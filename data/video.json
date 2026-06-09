@@ -9,9 +9,10 @@
     },
     {
       "in_evidenza": true,
-      "anno": "",
+      "anno": "2",
       "youtube": "https://www.youtube.com/watch?v=4M9BsOvx6cs",
-      "titolo": "curiosità del giorno"
+      "titolo": "curiosità del giornot",
+      "descrizione": "tt"
     }
   ]
 }
