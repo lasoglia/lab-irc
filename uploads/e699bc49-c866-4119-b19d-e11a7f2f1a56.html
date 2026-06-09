@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#f3ead9"/>
+<title>Lavagna delle idee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --paper:#f3ead9; --paper2:#ede0ca; --ink:#2c2722; --soft:#6b6258;
+  --line:#d9cbb0; --acc:#b4531f; --acc2:#8a3d14; --ok:#3a7a49; --danger:#b23b2e;
+  --c-idea:#ffe27a; --c-domanda:#bfe3f2; --c-importante:#ffc1bb;
+  --c-dubbio:#dcd0f5; --c-accordo:#c6ecc7; --c-opinione:#ffd9ad; --c-none:#faf6ec;
+  --sh:0 10px 28px rgba(44,39,34,.15),0 2px 6px rgba(44,39,34,.09);
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;min-height:100dvh}
+body{
+  font-family:"Hanken Grotesk",ui-sans-serif,system-ui,sans-serif;
+  color:var(--ink); background:var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 14%,rgba(180,83,31,.07),transparent 44%),
+    radial-gradient(circle at 82% 84%,rgba(58,122,73,.07),transparent 44%);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── layout ── */
+.page{max-width:560px;margin:0 auto;padding:20px 16px 80px}
+.serif{font-family:"Fraunces",Georgia,serif}
+
+/* ── banner ── */
+.banner{
+  background:#fffbe8;border:1px solid #e2d183;border-radius:12px;
+  padding:11px 14px;font-size:.88rem;line-height:1.5;color:#6b5a10;
+  margin-bottom:18px;
+}
+
+/* ── testa studente ── */
+.stu-head{text-align:center;padding:28px 6px 18px}
+.kicker{font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:.5rem}
+.stu-title{font-weight:900;font-size:clamp(2rem,8vw,2.7rem);line-height:1.04;margin-bottom:.4rem}
+.stu-prompt{color:var(--soft);font-size:1.02rem;line-height:1.45;max-width:30ch;margin:0 auto}
+
+/* ── card ── */
+.card{background:#fffdf7;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:20px 18px}
+.lbl{font-weight:700;font-size:.9rem;margin-bottom:8px;display:flex;justify-content:space-between}
+.cnt{font-variant-numeric:tabular-nums;color:var(--soft);font-size:.83rem;font-weight:400}
+.cnt.warn{color:var(--acc)}
+textarea{
+  width:100%;min-height:120px;resize:none;
+  border:1.5px solid var(--line);border-radius:12px;padding:13px 14px;
+  font:inherit;font-size:1.08rem;line-height:1.5;background:#fff;color:var(--ink);
+  transition:border-color .15s,box-shadow .15s;
+}
+textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px rgba(180,83,31,.12)}
+
+/* ── chips categoria ── */
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{
+  border:1.5px solid var(--line);background:#fff;border-radius:999px;
+  padding:9px 14px;font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;color:var(--ink);
+  transition:border-color .12s,background .12s,transform .08s;
+}
+.chip .dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.1);flex:none}
+.chip:active{transform:scale(.96)}
+.chip[aria-pressed=true]{border-color:var(--ink);background:var(--paper2);font-weight:700}
+
+/* ── bottoni ── */
+.btn{
+  appearance:none;border:none;cursor:pointer;font:inherit;font-weight:700;
+  border-radius:12px;padding:14px 18px;font-size:1.05rem;
+  transition:transform .08s,background .12s,opacity .15s;
+}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn-primary{background:var(--acc);color:#fff;width:100%;margin-top:18px;box-shadow:0 6px 18px rgba(180,83,31,.28)}
+.btn-primary:hover{background:var(--acc2)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn-ghost{background:transparent;color:var(--acc);border:1.5px solid var(--acc)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#1d1916}
+.btn-sm{padding:9px 13px;font-size:.9rem;border-radius:11px}
+.btn-danger{background:transparent;color:var(--danger);border:1.5px solid #e3b3ad}
+.btn-danger:hover{background:#fbeae8}
+
+/* ── conferma ── */
+.confirm{text-align:center;padding:36px 18px 28px}
+.check-circle{
+  width:90px;height:90px;border-radius:50%;background:var(--ok);
+  margin:0 auto 20px;display:grid;place-items:center;
+  box-shadow:0 10px 28px rgba(58,122,73,.3);
+  animation:pop .5s cubic-bezier(.2,1.2,.4,1) both;
+}
+.check-circle svg{width:48px;height:48px}
+.check-circle path{stroke-dasharray:50;stroke-dashoffset:50;animation:drw .42s .2s ease forwards}
+@keyframes pop{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes drw{to{stroke-dashoffset:0}}
+.confirm h2{font-weight:900;font-size:2rem;margin-bottom:.3rem}
+.confirm p{color:var(--soft);margin-bottom:20px}
+
+/* ── footer studente ── */
+.stu-foot{text-align:center;margin-top:22px}
+.stu-foot p{color:var(--soft);font-size:.78rem;margin-bottom:10px}
+.teacher-link{
+  font-size:.75rem;color:var(--soft);opacity:.45;text-decoration:none;
+  border-bottom:1px dashed currentColor;cursor:pointer;background:none;border-top:none;
+  border-left:none;border-right:none;font:inherit;padding:0;
+}
+.teacher-link:hover{opacity:.8}
+
+/* ── PIN overlay ── */
+.overlay{
+  position:fixed;inset:0;background:rgba(30,25,21,.55);backdrop-filter:blur(4px);
+  display:grid;place-items:center;padding:18px;z-index:60;
+  animation:fdin .2s ease;
+}
+@keyframes fdin{from{opacity:0}to{opacity:1}}
+.pin-box{
+  background:var(--paper);border-radius:20px;box-shadow:0 30px 70px rgba(0,0,0,.35);
+  max-width:340px;width:100%;padding:28px 24px;text-align:center;
+}
+.pin-box h3{font-family:"Fraunces",serif;font-weight:900;font-size:1.5rem;margin-bottom:.3rem}
+.pin-box p{color:var(--soft);font-size:.9rem;margin-bottom:18px}
+.pin-box input{
+  width:100%;border:1.5px solid var(--line);border-radius:11px;
+  padding:12px 14px;font:inherit;font-size:1.1rem;letter-spacing:.2em;
+  text-align:center;background:#fffdf7;color:var(--ink);margin-bottom:12px;
+}
+.pin-box input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px rgba(180,83,31,.12)}
+.pin-err{color:var(--danger);font-size:.85rem;min-height:1.2em;margin-bottom:8px}
+.pin-close{margin-top:10px;font-size:.85rem;color:var(--soft);cursor:pointer;border:none;background:none;font:inherit;text-decoration:underline}
+
+/* ═══════════════════════════════════ DASHBOARD ═══════════════════════════════ */
+.dash{max-width:1220px;margin:0 auto;padding:16px 16px 80px}
+.dtop{
+  display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;
+  justify-content:space-between;padding-bottom:14px;
+  border-bottom:1px solid var(--line);margin-bottom:4px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:44px;height:44px;border-radius:12px;background:var(--acc);display:grid;place-items:center;color:#fff;font-size:1.3rem;font-weight:900;flex:none;box-shadow:0 4px 14px rgba(180,83,31,.3)}
+.brand h1{font-weight:900;font-size:1.5rem;line-height:1;margin-bottom:3px}
+.brand .sub{color:var(--soft);font-size:.84rem}
+.live{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--soft);margin-top:5px}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(58,122,73,.5);animation:pulse 1.9s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(58,122,73,.55)}70%{box-shadow:0 0 0 9px rgba(58,122,73,0)}100%{box-shadow:0 0 0 0 rgba(58,122,73,0)}}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.count-pill{display:flex;align-items:center;gap:10px;background:#fffdf7;border:1px solid var(--line);border-radius:14px;padding:8px 15px;box-shadow:var(--sh)}
+.count-pill .n{font-family:"Fraunces",serif;font-weight:900;font-size:1.75rem;line-height:1;font-variant-numeric:tabular-nums}
+.count-pill .lbl{font-size:.73rem;color:var(--soft);line-height:1.15;text-transform:uppercase;letter-spacing:.06em}
+
+/* edit bar */
+.editbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 10px}
+.editbar input{font:inherit;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;background:#fffdf7;color:var(--ink);flex:1 1 180px}
+.editbar input:focus{outline:none;border-color:var(--acc)}
+.editbar .t-title{font-weight:700;font-size:1.04rem}
+.savenote{font-size:.78rem;color:var(--ok);opacity:0;transition:opacity .3s;white-space:nowrap}
+.savenote.show{opacity:1}
+
+/* filtri */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px;align-items:center}
+.fchip{border:1.5px solid var(--line);background:#fffdf7;border-radius:999px;padding:6px 12px;font:inherit;font-size:.84rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--ink);transition:border-color .1s,background .1s}
+.fchip .dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(0,0,0,.1);flex:none}
+.fchip[aria-pressed=true]{border-color:var(--ink);background:var(--paper2);font-weight:700}
+.tog-h{margin-left:auto;font-size:.84rem;color:var(--soft);display:inline-flex;align-items:center;gap:7px;cursor:pointer;user-select:none}
+.tog-h input{width:16px;height:16px;accent-color:var(--acc)}
+
+/* board */
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:18px;margin-top:16px}
+.note{
+  position:relative;border-radius:5px 5px 14px 5px;padding:16px 15px 40px;min-height:115px;
+  box-shadow:0 6px 16px rgba(44,39,34,.13),0 1px 3px rgba(44,39,34,.09);
+  line-height:1.42;word-break:break-word;
+  animation:noteIn .3s cubic-bezier(.2,1,.4,1) both;
+  transition:transform .12s,box-shadow .12s,opacity .2s,filter .2s;
+}
+.note:hover{transform:translateY(-3px) rotate(0deg)!important;box-shadow:0 14px 26px rgba(44,39,34,.2)}
+@keyframes noteIn{from{opacity:0;transform:scale(.86) translateY(10px)}to{opacity:1}}
+.tape{position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:72px;height:19px;background:rgba(255,255,255,.52);border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 2px rgba(0,0,0,.07)}
+.note .txt{font-size:1.03rem;white-space:pre-wrap}
+.note .meta{position:absolute;left:13px;bottom:11px;display:flex;align-items:center;gap:6px;font-size:.79rem;font-weight:600;opacity:.8}
+.dup{position:absolute;right:11px;bottom:9px;background:rgba(0,0,0,.76);color:#fff;border-radius:999px;font-size:.77rem;font-weight:700;padding:3px 9px;font-variant-numeric:tabular-nums}
+.acts{position:absolute;top:8px;right:8px;display:flex;gap:6px;opacity:.35;transition:opacity .15s}
+.note:hover .acts,.note:focus-within .acts{opacity:1}
+.ico{width:31px;height:31px;border-radius:8px;border:none;background:rgba(255,255,255,.6);cursor:pointer;display:grid;place-items:center;font-size:.92rem;transition:background .1s,transform .08s}
+.ico:hover{background:#fff}
+.ico:active{transform:scale(.9)}
+.ico.del:hover{background:#ffd9d4}
+.note.is-hid{opacity:.38;filter:grayscale(.55)}
+.hid-tag{position:absolute;top:8px;left:9px;font-size:.7rem;font-weight:700;color:var(--danger);background:rgba(255,255,255,.72);border-radius:6px;padding:2px 7px}
+/* colori note */
+.cat-idea{background:var(--c-idea)}.cat-domanda{background:var(--c-domanda)}.cat-importante{background:var(--c-importante)}.cat-dubbio{background:var(--c-dubbio)}.cat-accordo{background:var(--c-accordo)}.cat-opinione{background:var(--c-opinione)}.cat-none{background:var(--c-none);border:1px solid #ecdfc6}
+
+.empty{text-align:center;padding:80px 20px;color:var(--soft)}
+.empty .big{font-family:"Fraunces",serif;font-size:1.45rem;color:var(--ink);margin-bottom:6px}
+
+/* modale QR */
+.qr-overlay{position:fixed;inset:0;background:rgba(30,25,21,.55);backdrop-filter:blur(4px);display:grid;place-items:center;padding:18px;z-index:50;animation:fdin .2s ease}
+.qr-modal{background:var(--paper);border-radius:22px;box-shadow:0 30px 70px rgba(0,0,0,.4);max-width:430px;width:100%;padding:26px 22px;text-align:center;position:relative;max-height:92vh;overflow:auto}
+.qr-modal h2{font-family:"Fraunces",serif;font-weight:900;font-size:1.55rem;margin-bottom:.2rem}
+.qr-modal .hint{color:var(--soft);font-size:.9rem;margin-bottom:16px}
+.qr-box{background:#fff;border-radius:16px;padding:18px;display:inline-block;box-shadow:var(--sh);margin-bottom:14px}
+.qr-box canvas,.qr-box img{display:block}
+.url-row{display:flex;gap:8px;margin:8px 0}
+.url-row input{flex:1;font:inherit;font-size:.84rem;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;background:#fffdf7;color:var(--ink)}
+.url-row input:focus{outline:none;border-color:var(--acc)}
+.url-row button{white-space:nowrap}
+.modal-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.qr-note{font-size:.82rem;color:var(--soft);line-height:1.55;margin-top:14px;text-align:left;background:#fffdf7;border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.x-btn{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(0,0,0,.07);cursor:pointer;font-size:1.1rem;color:var(--ink)}
+.x-btn:hover{background:rgba(0,0,0,.13)}
+.cpd{font-size:.8rem;color:var(--ok);height:1.1em;margin-top:5px}
+
+/* ── PIN impostazioni ── */
+.settings-row{font-size:.82rem;color:var(--soft);margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.settings-row button{font:inherit;font-size:.82rem;color:var(--acc);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
+
+@media(max-width:520px){.dtop{align-items:flex-start}.ctrls{width:100%}.count-pill{flex:1}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   Lavagna delle idee — brainstorming collaborativo
+   • Pagina default = vista STUDENTE
+   • Docente accede premendo il link discreto in fondo e inserendo il PIN
+   ═══════════════════════════════════════════════════════════════ */
+
+const CATS=[
+  {id:"idea",       label:"Idea",       emoji:"💡", cls:"cat-idea",       color:"#ffe27a"},
+  {id:"domanda",    label:"Domanda",    emoji:"❓", cls:"cat-domanda",    color:"#bfe3f2"},
+  {id:"importante", label:"Importante", emoji:"⭐", cls:"cat-importante", color:"#ffc1bb"},
+  {id:"dubbio",     label:"Dubbio",     emoji:"🤔", cls:"cat-dubbio",     color:"#dcd0f5"},
+  {id:"accordo",    label:"D'accordo",  emoji:"✅", cls:"cat-accordo",    color:"#c6ecc7"},
+  {id:"opinione",   label:"Opinione",   emoji:"💬", cls:"cat-opinione",   color:"#ffd9ad"},
+];
+const NONE_CAT={id:"none",label:"Senza categoria",emoji:"📌",cls:"cat-none",color:"#faf6ec"};
+const catById=id=>CATS.find(c=>c.id===id)||NONE_CAT;
+const MAX=150;
+const IDEA_PFX="idea_";
+const K_HIDDEN="mod_hidden";
+const K_META="session_meta";
+const K_PIN="session_pin";
+const DEFAULT_PIN="docente";
+
+/* ─── storage ─── */
+const ST=typeof window!=="undefined"&&window.storage?window.storage:null;
+const hasStore=!!ST;
+async function sGet(k){try{return await ST.get(k,true)}catch{return null}}
+async function sSet(k,v){try{return await ST.set(k,v,true)}catch{return null}}
+async function sDel(k){try{return await ST.delete(k,true)}catch{return null}}
+async function sList(p){try{return await ST.list(p,true)}catch{return null}}
+const jp=(s,fb)=>{try{return JSON.parse(s)}catch{return fb}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s).trim().toLowerCase().replace(/\s+/g," ");
+const ang=id=>{let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>>>0;return((h%500)/100-2.5).toFixed(2)};
+
+/* ─── stato globale ─── */
+let mode="student";   // "student" | "teacher"
+let meta={title:"Lavagna delle idee",prompt:"Condividi la tua idea con la classe"};
+let currentPin=DEFAULT_PIN;
+const root=document.getElementById("root");
+
+/* ════════════════════════════════════════
+   BOOTSTRAP
+   ════════════════════════════════════════ */
+(async()=>{
+  if(hasStore){
+    const mr=await sGet(K_META);
+    if(mr?.value){const m=jp(mr.value,null);if(m)meta={title:m.title||meta.title,prompt:m.prompt||meta.prompt}}
+    const pr=await sGet(K_PIN);
+    if(pr?.value){currentPin=jp(pr.value,DEFAULT_PIN)||DEFAULT_PIN}
+  }
+  renderStudent();
+})();
+
+/* ════════════════════════════════════════
+   VISTA STUDENTE
+   ════════════════════════════════════════ */
+let selectedCat=null;
+
+function renderStudent(){
+  mode="student"; selectedCat=null;
+  root.innerHTML=`
+    ${!hasStore?`<div style="max-width:560px;margin:0 auto;padding:10px 16px 0"><div class="banner">⚠️ Stai usando l'app in anteprima. Le idee vengono ricevute solo quando l'artifact è <b>pubblicato</b> su Claude e aperto dal link pubblico.</div></div>`:""}
+    <div class="page">
+      <div class="stu-head">
+        <div class="kicker">La tua voce conta</div>
+        <h1 class="stu-title serif" id="s-title">${esc(meta.title)}</h1>
+        <p class="stu-prompt" id="s-prompt">${esc(meta.prompt)}</p>
+      </div>
+      <div class="card">
+        <div class="lbl"><span>La tua idea</span><span class="cnt" id="cnt">0/${MAX}</span></div>
+        <textarea id="ta" maxlength="${MAX}" placeholder="Scrivi qui — in modo chiaro e rispettoso…" autocomplete="off"></textarea>
+        <div style="margin-top:16px">
+          <div class="lbl" style="margin-bottom:0"><span>Categoria</span><span style="font-weight:400;color:var(--soft)">facoltativa</span></div>
+          <div class="cats" id="cats">
+            ${CATS.map(c=>`<button class="chip" data-id="${c.id}" aria-pressed="false">
+              <span class="dot" style="background:${c.color}"></span>${c.emoji} ${c.label}
+            </button>`).join("")}
+          </div>
+        </div>
+        <button class="btn btn-primary" id="send-btn" disabled>Invia idea →</button>
+      </div>
+      <div class="stu-foot">
+        <p>Anonimo · nessun login richiesto</p>
+        <button class="teacher-link" id="teacher-link">Sei il docente?</button>
+      </div>
+    </div>`;
+
+  const ta=document.getElementById("ta");
+  const cnt=document.getElementById("cnt");
+  const btn=document.getElementById("send-btn");
+  const refresh=()=>{
+    const n=ta.value.length;
+    cnt.textContent=`${n}/${MAX}`;
+    cnt.classList.toggle("warn",n>MAX-20);
+    btn.disabled=ta.value.trim().length===0;
+  };
+  ta.addEventListener("input",refresh);
+  ta.focus();
+
+  document.querySelectorAll(".chip").forEach(ch=>{
+    ch.addEventListener("click",()=>{
+      selectedCat=selectedCat===ch.dataset.id?null:ch.dataset.id;
+      document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x.dataset.id===selectedCat?"true":"false"));
+    });
+  });
+
+  btn.addEventListener("click",submitIdea);
+  ta.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key==="Enter"&&!btn.disabled)submitIdea()});
+  document.getElementById("teacher-link").addEventListener("click",showPinOverlay);
+}
+
+async function submitIdea(){
+  const ta=document.getElementById("ta");
+  const btn=document.getElementById("send-btn");
+  const text=ta.value.trim();
+  if(!text)return;
+  btn.disabled=true;btn.textContent="Invio in corso…";
+  const id=`${Date.now()}_${Math.random().toString(36).slice(2,7)}`;
+  const key=IDEA_PFX+id;
+  const payload=JSON.stringify({id,text,cat:selectedCat||"none",ts:Date.now()});
+  let ok=!hasStore; // se non c'è store, simula ok (anteprima)
+  if(hasStore){const r=await sSet(key,payload);ok=!!r}
+  if(!ok){btn.disabled=false;btn.textContent="Invia idea →";alert("Errore nell'invio. Controlla la connessione.");return}
+  renderConfirm();
+}
+
+function renderConfirm(){
+  root.innerHTML=`
+    <div class="page">
+      <div class="card confirm" style="margin-top:60px">
+        <div class="check-circle">
+          <svg viewBox="0 0 52 52"><path fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M14 27l8 8 16-18"/></svg>
+        </div>
+        <h2 class="serif">Idea ricevuta! ✓</h2>
+        <p>Grazie — la tua idea è ora sulla lavagna.</p>
+        <button class="btn btn-ghost" id="again">Invia un'altra idea</button>
+      </div>
+      <div class="stu-foot">
+        <p>Anonimo · nessun login richiesto</p>
+        <button class="teacher-link" id="teacher-link2">Sei il docente?</button>
+      </div>
+    </div>`;
+  document.getElementById("again").addEventListener("click",renderStudent);
+  document.getElementById("teacher-link2").addEventListener("click",showPinOverlay);
+}
+
+/* ════════════════════════════════════════
+   OVERLAY PIN
+   ════════════════════════════════════════ */
+function showPinOverlay(){
+  const ov=document.createElement("div");
+  ov.className="overlay";
+  ov.innerHTML=`
+    <div class="pin-box">
+      <h3 class="serif">Accesso docente</h3>
+      <p>Inserisci il PIN per aprire la dashboard</p>
+      <input type="password" id="pin-in" placeholder="PIN" autocomplete="off"/>
+      <div class="pin-err" id="pin-err"></div>
+      <button class="btn btn-primary" style="margin-top:0" id="pin-ok">Accedi</button>
+      <br><button class="pin-close" id="pin-cancel">Annulla</button>
+    </div>`;
+  document.body.appendChild(ov);
+  const inp=document.getElementById("pin-in");
+  const err=document.getElementById("pin-err");
+  inp.focus();
+  const check=()=>{
+    if(inp.value===currentPin){document.body.removeChild(ov);renderTeacher()}
+    else{err.textContent="PIN non corretto";inp.value="";inp.focus()}
+  };
+  document.getElementById("pin-ok").addEventListener("click",check);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")check()});
+  document.getElementById("pin-cancel").addEventListener("click",()=>document.body.removeChild(ov));
+}
+
+/* ════════════════════════════════════════
+   DASHBOARD DOCENTE
+   ════════════════════════════════════════ */
+const cache=new Map();
+let hidden=new Set();
+let filter="all";
+let showHid=false;
+let polling=false;
+let saveTimer=null;
+
+function renderTeacher(){
+  mode="teacher";
+  root.innerHTML=`
+    <div class="dash">
+      <div class="dtop">
+        <div class="brand">
+          <div class="mark">💭</div>
+          <div>
+            <h1 id="d-title">${esc(meta.title)}</h1>
+            <div class="sub" id="d-sub">${esc(meta.prompt)}</div>
+            <div class="live"><span class="pulse"></span>aggiornamento automatico</div>
+          </div>
+        </div>
+        <div class="ctrls">
+          <div class="count-pill"><span class="n" id="count">0</span><span class="lbl">idee<br>ricevute</span></div>
+          <button class="btn btn-sm btn-ink" id="qr-btn">📱 Mostra QR</button>
+          <button class="btn btn-sm btn-danger" id="clear-btn">Svuota tutto</button>
+          <button class="btn btn-sm btn-ghost" id="exit-btn">← Esci</button>
+        </div>
+      </div>
+      <div class="editbar">
+        <input class="t-title" id="in-title" placeholder="Titolo sessione" maxlength="60" value="${esc(meta.title)}"/>
+        <input id="in-prompt" placeholder="Domanda / consegna" maxlength="120" value="${esc(meta.prompt)}"/>
+        <span class="savenote" id="sn">salvato ✓</span>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div id="board"></div>
+      <div class="settings-row">
+        <span>PIN corrente: <b>${esc(currentPin)}</b></span>
+        <button id="change-pin">Cambia PIN</button>
+        <button id="exit-btn2" style="margin-left:auto">← Torna alla vista studente</button>
+      </div>
+    </div>
+    <div id="qr-slot"></div>`;
+
+  document.getElementById("exit-btn").addEventListener("click",renderStudent);
+  document.getElementById("exit-btn2").addEventListener("click",renderStudent);
+  document.getElementById("qr-btn").addEventListener("click",openQR);
+  document.getElementById("clear-btn").addEventListener("click",clearAll);
+  document.getElementById("change-pin").addEventListener("click",changePinDialog);
+
+  const inT=document.getElementById("in-title");
+  const inP=document.getElementById("in-prompt");
+  const sn=document.getElementById("sn");
+  const queueSave=()=>{
+    meta={title:inT.value.trim()||"Lavagna delle idee",prompt:inP.value.trim()||"Condividi la tua idea con la classe"};
+    document.getElementById("d-title").textContent=meta.title;
+    document.getElementById("d-sub").textContent=meta.prompt;
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(async()=>{
+      if(hasStore)await sSet(K_META,JSON.stringify(meta));
+      sn.classList.add("show");setTimeout(()=>sn.classList.remove("show"),1400);
+    },500);
+  };
+  inT.addEventListener("input",queueSave);
+  inP.addEventListener("input",queueSave);
+
+  renderFilters();
+  renderBoard();
+  if(hasStore){poll();setInterval(poll,3000)}
+  else{document.getElementById("board").innerHTML=`<div class="empty"><div class="big serif">Anteprima dashboard</div><div>Pubblica l'artifact per ricevere idee in tempo reale.</div></div>`}
+}
+
+function renderFilters(){
+  const box=document.getElementById("filters");
+  if(!box)return;
+  box.innerHTML=
+    `<button class="fchip" data-f="all" aria-pressed="${filter==="all"}">Tutte</button>`+
+    CATS.map(c=>`<button class="fchip" data-f="${c.id}" aria-pressed="${filter===c.id}"><span class="dot" style="background:${c.color}"></span>${c.emoji} ${c.label}</button>`).join("")+
+    `<button class="fchip" data-f="none" aria-pressed="${filter==="none"}">📌 Senza categoria</button>`+
+    `<label class="tog-h"><input type="checkbox" id="show-hid" ${showHid?"checked":""}/> mostra nascoste</label>`;
+  box.querySelectorAll(".fchip").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.f;renderFilters();renderBoard()}));
+  const sh=document.getElementById("show-hid");
+  sh.addEventListener("change",()=>{showHid=sh.checked;renderBoard()});
+}
+
+function renderBoard(){
+  const el=document.getElementById("board");
+  if(!el)return;
+  const all=[...cache.values()].sort((a,b)=>a.ts-b.ts);
+  const countEl=document.getElementById("count");
+  if(countEl)countEl.textContent=all.length;
+
+  // raggruppa per categoria + testo normalizzato
+  const groups=new Map();
+  for(const it of all){
+    const gk=(it.cat||"none")+"||"+norm(it.text);
+    if(!groups.has(gk))groups.set(gk,{ids:[],keys:[],text:it.text,cat:it.cat||"none",ts:it.ts});
+    const g=groups.get(gk);g.ids.push(it.id);g.keys.push(it.key);g.ts=Math.min(g.ts,it.ts);
+  }
+
+  let list=[...groups.values()];
+  if(filter!=="all")list=list.filter(g=>g.cat===filter);
+  list.forEach(g=>g.allHid=g.ids.every(id=>hidden.has(id)));
+  if(!showHid)list=list.filter(g=>!g.allHid);
+  list.sort((a,b)=>b.ts-a.ts);
+
+  if(list.length===0){
+    el.innerHTML=`<div class="empty"><div class="big serif">Nessuna idea${filter!=="all"?" in questa categoria":""}</div><div>Gli studenti devono aprire la pagina tramite QR e inviare le loro idee.</div></div>`;
+    return;
+  }
+  el.innerHTML=`<div class="board-grid">`+list.map(g=>{
+    const c=catById(g.cat);
+    const a=ang(g.ids[0]);
+    return `<div class="note ${c.cls}${g.allHid?" is-hid":""}" style="transform:rotate(${a}deg)">
+      <span class="tape"></span>
+      ${g.allHid?`<span class="hid-tag">nascosta</span>`:""}
+      <div class="acts">
+        <button class="ico hide" title="${g.allHid?"Ripristina":"Nascondi"}" data-ids="${g.ids.join(",")}">${g.allHid?"↩️":"🙈"}</button>
+        <button class="ico del" title="Elimina" data-keys="${g.keys.join(",")}" data-ids="${g.ids.join(",")}"}>🗑️</button>
+      </div>
+      <div class="txt">${esc(g.text)}</div>
+      <div class="meta"><span>${c.emoji}</span>${c.id==="none"?"Senza cat.":esc(c.label)}</div>
+      ${g.ids.length>1?`<span class="dup">×${g.ids.length}</span>`:""}
+    </div>`;
+  }).join("")+`</div>`;
+
+  el.querySelectorAll(".ico.hide").forEach(b=>b.addEventListener("click",async()=>{
+    const ids=b.dataset.ids.split(",");
+    const anyVis=ids.some(id=>!hidden.has(id));
+    ids.forEach(id=>anyVis?hidden.add(id):hidden.delete(id));
+    if(hasStore)await sSet(K_HIDDEN,JSON.stringify([...hidden]));
+    renderBoard();
+  }));
+  el.querySelectorAll(".ico.del").forEach(b=>b.addEventListener("click",async()=>{
+    const ids=b.dataset.ids.split(",");
+    const keys=b.dataset.keys.split(",");
+    if(!confirm(keys.length>1?`Eliminare definitivamente queste ${keys.length} idee identiche?`:"Eliminare definitivamente questa idea?"))return;
+    for(const k of keys){if(hasStore)await sDel(k);cache.delete(k)}
+    ids.forEach(id=>hidden.delete(id));
+    if(hasStore)await sSet(K_HIDDEN,JSON.stringify([...hidden]));
+    renderBoard();
+  }));
+}
+
+async function clearAll(){
+  if(cache.size===0)return;
+  if(!confirm("Eliminare TUTTE le idee della sessione? Non è reversibile."))return;
+  for(const k of [...cache.keys()]){if(hasStore)await sDel(k)}
+  cache.clear();hidden.clear();
+  if(hasStore)await sSet(K_HIDDEN,JSON.stringify([]));
+  renderBoard();
+}
+
+function changePinDialog(){
+  const np=prompt(`Imposta un nuovo PIN (attuale: "${currentPin}")\nMinimo 3 caratteri:`);
+  if(np===null)return;
+  if(np.trim().length<3){alert("Il PIN deve avere almeno 3 caratteri.");return}
+  currentPin=np.trim();
+  if(hasStore)sSet(K_PIN,JSON.stringify(currentPin));
+  const sp=document.querySelector(".settings-row b");
+  if(sp)sp.textContent=currentPin;
+  alert(`✅ PIN aggiornato a: "${currentPin}"`);
+}
+
+/* ── polling ── */
+async function poll(){
+  if(polling||!hasStore)return;
+  polling=true;
+  try{
+    const listed=await sList(IDEA_PFX);
+    const rawKeys=(listed&&listed.keys)?listed.keys:[];
+    const keys=rawKeys.map(k=>(typeof k==="string"&&k.startsWith(IDEA_PFX))?k:(IDEA_PFX+k));
+    const present=new Set(keys);
+    for(const k of [...cache.keys()])if(!present.has(k))cache.delete(k);
+    for(const k of keys){
+      if(cache.has(k))continue;
+      let r=await sGet(k);
+      if(r&&r.value){const o=jp(r.value,null);if(o?.text)cache.set(k,{key:k,id:o.id||k,text:o.text,cat:o.cat||"none",ts:o.ts||Date.now()})}
+    }
+    const hr=await sGet(K_HIDDEN);hidden=new Set(hr?.value?jp(hr.value,[]):[]);
+    const mr=await sGet(K_META);
+    if(mr?.value){
+      const m=jp(mr.value,null);
+      if(m){
+        const inT=document.getElementById("in-title");
+        const inP=document.getElementById("in-prompt");
+        if(inT&&document.activeElement!==inT&&!inT.dataset.dirty)inT.value=m.title||"";
+        if(inP&&document.activeElement!==inP&&!inP.dataset.dirty)inP.value=m.prompt||"";
+        meta={title:m.title||meta.title,prompt:m.prompt||meta.prompt};
+      }
+    }
+    renderBoard();
+  }finally{polling=false}
+}
+
+/* ── modale QR ── */
+function openQR(){
+  const slot=document.getElementById("qr-slot");
+  const baseUrl=location.href.split("#")[0].split("?")[0];
+  slot.innerHTML=`
+    <div class="qr-overlay" id="qr-ov">
+      <div class="qr-modal">
+        <button class="x-btn" id="qx">✕</button>
+        <h2>Collega la classe</h2>
+        <p class="hint">Gli studenti inquadrano il QR per inviare le loro idee</p>
+        <div class="qr-box" id="qr-box"></div>
+        <div class="cpd" id="cpd"></div>
+        <div class="url-row">
+          <input id="url-in" value="${esc(baseUrl)}"/>
+          <button class="btn btn-sm btn-ink" id="url-upd">Aggiorna</button>
+        </div>
+        <div class="modal-row">
+          <button class="btn btn-sm btn-ghost" id="copy-btn">Copia link</button>
+        </div>
+        <div class="qr-note"><b>Nota:</b> il QR punta all'URL della pagina attuale.
+          Funziona dai telefoni solo se l'artifact è <b>pubblicato</b> su Claude e aperto dal link pubblico.
+          Se l'indirizzo sopra non è quello giusto, incollalo a mano e premi "Aggiorna".</div>
+      </div>
+    </div>`;
+
+  function makeQR(){
+    const box=document.getElementById("qr-box");
+    box.innerHTML="";
+    const url=document.getElementById("url-in").value.trim();
+    if(typeof QRCode==="undefined"){box.innerHTML=`<p style="color:var(--danger);font-size:.9rem;max-width:24ch">QR non disponibile (rete?). Usa il link qui sotto.</p>`;return}
+    try{new QRCode(box,{text:url,width:224,height:224,colorDark:"#2c2722",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M})}
+    catch(e){box.innerHTML=`<p style="color:var(--danger);font-size:.9rem">Impossibile generare il QR.</p>`}
+  }
+  makeQR();
+
+  document.getElementById("url-upd").addEventListener("click",makeQR);
+  document.getElementById("url-in").addEventListener("keydown",e=>{if(e.key==="Enter")makeQR()});
+  document.getElementById("copy-btn").addEventListener("click",async()=>{
+    const cpd=document.getElementById("cpd");
+    try{await navigator.clipboard.writeText(document.getElementById("url-in").value.trim());cpd.textContent="Copiato ✓"}
+    catch{document.getElementById("url-in").select();cpd.textContent="Seleziona e copia"}
+  });
+  const close=()=>slot.innerHTML="";
+  document.getElementById("qx").addEventListener("click",close);
+  document.getElementById("qr-ov").addEventListener("click",e=>{if(e.target.id==="qr-ov")close()});
+}
+</script>
+</body>
+</html>
