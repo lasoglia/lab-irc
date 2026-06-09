@@ -1,0 +1,175 @@
+backend:
+  name: git-gateway
+  repo: lasoglia/lab-irc
+  branch: main
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/029fb3b4-3f04-4a8d-8d41-942bf6ce13e1/pkce
+  auth_token_endpoint: /sites/029fb3b4-3f04-4a8d-8d41-942bf6ce13e1/token
+  gateway_url: https://gateway.decapbridge.com
+  commit_messages:
+    create: 'Aggiunto {{collection}} "{{slug}}"'
+    update: 'Aggiornato {{collection}} "{{slug}}"'
+    delete: 'Eliminato {{collection}} "{{slug}}"'
+    uploadMedia: 'Caricato file "{{path}}"'
+    deleteMedia: 'Eliminato file "{{path}}"'
+
+auth:
+  email_claim: email
+  first_name_claim: first_name
+  last_name_claim: last_name
+  avatar_url_claim: avatar_url
+
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+site_url: https://lasoglia.github.io/lab-irc
+locale: it
+
+# Dove finiscono i file e le immagini che carichi
+media_folder: uploads
+public_folder: /uploads
+
+collections:
+  # ===========================================================
+  #  Impostazioni generali
+  # ===========================================================
+  - name: impostazioni
+    label: "⚙️  Impostazioni del sito"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: generali
+        label: "Informazioni generali"
+        file: data/site.json
+        fields:
+          - { label: "Nome del sito", name: titolo, widget: string, hint: "Compare in alto a sinistra. Es. Lab IRC" }
+          - { label: "Titolo grande (home)", name: sottotitolo, widget: string }
+          - { label: "Presentazione (Chi sono)", name: intro, widget: text }
+          - { label: "Pensiero / frase d'apertura", name: pensiero, widget: string, required: false, hint: "Breve frase mostrata in cima alla home" }
+          - { label: "Nome autore (per il copyright)", name: autore, widget: string, hint: "Compare nel footer: © anno NOME — Tutti i diritti riservati" }
+          - { label: "Email di contatto", name: email, widget: string, required: false }
+
+  # ===========================================================
+  #  Descrizioni dei 5 anni (facoltative)
+  # ===========================================================
+  - name: anni
+    label: "📚  Descrizioni degli anni"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: descrizioni
+        label: "Testo introduttivo di ogni anno"
+        file: data/anni.json
+        fields:
+          - { label: "Primo anno", name: primo, widget: text, required: false }
+          - { label: "Secondo anno", name: secondo, widget: text, required: false }
+          - { label: "Terzo anno", name: terzo, widget: text, required: false }
+          - { label: "Quarto anno", name: quarto, widget: text, required: false }
+          - { label: "Quinto anno", name: quinto, widget: text, required: false }
+
+  # ===========================================================
+  #  Materiali (slide, documenti, link) per anno
+  # ===========================================================
+  - name: materiali
+    label: "📄  Materiali"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco materiali"
+        file: data/materiali.json
+        fields:
+          - label: "Materiali"
+            name: materiali
+            widget: list
+            label_singular: "materiale"
+            summary: "{{fields.titolo}} — {{fields.anno}}° anno"
+            fields:
+              - { label: "Titolo", name: titolo, widget: string }
+              - label: "Anno di corso"
+                name: anno
+                widget: select
+                options:
+                  - { label: "1° — Primo anno", value: "1" }
+                  - { label: "2° — Secondo anno", value: "2" }
+                  - { label: "3° — Terzo anno", value: "3" }
+                  - { label: "4° — Quarto anno", value: "4" }
+                  - { label: "5° — Quinto anno", value: "5" }
+              - label: "Tipo"
+                name: tipo
+                widget: select
+                options: ["Slide", "Documento/PDF", "Link"]
+              - { label: "Descrizione", name: descrizione, widget: text, required: false }
+              - { label: "Immagine di copertina", name: immagine, widget: image, required: false, hint: "Facoltativa. Rende la scheda più accattivante (consigliato 1200×675 px)" }
+              - { label: "File da caricare (slide, PDF)", name: file, widget: file, required: false }
+              - { label: "Oppure un link esterno", name: link, widget: string, required: false, hint: "https://… — usato solo se non carichi un file" }
+              - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
+
+  # ===========================================================
+  #  Strumenti interattivi (artefatti / app)
+  # ===========================================================
+  - name: strumenti
+    label: "✦  Strumenti per le lezioni"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco strumenti"
+        file: data/strumenti.json
+        fields:
+          - label: "Strumenti"
+            name: strumenti
+            widget: list
+            label_singular: "strumento"
+            summary: "{{fields.titolo}}"
+            fields:
+              - { label: "Titolo", name: titolo, widget: string }
+              - { label: "Descrizione", name: descrizione, widget: text, required: false }
+              - label: "Anno (facoltativo)"
+                name: anno
+                widget: select
+                required: false
+                options:
+                  - { label: "Tutti gli anni", value: "" }
+                  - { label: "1° anno", value: "1" }
+                  - { label: "2° anno", value: "2" }
+                  - { label: "3° anno", value: "3" }
+                  - { label: "4° anno", value: "4" }
+                  - { label: "5° anno", value: "5" }
+              - { label: "Immagine di copertina", name: immagine, widget: image, required: false }
+              - { label: "File HTML dell'artefatto", name: file, widget: file, required: false, hint: "Carica qui il file .html dell'artefatto interattivo" }
+              - { label: "Oppure un link esterno", name: link, widget: string, required: false }
+              - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
+
+  # ===========================================================
+  #  Video da YouTube
+  # ===========================================================
+  - name: video
+    label: "▶  Video (YouTube)"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco video"
+        file: data/video.json
+        fields:
+          - label: "Video"
+            name: video
+            widget: list
+            label_singular: "video"
+            summary: "{{fields.titolo}}"
+            fields:
+              - { label: "Titolo", name: titolo, widget: string }
+              - { label: "Descrizione", name: descrizione, widget: text, required: false }
+              - { label: "Link YouTube", name: youtube, widget: string, hint: "Incolla l'indirizzo del video (es. https://youtu.be/XXXX). Funziona qualsiasi formato YouTube." }
+              - label: "Anno (facoltativo)"
+                name: anno
+                widget: select
+                required: false
+                options:
+                  - { label: "Tutti gli anni", value: "" }
+                  - { label: "1° anno", value: "1" }
+                  - { label: "2° anno", value: "2" }
+                  - { label: "3° anno", value: "3" }
+                  - { label: "4° anno", value: "4" }
+                  - { label: "5° anno", value: "5" }
+              - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lab IRC · Religione Cattolica</title>
+<meta name="description" content="Materiali, slide, video e strumenti interattivi di Religione Cattolica, organizzati per anno di corso." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   PALETTE  —  puoi cambiare i colori qui. I 5 anni hanno colori propri
+   (vedi più sotto, nello script, la lista ANNI).
+   ===================================================================== */
+:root{
+  --bg:#FAF7F1;
+  --bg2:#FFFFFF;
+  --ink:#1B1822;
+  --ink-soft:#39333F;
+  --muted:#6A6472;
+  --line:#ECE4D7;
+  --brand:#0E7C6B;          /* colore guida del sito (bottoni, link) */
+  --brand-d:#0A5A4E;
+  --gold:#C8941E;
+  --accent:#0E7C6B;         /* cambia in base alla sezione (anno) */
+  --shadow:0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --shadow-lg:0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.4);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Plus Jakarta Sans",system-ui,sans-serif;
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1140px; margin:0 auto; padding:0 22px; position:relative; z-index:1}
+a{color:var(--brand)}
+
+/* ---------- header ---------- */
+header{
+  position:sticky; top:0; z-index:40;
+  background:rgba(250,247,241,.85); backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.bar{display:flex; align-items:center; gap:14px; height:66px; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--ink); cursor:pointer; margin-right:auto}
+.seal{
+  width:38px; height:38px; border-radius:11px; flex:none;
+  background:linear-gradient(135deg,var(--brand),var(--brand-d)); color:#fff;
+  display:grid; place-items:center; font-family:"Fraunces",serif; font-weight:600; font-size:20px;
+}
+.brand b{font-family:"Fraunces",serif; font-weight:600; font-size:19px; letter-spacing:.1px}
+nav{display:flex; align-items:center; gap:4px}
+nav a{
+  color:var(--ink-soft); text-decoration:none; font-weight:600; font-size:14.5px;
+  padding:7px 12px; border-radius:9px; transition:.15s ease;
+}
+nav a:hover{background:rgba(14,124,107,.08); color:var(--brand)}
+.search{
+  display:flex; align-items:center; gap:7px; background:var(--bg2);
+  border:1px solid var(--line); border-radius:999px; padding:7px 14px; min-width:170px;
+}
+.search svg{flex:none; color:var(--muted)}
+.search input{border:none; outline:none; background:none; font-family:inherit; font-size:14px; width:100%; color:var(--ink)}
+@media(max-width:720px){
+  nav .opt{display:none}
+  .search{min-width:0; flex:1}
+}
+
+/* ---------- hero ---------- */
+.hero-wrap{position:relative; overflow:hidden}
+.hero-bg{
+  position:absolute; inset:-10% -10% auto -10%; height:130%; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(38% 50% at 12% 18%, rgba(226,96,59,.20), transparent 70%),
+    radial-gradient(38% 50% at 88% 12%, rgba(45,125,210,.18), transparent 70%),
+    radial-gradient(40% 55% at 72% 92%, rgba(106,79,176,.18), transparent 70%),
+    radial-gradient(38% 50% at 22% 96%, rgba(200,65,123,.15), transparent 70%);
+  animation:floaty 18s ease-in-out infinite alternate;
+}
+@keyframes floaty{from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(0,-18px,0) scale(1.04)}}
+.hero{position:relative; z-index:1; padding:62px 0 26px}
+.pensiero{
+  display:inline-flex; align-items:center; gap:9px; font-style:italic; color:var(--ink-soft);
+  background:rgba(255,255,255,.6); border:1px solid var(--line); border-radius:999px;
+  padding:7px 16px; font-size:14.5px; margin-bottom:22px;
+}
+.pensiero::before{content:"❝"; font-style:normal; color:var(--gold); font-size:18px; font-weight:700}
+h1{
+  font-family:"Fraunces",serif; font-weight:600; font-optical-sizing:auto;
+  font-size:clamp(40px,7.5vw,76px); line-height:1.0; letter-spacing:-.02em;
+  margin:0 0 18px; max-width:15ch;
+}
+.lede{font-size:clamp(17px,2.3vw,20px); color:var(--muted); max-width:60ch; margin:0}
+
+/* ---------- section heads ---------- */
+.shead{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin:52px 0 20px; flex-wrap:wrap}
+.shead h2{font-family:"Fraunces",serif; font-weight:600; font-size:clamp(26px,3.6vw,36px); margin:0; letter-spacing:-.015em}
+.shead .sub{color:var(--muted); font-size:15px; max-width:44ch}
+.eyebrow{font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:8px}
+
+/* ---------- year grid ---------- */
+.years{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:16px}
+.ycard{
+  position:relative; background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 24px 22px 30px; text-decoration:none; color:var(--ink);
+  display:flex; flex-direction:column; box-shadow:var(--shadow); overflow:hidden;
+  transition:transform .22s ease, box-shadow .22s ease;
+  opacity:0; transform:translateY(16px); animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.ycard::before{content:""; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--c)}
+.ycard::after{content:""; position:absolute; right:-30px; top:-30px; width:120px; height:120px; border-radius:50%; background:var(--c); opacity:.07; transition:.22s ease}
+.ycard:hover{transform:translateY(-5px); box-shadow:var(--shadow-lg)}
+.ycard:hover::after{opacity:.13; transform:scale(1.25)}
+.ynum{font-family:"Fraunces",serif; font-weight:600; font-size:52px; line-height:.9; color:var(--c)}
+.yname{font-family:"Fraunces",serif; font-weight:600; font-size:21px; margin-top:6px}
+.ydesc{color:var(--muted); font-size:14px; margin:7px 0 0; flex:1}
+.ycount{font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--c); margin-top:14px}
+.yarrow{display:inline-flex; align-items:center; gap:6px; color:var(--c); font-weight:700; font-size:14px; margin-top:4px}
+
+/* ---------- big tiles ---------- */
+.tiles{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px}
+.tile{
+  position:relative; border-radius:var(--radius); padding:30px 28px; color:#fff;
+  text-decoration:none; min-height:148px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end;
+  box-shadow:var(--shadow); transition:transform .2s ease, box-shadow .2s ease;
+}
+.tile:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
+.tile.t-str{background:linear-gradient(135deg,#7A5AC9,#4A338C)}
+.tile.t-vid{background:linear-gradient(135deg,#D24F86,#9E2D5E)}
+.tile .tlabel{font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; opacity:.85}
+.tile h3{font-family:"Fraunces",serif; font-size:27px; margin:4px 0 4px; font-weight:600}
+.tile p{margin:0; opacity:.9; font-size:14.5px; max-width:34ch}
+.tile .ti{position:absolute; right:-8px; top:-18px; font-size:104px; opacity:.16; line-height:1}
+@media(max-width:640px){.tiles{grid-template-columns:1fr}}
+
+/* ---------- filter chips ---------- */
+.filters{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:24px}
+.chip{
+  border:1px solid var(--line); background:var(--bg2); color:var(--ink);
+  font-family:inherit; font-size:14px; font-weight:600; padding:8px 16px; border-radius:999px;
+  cursor:pointer; transition:.16s ease;
+}
+.chip:hover{border-color:var(--accent); color:var(--accent)}
+.chip.on{background:var(--accent); border-color:var(--accent); color:#fff}
+
+/* ---------- cards grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:20px}
+.card{
+  position:relative; background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius);
+  display:flex; flex-direction:column; overflow:hidden; box-shadow:var(--shadow);
+  transition:transform .2s ease, box-shadow .2s ease;
+  opacity:0; transform:translateY(16px); animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.card:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
+.card.feat{outline:2px solid var(--gold); outline-offset:-2px}
+.card.feat .cbody::before{
+  content:"In evidenza"; align-self:flex-start; order:-1;
+  background:var(--gold); color:#3a2a06; font-size:10.5px; font-weight:800; letter-spacing:.06em;
+  text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:2px;
+}
+.cmedia{height:148px; background-size:cover; background-position:center; position:relative; background-color:#eee}
+.cmedia.grad{display:grid; place-items:center; background-image:linear-gradient(135deg,rgba(255,255,255,.20),rgba(0,0,0,.30))}
+.cmedia.grad span{font-family:"Fraunces",serif; font-size:56px; font-weight:600; color:rgba(255,255,255,.95)}
+.cmedia .playbadge{position:absolute; inset:0; display:grid; place-items:center; cursor:pointer; background:rgba(20,12,24,.30); transition:.15s ease}
+.cmedia .playbadge::before{content:""; width:54px; height:54px; border-radius:50%; background:rgba(255,255,255,.92); box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.cmedia .playbadge::after{content:""; position:absolute; border-style:solid; border-width:9px 0 9px 15px; border-color:transparent transparent transparent var(--accent); margin-left:4px}
+.cmedia:hover .playbadge{background:rgba(20,12,24,.18)}
+.cbody{padding:18px 20px 20px; display:flex; flex-direction:column; gap:10px; flex:1}
+.badge{align-self:flex-start; font-size:11.5px; font-weight:700; letter-spacing:.03em; padding:4px 11px; border-radius:7px; background:#EFEAF7; color:#5A3FA0}
+.badge[data-k="video"]{background:#FBE3EC; color:#A52E62}
+.badge[data-k="materiale"]{background:#E7F0EC; color:#0C6253}
+.card h3{font-family:"Fraunces",serif; font-weight:600; font-size:21px; line-height:1.2; margin:0; letter-spacing:-.01em}
+.desc{font-size:14.5px; color:var(--muted); margin:0; flex:1}
+.go{
+  margin-top:4px; align-self:flex-start; text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px;
+  background:var(--accent); color:#fff; font-weight:700; font-size:14px;
+  padding:10px 17px; border-radius:10px; transition:.16s ease;
+  border:none; cursor:pointer; font-family:inherit;
+}
+.go:hover{filter:brightness(.92)}
+.go.ghost{background:transparent; color:var(--accent); border:1px solid var(--line)}
+.go svg{flex:none}
+.ytembed{position:relative; padding-bottom:56.25%; height:0; background:#000}
+.ytembed iframe{position:absolute; inset:0; width:100%; height:100%; border:none}
+
+/* ---------- breadcrumb + section hero ---------- */
+.breadcrumb{display:flex; align-items:center; gap:9px; font-size:14px; color:var(--muted); margin:30px 0 0}
+.breadcrumb a{color:var(--accent); text-decoration:none; font-weight:600}
+.breadcrumb a:hover{text-decoration:underline}
+.breadcrumb .sep{opacity:.4}
+.sec-hero{position:relative; padding:34px 32px; border-radius:22px; margin:24px 0 36px; overflow:hidden; color:#fff;
+  background:linear-gradient(130deg,var(--accent),color-mix(in srgb,var(--accent) 55%, #14101a))}
+@supports not (background:color-mix(in srgb,red,blue)){.sec-hero{background:var(--accent)}}
+.sec-hero::after{content:attr(data-glyph); position:absolute; right:8px; bottom:-30px; font-size:160px; opacity:.14; font-family:"Fraunces",serif; line-height:1}
+.sec-hero .eyebrow{color:rgba(255,255,255,.8)}
+.sec-hero h2{font-family:"Fraunces",serif; font-weight:600; font-size:clamp(30px,5vw,50px); margin:4px 0 8px; letter-spacing:-.02em}
+.sec-hero p{margin:0; opacity:.92; max-width:56ch}
+
+/* ---------- about + footer ---------- */
+.about{margin:66px 0 0; padding:38px 34px; background:var(--ink); color:#EFE9DF; border-radius:22px; position:relative; overflow:hidden}
+.about::after{content:"✦"; position:absolute; right:-4px; bottom:-26px; font-size:150px; color:rgba(255,255,255,.05); line-height:1}
+.about .eyebrow{color:var(--gold)}
+.about h2{font-family:"Fraunces",serif; font-weight:600; font-size:28px; margin:4px 0 14px}
+.about p{margin:0; max-width:64ch; color:#DAD3C7; font-size:16px}
+.about a.mail{color:#fff; font-weight:700; text-decoration:none; border-bottom:1.5px solid rgba(255,255,255,.45)}
+footer{margin:30px 0 44px; padding-top:26px; border-top:1px solid var(--line); color:var(--muted); font-size:13.5px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap}
+footer a{color:var(--muted)}
+
+/* ---------- empty ---------- */
+.empty{grid-column:1/-1; text-align:center; padding:56px 20px; color:var(--muted); border:1.5px dashed var(--line); border-radius:var(--radius); background:var(--bg2)}
+.empty b{font-family:"Fraunces",serif; color:var(--ink); display:block; font-size:20px; margin-bottom:6px; font-weight:600}
+
+/* ---------- fullscreen viewer ---------- */
+.viewer{position:fixed; inset:0; z-index:100; display:none; flex-direction:column}
+.viewer.on{display:flex}
+.viewer-bar{height:56px; background:var(--ink); color:#fff; display:flex; align-items:center; gap:10px; padding:0 16px; flex:none}
+.viewer-back{display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.1); border:none; color:#fff; font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; padding:7px 13px; border-radius:9px; transition:.15s ease; white-space:nowrap}
+.viewer-back:hover{background:rgba(255,255,255,.18)}
+.viewer-title{font-family:"Fraunces",serif; font-size:16px; font-weight:600; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding:0 8px; opacity:.92}
+.viewer-frame{flex:1; border:none; background:#fff; width:100%}
+body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main{display:none}
+
+/* ---------- animations ---------- */
+.reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{to{opacity:1; transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" id="brandLink" href="#"><span class="seal" id="seal">L</span><b id="brandName">Lab IRC</b></a>
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+      <input id="q" type="search" placeholder="Cerca…" autocomplete="off" aria-label="Cerca nei contenuti">
+    </div>
+    <nav>
+      <a class="opt" href="#strumenti">Strumenti</a>
+      <a class="opt" href="#video">Video</a>
+      <a class="opt" href="#chisono">Chi sono</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-wrap" id="heroWrap"></div>
+<main class="wrap" id="main"></main>
+
+<div class="viewer" id="viewerEl">
+  <div class="viewer-bar">
+    <button class="viewer-back" id="viewerBack">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+      Torna al sito
+    </button>
+    <div class="viewer-title" id="viewerTitle"></div>
+  </div>
+  <iframe id="viewerFrame" class="viewer-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads" allow="fullscreen; clipboard-write" src="about:blank"></iframe>
+</div>
+
+<script>
+/* =====================================================================
+   ANNI — qui definisci i 5 anni di corso e i loro colori.
+   ===================================================================== */
+const ANNI = [
+  {n:"1", rom:"I",   nome:"Primo anno",   color:"#E2603B"},
+  {n:"2", rom:"II",  nome:"Secondo anno", color:"#2D7DD2"},
+  {n:"3", rom:"III", nome:"Terzo anno",   color:"#6A4FB0"},
+  {n:"4", rom:"IV",  nome:"Quarto anno",  color:"#C8417B"},
+  {n:"5", rom:"V",   nome:"Quinto anno",  color:"#C98A1E"},
+];
+const BRAND = "#0E7C6B";
+const ACC = {strumento:"#6A4FB0", video:"#C8417B"};
+const KEY = {"1":"primo","2":"secondo","3":"terzo","4":"quarto","5":"quinto"};
+
+let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], ITEMS=[];
+
+const SAMPLE = {
+  site:{titolo:"Lab IRC", sottotitolo:"Il laboratorio di Religione", intro:"Uno spazio per fare lezione in modo vivo: slide, documenti, video e strumenti interattivi, organizzati per anno di corso.", pensiero:"Le grandi domande meritano risposte all'altezza.", email:"", autore:"Matteo Sestili"},
+  anni:{},
+  materiali:[
+    {titolo:"Il Cantico dei Cantici e il linguaggio dell'amore", anno:"5", tipo:"Slide", descrizione:"Esempio. L'amore nella Bibbia, con un ponte alla cultura di oggi.", link:"#", in_evidenza:true},
+    {titolo:"Galileo e la Chiesa: una lettura onesta", anno:"4", tipo:"Documento/PDF", descrizione:"Esempio. Il caso Galileo senza concordismi né leggende.", link:"#"},
+    {titolo:"Lemaître e l'origine dell'universo", anno:"3", tipo:"Slide", descrizione:"Esempio. Il sacerdote che ipotizzò il Big Bang.", link:"#"}
+  ],
+  strumenti:[
+    {titolo:"Bacheca collaborativa", anno:"", descrizione:"Esempio. Gli studenti rispondono in tempo reale dallo smartphone con un QR.", link:"#", in_evidenza:true},
+    {titolo:"Linea del tempo della Chiesa", anno:"", descrizione:"Esempio. Una timeline interattiva da esplorare insieme in classe.", link:"#"}
+  ],
+  video:[
+    {titolo:"Che cos'è la Bibbia?", anno:"1", descrizione:"Esempio. Breve introduzione per la classe.", youtube:"jNQXAC9IVRw"}
+  ]
+};
+
+const $ = s => document.querySelector(s);
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+async function load(p,fb){try{const r=await fetch(p,{cache:"no-store"});if(!r.ok)throw 0;return await r.json();}catch(e){return fb;}}
+function annoMeta(n){return ANNI.find(a=>a.n===String(n));}
+function setAccent(c){$("#main").style.setProperty("--accent",c||BRAND);}
+function yr(){return new Date().getFullYear();}
+function ytId(u){if(!u)return"";u=String(u).trim();if(/^[\w-]{11}$/.test(u))return u;const m=u.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:"";}
+
+function buildItems(){
+  const mm=(MAT||[]).map(x=>Object.assign({kind:"materiale"},x));
+  const ss=(STR||[]).map(x=>Object.assign({kind:"strumento",tipo:"Strumento"},x));
+  const vv=(VID||[]).map(x=>Object.assign({kind:"video",tipo:"Video"},x));
+  ITEMS=mm.concat(ss,vv);
+}
+function countAnno(n){return ITEMS.filter(it=>String(it.anno)===String(n)).length;}
+
+/* ---------- card pieces ---------- */
+function mediaTag(it,accent){
+  if(it.immagine) return '<div class="cmedia" data-bg="'+esc(String(it.immagine).replace(/^\//,""))+'"></div>';
+  if(it.kind==="video"){
+    const id=ytId(it.youtube);
+    if(id) return '<div class="cmedia" data-bg="https://img.youtube.com/vi/'+esc(id)+'/hqdefault.jpg"><span class="playbadge" data-play="1"></span></div>';
+  }
+  let g="✦";
+  if(it.kind==="video")g="▶";
+  else if(it.kind==="materiale"){const a=annoMeta(it.anno);g=a?a.rom:"＋";}
+  return '<div class="cmedia grad" style="background-color:'+(accent||BRAND)+'"><span>'+g+'</span></div>';
+}
+function svgArrow(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M9 7h8v8"/></svg>';}
+function svgDown(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>';}
+function svgPlay(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';}
+function svgOpen(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>';}
+
+function actionBtn(it){
+  const isArt = it.kind==="strumento" || it.tipo==="Artefatto interattivo" || it.tipo==="Lezione interattiva";
+  const hasFile = !!it.file;
+  const href = hasFile ? String(it.file).replace(/^\//,"") : (it.link||"");
+  if(it.kind==="video"){
+    const id=ytId(it.youtube);
+    if(id) return '<button class="go playv" data-yt="'+esc(id)+'">Guarda '+svgPlay()+'</button>';
+    return '<span class="go ghost" style="cursor:default">Video non valido</span>';
+  }
+  if(isArt && href) return '<button class="go openart" data-href="'+esc(href)+'" data-title="'+esc(it.titolo||"")+'">Apri '+svgOpen()+'</button>';
+  if(hasFile) return '<a class="go" href="'+esc(href)+'" download>Scarica '+svgDown()+'</a>';
+  if(href && href!=="#") return '<a class="go" href="'+esc(href)+'" target="_blank" rel="noopener">Apri '+svgArrow()+'</a>';
+  return '<span class="go ghost" style="cursor:default">Presto disponibile</span>';
+}
+
+function cardHTML(it,accent,i){
+  return '<article class="card'+(it.in_evidenza?" feat":"")+'" style="--accent:'+(accent||BRAND)+';animation-delay:'+(.05*i+.05).toFixed(2)+'s">'
+    + mediaTag(it,accent)
+    + '<div class="cbody">'
+    +   '<span class="badge" data-k="'+esc(it.kind)+'">'+esc(it.tipo||"Materiale")+'</span>'
+    +   '<h3>'+esc(it.titolo||"Senza titolo")+'</h3>'
+    +   '<p class="desc">'+esc(it.descrizione||"")+'</p>'
+    +   actionBtn(it)
+    + '</div></article>';
+}
+
+function gridHTML(items,accent){
+  if(!items.length) return '<div class="empty"><b>Ancora nessun contenuto</b>Apri l\'<a href="admin/">area gestione</a> per aggiungerne.</div>';
+  return '<div class="grid" id="grid">'+items.map((it,i)=>cardHTML(it,accent,i)).join("")+'</div>';
+}
+function wireGrid(){
+  const g=$("#grid"); if(!g) return;
+  g.querySelectorAll("[data-bg]").forEach(d=>{d.style.backgroundImage="url('"+String(d.dataset.bg).replace(/'/g,"%27")+"')";});
+  g.querySelectorAll(".openart").forEach(b=>b.addEventListener("click",()=>openViewer(b.dataset.href,b.dataset.title)));
+  g.querySelectorAll(".playv").forEach(b=>b.addEventListener("click",()=>playVideo(b)));
+  g.querySelectorAll("[data-play]").forEach(s=>{const c=s.closest(".card");const b=c&&c.querySelector(".playv");if(b)s.addEventListener("click",()=>playVideo(b));});
+}
+function playVideo(btn){
+  const id=btn.dataset.yt; if(!id) return;
+  const card=btn.closest(".card"); const media=card&&card.querySelector(".cmedia"); if(!media) return;
+  const w=document.createElement("div"); w.className="ytembed";
+  w.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1" title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+  media.replaceWith(w);
+}
+
+/* ---------- views ---------- */
+function applySite(){
+  document.title=(SITE.titolo||"Lab IRC")+" · Religione Cattolica";
+  $("#brandName").textContent=SITE.titolo||"Lab IRC";
+  $("#seal").textContent=(SITE.titolo||"L").trim().charAt(0).toUpperCase();
+}
+
+function renderHome(){
+  setAccent(BRAND);
+  const yearsHTML=ANNI.map((a,i)=>{
+    const n=countAnno(a.n); const d=ANNIDESC[KEY[a.n]];
+    return '<a class="ycard" href="#anno/'+a.n+'" style="--c:'+a.color+';animation-delay:'+(.06*i+.05).toFixed(2)+'s">'
+      +'<div class="ynum">'+a.rom+'</div>'
+      +'<div class="yname">'+a.nome+'</div>'
+      +'<p class="ydesc">'+esc(d||"")+'</p>'
+      +'<div class="ycount">'+n+' '+(n===1?"contenuto":"contenuti")+'</div>'
+      +'<span class="yarrow">Entra <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>'
+      +'</a>';
+  }).join("");
+
+  $("#heroWrap").innerHTML='<div class="hero-bg"></div><div class="wrap hero">'
+    +(SITE.pensiero?'<div class="pensiero reveal" style="animation-delay:.04s">'+esc(SITE.pensiero)+'</div>':'')
+    +'<h1 class="reveal" style="animation-delay:.1s">'+esc(SITE.sottotitolo||"Materiali per le mie classi")+'</h1>'
+    +'<p class="lede reveal" style="animation-delay:.18s">'+esc(SITE.intro||"")+'</p>'
+    +'</div>';
+
+  $("#main").innerHTML=
+     '<section><div class="shead"><div><div class="eyebrow">Percorso</div><h2>Gli anni di corso</h2></div><div class="sub">Scegli l\'anno per trovare slide, documenti, video e strumenti.</div></div>'
+    +'<div class="years">'+yearsHTML+'</div></section>'
+
+    +'<section><div class="shead"><div><div class="eyebrow">Per fare lezione</div><h2>Strumenti e video</h2></div></div>'
+    +'<div class="tiles">'
+    +'<a class="tile t-str" href="#strumenti"><span class="ti">✦</span><span class="tlabel">Interattivi</span><h3>Strumenti per le lezioni</h3><p>App e artefatti da usare in classe, anche da smartphone.</p></a>'
+    +'<a class="tile t-vid" href="#video"><span class="ti">▶</span><span class="tlabel">YouTube</span><h3>Video</h3><p>Una raccolta di video per approfondire e discutere insieme.</p></a>'
+    +'</div></section>'
+
+    +'<section id="chisono" class="about reveal"><div class="eyebrow">Chi sono</div><h2>'+esc(SITE.autore||"L'insegnante")+'</h2>'
+    +'<p>'+esc(SITE.intro||"")+'</p>'
+    +(SITE.email?'<p style="margin-top:14px">Scrivimi: <a class="mail" href="mailto:'+esc(SITE.email)+'">'+esc(SITE.email)+'</a></p>':'')
+    +'</section>'
+
+    +footerHTML();
+  wireGrid();
+}
+
+function renderAnno(n){
+  const a=annoMeta(n); if(!a){renderHome();return;}
+  setAccent(a.color);
+  $("#heroWrap").innerHTML="";
+  let items=ITEMS.filter(it=>String(it.anno)===String(n)).sort((x,y)=>(y.in_evidenza?1:0)-(x.in_evidenza?1:0));
+  const kinds=[["Tutti",null],["Materiali","materiale"],["Strumenti","strumento"],["Video","video"]]
+    .filter(k=>k[1]===null||items.some(it=>it.kind===k[1]));
+  const d=ANNIDESC[KEY[a.n]];
+
+  $("#main").innerHTML=
+     '<nav class="breadcrumb reveal"><a href="#">Home</a><span class="sep">›</span><span>'+esc(a.nome)+'</span></nav>'
+    +'<div class="sec-hero" data-glyph="'+a.rom+'"><div class="eyebrow">Anno di corso</div><h2>'+esc(a.nome)+'</h2>'+(d?'<p>'+esc(d)+'</p>':'<p>Tutti i materiali, gli strumenti e i video di questo anno.</p>')+'</div>'
+    +'<div class="filters" id="filters">'+kinds.map((k,i)=>'<button class="chip'+(i===0?" on":"")+'" data-k="'+(k[1]||"")+'">'+k[0]+'</button>').join("")+'</div>'
+    +'<div id="gridHost">'+gridHTML(items,a.color)+'</div>'
+    +footerHTML();
+  wireGrid();
+
+  $("#filters").querySelectorAll(".chip").forEach(b=>b.addEventListener("click",()=>{
+    $("#filters").querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b));
+    const k=b.dataset.k;
+    const sub=k?items.filter(it=>it.kind===k):items;
+    $("#gridHost").innerHTML=gridHTML(sub,a.color);
+    wireGrid();
+  }));
+}
+
+function renderCollection(kind){
+  const accent=ACC[kind]||BRAND;
+  setAccent(accent);
+  $("#heroWrap").innerHTML="";
+  const meta = kind==="strumento"
+    ? {title:"Strumenti per le lezioni", eye:"Interattivi", glyph:"✦", sub:"Applicazioni e artefatti interattivi da usare in classe — molti li costruiamo su misura per le lezioni."}
+    : {title:"Video", eye:"YouTube", glyph:"▶", sub:"Una raccolta di video per introdurre, approfondire e far discutere la classe."};
+  let items=ITEMS.filter(it=>it.kind===kind).sort((x,y)=>(y.in_evidenza?1:0)-(x.in_evidenza?1:0));
+
+  $("#main").innerHTML=
+     '<nav class="breadcrumb reveal"><a href="#">Home</a><span class="sep">›</span><span>'+esc(meta.title)+'</span></nav>'
+    +'<div class="sec-hero" data-glyph="'+meta.glyph+'"><div class="eyebrow">'+meta.eye+'</div><h2>'+meta.title+'</h2><p>'+meta.sub+'</p></div>'
+    +'<div id="gridHost">'+gridHTML(items,accent)+'</div>'
+    +footerHTML();
+  wireGrid();
+}
+
+function renderSearch(q){
+  setAccent(BRAND);
+  $("#heroWrap").innerHTML="";
+  const t=q.toLowerCase();
+  const items=ITEMS.filter(it=>((it.titolo||"")+" "+(it.descrizione||"")).toLowerCase().includes(t))
+    .sort((x,y)=>(y.in_evidenza?1:0)-(x.in_evidenza?1:0));
+  $("#main").innerHTML=
+     '<div class="sec-hero" data-glyph="?" style="--accent:'+BRAND+'"><div class="eyebrow">Ricerca</div><h2>Risultati per «'+esc(q)+'»</h2><p>'+items.length+' '+(items.length===1?"contenuto trovato":"contenuti trovati")+'.</p></div>'
+    +'<div id="gridHost">'+(items.length?gridHTML(items,BRAND):'<div class="empty"><b>Nessun risultato</b>Prova con un\'altra parola.</div>')+'</div>'
+    +footerHTML();
+  wireGrid();
+}
+
+function footerHTML(){
+  const who=esc(SITE.autore||"");
+  return '<footer><span>© '+yr()+(who?" "+who:"")+' · Tutti i diritti riservati</span><a href="admin/">Area gestione</a></footer>';
+}
+
+/* ---------- viewer ---------- */
+function openViewer(path,title){
+  $("#viewerTitle").textContent=title||"";
+  $("#viewerFrame").src=path;
+  $("#viewerEl").classList.add("on");
+  document.body.classList.add("viewing");
+  history.pushState({viewer:true},"");
+}
+function closeViewer(){
+  $("#viewerEl").classList.remove("on");
+  document.body.classList.remove("viewing");
+  $("#viewerFrame").src="about:blank";
+}
+$("#viewerBack").addEventListener("click",()=>{closeViewer();history.back();});
+window.addEventListener("popstate",e=>{if(!(e.state&&e.state.viewer))closeViewer();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("viewing"))closeViewer();});
+
+/* ---------- router ---------- */
+function route(){
+  closeViewer();
+  if($("#q").value.trim()){renderSearch($("#q").value.trim());return;}
+  const h=location.hash.replace(/^#\/?/,"");
+  window.scrollTo({top:0,behavior:"instant"});
+  if(!h){renderHome();return;}
+  if(h==="chisono"){renderHome();setTimeout(()=>{const e=$("#chisono");if(e)e.scrollIntoView({behavior:"smooth"});},90);return;}
+  if(h==="strumenti"){renderCollection("strumento");return;}
+  if(h==="video"){renderCollection("video");return;}
+  const p=h.split("/");
+  if(p[0]==="anno"&&p[1]){renderAnno(decodeURIComponent(p[1]));return;}
+  renderHome();
+}
+
+$("#brandLink").addEventListener("click",e=>{e.preventDefault();$("#q").value="";history.pushState(null,"","#");route();});
+window.addEventListener("hashchange",route);
+let qt;
+$("#q").addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(()=>{const v=$("#q").value.trim();if(v)renderSearch(v);else route();},180);});
+
+/* ---------- init ---------- */
+(async function(){
+  const [site,anni,mat,str,vid]=await Promise.all([
+    load("data/site.json",SAMPLE.site),
+    load("data/anni.json",SAMPLE.anni),
+    load("data/materiali.json",{materiali:SAMPLE.materiali}),
+    load("data/strumenti.json",{strumenti:SAMPLE.strumenti}),
+    load("data/video.json",{video:SAMPLE.video}),
+  ]);
+  SITE=site||SAMPLE.site;
+  ANNIDESC=anni||{};
+  MAT=Array.isArray(mat&&mat.materiali)?mat.materiali:SAMPLE.materiali;
+  STR=Array.isArray(str&&str.strumenti)?str.strumenti:SAMPLE.strumenti;
+  VID=Array.isArray(vid&&vid.video)?vid.video:SAMPLE.video;
+  buildItems();
+  applySite();
+  route();
+})();
+</script>
+</body>
+</html>
