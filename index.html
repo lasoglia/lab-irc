@@ -585,4 +585,181 @@ function renderHome(){
   $("#main").innerHTML=
      '<section><div class="shead"><div><div class="eyebrow">Percorso</div><h2>Gli anni di corso</h2></div><div class="sub">Scegli l\'anno per trovare slide, documenti, video e strumenti.</div></div>'
     +'<div class="years">'+yearsHTML+'</div></section>'
-    +'<section><div class="shead"><div><div class="eyebrow">Per fare lezione</div><h2>
+    +'<section><div class="shead"><div><div class="eyebrow">Per fare lezione</div><h2>Strumenti &amp; Video</h2></div><div class="sub">Risorse interattive e clip per animare le lezioni.</div></div>'
+    +'<div class="tiles">'
+    +'<a class="tile t-str reveal" href="#strumenti" style="animation-delay:.24s"><span class="ti">⚙</span><span class="tlabel">Interattivi</span><h3>Strumenti</h3><p>Quiz, bacheche e attività digitali per la classe.</p></a>'
+    +'<a class="tile t-vid reveal" href="#video" style="animation-delay:.32s"><span class="ti">▶</span><span class="tlabel">Guardare insieme</span><h3>Video</h3><p>Clip e documentari selezionati per ogni tema.</p></a>'
+    +'</div></section>'
+    +'<div class="about reveal" id="chisono" style="animation-delay:.4s">'
+    +'<div class="eyebrow">Chi sono</div>'
+    +'<h2>'+esc(SITE.autore||"L\'insegnante")+'</h2>'
+    +'<p>'+esc(SITE.intro||"")+(SITE.email?' · Scrivimi: <a class="mail" href="mailto:'+esc(SITE.email)+'">'+esc(SITE.email)+'</a>':'')+'</p>'
+    +'</div>';
+}
+
+/* ---------- pagina anno ---------- */
+
+function renderAnno(n){
+  const meta=annoMeta(n); if(!meta){route(""); return;}
+  setAccent(meta.color);
+  const items=ITEMS.filter(it=>matchAnno(it,n));
+  const types=[...new Set(items.map(it=>it.tipo||"Materiale"))].filter(Boolean);
+
+  const d=ANNIDESC[KEY[n]]||ANNIDESC[n]||"";
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span><span>Anno '+esc(meta.rom)+'</span></div>';
+  const hero='<div class="sec-hero reveal" data-glyph="'+meta.rom+'">'
+    +'<div class="eyebrow">Anno '+esc(meta.rom)+'</div>'
+    +'<h2>'+esc(meta.nome)+'</h2>'
+    +(d?'<p>'+esc(d)+'</p>':'')
+    +'</div>';
+  const chipsHTML='<div class="filters" id="filters-anno">'
+    +'<button class="chip on" data-type="tutti">Tutti</button>'
+    +types.map(t=>'<button class="chip" data-type="'+esc(t)+'">'+esc(t)+'</button>').join("")
+    +'</div>';
+
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb+hero+chipsHTML+'<div id="anno-cont">'+gridHTML(items,meta.color)+'</div>';
+  wireGrid();
+
+  document.getElementById("backHome").addEventListener("click",e=>{e.preventDefault();route("");});
+
+  document.getElementById("filters-anno").addEventListener("click",e=>{
+    const btn=e.target.closest(".chip"); if(!btn) return;
+    document.getElementById("filters-anno").querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+    btn.classList.add("on");
+    const type=btn.dataset.type;
+    const filtered=type==="tutti"?items:items.filter(it=>(it.tipo||"Materiale")===type);
+    document.getElementById("anno-cont").innerHTML=gridHTML(filtered,meta.color);
+    wireGrid();
+  });
+}
+
+/* ---------- pagina strumenti ---------- */
+
+function renderStrumenti(){
+  setAccent(ACC.strumento);
+  const items=STR.map(x=>Object.assign({kind:"strumento",tipo:"Strumento"},x));
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome2">Home</a><span class="sep">›</span><span>Strumenti</span></div>';
+  const hero='<div class="sec-hero reveal" data-glyph="⚙">'
+    +'<div class="eyebrow">Interattivi</div>'
+    +'<h2>Strumenti</h2>'
+    +'<p>Quiz, bacheche e attività digitali da usare con la classe.</p>'
+    +'</div>';
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb+hero+gridHTML(items,ACC.strumento);
+  wireGrid();
+  document.getElementById("backHome2").addEventListener("click",e=>{e.preventDefault();route("");});
+}
+
+/* ---------- pagina video ---------- */
+
+function renderVideo(){
+  setAccent(ACC.video);
+  const items=VID.map(x=>Object.assign({kind:"video",tipo:"Video"},x));
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome3">Home</a><span class="sep">›</span><span>Video</span></div>';
+  const hero='<div class="sec-hero reveal" data-glyph="▶">'
+    +'<div class="eyebrow">Guardare insieme</div>'
+    +'<h2>Video</h2>'
+    +'<p>Clip e documentari selezionati per ogni tema.</p>'
+    +'</div>';
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb+hero+gridHTML(items,ACC.video);
+  wireGrid();
+  document.getElementById("backHome3").addEventListener("click",e=>{e.preventDefault();route("");});
+}
+
+/* ---------- ricerca ---------- */
+
+let searchQ="";
+
+function renderSearch(q){
+  setAccent(BRAND);
+  const lq=q.toLowerCase();
+  const items=ITEMS.filter(it=>(it.titolo||"").toLowerCase().includes(lq)||(it.descrizione||"").toLowerCase().includes(lq));
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome4">Home</a><span class="sep">›</span><span>Ricerca: "'+esc(q)+'"</span></div>';
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb
+    +'<div style="margin:20px 0 4px"><b>'+items.length+'</b> risultat'+(items.length===1?"o":"i")+' per <b>'+esc(q)+'</b></div>'
+    +gridHTML(items,BRAND);
+  wireGrid();
+  document.getElementById("backHome4").addEventListener("click",e=>{
+    e.preventDefault(); $("#q").value=""; searchQ=""; route("");
+  });
+}
+
+/* ---------- viewer iframe ---------- */
+
+function openViewer(href,title){
+  if(!href||href==="#") return;
+  $("#viewerTitle").textContent=title||"";
+  $("#viewerFrame").src=href;
+  $("#viewerEl").classList.add("on");
+  document.body.classList.add("viewing");
+}
+
+function closeViewer(){
+  $("#viewerEl").classList.remove("on");
+  document.body.classList.remove("viewing");
+  setTimeout(()=>{$("#viewerFrame").src="about:blank";},300);
+}
+
+/* ---------- router ---------- */
+
+function route(hash){
+  if(typeof hash==="undefined") hash=location.hash.replace(/^#/,"");
+  if(searchQ){renderSearch(searchQ); return;}
+  if(!hash||hash===""){renderHome(); renderFooter(); return;}
+  if(hash.startsWith("anno/")){const n=hash.split("/")[1]; renderAnno(n); renderFooter(); return;}
+  if(hash==="strumenti"){renderStrumenti(); renderFooter(); return;}
+  if(hash==="video"){renderVideo(); renderFooter(); return;}
+  renderHome(); renderFooter();
+}
+
+/* ---------- avvio ---------- */
+
+async function init(){
+  [SITE, ANNIDESC, MAT, STR, VID] = await Promise.all([
+    load("data/site.json",      SAMPLE.site),
+    load("data/anni.json",      SAMPLE.anni),
+    load("data/materiali.json", SAMPLE.materiali),
+    load("data/strumenti.json", SAMPLE.strumenti),
+    load("data/video.json",     SAMPLE.video),
+  ]);
+  applySite();
+  buildItems();
+  route(location.hash.replace(/^#/,""));
+}
+
+/* ---------- event listeners globali ---------- */
+
+window.addEventListener("hashchange",()=>{
+  if(!searchQ) route(location.hash.replace(/^#/,""));
+});
+
+$("#viewerBack").addEventListener("click", closeViewer);
+
+$("#q").addEventListener("input",e=>{
+  const v=e.target.value.trim();
+  searchQ=v;
+  if(v.length>1){
+    history.replaceState(null,"","#");
+    renderSearch(v);
+  } else if(v.length===0){
+    searchQ="";
+    route(location.hash.replace(/^#/,""));
+  }
+});
+
+$("#brandLink").addEventListener("click",e=>{
+  e.preventDefault();
+  $("#q").value=""; searchQ="";
+  history.pushState(null,"","#");
+  route("");
+});
+
+init();
+
+</script>
+
+</body>
+</html>
