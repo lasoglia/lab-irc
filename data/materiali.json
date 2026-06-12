@@ -1,3 +1,13 @@
 {
-  "materiali": []
+  "materiali": [
+    {
+      "in_evidenza": true,
+      "titolo": "dadada",
+      "anno": "1",
+      "tipo": "Documento/PDF",
+      "descrizione": "ddd",
+      "immagine": "/uploads/2024_03_13-22_25-office-lens-1-.jpg",
+      "file": "/uploads/roma.pdf"
+    }
+  ]
 }
