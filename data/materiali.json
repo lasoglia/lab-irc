@@ -11,11 +11,12 @@
     },
     {
       "titolo": "Galileo e la Chiesa: una lettura onesta",
-      "anno": "4",
+      "anno": "1",
       "tipo": "Documento/PDF",
       "descrizione": "ESEMPIO. Il caso Galileo letto senza concordismi né leggende, alla luce delle fonti.",
       "link": "#",
-      "in_evidenza": false
+      "in_evidenza": false,
+      "uda": "gioca con me"
     },
     {
       "titolo": "Lemaître e l'origine dell'universo",
