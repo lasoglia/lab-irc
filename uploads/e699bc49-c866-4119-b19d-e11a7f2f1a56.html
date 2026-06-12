@@ -266,6 +266,7 @@ const ang=id=>{let h=0;for(let i=0;i<id.length;i++)h=(h*31+id.charCodeAt(i))>>>0
 let mode="student";   // "student" | "teacher"
 let meta={title:"Lavagna delle idee",prompt:"Condividi la tua idea con la classe"};
 let currentPin=DEFAULT_PIN;
+let selectedCat=null; /* FIX — dichiarata PRIMA del bootstrap: senza storage il render parte subito e la variabile deve già esistere */
 const root=document.getElementById("root");
 
 /* ════════════════════════════════════════
@@ -284,7 +285,6 @@ const root=document.getElementById("root");
 /* ════════════════════════════════════════
    VISTA STUDENTE
    ════════════════════════════════════════ */
-let selectedCat=null;
 
 function renderStudent(){
   mode="student"; selectedCat=null;
