@@ -164,6 +164,35 @@ h1{
 
 .yarrow{display:inline-flex; align-items:center; gap:6px; color:var(--c); font-weight:700; font-size:14px; margin-top:4px}
 
+/* ---- cartelle UDA ---- */
+.folders{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px}
+
+.fcard{
+  position:relative; background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:20px 22px 18px 26px; text-decoration:none; color:var(--ink);
+  display:flex; flex-direction:column; gap:4px; box-shadow:var(--shadow); overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease;
+  opacity:0; transform:translateY(16px); animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards;
+}
+
+.fcard::before{content:""; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--c)}
+
+.fcard:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
+
+.ficon{width:40px; height:40px; border-radius:11px; background:rgba(27,24,34,.06); color:var(--c); display:grid; place-items:center; margin-bottom:8px; flex:none}
+
+@supports (background:color-mix(in srgb,red,blue)){.ficon{background:color-mix(in srgb,var(--c) 13%, #fff)}}
+
+.ftitle{font-family:"Fraunces",serif; font-weight:600; font-size:19px; line-height:1.25}
+
+.fdesc{color:var(--muted); font-size:13.5px; margin:2px 0 0; flex:1}
+
+.fcount{font-size:11.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--c); margin-top:10px}
+
+.shead.sub2{margin:42px 0 18px}
+
+.shead.sub2 h2{font-size:clamp(22px,3vw,28px)}
+
 .tiles{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px}
 
 .tile{
@@ -327,7 +356,7 @@ body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.vie
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important; transition:none!important}
-  .ycard,.card,.reveal{opacity:1!important; transform:none!important}
+  .ycard,.card,.fcard,.reveal{opacity:1!important; transform:none!important}
 }
 
 </style>
@@ -403,7 +432,7 @@ const BRAND = "#0E7C6B";
 const ACC = {strumento:"#6A4FB0", video:"#C8417B"};
 const KEY = {"1":"primo","2":"secondo","3":"terzo","4":"quarto","5":"quinto"};
 
-let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], ITEMS=[];
+let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], UDA=[], ITEMS=[];
 
 const SAMPLE = {
   site:{titolo:"Lab IRC", sottotitolo:"Il laboratorio di Religione", intro:"Uno spazio per fare lezione in modo vivo: slide, documenti, video e strumenti interattivi, organizzati per anno di corso.", pensiero:"Le grandi domande meritano risposte all'altezza.", email:"", autore:"Matteo Sestili"},
@@ -448,13 +477,18 @@ function ytId(u){
   return m?m[1]:"";
 }
 
+/* FIX — i JSON del pannello hanno la forma {chiave:[...]}: qui si normalizza
+   tutto in array semplici, così ogni pagina può usarli direttamente */
+function pickArr(x, key){
+  if(Array.isArray(x)) return x;
+  if(x && Array.isArray(x[key])) return x[key];
+  return [];
+}
+
 function buildItems(){
-  const matArr=Array.isArray(MAT)?MAT:(MAT&&Array.isArray(MAT.materiali)?MAT.materiali:[]);
-  const strArr=Array.isArray(STR)?STR:(STR&&Array.isArray(STR.strumenti)?STR.strumenti:[]);
-  const vidArr=Array.isArray(VID)?VID:(VID&&Array.isArray(VID.video)?VID.video:[]);
-  const mm=matArr.map(x=>Object.assign({kind:"materiale"},x));
-  const ss=strArr.map(x=>Object.assign({kind:"strumento",tipo:"Strumento"},x));
-  const vv=vidArr.map(x=>Object.assign({kind:"video",tipo:"Video"},x));
+  const mm=MAT.map(x=>Object.assign({kind:"materiale"},x));
+  const ss=STR.map(x=>Object.assign({kind:"strumento",tipo:"Strumento"},x));
+  const vv=VID.map(x=>Object.assign({kind:"video",tipo:"Video"},x));
   ITEMS=mm.concat(ss,vv);
 }
 
@@ -463,6 +497,70 @@ function matchAnno(item, n){
 }
 
 function countAnno(n){return ITEMS.filter(it=>matchAnno(it,n)).length;}
+
+/* ---------- UDA (cartelle per anno) ---------- */
+
+function normT(s){return String(s==null?"":s).trim().toLowerCase();}
+
+/* Le UDA di un anno: quelle definite nel pannello, più eventuali cartelle
+   "automatiche" se un contenuto cita un'UDA non ancora definita (così
+   nessun materiale va perso per un titolo scritto a mano) */
+function udaForYear(n){
+  const list=UDA.filter(u=>String(u.anno)===String(n)).slice();
+  const titles=new Set(list.map(u=>normT(u.titolo)));
+  ITEMS.forEach(it=>{
+    const t=normT(it.uda);
+    if(matchAnno(it,n) && t && !titles.has(t)){
+      titles.add(t);
+      list.push({titolo:String(it.uda).trim(), anno:String(n)});
+    }
+  });
+  list.sort((a,b)=>{
+    const oa=(a.ordine==null||a.ordine==="")?999:+a.ordine;
+    const ob=(b.ordine==null||b.ordine==="")?999:+b.ordine;
+    return oa-ob || String(a.titolo).localeCompare(String(b.titolo),"it");
+  });
+  return list;
+}
+
+function itemsInUda(n,titolo){
+  return ITEMS.filter(it=>matchAnno(it,n) && normT(it.uda)===normT(titolo));
+}
+
+function folderHTML(u,color,n,i){
+  const count=itemsInUda(n,u.titolo).length;
+  const slug=encodeURIComponent(String(u.titolo||"").trim());
+  return '<a class="fcard" href="#anno/'+esc(String(n))+'/uda/'+slug+'" style="--c:'+color+';animation-delay:'+(.05*i+.05).toFixed(2)+'s">'
+    +'<span class="ficon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg></span>'
+    +'<div class="ftitle">'+esc(u.titolo)+'</div>'
+    +(u.descrizione?'<p class="fdesc">'+esc(u.descrizione)+'</p>':'')
+    +'<div class="fcount">'+count+' '+(count===1?"contenuto":"contenuti")+'</div>'
+    +'</a>';
+}
+
+/* ---------- filtro per tipo (condiviso da pagina anno e pagina UDA) ---------- */
+
+function typeChipsHTML(items){
+  const types=[...new Set(items.map(it=>it.tipo||"Materiale"))].filter(Boolean);
+  if(types.length<2) return "";
+  return '<div class="filters" id="filters-type">'
+    +'<button class="chip on" data-type="tutti">Tutti</button>'
+    +types.map(t=>'<button class="chip" data-type="'+esc(t)+'">'+esc(t)+'</button>').join("")
+    +'</div>';
+}
+
+function wireTypeFilter(items,color){
+  const f=document.getElementById("filters-type"); if(!f) return;
+  f.addEventListener("click",e=>{
+    const btn=e.target.closest(".chip"); if(!btn) return;
+    f.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+    btn.classList.add("on");
+    const type=btn.dataset.type;
+    const filtered=type==="tutti"?items:items.filter(it=>(it.tipo||"Materiale")===type);
+    document.getElementById("type-cont").innerHTML=gridHTML(filtered,color);
+    wireGrid();
+  });
+}
 
 /* ---------- card pieces ---------- */
 
@@ -500,6 +598,12 @@ function actionBtn(it){
     return '<button class="go openart" data-href="'+esc(href)+'" data-title="'+esc(it.titolo||"")+'">Apri '+svgOpen()+'</button>';
   }
   if(isArt && href && href !== "#"){
+    /* FIX — i link esterni (es. artifact pubblicati su Claude) non possono
+       essere mostrati nel visore interno: molti siti bloccano gli iframe.
+       Si aprono quindi in una nuova scheda. */
+    if(/^https?:\/\//.test(href)){
+      return '<a class="go" href="'+esc(href)+'" target="_blank" rel="noopener">Apri '+svgArrow()+'</a>';
+    }
     return '<button class="go openart" data-href="'+esc(href)+'" data-title="'+esc(it.titolo||"")+'">Apri '+svgOpen()+'</button>';
   }
   if(it.file){
@@ -609,7 +713,8 @@ function renderAnno(n){
   const meta=annoMeta(n); if(!meta){route(""); return;}
   setAccent(meta.color);
   const items=ITEMS.filter(it=>matchAnno(it,n));
-  const types=[...new Set(items.map(it=>it.tipo||"Materiale"))].filter(Boolean);
+  const udas=udaForYear(n);
+  const loose=items.filter(it=>!normT(it.uda));
 
   const d=ANNIDESC[KEY[n]]||ANNIDESC[n]||"";
   const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span><span>Anno '+esc(meta.rom)+'</span></div>';
@@ -618,26 +723,46 @@ function renderAnno(n){
     +'<h2>'+esc(meta.nome)+'</h2>'
     +(d?'<p>'+esc(d)+'</p>':'')
     +'</div>';
-  const chipsHTML='<div class="filters" id="filters-anno">'
-    +'<button class="chip on" data-type="tutti">Tutti</button>'
-    +types.map(t=>'<button class="chip" data-type="'+esc(t)+'">'+esc(t)+'</button>').join("")
+
+  let body="";
+  if(udas.length){
+    body+='<div class="shead sub2"><div><div class="eyebrow">Percorsi</div><h2>Unità di apprendimento</h2></div><div class="sub">Le cartelle con i materiali di ogni unità.</div></div>'
+      +'<div class="folders">'+udas.map((u,i)=>folderHTML(u,meta.color,n,i)).join("")+'</div>';
+  }
+  if(loose.length || !udas.length){
+    if(udas.length) body+='<div class="shead sub2"><div><div class="eyebrow">Fuori dalle cartelle</div><h2>Altri contenuti</h2></div></div>';
+    body+=typeChipsHTML(loose)+'<div id="type-cont">'+gridHTML(loose,meta.color)+'</div>';
+  }
+
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb+hero+body;
+  wireGrid();
+  wireTypeFilter(loose,meta.color);
+  document.getElementById("backHome").addEventListener("click",e=>{e.preventDefault();route("");});
+}
+
+/* ---------- pagina UDA ---------- */
+
+function renderUda(n,titolo){
+  const meta=annoMeta(n); if(!meta){route(""); return;}
+  setAccent(meta.color);
+  const u=UDA.find(x=>String(x.anno)===String(n)&&normT(x.titolo)===normT(titolo))||{titolo:String(titolo||"").trim()};
+  const items=itemsInUda(n,titolo);
+
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span>'
+    +'<a href="#anno/'+esc(String(n))+'">Anno '+esc(meta.rom)+'</a><span class="sep">›</span>'
+    +'<span>'+esc(u.titolo)+'</span></div>';
+  const hero='<div class="sec-hero reveal" data-glyph="▤">'
+    +'<div class="eyebrow">'+esc(meta.nome)+' · Unità di apprendimento</div>'
+    +'<h2>'+esc(u.titolo)+'</h2>'
+    +(u.descrizione?'<p>'+esc(u.descrizione)+'</p>':'')
     +'</div>';
 
   $("#heroWrap").innerHTML="";
-  $("#main").innerHTML=breadcrumb+hero+chipsHTML+'<div id="anno-cont">'+gridHTML(items,meta.color)+'</div>';
+  $("#main").innerHTML=breadcrumb+hero+typeChipsHTML(items)+'<div id="type-cont">'+gridHTML(items,meta.color)+'</div>';
   wireGrid();
-
+  wireTypeFilter(items,meta.color);
   document.getElementById("backHome").addEventListener("click",e=>{e.preventDefault();route("");});
-
-  document.getElementById("filters-anno").addEventListener("click",e=>{
-    const btn=e.target.closest(".chip"); if(!btn) return;
-    document.getElementById("filters-anno").querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
-    btn.classList.add("on");
-    const type=btn.dataset.type;
-    const filtered=type==="tutti"?items:items.filter(it=>(it.tipo||"Materiale")===type);
-    document.getElementById("anno-cont").innerHTML=gridHTML(filtered,meta.color);
-    wireGrid();
-  });
 }
 
 /* ---------- pagina strumenti ---------- */
@@ -715,7 +840,15 @@ function route(hash){
   if(typeof hash==="undefined") hash=location.hash.replace(/^#/,"");
   if(searchQ){renderSearch(searchQ); return;}
   if(!hash||hash===""){renderHome(); renderFooter(); return;}
-  if(hash.startsWith("anno/")){const n=hash.split("/")[1]; renderAnno(n); renderFooter(); return;}
+  if(hash.startsWith("anno/")){
+    const parts=hash.split("/");
+    if(parts[2]==="uda" && parts[3]){
+      let t=parts.slice(3).join("/");
+      try{t=decodeURIComponent(t);}catch(e){}
+      renderUda(parts[1],t); renderFooter(); return;
+    }
+    renderAnno(parts[1]); renderFooter(); return;
+  }
   if(hash==="strumenti"){renderStrumenti(); renderFooter(); return;}
   if(hash==="video"){renderVideo(); renderFooter(); return;}
   renderHome(); renderFooter();
@@ -724,13 +857,20 @@ function route(hash){
 /* ---------- avvio ---------- */
 
 async function init(){
-  [SITE, ANNIDESC, MAT, STR, VID] = await Promise.all([
+  [SITE, ANNIDESC, MAT, STR, VID, UDA] = await Promise.all([
     load("data/site.json",      SAMPLE.site),
     load("data/anni.json",      SAMPLE.anni),
     load("data/materiali.json", SAMPLE.materiali),
     load("data/strumenti.json", SAMPLE.strumenti),
     load("data/video.json",     SAMPLE.video),
+    load("data/uda.json",       []),
   ]);
+  /* FIX — qui si normalizzano i dati del pannello ({chiave:[...]} → array):
+     senza questo passaggio le pagine Strumenti e Video andavano in errore */
+  MAT = pickArr(MAT, "materiali");
+  STR = pickArr(STR, "strumenti");
+  VID = pickArr(VID, "video");
+  UDA = pickArr(UDA, "uda");
   applySite();
   buildItems();
   route(location.hash.replace(/^#/,""));
