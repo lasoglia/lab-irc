@@ -8,6 +8,13 @@
       "descrizione": "ddd",
       "immagine": "/uploads/2024_03_13-22_25-office-lens-1-.jpg",
       "file": "/uploads/roma.pdf"
+    },
+    {
+      "in_evidenza": true,
+      "titolo": "parità di genere nella genei",
+      "anno": "2",
+      "tipo": "Documento/PDF",
+      "file": "/uploads/lezione_irc_adam_ish_isha.pptx"
     }
   ]
 }
