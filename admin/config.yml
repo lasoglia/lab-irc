@@ -98,6 +98,46 @@ collections:
               - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… per decidere l'ordine delle cartelle" }
 
   # ===========================================================
+  #  Lezioni — sottocartelle dentro le UDA
+  # ===========================================================
+  - name: lezioni
+    label: "📖  Lezioni (dentro le UDA)"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco lezioni"
+        file: data/lezioni.json
+        fields:
+          - label: "Lezioni"
+            name: lezioni
+            widget: list
+            label_singular: "lezione"
+            summary: "{{fields.titolo}} — {{fields.uda}} ({{fields.anno}}° anno)"
+            fields:
+              - { label: "Titolo della lezione", name: titolo, widget: string, hint: "Es. 'Lezione 1 — Il caso Galileo'. Diventa una sottocartella dentro l'UDA." }
+              - label: "Anno di corso"
+                name: anno
+                widget: select
+                options:
+                  - { label: "1° — Primo anno", value: "1" }
+                  - { label: "2° — Secondo anno", value: "2" }
+                  - { label: "3° — Terzo anno", value: "3" }
+                  - { label: "4° — Quarto anno", value: "4" }
+                  - { label: "5° — Quinto anno", value: "5" }
+              - label: "UDA di appartenenza"
+                name: uda
+                widget: relation
+                collection: uda
+                file: elenco
+                search_fields: ["uda.*.titolo"]
+                display_fields: ["uda.*.titolo"]
+                value_field: "uda.*.titolo"
+                hint: "L'unità (cartella) dentro cui sta questa lezione. Deve essere dello stesso anno."
+              - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Breve presentazione, mostrata sulla sottocartella e nella sua pagina" }
+              - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… per decidere l'ordine delle lezioni" }
+
+  # ===========================================================
   #  Materiali (slide, documenti, link) per anno
   # ===========================================================
   - name: materiali
@@ -135,6 +175,16 @@ collections:
                 value_field: "uda.*.titolo"
                 required: false
                 hint: "Facoltativo: scegli la cartella in cui mettere il materiale (prima creala nella sezione UDA). Lascia vuoto per mostrarlo fuori dalle cartelle."
+              - label: "Lezione (sottocartella)"
+                name: lezione
+                widget: relation
+                collection: lezioni
+                file: elenco
+                search_fields: ["lezioni.*.titolo"]
+                display_fields: ["lezioni.*.titolo"]
+                value_field: "lezioni.*.titolo"
+                required: false
+                hint: "Facoltativo: la lezione dentro l'UDA (prima creala nella sezione Lezioni). Se la scegli, l'UDA può anche restare vuota: si deduce dalla lezione."
               - label: "Tipo"
                 name: tipo
                 widget: select
@@ -186,6 +236,16 @@ collections:
                 value_field: "uda.*.titolo"
                 required: false
                 hint: "Per metterlo in una cartella serve anche l'anno qui sopra."
+              - label: "Lezione (sottocartella, facoltativa)"
+                name: lezione
+                widget: relation
+                collection: lezioni
+                file: elenco
+                search_fields: ["lezioni.*.titolo"]
+                display_fields: ["lezioni.*.titolo"]
+                value_field: "lezioni.*.titolo"
+                required: false
+                hint: "La lezione dentro l'UDA. Se la scegli, l'UDA può restare vuota: si deduce dalla lezione."
               - { label: "Immagine di copertina", name: immagine, widget: image, required: false }
               - { label: "File HTML dell'artefatto", name: file, widget: file, required: false, hint: "Carica qui il file .html dell'artefatto interattivo" }
               - { label: "Oppure un link esterno", name: link, widget: string, required: false }
@@ -233,4 +293,14 @@ collections:
                 value_field: "uda.*.titolo"
                 required: false
                 hint: "Per metterlo in una cartella serve anche l'anno qui sopra."
+              - label: "Lezione (sottocartella, facoltativa)"
+                name: lezione
+                widget: relation
+                collection: lezioni
+                file: elenco
+                search_fields: ["lezioni.*.titolo"]
+                display_fields: ["lezioni.*.titolo"]
+                value_field: "lezioni.*.titolo"
+                required: false
+                hint: "La lezione dentro l'UDA. Se la scegli, l'UDA può restare vuota: si deduce dalla lezione."
               - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
