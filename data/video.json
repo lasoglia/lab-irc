@@ -1,18 +1,3 @@
 {
-  "video": [
-    {
-      "titolo": "Che cos'è la Bibbia?",
-      "descrizione": "ESEMPIO. Breve video introduttivo da mostrare e commentare in classe.",
-      "youtube": "https://youtu.be/4M9BsOvx6cs?si=z-KcqnLIcYQS025p",
-      "anno": null,
-      "in_evidenza": false
-    },
-    {
-      "in_evidenza": true,
-      "anno": null,
-      "youtube": "https://www.youtube.com/watch?v=4M9BsOvx6cs",
-      "titolo": "curiosità del giornot",
-      "descrizione": "tt"
-    }
-  ]
+  "video": []
 }
