@@ -67,6 +67,37 @@ collections:
           - { label: "Quinto anno", name: quinto, widget: text, required: false }
 
   # ===========================================================
+  #  UDA — Unità di apprendimento (le "cartelle" di ogni anno)
+  # ===========================================================
+  - name: uda
+    label: "🗂  UDA (cartelle per anno)"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco UDA"
+        file: data/uda.json
+        fields:
+          - label: "UDA"
+            name: uda
+            widget: list
+            label_singular: "UDA"
+            summary: "{{fields.titolo}} — {{fields.anno}}° anno"
+            fields:
+              - { label: "Titolo dell'UDA", name: titolo, widget: string, hint: "Es. 'Le grandi domande'. Diventa una cartella nella pagina dell'anno." }
+              - label: "Anno di corso"
+                name: anno
+                widget: select
+                options:
+                  - { label: "1° — Primo anno", value: "1" }
+                  - { label: "2° — Secondo anno", value: "2" }
+                  - { label: "3° — Terzo anno", value: "3" }
+                  - { label: "4° — Quarto anno", value: "4" }
+                  - { label: "5° — Quinto anno", value: "5" }
+              - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Breve presentazione dell'unità, mostrata sulla cartella e nella sua pagina" }
+              - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… per decidere l'ordine delle cartelle" }
+
+  # ===========================================================
   #  Materiali (slide, documenti, link) per anno
   # ===========================================================
   - name: materiali
@@ -94,6 +125,16 @@ collections:
                   - { label: "3° — Terzo anno", value: "3" }
                   - { label: "4° — Quarto anno", value: "4" }
                   - { label: "5° — Quinto anno", value: "5" }
+              - label: "UDA (cartella)"
+                name: uda
+                widget: relation
+                collection: uda
+                file: elenco
+                search_fields: ["uda.*.titolo"]
+                display_fields: ["uda.*.titolo"]
+                value_field: "uda.*.titolo"
+                required: false
+                hint: "Facoltativo: scegli la cartella in cui mettere il materiale (prima creala nella sezione UDA). Lascia vuoto per mostrarlo fuori dalle cartelle."
               - label: "Tipo"
                 name: tipo
                 widget: select
@@ -135,6 +176,16 @@ collections:
                   - { label: "3° anno", value: "3" }
                   - { label: "4° anno", value: "4" }
                   - { label: "5° anno", value: "5" }
+              - label: "UDA (cartella, facoltativa)"
+                name: uda
+                widget: relation
+                collection: uda
+                file: elenco
+                search_fields: ["uda.*.titolo"]
+                display_fields: ["uda.*.titolo"]
+                value_field: "uda.*.titolo"
+                required: false
+                hint: "Per metterlo in una cartella serve anche l'anno qui sopra."
               - { label: "Immagine di copertina", name: immagine, widget: image, required: false }
               - { label: "File HTML dell'artefatto", name: file, widget: file, required: false, hint: "Carica qui il file .html dell'artefatto interattivo" }
               - { label: "Oppure un link esterno", name: link, widget: string, required: false }
@@ -172,4 +223,14 @@ collections:
                   - { label: "3° anno", value: "3" }
                   - { label: "4° anno", value: "4" }
                   - { label: "5° anno", value: "5" }
+              - label: "UDA (cartella, facoltativa)"
+                name: uda
+                widget: relation
+                collection: uda
+                file: elenco
+                search_fields: ["uda.*.titolo"]
+                display_fields: ["uda.*.titolo"]
+                value_field: "uda.*.titolo"
+                required: false
+                hint: "Per metterlo in una cartella serve anche l'anno qui sopra."
               - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
