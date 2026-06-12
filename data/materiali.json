@@ -1,20 +1,29 @@
 {
   "materiali": [
     {
-      "in_evidenza": true,
-      "titolo": "dadada",
-      "anno": "1",
-      "tipo": "Documento/PDF",
-      "descrizione": "ddd",
-      "immagine": "/uploads/2024_03_13-22_25-office-lens-1-.jpg",
-      "file": "/uploads/roma.pdf"
+      "titolo": "Il Cantico dei Cantici e il linguaggio dell'amore",
+      "anno": "5",
+      "tipo": "Slide",
+      "descrizione": "ESEMPIO (puoi eliminarlo). L'amore nella Bibbia, con un ponte verso la cultura di oggi.",
+      "link": "#",
+      "in_evidenza": true
     },
     {
-      "in_evidenza": true,
-      "titolo": "parità di genere nella genei",
-      "anno": "2",
+      "titolo": "Galileo e la Chiesa: una lettura onesta",
+      "anno": "4",
       "tipo": "Documento/PDF",
-      "file": "/uploads/lezione_irc_adam_ish_isha.pptx"
+      "descrizione": "ESEMPIO. Il caso Galileo letto senza concordismi né leggende, alla luce delle fonti.",
+      "link": "#",
+      "in_evidenza": false
+    },
+    {
+      "titolo": "Lemaître e l'origine dell'universo",
+      "anno": "3",
+      "uda": "Scienza e fede",
+      "tipo": "Slide",
+      "descrizione": "ESEMPIO. Scienza e fede in dialogo: il sacerdote che ipotizzò il Big Bang.",
+      "link": "#",
+      "in_evidenza": false
     }
   ]
 }
