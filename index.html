@@ -432,7 +432,7 @@ const BRAND = "#0E7C6B";
 const ACC = {strumento:"#6A4FB0", video:"#C8417B"};
 const KEY = {"1":"primo","2":"secondo","3":"terzo","4":"quarto","5":"quinto"};
 
-let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], UDA=[], ITEMS=[];
+let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], UDA=[], LEZ=[], ITEMS=[];
 
 const SAMPLE = {
   site:{titolo:"Lab IRC", sottotitolo:"Il laboratorio di Religione", intro:"Uno spazio per fare lezione in modo vivo: slide, documenti, video e strumenti interattivi, organizzati per anno di corso.", pensiero:"Le grandi domande meritano risposte all'altezza.", email:"", autore:"Matteo Sestili"},
@@ -505,6 +505,12 @@ function normT(s){return String(s==null?"":s).trim().toLowerCase();}
 /* Le UDA di un anno: quelle definite nel pannello, più eventuali cartelle
    "automatiche" se un contenuto cita un'UDA non ancora definita (così
    nessun materiale va perso per un titolo scritto a mano) */
+function byOrdine(a,b){
+  const oa=(a.ordine==null||a.ordine==="")?999:+a.ordine;
+  const ob=(b.ordine==null||b.ordine==="")?999:+b.ordine;
+  return oa-ob || String(a.titolo).localeCompare(String(b.titolo),"it");
+}
+
 function udaForYear(n){
   const list=UDA.filter(u=>String(u.anno)===String(n)).slice();
   const titles=new Set(list.map(u=>normT(u.titolo)));
@@ -515,16 +521,45 @@ function udaForYear(n){
       list.push({titolo:String(it.uda).trim(), anno:String(n)});
     }
   });
-  list.sort((a,b)=>{
-    const oa=(a.ordine==null||a.ordine==="")?999:+a.ordine;
-    const ob=(b.ordine==null||b.ordine==="")?999:+b.ordine;
-    return oa-ob || String(a.titolo).localeCompare(String(b.titolo),"it");
-  });
+  list.sort(byOrdine);
   return list;
 }
 
 function itemsInUda(n,titolo){
   return ITEMS.filter(it=>matchAnno(it,n) && normT(it.uda)===normT(titolo));
+}
+
+/* ---------- Lezioni (sottocartelle dentro le UDA) ---------- */
+
+/* Le lezioni di una UDA: quelle definite nel pannello, più eventuali
+   sottocartelle "automatiche" citate dai contenuti ma non definite */
+function lezioniForUda(n,udaTitolo){
+  const list=LEZ.filter(l=>String(l.anno)===String(n) && normT(l.uda)===normT(udaTitolo)).slice();
+  const titles=new Set(list.map(l=>normT(l.titolo)));
+  ITEMS.forEach(it=>{
+    const t=normT(it.lezione);
+    if(matchAnno(it,n) && normT(it.uda)===normT(udaTitolo) && t && !titles.has(t)){
+      titles.add(t);
+      list.push({titolo:String(it.lezione).trim(), anno:String(n), uda:udaTitolo});
+    }
+  });
+  list.sort(byOrdine);
+  return list;
+}
+
+function itemsInLezione(n,udaTitolo,lezTitolo){
+  return ITEMS.filter(it=>matchAnno(it,n) && normT(it.uda)===normT(udaTitolo) && normT(it.lezione)===normT(lezTitolo));
+}
+
+/* Se un contenuto indica la lezione ma non l'UDA, l'UDA si deduce
+   dalla definizione della lezione: un campo in meno da compilare */
+function inferUda(){
+  ITEMS.forEach(it=>{
+    if(normT(it.lezione) && !normT(it.uda)){
+      const L=LEZ.find(l=>String(l.anno)===String(it.anno) && normT(l.titolo)===normT(it.lezione));
+      if(L && L.uda) it.uda=L.uda;
+    }
+  });
 }
 
 function folderHTML(u,color,n,i){
@@ -534,6 +569,18 @@ function folderHTML(u,color,n,i){
     +'<span class="ficon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg></span>'
     +'<div class="ftitle">'+esc(u.titolo)+'</div>'
     +(u.descrizione?'<p class="fdesc">'+esc(u.descrizione)+'</p>':'')
+    +'<div class="fcount">'+count+' '+(count===1?"contenuto":"contenuti")+'</div>'
+    +'</a>';
+}
+
+function lessonFolderHTML(l,color,n,udaTitolo,i){
+  const count=itemsInLezione(n,udaTitolo,l.titolo).length;
+  const slugU=encodeURIComponent(String(udaTitolo||"").trim());
+  const slugL=encodeURIComponent(String(l.titolo||"").trim());
+  return '<a class="fcard" href="#anno/'+esc(String(n))+'/uda/'+slugU+'/lezione/'+slugL+'" style="--c:'+color+';animation-delay:'+(.05*i+.05).toFixed(2)+'s">'
+    +'<span class="ficon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>'
+    +'<div class="ftitle">'+esc(l.titolo)+'</div>'
+    +(l.descrizione?'<p class="fdesc">'+esc(l.descrizione)+'</p>':'')
     +'<div class="fcount">'+count+' '+(count===1?"contenuto":"contenuti")+'</div>'
     +'</a>';
 }
@@ -747,7 +794,9 @@ function renderUda(n,titolo){
   const meta=annoMeta(n); if(!meta){route(""); return;}
   setAccent(meta.color);
   const u=UDA.find(x=>String(x.anno)===String(n)&&normT(x.titolo)===normT(titolo))||{titolo:String(titolo||"").trim()};
-  const items=itemsInUda(n,titolo);
+  const lez=lezioniForUda(n,titolo);
+  const inUda=itemsInUda(n,titolo);
+  const loose=inUda.filter(it=>!normT(it.lezione));
 
   const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span>'
     +'<a href="#anno/'+esc(String(n))+'">Anno '+esc(meta.rom)+'</a><span class="sep">›</span>'
@@ -756,6 +805,43 @@ function renderUda(n,titolo){
     +'<div class="eyebrow">'+esc(meta.nome)+' · Unità di apprendimento</div>'
     +'<h2>'+esc(u.titolo)+'</h2>'
     +(u.descrizione?'<p>'+esc(u.descrizione)+'</p>':'')
+    +'</div>';
+
+  let body="";
+  if(lez.length){
+    body+='<div class="shead sub2"><div><div class="eyebrow">Percorso</div><h2>Lezioni</h2></div><div class="sub">Le sottocartelle con i materiali di ogni lezione.</div></div>'
+      +'<div class="folders">'+lez.map((l,i)=>lessonFolderHTML(l,meta.color,n,titolo,i)).join("")+'</div>';
+  }
+  if(loose.length || !lez.length){
+    if(lez.length) body+='<div class="shead sub2"><div><div class="eyebrow">Fuori dalle lezioni</div><h2>Altri contenuti</h2></div></div>';
+    body+=typeChipsHTML(loose)+'<div id="type-cont">'+gridHTML(loose,meta.color)+'</div>';
+  }
+
+  $("#heroWrap").innerHTML="";
+  $("#main").innerHTML=breadcrumb+hero+body;
+  wireGrid();
+  wireTypeFilter(loose,meta.color);
+  document.getElementById("backHome").addEventListener("click",e=>{e.preventDefault();route("");});
+}
+
+/* ---------- pagina lezione ---------- */
+
+function renderLezione(n,udaT,lezT){
+  const meta=annoMeta(n); if(!meta){route(""); return;}
+  setAccent(meta.color);
+  const u=UDA.find(x=>String(x.anno)===String(n)&&normT(x.titolo)===normT(udaT))||{titolo:String(udaT||"").trim()};
+  const L=LEZ.find(x=>String(x.anno)===String(n)&&normT(x.uda)===normT(udaT)&&normT(x.titolo)===normT(lezT))||{titolo:String(lezT||"").trim()};
+  const items=itemsInLezione(n,udaT,lezT);
+  const slugU=encodeURIComponent(String(u.titolo||"").trim());
+
+  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span>'
+    +'<a href="#anno/'+esc(String(n))+'">Anno '+esc(meta.rom)+'</a><span class="sep">›</span>'
+    +'<a href="#anno/'+esc(String(n))+'/uda/'+slugU+'">'+esc(u.titolo)+'</a><span class="sep">›</span>'
+    +'<span>'+esc(L.titolo)+'</span></div>';
+  const hero='<div class="sec-hero reveal" data-glyph="✎">'
+    +'<div class="eyebrow">'+esc(u.titolo)+' · Lezione</div>'
+    +'<h2>'+esc(L.titolo)+'</h2>'
+    +(L.descrizione?'<p>'+esc(L.descrizione)+'</p>':'')
     +'</div>';
 
   $("#heroWrap").innerHTML="";
@@ -843,9 +929,14 @@ function route(hash){
   if(hash.startsWith("anno/")){
     const parts=hash.split("/");
     if(parts[2]==="uda" && parts[3]){
-      let t=parts.slice(3).join("/");
-      try{t=decodeURIComponent(t);}catch(e){}
-      renderUda(parts[1],t); renderFooter(); return;
+      let u=parts[3];
+      try{u=decodeURIComponent(u);}catch(e){}
+      if(parts[4]==="lezione" && parts[5]){
+        let l=parts[5];
+        try{l=decodeURIComponent(l);}catch(e){}
+        renderLezione(parts[1],u,l); renderFooter(); return;
+      }
+      renderUda(parts[1],u); renderFooter(); return;
     }
     renderAnno(parts[1]); renderFooter(); return;
   }
@@ -857,13 +948,14 @@ function route(hash){
 /* ---------- avvio ---------- */
 
 async function init(){
-  [SITE, ANNIDESC, MAT, STR, VID, UDA] = await Promise.all([
+  [SITE, ANNIDESC, MAT, STR, VID, UDA, LEZ] = await Promise.all([
     load("data/site.json",      SAMPLE.site),
     load("data/anni.json",      SAMPLE.anni),
     load("data/materiali.json", SAMPLE.materiali),
     load("data/strumenti.json", SAMPLE.strumenti),
     load("data/video.json",     SAMPLE.video),
     load("data/uda.json",       []),
+    load("data/lezioni.json",   []),
   ]);
   /* FIX — qui si normalizzano i dati del pannello ({chiave:[...]} → array):
      senza questo passaggio le pagine Strumenti e Video andavano in errore */
@@ -871,8 +963,10 @@ async function init(){
   STR = pickArr(STR, "strumenti");
   VID = pickArr(VID, "video");
   UDA = pickArr(UDA, "uda");
+  LEZ = pickArr(LEZ, "lezioni");
   applySite();
   buildItems();
+  inferUda();
   route(location.hash.replace(/^#/,""));
 }
 
