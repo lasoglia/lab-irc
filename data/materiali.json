@@ -1,29 +1,3 @@
 {
-  "materiali": [
-    {
-      "titolo": "Il Cantico dei Cantici e il linguaggio dell'amore",
-      "anno": "5",
-      "tipo": "Documento/PDF",
-      "descrizione": "ESEMPIO (puoi eliminarlo). L'amore nella Bibbia, con un ponte verso la cultura di oggi.",
-      "link": "#",
-      "in_evidenza": true,
-      "file": "/uploads/roma.pdf"
-    },
-    {
-      "titolo": "Galileo e la Chiesa: una lettura onesta",
-      "anno": "4",
-      "tipo": "Documento/PDF",
-      "descrizione": "ESEMPIO. Il caso Galileo letto senza concordismi né leggende, alla luce delle fonti.",
-      "link": "#",
-      "in_evidenza": false
-    },
-    {
-      "titolo": "Lemaître e l'origine dell'universo",
-      "anno": "3",
-      "tipo": "Slide",
-      "descrizione": "ESEMPIO. Scienza e fede in dialogo: il sacerdote che ipotizzò il Big Bang.",
-      "link": "#",
-      "in_evidenza": false
-    }
-  ]
+  "materiali": []
 }
