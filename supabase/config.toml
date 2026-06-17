@@ -1,0 +1,16 @@
+# Configurazione del progetto Supabase per la CLI.
+# Sostituisci "project_id" con il "Reference ID" del tuo progetto
+# (Supabase → Project Settings → General → Reference ID).
+project_id = "INCOLLA_QUI_REFERENCE_ID"
+
+# Le funzioni dello studente sono pubbliche di proposito (lo studente non ha
+# login): la sicurezza è dentro la funzione, che verifica il token_consegna e
+# legge le soluzioni solo lato server. Per questo disattiviamo il controllo JWT.
+[functions.avvia-verifica]
+verify_jwt = false
+
+[functions.salva-risposte]
+verify_jwt = false
+
+[functions.consegna-verifica]
+verify_jwt = false

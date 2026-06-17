@@ -398,7 +398,11 @@ body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.vie
     </button>
     <div class="viewer-title" id="viewerTitle"></div>
   </div>
-  <iframe id="viewerFrame" class="viewer-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads" allow="fullscreen; clipboard-write" src="about:blank"></iframe>
+  <!-- SICUREZZA: niente "allow-same-origin" né "allow-popups-to-escape-sandbox".
+       Così un artefatto HTML caricato in /uploads non può leggere lo storage del
+       sito (es. la sessione del docente nell'area /esami) né raggiungere la pagina
+       genitore. Gli artefatti autonomi (quiz, timeline…) continuano a funzionare. -->
+  <iframe id="viewerFrame" class="viewer-frame" title="Contenuto interattivo" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads" allow="fullscreen; clipboard-write" src="about:blank"></iframe>
 </div>
 
 <script>
