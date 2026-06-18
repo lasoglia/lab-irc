@@ -104,11 +104,86 @@ function riprendi() {
   renderDomande();
   avviaTimer();
   avviaAutosave();
+  attivaAnticheat();
   window.addEventListener("beforeunload", (e) => {
     if (!consegnato) { e.preventDefault(); e.returnValue = ""; }
   });
 }
 
+// ---------------------------------------------------------------------
+//  Anticheat
+// ---------------------------------------------------------------------
+function attivaAnticheat() {
+  // 1. Blocco copia su tutta la pagina
+  document.addEventListener("copy", (e) => {
+    e.preventDefault();
+    avviso("La copia del testo non è consentita durante la verifica.", "err");
+  });
+
+  // 2. Blocco incolla su tutta la pagina
+  document.addEventListener("paste", (e) => {
+    e.preventDefault();
+    avviso("L'incolla non è consentito durante la verifica.", "err");
+  });
+
+  // 3. Blocco tasto destro (previene copia dal menu contestuale)
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+
+  // 4. Blocco scorciatoie tastiera (Ctrl+C, Ctrl+V, Ctrl+A, Ctrl+X)
+  document.addEventListener("keydown", (e) => {
+    const tasti = ["c", "v", "a", "x"];
+    if ((e.ctrlKey || e.metaKey) && tasti.includes(e.key.toLowerCase())) {
+      e.preventDefault();
+      if (e.key.toLowerCase() === "v") {
+        avviso("L'incolla non è consentito durante la verifica.", "err");
+      } else if (e.key.toLowerCase() === "c") {
+        avviso("La copia del testo non è consentita durante la verifica.", "err");
+      }
+    }
+  });
+
+  // 5. Rilevamento cambio scheda / perdita focus finestra
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && !consegnato) {
+      registraEvento("cambio_scheda", { momento: new Date().toISOString() });
+      avviso("⚠️ Attenzione: hai cambiato scheda. L'evento è stato registrato.", "err");
+    }
+  });
+
+  // 6. Rilevamento finestra minimizzata o perdita focus
+  window.addEventListener("blur", () => {
+    if (!consegnato) {
+      registraEvento("perdita_focus", { momento: new Date().toISOString() });
+    }
+  });
+}
+
+// Invia l'evento anticheat a Supabase
+async function registraEvento(tipo, dettagli = {}) {
+  if (!stato?.token_consegna) return;
+  try {
+    // Recuperiamo prima l'id della consegna tramite il token
+    const { data: cons } = await sb
+      .from("consegne")
+      .select("id")
+      .eq("token_consegna", stato.token_consegna)
+      .single();
+    if (!cons?.id) return;
+    await sb.from("eventi_anticheat").insert({
+      consegna_id: cons.id,
+      tipo,
+      dettagli,
+    });
+  } catch (_e) {
+    // Silenzioso: non blocchiamo la verifica per un errore di logging
+  }
+}
+
+// ---------------------------------------------------------------------
+//  Render barra e domande
+// ---------------------------------------------------------------------
 function renderBarra() {
   barra.innerHTML = "";
   const b = el("div", { class: "barra-studente" },
@@ -131,14 +206,14 @@ function renderDomande() {
 function renderDomanda(d, i) {
   const blocco = el("div", { class: "domanda" },
     el("div", { class: "num" }, `Domanda ${i + 1} di ${stato.domande.length}`),
-    el("div", { class: "testo" }, d.testo));
+    el("div", { class: "testo", style: "user-select:none" }, d.testo));
 
   if (d.tipo === "scelta_multipla") {
     (d.opzioni || []).forEach((o, j) => {
       const sceltaSalvata = stato.risposte[d.id]?.indice;
       const riga = el("label", { class: "opzione" + (sceltaSalvata === j ? " scelta" : "") },
         el("input", { type: "radio", name: "d" + d.id, value: j, checked: sceltaSalvata === j }),
-        el("span", {}, o));
+        el("span", { style: "user-select:none" }, o));
       riga.querySelector("input").addEventListener("change", () => {
         stato.risposte[d.id] = { indice: j };
         main.querySelectorAll(`[name="d${d.id}"]`).forEach((r) => r.closest(".opzione").classList.remove("scelta"));
@@ -152,7 +227,6 @@ function renderDomanda(d, i) {
     const ta = el("textarea", { class: "maiuscolo", placeholder: "SCRIVI QUI LA TUA RISPOSTA", "aria-label": "Risposta" },
       stato.risposte[d.id]?.testo || "");
     ta.addEventListener("input", () => {
-      // converte in maiuscolo SENZA far saltare il cursore
       const ini = ta.selectionStart, fin = ta.selectionEnd;
       const su = ta.value.toUpperCase();
       if (su !== ta.value) { ta.value = su; ta.setSelectionRange(ini, fin); }
@@ -165,7 +239,7 @@ function renderDomanda(d, i) {
 }
 
 // ---------------------------------------------------------------------
-//  Timer (server = autorità; qui calcoliamo dal started_at)
+//  Timer
 // ---------------------------------------------------------------------
 function scadenza() { return new Date(stato.started_at).getTime() + stato.durata * 60000; }
 
@@ -259,7 +333,7 @@ function schermataConsegnata(automatica) {
 }
 
 // ---------------------------------------------------------------------
-//  Persistenza locale (sopravvive a un refresh durante la sessione)
+//  Persistenza locale
 // ---------------------------------------------------------------------
 function salvaSessione() { try { sessionStorage.setItem(CHIAVE, JSON.stringify(stato)); } catch (_e) {} }
 function leggiSessione() { try { return JSON.parse(sessionStorage.getItem(CHIAVE)); } catch (_e) { return null; } }
