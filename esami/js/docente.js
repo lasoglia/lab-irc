@@ -135,6 +135,7 @@ function botoniStato(e) {
   } else if (e.stato === "chiusa") {
     cont.append(el("button", { class: "btn piccolo", onclick: () => cambiaStato(e.id, "pubblicata") }, "Riapri"));
   }
+  cont.append(el("button", { class: "btn danger piccolo", onclick: () => eliminaVerifica(e.id, e.titolo) }, "Elimina"));
   return cont;
 }
 
@@ -371,6 +372,7 @@ async function mostraRisultati(esameId) {
       const btnCorreggi = c.stato === "consegnata"
         ? el("button", { class: "btn piccolo", onclick: () => apriCorrezione(c.id, ident, esameId) }, "Correggi")
         : el("button", { class: "btn ghost piccolo", onclick: () => apriCorrezione(c.id, ident, esameId) }, "Rivedi");
+      const btnElimina = el("button", { class: "btn danger piccolo", onclick: () => eliminaConsegna(c.id, ident, esameId) }, "Elimina");
       tb.append(el("tr", {},
         el("td", {}, ident),
         el("td", {}, c.classe),
@@ -378,7 +380,7 @@ async function mostraRisultati(esameId) {
         el("td", {}, c.percentuale == null ? "—" : c.percentuale + "%"),
         el("td", {}, el("span", { class: "badge " + c.stato }, etichettaStato(c.stato))),
         el("td", {}, c.submitted_at ? new Date(c.submitted_at).toLocaleString("it-IT") : "—"),
-        el("td", {}, btnCorreggi)));
+        el("td", {}, el("span", { style: "display:flex;gap:6px" }, btnCorreggi, btnElimina))));
     }
     tab.append(tb);
     card.append(tab);
@@ -569,6 +571,22 @@ async function apriCorrezione(consegnaId, ident, esameId) {
 
   main.innerHTML = "";
   main.append(card);
+}
+
+async function eliminaVerifica(esameId, titolo) {
+  if (!confirm(`Vuoi eliminare la verifica "${titolo}"? Saranno cancellate anche tutte le consegne degli studenti. Questa azione è irreversibile.`)) return;
+  const { error } = await sb.from("esami").delete().eq("id", esameId);
+  if (error) return avviso("Errore nell eliminazione: " + error.message, "err");
+  avviso("Verifica eliminata.", "ok");
+  mostraDashboard();
+}
+
+async function eliminaConsegna(consegnaId, ident, esameId) {
+  if (!confirm(`Vuoi eliminare la consegna di ${ident}? Questa azione è irreversibile.`)) return;
+  const { error } = await sb.from("consegne").delete().eq("id", consegnaId);
+  if (error) return avviso("Errore nell eliminazione: " + error.message, "err");
+  avviso("Consegna eliminata.", "ok");
+  mostraRisultati(esameId);
 }
 
 function etichettaStato(s) {
