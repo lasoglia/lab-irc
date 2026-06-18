@@ -105,7 +105,7 @@ async function mostraDashboard() {
   const card = el("div", { class: "card" }, testa);
 
   if (!esami.length) {
-    card.append(el("p", { class: "muted" }, "Non hai ancora creato verifiche. Inizia con “Nuova verifica”."));
+    card.append(el("p", { class: "muted" }, "Non hai ancora creato verifiche. Inizia con "Nuova verifica"."));
   } else {
     for (const e of esami) {
       card.append(el("div", { class: "lista-esame" },
@@ -307,7 +307,6 @@ async function salva() {
   if (esameId) {
     const { error } = await sb.from("esami").update(base).eq("id", esameId);
     if (error) return avviso("Errore nel salvataggio: " + error.message, "err");
-    // riscrivo le domande da zero (consentito perché è una bozza senza consegne)
     await sb.from("domande").delete().eq("esame_id", esameId);
   } else {
     const { data, error } = await sb.from("esami").insert({ ...base, created_by: u.user.id }).select("id").single();
@@ -315,7 +314,6 @@ async function salva() {
     esameId = data.id;
   }
 
-  // Inserisco domande e soluzioni
   for (const [i, d] of editor.domande.entries()) {
     const opzioni = d.tipo === "scelta_multipla" ? d.opzioni.filter((o) => o.trim()) : null;
     const { data: dom, error: dErr } = await sb.from("domande").insert({
@@ -362,25 +360,160 @@ async function mostraRisultati(esameId) {
         el("th", {}, "Punteggio"),
         el("th", {}, "%"),
         el("th", {}, "Stato"),
-        el("th", {}, "Consegnata"))));
+        el("th", {}, "Consegnata"),
+        el("th", {}, "Azioni"))));
     const tb = el("tbody", {});
     for (const c of consegne) {
       const ident = e?.mostra_nomi_reali && c.nome_reale ? c.nome_reale : c.codice_studente;
       const punti = c.punteggio == null ? "—" : `${c.punteggio} / ${c.punteggio_max}`;
+      const btnCorreggi = c.stato === "consegnata"
+        ? el("button", { class: "btn piccolo", onclick: () => apriCorrezione(c.id, ident, esameId) }, "Correggi")
+        : el("button", { class: "btn ghost piccolo", onclick: () => apriCorrezione(c.id, ident, esameId) }, "Rivedi");
       tb.append(el("tr", {},
         el("td", {}, ident),
         el("td", {}, c.classe),
         el("td", {}, punti),
         el("td", {}, c.percentuale == null ? "—" : c.percentuale + "%"),
         el("td", {}, el("span", { class: "badge " + c.stato }, etichettaStato(c.stato))),
-        el("td", {}, c.submitted_at ? new Date(c.submitted_at).toLocaleString("it-IT") : "—")));
+        el("td", {}, c.submitted_at ? new Date(c.submitted_at).toLocaleString("it-IT") : "—"),
+        el("td", {}, btnCorreggi)));
     }
     tab.append(tb);
     card.append(tab);
-    const daCorr = consegne.filter((c) => c.stato === "consegnata").length;
-    if (daCorr) card.append(el("p", { class: "nota" },
-      `${daCorr} consegn${daCorr === 1 ? "a ha" : "e hanno"} domande aperte in attesa di correzione manuale (arriverà nella Fase 3).`));
   }
+  main.innerHTML = "";
+  main.append(card);
+}
+
+// ---------------------------------------------------------------------
+//  Correzione domande aperte
+// ---------------------------------------------------------------------
+async function apriCorrezione(consegnaId, ident, esameId) {
+  main.innerHTML = `<p class="muted">Carico le risposte…</p>`;
+
+  // Carico risposte + domande collegate
+  const { data: risposte, error: rErr } = await sb
+    .from("risposte")
+    .select("id, domanda_id, contenuto, corretto, punteggio_ottenuto")
+    .eq("consegna_id", consegnaId);
+
+  if (rErr) { avviso("Errore nel caricamento risposte: " + rErr.message, "err"); return; }
+
+  const domandaIds = risposte.map((r) => r.domanda_id);
+  const { data: domande } = domandaIds.length
+    ? await sb.from("domande").select("id, tipo, testo, punteggio").in("id", domandaIds)
+    : { data: [] };
+
+  const domMap = new Map((domande ?? []).map((d) => [d.id, d]));
+
+  // Mostro solo le domande aperte
+  const aperte = risposte.filter((r) => domMap.get(r.domanda_id)?.tipo === "aperta");
+
+  const card = el("div", { class: "card" },
+    el("div", { class: "lista-esame" },
+      el("h2", {}, `Correzione — ${esc(ident)}`),
+      el("span", { class: "spazio" }),
+      el("button", { class: "btn ghost", onclick: () => mostraRisultati(esameId) }, "← Torna ai risultati")));
+
+  if (!aperte.length) {
+    card.append(el("p", { class: "muted" }, "Nessuna domanda aperta in questa consegna."));
+    main.innerHTML = "";
+    main.append(card);
+    return;
+  }
+
+  // Mostro anche le domande chiuse come riferimento
+  const chiuse = risposte.filter((r) => domMap.get(r.domanda_id)?.tipo !== "aperta");
+  if (chiuse.length) {
+    const riepilogo = el("div", { class: "card" }, el("h3", {}, "Domande chiuse (già corrette automaticamente)"));
+    for (const r of chiuse) {
+      const dom = domMap.get(r.domanda_id);
+      if (!dom) continue;
+      riepilogo.append(el("div", { style: "margin-bottom:12px;padding:10px;background:var(--sfondo,#f8f8f8);border-radius:6px" },
+        el("p", { style: "margin:0 0 4px;font-weight:600" }, esc(dom.testo)),
+        el("p", { style: "margin:0;font-size:.9em" },
+          `Risposta: indice ${r.contenuto?.indice ?? "—"} · `,
+          el("span", { style: r.corretto ? "color:green" : "color:red" }, r.corretto ? "✓ corretta" : "✗ errata"),
+          ` · ${r.punteggio_ottenuto ?? 0} / ${dom.punteggio} pt`)));
+    }
+    card.append(riepilogo);
+  }
+
+  // Form correzione domande aperte
+  const formCorr = el("div", {});
+  const campiPunteggio = [];
+
+  for (const r of aperte) {
+    const dom = domMap.get(r.domanda_id);
+    if (!dom) continue;
+    const testRisposta = r.contenuto?.testo ?? JSON.stringify(r.contenuto);
+    const maxPt = dom.punteggio;
+    const attuale = r.punteggio_ottenuto ?? "";
+
+    const inputPt = el("input", {
+      type: "number", min: "0", step: "0.5",
+      max: maxPt, value: attuale,
+      style: "width:90px",
+      placeholder: "punti"
+    });
+    campiPunteggio.push({ rispostaId: r.id, input: inputPt, max: maxPt });
+
+    formCorr.append(el("div", { style: "margin-bottom:20px;padding:14px;border:1px solid var(--bordo,#ddd);border-radius:8px" },
+      el("p", { style: "margin:0 0 6px;font-weight:600" }, esc(dom.testo)),
+      el("div", { style: "background:var(--sfondo,#f8f8f8);padding:10px;border-radius:6px;margin-bottom:10px;font-style:italic" },
+        esc(testRisposta)),
+      el("div", { style: "display:flex;align-items:center;gap:10px" },
+        el("label", { style: "font-weight:400" }, `Punteggio (max ${maxPt}):`),
+        inputPt)));
+  }
+
+  const btnSalvaCorr = el("button", { class: "btn oro", onclick: async () => {
+    // Valido i punteggi
+    for (const { input, max } of campiPunteggio) {
+      const v = parseFloat(input.value);
+      if (isNaN(v) || v < 0 || v > max) {
+        return avviso(`Inserisci un punteggio valido tra 0 e ${max}.`, "err");
+      }
+    }
+
+    // Aggiorno ogni risposta aperta
+    for (const { rispostaId, input } of campiPunteggio) {
+      const pt = parseFloat(input.value);
+      const { error } = await sb.from("risposte")
+        .update({ punteggio_ottenuto: pt, corretto: pt > 0 })
+        .eq("id", rispostaId);
+      if (error) return avviso("Errore nel salvare: " + error.message, "err");
+    }
+
+    // Ricalcolo il punteggio totale della consegna
+    const { data: tutteRisposte } = await sb
+      .from("risposte")
+      .select("punteggio_ottenuto")
+      .eq("consegna_id", consegnaId);
+
+    const totaleOttenuto = (tutteRisposte ?? []).reduce((s, r) => s + (r.punteggio_ottenuto ?? 0), 0);
+
+    // Recupero il punteggio_max dalla consegna
+    const { data: cons } = await sb.from("consegne").select("punteggio_max").eq("id", consegnaId).single();
+    const max = cons?.punteggio_max ?? totaleOttenuto;
+    const perc = max > 0 ? Math.round((totaleOttenuto / max) * 100 * 10) / 10 : 0;
+
+    const { error: cErr } = await sb.from("consegne").update({
+      punteggio: totaleOttenuto,
+      percentuale: perc,
+      stato: "corretta"
+    }).eq("id", consegnaId);
+
+    if (cErr) return avviso("Errore nell'aggiornare il totale: " + cErr.message, "err");
+
+    avviso("Correzione salvata!", "ok");
+    mostraRisultati(esameId);
+  }}, "Salva correzione");
+
+  card.append(formCorr);
+  card.append(el("div", { class: "azioni" }, btnSalvaCorr,
+    el("button", { class: "btn ghost", onclick: () => mostraRisultati(esameId) }, "Annulla")));
+
   main.innerHTML = "";
   main.append(card);
 }
