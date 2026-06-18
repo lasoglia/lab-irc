@@ -78,6 +78,7 @@ function mostraInizio() {
     }
     stato = {
       token_consegna: data.token_consegna,
+      consegna_id: data.consegna_id,
       started_at: data.started_at,
       durata: data.esame.durata_minuti,
       titolo: data.esame.titolo,
@@ -162,17 +163,10 @@ function attivaAnticheat() {
 
 // Invia l'evento anticheat a Supabase
 async function registraEvento(tipo, dettagli = {}) {
-  if (!stato?.token_consegna) return;
+  if (!stato?.consegna_id) return;
   try {
-    // Recuperiamo prima l'id della consegna tramite il token
-    const { data: cons } = await sb
-      .from("consegne")
-      .select("id")
-      .eq("token_consegna", stato.token_consegna)
-      .single();
-    if (!cons?.id) return;
     await sb.from("eventi_anticheat").insert({
-      consegna_id: cons.id,
+      consegna_id: stato.consegna_id,
       tipo,
       dettagli,
     });
