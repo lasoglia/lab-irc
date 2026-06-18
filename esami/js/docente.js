@@ -105,7 +105,7 @@ async function mostraDashboard() {
   const card = el("div", { class: "card" }, testa);
 
   if (!esami.length) {
-    card.append(el("p", { class: "muted" }, "Non hai ancora creato verifiche. Inizia con "Nuova verifica"."));
+    card.append(el("p", { class: "muted" }, 'Non hai ancora creato verifiche. Inizia con "Nuova verifica".'));
   } else {
     for (const e of esami) {
       card.append(el("div", { class: "lista-esame" },
