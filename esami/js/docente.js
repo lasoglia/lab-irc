@@ -105,7 +105,7 @@ async function mostraDashboard() {
   const card = el("div", { class: "card" }, testa);
 
   if (!esami.length) {
-    card.append(el("p", { class: "muted" }, 'Non hai ancora creato verifiche. Inizia con "Nuova verifica".'));
+    card.append(el("p", { class: "muted" }, "Non hai ancora creato verifiche. Inizia con "Nuova verifica"."));
   } else {
     for (const e of esami) {
       card.append(el("div", { class: "lista-esame" },
@@ -391,11 +391,14 @@ async function mostraRisultati(esameId) {
 async function apriCorrezione(consegnaId, ident, esameId) {
   main.innerHTML = `<p class="muted">Carico le risposte…</p>`;
 
-  // Carico risposte + domande collegate
-  const { data: risposte, error: rErr } = await sb
-    .from("risposte")
-    .select("id, domanda_id, contenuto, corretto, punteggio_ottenuto")
-    .eq("consegna_id", consegnaId);
+  // Carico risposte + domande collegate + eventi anticheat in parallelo
+  const [
+    { data: risposte, error: rErr },
+    { data: eventiRaw }
+  ] = await Promise.all([
+    sb.from("risposte").select("id, domanda_id, contenuto, corretto, punteggio_ottenuto").eq("consegna_id", consegnaId),
+    sb.from("eventi_anticheat").select("tipo, avvenuto_il, dettagli").eq("consegna_id", consegnaId).order("avvenuto_il")
+  ]);
 
   if (rErr) { avviso("Errore nel caricamento risposte: " + rErr.message, "err"); return; }
 
@@ -414,6 +417,54 @@ async function apriCorrezione(consegnaId, ident, esameId) {
       el("h2", {}, `Correzione — ${esc(ident)}`),
       el("span", { class: "spazio" }),
       el("button", { class: "btn ghost", onclick: () => mostraRisultati(esameId) }, "← Torna ai risultati")));
+
+  // Sezione anticheat
+  const eventi = eventiRaw ?? [];
+  const conteggioPerTipo = {};
+  for (const ev of eventi) {
+    conteggioPerTipo[ev.tipo] = (conteggioPerTipo[ev.tipo] || 0) + 1;
+  }
+  const etichettaTipo = (t) => {
+    if (t === "cambio_scheda") return "Cambio scheda";
+    if (t === "perdita_focus") return "Finestra in background";
+    return t;
+  };
+  const coloreRischio = eventi.length === 0 ? "green" : eventi.length <= 2 ? "orange" : "red";
+  const anticheatCard = el("div", { style: `border:2px solid ${coloreRischio};border-radius:8px;padding:14px;margin-bottom:16px` },
+    el("div", { style: "display:flex;align-items:center;gap:10px;margin-bottom:10px" },
+      el("h3", { style: "margin:0" }, "🔍 Anticheat"),
+      el("span", { style: `background:${coloreRischio};color:white;padding:2px 10px;border-radius:20px;font-size:.85em` },
+        eventi.length === 0 ? "Nessun evento" : `${eventi.length} eventi`)));
+
+  if (eventi.length === 0) {
+    anticheatCard.append(el("p", { class: "muted", style: "margin:0" }, "Nessun comportamento sospetto rilevato."));
+  } else {
+    // Riepilogo per tipo
+    const riepilogo = el("div", { style: "margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap" });
+    for (const [tipo, count] of Object.entries(conteggioPerTipo)) {
+      riepilogo.append(el("span", { style: "background:#f0f0f0;padding:4px 10px;border-radius:20px;font-size:.9em" },
+        `${etichettaTipo(tipo)}: ${count}×`));
+    }
+    anticheatCard.append(riepilogo);
+
+    // Dettaglio cronologico
+    const det = el("details",
+      el("summary", { style: "cursor:pointer;font-size:.9em;color:#666" }, "Mostra dettaglio cronologico"));
+    const lista = el("table", { style: "width:100%;font-size:.85em;margin-top:8px" },
+      el("thead", {}, el("tr", {},
+        el("th", { style: "text-align:left" }, "Tipo"),
+        el("th", { style: "text-align:left" }, "Orario"))));
+    const tb = el("tbody", {});
+    for (const ev of eventi) {
+      tb.append(el("tr", {},
+        el("td", {}, etichettaTipo(ev.tipo)),
+        el("td", {}, new Date(ev.avvenuto_il).toLocaleTimeString("it-IT"))));
+    }
+    lista.append(tb);
+    det.append(lista);
+    anticheatCard.append(det);
+  }
+  card.append(anticheatCard);
 
   if (!aperte.length) {
     card.append(el("p", { class: "muted" }, "Nessuna domanda aperta in questa consegna."));
