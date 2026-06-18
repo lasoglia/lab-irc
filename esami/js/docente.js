@@ -105,7 +105,7 @@ async function mostraDashboard() {
   const card = el("div", { class: "card" }, testa);
 
   if (!esami.length) {
-    card.append(el("p", { class: "muted" }, 'Non hai ancora creato verifiche. Inizia con "Nuova verifica".'));
+    card.append(el("p", { class: "muted" }, "Non hai ancora creato verifiche. Inizia con "Nuova verifica"."));
   } else {
     for (const e of esami) {
       card.append(el("div", { class: "lista-esame" },
@@ -132,6 +132,8 @@ function botoniStato(e) {
   } else if (e.stato === "pubblicata") {
     cont.append(el("button", { class: "btn ghost piccolo", onclick: () => mostraLink(e) }, "Link"));
     cont.append(el("button", { class: "btn danger piccolo", onclick: () => cambiaStato(e.id, "chiusa") }, "Chiudi"));
+  } else if (e.stato === "chiusa") {
+    cont.append(el("button", { class: "btn piccolo", onclick: () => cambiaStato(e.id, "pubblicata") }, "Riapri"));
   }
   return cont;
 }
