@@ -1,21 +1,27 @@
 {
   "uda": [
     {
+      "titolo": "accoglienza",
+      "anno": "1",
+      "ordine": 1
+    },
+    {
+      "titolo": "Parità di genere",
+      "anno": "4",
+      "ordine": 1,
+      "descrizione": "Uda di metà anno scolastico"
+    },
+    {
       "titolo": "Scienza e fede",
       "anno": "3",
       "descrizione": "ESEMPIO (puoi eliminarla o rinominarla). Il dialogo tra ragione scientifica e fede: casi storici, malintesi e convergenze.",
       "ordine": 1
     },
     {
-      "titolo": "gioca con me",
-      "anno": "3",
+      "titolo": "Bibbia",
+      "anno": "4",
       "descrizione": "saw l'enigmista",
-      "ordine": 2
-    },
-    {
-      "titolo": "accoglienza",
-      "anno": "1",
-      "ordine": 1
+      "ordine": 0
     }
   ]
 }
