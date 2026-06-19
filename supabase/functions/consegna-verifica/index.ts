@@ -31,8 +31,17 @@ Deno.serve(async (req) => {
       return jsonResponse({ errore: "Verifica già consegnata.", gia_consegnata: true }, 409);
     }
 
-    // Salvataggio finale delle risposte inviate con la consegna (se presenti)
-    if (Array.isArray(risposte) && risposte.length) {
+    // Il server è l'autorità sul tempo: oltre la scadenza (+ margine tecnico)
+    // non si accettano più modifiche alle risposte, neanche in fase di
+    // consegna. Si corregge solo ciò che era già salvato.
+    const { data: esamePerTempo } = await db
+      .from("esami").select("durata_minuti").eq("id", consegna.esame_id).single();
+    const scadenzaTempo = new Date(consegna.started_at).getTime() + (esamePerTempo?.durata_minuti ?? 0) * 60000;
+    const oltreTempo = Date.now() > scadenzaTempo + 5000;
+
+    // Salvataggio finale delle risposte inviate con la consegna (se presenti
+    // e se siamo ancora nei tempi)
+    if (!oltreTempo && Array.isArray(risposte) && risposte.length) {
       const { data: domande } = await db
         .from("domande").select("id").eq("esame_id", consegna.esame_id);
       const valide = new Set((domande ?? []).map((d) => d.id));

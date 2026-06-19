@@ -4,7 +4,10 @@
 //  risposte, mai un voto.
 // =====================================================================
 import { sb, configurato } from "./supabase.js";
-import { $, esc, el, avviso, mmss } from "./comune.js";
+import { $, esc, el, avviso, mmss, invocaFunzione } from "./comune.js";
+import { inizializzaTemaToggle } from "./tema.js";
+
+inizializzaTemaToggle();
 
 const main = $("#contenuto");
 const barra = $("#barra");
@@ -17,6 +20,7 @@ let timer = null;
 let autosaveTimer = null;
 let salvataggioInSospeso = false;
 let consegnato = false;
+let riprovaSalvataggio = null;
 
 // ---------------------------------------------------------------------
 //  Avvio
@@ -69,22 +73,24 @@ function mostraInizio() {
     if (!codice || !classe) return msg("Inserisci codice e classe.");
     const btn = form.querySelector("button");
     btn.disabled = true; btn.textContent = "Avvio…";
-    const { data, error } = await sb.functions.invoke("avvia-verifica", {
-      body: { token_pubblico: TOKEN_PUBBLICO, codice_studente: codice, classe, nome_reale: nome },
+    const { dati, errore } = await invocaFunzione(sb, "avvia-verifica", {
+      token_pubblico: TOKEN_PUBBLICO, codice_studente: codice, classe, nome_reale: nome,
     });
-    if (error || data?.errore) {
+    if (errore || !dati?.token_consegna) {
       btn.disabled = false; btn.textContent = "Inizia →";
-      return msg(data?.errore || "Impossibile avviare la verifica. Riprova.");
+      return msg(errore || "Impossibile avviare la verifica. Riprova.");
     }
+    const risposte = {};
+    (dati.risposte || []).forEach((r) => { risposte[r.domanda_id] = r.contenuto; });
     stato = {
-      token_consegna: data.token_consegna,
-      consegna_id: data.consegna_id,
-      started_at: data.started_at,
-      durata: data.esame.durata_minuti,
-      titolo: data.esame.titolo,
-      anticheat: data.esame.anticheat,
-      domande: data.domande,
-      risposte: {},
+      token_consegna: dati.token_consegna,
+      consegna_id: dati.consegna_id,
+      started_at: dati.started_at,
+      durata: dati.esame.durata_minuti,
+      titolo: dati.esame.titolo,
+      anticheat: dati.esame.anticheat,
+      domande: dati.domande,
+      risposte,
       consegnato: false,
     };
     salvaSessione();
@@ -105,7 +111,15 @@ function riprendi() {
   renderDomande();
   avviaTimer();
   avviaAutosave();
-  attivaAnticheat();
+  // L'anti-cheat resta spento di default: si attiva solo se il docente lo
+  // ha abilitato per QUESTA verifica (anticheat_config.attivo nel database).
+  if (stato.anticheat) attivaAnticheat();
+  // Anche se la pagina resta in background, al ritorno in primo piano
+  // ricalcoliamo subito il timer: evita di "perdere" una consegna
+  // automatica per via dei timer che i browser rallentano quando il
+  // tab non è visibile.
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) aggiornaTimer(); });
+  window.addEventListener("focus", aggiornaTimer);
   window.addEventListener("beforeunload", (e) => {
     if (!consegnato) { e.preventDefault(); e.returnValue = ""; }
   });
@@ -272,14 +286,17 @@ async function salvaServer() {
   if (consegnato) return;
   salvataggioInSospeso = false;
   const risposte = Object.entries(stato.risposte).map(([domanda_id, contenuto]) => ({ domanda_id, contenuto }));
-  const { data, error } = await sb.functions.invoke("salva-risposte", {
-    body: { token_consegna: stato.token_consegna, risposte },
+  const { dati, errore, erroreRete } = await invocaFunzione(sb, "salva-risposte", {
+    token_consegna: stato.token_consegna, risposte,
   });
   const s = $("#statoSalv");
-  if (error || data?.errore) {
-    if (data?.scaduto) { consegna(true); return; }
+  if (errore || erroreRete) {
+    if (dati?.scaduto) { consegna(true); return; }
     salvataggioInSospeso = true;
-    if (s) s.textContent = "Salvataggio in ritardo…";
+    if (s) s.textContent = "Connessione assente, riprovo…";
+    // Non aspettiamo i 12s del giro successivo: ritentiamo prima, una sola volta.
+    clearTimeout(riprovaSalvataggio);
+    riprovaSalvataggio = setTimeout(() => { if (salvataggioInSospeso) salvaServer(); }, 4000);
   } else if (s) {
     s.textContent = "Salvato";
   }
@@ -299,13 +316,22 @@ async function consegna(automatica) {
   clearInterval(autosaveTimer);
   const btn = $("#btnConsegna"); if (btn) { btn.disabled = true; btn.textContent = "Invio…"; }
   const risposte = Object.entries(stato.risposte).map(([domanda_id, contenuto]) => ({ domanda_id, contenuto }));
-  const { data, error } = await sb.functions.invoke("consegna-verifica", {
-    body: { token_consegna: stato.token_consegna, risposte },
+  const { dati, errore, erroreRete } = await invocaFunzione(sb, "consegna-verifica", {
+    token_consegna: stato.token_consegna, risposte,
   });
-  if (error || (data?.errore && !data?.gia_consegnata)) {
+  // Consideriamo riuscita la consegna solo se il server ha confermato (ok)
+  // o ha detto che era già stata consegnata in precedenza: su un vero guasto
+  // di rete non arriva nessuna conferma e bisogna ritentare l'invio.
+  if (!dati?.ok && !dati?.gia_consegnata) {
     consegnato = false;
     if (btn) { btn.disabled = false; btn.textContent = "Consegna la verifica"; }
-    return avviso(data?.errore || "Invio non riuscito. Riprova.", "err");
+    avviso(errore || (erroreRete
+      ? "Connessione assente: la verifica NON è stata consegnata. Riprova appena torna la rete."
+      : "Invio non riuscito. Riprova."), "err");
+    // Se la consegna era automatica (tempo scaduto), il tentativo non deve
+    // dipendere da un clic dello studente: ritentiamo da soli.
+    if (automatica) setTimeout(() => consegna(true), 5000);
+    return;
   }
   stato.consegnato = true;
   salvaSessione();
