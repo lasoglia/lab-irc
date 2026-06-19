@@ -32,19 +32,46 @@ Deno.serve(async (req) => {
       return jsonResponse({ errore: "Questa verifica non è al momento disponibile." }, 403);
     }
 
-    // Crea la consegna. Il nome reale si salva solo se la verifica lo prevede.
-    const { data: consegna, error: cErr } = await db
-      .from("consegne")
-      .insert({
-        esame_id: esame.id,
-        codice_studente: String(codice_studente).trim(),
-        classe: String(classe).trim(),
-        nome_reale: esame.mostra_nomi_reali && nome_reale ? String(nome_reale).trim() : null,
-      })
-      .select("id, token_consegna, started_at")
-      .single();
+    const codice = String(codice_studente).trim();
+    const classeTrim = String(classe).trim();
 
-    if (cErr || !consegna) return jsonResponse({ errore: "Impossibile avviare la verifica." }, 500);
+    // Se lo studente aveva già iniziato (stesso codice+classe), riprendiamo
+    // quella consegna invece di crearne una nuova: il tempo resta quello
+    // calcolato dal server fin dal primo avvio, anche se ha chiuso il
+    // browser o cambiato dispositivo.
+    const { data: precedenti } = await db
+      .from("consegne")
+      .select("id, token_consegna, started_at, stato")
+      .eq("esame_id", esame.id)
+      .eq("codice_studente", codice)
+      .eq("classe", classeTrim)
+      .order("started_at", { ascending: false })
+      .limit(1);
+
+    const precedente = precedenti?.[0];
+    let consegna;
+
+    if (precedente && precedente.stato !== "in_corso") {
+      return jsonResponse({ errore: "Hai già consegnato questa verifica con questo codice." }, 409);
+    }
+
+    if (precedente) {
+      consegna = precedente;
+    } else {
+      // Crea la consegna. Il nome reale si salva solo se la verifica lo prevede.
+      const { data: nuova, error: cErr } = await db
+        .from("consegne")
+        .insert({
+          esame_id: esame.id,
+          codice_studente: codice,
+          classe: classeTrim,
+          nome_reale: esame.mostra_nomi_reali && nome_reale ? String(nome_reale).trim() : null,
+        })
+        .select("id, token_consegna, started_at")
+        .single();
+      if (cErr || !nuova) return jsonResponse({ errore: "Impossibile avviare la verifica." }, 500);
+      consegna = nuova;
+    }
 
     // Domande SENZA soluzioni
     const { data: domande, error: dErr } = await db
@@ -54,6 +81,12 @@ Deno.serve(async (req) => {
       .order("ordine", { ascending: true });
 
     if (dErr) return jsonResponse({ errore: "Errore nel caricamento delle domande." }, 500);
+
+    // Se riprendiamo una consegna, restituiamo anche le risposte già salvate.
+    const { data: risposteSalvate } = await db
+      .from("risposte")
+      .select("domanda_id, contenuto")
+      .eq("consegna_id", consegna.id);
 
     return jsonResponse({
       token_consegna: consegna.token_consegna,
@@ -65,6 +98,7 @@ Deno.serve(async (req) => {
         anticheat: !!(esame.anticheat_config && esame.anticheat_config.attivo),
       },
       domande: domande ?? [],
+      risposte: risposteSalvate ?? [],
     });
   } catch (_e) {
     return jsonResponse({ errore: "Richiesta non valida." }, 400);

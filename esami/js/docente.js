@@ -3,6 +3,9 @@
 // =====================================================================
 import { sb, configurato } from "./supabase.js";
 import { $, esc, el, avviso } from "./comune.js";
+import { inizializzaTemaToggle } from "./tema.js";
+
+inizializzaTemaToggle();
 
 const main = $("#contenuto");
 const chiSono = $("#chiSono");
@@ -383,7 +386,7 @@ async function mostraRisultati(esameId) {
         el("td", {}, el("span", { style: "display:flex;gap:6px" }, btnCorreggi, btnElimina))));
     }
     tab.append(tb);
-    card.append(tab);
+    card.append(el("div", { class: "tabella-scroll" }, tab));
   }
   main.innerHTML = "";
   main.append(card);
@@ -484,7 +487,7 @@ async function apriCorrezione(consegnaId, ident, esameId) {
     for (const r of chiuse) {
       const dom = domMap.get(r.domanda_id);
       if (!dom) continue;
-      riepilogo.append(el("div", { style: "margin-bottom:12px;padding:10px;background:var(--sfondo,#f8f8f8);border-radius:6px" },
+      riepilogo.append(el("div", { style: "margin-bottom:12px;padding:10px;background:var(--bg);border-radius:6px" },
         el("p", { style: "margin:0 0 4px;font-weight:600" }, esc(dom.testo)),
         el("p", { style: "margin:0;font-size:.9em" },
           `Risposta: indice ${r.contenuto?.indice ?? "—"} · `,
@@ -513,9 +516,9 @@ async function apriCorrezione(consegnaId, ident, esameId) {
     });
     campiPunteggio.push({ rispostaId: r.id, input: inputPt, max: maxPt });
 
-    formCorr.append(el("div", { style: "margin-bottom:20px;padding:14px;border:1px solid var(--bordo,#ddd);border-radius:8px" },
+    formCorr.append(el("div", { style: "margin-bottom:20px;padding:14px;border:1px solid var(--linea);border-radius:8px" },
       el("p", { style: "margin:0 0 6px;font-weight:600" }, esc(dom.testo)),
-      el("div", { style: "background:var(--sfondo,#f8f8f8);padding:10px;border-radius:6px;margin-bottom:10px;font-style:italic" },
+      el("div", { style: "background:var(--bg);padding:10px;border-radius:6px;margin-bottom:10px;font-style:italic" },
         esc(testRisposta)),
       el("div", { style: "display:flex;align-items:center;gap:10px" },
         el("label", { style: "font-weight:400" }, `Punteggio (max ${maxPt}):`),

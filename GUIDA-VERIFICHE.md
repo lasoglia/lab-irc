@@ -130,6 +130,37 @@ Dopo 1–2 minuti l'area verifiche sarà online a:
 
 ---
 
+## Novità della Fase 2 (robustezza)
+
+Rispetto alla Fase 1, due Edge Function sono cambiate: bisogna **ricaricarle**
+su Supabase (stessa procedura della Parte C):
+
+```
+supabase functions deploy avvia-verifica
+supabase functions deploy consegna-verifica
+```
+
+Cosa cambia per chi usa il sito:
+
+- **Ripresa della verifica**: se uno studente chiude il browser (o gli si
+  scarica il telefono) e riapre lo stesso link inserendo lo **stesso codice
+  e la stessa classe**, ritrova esattamente il punto in cui era: il tempo
+  rimanente è quello vero, calcolato dal server fin dal primo avvio, non
+  riparte da capo.
+- **Tempo autorevole anche alla consegna**: se la verifica viene inviata in
+  ritardo rispetto alla scadenza (oltre qualche secondo di margine tecnico),
+  il server ignora eventuali ultime modifiche e corregge solo ciò che era
+  già stato salvato in tempo.
+- **Tema chiaro/scuro**: in basso a destra, sia per il docente che per lo
+  studente, c'è un piccolo pulsante (🌙/☀️) per cambiare tema. La scelta
+  resta salvata solo su quel dispositivo.
+- **Connessione che va e viene**: durante il salvataggio automatico, se la
+  rete manca per un istante il sito ritenta da solo; se manca proprio al
+  momento della consegna finale, il sito avvisa lo studente e (se era una
+  consegna automatica per tempo scaduto) ritenta da solo ogni pochi secondi.
+
+---
+
 ## Privacy (leggi prima dell'uso reale)
 
 - Di default si usano **codici pseudonimi**, non nomi reali: la corrispondenza

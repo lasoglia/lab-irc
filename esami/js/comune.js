@@ -46,3 +46,17 @@ export function mmss(secondi) {
   const s = String(secondi % 60).padStart(2, "0");
   return `${m}:${s}`;
 }
+
+// Chiama una Edge Function e restituisce sempre { dati, erroreRete, errore }.
+// Quando la funzione risponde con un codice non-2xx, supabase-js mette il
+// corpo della risposta in error.context invece che in "data": qui lo
+// recuperiamo, così l'utente vede sempre il messaggio specifico del server
+// ("Hai già consegnato questa verifica", "Tempo scaduto"...) e non un
+// messaggio generico.
+export async function invocaFunzione(sb, nome, body) {
+  const { data, error } = await sb.functions.invoke(nome, { body });
+  if (!error) return { dati: data, erroreRete: false, errore: data?.errore ?? null };
+  let corpo = null;
+  try { corpo = typeof error.context?.json === "function" ? await error.context.json() : error.context; } catch (_e) {}
+  return { dati: corpo, erroreRete: true, errore: corpo?.errore ?? null };
+}
