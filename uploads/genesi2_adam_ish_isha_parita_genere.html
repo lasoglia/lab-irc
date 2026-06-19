@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --oro: #B8860B;
+    --oro-chiaro: #F5EDD5;
+    --oro-scuro: #7A5800;
+    --terracotta: #8B3A2A;
+    --terracotta-light: #F5E8E4;
+    --argilla: #D4C5A9;
+    --fumo: #4A4540;
+    --fumo-chiaro: #F7F4EF;
+    --inchiostro: #1C1814;
+    --grigio-muto: #7A7268;
+    --verde-salvia: #4A6741;
+    --verde-salvia-light: #EBF0E8;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--fumo-chiaro);
+    color: var(--inchiostro);
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .intestazione {
+    background: var(--inchiostro);
+    color: #F5EDD5;
+    padding: 2.5rem 2rem 2rem;
+    border-bottom: 3px solid var(--oro);
+  }
+  .intestazione-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--argilla);
+    margin-bottom: 0.75rem;
+  }
+  .intestazione h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #F5EDD5;
+    margin-bottom: 0.4rem;
+  }
+  .intestazione h1 em {
+    color: var(--oro);
+    font-style: italic;
+  }
+  .intestazione-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--argilla);
+    margin-top: 0.5rem;
+  }
+  .badge-riga {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .badge-oro { background: var(--oro); color: #1C1814; }
+  .badge-muto { background: rgba(255,255,255,0.1); color: var(--argilla); border: 0.5px solid rgba(255,255,255,0.2); }
+
+  /* NAVIGAZIONE */
+  .nav-tabs {
+    background: white;
+    border-bottom: 0.5px solid var(--argilla);
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-tab {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: var(--grigio-muto);
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-tab:hover { color: var(--inchiostro); }
+  .nav-tab.attivo { color: var(--oro-scuro); border-bottom-color: var(--oro); }
+
+  /* CONTENUTO */
+  .sezione { display: none; padding: 2rem; max-width: 820px; margin: 0 auto; }
+  .sezione.visibile { display: block; }
+
+  /* TIPOGRAFIA */
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--inchiostro);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  h2 .numero {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grigio-muto);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--fumo);
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  p { font-size: 15px; margin-bottom: 1rem; color: var(--fumo); }
+
+  /* CITAZIONE BIBLICA */
+  .citazione-biblica {
+    background: var(--oro-chiaro);
+    border-left: 3px solid var(--oro);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .citazione-biblica blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--oro-scuro);
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+  }
+  .citazione-biblica cite {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grigio-muto);
+    font-style: normal;
+  }
+
+  /* SCHEMA COMPARATIVO */
+  .schema-adam {
+    background: white;
+    border: 0.5px solid var(--argilla);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .schema-adam-titolo {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grigio-muto);
+    margin-bottom: 1rem;
+  }
+  .schema-griglia {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  .schema-voce {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 6px;
+  }
+  .schema-voce-adam {
+    background: var(--fumo-chiaro);
+    border: 0.5px solid var(--argilla);
+  }
+  .schema-voce-ish {
+    background: var(--oro-chiaro);
+    border: 0.5px solid var(--oro);
+  }
+  .schema-voce-isha {
+    background: var(--terracotta-light);
+    border: 0.5px solid #C49A8A;
+  }
+  .schema-termine {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .schema-desc {
+    font-size: 12px;
+    color: var(--grigio-muto);
+    line-height: 1.4;
+  }
+  .schema-freccia {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--grigio-muto);
+    font-style: italic;
+  }
+  .schema-nota {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--argilla);
+    font-size: 13px;
+    color: var(--grigio-muto);
+    font-style: italic;
+  }
+
+  /* BOX FILOLOGICO */
+  .box-filologia {
+    background: var(--verde-salvia-light);
+    border: 0.5px solid #9AB894;
+    border-radius: 6px;
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .box-filologia-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--verde-salvia);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .termine-ebraico {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .heb {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--verde-salvia);
+    letter-spacing: 0.05em;
+  }
+  .heb-traslit {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--grigio-muto);
+    font-style: italic;
+  }
+  .heb-signif {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--fumo);
+  }
+
+  /* BOX DOMANDE */
+  .box-domande {
+    background: var(--terracotta-light);
+    border-left: 3px solid var(--terracotta);
+    border-radius: 0 6px 6px 0;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+  .box-domande-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+  .domanda {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--terracotta);
+    margin-bottom: 0.6rem;
+    padding-left: 0.5rem;
+    border-left: 0;
+    line-height: 1.5;
+  }
+
+  /* NOTE DOCENTE */
+  .collassabile-toggle {
+    background: none;
+    border: 0.5px solid var(--argilla);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--grigio-muto);
+    cursor: pointer;
+    margin: 1.5rem 0 0.5rem;
+    letter-spacing: 0.05em;
+  }
+  .collassabile-toggle:hover { color: var(--inchiostro); border-color: var(--inchiostro); }
+  .note-docente {
+    background: #F0EEE8;
+    border: 0.5px dashed var(--argilla);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--grigio-muto);
+    display: none;
+  }
+  .note-docente.aperte { display: block; }
+  .note-docente p { font-size: 13px; color: var(--grigio-muto); }
+
+  /* SEPARATORE */
+  .sep {
+    border: none;
+    border-top: 0.5px solid var(--argilla);
+    margin: 2rem 0;
+  }
+
+  /* CHIUSURA */
+  .chiusura-citazione {
+    background: var(--inchiostro);
+    color: var(--oro-chiaro);
+    padding: 2rem;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    text-align: center;
+  }
+  .chiusura-citazione blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+  .chiusura-citazione cite {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--argilla);
+    font-style: normal;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* SCHEMA TIMELINE PRIMA/DOPO */
+  .schema-timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .timeline-box {
+    border-radius: 6px;
+    padding: 1.25rem;
+  }
+  .timeline-box.prima {
+    background: #F9F0E0;
+    border: 0.5px solid var(--oro);
+  }
+  .timeline-box.dopo {
+    background: var(--verde-salvia-light);
+    border: 0.5px solid #9AB894;
+  }
+  .timeline-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .prima .timeline-label { color: var(--oro-scuro); }
+  .dopo .timeline-label { color: var(--verde-salvia); }
+  .timeline-box h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .prima h4 { color: var(--oro-scuro); }
+  .dopo h4 { color: var(--verde-salvia); }
+  .timeline-box p { font-size: 13px; }
+
+  @media (max-width: 600px) {
+    .schema-griglia { grid-template-columns: 1fr; }
+    .schema-freccia { transform: rotate(90deg); }
+    .schema-timeline { grid-template-columns: 1fr; }
+    .intestazione h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="intestazione">
+  <p class="intestazione-meta">IIS "Torricelli" · Roma · A.S. 2025/2026 · Prof. Matteo Sestili</p>
+  <h1><em>Adam</em>, <em>ish</em> e <em>isha</em></h1>
+  <h1 style="font-size:1.4rem; font-weight:400; color: var(--argilla); font-style:italic; font-family:'Cormorant Garamond',serif;">L'umanità indivisa e l'uguaglianza originaria in Genesi 2</h1>
+  <p class="intestazione-sub">Il primo capitolo dell'uguaglianza non è scritto dalla legge — è scritto dall'argilla</p>
+  <div class="badge-riga">
+    <span class="badge badge-oro">IV – V anno</span>
+    <span class="badge badge-muto">60 min</span>
+    <span class="badge badge-muto">Bioetica · Antropologia biblica</span>
+    <span class="badge badge-muto">Testo: Gn 2,18–25</span>
+  </div>
+</div>
+
+<nav class="nav-tabs" role="tablist">
+  <button class="nav-tab attivo" onclick="mostra(0)" role="tab">Hook</button>
+  <button class="nav-tab" onclick="mostra(1)" role="tab">Il Prima</button>
+  <button class="nav-tab" onclick="mostra(2)" role="tab">Il Testo</button>
+  <button class="nav-tab" onclick="mostra(3)" role="tab">Il Dopo</button>
+  <button class="nav-tab" onclick="mostra(4)" role="tab">Aggancio</button>
+  <button class="nav-tab" onclick="mostra(5)" role="tab">Domande</button>
+  <button class="nav-tab" onclick="mostra(6)" role="tab">Chiusura</button>
+</nav>
+
+<!-- 0. HOOK -->
+<section class="sezione visibile" id="sez-0">
+  <h2><span class="numero">Apertura · 5–10 min</span>«Dio ha fatto l'uomo e la donna uguali?»</h2>
+  <p>Scrivere alla lavagna, senza commentare, una sola riga:</p>
+  <div class="citazione-biblica">
+    <blockquote>«Non è bene che l'uomo sia solo: voglio fargli un aiuto che gli corrisponda.»</blockquote>
+    <cite>Genesi 2,18</cite>
+  </div>
+  <p>Chiedere alla classe: <em>Chi è «l'uomo» di cui si parla? Un maschio? L'umanità? E l'«aiuto» è qualcosa di inferiore o di uguale?</em></p>
+  <p>Lasciare emergere le risposte — probabilmente divise. Poi porre la provocazione vera:</p>
+  <div class="box-domande">
+    <p class="box-domande-label">Provocazione iniziale</p>
+    <p class="domanda">«Secondo voi, la Bibbia è il primo testo a fondare la parità tra uomo e donna — oppure è il primo testo che la nega?»</p>
+  </div>
+  <p style="font-size:14px; color: var(--grigio-muto);">Non dare la risposta. Annunciare che la lezione ci porterà a leggere Genesi 2 in modo molto diverso da quello che ci aspettiamo.</p>
+
+  <button class="collassabile-toggle" onclick="toggleNote(0)">+ Note per il docente</button>
+  <div class="note-docente" id="note-0">
+    <p>L'obiettivo dell'hook è creare disorientamento produttivo: molti studenti hanno sentito che la Bibbia «mette la donna in secondo piano» (la rib, la creazione da Adamo ecc.). Il punto di arrivo — che quella lettura è filologicamente errata — ha più impatto se i ragazzi partono dalla loro precomprensione.</p>
+    <p>Se la classe è vivace, si può anche scrivere alla lavagna le due tesi («Bibbia = parità» / «Bibbia = disuguaglianza») e tornare a esse alla fine.</p>
+  </div>
+</section>
+
+<!-- 1. IL PRIMA -->
+<section class="sezione" id="sez-1">
+  <h2><span class="numero">Il Prima · 15 min</span>Come leggevano questo testo — e come lo leggiamo ancora</h2>
+
+  <p>Per secoli, Genesi 2 è stato letto con una sequenza rigida:</p>
+
+  <div class="schema-timeline">
+    <div class="timeline-box prima">
+      <p class="timeline-label">Lettura tradizionale (errata)</p>
+      <h4>Prima viene Adamo</h4>
+      <p>Prima Dio crea l'uomo (maschio). Poi, come appendice, crea la donna dalla costola. L'ordine implica superiorità: Adamo è il soggetto principale, Eva è derivata.</p>
+    </div>
+    <div class="timeline-box dopo">
+      <p class="timeline-label">Conseguenza storica</p>
+      <h4>La donna come "secondo"</h4>
+      <p>Questa lettura ha alimentato per secoli teologie e legislazioni che relegavano la donna a ruolo subalterno: nell'eredità, nella testimonianza giuridica, nell'accesso all'istruzione e alla vita pubblica.</p>
+    </div>
+  </div>
+
+  <p>Ma questa lettura è corretta? Dipende interamente da <em>come si legge la parola ebraica <strong>adam</strong></em>.</p>
+
+  <div class="box-filologia">
+    <p class="box-filologia-label">Punto filologico chiave</p>
+    <div class="termine-ebraico">
+      <span class="heb">אָדָם</span>
+      <span class="heb-traslit">adam</span>
+      <span class="heb-signif">= «essere umano», «umanità», terreo — da <em>adamah</em> (terra, humus). <strong>Non significa «maschio».</strong></span>
+    </div>
+    <div class="termine-ebraico">
+      <span class="heb">אִישׁ</span>
+      <span class="heb-traslit">ish</span>
+      <span class="heb-signif">= «uomo» nel senso di maschio. Appare <em>solo dopo</em> la separazione.</span>
+    </div>
+    <div class="termine-ebraico">
+      <span class="heb">אִשָּׁה</span>
+      <span class="heb-traslit">isha</span>
+      <span class="heb-signif">= «donna». Appare <em>solo dopo</em> la separazione. Il nome stesso contiene <em>ish</em>: sono nominati insieme, nello stesso momento.</span>
+    </div>
+  </div>
+
+  <button class="collassabile-toggle" onclick="toggleNote(1)">+ Note per il docente</button>
+  <div class="note-docente" id="note-1">
+    <p>La distinzione adam/ish/isha è il cuore esegetico della lezione. Vale la pena scriverla alla lavagna con le tre parole. Fonti attendibili: Phyllis Trible, <em>God and the Rhetoric of Sexuality</em>, 1978; Claus Westermann, <em>Genesis 1–11</em>; per la tradizione rabbinica, il midrash su Bereishit e il Talmud babilonese (Eruvin 18a) parlano espressamente di «essere androgino» o «bifacciale» (du-partzufim).</p>
+    <p>Attenzione: non presentare questo come una lettura alternativa «moderna». È la lettura filologicamente più rigorosa del testo ebraico.</p>
+  </div>
+</section>
+
+<!-- 2. IL TESTO -->
+<section class="sezione" id="sez-2">
+  <h2><span class="numero">Il Testo · 15 min</span>Genesi 2 letto senza pregiudizi</h2>
+
+  <div class="citazione-biblica">
+    <blockquote>«Il Signore Dio plasmò l'uomo con polvere del suolo e soffiò nelle sue narici un alito di vita e l'uomo divenne un essere vivente.»</blockquote>
+    <cite>Genesi 2,7</cite>
+  </div>
+
+  <p>L'essere plasmato qui è <em>ha-adam</em> — non un maschio, ma l'umano. Una creatura indifferenziata, composta di terra (<em>adamah</em>) e soffio divino.</p>
+
+  <div class="citazione-biblica">
+    <blockquote>«Il Signore Dio costruì con la costola che aveva tolto all'uomo una donna e la condusse all'uomo. Allora l'uomo disse: "Questa volta è osso dalle mie ossa, carne dalla mia carne. La si chiamerà donna perché dall'uomo è stata tolta."»</blockquote>
+    <cite>Genesi 2,22–23</cite>
+  </div>
+
+  <p>Il testo ebraico qui è preciso e rivelatore: nel momento in cui appare <em>isha</em>, appare per la prima volta anche <em>ish</em>. I due termini nascono insieme, nello stesso versetto, come effetto della stessa separazione.</p>
+
+  <div class="schema-adam">
+    <p class="schema-adam-titolo">La struttura del racconto di Genesi 2</p>
+    <div class="schema-griglia">
+      <div class="schema-voce schema-voce-adam">
+        <span class="schema-termine" style="color: var(--fumo);">adam</span>
+        <span class="schema-desc">Essere umano indiviso.<br>Mascolinità e femminilità<br>in unità non ancora differenziata.</span>
+      </div>
+      <div class="schema-freccia">
+        separazione<br>↓<br>↑<br>tzela (costola/lato)
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <div class="schema-voce schema-voce-ish">
+          <span class="schema-termine" style="color: var(--oro-scuro);">ish</span>
+          <span class="schema-desc">Uomo / maschio.<br>Nasce <em>con</em> isha,<br>non prima di lei.</span>
+        </div>
+        <div class="schema-voce schema-voce-isha">
+          <span class="schema-termine" style="color: var(--terracotta);">isha</span>
+          <span class="schema-desc">Donna / femmina.<br>Nasce <em>con</em> ish,<br>non da lui per subordinazione.</span>
+        </div>
+      </div>
+    </div>
+    <p class="schema-nota">La parola ebraica <em>tzela</em> significa «lato», «fianco» — non semplicemente «costola». Alcuni esegeti traducono: Dio separò un lato dell'adam per farne due esseri distinti ma speculari.</p>
+  </div>
+
+  <h3>La parola-chiave: <em>ezer k'negdo</em></h3>
+  <div class="box-filologia">
+    <p class="box-filologia-label">Traduzione e significato</p>
+    <div class="termine-ebraico">
+      <span class="heb">עֵזֶר כְּנֶגְדּוֹ</span>
+      <span class="heb-traslit">ezer k'negdo</span>
+      <span class="heb-signif">= «aiuto di fronte a lui», «che gli corrisponde», «suo pari speculare». Non «aiutante» nel senso gerarchico.</span>
+    </div>
+    <p style="margin-top: 0.5rem; font-size: 13px;">La stessa parola <em>ezer</em> viene usata nei Salmi per indicare Dio come aiuto di Israele (Sal 121,2). Chi oserebbe dire che Dio è subordinato a Israele perché lo «aiuta»?</p>
+  </div>
+
+  <button class="collassabile-toggle" onclick="toggleNote(2)">+ Note per il docente</button>
+  <div class="note-docente" id="note-2">
+    <p>Il parallelo con i Salmi (ezer riferito a Dio) è molto efficace per far capire che «aiuto» non implica inferiorità. Puoi chiedere ai ragazzi: «Se Dio è l'"ezer" di Israele, significa che Dio è inferiore a Israele?»</p>
+    <p>Per il riferimento al Magistero: il Catechismo della Chiesa Cattolica al n. 369–373 tratta l'uguaglianza tra uomo e donna come dato rivelato. Giovanni Paolo II nelle Catechesi sull'amore umano (1979–1984) ha sviluppato esattamente questa lettura di Genesi 2, parlando di «unità originaria» dell'essere umano.</p>
+  </div>
+</section>
+
+<!-- 3. IL DOPO -->
+<section class="sezione" id="sez-3">
+  <h2><span class="numero">Il Dopo · 15 min</span>Dove la parità viene pervertita — e da che cosa</h2>
+
+  <p>Se Genesi 2 fonda la parità, Genesi 3 ne descrive la rottura. Il peccato non è la comparsa della sessualità (come spesso si fraintende): è la rottura della relazione di reciprocità.</p>
+
+  <div class="citazione-biblica">
+    <blockquote>«Verso tuo marito sarà il tuo istinto, ma egli ti dominerà.»</blockquote>
+    <cite>Genesi 3,16</cite>
+  </div>
+
+  <p>Questo versetto descrive una <em>conseguenza</em> del peccato — non un ordine di Dio. Il testo non dice «Dio vuole che l'uomo domini la donna»: dice che, a causa della rottura del rapporto con Dio, la relazione tra i due si deforma in dominio.</p>
+
+  <div class="schema-timeline">
+    <div class="timeline-box prima">
+      <p class="timeline-label">Prima del peccato (Gn 2)</p>
+      <h4>Reciprocità originaria</h4>
+      <p><em>Ish</em> e <em>isha</em> nascono insieme dalla stessa umanità indivisa. Nessuno precede l'altro. Il riconoscimento è immediato: «osso delle mie ossa».</p>
+    </div>
+    <div class="timeline-box dopo" style="background: var(--terracotta-light); border-color: #C49A8A;">
+      <p class="timeline-label" style="color: var(--terracotta);">Dopo il peccato (Gn 3)</p>
+      <h4 style="color: var(--terracotta);">Dominio come distorsione</h4>
+      <p>L'uomo «domina» la donna. Non è un decreto divino: è la descrizione di come il peccato corrompe la relazione. La struttura del dominio patriarcale ha radici nel peccato, non nella creazione.</p>
+    </div>
+  </div>
+
+  <h3>Il Magistero e la rilettura di Genesi 2</h3>
+  <p>Giovanni Paolo II, nelle <em>Catechesi sull'amore umano</em> (1979–1984), ha ricostruito esattamente questo percorso: <em>adam</em> come «solitudine originaria» dell'essere umano, poi «unità» nell'incontro dei due, poi la «nudità» come simbolo di trasparenza e dono reciproco <em>prima</em> che il peccato introducesse la vergogna e il dominio.</p>
+  <p>Il Concilio Vaticano II, nella <em>Gaudium et Spes</em> (n. 29), afferma che ogni discriminazione fondata sul sesso «deve essere superata e eliminata, come contraria al disegno di Dio».</p>
+
+  <button class="collassabile-toggle" onclick="toggleNote(3)">+ Note per il docente</button>
+  <div class="note-docente" id="note-3">
+    <p>Punto delicato: alcune tradizioni (anche cattoliche) hanno usato Genesi 3,16 per giustificare la subordinazione femminile. Essere onesti su questo è necessario. La risposta teologica corretta è: quella subordinazione è descritta come conseguenza del peccato, e Cristo viene per redimere anche questa distorsione. Gal 3,28 («non c'è più né maschio né femmina, tutti voi siete uno in Cristo Gesù») è la prospettiva escatologica che ribalta la condizione postlapsaria.</p>
+  </div>
+</section>
+
+<!-- 4. AGGANCIO CULTURALE -->
+<section class="sezione" id="sez-4">
+  <h2><span class="numero">Aggancio culturale · 10 min</span>La stessa domanda, con altri linguaggi</h2>
+
+  <h3>Platone e gli esseri sferici</h3>
+  <p>Nel <em>Simposio</em> di Platone, Aristofane racconta il mito degli esseri originari: creature sferiche, complete, divise dagli dei in due metà che si cercano per tutta la vita. La struttura narrativa è sorprendentemente simile a Genesi 2: un essere originario indiviso, separato, che ritrova la propria completezza nell'altro.</p>
+  <p>Domanda: è una coincidenza? O tutte le culture umane intuiscono qualcosa di vero sull'essere umano — che la solitudine originaria dell'io chiama un altro io speculare?</p>
+
+  <h3>Il linguaggio contemporaneo</h3>
+  <p>Oggi si parla molto di «parità di genere», «femminismo», «patriarcato». Sono discussioni reali e importanti. Ma spesso vengono trattate come questioni nate nel Novecento, senza radici.</p>
+  <p>La provocazione è: il primo testo della Bibbia — il testo fondativo della civiltà occidentale — dice già, in 3000 anni di anticipo, che maschio e femmina non sono gerarchici ma speculari. Che la parità non è una conquista moderna: è la condizione originaria dell'umanità, e il dominio è la sua corruzione.</p>
+
+  <div class="box-domande">
+    <p class="box-domande-label">Per la discussione</p>
+    <p class="domanda">«Se la parità fosse già scritta nell'origine, perché ci ha messo così tanto ad emergere nella storia?»</p>
+    <p class="domanda">«Tra la visione biblica (parità come condizione originaria corrotta dal peccato) e quella laica (parità come conquista progressiva della ragione), quale vi sembra più radicale?»</p>
+  </div>
+</section>
+
+<!-- 5. DOMANDE -->
+<section class="sezione" id="sez-5">
+  <h2><span class="numero">Conseguenze · 10–15 min</span>Cosa abbiamo ereditato — e cosa non sappiamo di avere</h2>
+
+  <p>Se Genesi 2 fonda la parità originaria, le sue conseguenze arrivano fino a oggi — spesso in modo invisibile.</p>
+
+  <div class="schema-timeline">
+    <div class="timeline-box prima">
+      <p class="timeline-label">Senza questa premessa</p>
+      <h4>Su cosa si fonda la parità?</h4>
+      <p>Se la parità tra uomo e donna non ha un fondamento ontologico (nell'essere umano come tale), su cosa si regge? Solo sulla forza della legge? Sul consenso sociale? E se il consenso cambia?</p>
+    </div>
+    <div class="timeline-box dopo">
+      <p class="timeline-label">Con questa premessa</p>
+      <h4>La parità come dato originario</h4>
+      <p>La visione biblica dice: la parità non va conquistata — va <em>riconosciuta</em>. È già lì, nell'origine. Il problema è che la distorsione (il peccato, la violenza, il potere) la copre. Il compito etico è togliere quella copertura.</p>
+    </div>
+  </div>
+
+  <div class="box-domande">
+    <p class="box-domande-label">Domande per la classe — nessuna risposta obbligata</p>
+    <p class="domanda">1. «Il racconto di Genesi 2 vi sembra più "avanzato" o più "antico" di come lo immaginavate, rispetto alla questione della parità?»</p>
+    <p class="domanda">2. «La lettura di ish e isha come originati insieme cambia qualcosa nel modo in cui pensate al rapporto tra uomo e donna? O no?»</p>
+    <p class="domanda">3. «Se il dominio è descritto dalla Bibbia stessa come una conseguenza del peccato, come si spiega che per secoli la Chiesa ha talvolta usato la Bibbia per giustificarlo?»</p>
+    <p class="domanda">4. (aperta) «Gal 3,28 dice: "non c'è più né maschio né femmina". È un testo utopico, o descrive qualcosa di già reale? E in che senso?»</p>
+  </div>
+
+  <button class="collassabile-toggle" onclick="toggleNote(5)">+ Note per il docente</button>
+  <div class="note-docente" id="note-5">
+    <p>La domanda 3 è la più difficile e la più onesta. Non eludere. La risposta storicamente corretta è che molti teologi (Agostino incluso, talvolta) hanno usato Gn 3,16 come prescrizione invece che come diagnosi. Il Magistero contemporaneo ha chiarito la distinzione. Ma riconoscere l'errore storico aumenta, non diminuisce, la credibilità della lettura corretta.</p>
+    <p>La domanda 4 è volutamente aperta: «già reale» nella dimensione sacramentale del battesimo (tutti ugualmente figli di Dio), ma non ancora pienamente realizzata nella storia. Tensione escatologica classica: «già / non ancora».</p>
+  </div>
+</section>
+
+<!-- 6. CHIUSURA -->
+<section class="sezione" id="sez-6">
+  <h2><span class="numero">Chiusura · 5 min</span>La domanda trasformata</h2>
+
+  <p>Si inizia chiedendo: «La Bibbia fonda la parità o la nega?»</p>
+  <p>Si arriva qui: la Bibbia descrive la parità come condizione originaria dell'umanità — e descrive il dominio come la sua distorsione, prodotta dal peccato.</p>
+  <p>La domanda non si chiude. Si trasforma:</p>
+
+  <div class="chiusura-citazione">
+    <blockquote>«Non si tratta di decidere se l'uomo e la donna siano uguali. Il testo dice che erano uno. La domanda vera è: cosa fa di noi, ogni giorno, qualcosa di meno di quell'uno?»</blockquote>
+    <cite>Domanda per portarsi a casa</cite>
+  </div>
+
+  <hr class="sep">
+
+  <div class="citazione-biblica">
+    <blockquote>«Non c'è più giudeo né greco; non c'è più schiavo né libero; non c'è più uomo né donna, poiché tutti voi siete uno in Cristo Gesù.»</blockquote>
+    <cite>Galati 3,28</cite>
+  </div>
+
+  <p style="font-size:14px; color: var(--grigio-muto);">Non commentare. Lasciare il testo a parlare da solo.</p>
+
+  <button class="collassabile-toggle" onclick="toggleNote(6)">+ Note per il docente</button>
+  <div class="note-docente" id="note-6">
+    <p>La chiusura con Gal 3,28 senza commento è volutamente aperta. Se la classe chiede, si può dire: «Questo testo di Paolo è stato scritto duemila anni fa. Quante delle sue parole sono già realtà?» — e lasciare la domanda.</p>
+    <p>Se il tempo lo consente, si può tornare alla lavagna con le due tesi di apertura («Bibbia = parità» / «Bibbia = disuguaglianza») e chiedere alla classe se vogliono modificare le loro posizioni iniziali. Non obbligarli.</p>
+  </div>
+</section>
+
+<div style="height: 3rem;"></div>
+
+<script>
+  const sezioni = document.querySelectorAll('.sezione');
+  const tabs = document.querySelectorAll('.nav-tab');
+
+  function mostra(i) {
+    sezioni.forEach((s, idx) => {
+      s.classList.toggle('visibile', idx === i);
+    });
+    tabs.forEach((t, idx) => {
+      t.classList.toggle('attivo', idx === i);
+    });
+  }
+
+  function toggleNote(i) {
+    const note = document.getElementById('note-' + i);
+    const toggle = note.previousElementSibling;
+    const aperte = note.classList.toggle('aperte');
+    toggle.textContent = (aperte ? '– ' : '+ ') + 'Note per il docente';
+  }
+</script>
+
+</body>
+</html>
