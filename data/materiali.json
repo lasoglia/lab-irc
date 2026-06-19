@@ -27,6 +27,14 @@
       "descrizione": "ESEMPIO. Scienza e fede in dialogo: il sacerdote che ipotizzò il Big Bang.",
       "link": "#",
       "in_evidenza": false
+    },
+    {
+      "in_evidenza": true,
+      "titolo": "genesi 2",
+      "anno": "4",
+      "lezione": "bibbia",
+      "tipo": "Documento/PDF",
+      "file": "/uploads/genesi2_adam_ish_isha_parita_genere.html"
     }
   ]
 }
