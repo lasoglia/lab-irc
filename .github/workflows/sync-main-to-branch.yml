@@ -1,0 +1,46 @@
+name: Sincronizza contenuti su branch verifiche
+
+# Perché esiste questo file
+# ---------------------------------------------------------------------
+# Il pannello di gestione (Decap CMS) scrive sempre sul branch "main"
+# (vedi admin/config.yml). Mentre sviluppiamo la piattaforma verifiche
+# su un branch separato, ogni modifica fatta dal pannello (materiali,
+# UDA, lezioni...) resta invisibile su quel branch finché non viene
+# unita. Questa Action lo fa automaticamente, ad ogni salvataggio.
+#
+# Quando il branch delle verifiche verrà unito definitivamente in
+# "main", questo file non serve più e si può eliminare.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  sincronizza:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verifica che il branch di sviluppo esista ancora
+        id: check
+        run: |
+          if git ls-remote --exit-code --heads origin claude/lab-irc-exam-platform-v2-712y8s >/dev/null 2>&1; then
+            echo "esiste=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "esiste=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Unisci main nel branch di sviluppo
+        if: steps.check.outputs.esiste == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout claude/lab-irc-exam-platform-v2-712y8s
+          git merge origin/main --no-edit
+          git push origin claude/lab-irc-exam-platform-v2-712y8s
