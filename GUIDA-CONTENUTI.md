@@ -12,10 +12,35 @@ in 1–2 minuti.
 - **Anno (1–5)** → tutti i materiali, strumenti e video di quell'anno
 - **Strumenti** → le app e gli artefatti interattivi
 - **Video** → i video di YouTube
+- **Verifiche** → la voce in alto porta all'area esami (`/esami`)
 - **Ricerca** → la barra in alto cerca in tutti i contenuti
 
 Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, Materiali,
 Strumenti, Video.
+
+---
+
+## L'aspetto: tema "Notte studio" (scuro/chiaro)
+
+Il sito usa di default un tema **scuro** moderno ("Notte studio"), pensato per
+tenere viva l'attenzione e rendere bene anche da proiettore o telefono. In basso
+a destra c'è un pulsante **🌙 / ☀️**: chi preferisce passa al **tema chiaro** con
+un clic. La scelta resta salvata su quel dispositivo (vale anche per le verifiche).
+
+I colori, i font e i "mattoncini" grafici stanno in un unico file riutilizzabile,
+`assets/lab-style.css`. Puoi vedere tutto lo stile dal vivo in
+`assets/anteprima-stile.html`.
+
+**Per gli artefatti/lezioni `.html` che costruiamo insieme:** ereditano lo stesso
+look (e l'interruttore tema) aggiungendo due righe nel loro `<head>`/fine `<body>`:
+
+```html
+<link rel="stylesheet" href="../assets/lab-style.css">
+<script src="../assets/lab-tema.js"></script>
+```
+
+(regola il numero di `../` in base a dove si trova il file). Così non serve più
+pensare alla grafica: la scrivo una volta e ogni artefatto la riusa.
 
 ---
 

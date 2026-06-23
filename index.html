@@ -18,9 +18,47 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+<!-- Applica subito il tema salvato (chiaro/scuro) per evitare il "lampo".
+     Default del sito = scuro ("Notte studio"). Chiave condivisa con artefatti e verifiche. -->
+<script>try{var t=localStorage.getItem('tema_lab');if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+
 <style>
 
+/* ===== NOTTE STUDIO — tema scuro (default) ===== */
 :root{
+  --bg:#14131F;
+  --bg2:#1E1C2E;
+  --ink:#ECEAF5;
+  --ink-soft:#C7C3DA;
+  --muted:#8E89A6;
+  --line:#322E45;
+  --brand:#A78BFA;
+  --brand-d:#7C5CE0;
+  --gold:#FBBF24;
+  --accent:#A78BFA;
+  --shadow:0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --shadow-lg:0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+  --radius:18px;
+  /* elementi a tema (cambiano fra chiaro e scuro) */
+  --header-bg:rgba(20,19,31,.82);
+  --hover-tint:rgba(139,92,246,.16);
+  --pensiero-bg:rgba(255,255,255,.05);
+  --ficon-base:var(--bg2);
+  --about-bg:linear-gradient(160deg,#221F33,#191726);
+  --about-ink:#ECEAF5;
+  --about-ink-soft:#C7C3DA;
+  --viewer-bar-bg:#191726;
+  --media-bg:#272438;
+  --bdg-str-bg:rgba(139,92,246,.20); --bdg-str-ink:#C4B5FD;
+  --bdg-vid-bg:rgba(244,114,182,.20); --bdg-vid-ink:#F9A8D4;
+  --bdg-mat-bg:rgba(52,211,153,.18); --bdg-mat-ink:#6EE7B7;
+  /* colori dei 5 anni (versione brillante per fondo scuro) */
+  --anno-1:#FF7A59; --anno-2:#4FB0FF; --anno-3:#A78BFA; --anno-4:#FB7BB5; --anno-5:#FBBF24;
+  --c-strumento:#A78BFA; --c-video:#FB7BB5;
+  color-scheme:dark;
+}
+/* ===== Tema chiaro (l'aspetto editoriale precedente) ===== */
+html[data-tema="chiaro"]{
   --bg:#FAF7F1;
   --bg2:#FFFFFF;
   --ink:#1B1822;
@@ -33,7 +71,21 @@
   --accent:#0E7C6B;
   --shadow:0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
   --shadow-lg:0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.4);
-  --radius:18px;
+  --header-bg:rgba(250,247,241,.85);
+  --hover-tint:rgba(14,124,107,.08);
+  --pensiero-bg:rgba(255,255,255,.6);
+  --ficon-base:#fff;
+  --about-bg:#1B1822;
+  --about-ink:#EFE9DF;
+  --about-ink-soft:#DAD3C7;
+  --viewer-bar-bg:#1B1822;
+  --media-bg:#eee;
+  --bdg-str-bg:#EFEAF7; --bdg-str-ink:#5A3FA0;
+  --bdg-vid-bg:#FBE3EC; --bdg-vid-ink:#A52E62;
+  --bdg-mat-bg:#E7F0EC; --bdg-mat-ink:#0C6253;
+  --anno-1:#E2603B; --anno-2:#2D7DD2; --anno-3:#6A4FB0; --anno-4:#C8417B; --anno-5:#C98A1E;
+  --c-strumento:#6A4FB0; --c-video:#C8417B;
+  color-scheme:light;
 }
 
 *{box-sizing:border-box}
@@ -57,7 +109,7 @@ a{color:var(--brand)}
 
 header{
   position:sticky; top:0; z-index:40;
-  background:rgba(250,247,241,.85); backdrop-filter:saturate(160%) blur(12px);
+  background:var(--header-bg); backdrop-filter:saturate(160%) blur(12px);
   border-bottom:1px solid var(--line);
 }
 
@@ -80,7 +132,7 @@ nav a{
   padding:7px 12px; border-radius:9px; transition:.15s ease;
 }
 
-nav a:hover{background:rgba(14,124,107,.08); color:var(--brand)}
+nav a:hover{background:var(--hover-tint); color:var(--brand)}
 
 .search{
   display:flex; align-items:center; gap:7px; background:var(--bg2);
@@ -114,7 +166,7 @@ nav a:hover{background:rgba(14,124,107,.08); color:var(--brand)}
 
 .pensiero{
   display:inline-flex; align-items:center; gap:9px; font-style:italic; color:var(--ink-soft);
-  background:rgba(255,255,255,.6); border:1px solid var(--line); border-radius:999px;
+  background:var(--pensiero-bg); border:1px solid var(--line); border-radius:999px;
   padding:7px 16px; font-size:14.5px; margin-bottom:22px;
 }
 
@@ -179,9 +231,9 @@ h1{
 
 .fcard:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
 
-.ficon{width:40px; height:40px; border-radius:11px; background:rgba(27,24,34,.06); color:var(--c); display:grid; place-items:center; margin-bottom:8px; flex:none}
+.ficon{width:40px; height:40px; border-radius:11px; background:var(--media-bg); color:var(--c); display:grid; place-items:center; margin-bottom:8px; flex:none}
 
-@supports (background:color-mix(in srgb,red,blue)){.ficon{background:color-mix(in srgb,var(--c) 13%, #fff)}}
+@supports (background:color-mix(in srgb,red,blue)){.ficon{background:color-mix(in srgb,var(--c) 16%, var(--ficon-base))}}
 
 .ftitle{font-family:"Fraunces",serif; font-weight:600; font-size:19px; line-height:1.25}
 
@@ -248,7 +300,7 @@ h1{
   text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:2px;
 }
 
-.cmedia{height:148px; background-size:cover; background-position:center; position:relative; background-color:#eee}
+.cmedia{height:148px; background-size:cover; background-position:center; position:relative; background-color:var(--media-bg)}
 
 .cmedia.grad{display:grid; place-items:center; background-image:linear-gradient(135deg,rgba(255,255,255,.20),rgba(0,0,0,.30))}
 
@@ -264,11 +316,11 @@ h1{
 
 .cbody{padding:18px 20px 20px; display:flex; flex-direction:column; gap:10px; flex:1}
 
-.badge{align-self:flex-start; font-size:11.5px; font-weight:700; letter-spacing:.03em; padding:4px 11px; border-radius:7px; background:#EFEAF7; color:#5A3FA0}
+.badge{align-self:flex-start; font-size:11.5px; font-weight:700; letter-spacing:.03em; padding:4px 11px; border-radius:7px; background:var(--bdg-str-bg); color:var(--bdg-str-ink)}
 
-.badge[data-k="video"]{background:#FBE3EC; color:#A52E62}
+.badge[data-k="video"]{background:var(--bdg-vid-bg); color:var(--bdg-vid-ink)}
 
-.badge[data-k="materiale"]{background:#E7F0EC; color:#0C6253}
+.badge[data-k="materiale"]{background:var(--bdg-mat-bg); color:var(--bdg-mat-ink)}
 
 .card h3{font-family:"Fraunces",serif; font-weight:600; font-size:21px; line-height:1.2; margin:0; letter-spacing:-.01em}
 
@@ -313,7 +365,7 @@ h1{
 
 .sec-hero p{margin:0; opacity:.92; max-width:56ch}
 
-.about{margin:66px 0 0; padding:38px 34px; background:var(--ink); color:#EFE9DF; border-radius:22px; position:relative; overflow:hidden}
+.about{margin:66px 0 0; padding:38px 34px; background:var(--about-bg); color:var(--about-ink); border-radius:22px; position:relative; overflow:hidden}
 
 .about::after{content:"✦"; position:absolute; right:-4px; bottom:-26px; font-size:150px; color:rgba(255,255,255,.05); line-height:1}
 
@@ -321,7 +373,7 @@ h1{
 
 .about h2{font-family:"Fraunces",serif; font-weight:600; font-size:28px; margin:4px 0 14px}
 
-.about p{margin:0; max-width:64ch; color:#DAD3C7; font-size:16px}
+.about p{margin:0; max-width:64ch; color:var(--about-ink-soft); font-size:16px}
 
 .about a.mail{color:#fff; font-weight:700; text-decoration:none; border-bottom:1.5px solid rgba(255,255,255,.45)}
 
@@ -338,7 +390,7 @@ footer a{color:var(--muted)}
 
 .viewer.on{display:flex}
 
-.viewer-bar{height:56px; background:var(--ink); color:#fff; display:flex; align-items:center; gap:10px; padding:0 16px; flex:none}
+.viewer-bar{height:56px; background:var(--viewer-bar-bg); color:#fff; display:flex; align-items:center; gap:10px; padding:0 16px; flex:none}
 
 .viewer-back{display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.1); border:none; color:#fff; font-family:inherit; font-size:13.5px; font-weight:700; cursor:pointer; padding:7px 13px; border-radius:9px; transition:.15s ease; white-space:nowrap}
 
@@ -349,6 +401,17 @@ footer a{color:var(--muted)}
 .viewer-frame{flex:1; border:none; background:#fff; width:100%}
 
 body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.viewing > footer{display:none}
+
+/* Interruttore tema chiaro/scuro (lo crea assets/lab-tema.js) */
+#labTema{
+  position:fixed; right:16px; bottom:16px; z-index:60;
+  width:46px; height:46px; border-radius:50%;
+  border:1px solid var(--line); background:var(--bg2); color:var(--ink);
+  font-size:20px; cursor:pointer; box-shadow:var(--shadow);
+  display:grid; place-items:center; transition:transform .18s ease, box-shadow .2s ease;
+}
+#labTema:hover{transform:translateY(-3px) scale(1.05); box-shadow:var(--shadow-lg)}
+body.viewing #labTema{display:none}
 
 .reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
 
@@ -378,6 +441,7 @@ body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.vie
     <nav>
       <a class="opt" href="#strumenti">Strumenti</a>
       <a class="opt" href="#video">Video</a>
+      <a href="esami/">Verifiche</a>
       <a class="opt" href="#chisono">Chi sono</a>
     </nav>
   </div>
@@ -424,16 +488,18 @@ function resolvePath(p){
   return BASE + p;
 }
 
+/* I colori puntano alle variabili CSS (--anno-N), così seguono da soli
+   il tema chiaro/scuro senza dover rigenerare le schede. */
 const ANNI = [
-  {n:"1", rom:"I",   nome:"Primo anno",   color:"#E2603B"},
-  {n:"2", rom:"II",  nome:"Secondo anno", color:"#2D7DD2"},
-  {n:"3", rom:"III", nome:"Terzo anno",   color:"#6A4FB0"},
-  {n:"4", rom:"IV",  nome:"Quarto anno",  color:"#C8417B"},
-  {n:"5", rom:"V",   nome:"Quinto anno",  color:"#C98A1E"},
+  {n:"1", rom:"I",   nome:"Primo anno",   color:"var(--anno-1)"},
+  {n:"2", rom:"II",  nome:"Secondo anno", color:"var(--anno-2)"},
+  {n:"3", rom:"III", nome:"Terzo anno",   color:"var(--anno-3)"},
+  {n:"4", rom:"IV",  nome:"Quarto anno",  color:"var(--anno-4)"},
+  {n:"5", rom:"V",   nome:"Quinto anno",  color:"var(--anno-5)"},
 ];
 
-const BRAND = "#0E7C6B";
-const ACC = {strumento:"#6A4FB0", video:"#C8417B"};
+const BRAND = "var(--brand)";
+const ACC = {strumento:"var(--c-strumento)", video:"var(--c-video)"};
 const KEY = {"1":"primo","2":"secondo","3":"terzo","4":"quarto","5":"quinto"};
 
 let SITE={}, ANNIDESC={}, MAT=[], STR=[], VID=[], UDA=[], LEZ=[], ITEMS=[];
@@ -1037,6 +1103,9 @@ $("#brandLink").addEventListener("click",e=>{
 init();
 
 </script>
+
+<!-- interruttore tema chiaro/scuro condiviso (stessa logica dell'area verifiche) -->
+<script src="assets/lab-tema.js"></script>
 
 </body>
 </html>
