@@ -84,7 +84,6 @@ function mostraInizio() {
     (dati.risposte || []).forEach((r) => { risposte[r.domanda_id] = r.contenuto; });
     stato = {
       token_consegna: dati.token_consegna,
-      consegna_id: dati.consegna_id,
       started_at: dati.started_at,
       durata: dati.esame.durata_minuti,
       titolo: dati.esame.titolo,
@@ -175,15 +174,12 @@ function attivaAnticheat() {
   });
 }
 
-// Invia l'evento anticheat a Supabase
+// Invia l'evento anticheat tramite l'Edge Function: lo studente (ruolo anon)
+// non può scrivere direttamente sulla tabella (RLS nega tutto per default).
 async function registraEvento(tipo, dettagli = {}) {
-  if (!stato?.consegna_id) return;
+  if (!stato?.token_consegna) return;
   try {
-    await sb.from("eventi_anticheat").insert({
-      consegna_id: stato.consegna_id,
-      tipo,
-      dettagli,
-    });
+    await invocaFunzione(sb, "registra-evento-anticheat", { token_consegna: stato.token_consegna, tipo, dettagli });
   } catch (_e) {
     // Silenzioso: non blocchiamo la verifica per un errore di logging
   }
@@ -205,6 +201,11 @@ function renderBarra() {
 function renderDomande() {
   main.innerHTML = "";
   const cont = el("div", {});
+  if (stato.anticheat) {
+    cont.append(el("p", { class: "nota" },
+      el("b", {}, "ℹ️ Controllo anti-cheat attivo: "),
+      "copia/incolla e tasto destro sono disattivati; se cambi scheda o finestra viene registrato e visto dall'insegnante."));
+  }
   stato.domande.forEach((d, i) => cont.append(renderDomanda(d, i)));
   cont.append(el("div", { class: "azioni", style: "margin-top:20px" },
     el("button", { class: "btn oro", id: "btnConsegna", onclick: confermaConsegna }, "Consegna la verifica")));

@@ -186,6 +186,34 @@ Cosa cambia:
 
 ---
 
+## Novità della Fase 4 (anti-cheat: la registrazione ora funziona davvero)
+
+Durante un controllo è emerso che gli eventi anti-cheat (cambio scheda,
+perdita del focus della finestra) **non venivano mai salvati**: il sito
+provava a scriverli direttamente nel database con la chiave pubblica, ma le
+regole di sicurezza lo impediscono sempre (come deve essere: lo studente non
+può scrivere a piacere nel database). L'interruttore "Attiva il controllo
+anti-cheat" della Fase 3 quindi bloccava davvero copia/incolla, ma non
+registrava nulla da mostrare al docente.
+
+Questa volta c'è **una nuova funzione da caricare** su Supabase (stessa
+procedura della Parte C):
+
+```bash
+supabase functions deploy registra-evento-anticheat
+```
+
+Cosa cambia:
+
+- Gli eventi anti-cheat (cambio scheda/finestra) vengono ora registrati
+  davvero lato server e compaiono cliccando "Correggi" sulla singola
+  consegna, come previsto fin dalla Fase 3.
+- Quando l'anti-cheat è attivo, allo studente compare ora un avviso prima
+  di iniziare la verifica, che spiega in modo chiaro cosa viene bloccato e
+  cosa viene registrato: nessuna sorpresa, trasparenza totale.
+
+---
+
 ## Privacy (leggi prima dell'uso reale)
 
 - Di default si usano **codici pseudonimi**, non nomi reali: la corrispondenza
