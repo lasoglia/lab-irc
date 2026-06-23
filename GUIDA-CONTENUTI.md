@@ -8,14 +8,15 @@ in 1–2 minuti.
 
 ## La nuova struttura
 
-- **Home** → i 5 anni di corso + scorciatoie a Strumenti e Video
+- **Home** → i 5 anni di corso + scorciatoie a Lezioni, Strumenti e Video
 - **Anno (1–5)** → tutti i materiali, strumenti e video di quell'anno
+- **Lezioni** → tutte le lezioni-pagina (artefatti HTML), raggruppate per anno e UDA
 - **Strumenti** → le app e gli artefatti interattivi
 - **Video** → i video di YouTube
-- **Ricerca** → la barra in alto cerca in tutti i contenuti
+- **Ricerca** → la barra in alto cerca in tutti i contenuti (lezioni comprese)
 
-Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, Materiali,
-Strumenti, Video.
+Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, UDA,
+Lezioni, Materiali, Strumenti, Video.
 
 ---
 
@@ -86,6 +87,44 @@ pulsante per tornare indietro. Perfetto da proiettare o da far usare ai ragazzi.
 > visualizzazioni, bacheche) funzionano perfettamente sul sito. Gli artefatti che
 > dialogano "dal vivo" con l'AI funzionano solo dentro l'app di Claude e non una
 > volta pubblicati qui: per il sito costruiremo quindi strumenti autonomi.
+
+---
+
+## 4. Pubblicare una lezione come pagina del sito (con un indirizzo suo)
+
+Quando una lezione è un artefatto `.html` (una lezione interattiva costruita
+insieme), puoi pubblicarla come **vera pagina sfogliabile** del sito: si apre
+**dentro** il sito nel browser (non si scarica) e ha un **indirizzo tutto suo**
+che puoi copiare e condividere con la classe.
+
+1. Pannello → **📖 Lezioni** → *Add lezione*.
+2. **Titolo della lezione** (es. "Lezione 1 — Il caso Galileo").
+3. Scegli l'**Anno di corso** e l'**UDA di appartenenza** (la cartella).
+   *Suggerimento:* se l'UDA non esiste ancora, creala prima nella sezione **🗂 UDA**.
+4. (Facoltativo) **Descrizione** e **Numero della lezione** (1, 2, 3… serve sia
+   come numero sia per l'ordine in cui compaiono).
+5. Nel campo **"Pagina HTML della lezione (l'artefatto)"** carica il file `.html`.
+   (In alternativa puoi incollare un **link esterno**: in quel caso la lezione si
+   aprirà in una nuova scheda.)
+6. **Publish**. Dopo 1–2 minuti la lezione è online.
+
+**Dove la trovi e come si condivide:**
+- Nel menù in alto compare la voce **Lezioni**: è l'indice di tutte le lezioni,
+  raggruppate per **Anno → UDA**, con un link diretto a ciascuna.
+- La lezione compare anche dentro la sua UDA (con l'icona "pagina" e la scritta
+  "Apri lezione").
+- Aprendo la lezione, l'indirizzo nella barra del browser è quello **proprio**
+  della lezione (finisce con `.../#anno/…/uda/…/lezione/…`): copialo per
+  condividerlo. Chi lo apre vede subito la lezione dentro il sito.
+- Dentro la pagina della lezione c'è il pulsante **"A tutto schermo"** (comodo da
+  proiettare) e **"Apri in una nuova scheda"**.
+
+> Nota: se in passato avevi caricato una lezione `.html` come **Materiale** o
+> **Strumento**, continua a funzionare. Per darle un indirizzo proprio e farla
+> comparire nell'indice **Lezioni**, ri-caricala qui nella sezione **Lezioni**.
+
+> Come per gli strumenti, valgono gli artefatti **autonomi**: non serve Supabase,
+> è tutto sito pubblico e si aggiorna da solo dopo *Publish*.
 
 ---
 
