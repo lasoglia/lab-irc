@@ -90,7 +90,6 @@ Deno.serve(async (req) => {
 
     return jsonResponse({
       token_consegna: consegna.token_consegna,
-      consegna_id: consegna.id,
       started_at: consegna.started_at,
       esame: {
         titolo: esame.titolo,
