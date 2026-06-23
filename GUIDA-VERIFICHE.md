@@ -161,6 +161,31 @@ Cosa cambia per chi usa il sito:
 
 ---
 
+## Novità della Fase 3 (statistiche e anti-cheat opzionale)
+
+Questa volta non c'è nessuna funzione da ricaricare su Supabase: sono solo
+modifiche al sito, quindi bastano 1-2 minuti dopo il salvataggio su GitHub
+perché compaiano online.
+
+Cosa cambia:
+
+- **Statistiche nei risultati**: aprendo "Risultati" di una verifica trovi
+  ora un riquadro con consegne ricevute, media, voto più alto/più basso e,
+  per ogni domanda, la percentuale di risposte corrette (scelta multipla) o
+  il punteggio medio assegnato (risposta aperta).
+- **Esporta CSV**: nella pagina "Risultati" c'è un pulsante "Esporta CSV"
+  che scarica un file apribile con Excel o Fogli Google, con tutti i dati
+  della tabella (utile per il registro o per condividerli).
+- **Interruttore anti-cheat**: nell'editor di una verifica (quando è in
+  bozza) trovi ora la voce "Attiva il controllo anti-cheat per questa
+  verifica". È **spenta di default**: se la lasci com'è, nulla cambia per
+  gli studenti. Se la attivi, durante quella verifica copia/incolla e tasto
+  destro sono bloccati e il sistema registra se lo studente cambia
+  scheda/finestra; questi eventi si vedono poi cliccando "Correggi" sulla
+  singola consegna.
+
+---
+
 ## Privacy (leggi prima dell'uso reale)
 
 - Di default si usano **codici pseudonimi**, non nomi reali: la corrispondenza

@@ -180,11 +180,15 @@ function mostraLink(e) {
 //  Editor verifica (solo in stato bozza)
 // ---------------------------------------------------------------------
 async function apriEditor(id = null) {
-  editor = { id, titolo: "", classe: "", durata: 30, mostraNomi: false, domande: [] };
+  editor = { id, titolo: "", classe: "", durata: 30, mostraNomi: false, anticheat: false, domande: [] };
 
   if (id) {
     const { data: e } = await sb.from("esami").select("*").eq("id", id).single();
-    if (e) { editor.titolo = e.titolo; editor.classe = e.classe; editor.durata = e.durata_minuti; editor.mostraNomi = e.mostra_nomi_reali; }
+    if (e) {
+      editor.titolo = e.titolo; editor.classe = e.classe; editor.durata = e.durata_minuti;
+      editor.mostraNomi = e.mostra_nomi_reali;
+      editor.anticheat = !!(e.anticheat_config && e.anticheat_config.attivo);
+    }
     const { data: dom } = await sb.from("domande").select("*").eq("esame_id", id).order("ordine");
     const ids = (dom ?? []).map((d) => d.id);
     const { data: sol } = ids.length ? await sb.from("soluzioni").select("*").in("domanda_id", ids) : { data: [] };
@@ -219,7 +223,15 @@ function renderEditor() {
     el("div", { class: "nota" },
       el("b", {}, "Privacy: "),
       "di norma gli studenti si identificano con un codice + la classe, non con nome e cognome. " +
-      "Attiva i nomi reali solo dopo aver verificato la base giuridica con DS/DSGA/DPO della scuola.")
+      "Attiva i nomi reali solo dopo aver verificato la base giuridica con DS/DSGA/DPO della scuola."),
+    el("label", { style: "display:flex;gap:8px;align-items:center;font-weight:400;margin-top:10px" },
+      checkbox("edAnticheat", editor.anticheat),
+      el("span", {}, "Attiva il controllo anti-cheat per questa verifica")),
+    el("div", { class: "nota" },
+      el("b", {}, "Anti-cheat: "),
+      "se attivo, durante la verifica copia/incolla e tasto destro sono bloccati e il sistema registra " +
+      "se lo studente cambia scheda o finestra (visibile poi in \"Correggi\"). È spento di default: " +
+      "attivalo solo se è davvero necessario per questa verifica.")
   );
 
   const domCard = el("div", { class: "card" }, el("h2", {}, "Domande"));
@@ -287,6 +299,7 @@ function leggiDom() {
     editor.classe = $("#edClasse").value.trim();
     editor.durata = parseInt($("#edDurata").value, 10) || 1;
     editor.mostraNomi = $("#edNomi").checked;
+    editor.anticheat = $("#edAnticheat").checked;
   }
 }
 
@@ -306,6 +319,7 @@ async function salva() {
   const base = {
     titolo: editor.titolo, classe: editor.classe,
     durata_minuti: editor.durata, mostra_nomi_reali: editor.mostraNomi,
+    anticheat_config: { attivo: editor.anticheat },
     stato: "bozza",
   };
 
@@ -354,11 +368,13 @@ async function mostraRisultati(esameId) {
     el("div", { class: "lista-esame" },
       el("h1", {}, "Risultati — " + esc(e?.titolo ?? "")),
       el("span", { class: "spazio" }),
+      consegne?.length ? el("button", { class: "btn ghost piccolo", onclick: () => esportaCsv(e, consegne) }, "Esporta CSV") : null,
       el("button", { class: "btn ghost", onclick: mostraDashboard }, "← Torna")));
 
   if (!consegne?.length) {
     card.append(el("p", { class: "muted" }, "Ancora nessuna consegna."));
   } else {
+    card.append(await renderStatistiche(esameId, consegne));
     const tab = el("table", {},
       el("thead", {}, el("tr", {},
         el("th", {}, e?.mostra_nomi_reali ? "Studente" : "Codice"),
@@ -390,6 +406,93 @@ async function mostraRisultati(esameId) {
   }
   main.innerHTML = "";
   main.append(card);
+}
+
+// ---------------------------------------------------------------------
+//  Statistiche aggregate (media, distribuzione, per-domanda)
+// ---------------------------------------------------------------------
+async function renderStatistiche(esameId, consegne) {
+  const finite = consegne.filter((c) => c.percentuale != null);
+  const numConsegnate = consegne.filter((c) => c.stato !== "in_corso").length;
+  const numCorrette = consegne.filter((c) => c.stato === "corretta").length;
+
+  const cont = el("div", { class: "card", style: "background:var(--bg)" }, el("h2", { style: "margin-top:0" }, "Statistiche"));
+  const riepilogo = el("div", { style: "display:flex;gap:24px;flex-wrap:wrap;margin-bottom:14px" });
+  riepilogo.append(
+    statBox("Consegne", `${numConsegnate} / ${consegne.length}`),
+    statBox("Corrette", numCorrette),
+    statBox("Media", finite.length ? media(finite.map((c) => c.percentuale)).toFixed(1) + "%" : "—"),
+    statBox("Più alta", finite.length ? Math.max(...finite.map((c) => c.percentuale)) + "%" : "—"),
+    statBox("Più bassa", finite.length ? Math.min(...finite.map((c) => c.percentuale)) + "%" : "—"));
+  cont.append(riepilogo);
+
+  const { data: domande } = await sb.from("domande").select("id, tipo, testo, punteggio").eq("esame_id", esameId).order("ordine");
+  const consegneIds = consegne.map((c) => c.id);
+  const { data: risposte } = consegneIds.length
+    ? await sb.from("risposte").select("domanda_id, contenuto, corretto, punteggio_ottenuto").in("consegna_id", consegneIds)
+    : { data: [] };
+
+  if (domande?.length && risposte?.length) {
+    const perDomanda = el("table", { style: "font-size:.9rem" },
+      el("thead", {}, el("tr", {}, el("th", {}, "Domanda"), el("th", {}, "Risposte"), el("th", {}, "Esito medio"))));
+    const tb = el("tbody", {});
+    for (const d of domande) {
+      const risp = risposte.filter((r) => r.domanda_id === d.id);
+      if (!risp.length) continue;
+      let esito;
+      if (d.tipo === "scelta_multipla") {
+        const corrette = risp.filter((r) => r.corretto === true).length;
+        esito = `${Math.round((corrette / risp.length) * 100)}% corrette`;
+      } else {
+        const valutate = risp.filter((r) => r.punteggio_ottenuto != null);
+        esito = valutate.length
+          ? `${media(valutate.map((r) => r.punteggio_ottenuto)).toFixed(1)} / ${d.punteggio} pt medi`
+          : "da correggere";
+      }
+      tb.append(el("tr", {},
+        el("td", {}, esc(d.testo.length > 60 ? d.testo.slice(0, 60) + "…" : d.testo)),
+        el("td", {}, risp.length),
+        el("td", {}, esito)));
+    }
+    perDomanda.append(tb);
+    cont.append(el("div", { class: "tabella-scroll" }, perDomanda));
+  }
+  return cont;
+}
+
+function statBox(etichetta, valore) {
+  return el("div", {}, el("div", { class: "muted piccolo" }, etichetta), el("div", { style: "font-size:1.4rem;font-weight:800" }, String(valore)));
+}
+
+function media(numeri) { return numeri.reduce((s, n) => s + n, 0) / numeri.length; }
+
+// ---------------------------------------------------------------------
+//  Esportazione risultati in CSV
+// ---------------------------------------------------------------------
+function esportaCsv(esame, consegne) {
+  const intestazioni = [esame?.mostra_nomi_reali ? "Studente" : "Codice", "Classe", "Punteggio", "Punteggio max", "Percentuale", "Stato", "Consegnata il"];
+  const righe = consegne.map((c) => [
+    esame?.mostra_nomi_reali && c.nome_reale ? c.nome_reale : c.codice_studente,
+    c.classe,
+    c.punteggio ?? "",
+    c.punteggio_max ?? "",
+    c.percentuale ?? "",
+    etichettaStato(c.stato),
+    c.submitted_at ? new Date(c.submitted_at).toLocaleString("it-IT") : "",
+  ]);
+  const csv = [intestazioni, ...righe]
+    .map((riga) => riga.map(campoCsv).join(";"))
+    .join("\r\n");
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+  const a = el("a", { href: URL.createObjectURL(blob), download: `risultati-${(esame?.titolo || "verifica").replace(/[^a-z0-9]+/gi, "-")}.csv` });
+  document.body.append(a);
+  a.click();
+  a.remove();
+}
+
+function campoCsv(v) {
+  const s = String(v ?? "");
+  return /[;"\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
 // ---------------------------------------------------------------------
