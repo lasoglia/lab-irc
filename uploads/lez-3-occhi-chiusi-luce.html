@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gli occhi chiusi davanti alla luce — Lezione IRC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1A1814;
+  --ink-soft: #4A453C;
+  --parchment: #F2EAD8;
+  --parchment-warm: #EDE3CC;
+  --night: #0F1620;
+  --night-soft: #1C2735;
+  --gold: #C49A5A;
+  --gold-deep: #9B7838;
+  --rust: #8B4423;
+  --line: rgba(26, 24, 20, 0.12);
+  --line-light: rgba(242, 234, 216, 0.18);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: var(--ink);
+  background: var(--parchment);
+  line-height: 1.65;
+  font-size: 17px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============ NAVIGATORE ============ */
+.breadcrumb {
+  background: var(--parchment-warm);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.breadcrumb-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+.breadcrumb span:not(:last-child)::after {
+  content: '→';
+  margin-left: 16px;
+  color: var(--gold-deep);
+}
+.breadcrumb .current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ============ HERO ============ */
+.hero {
+  background: var(--night);
+  color: var(--parchment);
+  padding: 120px 32px 140px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(196, 154, 90, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero .eyebrow::before, .hero .eyebrow::after {
+  content: '';
+  height: 1px;
+  background: var(--gold);
+  flex: 0 1 40px;
+  opacity: 0.5;
+}
+.hero .eyebrow::after { flex: 1; opacity: 0.2; }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+  font-weight: 400;
+}
+.hero .subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(242, 234, 216, 0.75);
+  max-width: 560px;
+  line-height: 1.4;
+}
+.hero-meta {
+  display: flex;
+  gap: 40px;
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-light);
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 216, 0.5);
+}
+.hero-meta-item strong {
+  display: block;
+  color: var(--parchment);
+  font-weight: 500;
+  margin-top: 6px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+
+/* ============ DOMANDA GENERATIVA ============ */
+.opening-question {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 100px 32px 80px;
+  text-align: center;
+}
+.opening-question .label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 32px;
+  font-weight: 600;
+}
+.opening-question .q {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.25;
+  font-style: italic;
+  color: var(--ink);
+  font-weight: 400;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ============ SECTION GENERICA ============ */
+section.content {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.section-wrap {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+}
+.section-wrap:first-of-type { border-top: none; }
+
+.section-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--gold-deep);
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 48px);
+  line-height: 1.1;
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.section-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+.section-body p {
+  margin-bottom: 22px;
+}
+.section-body p:last-child { margin-bottom: 0; }
+
+/* Citazioni inline */
+.cite {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.08em;
+  color: var(--ink);
+}
+
+/* Riferimento */
+.ref {
+  color: var(--gold-deep);
+  font-weight: 500;
+  font-size: 0.92em;
+}
+
+/* Pull quote (citazione grande) */
+.pull {
+  margin: 50px 0;
+  padding: 0 0 0 32px;
+  border-left: 2px solid var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.pull cite {
+  display: block;
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 16px;
+  color: var(--gold-deep);
+  font-weight: 500;
+}
+
+/* ============ LA FINESTRA (signature element) ============ */
+.window-section {
+  background: var(--night);
+  color: var(--parchment);
+  padding: 120px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.window-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(196, 154, 90, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(196, 154, 90, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.window-frame {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+}
+.window-label {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+.window {
+  border: 1px solid rgba(196, 154, 90, 0.4);
+  padding: 60px 50px;
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(196, 154, 90, 0.03) 0%, transparent 100%);
+}
+.window::before, .window::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--gold);
+  border-style: solid;
+}
+.window::before {
+  top: -1px; left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.window::after {
+  bottom: -1px; right: -1px;
+  border-width: 0 2px 2px 0;
+}
+.window-cross {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: rgba(196, 154, 90, 0.15);
+  pointer-events: none;
+}
+.window-cross-v {
+  position: absolute;
+  top: 0; bottom: 0; left: 50%;
+  width: 1px;
+  background: rgba(196, 154, 90, 0.15);
+  pointer-events: none;
+}
+.window blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.55;
+  color: rgba(242, 234, 216, 0.92);
+  position: relative;
+  z-index: 1;
+}
+.window blockquote p {
+  margin-bottom: 18px;
+}
+.window blockquote p:last-of-type { margin-bottom: 0; }
+.window blockquote strong {
+  color: var(--gold);
+  font-weight: 500;
+  font-style: normal;
+}
+.window-attribution {
+  text-align: right;
+  margin-top: 40px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ============ DOMANDE PER LA CLASSE ============ */
+.questions {
+  background: var(--parchment-warm);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 90px 32px;
+}
+.questions-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.questions-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+.questions h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 500;
+  margin-bottom: 48px;
+  line-height: 1.1;
+}
+.q-item {
+  display: flex;
+  gap: 32px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  align-items: flex-start;
+}
+.q-item:last-child { border-bottom: 1px solid var(--line); }
+.q-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-style: italic;
+  color: var(--gold-deep);
+  font-weight: 400;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 50px;
+}
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* ============ AGGANCIO CULTURALE ============ */
+.culture {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 80px 32px;
+}
+.culture-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 40px;
+}
+.culture-card {
+  border: 1px solid var(--line);
+  padding: 32px;
+  background: var(--parchment-warm);
+}
+.culture-card .type {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.culture-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.culture-card .meta {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+.culture-card p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============ TIMELINE LEZIONE ============ */
+.timeline {
+  background: var(--night);
+  color: var(--parchment);
+  padding: 80px 32px;
+}
+.timeline-inner {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.timeline-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.timeline h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 500;
+  margin-bottom: 48px;
+}
+.timeline-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 200px;
+  gap: 24px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line-light);
+  align-items: baseline;
+}
+.timeline-row:last-child { border-bottom: 1px solid var(--line-light); }
+.timeline-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--gold);
+  font-style: italic;
+}
+.timeline-phase {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(242, 234, 216, 0.5);
+  font-weight: 500;
+}
+.timeline-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--parchment);
+}
+
+/* ============ NOTE DOCENTE ============ */
+.teacher-notes {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 60px 32px 100px;
+}
+.teacher-notes details {
+  border: 1px dashed var(--ink-soft);
+  padding: 0;
+  background: transparent;
+}
+.teacher-notes summary {
+  cursor: pointer;
+  padding: 20px 28px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.teacher-notes summary::-webkit-details-marker { display: none; }
+.teacher-notes summary::after {
+  content: '+';
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--gold-deep);
+  transition: transform 0.3s;
+}
+.teacher-notes details[open] summary::after {
+  content: '−';
+}
+.teacher-notes .notes-body {
+  padding: 8px 28px 28px;
+  border-top: 1px dashed var(--line);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.teacher-notes .notes-body p {
+  margin-bottom: 14px;
+}
+.teacher-notes .notes-body strong {
+  color: var(--ink);
+}
+
+/* ============ FOOTER ============ */
+footer {
+  background: var(--night);
+  color: rgba(242, 234, 216, 0.5);
+  padding: 50px 32px;
+  text-align: center;
+  border-top: 1px solid var(--line-light);
+}
+footer .author {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--parchment);
+  margin-bottom: 8px;
+}
+footer .institution {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 700px) {
+  .timeline-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .timeline-phase { order: -1; }
+  .culture-grid { grid-template-columns: 1fr; }
+  .window { padding: 40px 28px; }
+  .q-item { gap: 20px; }
+  .q-num { font-size: 26px; min-width: 36px; }
+  .q-text { font-size: 19px; }
+  .hero { padding: 80px 28px 100px; }
+  .opening-question { padding: 70px 28px 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATORE -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <span>Classe IV</span>
+    <span>UDA 3 — Il male, il perdono, la libertà</span>
+    <span class="current">Lezione 3 di 5</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Il peccato contro lo Spirito Santo</div>
+    <h1>Gli occhi chiusi<br>davanti alla <em>luce</em></h1>
+    <p class="subtitle">Una riflessione sul perdono che non può imporsi, sull'amore che non si può forzare, sulla libertà come prezzo della grazia.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">Disciplina<strong>IRC</strong></div>
+      <div class="hero-meta-item">Classe<strong>IV — Liceo Scientifico</strong></div>
+      <div class="hero-meta-item">Durata<strong>55 minuti</strong></div>
+      <div class="hero-meta-item">Docente<strong>Prof. Matteo Sestili</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMANDA GENERATIVA -->
+<section class="opening-question">
+  <div class="label">Domanda generativa</div>
+  <p class="q">Esiste qualcosa che Dio non può perdonare?<br>E se sì, di chi è la colpa?</p>
+</section>
+
+<!-- PRIMA -->
+<div class="section-wrap" style="background: var(--parchment);">
+<section class="content">
+  <div class="section-number">I · Prima</div>
+  <h2 class="section-title">Un versetto che ha terrorizzato secoli</h2>
+  <p class="section-subtitle">Quando una frase del Vangelo diventa una trappola</p>
+
+  <div class="section-body">
+    <p>Poche righe del Vangelo hanno pesato quanto queste: <span class="cite">«Qualunque peccato e bestemmia sarà perdonata agli uomini, ma la bestemmia contro lo Spirito non sarà perdonata né in questo secolo né in quello futuro»</span> <span class="ref">(Mt 12,31-32)</span>. Per secoli, queste parole hanno alimentato un terrore religioso difficile da immaginare oggi.</p>
+
+    <p>Nel Medioevo, cristiani sinceramente devoti vivevano nell'angoscia di aver commesso questo peccato <em>senza saperlo</em> — una maledizione invisibile e irrevocabile.</p>
+
+    <p><strong>Gregorio Magno</strong> (VI sec.) aveva elencato sei manifestazioni di questa bestemmia: la <span class="cite">desperatio</span> (disperazione di ottenere il perdono), la <span class="cite">praesumptio</span> (presunzione di non averne bisogno), la resistenza alla verità conosciuta, l'invidia per la grazia altrui, la pertinacia nel peccato, l'impenitenza finale. Sei categorie che potevano facilmente trasformarsi in sei trappole per anime scrupolose.</p>
+
+    <p><strong>Tommaso d'Aquino</strong>, nella <span class="cite">Summa Theologiae</span> <span class="ref">(II-II, q. 14)</span>, affrontò la questione con la sua abituale precisione: questo peccato è irremissibile non per difetto della misericordia divina — che è infinita — ma perché in esso vengono rimossi i presupposti stessi che rendono possibile la remissione. <em>Non Dio</em> nega il perdono: è la struttura del peccato stesso che esclude le condizioni del perdono.</p>
+
+    <div class="pull">
+      Il problema storico è che questa distinzione sottile non arrivava ai fedeli. Quello che arrivava era la paura. E la paura, usata male, non converte: paralizza.
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- DOPO -->
+<div class="section-wrap">
+<section class="content">
+  <div class="section-number">II · Dopo</div>
+  <h2 class="section-title">Il perdono è un incontro, non un decreto</h2>
+  <p class="section-subtitle">Quando una svolta interpretativa scioglie un nodo antico</p>
+
+  <div class="section-body">
+    <p>Il <strong>Catechismo della Chiesa Cattolica</strong>, al numero 1864, afferma con una precisione che vale la pena leggere per intero:</p>
+
+    <div class="pull">
+      Non vi sono limiti alla misericordia di Dio, ma chi non vuole accettare la sua misericordia mediante il pentimento, rifiuta il perdono dei propri peccati e la salvezza offerta dallo Spirito Santo.
+      <cite>CCC, n. 1864</cite>
+    </div>
+
+    <p>La frase chiave è: <em>«chi non vuole accettare»</em>. Non è Dio che rifiuta. È l'uomo che rifiuta di essere perdonato. La misericordia divina non è un rubinetto che si apre o si chiude — è una sorgente sempre aperta. Ma una sorgente non irrora il campo se qualcuno costruisce intorno a sé un muro impermeabile.</p>
+
+    <p>È qui che la riflessione di <strong>don Luigi Maria Epicoco</strong> — sacerdote, teologo, docente alla Pontificia Università Lateranense — entra in scena con un'immagine di straordinaria semplicità. Davanti alla finestra del suo studio si apre un paesaggio bellissimo. Quando qualcuno gli chiede del peccato contro lo Spirito Santo, lo accompagna lì.</p>
+  </div>
+</section>
+</div>
+
+<!-- LA FINESTRA - signature element -->
+<section class="window-section">
+  <div class="window-frame">
+    <div class="window-label">— La finestra di don Epicoco —</div>
+    <div class="window">
+      <div class="window-cross"></div>
+      <div class="window-cross-v"></div>
+      <blockquote>
+        <p>Molte volte la gente mi domanda di spiegargli in cosa consiste la bestemmia contro lo Spirito Santo. Solitamente li accompagno davanti alla finestra del mio studio. C'è un paesaggio bellissimo. Anche quando piove si scorge la montagna, il verde, il cielo o il grigio azzurro delle nuvole.</p>
+
+        <p>Dopo aver fatto vedere tutto quel paesaggio, domando: <em>«ti piace?»</em>; tutti nella totalità mi dicono che è molto bello. Allora io continuo dicendo: <em>«quella bellezza è lì, anche se io sono un peccatore o il migliore dei santi. Quella bellezza è lì, ma non si impone al mio sguardo. Infatti io potrei affacciarmi da quella finestra e tenere gli occhi chiusi. Decidendo di tenere gli occhi chiusi, quanta bellezza entrerebbe in me?».</em></p>
+
+        <p>Tutti mi rispondono: <em>«Nessuna»</em>.</p>
+
+        <p><strong>Ecco che cos'è la bestemmia contro lo Spirito Santo: è stare davanti alla Luce e rimanere ostinatamente con gli occhi chiusi.</strong> Quel buio scelto deliberatamente da me non può essermi perdonato, perché la misericordia di Dio non può costringermi ad aprire per forza gli occhi.</p>
+
+        <p>Dio non può salvarci per forza; dove sarebbe la nostra libertà? Dove sarebbe l'amore? Non si può perdonare uno che non accetta di essere perdonato. Non si riesce ad amare uno che rifiuta di essere amato.</p>
+      </blockquote>
+    </div>
+    <p class="window-attribution">Don Luigi Maria Epicoco</p>
+  </div>
+</section>
+
+<!-- PERCHÉ -->
+<div class="section-wrap">
+<section class="content">
+  <div class="section-number">III · Perché</div>
+  <h2 class="section-title">Libertà e amore sono inseparabili</h2>
+  <p class="section-subtitle">Il nodo teologico: l'onnipotenza che rispetta il "no"</p>
+
+  <div class="section-body">
+    <p>Per capire perché Dio <em>«non può»</em> forzare gli occhi ad aprirsi, bisogna capire cosa intende la teologia cristiana per libertà.</p>
+
+    <p><strong>Agostino di Ippona</strong>, nel <span class="cite">Sermo</span> 169, scrive una frase diventata pietra miliare della teologia della grazia:</p>
+
+    <div class="pull">
+      Qui fecit te sine te, non te iustificat sine te.<br>
+      <em>— Chi ti ha creato senza di te, non ti giustifica senza di te.</em>
+      <cite>Agostino, Sermo 169, 11, 13</cite>
+    </div>
+
+    <p>La creazione non richiede il consenso della creatura — non c'era ancora nessuno da consultare. Ma la salvezza sì. La giustificazione — cioè il ristabilimento del rapporto con Dio — non può avvenire <em>senza</em> la partecipazione libera della persona. Non perché Dio ne sia incapace in senso assoluto, ma perché un atto compiuto sopra di noi <em>contro la nostra volontà</em> non sarebbe salvezza: sarebbe violenza.</p>
+
+    <p>Il <strong>Concilio Vaticano II</strong>, nella Costituzione pastorale <span class="cite">Gaudium et Spes</span> al numero 17, afferma: <span class="cite">«La vera libertà è nell'uomo un segno privilegiato dell'immagine divina»</span>. La libertà non è un'aggiunta opzionale all'essere umano — è il segno stesso dell'<span class="cite">imago Dei</span>.</p>
+
+    <p>Il paradosso teologico è dunque questo: Dio è onnipotente, ma l'onnipotenza dell'amore si esprime nel <em>rispettare</em> la libertà dell'amato. Questo non è un limite di Dio — è la forma più alta della sua potenza.</p>
+
+    <p>Il peccato contro lo Spirito Santo non è dunque un atto specifico. Non è una bestemmia pronunciata ad alta voce. Non è un gesto rituale compiuto in un momento di rabbia. È una <strong>postura esistenziale</strong>: la chiusura deliberata, ostinata, prolungata verso qualsiasi apertura al bene, alla grazia, al perdono.</p>
+  </div>
+</section>
+</div>
+
+<!-- CONSEGUENZE -->
+<div class="section-wrap">
+<section class="content">
+  <div class="section-number">IV · Conseguenze</div>
+  <h2 class="section-title">Cosa cambia per noi</h2>
+  <p class="section-subtitle">Tre conseguenze concrete per la vita</p>
+
+  <div class="section-body">
+    <p><strong>Prima:</strong> il senso di colpa <em>non è</em> questo peccato. Chi si dispera di essere perdonato, chi torna ossessivamente su un errore passato, chi si sente indegno della misericordia — sta facendo esattamente il contrario di tenere gli occhi chiusi. Sta guardando la luce. Il fatto che faccia male non significa che la stia rifiutando.</p>
+
+    <p><strong>Seconda:</strong> il perdono nelle relazioni umane ha la stessa struttura. Si può offrire perdono a qualcuno che non lo vuole. Si può tendere una mano che non viene presa. Non significa che il perdono non ci fosse — significa che l'incontro non è avvenuto. Non è fallimento di chi perdona: è il limite strutturale dell'amore rispettoso della libertà.</p>
+
+    <p><strong>Terza:</strong> la misericordia di Dio non è sentimentalismo. Non è Dio che <em>«chiude un occhio»</em>. È un'offerta strutturata, concreta, continua, gratuita — che aspetta. La parabola del padre misericordioso <span class="ref">(Lc 15,11-32)</span> mostra un padre che non va a cercare il figlio, non lo trascina a casa, non lo convince con argomenti. <strong>Aspetta.</strong> E quando il figlio <span class="cite">«tornò in sé»</span> — cioè aprì gli occhi — <em>allora</em> il padre corse incontro a lui. La corsa è di chi aspettava già sulla soglia.</p>
+  </div>
+</section>
+</div>
+
+<!-- AGGANCIO CULTURALE -->
+<section class="culture">
+  <div class="section-number">V · Aggancio culturale</div>
+  <h2 class="section-title">Storie che dicono la stessa cosa</h2>
+  <p class="section-subtitle">Quando il cinema mostra ciò che la teologia argomenta</p>
+  <div class="culture-grid">
+    <div class="culture-card">
+      <div class="type">Cinema · 2016</div>
+      <h3>Silence</h3>
+      <p class="meta">di Martin Scorsese — tratto dal romanzo di Shūsaku Endō</p>
+      <p>Il protagonista, padre Rodrigues, affronta la domanda del silenzio di Dio davanti alla sofferenza. La scena dell'apostasia diventa il fulcro: un uomo che <em>apre gli occhi</em> nel momento più buio, anziché chiuderli. Contrappunto perfetto alla riflessione di Epicoco.</p>
+    </div>
+    <div class="culture-card">
+      <div class="type">Vangelo · Lc 15</div>
+      <h3>Il padre misericordioso</h3>
+      <p class="meta">La parabola che attraversa tutta la riflessione</p>
+      <p>Il padre non rincorre il figlio minore. Aspetta. Quando il figlio <span class="cite">«tornò in sé»</span> — quando aprì gli occhi — il padre corse. La grazia c'era già: serviva uno sguardo capace di vederla.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline">
+  <div class="timeline-inner">
+    <div class="timeline-label">Struttura della lezione</div>
+    <h2>55 minuti</h2>
+
+    <div class="timeline-row">
+      <div class="timeline-time">8'</div>
+      <div class="timeline-phase">Hook</div>
+      <div class="timeline-desc">La domanda: «Esiste qualcosa che Dio non può perdonare?»</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-time">10'</div>
+      <div class="timeline-phase">Prima</div>
+      <div class="timeline-desc">Il terrore medievale del versetto di Matteo — Gregorio Magno, Tommaso</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-time">8'</div>
+      <div class="timeline-phase">Dopo</div>
+      <div class="timeline-desc">CCC n. 1864 — la svolta relazionale del perdono</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-time">12'</div>
+      <div class="timeline-phase">Perché</div>
+      <div class="timeline-desc">Agostino, Gaudium et Spes 17 — libertà e amore inseparabili</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-time">10'</div>
+      <div class="timeline-phase">La finestra</div>
+      <div class="timeline-desc">Lettura del testo di Epicoco. Silenzio. «Cosa ti ha colpito?»</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-time">7'</div>
+      <div class="timeline-phase">Apertura</div>
+      <div class="timeline-desc">Le quattro domande aperte alla classe</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMANDE PER LA CLASSE -->
+<section class="questions">
+  <div class="questions-inner">
+    <div class="questions-label">— Domande aperte alla classe —</div>
+    <h2>Per restare con la finestra aperta</h2>
+
+    <div class="q-item">
+      <div class="q-num">i</div>
+      <p class="q-text">Epicoco dice che «Dio non può salvarci per forza». Questa affermazione ti dà sollievo o ti spaventa? Perché?</p>
+    </div>
+    <div class="q-item">
+      <div class="q-num">ii</div>
+      <p class="q-text">Pensi che sia possibile scegliere il buio definitivamente, o credi che nessuno lo faccia davvero fino in fondo?</p>
+    </div>
+    <div class="q-item">
+      <div class="q-num">iii</div>
+      <p class="q-text">Nella tua esperienza, hai incontrato persone che «tenevano gli occhi chiusi» davanti a qualcosa di bello? Come le hai viste?</p>
+    </div>
+    <div class="q-item">
+      <div class="q-num">iv</div>
+      <p class="q-text">Se il perdono richiede che io lo voglia — chi mi aiuta a volerlo, quando non ne ho la forza?</p>
+    </div>
+  </div>
+</section>
+
+<!-- NOTE DOCENTE -->
+<section class="teacher-notes">
+  <details>
+    <summary>Note per il docente</summary>
+    <div class="notes-body">
+      <p><strong>Posizione nell'UDA.</strong> Questa è la terza di cinque lezioni dell'UDA "Il male, il perdono, la libertà". Presuppone che siano già state introdotte le categorie di peccato (lez. 1) e misericordia (lez. 2). La lezione successiva (4) affronterà il sacramento della Riconciliazione come <em>luogo</em> dove il perdono diventa incontro reale; la quinta concluderà sulla libertà escatologica.</p>
+
+      <p><strong>Punti di attenzione.</strong> Il tema può toccare ragazzi che vivono esperienze di colpa o scrupolo: la <em>prima conseguenza</em> (il senso di colpa non è questo peccato) va sottolineata con cura. Evitare di drammatizzare l'idea di "dannazione definitiva": la Chiesa non ha mai dichiarato nessuno definitivamente perduto, e questo è teologicamente importante.</p>
+
+      <p><strong>Lettura del testo Epicoco.</strong> Si suggerisce lettura ad alta voce da parte del docente, poi silenzio. Non commentare subito. Lasciar emergere reazioni spontanee dalla classe. Solo dopo, raccordare con il quadro teologico già costruito.</p>
+
+      <p><strong>Approfondimento didattico.</strong> Per studenti particolarmente interessati: confronto con la posizione di Origene sull'<span class="cite">apocatastasi</span> (la possibile salvezza universale finale) e l'attenzione di Hans Urs von Balthasar in <em>Sperare per tutti</em>. Questo apre la quinta lezione.</p>
+
+      <p><strong>Sottocartella sito:</strong> <code>IV / uda-3-male-perdono-liberta / lez-3-occhi-chiusi-luce</code></p>
+    </div>
+  </details>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="author">Prof. Matteo Sestili</p>
+  <p class="institution">IIS «Torricelli» — Roma · IRC · A.S. 2025/2026</p>
+</footer>
+
+</body>
+</html>
