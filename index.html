@@ -193,7 +193,7 @@ h1{
 
 .shead.sub2 h2{font-size:clamp(22px,3vw,28px)}
 
-.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:16px}
+.tiles{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px}
 
 .tile{
   position:relative; border-radius:var(--radius); padding:30px 28px; color:#fff;
@@ -206,8 +206,6 @@ h1{
 .tile.t-str{background:linear-gradient(135deg,#7A5AC9,#4A338C)}
 
 .tile.t-vid{background:linear-gradient(135deg,#D24F86,#9E2D5E)}
-
-.tile.t-lez{background:linear-gradient(135deg,#0E9E88,#0A5A4E)}
 
 .tile .tlabel{font-size:12.5px; letter-spacing:.18em; text-transform:uppercase; font-weight:700; opacity:.85}
 
@@ -352,23 +350,6 @@ footer a{color:var(--muted)}
 
 body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.viewing > footer{display:none}
 
-/* ---- Fase 5: lezioni come pagine ---- */
-.lesson-actions{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 14px}
-
-.lesson-embed{margin:0 0 8px}
-
-.lesson-frame{width:100%; height:78vh; min-height:520px; border:1px solid var(--line); border-radius:var(--radius); background:#fff; box-shadow:var(--shadow)}
-
-.lesson-extlink{background:var(--bg2); border:1px solid var(--line); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow); margin:18px 0}
-
-.lesson-extlink p{margin:0 0 14px; color:var(--muted)}
-
-.lez-uda{margin:0 0 22px}
-
-.lez-uda-title{font-family:"Fraunces",serif; font-weight:600; font-size:18px; margin:6px 0 12px; color:var(--ink-soft)}
-
-.badge[data-k="lezione"]{background:#E1F2EE; color:#0C6253}
-
 .reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
 
 @keyframes rise{to{opacity:1; transform:none}}
@@ -395,7 +376,6 @@ body.viewing > header, body.viewing > .hero-wrap, body.viewing > #main, body.vie
       <input id="q" type="search" placeholder="Cerca…" autocomplete="off" aria-label="Cerca nei contenuti">
     </div>
     <nav>
-      <a class="opt" href="#lezioni">Lezioni</a>
       <a class="opt" href="#strumenti">Strumenti</a>
       <a class="opt" href="#video">Video</a>
       <a class="opt" href="#chisono">Chi sono</a>
@@ -586,28 +566,6 @@ function inferUda(){
   });
 }
 
-/* ---------- Lezioni come pagine (Fase 5) ---------- */
-
-/* Una lezione è una "pagina" se ha un artefatto HTML caricato o un link esterno */
-function lessonHasPage(l){
-  const f=(l&&l.file)?String(l.file).trim():"";
-  const k=(l&&l.link)?String(l.link).trim():"";
-  return (!!f && f!=="#") || (!!k && k!=="#");
-}
-
-/* Slug dell'UDA per l'indirizzo: se manca, usa "-" così l'indirizzo resta valido */
-function udaSlug(t){
-  t=String(t==null?"":t).trim();
-  return t ? encodeURIComponent(t) : "-";
-}
-
-/* Indirizzo (URL con #) proprio di una lezione: condivisibile e segnalibile */
-function lessonHref(l){
-  const slugU=udaSlug(l.uda);
-  const slugL=encodeURIComponent(String(l.titolo||"").trim());
-  return '#anno/'+encodeURIComponent(String(l.anno||"").trim())+'/uda/'+slugU+'/lezione/'+slugL;
-}
-
 function folderHTML(u,color,n,i){
   const count=itemsInUda(n,u.titolo).length;
   const slug=encodeURIComponent(String(u.titolo||"").trim());
@@ -620,22 +578,14 @@ function folderHTML(u,color,n,i){
 }
 
 function lessonFolderHTML(l,color,n,udaTitolo,i){
-  const page=lessonHasPage(l);
   const count=itemsInLezione(n,udaTitolo,l.titolo).length;
-  const slugU=udaSlug(udaTitolo);
+  const slugU=encodeURIComponent(String(udaTitolo||"").trim());
   const slugL=encodeURIComponent(String(l.titolo||"").trim());
-  /* lezione-pagina: icona "documento"; lezione-cartella: icona "quaderno" */
-  const icon=page
-    ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg>'
-    : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
-  const footer=page
-    ? '<div class="fcount">Apri lezione →</div>'
-    : '<div class="fcount">'+count+' '+(count===1?"contenuto":"contenuti")+'</div>';
   return '<a class="fcard" href="#anno/'+esc(String(n))+'/uda/'+slugU+'/lezione/'+slugL+'" style="--c:'+color+';animation-delay:'+(.05*i+.05).toFixed(2)+'s">'
-    +'<span class="ficon">'+icon+'</span>'
+    +'<span class="ficon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>'
     +'<div class="ftitle">'+esc(l.titolo)+'</div>'
     +(l.descrizione?'<p class="fdesc">'+esc(l.descrizione)+'</p>':'')
-    +footer
+    +'<div class="fcount">'+count+' '+(count===1?"contenuto":"contenuti")+'</div>'
     +'</a>';
 }
 
@@ -676,7 +626,6 @@ function mediaTag(it,accent){
   }
   let g="✦";
   if(it.kind==="video")g="▶";
-  else if(it.kind==="lezione")g="✎";
   else if(it.kind==="materiale"){const a=annoMeta(it.anno);g=a?a.rom:"＋";}
   return '<div class="cmedia grad" style="background-color:'+(accent||BRAND)+'"><span>'+g+'</span></div>';
 }
@@ -687,11 +636,13 @@ function svgPlay(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill=
 function svgOpen(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>';}
 
 function actionBtn(it){
-  /* le lezioni-pagina puntano al loro indirizzo interno (URL con #) */
-  if(it.kind==="lezione"){
-    return '<a class="go lezlink" href="'+esc(it.href||"#")+'">Apri lezione '+svgArrow()+'</a>';
-  }
-  const isArt = it.kind==="strumento" || it.tipo==="Artefatto interattivo" || it.tipo==="Lezione interattiva";
+  /* Un artefatto interattivo si apre DENTRO il sito (visore in sandbox), non si
+     scarica. Lo riconosciamo dagli strumenti, dal "tipo" scelto nel pannello,
+     oppure in automatico se il file caricato è una pagina .html (es. un
+     materiale-artefatto di una lezione). */
+  const fileStr = String(it.file||"");
+  const isHtml = /\.html?($|\?|#)/i.test(fileStr);
+  const isArt = it.kind==="strumento" || it.tipo==="Artefatto interattivo" || it.tipo==="Lezione interattiva" || isHtml;
   const rawHref = it.file || it.link || "";
   const href = (rawHref && rawHref !== "#") ? resolvePath(rawHref) : rawHref;
 
@@ -801,11 +752,10 @@ function renderHome(){
   $("#main").innerHTML=
      '<section><div class="shead"><div><div class="eyebrow">Percorso</div><h2>Gli anni di corso</h2></div><div class="sub">Scegli l\'anno per trovare slide, documenti, video e strumenti.</div></div>'
     +'<div class="years">'+yearsHTML+'</div></section>'
-    +'<section><div class="shead"><div><div class="eyebrow">Per fare lezione</div><h2>Lezioni, Strumenti &amp; Video</h2></div><div class="sub">Pagine sfogliabili, risorse interattive e clip per animare le lezioni.</div></div>'
+    +'<section><div class="shead"><div><div class="eyebrow">Per fare lezione</div><h2>Strumenti &amp; Video</h2></div><div class="sub">Risorse interattive e clip per animare le lezioni.</div></div>'
     +'<div class="tiles">'
-    +'<a class="tile t-lez reveal" href="#lezioni" style="animation-delay:.20s"><span class="ti">✎</span><span class="tlabel">Pagine sfogliabili</span><h3>Lezioni</h3><p>Le lezioni interattive, raggruppate per anno e unità.</p></a>'
-    +'<a class="tile t-str reveal" href="#strumenti" style="animation-delay:.28s"><span class="ti">⚙</span><span class="tlabel">Interattivi</span><h3>Strumenti</h3><p>Quiz, bacheche e attività digitali per la classe.</p></a>'
-    +'<a class="tile t-vid reveal" href="#video" style="animation-delay:.36s"><span class="ti">▶</span><span class="tlabel">Guardare insieme</span><h3>Video</h3><p>Clip e documentari selezionati per ogni tema.</p></a>'
+    +'<a class="tile t-str reveal" href="#strumenti" style="animation-delay:.24s"><span class="ti">⚙</span><span class="tlabel">Interattivi</span><h3>Strumenti</h3><p>Quiz, bacheche e attività digitali per la classe.</p></a>'
+    +'<a class="tile t-vid reveal" href="#video" style="animation-delay:.32s"><span class="ti">▶</span><span class="tlabel">Guardare insieme</span><h3>Video</h3><p>Clip e documentari selezionati per ogni tema.</p></a>'
     +'</div></section>'
     +'<div class="about reveal" id="chisono" style="animation-delay:.4s">'
     +'<div class="eyebrow">Chi sono</div>'
@@ -892,112 +842,23 @@ function renderLezione(n,udaT,lezT){
   const u=UDA.find(x=>String(x.anno)===String(n)&&normT(x.titolo)===normT(udaT))||{titolo:String(udaT||"").trim()};
   const L=LEZ.find(x=>String(x.anno)===String(n)&&normT(x.uda)===normT(udaT)&&normT(x.titolo)===normT(lezT))||{titolo:String(lezT||"").trim()};
   const items=itemsInLezione(n,udaT,lezT);
-  const slugU=udaSlug(u.titolo);
+  const slugU=encodeURIComponent(String(u.titolo||"").trim());
 
   const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome">Home</a><span class="sep">›</span>'
     +'<a href="#anno/'+esc(String(n))+'">Anno '+esc(meta.rom)+'</a><span class="sep">›</span>'
-    +'<a href="#anno/'+esc(String(n))+'/uda/'+slugU+'">'+esc(u.titolo||"Unità")+'</a><span class="sep">›</span>'
+    +'<a href="#anno/'+esc(String(n))+'/uda/'+slugU+'">'+esc(u.titolo)+'</a><span class="sep">›</span>'
     +'<span>'+esc(L.titolo)+'</span></div>';
   const hero='<div class="sec-hero reveal" data-glyph="✎">'
-    +'<div class="eyebrow">'+esc(u.titolo||meta.nome)+' · Lezione</div>'
+    +'<div class="eyebrow">'+esc(u.titolo)+' · Lezione</div>'
     +'<h2>'+esc(L.titolo)+'</h2>'
     +(L.descrizione?'<p>'+esc(L.descrizione)+'</p>':'')
     +'</div>';
 
-  /* Artefatto della lezione (se presente). I file locali si mostrano dentro
-     il sito in un iframe in sandbox (stessa sicurezza del visore: l'artefatto
-     non può raggiungere la sessione del docente in /esami). I link esterni si
-     aprono in una nuova scheda, perché molti siti bloccano gli iframe. */
-  const rawHref=L.file||L.link||"";
-  const href=(rawHref && rawHref!=="#") ? resolvePath(rawHref) : "";
-  const isExternal=href && /^https?:\/\//.test(href);
-  let pageBody="";
-  if(href && !isExternal){
-    pageBody='<div class="lesson-actions">'
-      +'<button class="go openart" data-href="'+esc(href)+'" data-title="'+esc(L.titolo||"")+'">A tutto schermo '+svgOpen()+'</button>'
-      +'<a class="go ghost" href="'+esc(href)+'" target="_blank" rel="noopener">Apri in una nuova scheda '+svgArrow()+'</a>'
-      +'</div>'
-      +'<div class="lesson-embed"><iframe class="lesson-frame" title="'+esc(L.titolo||"Lezione")+'" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads" allow="fullscreen; clipboard-write" src="'+esc(href)+'"></iframe></div>';
-  } else if(isExternal){
-    pageBody='<div class="lesson-extlink"><p>Questa lezione si trova su un sito esterno e si apre in una nuova scheda.</p>'
-      +'<a class="go" href="'+esc(href)+'" target="_blank" rel="noopener">Apri la lezione '+svgArrow()+'</a></div>';
-  }
-
-  /* Eventuali contenuti collegati alla stessa lezione (materiali, video…) */
-  let extra="";
-  if(items.length){
-    if(pageBody) extra+='<div class="shead sub2"><div><div class="eyebrow">In questa lezione</div><h2>Materiali</h2></div></div>';
-    extra+=typeChipsHTML(items)+'<div id="type-cont">'+gridHTML(items,meta.color)+'</div>';
-  } else if(!pageBody){
-    /* nessun artefatto e nessun contenuto: messaggio guida come prima */
-    extra+='<div id="type-cont">'+gridHTML(items,meta.color)+'</div>';
-  }
-
   $("#heroWrap").innerHTML="";
-  $("#main").innerHTML=breadcrumb+hero+pageBody+extra;
+  $("#main").innerHTML=breadcrumb+hero+typeChipsHTML(items)+'<div id="type-cont">'+gridHTML(items,meta.color)+'</div>';
   wireGrid();
   wireTypeFilter(items,meta.color);
-  /* Il pulsante "A tutto schermo" sta fuori dalla griglia: lo colleghiamo a parte */
-  const fs=document.querySelector(".lesson-actions .openart");
-  if(fs) fs.addEventListener("click",()=>openViewer(fs.dataset.href,fs.dataset.title));
   document.getElementById("backHome").addEventListener("click",e=>{e.preventDefault();route("");});
-}
-
-/* ---------- pagina indice: tutte le lezioni-pagina (Anno → UDA) ---------- */
-
-function lessonPageCardHTML(l,color,i){
-  return '<a class="fcard" href="'+lessonHref(l)+'" style="--c:'+color+';animation-delay:'+(.05*i+.05).toFixed(2)+'s">'
-    +'<span class="ficon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h4"/></svg></span>'
-    +'<div class="ftitle">'+esc(l.titolo)+'</div>'
-    +(l.descrizione?'<p class="fdesc">'+esc(l.descrizione)+'</p>':'')
-    +'<div class="fcount">Apri lezione →</div>'
-    +'</a>';
-}
-
-function renderLezioni(){
-  setAccent(BRAND);
-  const breadcrumb='<div class="breadcrumb"><a href="#" id="backHomeL">Home</a><span class="sep">›</span><span>Lezioni</span></div>';
-  const hero='<div class="sec-hero reveal" data-glyph="✎">'
-    +'<div class="eyebrow">Pagine sfogliabili</div>'
-    +'<h2>Lezioni</h2>'
-    +'<p>Tutte le lezioni interattive, raggruppate per anno e unità di apprendimento.</p>'
-    +'</div>';
-
-  const pages=LEZ.filter(lessonHasPage);
-  let body="";
-  if(!pages.length){
-    body='<div class="empty"><b>Ancora nessuna lezione</b>Apri l\'<a href="admin/">area gestione</a>, vai in “Lezioni” e carica il file HTML di una lezione.</div>';
-  } else {
-    ANNI.forEach(a=>{
-      const inAnno=pages.filter(l=>String(l.anno)===a.n);
-      if(!inAnno.length) return;
-      body+='<div class="shead sub2"><div><div class="eyebrow">Anno '+esc(a.rom)+'</div><h2>'+esc(a.nome)+'</h2></div></div>';
-      /* ordine UDA: prima quelle definite (col loro ordine), poi le altre */
-      const present=[]; const seen=new Set();
-      udaForYear(a.n).map(u=>u.titolo).forEach(t=>{
-        const k=normT(t);
-        if(!seen.has(k) && inAnno.some(l=>normT(l.uda)===k)){ seen.add(k); present.push(t); }
-      });
-      inAnno.forEach(l=>{
-        const k=normT(l.uda);
-        if(k && !seen.has(k)){ seen.add(k); present.push(String(l.uda).trim()); }
-      });
-      present.forEach(udaTitle=>{
-        const lessons=inAnno.filter(l=>normT(l.uda)===normT(udaTitle)).slice().sort(byOrdine);
-        body+='<div class="lez-uda"><h3 class="lez-uda-title">'+esc(udaTitle)+'</h3>'
-          +'<div class="folders">'+lessons.map((l,i)=>lessonPageCardHTML(l,a.color,i)).join("")+'</div></div>';
-      });
-      const senzaUda=inAnno.filter(l=>!normT(l.uda)).slice().sort(byOrdine);
-      if(senzaUda.length){
-        body+='<div class="lez-uda"><h3 class="lez-uda-title">Senza unità</h3>'
-          +'<div class="folders">'+senzaUda.map((l,i)=>lessonPageCardHTML(l,a.color,i)).join("")+'</div></div>';
-      }
-    });
-  }
-
-  $("#heroWrap").innerHTML="";
-  $("#main").innerHTML=breadcrumb+hero+body;
-  document.getElementById("backHomeL").addEventListener("click",e=>{e.preventDefault();route("");});
 }
 
 /* ---------- pagina strumenti ---------- */
@@ -1042,26 +903,12 @@ function renderSearch(q){
   setAccent(BRAND);
   const lq=q.toLowerCase();
   const items=ITEMS.filter(it=>(it.titolo||"").toLowerCase().includes(lq)||(it.descrizione||"").toLowerCase().includes(lq));
-  /* anche le lezioni-pagina entrano nella ricerca */
-  const lezItems=LEZ.filter(lessonHasPage)
-    .filter(l=>(l.titolo||"").toLowerCase().includes(lq)||(l.descrizione||"").toLowerCase().includes(lq))
-    .map(l=>({kind:"lezione", tipo:"Lezione", titolo:l.titolo, descrizione:l.descrizione||"", href:lessonHref(l)}));
-  const all=lezItems.concat(items);
   const breadcrumb='<div class="breadcrumb"><a href="#" id="backHome4">Home</a><span class="sep">›</span><span>Ricerca: "'+esc(q)+'"</span></div>';
   $("#heroWrap").innerHTML="";
   $("#main").innerHTML=breadcrumb
-    +'<div style="margin:20px 0 4px"><b>'+all.length+'</b> risultat'+(all.length===1?"o":"i")+' per <b>'+esc(q)+'</b></div>'
-    +gridHTML(all,BRAND);
+    +'<div style="margin:20px 0 4px"><b>'+items.length+'</b> risultat'+(items.length===1?"o":"i")+' per <b>'+esc(q)+'</b></div>'
+    +gridHTML(items,BRAND);
   wireGrid();
-  /* i link delle lezioni navigano: usciamo dalla ricerca e seguiamo l'indirizzo */
-  $("#main").querySelectorAll(".lezlink").forEach(a=>{
-    a.addEventListener("click",e=>{
-      e.preventDefault();
-      $("#q").value=""; searchQ="";
-      const h=a.getAttribute("href")||"#";
-      if(location.hash===h) route(h.replace(/^#/,"")); else location.hash=h;
-    });
-  });
   document.getElementById("backHome4").addEventListener("click",e=>{
     e.preventDefault(); $("#q").value=""; searchQ=""; route("");
   });
@@ -1094,7 +941,6 @@ function route(hash){
     if(parts[2]==="uda" && parts[3]){
       let u=parts[3];
       try{u=decodeURIComponent(u);}catch(e){}
-      if(u==="-") u="";   /* "-" = lezione senza UDA: indirizzo valido, UDA vuota */
       if(parts[4]==="lezione" && parts[5]){
         let l=parts[5];
         try{l=decodeURIComponent(l);}catch(e){}
@@ -1104,7 +950,6 @@ function route(hash){
     }
     renderAnno(parts[1]); renderFooter(); return;
   }
-  if(hash==="lezioni"){renderLezioni(); renderFooter(); return;}
   if(hash==="strumenti"){renderStrumenti(); renderFooter(); return;}
   if(hash==="video"){renderVideo(); renderFooter(); return;}
   renderHome(); renderFooter();
