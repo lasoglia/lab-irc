@@ -916,15 +916,36 @@ function renderSearch(q){
 
 /* ---------- viewer iframe ---------- */
 
+let viewerOpen=false;
+
 function openViewer(href,title){
   if(!href||href==="#") return;
   $("#viewerTitle").textContent=title||"";
   $("#viewerFrame").src=href;
   $("#viewerEl").classList.add("on");
   document.body.classList.add("viewing");
+  /* Registriamo una voce nella cronologia: così il tasto "indietro" del
+     browser chiude il visore invece di navigare la pagina nascosta sotto. */
+  if(!viewerOpen){
+    viewerOpen=true;
+    history.pushState({viewer:true},"");
+  }
 }
 
+/* Chiusura "logica" (pulsante della pagina): torniamo indietro nella cronologia,
+   così il comportamento è identico a quello del tasto indietro del browser. */
 function closeViewer(){
+  if(!viewerOpen) return;
+  if(history.state && history.state.viewer){
+    history.back();          /* fa scattare popstate → hideViewer() */
+  } else {
+    hideViewer();
+  }
+}
+
+/* Chiusura "fisica": nasconde davvero il visore. */
+function hideViewer(){
+  viewerOpen=false;
   $("#viewerEl").classList.remove("on");
   document.body.classList.remove("viewing");
   setTimeout(()=>{$("#viewerFrame").src="about:blank";},300);
@@ -984,6 +1005,12 @@ async function init(){
 
 window.addEventListener("hashchange",()=>{
   if(!searchQ) route(location.hash.replace(/^#/,""));
+});
+
+/* Tasto "indietro" del browser: se il visore è aperto, lo chiudiamo (la voce
+   di cronologia che avevamo aggiunto in openViewer è appena stata rimossa). */
+window.addEventListener("popstate",()=>{
+  if(viewerOpen) hideViewer();
 });
 
 $("#viewerBack").addEventListener("click", closeViewer);
