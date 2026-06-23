@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="it" data-tema="scuro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anteprima stile — Notte studio · lab-irc</title>
+<!-- evita il "lampo" di tema sbagliato -->
+<script>try{var t=localStorage.getItem('tema_lab');if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<link rel="stylesheet" href="lab-style.css">
+<style>
+  /* solo per impaginare questa vetrina */
+  section{ margin:38px 0; }
+  .swatches{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); }
+  .sw{ border-radius:14px; padding:16px; min-height:84px; display:flex; flex-direction:column; justify-content:flex-end;
+       border:1px solid var(--lab-line); font-size:12.5px; font-weight:700; }
+  .sw small{ font-weight:500; opacity:.85; display:block; }
+  .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+</style>
+</head>
+<body>
+
+<div class="lab-wrap" style="padding-top:30px; padding-bottom:80px">
+
+  <!-- HERO -->
+  <header class="lab-hero lab-in">
+    <p class="lab-eyebrow">lab · irc — anteprima stile</p>
+    <h1>Notte studio: <span class="lab-grad-text">imparare, ma con stile.</span></h1>
+    <p class="lab-muted">Questa è una pagina-vetrina: mostra come diventerebbero il sito, le lezioni
+      e gli artefatti con il nuovo design. Prova l'interruttore <b>🌙/☀️</b> in basso a destra:
+      cambia tutto, anche questa pagina.</p>
+    <div class="row" style="margin-top:18px">
+      <a class="lab-btn lab-btn-primary" href="#">Inizia a esplorare →</a>
+      <a class="lab-btn lab-btn-ghost" href="#">Scopri di più</a>
+    </div>
+  </header>
+
+  <!-- PALETTE -->
+  <section class="lab-in-2">
+    <p class="lab-eyebrow">Palette</p>
+    <h2>I colori</h2>
+    <div class="swatches">
+      <div class="sw" style="background:var(--lab-viola); color:#fff">Viola <small>primario</small></div>
+      <div class="sw" style="background:var(--lab-ciano); color:#06222a">Ciano <small>secondario</small></div>
+      <div class="sw" style="background:var(--lab-ambra); color:#3a2a06">Ambra <small>evidenza</small></div>
+      <div class="sw" style="background:var(--lab-rosa); color:#3a0a23">Rosa</div>
+      <div class="sw" style="background:var(--lab-verde); color:#06281d">Verde <small>successo</small></div>
+      <div class="sw" style="background:var(--lab-grad); color:#fff">Gradiente <small>brand</small></div>
+    </div>
+  </section>
+
+  <!-- ANNI -->
+  <section class="lab-in-2">
+    <p class="lab-eyebrow">Home</p>
+    <h2>I cinque anni</h2>
+    <div class="lab-grid">
+      <div class="lab-card lab-anno lab-anno-1"><div class="lab-num">I</div><h3>Primo anno</h3><p class="lab-muted lab-piccolo">Le grandi domande, l'origine, il senso.</p></div>
+      <div class="lab-card lab-anno lab-anno-2"><div class="lab-num">II</div><h3>Secondo anno</h3><p class="lab-muted lab-piccolo">La Bibbia, la storia, l'alleanza.</p></div>
+      <div class="lab-card lab-anno lab-anno-3"><div class="lab-num">III</div><h3>Terzo anno</h3><p class="lab-muted lab-piccolo">Gesù, i vangeli, le prime comunità.</p></div>
+      <div class="lab-card lab-anno lab-anno-4"><div class="lab-num">IV</div><h3>Quarto anno</h3><p class="lab-muted lab-piccolo">Etica, scelte, relazioni, dignità.</p></div>
+      <div class="lab-card lab-anno lab-anno-5"><div class="lab-num">V</div><h3>Quinto anno</h3><p class="lab-muted lab-piccolo">Mondo contemporaneo, pace, futuro.</p></div>
+    </div>
+  </section>
+
+  <!-- FILTRI + MATERIALI -->
+  <section class="lab-in-3">
+    <p class="lab-eyebrow">Dentro una lezione</p>
+    <h2>Materiali</h2>
+    <div class="row" style="margin-bottom:18px">
+      <span class="lab-chip on">Tutti</span>
+      <span class="lab-chip">Slide</span>
+      <span class="lab-chip">PDF</span>
+      <span class="lab-chip">Artefatti</span>
+      <span class="lab-chip">Video</span>
+    </div>
+    <div class="lab-grid">
+      <div class="lab-card">
+        <span class="lab-badge">Artefatto interattivo</span>
+        <h3 style="margin-top:12px">Genesi 2: Adam, Ish e Isha</h3>
+        <p class="lab-muted lab-piccolo">Un viaggio interattivo sulla parità nel racconto della creazione.</p>
+        <a class="lab-btn lab-btn-primary" style="align-self:flex-start; margin-top:8px" href="#">Apri →</a>
+      </div>
+      <div class="lab-card">
+        <span class="lab-badge ciano">Slide</span>
+        <h3 style="margin-top:12px">Luce e ombra</h3>
+        <p class="lab-muted lab-piccolo">Presentazione introduttiva all'unità.</p>
+        <a class="lab-btn lab-btn-ghost" style="align-self:flex-start; margin-top:8px" href="#">Scarica</a>
+      </div>
+      <div class="lab-card">
+        <span class="lab-badge rosa">Video</span>
+        <h3 style="margin-top:12px">Intervista a un testimone</h3>
+        <p class="lab-muted lab-piccolo">8 minuti, con sottotitoli.</p>
+        <a class="lab-btn lab-btn-ghost" style="align-self:flex-start; margin-top:8px" href="#">Guarda ▶</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESEMPIO ARTEFATTO -->
+  <section class="lab-in-3">
+    <p class="lab-eyebrow">Come apparirebbe un artefatto</p>
+    <h2>Mini-quiz interattivo</h2>
+    <div class="lab-card" style="max-width:560px">
+      <span class="lab-badge ambra">Domanda 1 di 3</span>
+      <h3 style="margin-top:12px">Cosa significa la parola ebraica «adam»?</h3>
+      <div style="display:grid; gap:10px; margin-top:12px">
+        <button class="lab-btn lab-btn-ghost" style="justify-content:flex-start">Il primo uomo, un nome proprio</button>
+        <button class="lab-btn lab-btn-ghost" style="justify-content:flex-start">L'essere umano, l'umanità</button>
+        <button class="lab-btn lab-btn-ghost" style="justify-content:flex-start">Il giardino dell'Eden</button>
+      </div>
+      <p class="lab-nota" style="margin-top:16px">💡 Suggerimento: pensa al legame con «adamà», la terra.</p>
+    </div>
+  </section>
+
+  <!-- COMPONENTI -->
+  <section class="lab-in-3">
+    <p class="lab-eyebrow">Mattoncini riutilizzabili</p>
+    <h2>Bottoni, campi, badge</h2>
+    <div class="row" style="margin-bottom:18px">
+      <button class="lab-btn lab-btn-primary">Primario</button>
+      <button class="lab-btn lab-btn-ghost">Secondario</button>
+      <button class="lab-btn lab-btn-gold">Evidenza</button>
+    </div>
+    <div class="row" style="margin-bottom:18px">
+      <span class="lab-badge">Viola</span>
+      <span class="lab-badge ciano">Ciano</span>
+      <span class="lab-badge ambra">Ambra</span>
+      <span class="lab-badge rosa">Rosa</span>
+      <span class="lab-badge verde">Verde</span>
+    </div>
+    <div style="max-width:360px; display:grid; gap:12px">
+      <input class="lab-input" placeholder="Campo di testo">
+      <textarea class="lab-textarea" rows="3" placeholder="Area di testo"></textarea>
+    </div>
+  </section>
+
+  <p class="lab-muted lab-piccolo" style="margin-top:50px; text-align:center">
+    Pagina di anteprima — non collegata al sito pubblico. Quando approvi,
+    porto questo stile nel sito vero e lo rendo importabile dagli artefatti.
+  </p>
+
+</div>
+
+<!-- interruttore tema condiviso -->
+<script src="lab-tema.js"></script>
+</body>
+</html>
