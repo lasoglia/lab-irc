@@ -115,7 +115,7 @@ collections:
             label_singular: "lezione"
             summary: "{{fields.titolo}} — {{fields.uda}} ({{fields.anno}}° anno)"
             fields:
-              - { label: "Titolo della lezione", name: titolo, widget: string, hint: "Es. 'Lezione 1 — Il caso Galileo'. Diventa una sottocartella dentro l'UDA." }
+              - { label: "Titolo della lezione", name: titolo, widget: string, hint: "Es. 'Lezione 1 — Il caso Galileo'. Se carichi il file HTML qui sotto, diventa una pagina sfogliabile; altrimenti resta una sottocartella dentro l'UDA." }
               - label: "Anno di corso"
                 name: anno
                 widget: select
@@ -134,8 +134,10 @@ collections:
                 display_fields: ["uda.*.titolo"]
                 value_field: "uda.*.titolo"
                 hint: "L'unità (cartella) dentro cui sta questa lezione. Deve essere dello stesso anno."
-              - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Breve presentazione, mostrata sulla sottocartella e nella sua pagina" }
-              - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… per decidere l'ordine delle lezioni" }
+              - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Breve presentazione, mostrata sulla scheda e in cima alla pagina della lezione" }
+              - { label: "Pagina HTML della lezione (l'artefatto)", name: file, widget: file, required: false, hint: "Carica qui il file .html della lezione. Caricandolo, la lezione diventa una pagina sfogliabile con un indirizzo tutto suo, da aprire o condividere." }
+              - { label: "Oppure un link esterno", name: link, widget: string, required: false, hint: "https://… — usato solo se non carichi un file. La lezione si aprirà in una nuova scheda." }
+              - { label: "Numero della lezione", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… È sia il numero della lezione sia l'ordine in cui compare." }
 
   # ===========================================================
   #  Materiali (slide, documenti, link) per anno
