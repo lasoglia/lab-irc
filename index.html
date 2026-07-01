@@ -164,6 +164,12 @@ nav a:hover{background:var(--hover-tint); color:var(--brand)}
 
 .hero{position:relative; z-index:1; padding:62px 0 26px}
 
+.hero-illus{
+  position:absolute; right:26px; top:50%; transform:translateY(-50%);
+  width:230px; opacity:.92; pointer-events:none;
+}
+@media(max-width:1280px){.hero-illus{display:none}}
+
 .pensiero{
   display:inline-flex; align-items:center; gap:9px; font-style:italic; color:var(--ink-soft);
   background:var(--pensiero-bg); border:1px solid var(--line); border-radius:999px;
@@ -305,6 +311,12 @@ h1{
 .cmedia.grad{display:grid; place-items:center; background-image:linear-gradient(135deg,rgba(255,255,255,.20),rgba(0,0,0,.30))}
 
 .cmedia.grad span{font-family:"Fraunces",serif; font-size:56px; font-weight:600; color:rgba(255,255,255,.95)}
+
+.ticon{
+  position:absolute; left:11px; top:11px; width:26px; height:26px; border-radius:8px;
+  background:rgba(0,0,0,.28); backdrop-filter:blur(3px); color:#fff;
+  display:grid; place-items:center;
+}
 
 .cmedia .playbadge{position:absolute; inset:0; display:grid; place-items:center; cursor:pointer; background:rgba(20,12,24,.30); transition:.15s ease}
 
@@ -692,8 +704,46 @@ function mediaTag(it,accent){
   }
   let g="✦";
   if(it.kind==="video")g="▶";
+  else if(it.kind==="strumento")g="⚙";
   else if(it.kind==="materiale"){const a=annoMeta(it.anno);g=a?a.rom:"＋";}
-  return '<div class="cmedia grad" style="background-color:'+(accent||BRAND)+'"><span>'+g+'</span></div>';
+  const ticon=it.kind==="materiale"?tipoIconSvg(it.tipo):"";
+  return '<div class="cmedia grad" style="background-color:'+(accent||BRAND)+'">'+ticon+'<span>'+g+'</span></div>';
+}
+
+/* Icona per tipo di materiale, mostrata nell'angolo della copertina quando
+   non c'è un'immagine caricata: aiuta a distinguere slide/PDF/artefatti/link
+   a colpo d'occhio in una griglia di card. */
+function tipoIconSvg(tipo){
+  const paths={
+    "Slide":'<rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 9.5h18"/><path d="M9 21h6"/>',
+    "Documento/PDF":'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/>',
+    "Artefatto interattivo":'<path d="M4 4l7.5 18 2.4-7.6L22 12z"/>',
+    "Link":'<path d="M10 13a5 5 0 0 0 7.07 0l1.94-1.94a5 5 0 0 0-7.07-7.07L10.5 5.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.99 12.94a5 5 0 0 0 7.07 7.07L13.5 18.5"/>'
+  };
+  const d=paths[tipo];
+  if(!d) return "";
+  return '<span class="ticon" title="'+esc(tipo)+'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg></span>';
+}
+
+/* Illustrazione decorativa dell'hero: un libro aperto da cui esce luce.
+   Solo SVG (nessuna immagine esterna da generare), quindi si adatta da
+   sola al tema chiaro/scuro tramite le variabili colore. */
+function heroIllusSvg(){
+  return '<svg class="hero-illus" viewBox="0 0 230 230" fill="none" aria-hidden="true" focusable="false">'
+    +'<defs><radialGradient id="heroGlow"><stop offset="0%" stop-color="var(--gold)" stop-opacity=".55"/><stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/></radialGradient></defs>'
+    +'<g stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" opacity=".6">'
+    +'<path d="M115 34v-24"/><path d="M152 46l17-17"/><path d="M78 46l-17-17"/>'
+    +'<path d="M168 76l22-7"/><path d="M62 76l-22-7"/>'
+    +'</g>'
+    +'<circle cx="115" cy="80" r="46" fill="url(#heroGlow)"/>'
+    +'<circle cx="115" cy="80" r="13" fill="var(--gold)" opacity=".9"/>'
+    +'<g stroke="var(--brand)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
+    +'<path d="M36 128c30-16 58-16 79 0 21-16 49-16 79 0v58c-30-16-58-16-79 0-21-16-49-16-79 0z" fill="var(--bg2)"/>'
+    +'<path d="M115 128v58"/>'
+    +'<path d="M52 137l46-11" opacity=".55"/><path d="M52 152l46-11" opacity=".55"/><path d="M52 167l38-9" opacity=".55"/>'
+    +'<path d="M178 137l-46-11" opacity=".55"/><path d="M178 152l-46-11" opacity=".55"/><path d="M178 167l-38-9" opacity=".55"/>'
+    +'</g>'
+    +'</svg>';
 }
 
 function svgArrow(){return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17L17 7M9 7h8v8"/></svg>';}
@@ -812,6 +862,7 @@ function renderHome(){
     +(SITE.pensiero?'<div class="pensiero reveal" style="animation-delay:.04s">'+esc(SITE.pensiero)+'</div>':'')
     +'<h1 class="reveal" style="animation-delay:.1s">'+esc(SITE.sottotitolo||"Materiali per le mie classi")+'</h1>'
     +'<p class="lede reveal" style="animation-delay:.18s">'+esc(SITE.intro||"")+'</p>'
+    +heroIllusSvg()
     +'</div>';
 
   /* FIX #4 — rimosso footerHTML() da qui, il footer è ora in #footerEl */
