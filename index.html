@@ -12,6 +12,8 @@
 
 <meta name="description" content="Materiali, slide, video e strumenti interattivi di Religione Cattolica, organizzati per anno di corso." />
 
+<link rel="icon" type="image/svg+xml" href="assets/logo-lab-irc.svg" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -243,10 +245,11 @@ nav a:hover{background:var(--hover-tint); color:var(--brand)}
 .hero{position:relative; z-index:1; padding:62px 0 26px}
 
 .hero-illus{
-  position:absolute; right:26px; top:50%; transform:translateY(-50%);
-  width:230px; opacity:.92; pointer-events:none;
+  position:absolute; right:-10px; top:50%; transform:translateY(-52%);
+  width:min(430px,36vw); opacity:.95; pointer-events:none;
 }
-@media(max-width:1280px){.hero-illus{display:none}}
+html[data-tema="chiaro"] .hero-illus{opacity:.9}
+@media(max-width:1080px){.hero-illus{display:none}}
 
 .pensiero{
   display:inline-flex; align-items:center; gap:9px; font-style:italic; color:var(--ink-soft);
@@ -603,7 +606,7 @@ body.viewing #labTema{display:none}
 
 <header>
   <div class="wrap bar">
-    <a class="brand" id="brandLink" href="#"><span class="seal" id="seal">L</span><b id="brandName">Lab IRC</b></a>
+    <a class="brand" id="brandLink" href="#"><span class="seal" id="seal"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4.6 L12.9 7 L15.3 7.9 L12.9 8.8 L12 11.2 L11.1 8.8 L8.7 7.9 L11.1 7 Z" fill="#FBBF24"/><g stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20 C10 18.4 7.4 17.7 5 18 L5 12.6 C7.4 12.2 10 12.9 12 14.6 C14 12.9 16.6 12.2 19 12.6 L19 18 C16.6 17.7 14 18.4 12 20 Z"/><path d="M12 14.6 L12 20"/><path d="M9 11.5 L7.6 9.8"/><path d="M15 11.5 L16.4 9.8"/></g></svg></span><b id="brandName">Lab IRC</b></a>
     <div class="search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="q" type="search" placeholder="Cerca…" autocomplete="off" aria-label="Cerca nei contenuti">
@@ -883,23 +886,62 @@ function tipoIconSvg(tipo){
   return '<span class="ticon" title="'+esc(tipo)+'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+d+'</svg></span>';
 }
 
-/* Illustrazione decorativa dell'hero: un libro aperto da cui esce luce.
-   Solo SVG (nessuna immagine esterna da generare), quindi si adatta da
-   sola al tema chiaro/scuro tramite le variabili colore. */
+/* Illustrazione dell'hero, ricreata in vettoriale dalla copertina scelta:
+   un libro antico dorato da cui esplode una colonna di luce con particelle
+   e scintille, avvolta da aurore viola e ciano. Essendo SVG resta nitida,
+   leggera e gradevole in entrambi i temi. */
 function heroIllusSvg(){
-  return '<svg class="hero-illus" viewBox="0 0 230 230" fill="none" aria-hidden="true" focusable="false">'
-    +'<defs><radialGradient id="heroGlow"><stop offset="0%" stop-color="var(--gold)" stop-opacity=".55"/><stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/></radialGradient></defs>'
-    +'<g stroke="var(--gold)" stroke-width="2.5" stroke-linecap="round" opacity=".6">'
-    +'<path d="M115 34v-24"/><path d="M152 46l17-17"/><path d="M78 46l-17-17"/>'
-    +'<path d="M168 76l22-7"/><path d="M62 76l-22-7"/>'
+  return '<svg class="hero-illus" viewBox="0 0 460 380" fill="none" aria-hidden="true" focusable="false">'
+    +'<defs>'
+    +'<radialGradient id="hBurst" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#FFE9A8" stop-opacity=".9"/><stop offset=".55" stop-color="#FBBF24" stop-opacity=".28"/><stop offset="1" stop-color="#FBBF24" stop-opacity="0"/></radialGradient>'
+    +'<linearGradient id="hPageL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6ECD2"/><stop offset="1" stop-color="#E4D3A8"/></linearGradient>'
+    +'<linearGradient id="hPageR" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2E7C9"/><stop offset="1" stop-color="#DDC99B"/></linearGradient>'
+    +'<linearGradient id="hCover" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#B78A2E"/><stop offset=".5" stop-color="#D9AC4B"/><stop offset="1" stop-color="#9C7222"/></linearGradient>'
+    +'<linearGradient id="hRibV" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8B5CF6" stop-opacity="0"/><stop offset=".5" stop-color="#8B5CF6" stop-opacity=".55"/><stop offset="1" stop-color="#C084FC" stop-opacity="0"/></linearGradient>'
+    +'<linearGradient id="hRibC" x1="1" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#22D3EE" stop-opacity="0"/><stop offset=".5" stop-color="#22D3EE" stop-opacity=".5"/><stop offset="1" stop-color="#67E8F9" stop-opacity="0"/></linearGradient>'
+    +'<filter id="hB12" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="12"/></filter>'
+    +'<filter id="hB5" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="5"/></filter>'
+    +'</defs>'
+    /* aurore */
+    +'<path d="M10 175 C95 105 150 140 225 70 C268 32 330 14 395 26 L382 62 C325 54 282 70 246 102 C185 158 110 160 38 210 Z" fill="url(#hRibV)" filter="url(#hB12)"/>'
+    +'<path d="M450 150 C380 95 330 120 275 62 C245 30 205 18 165 22 L172 54 C210 52 240 66 268 96 C315 146 380 150 432 192 Z" fill="url(#hRibC)" filter="url(#hB12)" opacity=".8"/>'
+    /* stelline di fondo */
+    +'<g fill="#fff">'
+    +'<circle cx="60" cy="60" r="1.4" opacity=".5"/><circle cx="120" cy="34" r="1" opacity=".4"/><circle cx="190" cy="88" r="1.2" opacity=".35"/>'
+    +'<circle cx="330" cy="46" r="1.4" opacity=".5"/><circle cx="392" cy="98" r="1.1" opacity=".4"/><circle cx="420" cy="60" r="1.3" opacity=".35"/>'
+    +'<circle cx="90" cy="140" r="1.1" opacity=".3"/><circle cx="405" cy="170" r="1.2" opacity=".3"/><circle cx="150" cy="190" r="1" opacity=".25"/>'
     +'</g>'
-    +'<circle cx="115" cy="80" r="46" fill="url(#heroGlow)"/>'
-    +'<circle cx="115" cy="80" r="13" fill="var(--gold)" opacity=".9"/>'
-    +'<g stroke="var(--brand)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'
-    +'<path d="M36 128c30-16 58-16 79 0 21-16 49-16 79 0v58c-30-16-58-16-79 0-21-16-49-16-79 0z" fill="var(--bg2)"/>'
-    +'<path d="M115 128v58"/>'
-    +'<path d="M52 137l46-11" opacity=".55"/><path d="M52 152l46-11" opacity=".55"/><path d="M52 167l38-9" opacity=".55"/>'
-    +'<path d="M178 137l-46-11" opacity=".55"/><path d="M178 152l-46-11" opacity=".55"/><path d="M178 167l-38-9" opacity=".55"/>'
+    /* colonna di luce */
+    +'<ellipse cx="260" cy="195" rx="115" ry="150" fill="url(#hBurst)" opacity=".55"/>'
+    +'<ellipse cx="260" cy="165" rx="52" ry="115" fill="url(#hBurst)" filter="url(#hB12)" opacity=".8"/>'
+    +'<ellipse cx="260" cy="243" rx="66" ry="22" fill="#FFF3C4" filter="url(#hB5)" opacity=".85"/>'
+    /* particelle dorate che salgono */
+    +'<g fill="#FFD766">'
+    +'<circle cx="230" cy="200" r="2.6" opacity=".9"/><circle cx="285" cy="176" r="2" opacity=".8"/><circle cx="250" cy="140" r="3" opacity=".85"/>'
+    +'<circle cx="300" cy="120" r="1.8" opacity=".6"/><circle cx="225" cy="96" r="2.2" opacity=".7"/><circle cx="262" cy="70" r="1.6" opacity=".8"/>'
+    +'<circle cx="240" cy="46" r="1.4" opacity=".55"/><circle cx="296" cy="60" r="1.2" opacity=".5"/><circle cx="210" cy="150" r="1.5" opacity=".5"/>'
+    +'<circle cx="320" cy="150" r="1.4" opacity=".45"/><circle cx="276" cy="106" r="2.4" opacity=".75"/><circle cx="248" cy="182" r="1.8" opacity=".8"/>'
+    +'</g>'
+    /* scintille a 4 punte */
+    +'<g fill="#FFD766">'
+    +'<path d="M204 122 l1.8 5.2 5.2 1.8 -5.2 1.8 -1.8 5.2 -1.8 -5.2 -5.2 -1.8 5.2 -1.8 Z" opacity=".9"/>'
+    +'<path d="M312 86 l1.5 4.4 4.4 1.5 -4.4 1.5 -1.5 4.4 -1.5 -4.4 -4.4 -1.5 4.4 -1.5 Z" opacity=".8"/>'
+    +'<path d="M256 18 l1.9 5.6 5.6 1.9 -5.6 1.9 -1.9 5.6 -1.9 -5.6 -5.6 -1.9 5.6 -1.9 Z" opacity=".95"/>'
+    +'</g>'
+    /* alone a terra + libro dorato */
+    +'<ellipse cx="260" cy="330" rx="112" ry="17" fill="#8B5CF6" filter="url(#hB12)" opacity=".22"/>'
+    +'<path d="M260 334 C231 310 186 302 150 308 L150 264 C186 257 231 266 260 290 C289 266 334 257 370 264 L370 308 C334 302 289 310 260 334 Z" fill="url(#hCover)" stroke="#7A5717" stroke-width="2"/>'
+    +'<path d="M260 322 C236 302 200 295 167 299 L167 257 C200 252 236 260 260 279 Z" fill="url(#hPageL)"/>'
+    +'<path d="M260 322 C284 302 320 295 353 299 L353 257 C320 252 284 260 260 279 Z" fill="url(#hPageR)"/>'
+    +'<path d="M260 279 L260 322" stroke="#B99C58" stroke-width="3"/>'
+    /* righe di testo accennate sulle pagine */
+    +'<g stroke="#A8894A" stroke-width="1.6" stroke-linecap="round" opacity=".55">'
+    +'<path d="M182 271 C205 267 228 270 248 280"/>'
+    +'<path d="M182 283 C205 279 228 282 248 292"/>'
+    +'<path d="M186 295 C206 292 226 295 244 303"/>'
+    +'<path d="M338 271 C315 267 292 270 272 280"/>'
+    +'<path d="M338 283 C315 279 292 282 272 292"/>'
+    +'<path d="M334 295 C314 292 294 295 276 303"/>'
     +'</g>'
     +'</svg>';
 }
@@ -989,7 +1031,8 @@ function playVideo(btn){
 function applySite(){
   document.title=(SITE.titolo||"Lab IRC")+" · Religione Cattolica";
   $("#brandName").textContent=SITE.titolo||"Lab IRC";
-  $("#seal").textContent=(SITE.titolo||"L").trim().charAt(0).toUpperCase();
+  /* il sigillo nell'header è ora il marchio grafico (libro + luce),
+     non più l'iniziale del titolo */
   /* FIX #7 — aggiorna il meta description con il testo del sito */
   const metaDesc = document.querySelector('meta[name="description"]');
   if(metaDesc && SITE.intro) metaDesc.setAttribute("content", SITE.intro);
