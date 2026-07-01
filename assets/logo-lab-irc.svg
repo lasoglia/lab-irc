@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- Logo "Lab IRC" — libro aperto con raggi di luce e stella.
+       Ricreato in vettoriale dal design approvato (gradiente viola→ciano,
+       stella ambra). La tessera scura di sfondo lo rende leggibile come
+       favicon su qualsiasi scheda del browser. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset=".55" stop-color="#4F8DF9"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="240" height="240" rx="52" fill="#14131F"/>
+
+  <!-- stella -->
+  <path d="M120 22 L125.5 38.5 L142 44 L125.5 49.5 L120 66 L114.5 49.5 L98 44 L114.5 38.5 Z" fill="#FBBF24"/>
+
+  <!-- raggi a ventaglio -->
+  <g stroke="url(#g)" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M106 117 L76 99"/>
+    <path d="M109 114 L92 97"/>
+    <path d="M112 112 L93 79"/>
+    <path d="M115 111 L107 84"/>
+    <path d="M118 110 L114 68"/>
+    <path d="M122 110 L126 68"/>
+    <path d="M125 111 L133 84"/>
+    <path d="M128 112 L147 79"/>
+    <path d="M131 114 L148 97"/>
+    <path d="M134 117 L164 99"/>
+  </g>
+
+  <!-- libro aperto: copertina esterna + pagine interne -->
+  <g stroke="url(#g)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="9" d="M120 196 C97 176 66 168 36 173 L36 116 C66 111 97 119 120 139 C143 119 174 111 204 116 L204 173 C174 168 143 176 120 196 Z"/>
+    <path stroke-width="6" d="M120 182 C100 166 74 159 50 162 L50 124 C74 120 100 127 120 145 C140 127 166 120 190 124 L190 162 C166 159 140 166 120 182"/>
+    <path stroke-width="6" d="M120 145 L120 194"/>
+  </g>
+</svg>
