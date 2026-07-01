@@ -22,6 +22,46 @@
      Default del sito = scuro ("Notte studio"). Chiave condivisa con artefatti e verifiche. -->
 <script>try{var t=localStorage.getItem('tema_lab');if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
 
+<!-- Animazioni (Motion One via CDN, ~5 KB, nessuna build): transizioni fra
+     le pagine e un piccolo "tilt" luminoso al passaggio del mouse sulle
+     card. Se il CDN non è raggiungibile il sito resta comunque perfettamente
+     funzionante, solo senza questi effetti (vedi i controlli su window.__motion
+     nello script principale). -->
+<script type="module">
+import { animate } from "https://cdn.jsdelivr.net/npm/motion@11/+esm";
+window.__motion = { animate };
+
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(!reduceMotion){
+  const TILT_SEL = ".card,.ycard,.fcard,.tile";
+  let raf=null, lastEvt=null;
+
+  function applyTilt(e){
+    const card=e.target.closest(TILT_SEL);
+    if(!card) return;
+    const r=card.getBoundingClientRect();
+    const px=((e.clientX-r.left)/r.width)*100, py=((e.clientY-r.top)/r.height)*100;
+    const rx=((py/100)-.5)*-6, ry=((px/100)-.5)*6;
+    card.style.backgroundImage=`radial-gradient(320px circle at ${px}% ${py}%, rgba(255,255,255,.10), transparent 60%)`;
+    animate(card, {transform:`perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`}, {duration:.25, easing:[.2,.8,.2,1]});
+  }
+
+  document.addEventListener("pointermove",(e)=>{
+    if(e.pointerType!=="mouse") return;
+    lastEvt=e;
+    if(raf) return;
+    raf=requestAnimationFrame(()=>{ raf=null; applyTilt(lastEvt); });
+  });
+
+  document.addEventListener("pointerleave",(e)=>{
+    const card=e.target.closest && e.target.closest(TILT_SEL);
+    if(!card) return;
+    card.style.backgroundImage="";
+    animate(card, {transform:"none"}, {duration:.3, easing:[.2,.8,.2,1]}).finished.then(()=>{ card.style.transform=""; }).catch(()=>{ card.style.transform=""; });
+  }, true);
+}
+</script>
+
 <style>
 
 /* ===== NOTTE STUDIO — tema scuro (default) ===== */
@@ -428,6 +468,16 @@ body.viewing #labTema{display:none}
 .reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
 
 @keyframes rise{to{opacity:1; transform:none}}
+
+/* Feedback "a scatto" al tocco/click su link e bottoni: rende l'interfaccia
+   più reattiva e viva al tatto (Motion One gestisce invece le transizioni
+   di pagina e il tilt delle card, vedi script a fine pagina). */
+a:active, button:active{ transform:scale(.96); transition:transform .1s ease; }
+
+.card,.ycard,.fcard,.tile{ will-change:transform; }
+
+/* Contenitore di #main/#heroWrap durante la transizione fra pagine */
+#main, #heroWrap{ transform-origin:center top; }
 
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important; transition:none!important}
@@ -1070,7 +1120,7 @@ function hideViewer(){
 
 /* ---------- router ---------- */
 
-function route(hash){
+function renderRoute(hash){
   if(typeof hash==="undefined") hash=location.hash.replace(/^#/,"");
   if(searchQ){renderSearch(searchQ); return;}
   if(!hash||hash===""){renderHome(); renderFooter(); return;}
@@ -1091,6 +1141,22 @@ function route(hash){
   if(hash==="strumenti"){renderStrumenti(); renderFooter(); return;}
   if(hash==="video"){renderVideo(); renderFooter(); return;}
   renderHome(); renderFooter();
+}
+
+/* Cambio pagina con una piccola dissolvenza (Motion One, caricato via CDN
+   in testa alla pagina). Se lo script non è disponibile — offline, blocco
+   annunci — si passa direttamente a renderRoute() senza transizione: il
+   sito resta comunque perfettamente funzionante. */
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function route(hash){
+  const m=window.__motion;
+  if(!m || reduceMotion || document.body.classList.contains("viewing")){ renderRoute(hash); return; }
+  const targets=[$("#heroWrap"), $("#main")].filter(Boolean);
+  m.animate(targets, {opacity:[1,0], transform:["translateY(0px)","translateY(-10px)"]}, {duration:.16, easing:"ease-in"})
+   .finished.then(()=>{
+      renderRoute(hash);
+      m.animate(targets, {opacity:[0,1], transform:["translateY(12px)","translateY(0px)"]}, {duration:.45, easing:[.2,.8,.2,1]});
+    }).catch(()=>renderRoute(hash));
 }
 
 /* ---------- avvio ---------- */
