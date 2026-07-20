@@ -1,17 +1,9 @@
 {
   "lezioni": [
     {
-      "titolo": "Il Big Bang di Lemaître",
-      "anno": "3",
-      "uda": "Scienza e fede",
-      "descrizione": "ESEMPIO (puoi eliminarla o rinominarla). Il sacerdote che ipotizzò l'origine dell'universo: lettura delle fonti e discussione.",
-      "ordine": 1
-    },
-    {
-      "titolo": "bibbia",
-      "anno": "4",
-      "uda": "Parità di genere",
-      "ordine": 1
+      "titolo": "Lemaitre e Einstein",
+      "anno": "5",
+      "uda": "Scienza e fede"
     }
   ]
 }
