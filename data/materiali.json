@@ -26,6 +26,15 @@
       "lezione": "Lemaitre e Einstein",
       "tipo": "Documento/PDF",
       "file": "/uploads/le-due-vie-fascicolo-di-studio.pdf"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Slide",
+      "anno": "5",
+      "uda": "Scienza e fede",
+      "lezione": "Lemaitre e Einstein",
+      "tipo": "Slide",
+      "file": "/uploads/the_infinite_duel.pptx"
     }
   ]
 }
