@@ -11,12 +11,12 @@
     },
     {
       "in_evidenza": false,
-      "titolo": "luce ombra",
-      "anno": "4",
-      "uda": "Bibbia",
-      "lezione": "bibbia",
-      "tipo": "Link",
-      "file": "/uploads/lez-3-occhi-chiusi-luce.html"
+      "anno": "5",
+      "uda": "Scienza e fede",
+      "lezione": "Lemaitre e Einstein",
+      "file": "/uploads/lemaitre-einstein-due-vie.html",
+      "titolo": "Lezione interattiva",
+      "tipo": "Artefatto interattivo"
     }
   ]
 }

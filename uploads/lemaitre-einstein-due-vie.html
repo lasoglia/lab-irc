@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le due vie — Lemaître, Einstein e il mistero dell'inizio | IRC</title>
+<meta name="description" content="Lezione IRC di quinta: Georges Lemaître, Albert Einstein e il rapporto fra scienza e fede senza concordismo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKEN — la palette è il redshift.
+   Ciano = vicino/inizio. Magenta = lontano/fine.
+   La barra di avanzamento della lezione si sposta dal ciano
+   al magenta man mano che il racconto avanza nel tempo.
+   ============================================================ */
+:root{
+  --void:#070B18;
+  --deep:#0D1428;
+  --panel:rgba(255,255,255,.045);
+  --panel-hi:rgba(255,255,255,.075);
+  --edge:rgba(255,255,255,.11);
+  --edge-hi:rgba(255,255,255,.22);
+
+  --cyan:#4CE0F5;
+  --violet:#8B7BFF;
+  --magenta:#FF6FB5;
+  --amber:#FFC46B;
+
+  --ink:#EAF0FF;
+  --muted:rgba(234,240,255,.62);
+  --faint:rgba(234,240,255,.38);
+
+  --spectrum:linear-gradient(90deg,var(--cyan) 0%,var(--violet) 52%,var(--magenta) 100%);
+
+  --sans:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+
+  --r-lg:28px; --r-md:20px; --r-sm:13px;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.75);
+  --wrap:1160px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  font-weight:300;
+  background:var(--void);
+  color:var(--ink);
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- fondo: due nebulose lente + reticolo che si dilata ---------- */
+.sky{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.sky::before,.sky::after{content:'';position:absolute;border-radius:50%;filter:blur(90px)}
+.sky::before{
+  width:60vw;height:60vw;top:-18vw;left:-14vw;
+  background:radial-gradient(circle,rgba(76,224,245,.22),transparent 68%);
+  animation:drift 34s ease-in-out infinite alternate;
+}
+.sky::after{
+  width:64vw;height:64vw;bottom:-24vw;right:-18vw;
+  background:radial-gradient(circle,rgba(255,111,181,.18),transparent 68%);
+  animation:drift 42s ease-in-out infinite alternate-reverse;
+}
+.grid-far{
+  position:fixed;inset:-25%;z-index:-1;pointer-events:none;opacity:.42;
+  background-image:radial-gradient(rgba(255,255,255,.5) .9px,transparent .9px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 42%,#000 12%,transparent 74%);
+  mask-image:radial-gradient(ellipse at 50% 42%,#000 12%,transparent 74%);
+  animation:expand 26s linear infinite;
+}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(5vw,4vw,0)}}
+@keyframes expand{from{transform:scale(1)}to{transform:scale(1.14)}}
+
+/* ---------- vetro ---------- */
+.glass{
+  background:var(--panel);
+  -webkit-backdrop-filter:blur(22px) saturate(1.4);
+  backdrop-filter:blur(22px) saturate(1.4);
+  border:1px solid var(--edge);
+  border-radius:var(--r-md);
+}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+/* ============================ INTESTAZIONE ============================ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(7,11,24,.72);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--edge);
+}
+.topbar-in{
+  max-width:var(--wrap);margin:0 auto;padding:11px 24px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+}
+.school{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);font-weight:500;line-height:1.5}
+.school b{color:var(--muted);font-weight:600}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto}
+.chip{
+  font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:5px 11px;border-radius:100px;border:1px solid var(--edge);color:var(--muted);
+  white-space:nowrap;
+}
+.chip.hot{border-color:rgba(255,196,107,.4);color:var(--amber)}
+
+/* ============================ HERO ============================ */
+.hero{padding:clamp(56px,11vw,118px) 0 clamp(40px,7vw,72px);position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;
+  color:var(--cyan);margin-bottom:26px;
+}
+.eyebrow::before{content:'';width:34px;height:1px;background:var(--spectrum)}
+h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(3rem,10vw,6.4rem);line-height:.94;letter-spacing:-.02em;
+  margin-bottom:24px;
+}
+h1 .lit{
+  background:var(--spectrum);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;font-style:italic;
+}
+.hero-sub{
+  font-size:clamp(1.02rem,2.2vw,1.3rem);color:var(--muted);max-width:660px;font-weight:300;
+}
+.hero-q{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.3rem,3.4vw,2rem);line-height:1.35;
+  color:var(--ink);max-width:720px;margin:34px 0 38px;
+  padding-left:24px;border-left:2px solid;border-image:var(--spectrum) 1;
+}
+.cta-row{display:flex;gap:13px;flex-wrap:wrap}
+.btn{
+  font-family:var(--sans);font-size:.86rem;font-weight:600;letter-spacing:.02em;
+  padding:14px 26px;border-radius:100px;border:1px solid var(--edge);
+  background:var(--panel);color:var(--ink);cursor:pointer;
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  transition:transform .28s cubic-bezier(.2,.9,.3,1),border-color .28s,box-shadow .28s,background .28s;
+}
+.btn:hover{transform:translateY(-3px);border-color:var(--edge-hi);background:var(--panel-hi);box-shadow:0 14px 34px -12px rgba(139,123,255,.5)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.btn.primary{background:var(--spectrum);border-color:transparent;color:#0A0F1F;font-weight:700}
+.btn.primary:hover{box-shadow:0 16px 40px -12px rgba(255,111,181,.62)}
+
+/* ============================ NAV MODALITÀ ============================ */
+.modes{position:sticky;top:52px;z-index:50;padding:14px 0 26px}
+.modes-in{
+  display:flex;gap:6px;padding:6px;flex-wrap:wrap;
+  background:rgba(13,20,40,.78);
+  -webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);
+  border:1px solid var(--edge);border-radius:100px;width:fit-content;max-width:100%;
+}
+.tab{
+  font-family:var(--sans);font-size:.79rem;font-weight:500;
+  padding:10px 20px;border-radius:100px;border:none;background:transparent;
+  color:var(--muted);cursor:pointer;transition:color .25s,background .25s;white-space:nowrap;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--panel-hi);color:var(--ink);font-weight:600;box-shadow:inset 0 0 0 1px var(--edge)}
+.tab:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+.panel[hidden]{display:none}
+.panel{animation:rise .55s cubic-bezier(.2,.9,.3,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ============================ PRESENTAZIONE ============================ */
+.deck{
+  position:relative;border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(155deg,rgba(76,224,245,.07),rgba(255,111,181,.07));
+  border:1px solid var(--edge);box-shadow:var(--shadow);
+  -webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);
+}
+.deck:fullscreen{border-radius:0;background:var(--void)}
+.stage{position:relative;min-height:clamp(430px,62vh,600px);display:flex}
+.slide{
+  position:absolute;inset:0;padding:clamp(30px,5.5vw,66px);
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:0;visibility:hidden;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s cubic-bezier(.2,.9,.3,1),visibility .5s;
+}
+.slide.on{opacity:1;visibility:visible;transform:none}
+.s-eyebrow{
+  font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+  margin-bottom:18px;display:flex;align-items:center;gap:11px;
+}
+.s-eyebrow::after{content:'';flex:1;height:1px;background:currentColor;opacity:.22;max-width:130px}
+.m-prima{color:var(--cyan)} .m-dopo{color:#79C7FF} .m-perche{color:var(--violet)}
+.m-hook{color:var(--amber)} .m-cons{color:var(--magenta)} .m-fine{color:var(--magenta)}
+.slide h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.85rem,5.4vw,3.5rem);line-height:1.03;letter-spacing:-.015em;margin-bottom:20px;
+}
+.slide p{font-size:clamp(.96rem,1.9vw,1.19rem);color:var(--muted);max-width:760px;margin-bottom:13px}
+.slide strong{color:var(--ink);font-weight:600}
+.s-quote{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.15rem,3vw,1.9rem);line-height:1.32;color:var(--ink);
+  margin:22px 0 12px;padding-left:22px;border-left:2px solid;border-image:var(--spectrum) 1;max-width:760px;
+}
+.s-src{font-size:.75rem;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;font-weight:500}
+.datebadge{
+  display:inline-block;font-family:var(--serif);font-size:clamp(2.6rem,9vw,5.4rem);
+  line-height:1;background:var(--spectrum);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;margin-bottom:8px;
+}
+.s-list{list-style:none;margin:14px 0;display:grid;gap:11px;max-width:700px}
+.s-list li{
+  padding-left:22px;position:relative;color:var(--muted);
+  font-size:clamp(.92rem,1.8vw,1.06rem);
+}
+.s-list li::before{content:'';position:absolute;left:0;top:.72em;width:8px;height:8px;border-radius:50%;background:var(--spectrum)}
+
+.deck-foot{
+  display:flex;align-items:center;gap:16px;padding:15px clamp(20px,4vw,34px);
+  border-top:1px solid var(--edge);background:rgba(7,11,24,.4);flex-wrap:wrap;
+}
+.nav-btn{
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--edge);
+  background:var(--panel);color:var(--ink);cursor:pointer;font-size:1rem;
+  display:grid;place-items:center;transition:all .25s;flex-shrink:0;
+}
+.nav-btn:hover:not(:disabled){background:var(--panel-hi);border-color:var(--edge-hi);transform:scale(1.09)}
+.nav-btn:disabled{opacity:.24;cursor:not-allowed}
+.nav-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.progress{flex:1;min-width:110px;height:3px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--spectrum);width:0;transition:width .5s cubic-bezier(.2,.9,.3,1)}
+.counter{font-size:.76rem;color:var(--faint);letter-spacing:.1em;font-weight:500;font-variant-numeric:tabular-nums}
+.mini{font-size:.72rem;padding:9px 15px}
+.redshift-note{
+  font-size:.68rem;color:var(--faint);letter-spacing:.04em;
+  text-align:center;margin-top:14px;font-weight:300;
+}
+
+/* ============================ STUDIO ============================ */
+.study{display:grid;grid-template-columns:220px 1fr;gap:46px;align-items:start}
+.toc{position:sticky;top:118px;padding:22px}
+.toc h3{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin-bottom:15px;font-weight:600}
+.toc a{
+  display:block;font-size:.85rem;color:var(--muted);text-decoration:none;
+  padding:7px 0 7px 13px;border-left:1px solid var(--edge);transition:all .25s;
+}
+.toc a:hover{color:var(--ink);border-left-color:var(--cyan);padding-left:18px}
+.prose{max-width:720px}
+.prose section{margin-bottom:60px;scroll-margin-top:130px}
+.prose h2{
+  font-family:var(--serif);font-weight:400;font-size:clamp(1.75rem,4.4vw,2.7rem);
+  line-height:1.08;margin-bottom:8px;letter-spacing:-.01em;
+}
+.sec-tag{
+  font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+  display:block;margin-bottom:12px;
+}
+.prose p{margin-bottom:17px;color:var(--muted);font-size:1.015rem}
+.prose p strong{color:var(--ink);font-weight:600}
+.prose em{color:rgba(234,240,255,.85);font-style:italic}
+
+.pull{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1.28rem,3.2vw,1.85rem);line-height:1.34;color:var(--ink);
+  margin:34px 0;padding:26px 30px;border-radius:var(--r-md);
+  background:linear-gradient(135deg,rgba(139,123,255,.11),rgba(255,111,181,.07));
+  border:1px solid var(--edge);
+}
+.pull cite{display:block;font-family:var(--sans);font-style:normal;font-size:.73rem;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);margin-top:15px;font-weight:500}
+
+.ask{
+  margin:30px 0;padding:24px 26px;border-radius:var(--r-md);
+  background:rgba(76,224,245,.06);border:1px solid rgba(76,224,245,.24);
+}
+.ask h4{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:13px;font-weight:700}
+.ask ol{margin-left:17px;display:grid;gap:9px}
+.ask li{color:var(--muted);font-size:.94rem}
+
+.scripture{
+  margin:26px 0;padding:22px 26px;border-radius:var(--r-sm);
+  border-left:3px solid var(--amber);background:rgba(255,196,107,.06);
+}
+.scripture p{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink);margin-bottom:8px}
+.scripture span{font-size:.72rem;letter-spacing:.11em;text-transform:uppercase;color:var(--amber);font-weight:600}
+
+/* ============================ SMISTATORE ============================ */
+.sorter-head{max-width:700px;margin-bottom:34px}
+.sorter-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,5vw,3rem);line-height:1.05;margin-bottom:14px}
+.sorter-head p{color:var(--muted)}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 30px}
+.leg{font-size:.72rem;font-weight:600;padding:7px 14px;border-radius:100px;border:1px solid}
+.leg.f{color:var(--cyan);border-color:rgba(76,224,245,.4);background:rgba(76,224,245,.07)}
+.leg.t{color:var(--amber);border-color:rgba(255,196,107,.4);background:rgba(255,196,107,.07)}
+.leg.x{color:var(--magenta);border-color:rgba(255,111,181,.4);background:rgba(255,111,181,.07)}
+
+.items{display:grid;gap:14px}
+.item{padding:22px;border-radius:var(--r-sm);transition:border-color .3s,background .3s}
+.item .q{font-family:var(--serif);font-size:clamp(1.08rem,2.6vw,1.35rem);line-height:1.36;margin-bottom:16px;color:var(--ink)}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{
+  font-family:var(--sans);font-size:.76rem;font-weight:500;padding:9px 16px;
+  border-radius:100px;border:1px solid var(--edge);background:transparent;color:var(--muted);
+  cursor:pointer;transition:all .25s;
+}
+.opt:hover:not(:disabled){border-color:var(--edge-hi);color:var(--ink);transform:translateY(-2px)}
+.opt:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.opt:disabled{cursor:default}
+.opt.right{background:rgba(76,224,245,.16);border-color:var(--cyan);color:var(--cyan);font-weight:600}
+.opt.wrong{background:rgba(255,111,181,.14);border-color:var(--magenta);color:var(--magenta);text-decoration:line-through}
+.feedback{
+  margin-top:15px;padding:15px 18px;border-radius:var(--r-sm);
+  font-size:.89rem;color:var(--muted);border-left:2px solid var(--violet);
+  background:rgba(139,123,255,.07);display:none;
+}
+.feedback.show{display:block;animation:rise .4s ease both}
+.feedback b{color:var(--ink);font-weight:600}
+.score{
+  margin-top:26px;padding:24px;border-radius:var(--r-md);text-align:center;
+  background:linear-gradient(135deg,rgba(76,224,245,.09),rgba(255,111,181,.09));
+  border:1px solid var(--edge);display:none;
+}
+.score.show{display:block;animation:rise .5s ease both}
+.score .n{font-family:var(--serif);font-size:3rem;line-height:1;background:var(--spectrum);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.score p{color:var(--muted);font-size:.94rem;margin-top:10px}
+
+/* ============================ NOTE DOCENTE / FOOTER ============================ */
+.teacher{margin:64px 0 0;border-radius:var(--r-md);overflow:hidden}
+.teacher summary{
+  padding:17px 24px;cursor:pointer;font-size:.76rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--faint);font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px;transition:color .25s;
+}
+.teacher summary:hover{color:var(--muted)}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher summary::before{content:'▸';transition:transform .3s;font-size:.8rem}
+.teacher[open] summary::before{transform:rotate(90deg)}
+.teacher-body{padding:0 24px 26px;font-size:.88rem;color:var(--muted)}
+.teacher-body p{margin-bottom:11px}
+.teacher-body strong{color:var(--ink);font-weight:600}
+.teacher-body ul{margin:10px 0 14px 18px;display:grid;gap:6px}
+
+footer{margin-top:80px;padding:34px 0 44px;border-top:1px solid var(--edge)}
+.foot-in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot-in p{font-size:.76rem;color:var(--faint)}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap}
+.foot-links a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .25s}
+.foot-links a:hover{color:var(--cyan)}
+
+/* ============================ RESPONSIVE ============================ */
+@media(max-width:900px){
+  .study{grid-template-columns:1fr;gap:28px}
+  .toc{position:static;order:-1}
+  .modes{top:0}
+}
+@media(max-width:560px){
+  .wrap{padding:0 18px}
+  .topbar-in{padding:10px 18px;gap:10px}
+  .chips{width:100%;margin-left:0}
+  .stage{min-height:480px}
+  .deck-foot{gap:10px}
+  .counter{order:3;width:100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<div class="grid-far" aria-hidden="true"></div>
+
+<!-- ===================== INTESTAZIONE ISTITUZIONALE ===================== -->
+<header class="topbar" id="top">
+  <div class="topbar-in">
+    <div class="school">
+      <b>IIS «Evangelista Torricelli» — Roma</b><br>
+      IRC · Prof. Matteo Sestili · a.s. 2026/2027
+    </div>
+    <div class="chips">
+      <span class="chip">Classe V · Liceo scientifico</span>
+      <span class="chip">UDA · Scienza e fede</span>
+      <span class="chip hot">Lezione 1</span>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===================== HERO ===================== -->
+<section class="hero wrap">
+  <span class="eyebrow">Un giorno senza ieri</span>
+  <h1>Le due<br><span class="lit">vie</span></h1>
+  <p class="hero-sub">Georges Lemaître, Albert Einstein e la domanda che nel 1927 nessuno voleva sentire: l'universo ha una data di nascita?</p>
+  <blockquote class="hero-q">Se l'universo ha avuto un inizio, qualcuno l'ha acceso. Ma è una domanda che può fare la fisica?</blockquote>
+  <div class="cta-row">
+    <button class="btn primary" data-go="deck">Entra nella lezione</button>
+    <button class="btn" data-go="study">Leggi il testo</button>
+    <button class="btn" id="dl">⬇ Scarica testo</button>
+  </div>
+</section>
+
+<!-- ===================== NAVIGAZIONE MODALITÀ ===================== -->
+<nav class="modes wrap" aria-label="Modalità di lettura">
+  <div class="modes-in" role="tablist">
+    <button class="tab" role="tab" id="t-deck"  aria-controls="p-deck"  aria-selected="true">Presentazione</button>
+    <button class="tab" role="tab" id="t-study" aria-controls="p-study" aria-selected="false">Studio</button>
+    <button class="tab" role="tab" id="t-sort"  aria-controls="p-sort"  aria-selected="false">Smistatore</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ===================== MODALITÀ 1 · PRESENTAZIONE ===================== -->
+<section class="panel" id="p-deck" role="tabpanel" aria-labelledby="t-deck">
+  <div class="deck" id="deck">
+    <div class="stage" id="stage">
+
+      <article class="slide on">
+        <span class="s-eyebrow m-hook">La domanda</span>
+        <h2>Un giorno<br>senza ieri</h2>
+        <p>Nel 1931 un prete cattolico belga scrive che l'universo è cominciato. Un fisico ebreo tedesco gli aveva risposto quattro anni prima che la sua fisica era <strong>abominevole</strong>.</p>
+        <p>Nel 1933 lo stesso fisico si alzò in piedi ad applaudirlo.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-prima">Prima · L'universo eterno</span>
+        <h2>Un orologio che nessuno ha caricato</h2>
+        <p>Fino agli anni Venti del Novecento <strong>nessuno scienziato al mondo</strong> pensa che l'universo abbia una data di nascita. Da Aristotele a Newton l'universo è eterno, immutabile, sostanzialmente fermo.</p>
+        <p>Non è una questione di dati: è una questione di ciò che sembra ovvio.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-prima">Prima · Einstein, 1917</span>
+        <span class="datebadge">1917</span>
+        <h2>Il puntello</h2>
+        <p>Einstein applica la relatività generale all'universo intero. Le equazioni rispondono che l'universo <strong>non può stare fermo</strong>: o si espande, o si contrae.</p>
+        <p>Lui non ci crede. E aggiunge alle equazioni un termine — la costante cosmologica <strong>Λ</strong> — con l'unico scopo di tenerlo fermo. Come un travetto sotto un solaio che sei convinto non possa cadere.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-dopo">Dopo · Chi era Lemaître</span>
+        <h2>L'artigliere che diventò sacerdote</h2>
+        <ul class="s-list">
+          <li><strong>1914–1918</strong> — quattro anni di fronte nell'esercito belga, artiglieria, decorato.</li>
+          <li><strong>1923</strong> — ordinato sacerdote. Subito dopo va a Cambridge da Eddington, poi Harvard, poi il MIT.</li>
+          <li><strong>1927</strong> — pubblica sugli <em>Annales de la Société Scientifique de Bruxelles</em>, rivista che nel mondo leggono forse duecento persone.</li>
+        </ul>
+        <p>Entra nei seminari di fisica in clergyman. Nel 1927 è un gesto che si nota.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-dopo">Dopo · Che cosa aveva capito</span>
+        <h2>Non corrono le uvette.<br>Cresce l'impasto.</h2>
+        <p>Immagina un panettone che lievita. Da qualunque uvetta tu guardi, tutte le altre si allontanano — e le più lontane si allontanano più in fretta, perché fra loro e te c'è più impasto che cresce.</p>
+        <p>Le galassie <strong>non stanno fuggendo attraverso lo spazio</strong>. È lo spazio, fra una galassia e l'altra, che si allunga.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-dopo">Dopo · Parc Léopold, Bruxelles</span>
+        <span class="datebadge">1927</span>
+        <h2>«La sua fisica è abominevole»</h2>
+        <p>Al V Congresso Solvay Lemaître <strong>non era stato invitato</strong>. Arrivò da Lovanio, venti chilometri, per intercettare Einstein durante una pausa. Camminarono nel parco.</p>
+        <blockquote class="s-quote">Vos calculs sont corrects, mais votre physique est abominable.</blockquote>
+        <span class="s-src">Einstein a Lemaître — testimonianza di Lemaître, 1958</span>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-dopo">Dopo · L'atomo primitivo</span>
+        <span class="datebadge">1931</span>
+        <h2>E allora ieri?</h2>
+        <p>Nel 1929 Hubble misura l'espansione col telescopio del Monte Wilson. Tutti l'accettano. Ma nessuno vuole fare la domanda successiva, che è la più semplice e quindi la più terribile.</p>
+        <p>Lemaître la fa. Se mandi indietro il film, arrivi a un punto solo: l'<strong>atomo primitivo</strong>. Su <em>Nature</em> lo chiama «l'inizio del mondo dal punto di vista della teoria dei quanti».</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-perche">Perché · La frase cassata</span>
+        <h2>Il prete che cancellò Dio dal proprio articolo</h2>
+        <p>Nel manoscritto originale di quell'articolo — conservato negli archivi di Lovanio — c'era un'ultima frase, che Lemaître scrisse e poi <strong>cancellò di sua mano</strong> prima di spedirlo a <em>Nature</em>.</p>
+        <blockquote class="s-quote">Chi crede in un Essere supremo crede anche che Dio sia essenzialmente nascosto, e può essere lieto di vedere che la fisica di oggi stende un velo sulla creazione.</blockquote>
+        <span class="s-src">Manoscritto Nature 1931 — riga soppressa · Archives Lemaître, Lovanio</span>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-perche">Perché · Il Dio nascosto</span>
+        <h2>Non dà: <em>toglie</em></h2>
+        <p>La teoria dell'atomo primitivo, scrive Lemaître, resta <strong>interamente al di fuori</strong> di ogni questione metafisica o religiosa. Lascia il materialista libero di negare ogni essere trascendente. E al credente <strong>toglie</strong> ogni pretesa di familiarità con Dio.</p>
+        <blockquote class="s-quote">Davvero tu sei un Dio nascosto, Dio d'Israele, salvatore.</blockquote>
+        <span class="s-src">Isaia 45,15 — il <em>Deus absconditus</em> citato da Lemaître nel 1958</span>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-hook">Aggancio · Il nome</span>
+        <span class="datebadge">1949</span>
+        <h2>«Big Bang» era un insulto</h2>
+        <p>Fred Hoyle, alla radio della BBC, conia l'espressione per <strong>ridicolizzare</strong> la teoria: il grande botto, roba da fuochi d'artificio. Hoyle non ci credeva e sospettava che dietro ci fosse il Creatore.</p>
+        <p>Il nomignolo è rimasto. Lo usiamo tutti. E nessuno si ricorda più che era uno sfottò.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-hook">Aggancio · Pasadena, California</span>
+        <span class="datebadge">1933</span>
+        <h2>Einstein si alzò in piedi</h2>
+        <p>Gennaio 1933, California Institute of Technology. Lemaître espone l'atomo primitivo. Quando finisce, Einstein si alza, applaude e dice che è la più bella e soddisfacente spiegazione della creazione che gli sia mai capitato di ascoltare.</p>
+        <p>Il mese dopo il <em>New York Times</em> pubblica il servizio. Titolo: <strong>«Lemaître segue due vie verso la verità»</strong>.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-cons">Conseguenze · Il colpo di scena</span>
+        <span class="datebadge">1951</span>
+        <h2>Il prete che frenò il Papa</h2>
+        <p>Il 22 novembre 1951 Pio XII, alla Pontificia Accademia delle Scienze, dice che pare che la scienza sia riuscita a farsi testimone del primordiale <em>Fiat lux</em>.</p>
+        <p>Lemaître non era in sala. Quando lo seppe, si allarmò — e attraverso il gesuita Daniel O'Connell ottenne un colloquio col Papa. Nel settembre 1952, davanti agli astronomi di tutto il mondo, <strong>quell'accostamento non fu ripetuto</strong>.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-cons">Conseguenze · Oggi</span>
+        <span class="datebadge">2018</span>
+        <h2>Gli hanno restituito il nome</h2>
+        <p>L'Unione Astronomica Internazionale mette ai voti il nome della legge che descrive l'espansione. Votano in quattromila: passa col <strong>78%</strong>. Non più «legge di Hubble», ma <strong>legge di Hubble-Lemaître</strong>.</p>
+        <p>Nelle motivazioni ufficiali c'è scritto: per onorare l'integrità intellettuale di Lemaître, che lo portò a tenere al progresso della scienza più che alla propria visibilità.</p>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-fine">Domande aperte</span>
+        <h2>Per voi</h2>
+        <ul class="s-list">
+          <li>Perché Lemaître cancella quella frase? Che cosa temeva, esattamente?</li>
+          <li>Un Dio dimostrato dalla fisica del 1951 sarebbe stato smontabile dalla fisica del 1970. È un buon argomento — o è un modo elegante per mettersi al riparo?</li>
+          <li>Nei video e nei post che vi capitano sotto gli occhi, «scienza contro fede» è una domanda vera o una domanda malposta?</li>
+          <li>Esiste una domanda che <em>nessuno</em> dei due metodi può affrontare?</li>
+        </ul>
+      </article>
+
+      <article class="slide">
+        <span class="s-eyebrow m-fine">Chiusura</span>
+        <h2>Due vie</h2>
+        <p>Non una via giusta e una sbagliata. Non una via che assorbe l'altra.</p>
+        <blockquote class="s-quote">Il pericolo non è percorrerne una sola.<br>Il pericolo è confonderle.</blockquote>
+        <p>Pochi mesi prima di morire, nel 1966, portarono a Lemaître in ospedale la notizia che due americani avevano trovato il calore residuo dell'inizio. Fece in tempo a saperlo.</p>
+      </article>
+
+    </div>
+
+    <div class="deck-foot">
+      <button class="nav-btn" id="prev" aria-label="Slide precedente">←</button>
+      <button class="nav-btn" id="next" aria-label="Slide successiva">→</button>
+      <div class="progress"><i id="bar"></i></div>
+      <span class="counter" id="count">01 / 15</span>
+      <button class="btn mini" id="fs">Schermo intero</button>
+    </div>
+  </div>
+  <p class="redshift-note">La barra si sposta dal ciano al magenta come la luce delle galassie che si allontanano: più avanti nel racconto, più redshift.</p>
+</section>
+
+<!-- ===================== MODALITÀ 2 · STUDIO ===================== -->
+<section class="panel" id="p-study" role="tabpanel" aria-labelledby="t-study" hidden>
+  <div class="study">
+    <aside class="toc glass">
+      <h3>Indice</h3>
+      <a href="#s1">1 · L'universo eterno</a>
+      <a href="#s2">2 · Il prete e l'espansione</a>
+      <a href="#s3">3 · Il perché teologico</a>
+      <a href="#s4">4 · Le conseguenze</a>
+    </aside>
+
+    <article class="prose">
+
+      <section id="s1">
+        <span class="sec-tag m-prima">Prima</span>
+        <h2>Un universo che non era mai cominciato</h2>
+        <p>Per capire questa storia bisogna prima capire che cosa sembrava ovvio nel 1917. E ciò che sembrava ovvio è che l'universo <strong>non ha una data di nascita</strong>. Da Aristotele in poi, passando per Newton, il cosmo è eterno, immutabile e sostanzialmente statico: un orologio che va da sempre e andrà per sempre, senza che nessuno l'abbia mai caricato. Non era una conclusione tratta dai dati. Era il presupposto con cui i dati venivano letti.</p>
+        <p>Nel 1917 Albert Einstein fa una cosa che nessuno aveva mai fatto: prende le equazioni della relatività generale, pubblicata due anni prima, e le applica non a una stella o a un pianeta, ma <em>all'universo intero</em>. E le equazioni gli danno una risposta sgradevole: l'universo non può stare fermo. O si espande, o si contrae.</p>
+        <p>Einstein non ci crede. E allora fa una cosa che detta così sembra quasi imbarazzante: <strong>aggiunge un termine alle proprie equazioni</strong>. Introduce la costante cosmologica, la lettera greca Λ, con l'unico scopo di tenere fermo l'universo. Un puntello, come il travetto che metti sotto un solaio di cui sei convintissimo che non possa cadere.</p>
+        <p>Perché lo fa? Perché per Einstein un universo che <em>comincia</em> è un universo che chiede una spiegazione dall'esterno — e questo, alla fisica, non compete. Attenzione, però: Einstein non era ateo. Diceva di credere nel Dio di Spinoza, quello che si rivela nell'armonia ordinata di ciò che esiste. Ma proprio per questo un inizio gli era insopportabile: se Dio <em>è</em> l'ordine del mondo, il mondo non può aver cominciato, altrimenti Dio diventa un artigiano che a un certo punto si mette al lavoro.</p>
+        <p>La resistenza di Einstein non è dunque pigrizia mentale né pregiudizio anticlericale. È una <strong>posizione metafisica</strong> — solo che lui non la chiamava così. Ed è il primo dato importante di questa lezione: anche chi crede di fare solo scienza porta con sé delle convinzioni che scienza non sono.</p>
+        <div class="ask">
+          <h4>Ferma e rispondi</h4>
+          <ol>
+            <li>Che differenza c'è fra «i dati mi dicono X» e «mi sembra ovvio che X»?</li>
+            <li>Einstein modifica un'equazione per salvare una convinzione. Ti è mai capitato di fare la stessa cosa con un ragionamento?</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="s2">
+        <span class="sec-tag m-dopo">Dopo</span>
+        <h2>Il prete che sapeva la matematica</h2>
+        <p>Georges Lemaître nasce a Charleroi nel 1894. A dieci anni ha già deciso due cose insieme: farà il sacerdote e farà lo scienziato. Non l'uno <em>invece</em> dell'altro. Poi arriva il 1914: si arruola volontario e fa quattro anni di fronte come artigliere nell'esercito belga, e ne esce decorato. Ordinato sacerdote nel 1923, va subito a Cambridge da Arthur Eddington — l'uomo che aveva verificato la relatività con l'eclissi del 1919 — poi a Harvard, poi al MIT per il dottorato.</p>
+        <p>Nel 1927 pubblica su una rivista belga letta da poche centinaia di persone un articolo in cui ricava dalle equazioni di Einstein che <strong>l'universo si espande</strong>, e ne calcola perfino il ritmo a partire dai dati astronomici disponibili. È la relazione che oggi conosciamo come legge di Hubble-Lemaître, e la scrive due anni prima di Hubble.</p>
+        <div class="pull">Le galassie non stanno fuggendo attraverso lo spazio. È lo spazio, fra una galassia e l'altra, che si allunga.<cite>L'immagine del panettone che lievita</cite></div>
+        <p>Nell'ottobre di quello stesso anno, a Bruxelles, si tiene il V Congresso Solvay. Lemaître non è invitato: non è nessuno. Arriva da Lovanio, venti chilometri, sperando di intercettare Einstein durante una pausa. Camminano insieme nel Parc Léopold. Einstein ascolta, e poi gli dice la frase che Lemaître si porterà addosso per tutta la vita: <em>«Vos calculs sont corrects, mais votre physique est abominable»</em> — i suoi calcoli sono giusti, ma la sua fisica è abominevole.</p>
+        <p>Nel 1929 Edwin Hubble pubblica le misure del Monte Wilson e l'espansione diventa un fatto accettato. Ma nessuno vuole fare la domanda successiva, che è la più semplice del mondo e proprio per questo la più terribile: <em>e allora ieri?</em> Se oggi tutto si allontana da tutto, ieri era più vicino. E se mandi indietro il film abbastanza a lungo, arriva un momento in cui tutta la materia sta in un punto solo. Nel 1931 Lemaître pubblica su <em>Nature</em> l'ipotesi dell'<strong>atomo primitivo</strong> e definisce quel momento con un'espressione che è pura poesia: <em>un giorno senza ieri</em>.</p>
+        <div class="ask">
+          <h4>Ferma e rispondi</h4>
+          <ol>
+            <li>Perché l'espansione era accettabile e l'inizio no? Che cosa cambia, logicamente, fra le due?</li>
+            <li>Che cosa dice di un uomo il fatto che pubblichi una scoperta simile su una rivista che non legge nessuno?</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="s3">
+        <span class="sec-tag m-perche">Perché</span>
+        <h2>La riga cancellata</h2>
+        <p>Qui arriva il punto teologico, ed è il cuore di questa lezione. Nel manoscritto originale dell'articolo del 1931 — conservato negli Archives Lemaître di Lovanio — c'era un'ultima frase che Lemaître <strong>scrisse e poi cancellò di sua mano</strong> prima di spedire il testo a <em>Nature</em>. Diceva che chi crede in un Essere supremo crede anche che Dio sia essenzialmente nascosto, e può essere lieto di vedere che la fisica di oggi stende un velo sulla creazione.</p>
+        <p>Il prete cancella Dio dal proprio articolo scientifico. Non perché se ne vergogni: perché sa benissimo che, se quella frase restasse, la sua teoria verrebbe letta per quello che <em>non</em> è.</p>
+        <p>Il sospetto arriva lo stesso, e da entrambe le parti. Eddington — che era credente — scrive che l'idea di un inizio dell'ordine naturale gli è filosoficamente ripugnante: un'obiezione estetica, non fisica, ed è onesto abbastanza da ammetterlo. Nel 1949 Fred Hoyle, alla BBC, conia il nomignolo <em>Big Bang</em> per ridicolizzare la teoria, che gli sembrava puzzare di Creatore. Il nomignolo è rimasto: lo usiamo tutti, e nessuno ricorda più che era un insulto.</p>
+        <p>La risposta di Lemaître è di una lucidità che colpisce ancora. La teoria dell'atomo primitivo, scrive, resta <strong>interamente al di fuori</strong> di ogni questione metafisica o religiosa: lascia il materialista libero di negare ogni essere trascendente e, al credente, <em>toglie</em> ogni pretesa di familiarità con Dio. Toglie — non dà.</p>
+        <p>Perché la tentazione eterna del credente è di infilare Dio nei buchi: dove la scienza non arriva, ci metto Dio. Ma allora ogni volta che la scienza avanza, Dio arretra. È un pessimo affare, e Lemaître lo rifiuta. E conclude citando il profeta Isaia: tutto questo è in consonanza con il Dio nascosto.</p>
+        <div class="scripture">
+          <p>«Davvero tu sei un Dio nascosto, Dio d'Israele, salvatore.»</p>
+          <span>Isaia 45,15 — il <em>Deus absconditus</em></span>
+        </div>
+        <p>Che è esattamente il contrario del concordismo. Non «la scienza conferma la Bibbia», ma: <strong>non aspettatevi di trovarlo lì, perché lì non lo troverete mai</strong>. La creazione, nel linguaggio teologico, non è un evento accaduto molto tempo fa: è il rapporto per cui tutto ciò che esiste, in ogni istante, dipende da Dio per esistere. Non è una data. È una dipendenza.</p>
+        <div class="ask">
+          <h4>Ferma e rispondi</h4>
+          <ol>
+            <li>«Dio dei buchi»: prova a spiegare con parole tue perché è un argomento che si autodistrugge.</li>
+            <li>Se la creazione non è una data, che cosa risponderesti a chi dice «prima del Big Bang non c'era niente, quindi Dio non serve»?</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="s4">
+        <span class="sec-tag m-cons">Conseguenze</span>
+        <h2>Il prete che frenò il Papa</h2>
+        <p>Il 22 novembre 1951 Pio XII riceve i membri della Pontificia Accademia delle Scienze e, parlando delle nuove cosmologie, afferma che pare davvero che la scienza di oggi sia riuscita a farsi testimone di quel primordiale <em>Fiat lux</em>. Immaginate i titoli: la Chiesa dice che il Big Bang dimostra la Genesi.</p>
+        <p>Lemaître quel giorno non era in sala. Quando lo viene a sapere, la sua reazione non è di trionfo: è di <strong>allarme</strong>. Perché quel discorso faceva esattamente la cosa che lui aveva passato vent'anni a evitare — intrecciava fisica e metafisica. Si muove allora con discrezione: attraverso il gesuita Daniel O'Connell, dell'Osservatorio Vaticano, e la Segreteria di Stato ottiene un colloquio con il Papa. Del colloquio non abbiamo il verbale. Sappiamo però che nel settembre 1952, quando Pio XII parla a Roma davanti agli astronomi di tutto il mondo riuniti per l'Unione Astronomica Internazionale — l'occasione perfetta per ribadire il concetto — <strong>quell'accostamento non viene ripetuto</strong>.</p>
+        <div class="pull">Lemaître non stava proteggendo la scienza dalla Chiesa. Stava proteggendo la fede da se stessa.</div>
+        <p>Il motivo è tanto semplice quanto duro: un Dio dimostrato dalla fisica del 1951 sarebbe stato un Dio smontabile dalla fisica del 1970. Chi lega la fede a una teoria scientifica la consegna al destino di quella teoria.</p>
+        <p>Lemaître diventerà presidente della Pontificia Accademia delle Scienze e morirà a Lovanio nel giugno 1966. Pochi mesi prima, in ospedale, gli portano la notizia che due radioastronomi americani hanno trovato per caso una debolissima radiazione che arriva uniformemente da ogni direzione del cielo: il calore residuo dell'inizio, la luce fossile del suo giorno senza ieri. Fece in tempo a saperlo.</p>
+        <p>E nel 2018 l'Unione Astronomica Internazionale mette ai voti il nome della legge dell'espansione. Votano in quattromila, passa con il 78%: non più «legge di Hubble», ma <strong>legge di Hubble-Lemaître</strong>. Nelle motivazioni ufficiali si legge che si vuole onorare l'integrità intellettuale di Lemaître, che lo portò a tenere al progresso della scienza più che alla propria visibilità.</p>
+        <p>Che cosa abbiamo visto, allora? Un fisico laico che resiste a un'idea per ragioni che credeva scientifiche e che erano in buona parte metafisiche. E un prete che resiste alla tentazione di usare la scienza per la propria fede, tenendo i due piani separati con un rigore quasi feroce. Non è il conflitto fra fede e ragione. È il contrario: due uomini che hanno rifiutato di far dire alla realtà quello che avrebbero voluto sentirsi dire.</p>
+        <div class="ask">
+          <h4>Domande per la classe</h4>
+          <ol>
+            <li>Perché, secondo te, Lemaître considera pericoloso un Papa che <em>appoggia</em> la sua teoria?</li>
+            <li>Nei contenuti che vi passano davanti ogni giorno, «scienza contro fede» è una domanda vera o una domanda malposta?</li>
+            <li>Esiste una domanda che <em>nessuno</em> dei due metodi può affrontare? Provate a formularla.</li>
+          </ol>
+        </div>
+      </section>
+
+    </article>
+  </div>
+</section>
+
+<!-- ===================== MODALITÀ 3 · SMISTATORE ===================== -->
+<section class="panel" id="p-sort" role="tabpanel" aria-labelledby="t-sort" hidden>
+  <div class="sorter-head">
+    <h2>Smistatore epistemologico</h2>
+    <p>Otto affermazioni. Per ciascuna decidi a quale piano appartiene. Attenzione: alcune non appartengono a nessuno dei due, perché <strong>confondono i piani</strong> — ed è esattamente l'errore che Lemaître passò la vita a evitare.</p>
+    <div class="legend">
+      <span class="leg f">Fisica</span>
+      <span class="leg t">Teologia</span>
+      <span class="leg x">Domanda malposta</span>
+    </div>
+  </div>
+  <div class="items" id="items"></div>
+  <div class="score glass" id="score">
+    <div class="n" id="score-n">0/8</div>
+    <p id="score-msg"></p>
+  </div>
+</section>
+
+<!-- ===================== NOTE PER IL DOCENTE ===================== -->
+<details class="teacher glass">
+  <summary>Note per il docente</summary>
+  <div class="teacher-body">
+    <p><strong>Elemento interattivo scelto:</strong> smistatore epistemologico (variante dell'<em>argument mapping</em> previsto dalla skill per le lezioni interdisciplinari scienza-fede). La terza categoria — «domanda malposta» — è la parte pedagogicamente decisiva: è lì che si gioca il criterio di fallimento della verifica.</p>
+    <p><strong>Criterio di fallimento:</strong> se lo studente sostiene che il Big Bang <em>dimostra</em> Dio, o che la fisica <em>esclude</em> Dio, l'obiettivo non è raggiunto — indipendentemente dalla qualità formale dell'elaborato.</p>
+    <p><strong>Precisione storica da presidiare in classe:</strong></p>
+    <ul>
+      <li>La svolta di Einstein del 1933 avvenne al <strong>Caltech di Pasadena, in gennaio</strong>, non a un Congresso Solvay: al VII Solvay (ottobre 1933) Einstein non partecipò perché era appena emigrato negli Stati Uniti. La confusione è diffusissima nella divulgazione.</li>
+      <li>Lemaître <strong>non era presente</strong> al discorso di Pio XII del 22 novembre 1951. Intervenne dopo, per via riservata, prima del discorso alla IAU del settembre 1952. Non usare <em>Humani Generis</em> come fonte per questo episodio.</li>
+      <li>Il paragrafo mancante nella traduzione MNRAS del 1931 fu tolto da Lemaître stesso (M. Livio, <em>Nature</em> 479, 2011), non da Hubble o dalla redazione: la tesi del complotto è smentita.</li>
+      <li>Il «più grande errore della mia vita» riferito alla costante cosmologica ci arriva di seconda mano da Gamow: usarlo con cautela o non usarlo.</li>
+    </ul>
+    <p><strong>Tempi indicativi:</strong> presentazione 25', smistatore in coppie 15', discussione delle domande aperte 15'.</p>
+    <p><strong>Da personalizzare prima della pubblicazione:</strong> anno scolastico, numerazione della lezione nell'UDA, link del footer.</p>
+  </div>
+</details>
+
+</div><!-- /wrap -->
+</main>
+
+<footer>
+  <div class="wrap foot-in">
+    <p>Lezione IRC · Prof. Matteo Sestili · IIS «E. Torricelli», Roma<br>Materiale didattico — uso interno</p>
+    <nav class="foot-links" aria-label="Collegamenti">
+      <a href="https://lasoglia.github.io/lab-irc/">LAB-IRC</a>
+      <a href="#" id="dl2">Scarica il testo</a>
+      <a href="#top">Torna su</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------------- TAB ---------------- */
+  var tabs = [
+    {t:document.getElementById('t-deck'),  p:document.getElementById('p-deck')},
+    {t:document.getElementById('t-study'), p:document.getElementById('p-study')},
+    {t:document.getElementById('t-sort'),  p:document.getElementById('p-sort')}
+  ];
+  function show(i){
+    tabs.forEach(function(o,j){
+      var on = i===j;
+      o.t.setAttribute('aria-selected', on?'true':'false');
+      o.p.hidden = !on;
+      if(on) reveal(o.p);
+    });
+  }
+  tabs.forEach(function(o,i){ o.t.addEventListener('click', function(){ show(i); }); });
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.getAttribute('data-go');
+      show(k==='deck'?0:k==='study'?1:2);
+      document.querySelector('.modes').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+
+  /* ---------------- SLIDESHOW ---------------- */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var idx = 0, N = slides.length;
+  var bar = document.getElementById('bar'),
+      cnt = document.getElementById('count'),
+      prev = document.getElementById('prev'),
+      next = document.getElementById('next');
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+  function render(){
+    slides.forEach(function(s,i){ s.classList.toggle('on', i===idx); });
+    var pct = ((idx+1)/N)*100;
+    bar.style.width = pct+'%';
+    /* Il gradiente resta ancorato all'intera pista: la barra ne scopre
+       una porzione crescente, così il bordo avanza dal ciano al magenta. */
+    bar.style.backgroundSize = (10000/pct)+'% 100%';
+    cnt.textContent = pad(idx+1)+' / '+pad(N);
+    prev.disabled = idx===0;
+    next.disabled = idx===N-1;
+  }
+  function go(d){ var n = idx+d; if(n>=0 && n<N){ idx=n; render(); } }
+  prev.addEventListener('click', function(){ go(-1); });
+  next.addEventListener('click', function(){ go(1); });
+  document.addEventListener('keydown', function(e){
+    if(document.getElementById('p-deck').hidden) return;
+    var tag = (e.target.tagName||'').toLowerCase();
+    if(tag==='input'||tag==='textarea') return;
+    if(e.key==='ArrowRight'){ go(1); }
+    if(e.key==='ArrowLeft'){ go(-1); }
+  });
+  /* swipe */
+  var x0=null;
+  var stage = document.getElementById('stage');
+  stage.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if(x0===null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if(Math.abs(dx)>55){ go(dx<0?1:-1); }
+    x0=null;
+  }, {passive:true});
+  /* fullscreen */
+  document.getElementById('fs').addEventListener('click', function(){
+    var d = document.getElementById('deck');
+    if(!document.fullscreenElement){ if(d.requestFullscreen) d.requestFullscreen(); }
+    else { if(document.exitFullscreen) document.exitFullscreen(); }
+  });
+  render();
+
+  /* ---------------- SMISTATORE ---------------- */
+  var DATA = [
+    {q:"Quanti anni ha l'universo?", a:'F',
+     e:"<b>Fisica.</b> È una domanda su una grandezza misurabile. La risposta attuale — circa 13,8 miliardi di anni — deriva da osservazioni, ed è rivedibile se le osservazioni cambiano."},
+    {q:"Perché c'è qualcosa invece che nulla?", a:'T',
+     e:"<b>Teologia (e metafisica).</b> Nessun esperimento può rispondere, perché la domanda non riguarda <em>come</em> è fatto ciò che esiste, ma il fatto stesso che esista. Leibniz la chiamava la domanda fondamentale."},
+    {q:"Il Big Bang dimostra che Dio esiste.", a:'X',
+     e:"<b>Domanda malposta.</b> È esattamente ciò che Lemaître andò a impedire nel 1951. Una teoria fisica non può dimostrare una tesi metafisica — e se lo facesse, la fisica successiva potrebbe smontarla."},
+    {q:"Che cosa succedeva prima del tempo di Planck?", a:'F',
+     e:"<b>Fisica.</b> È una domanda aperta, e forse mal formulata all'interno delle teorie attuali, ma resta una domanda fisica: chiede un modello, non un senso."},
+    {q:"La scienza ha ormai escluso l'esistenza di Dio.", a:'X',
+     e:"<b>Domanda malposta.</b> È lo stesso errore dell'affermazione 3, ribaltato. Lemaître scriveva che la sua teoria lascia il materialista <em>libero</em> di negare ogni essere trascendente: libero, non obbligato."},
+    {q:"L'universo ha uno scopo?", a:'T',
+     e:"<b>Teologia.</b> La fisica descrive processi, non finalità. Può dire dove va un sistema, non perché valga la pena che ci vada."},
+    {q:"A che velocità si allontanano le galassie più lontane?", a:'F',
+     e:"<b>Fisica.</b> È precisamente ciò che Lemaître calcolò nel 1927 e che oggi chiamiamo legge di Hubble-Lemaître."},
+    {q:"Dio ha creato l'universo 13,8 miliardi di anni fa con un'esplosione.", a:'X',
+     e:"<b>Domanda malposta</b> — la più sottile. Nel linguaggio teologico la creazione non è un evento datato all'inizio della linea del tempo, ma la dipendenza di tutto ciò che esiste, in ogni istante. Trasformarla in un fatto storico la riduce a un'ipotesi in concorrenza con la fisica."}
+  ];
+  var LABEL = {F:'Fisica', T:'Teologia', X:'Domanda malposta'};
+  var answered = 0, correct = 0;
+  var box = document.getElementById('items');
+
+  DATA.forEach(function(d, i){
+    var art = document.createElement('article');
+    art.className = 'item glass';
+    var opts = ['F','T','X'].map(function(k){
+      return '<button class="opt" data-k="'+k+'" data-i="'+i+'">'+LABEL[k]+'</button>';
+    }).join('');
+    art.innerHTML = '<p class="q">'+d.q+'</p><div class="opts">'+opts+'</div>'+
+                    '<div class="feedback" id="fb'+i+'">'+d.e+'</div>';
+    box.appendChild(art);
+  });
+
+  box.addEventListener('click', function(ev){
+    var b = ev.target.closest('.opt');
+    if(!b || b.disabled) return;
+    var i = +b.getAttribute('data-i'), k = b.getAttribute('data-k');
+    var group = b.parentNode.querySelectorAll('.opt');
+    Array.prototype.forEach.call(group, function(g){
+      g.disabled = true;
+      if(g.getAttribute('data-k')===DATA[i].a) g.classList.add('right');
+      else if(g===b) g.classList.add('wrong');
+    });
+    document.getElementById('fb'+i).classList.add('show');
+    answered++;
+    if(k===DATA[i].a) correct++;
+    if(answered===DATA.length){
+      var s = document.getElementById('score');
+      document.getElementById('score-n').textContent = correct+'/'+DATA.length;
+      document.getElementById('score-msg').textContent =
+        correct>=7 ? 'I due piani li tieni distinti. È esattamente il rigore di Lemaître.'
+        : correct>=5 ? 'Buona base. Rileggi le tre affermazioni malposte: è lì che si gioca tutto.'
+        : 'Rileggi la sezione «Il perché teologico»: la distinzione fra i piani non è ancora salda.';
+      s.classList.add('show');
+      s.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  });
+
+  /* ---------------- DOWNLOAD .TXT ---------------- */
+  function plain(el){
+    var t = el.innerText || el.textContent || '';
+    return t.replace(/\u00a0/g,' ').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function build(){
+    var d = new Date().toLocaleDateString('it-IT');
+    var out = [];
+    out.push('LE DUE VIE — LEMAITRE, EINSTEIN E IL MISTERO DELL\'INIZIO');
+    out.push('=========================================================');
+    out.push('Classe V — Liceo scientifico');
+    out.push('UDA: Scienza e fede — Lezione 1');
+    out.push('Prof. Matteo Sestili — IIS «Evangelista Torricelli», Roma');
+    out.push('Data: '+d);
+    out.push('');
+    out.push('---------------------------------------------------------');
+    out.push('');
+    document.querySelectorAll('#p-study .prose section').forEach(function(sec){
+      var tag = sec.querySelector('.sec-tag'), h = sec.querySelector('h2');
+      out.push('['+plain(tag).toUpperCase()+'] '+plain(h));
+      out.push('');
+      sec.querySelectorAll('p, .pull, .scripture, .ask').forEach(function(n){
+        if(n.closest('.pull') && !n.classList.contains('pull')) return;
+        if(n.closest('.scripture') && !n.classList.contains('scripture')) return;
+        if(n.closest('.ask') && !n.classList.contains('ask')) return;
+        if(n.classList.contains('pull')){
+          var c = n.querySelector('cite');
+          out.push('« '+plain(n).replace(c?plain(c):'','').trim()+' »'+(c?' ('+plain(c)+')':''));
+        } else if(n.classList.contains('scripture')){
+          var sp = n.querySelector('span');
+          out.push('« '+plain(n.querySelector('p')).replace(/^«|»$/g,'').trim()+' » ('+plain(sp)+')');
+        } else if(n.classList.contains('ask')){
+          out.push('');
+          out.push('DOMANDE DI RIFLESSIONE:');
+          n.querySelectorAll('li').forEach(function(li,k){ out.push('  '+(k+1)+'. '+plain(li)); });
+        } else {
+          out.push(plain(n));
+        }
+        out.push('');
+      });
+      out.push('---------------------------------------------------------');
+      out.push('');
+    });
+    out.push('FONTI VERIFICATE');
+    out.push('- V Congresso Solvay, Bruxelles, ottobre 1927 (testimonianza di Lemaitre, 1958).');
+    out.push('- G. Lemaitre, Annales de la Societe Scientifique de Bruxelles, 1927.');
+    out.push('- G. Lemaitre, "The Beginning of the World from the Point of View of Quantum Theory", Nature, 1931.');
+    out.push('- Manoscritto Nature 1931, riga soppressa: Archives Lemaitre, Lovanio.');
+    out.push('- Traduzione MNRAS 1931 e paragrafo omesso: M. Livio, Nature 479, 2011.');
+    out.push('- Pasadena, gennaio 1933: D. Aikman, New York Times Magazine, 19 febbraio 1933.');
+    out.push('- Pio XII, discorso alla Pontificia Accademia delle Scienze, 22 novembre 1951.');
+    out.push('- Risoluzione B4, Unione Astronomica Internazionale, voto del 26 ottobre 2018 (78%).');
+    out.push('- Isaia 45,15.');
+    out.push('');
+    out.push('Materiale didattico IRC — uso interno');
+    return out.join('\n');
+  }
+  function download(){
+    var blob = new Blob([build()], {type:'text/plain;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'lemaitre-einstein-le-due-vie.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+  }
+  document.getElementById('dl').addEventListener('click', download);
+  document.getElementById('dl2').addEventListener('click', function(e){ e.preventDefault(); download(); });
+
+  /* ---------------- COMPARSA ALLO SCROLL ----------------
+     Inizializzata solo quando il pannello diventa visibile: gli elementi
+     dentro un pannello nascosto non verrebbero mai osservati e resterebbero
+     invisibili. Se l'utente ha chiesto meno animazioni, non si attiva. */
+  var revealed = [];
+  function reveal(panel){
+    if(revealed.indexOf(panel) > -1) return;
+    revealed.push(panel);
+    if(!('IntersectionObserver' in window)) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var targets = panel.querySelectorAll('.prose section, .item');
+    if(!targets.length) return;
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.style.opacity = 1;
+          en.target.style.transform = 'none';
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:.1});
+
+    Array.prototype.forEach.call(targets, function(el){
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity .7s ease, transform .7s cubic-bezier(.2,.9,.3,1)';
+      io.observe(el);
+    });
+  }
+  reveal(document.getElementById('p-deck'));
+})();
+</script>
+</body>
+</html>
