@@ -17,6 +17,15 @@
       "file": "/uploads/lemaitre-einstein-due-vie.html",
       "titolo": "Lezione interattiva",
       "tipo": "Artefatto interattivo"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Appunti per lo studente",
+      "anno": "5",
+      "uda": "Scienza e fede",
+      "lezione": "Lemaitre e Einstein",
+      "tipo": "Documento/PDF",
+      "file": "/uploads/le-due-vie-fascicolo-di-studio.pdf"
     }
   ]
 }
