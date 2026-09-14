@@ -35,6 +35,15 @@
       "lezione": "Lemaitre e Einstein",
       "tipo": "Slide",
       "file": "/uploads/the_infinite_duel.pptx"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Accoglienza interattiva",
+      "anno": "4",
+      "uda": "Accoglienza ",
+      "lezione": "Presentazione corso",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/apertura-dell-anno-accoglienza-artefatto.html"
     }
   ]
 }
