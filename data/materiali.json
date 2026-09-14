@@ -2,12 +2,28 @@
   "materiali": [
     {
       "in_evidenza": false,
+      "titolo": "Accoglienza",
+      "anno": "1",
+      "uda": "Accoglienza I",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/accoglienza-classi-1.html"
+    },
+    {
+      "in_evidenza": false,
       "titolo": "ish e issha",
       "anno": "1",
       "uda": "Parità di genere",
       "lezione": "bibbia",
       "tipo": "Link",
       "file": "/uploads/genesi2_adam_ish_isha_parita_genere.html"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Accoglienza",
+      "anno": "3",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/accoglienza-terza-mazzo-estate-artefatto.html",
+      "uda": "Accoglienza III"
     },
     {
       "in_evidenza": false,
@@ -52,21 +68,6 @@
       "titolo": "Accoglienza",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/apertura-cuore-inquieto-artefatto.html"
-    },
-    {
-      "in_evidenza": false,
-      "titolo": "Accoglienza",
-      "anno": "1",
-      "uda": "Accoglienza I",
-      "tipo": "Artefatto interattivo",
-      "file": "/uploads/accoglienza-classi-1.html"
-    },
-    {
-      "in_evidenza": false,
-      "titolo": "Accoglienza",
-      "anno": "3",
-      "tipo": "Artefatto interattivo",
-      "file": "/uploads/accoglienza-terza-mazzo-estate-artefatto.html"
     }
   ]
 }
