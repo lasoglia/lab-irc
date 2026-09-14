@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il nome e la domanda — Primo giorno</title>
+<meta name="author" content="Matteo Sestili">
+<meta name="copyright" content="© Matteo Sestili — Tutti i diritti riservati">
+<meta name="description" content="Lezione inaugurale di IRC per la classe prima: il gioco dei nomi, la domanda dell'anno, la mappa delle quattro tappe, il patto e la scatola delle domande.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--void:#0B1026;--panel:rgba(255,255,255,.05);--edge:rgba(255,255,255,.13);--ocra:#E0A048;--ocra-soft:#F2C77E;--indaco:#5A6BC4;--rosso:#D26A5C;--ink:#EDF0FA;--muted:rgba(237,240,250,.62);--rule:linear-gradient(90deg,var(--ocra) 0%,var(--indaco) 60%,transparent 100%)}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--void);color:var(--ink);font-family:'Poppins',system-ui,sans-serif;font-weight:300;font-size:16px;line-height:1.65;background-image:radial-gradient(120% 80% at 15% 0%,#1A2350 0%,transparent 60%);background-attachment:fixed}
+.wrap{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
+header.top{border-bottom:1px solid var(--edge);padding-bottom:14px;margin-bottom:18px}
+h1{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.05;margin:0 0 6px}
+.kicker{font-size:.78rem;color:var(--muted);letter-spacing:.08em;margin-bottom:10px}.kicker b{color:var(--ocra-soft);font-weight:500}
+.subt{color:var(--muted);font-size:.95rem;margin:0;max-width:60ch}
+nav.tabs{display:flex;gap:8px;margin:20px 0 24px;flex-wrap:wrap}
+.tab{background:var(--panel);border:1px solid var(--edge);color:var(--ink);font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:400;padding:9px 16px;border-radius:2px;cursor:pointer;transition:background .18s,border-color .18s}
+.tab:hover{background:rgba(255,255,255,.09)}.tab[aria-selected="true"]{background:var(--ocra);color:#241703;border-color:var(--ocra);font-weight:500}
+.tab:focus-visible,button:focus-visible,a:focus-visible,.opt:focus-visible{outline:2px solid var(--ocra-soft);outline-offset:3px}
+[hidden]{display:none !important}
+.stage{position:relative;border:1px solid var(--edge);background:linear-gradient(160deg,#101736 0%,#0B1026 100%);min-height:430px;display:flex;align-items:center;padding:40px 60px;overflow:hidden}
+.slide{width:100%}.slide[hidden]{display:none}
+.s-tag{font-size:.7rem;letter-spacing:.14em;color:var(--ocra);margin-bottom:14px;font-weight:500}
+.s-tit{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(1.5rem,4.2vw,2.5rem);line-height:1.12;margin:0 0 14px}
+.s-txt{font-size:1.02rem;color:var(--ink);max-width:60ch;margin:0}.s-txt.mut{color:var(--muted)}
+.s-quote{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:clamp(1.35rem,3.6vw,2.1rem);line-height:1.35;max-width:24ch;margin:0 0 16px}
+.s-src{font-size:.76rem;color:var(--muted);margin-top:14px;line-height:1.5}
+.cols{display:flex;gap:20px;flex-wrap:wrap;margin-top:6px}
+.col{flex:1 1 200px;border-left:2px solid var(--ocra);padding:4px 0 4px 14px}.col.b{border-left-color:var(--indaco)}
+.col h3{font-family:'Poppins';font-size:.9rem;font-weight:600;margin:0 0 8px;letter-spacing:.02em}
+.col ul{margin:0;padding-left:16px;font-size:.9rem;color:var(--muted)}.col li{margin-bottom:6px}
+.steps{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.step{flex:1 1 150px;border:1px solid var(--edge);padding:12px 14px;background:var(--panel)}
+.step b{display:block;font-family:'Instrument Serif',serif;font-weight:400;font-size:1.6rem;color:var(--ocra);line-height:1;margin-bottom:6px}
+.step span{font-size:.88rem;color:var(--muted)}
+.rule{font-family:'Instrument Serif',serif;font-size:clamp(1.3rem,3.4vw,2rem);line-height:1.3;margin:6px 0}
+.rule em{color:var(--ocra-soft);font-style:normal}
+.m-prima .s-tag{color:var(--muted)}
+.snav{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.snav button{background:var(--panel);border:1px solid var(--edge);color:var(--ink);width:42px;height:42px;border-radius:2px;cursor:pointer;font-size:1.1rem}
+.snav button:hover{background:rgba(255,255,255,.1)}.snav button[disabled]{opacity:.32;cursor:not-allowed}
+.count{font-size:.82rem;color:var(--muted);min-width:90px}
+.bar{flex:1;height:2px;background:rgba(255,255,255,.12);position:relative;min-width:80px}.bar i{position:absolute;left:0;top:0;height:2px;background:var(--ocra);transition:width .25s}
+.studio{max-width:720px}
+.toc{border:1px solid var(--edge);background:var(--panel);padding:16px 20px;margin-bottom:26px}
+.toc h2{font-size:.8rem;letter-spacing:.1em;margin:0 0 10px;font-weight:500;color:var(--ocra)}
+.toc ol{margin:0;padding-left:18px;font-size:.9rem}.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}.toc a:hover{border-bottom-color:var(--ocra)}
+.studio h2.sec{font-family:'Instrument Serif',serif;font-weight:400;font-size:1.75rem;margin:34px 0 10px;line-height:1.2}
+.studio h2.sec::after{content:"";display:block;height:2px;width:64px;background-image:var(--rule);margin-top:10px}
+.studio p{margin:0 0 14px}
+.badge{display:inline-block;background:rgba(224,160,72,.16);border:1px solid rgba(224,160,72,.45);color:var(--ocra-soft);padding:1px 8px;font-size:.82rem;white-space:nowrap}
+.tappa{border:1px solid var(--edge);background:var(--panel);padding:14px 18px;margin:0 0 12px}
+.tappa b{font-family:'Instrument Serif',serif;font-weight:400;font-size:1.25rem;display:block;margin-bottom:4px}
+.tappa span{font-size:.9rem;color:var(--muted)}
+.pull{font-family:'Instrument Serif',serif;font-size:1.5rem;line-height:1.3;color:var(--ocra-soft);border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:18px 0;margin:26px 0}
+.rifl{border:1px dashed var(--edge);padding:14px 18px;margin:20px 0;font-size:.92rem;color:var(--muted)}
+.rifl b{color:var(--ink);font-weight:500;display:block;margin-bottom:5px;font-size:.78rem;letter-spacing:.08em}
+.patto{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}
+.patto div{flex:1 1 260px;border-left:2px solid var(--ocra);padding:6px 0 6px 14px}.patto div.b{border-left-color:var(--indaco)}
+.patto h3{font-family:'Poppins';font-size:.9rem;font-weight:600;margin:0 0 8px}.patto ol{margin:0;padding-left:18px;font-size:.92rem}.patto li{margin-bottom:5px}
+.ex{max-width:760px}
+.q{border:1px solid var(--edge);background:var(--panel);padding:18px 20px;margin-bottom:14px}
+.q .txt{font-family:'Instrument Serif',serif;font-size:1.28rem;line-height:1.3;margin:0 0 14px}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+.opt{background:transparent;border:1px solid var(--edge);color:var(--ink);font-family:'Poppins';font-size:.86rem;padding:8px 14px;cursor:pointer;border-radius:2px;flex:1 1 140px;text-align:left}
+.opt:hover{border-color:var(--ocra)}.opt[data-state="ok"]{border-color:var(--ocra);background:rgba(224,160,72,.15)}.opt[data-state="no"]{border-color:var(--rosso);background:rgba(210,106,92,.13)}
+.fb{margin-top:12px;font-size:.88rem;line-height:1.55;color:var(--muted);border-left:2px solid var(--indaco);padding-left:12px}.fb b{color:var(--ink);font-weight:500}
+.score{border:1px solid var(--edge);padding:14px 18px;margin-top:18px;font-size:.92rem;color:var(--muted)}.score b{color:var(--ocra-soft)}
+.actions{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{background:var(--ocra);color:#241703;border:none;font-family:'Poppins';font-weight:500;font-size:.88rem;padding:11px 20px;border-radius:2px;cursor:pointer}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--edge)}
+details.note{margin-top:34px;border-top:1px solid var(--edge);padding-top:16px}
+details.note summary{cursor:pointer;font-size:.82rem;color:var(--muted);letter-spacing:.06em}
+details.note .body{font-size:.9rem;color:var(--muted);margin-top:14px;max-width:70ch}details.note .body ul{padding-left:18px}
+footer.copy{margin-top:36px;padding-top:14px;border-top:1px solid var(--edge);font-size:.74rem;color:var(--muted);text-align:center}
+@media (max-width:700px){.stage{padding:26px 20px;min-height:400px}.wrap{padding:14px 12px 50px}}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+@media print{body{background:#fff;color:#111}nav.tabs,.snav,.actions,#tab-slide,#tab-ex,details.note{display:none !important}#pane-studio{display:block !important}.studio{max-width:100%}.tappa,.toc{border-color:#999;background:#f4f4f4}.pull{color:#555}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">Insegnamento della Religione Cattolica · <b>Classe I</b> · Lezione inaugurale</div>
+  <h1>Il nome e la domanda</h1>
+  <p class="subt">Prima i nomi, uno per uno. Poi una domanda che ci terrà compagnia fino a giugno — e la mappa per arrivarci.</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sezioni della lezione">
+  <button class="tab" id="tab-slide" role="tab" aria-selected="true" aria-controls="pane-slide">Presentazione</button>
+  <button class="tab" id="tab-studio" role="tab" aria-selected="false" aria-controls="pane-studio">Studio</button>
+  <button class="tab" id="tab-ex" role="tab" aria-selected="false" aria-controls="pane-ex">Esercizio</button>
+</nav>
+
+<!-- =============== PRESENTAZIONE =============== -->
+<section id="pane-slide" role="tabpanel" aria-labelledby="tab-slide">
+  <div class="stage">
+
+    <div class="slide m-hook">
+      <div class="s-tag">PRIMO GIORNO</div>
+      <h2 class="s-tit">Il nome e la domanda</h2>
+      <p class="s-quote">Prima i nomi, uno per uno. Poi una domanda che ci terrà compagnia fino a giugno.</p>
+    </div>
+
+    <div class="slide m-prima" hidden>
+      <div class="s-tag">IL GIOCO · TRE REGOLE</div>
+      <h2 class="s-tit">La catena dei nomi</h2>
+      <div class="steps">
+        <div class="step"><b>1</b><span>Dici il tuo <strong>nome</strong>.</span></div>
+        <div class="step"><b>2</b><span>Dici <strong>una cosa che ti riesce bene</strong>. Qualunque: cucinare, ascoltare, dormire, un videogioco.</span></div>
+        <div class="step"><b>3</b><span>Prima di parlare, <strong>ripeti chi c'era prima di te</strong>: «Lei è Sara, che sa fare X. Io sono…»</span></div>
+      </div>
+      <p class="s-src">Comincia chi sta in cattedra. Nessuno può passare, ma «non lo so ancora» è una risposta valida.</p>
+    </div>
+
+    <div class="slide m-prima" hidden>
+      <div class="s-tag">IL GIOCO · LA LAVAGNA</div>
+      <h2 class="s-tit">Questa lavagna la fotografo</h2>
+      <p class="s-txt">Ogni nome e ogni cosa che sapete fare finiscono qui. È la prima mappa dei talenti della classe. La rivedremo a maggio, quando le ultime sei ore dell'anno saranno interamente vostre.</p>
+    </div>
+
+    <div class="slide m-dopo" hidden>
+      <div class="s-tag">UNA COSA CHE NESSUNO SA</div>
+      <p class="s-quote">Questa è l'unica materia dell'orario a cui potevate dire di no.</p>
+      <p class="s-txt mut">Alzi la mano chi lo sapeva. E chi ha barrato quella casella: voi, o i vostri genitori?</p>
+    </div>
+
+    <div class="slide m-dopo" hidden>
+      <div class="s-tag">LA DOMANDA DELL'ANNO</div>
+      <p class="s-quote">Da dove viene l'idea che ogni persona conta?</p>
+      <p class="s-txt mut">Sembra ovvia. Non lo è mai stata.</p>
+    </div>
+
+    <div class="slide m-dopo" hidden>
+      <div class="s-tag">PERCHÉ NON È OVVIA</div>
+      <h2 class="s-tit">Nel mondo antico contavano i re, gli dèi e le città</h2>
+      <p class="s-txt">Un uomo solo, senza titoli e senza terra, non contava niente. Eppure oggi i vostri nomi sono su quella lavagna, uno per uno. In mezzo c'è una storia lunga tremila anni. Quest'anno la percorriamo.</p>
+    </div>
+
+    <div class="slide m-perche" hidden>
+      <div class="s-tag">LA MAPPA DELL'ANNO</div>
+      <h2 class="s-tit">Quattro tappe e un finale</h2>
+      <div class="steps">
+        <div class="step"><b>1</b><span>Un popolo che dice no agli dèi</span></div>
+        <div class="step"><b>2</b><span>Il libro che ha scritto il nostro alfabeto</span></div>
+        <div class="step"><b>3</b><span>Un Dio che non sta in un tempio</span></div>
+        <div class="step"><b>4</b><span>Ogni persona conta: ma perché?</span></div>
+        <div class="step"><b>★</b><span>Talenti: le ultime sei ore sono vostre</span></div>
+      </div>
+    </div>
+
+    <div class="slide m-perche" hidden>
+      <div class="s-tag">TAPPA 1 · DA OTTOBRE</div>
+      <h2 class="s-tit">Un popolo che dice no agli dèi</h2>
+      <p class="s-txt">Il primo grande libro dell'umanità racconta di un re, Gilgamesh, che parte per non morire e torna sapendo che morirà. Poi un altro uomo parte dalla stessa terra, e la sua storia va diversamente. Seguiamo il suo popolo per mille anni.</p>
+      <p class="s-src">Con: l'<em>Epopea di Gilgamesh</em> · <em>Il Principe d'Egitto</em></p>
+    </div>
+
+    <div class="slide m-perche" hidden>
+      <div class="s-tag">TAPPA 2 · DICEMBRE</div>
+      <h2 class="s-tit">Il libro che ha scritto il nostro alfabeto</h2>
+      <p class="s-txt">Non un libro: una biblioteca scritta in mille anni. Come si legge senza prenderla alla lettera e senza liquidarla come favola — e quante parole che usate ogni giorno vengono da lì.</p>
+      <p class="s-src">Con: <em>Le Cronache di Narnia — Il nipote del mago</em></p>
+    </div>
+
+    <div class="slide m-perche" hidden>
+      <div class="s-tag">TAPPA 3 · FEBBRAIO</div>
+      <h2 class="s-tit">Un Dio che non sta in un tempio</h2>
+      <p class="s-txt">Tre idee che hanno cambiato il modo di pensare l'essere umano: un solo Dio, un Dio che parla nella storia, l'uomo «a sua immagine». Lette come filosofia, non come catechismo.</p>
+      <p class="s-src">Con: <em>Inside Out</em></p>
+    </div>
+
+    <div class="slide m-perche" hidden>
+      <div class="s-tag">TAPPA 4 · APRILE</div>
+      <h2 class="s-tit">Ogni persona conta: ma perché?</h2>
+      <p class="s-txt">Torniamo a oggi: i diritti umani, le regole (ci rendono liberi o prigionieri?), il diritto a non produrre, chi arriva da fuori, il nome contro il numero. Si chiude con un caso vero.</p>
+      <p class="s-src">Con: <em>L'onda</em> · <em>Wonder</em></p>
+    </div>
+
+    <div class="slide m-cons" hidden>
+      <div class="s-tag">TRE COSE CHE QUEST'ORA NON È</div>
+      <div class="cols">
+        <div class="col"><h3>Non è catechismo</h3><ul><li>programma fissato per decreto</li><li>uguale per chi crede e chi no</li></ul></div>
+        <div class="col b"><h3>Non è senza valutazione</h3><ul><li>giudizio su nota separata</li><li>si valuta il lavoro, mai le idee</li></ul></div>
+        <div class="col"><h3>Non è un'ora di buco</h3><ul><li>testi, storia, film, discussione</li><li>un caso da analizzare a fine anno</li></ul></div>
+      </div>
+    </div>
+
+    <div class="slide m-cons" hidden>
+      <div class="s-tag">IL PATTO · VALE SOLO IN DUE</div>
+      <div class="cols">
+        <div class="col"><h3>Si obbliga chi insegna</h3><ul><li>dire sempre se è un fatto, un'interpretazione o un valore</li><li>non chiedere mai che cosa credi</li><li>valutare il lavoro, non le idee</li><li>dire «non lo so» quando non lo sa</li></ul></div>
+        <div class="col b"><h3>Si obbliga chi studia</h3><ul><li>portare la testa, non solo il corpo</li><li>dissentire sì, deridere mai</li><li>fare le domande scomode</li><li>rispettare chi sceglie di tacere</li></ul></div>
+      </div>
+    </div>
+
+    <div class="slide m-fine" hidden>
+      <div class="s-tag">UN COMPITO, UNO SOLO</div>
+      <h2 class="s-tit">La scatola delle domande</h2>
+      <p class="s-txt">Una domanda vera, scritta a mano, senza firma. La regola: <em>se la risposta si trova cercandola online, non è quella giusta</em>. La scatola resta in classe tutto l'anno; la apriamo la prima volta a novembre.</p>
+    </div>
+
+    <div class="slide m-fine" hidden>
+      <div class="s-tag">FINE DEL PRIMO GIORNO</div>
+      <p class="s-quote">Quest'ora non serve a niente, se «servire» vuol dire produrre qualcosa di spendibile subito.</p>
+      <p class="s-txt mut">Serve a non arrivare impreparati alle uniche domande che, prima o poi, arrivano a tutti. Ci vediamo alla tappa 1.</p>
+    </div>
+
+  </div>
+
+  <div class="snav">
+    <button id="prev" aria-label="Slide precedente">‹</button>
+    <button id="next" aria-label="Slide successiva">›</button>
+    <span class="count" id="count" role="status" aria-live="polite">Slide 1 di 15</span>
+    <span class="bar"><i id="bar" style="width:6.6%"></i></span>
+    <button id="fs" aria-label="Schermo intero" title="Schermo intero" style="width:auto;padding:0 14px;font-size:.82rem">⛶</button>
+  </div>
+  <p class="s-src" style="margin-top:10px">Si naviga anche con le frecce ← → della tastiera.</p>
+</section>
+
+<!-- =============== STUDIO =============== -->
+<section id="pane-studio" role="tabpanel" aria-labelledby="tab-studio" hidden>
+ <div class="studio">
+  <div class="toc">
+    <h2>INDICE</h2>
+    <ol>
+      <li><a href="#s1">La domanda dell'anno</a></li>
+      <li><a href="#s2">Le quattro tappe</a></li>
+      <li><a href="#s3">Come funziona quest'ora</a></li>
+      <li><a href="#s4">Il patto</a></li>
+      <li><a href="#s5">La scatola e i Talenti</a></li>
+    </ol>
+  </div>
+
+  <h2 class="sec" id="s1">La domanda dell'anno</h2>
+  <p>Quest'anno partiamo da una domanda che sembra ovvia e non lo è: <strong>da dove viene l'idea che ogni persona conta?</strong> Nel mondo antico contavano i re, gli dèi e le città. Un uomo solo, senza titoli e senza terra, non contava niente — e lo sapeva. Il primo grande libro dell'umanità, l'<span class="badge">Epopea di Gilgamesh</span>, racconta di un re che parte per non morire e torna sapendo che morirà.</p>
+  <p>Vale la pena fermarsi su cosa Gilgamesh cercasse davvero. Parte per la Foresta dei Cedri con uno scopo dichiarato nel testo: procurarsi una fama imperitura, un nome che sopravviva a lui. Nel suo mondo è l'unica immortalità disponibile, e per ottenerla si può anche morire. Quando l'amico Enkidu muore, Gilgamesh capisce di essere mortale davvero e riparte, stavolta in cerca della vita senza fine. Non la trova. Lungo la strada una locandiera gli dice in sostanza: la vita eterna non è per te, torna a casa, mangia, bevi, tieniti stretto chi ti vuole bene, perché quello è quanto agli uomini è concesso. È una risposta onesta, e amara.</p>
+  <p>Poi un altro uomo parte dalla stessa terra, e la sua storia va diversamente: non gli viene promessa la vita eterna e nemmeno la fama, gli viene promesso un futuro che lui non vedrà. Da lì comincia un popolo, e da quel popolo un modo nuovo di pensare l'essere umano: che a contare non siano i re e le città, ma ogni singola persona.</p>
+  <p>In mezzo, fra Gilgamesh che si ammazza per un nome e la lavagna del primo giorno con i vostri nomi scritti sopra gratis, ci sono tremila anni. Quest'anno li attraversiamo.</p>
+
+  <h2 class="sec" id="s2">Le quattro tappe</h2>
+  <div class="tappa"><b>1 · Un popolo che dice no agli dèi</b><span>Da Gilgamesh ad Abramo, dall'Esodo all'esilio: come un piccolo popolo del Vicino Oriente ha inventato un modo nuovo di stare al mondo. Cinque lezioni, da ottobre. Con l'<em>Epopea di Gilgamesh</em> e <em>Il Principe d'Egitto</em>.</span></div>
+  <div class="tappa"><b>2 · Il libro che ha scritto il nostro alfabeto</b><span>L'Antico Testamento non è un libro: è una biblioteca scritta in mille anni, con generi diversi. Impariamo a leggerlo senza prenderlo alla lettera e senza liquidarlo come favola, e scopriamo quante parole che usate ogni giorno — capro espiatorio, giubileo, sabato — vengono da lì. Quattro lezioni. Con <em>Il nipote del mago</em> di C. S. Lewis.</span></div>
+  <div class="tappa"><b>3 · Un Dio che non sta in un tempio</b><span>Tre idee che hanno cambiato il modo di pensare la persona: un solo Dio, un Dio che parla nella storia, l'uomo «a sua immagine». Le leggiamo come filosofia, accessibile a chiunque, non come catechismo. Quattro lezioni. Con <em>Inside Out</em>.</span></div>
+  <div class="tappa"><b>4 · Ogni persona conta: ma perché?</b><span>Torniamo a oggi con gli strumenti raccolti: i diritti umani, le regole (ci rendono liberi o prigionieri?), il diritto a non produrre, chi arriva da fuori, il nome contro il numero. Cinque lezioni; l'ultima è l'analisi di un caso. Con <em>L'onda</em> e <em>Wonder</em>.</span></div>
+
+  <div class="pull">Non vi dirò cosa pensare. Vi darò uno strumento per pensarlo meglio.</div>
+
+  <p>Lo strumento di quest'anno è uno solo, e si usa da subito: distinguere sempre <strong>un fatto</strong> (si può verificare), <strong>un'interpretazione</strong> (si può discutere) e <strong>un giudizio di valore</strong> (si può sostenere, ma non dimostrare). Quasi tutti i litigi del mondo nascono dal confonderli. È il primo di cinque attrezzi: uno nuovo ogni anno, e quelli vecchi restano.</p>
+
+  <h2 class="sec" id="s3">Come funziona quest'ora</h2>
+  <p><strong>Si può rifiutare.</strong> È l'unica materia dell'orario per cui è così: dal 1984, quando Italia e Santa Sede hanno rivisto il Concordato, ciascuno sceglie se avvalersene. E nella scuola superiore la scelta spetta a voi, non ai vostri genitori: per molti è la prima decisione scolastica presa in prima persona.</p>
+  <p><strong>Non è catechismo.</strong> Il programma è fissato per decreto e vale per tutti allo stesso modo, credenti e non. Nessuno vi chiederà che cosa credete.</p>
+  <p><strong>Si valuta.</strong> Non con un voto in decimi ma con un giudizio, su una nota separata. Si valuta ciò che fate — l'attenzione, il ragionamento, i lavori — mai ciò che pensate.</p>
+  <p><strong>Non è un'ora di buco.</strong> Leggeremo testi, guarderemo pezzi di film, discuteremo, analizzeremo un caso, e le ultime sei ore saranno interamente vostre.</p>
+
+  <div class="rifl"><b>DOMANDA</b>Avete scelto voi, all'iscrizione, se stare in quest'ora. Quanto ha pesato una convinzione, quanto l'abitudine, quanto ciò che facevano gli altri? Nessuno leggerà la risposta.</div>
+
+  <h2 class="sec" id="s4">Il patto</h2>
+  <div class="patto">
+    <div><h3>Si obbliga chi insegna</h3><ol><li>a dire sempre su quale piano ci si trova: fatto, interpretazione, valore;</li><li>a non chiedere mai a nessuno che cosa crede;</li><li>a valutare il lavoro e mai le convinzioni;</li><li>a dire «non lo so» quando non lo sa;</li><li>a presentare le posizioni diverse dalla propria come le presenterebbe chi le abita.</li></ol></div>
+    <div class="b"><h3>Si obbliga chi studia</h3><ol><li>a portare in quest'ora la propria testa, non solo il corpo;</li><li>a dissentire quanto vuole e a non deridere mai;</li><li>a fare le domande scomode, che sono le più utili;</li><li>a distinguere ciò che sa da ciò che ha sentito dire;</li><li>a rispettare chi sceglie di non parlare.</li></ol></div>
+  </div>
+  <p>Il patto entra in vigore alla fine del primo giorno. Non ha rinnovo tacito: si rinnova ogni settimana, o non si rinnova.</p>
+
+  <h2 class="sec" id="s5">La scatola e i Talenti</h2>
+  <p><strong>La scatola delle domande</strong> resta in classe tutto l'anno. Ci si mette una domanda vera, scritta a mano, senza firma. La regola per capire se è vera: se la risposta si trova cercandola online, non è quella giusta. La apriamo due volte, a novembre e ad aprile, e discutiamo quello che c'è dentro.</p>
+  <p><strong>I Talenti</strong> sono le ultime sei ore dell'anno. Lavorerete in gruppo per mettere davanti alla classe una cosa che sapete fare. La lavagna del primo giorno — i vostri nomi e le cose che vi riescono bene — è il punto da cui ripartiremo.</p>
+
+  <div class="actions">
+    <button class="btn" id="dl">Scarica il testo (.txt)</button>
+    <button class="btn ghost" onclick="window.print()">Stampa</button>
+  </div>
+ </div>
+</section>
+
+<!-- =============== ESERCIZIO =============== -->
+<section id="pane-ex" role="tabpanel" aria-labelledby="tab-ex" hidden>
+ <div class="ex">
+  <h2 style="font-family:'Instrument Serif',serif;font-weight:400;font-size:1.75rem;margin:0 0 8px">Vero o falso?</h2>
+  <p style="color:var(--muted);max-width:62ch;margin:0 0 22px">Otto cose che si dicono sull'ora di religione. Alcune sono vere, la maggior parte no. Dopo ogni risposta compare il perché — e la fonte, così potete controllare.</p>
+  <div id="quiz"></div>
+  <div class="score" id="score" hidden></div>
+  <div class="actions"><button class="btn ghost" id="reset">Ricomincia</button></div>
+  <p style="font-size:.8rem;color:var(--muted);margin-top:18px">Nessun dato viene raccolto, salvato o inviato: ricaricando la pagina si riparte da capo.</p>
+ </div>
+</section>
+
+<details class="note">
+  <summary>Note per il docente (aprire solo fuori dalla proiezione)</summary>
+  <div class="body">
+    <ul>
+      <li><b>Uso in aula.</b> Slide 2–3 durante il gioco (restano proiettate); slide 4–15 per la panoramica. Scheda <em>Studio</em> a casa; <em>Esercizio</em> negli ultimi minuti o alla lezione dopo.</li>
+      <li><b>Il gioco.</b> Chi sta in cattedra comincia e dà l'esempio con una cosa piccola, non con un talento. La lavagna va fotografata davvero: serve a maggio.</li>
+      <li><b>Se qualcuno ride di qualcuno.</b> Si ferma il gioco, si ripete la regola del patto (dissentire sì, deridere no) e si riparte. È il primo caso dell'anno, e conviene che avvenga il primo giorno.</li>
+      <li><b>Deviazione dallo schema.</b> Lezione relazionale e di orientamento: PRIMA/DOPO regge solo il passaggio «nel mondo antico non contavi / oggi il tuo nome è sulla lavagna». Il resto è mappa e patto.</li>
+      <li><b>Privacy.</b> Nessuno storage, nessuna chiamata esterna oltre ai font.</li>
+    </ul>
+  </div>
+</details>
+
+<footer class="copy">© Matteo Sestili — Tutti i diritti riservati</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var tabs=[["tab-slide","pane-slide"],["tab-studio","pane-studio"],["tab-ex","pane-ex"]];
+  tabs.forEach(function(t){document.getElementById(t[0]).addEventListener("click",function(){tabs.forEach(function(u){var b=document.getElementById(u[0]),p=document.getElementById(u[1]),on=(u[0]===t[0]);b.setAttribute("aria-selected",on?"true":"false");p.hidden=!on;});});});
+
+  var slides=[].slice.call(document.querySelectorAll(".slide")),i=0,N=slides.length;
+  var prev=document.getElementById("prev"),next=document.getElementById("next"),count=document.getElementById("count"),bar=document.getElementById("bar");
+  function show(k){i=Math.max(0,Math.min(N-1,k));slides.forEach(function(s,n){s.hidden=(n!==i);});count.textContent="Slide "+(i+1)+" di "+N;bar.style.width=((i+1)/N*100).toFixed(1)+"%";prev.disabled=(i===0);next.disabled=(i===N-1);}
+  prev.addEventListener("click",function(){show(i-1);});next.addEventListener("click",function(){show(i+1);});
+  document.addEventListener("keydown",function(e){if(document.getElementById("pane-slide").hidden)return;var t=e.target.tagName;if(t==="INPUT"||t==="TEXTAREA")return;if(e.key==="ArrowRight")show(i+1);else if(e.key==="ArrowLeft")show(i-1);});
+  document.getElementById("fs").addEventListener("click",function(){var el=document.querySelector(".stage");if(!document.fullscreenElement&&el.requestFullscreen)el.requestFullscreen();else if(document.exitFullscreen&&document.fullscreenElement)document.exitFullscreen();});
+  show(0);
+
+  var ITEMS=[
+    {q:"L'ora di religione è obbligatoria per tutti.",a:false,f:"Dal 1984 ciascuno sceglie se avvalersene o no. Fino a quell'anno era il «fondamento e coronamento» dell'istruzione pubblica; con la revisione del Concordato è diventata una scelta.",s:"Accordo del 18 febbraio 1984, art. 9 n. 2 (legge 121/1985)."},
+    {q:"Nella scuola superiore la scelta la fa lo studente, non i genitori.",a:true,f:"È così: la Corte costituzionale ha chiarito che nelle secondarie superiori la titolarità della scelta è direttamente degli studenti. Per molti di voi è la prima decisione scolastica presa in prima persona.",s:"Corte costituzionale, sentenza n. 203/1989."},
+    {q:"In quest'ora si prende un voto in decimi.",a:false,f:"Si valuta, ma con un giudizio su una nota separata, non con un voto in decimi. E si valuta il lavoro, mai le convinzioni.",s:"Normativa sulla valutazione dell'IRC; patto della classe."},
+    {q:"Il programma lo decide il docente insieme alla sua parrocchia.",a:false,f:"Il programma è fissato per decreto, uguale in tutta Italia, con tre competenze dichiarate — e nessuna delle tre chiede di credere.",s:"D.P.R. 176/2012 (Intesa MIUR–CEI)."},
+    {q:"Chi non è cattolico non può frequentare quest'ora.",a:false,f:"L'ora è aperta a tutti, senza distinzione di credo. Si rivolge a chi crede, a chi non crede e a chi non lo sa ancora — esattamente allo stesso modo.",s:"Accordo del 1984, art. 9 n. 2; Costituzione, art. 3."},
+    {q:"Chi non si avvale deve seguire obbligatoriamente un'altra materia.",a:false,f:"No: la Corte lo chiama «stato di non-obbligo». Se l'alternativa fosse obbligatoria, la scelta sarebbe una scelta fra due obblighi, cioè non sarebbe libera.",s:"Corte costituzionale, sentenze n. 203/1989 e n. 13/1991."},
+    {q:"In quest'ora vi verrà chiesto in che cosa credete.",a:false,f:"Mai. È il secondo obbligo del patto per chi insegna. Se qualcuno vuole dirlo, è libero di farlo; nessuno glielo chiederà e nessuno ne trarrà conseguenze.",s:"Patto della classe, colonna di chi insegna, punto 2."},
+    {q:"La parola «laicità» è scritta nella Costituzione italiana.",a:false,f:"Non compare da nessuna parte. È entrata nel diritto italiano come «principio supremo» con una sentenza della Corte costituzionale — che decideva, guarda caso, proprio sull'ora di religione.",s:"Corte costituzionale, sentenza n. 203/1989."}
+  ];
+  var done=0,right=0;
+  function build(){
+    done=0;right=0;var box=document.getElementById("quiz");box.innerHTML="";document.getElementById("score").hidden=true;
+    ITEMS.forEach(function(it,n){
+      var d=document.createElement("div");d.className="q";
+      var p=document.createElement("p");p.className="txt";p.textContent=(n+1)+". "+it.q;d.appendChild(p);
+      var o=document.createElement("div");o.className="opts";
+      [[true,"Vero"],[false,"Falso"]].forEach(function(c){
+        var b=document.createElement("button");b.className="opt";b.type="button";b.textContent=c[1];
+        b.addEventListener("click",function(){
+          if(d.dataset.ans)return;d.dataset.ans="1";done++;
+          var ok=(c[0]===it.a);if(ok)right++;
+          b.dataset.state=ok?"ok":"no";b.textContent=c[1]+(ok?" ✓":" ✗");
+          [].slice.call(o.children).forEach(function(x){if(x!==b){x.disabled=true;x.style.opacity=".45";}});
+          var f=document.createElement("div");f.className="fb";
+          f.innerHTML="<b>"+(ok?"Esatto.":"Non è così.")+"</b> "+it.f+" <span style='opacity:.75'>— "+it.s+"</span>";
+          d.appendChild(f);
+          if(done===ITEMS.length){var s=document.getElementById("score");s.hidden=false;s.innerHTML="Fatto: <b>"+right+" su "+ITEMS.length+"</b>. Il numero non va da nessuna parte. Quello che conta è che ora sapete tre cose che quasi nessun adulto sa: che avete scelto voi, che nessuno vi chiederà cosa credete, e che la parola «laicità» è entrata in Italia dalla porta di quest'ora.";}
+        });
+        o.appendChild(b);
+      });
+      d.appendChild(o);box.appendChild(d);
+    });
+  }
+  document.getElementById("reset").addEventListener("click",build);build();
+
+  document.getElementById("dl").addEventListener("click",function(){
+    var root=document.querySelector("#pane-studio .studio");
+    var out=["IL NOME E LA DOMANDA","Insegnamento della Religione Cattolica - Classe I - Lezione inaugurale","","----------------------------------------",""];
+    [].slice.call(root.children).forEach(function(el){
+      if(el.classList.contains("toc")||el.classList.contains("actions"))return;
+      var t=(el.textContent||"").replace(/\s+/g," ").trim();if(!t)return;
+      if(el.tagName==="H2"){out.push("","== "+t.toUpperCase()+" ==","");}
+      else if(el.classList.contains("pull")){out.push("",t,"");}
+      else if(el.classList.contains("rifl")){out.push("","[DOMANDA] "+t.replace(/^DOMANDA\s*/,""),"");}
+      else if(el.classList.contains("patto")){[].slice.call(el.children).forEach(function(c){out.push((c.querySelector("h3").textContent||"").toUpperCase());[].slice.call(c.querySelectorAll("li")).forEach(function(li,k){out.push("  "+(k+1)+". "+li.textContent.trim());});out.push("");});}
+      else{out.push(t,"");}
+    });
+    out.push("","----------------------------------------","© Matteo Sestili - Tutti i diritti riservati");
+    var blob=new Blob([out.join("\n")],{type:"text/plain;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="il-nome-e-la-domanda.txt";document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(a.href);},1500);
+  });
+})();
+</script>
+</body>
+</html>
