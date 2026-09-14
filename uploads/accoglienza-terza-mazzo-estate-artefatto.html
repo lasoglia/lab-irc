@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il mazzo dell'estate — Accoglienza e presentazione dell'anno, Classe III</title>
+<meta name="author" content="Matteo Sestili">
+<meta name="copyright" content="© Matteo Sestili — Tutti i diritti riservati">
+<meta name="description" content="Ora di accoglienza IRC per la classe III: un gioco di carte per raccontare l'estate e le attese, poi la presentazione dell'anno «Chi l'ha deciso?».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --notte:#131A32; --notte2:#1B2342; --notte3:#232C4F;
+  --carta:#F3EEE3; --carta2:#E7DFCE;
+  --ocra:#D2A04A; --ocra-soft:#E9C480;
+  --sigillo:#C1573C; --verde:#5E9C7A; --cielo:#6FA8C9;
+  --ink:#EFEBE1; --muted:rgba(239,235,225,.68);
+  --edge:rgba(239,235,225,.16);
+  --lettura:720px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--notte);
+  background-image:radial-gradient(115% 70% at 50% -10%, #23305C 0%, var(--notte) 62%);
+  background-attachment:fixed;
+  color:var(--ink);
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:'Instrument Serif',Georgia,serif;font-weight:400}
+:focus-visible{outline:2px solid var(--ocra);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--lettura);margin:0 auto;padding:0 20px}
+button{font-family:'Space Grotesk',sans-serif}
+
+/* ---------- intestazione ---------- */
+header.top{padding:26px 0 8px}
+.eyebrow{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ocra);margin-bottom:10px}
+h1.titolo{font-size:clamp(2.4rem,10vw,3.6rem);line-height:.96;margin:0}
+.sub{color:var(--muted);font-size:.95rem;margin-top:10px;max-width:36rem}
+
+/* ---------- schede ---------- */
+.tabs{position:sticky;top:0;z-index:50;background:rgba(19,26,50,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--edge);margin-top:18px}
+.tabs .wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.tab{appearance:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-size:.92rem;padding:14px 2px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ocra)}
+.dl{margin-left:auto;appearance:none;cursor:pointer;background:var(--ocra);color:#22180A;border:0;font-weight:600;font-size:.8rem;padding:8px 14px;border-radius:3px}
+.dl:hover{background:var(--ocra-soft)}
+
+/* ---------- GIOCO ---------- */
+#gioco .wrap{padding-top:22px;padding-bottom:40px}
+.g-testa{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.g-testa h2{font-size:1.9rem;margin:0}
+.contatore{font-size:.82rem;color:var(--muted)}
+.regola{color:var(--muted);font-size:.92rem;margin:8px 0 18px;max-width:36rem}
+.semi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seme{appearance:none;cursor:pointer;background:var(--notte2);border:1px solid var(--edge);border-radius:4px;color:var(--ink);padding:12px 8px;text-align:left;display:flex;flex-direction:column;gap:4px}
+.seme:hover:not(:disabled){border-color:var(--ocra)}
+.seme:disabled{opacity:.38;cursor:not-allowed}
+.seme .nome{font-family:'Instrument Serif',serif;font-size:1.15rem;line-height:1.1}
+.seme .quante{font-size:.74rem;color:var(--muted)}
+.seme .punto{width:10px;height:10px;border-radius:50%;display:inline-block;margin-bottom:2px}
+.p-estate{background:var(--ocra)} .p-att{background:var(--verde)} .p-dom{background:var(--cielo)} .p-sfida{background:var(--sigillo)}
+
+.tavolo{margin-top:18px;min-height:250px;perspective:1200px}
+.cartagioco{
+  position:relative;background:var(--carta);color:#1F2436;border-radius:8px;padding:26px 24px 22px;
+  min-height:250px;display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+  transform-origin:center;transition:transform .35s ease;
+}
+.cartagioco.gira{animation:flip .45s ease}
+@keyframes flip{0%{transform:rotateY(90deg)}100%{transform:rotateY(0)}}
+.cartagioco .seme-tag{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:#6B6151;display:flex;align-items:center;gap:8px}
+.cartagioco .seme-tag .punto{width:10px;height:10px;border-radius:50%;display:inline-block}
+.cartagioco .testo{font-family:'Instrument Serif',serif;font-size:clamp(1.5rem,5.4vw,2.2rem);line-height:1.2;color:#1B2342;margin:18px 0}
+.cartagioco .nota{font-size:.84rem;color:#6B6151}
+.cartagioco.vuota{background:transparent;border:1px dashed var(--edge);color:var(--muted);box-shadow:none;align-items:center;justify-content:center;text-align:center}
+.cartagioco.vuota .testo{color:var(--muted);font-size:1.3rem}
+.cartagioco.finale{background:#1B2342;color:var(--ink);border:1px solid var(--ocra)}
+.cartagioco.finale .testo{color:var(--ocra-soft)}
+.cartagioco.finale .seme-tag,.cartagioco.finale .nota{color:var(--muted)}
+
+.strumenti{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.strumenti button{appearance:none;cursor:pointer;background:none;border:1px solid var(--edge);border-radius:3px;color:var(--ink);font-size:.86rem;padding:8px 13px}
+.strumenti button:hover{border-color:var(--ocra)}
+.strumenti .primario{background:var(--ocra);color:#22180A;border-color:var(--ocra);font-weight:600}
+.timer{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.86rem;color:var(--muted)}
+.timer .cifra{font-family:'Instrument Serif',serif;font-size:1.6rem;color:var(--ink);min-width:2.4rem;text-align:right}
+.timer .barra{width:120px;height:3px;background:var(--edge);position:relative;border-radius:2px;overflow:hidden}
+.timer .barra span{position:absolute;left:0;top:0;bottom:0;background:var(--ocra);width:100%}
+
+/* ---------- L'ANNO (slide) ---------- */
+#anno{display:none}
+#anno .wrap{padding-top:10px}
+.slide{display:none;min-height:60vh;padding:16px 0 8px}
+.slide.on{display:block}
+.fase{font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ocra);margin-bottom:12px}
+.slide h2{font-size:clamp(1.8rem,7.5vw,2.9rem);line-height:1.1;margin:0 0 16px}
+.slide p{margin:0 0 12px;max-width:34rem}
+.slide ul{margin:6px 0 14px;padding-left:18px;max-width:34rem}
+.slide li{margin-bottom:8px}
+.cap{font-size:.9rem;color:var(--muted)}
+.big{font-family:'Instrument Serif',serif;font-size:clamp(3rem,14vw,5.5rem);line-height:1;display:block;margin:4px 0;color:var(--ocra)}
+.riga-uda{display:flex;gap:14px;align-items:baseline;border-top:1px solid var(--edge);padding:10px 0}
+.riga-uda .n{font-family:'Instrument Serif',serif;font-size:1.6rem;color:var(--ocra);min-width:1.6rem}
+.riga-uda .t{font-family:'Instrument Serif',serif;font-size:1.25rem;line-height:1.2}
+.riga-uda .s{font-size:.84rem;color:var(--muted);margin-top:2px}
+blockquote{margin:18px 0;padding:2px 0 2px 16px;border-left:3px solid var(--ocra);font-family:'Instrument Serif',serif;font-size:1.5rem;line-height:1.3}
+.nav{border-top:1px solid var(--edge);margin-top:10px}
+.nav .wrap{display:flex;align-items:center;gap:12px;padding-top:12px;padding-bottom:34px}
+.nav button{appearance:none;background:none;border:1px solid var(--edge);border-radius:3px;color:var(--ink);font-size:.84rem;padding:7px 13px;cursor:pointer}
+.nav button:hover{border-color:var(--ocra)}
+.barra-s{flex:1;height:2px;background:var(--edge);position:relative}
+.barra-s span{position:absolute;left:0;top:0;bottom:0;background:var(--ocra);width:6.6%}
+.conta{font-size:.8rem;color:var(--muted);min-width:5.6rem;text-align:right}
+
+/* ---------- MAPPA ---------- */
+#mappa{display:none}
+.foglio{background:var(--carta);color:#1F2436;border-radius:4px;margin:18px auto 40px;padding:30px 26px 34px;max-width:var(--lettura)}
+.foglio h2{font-size:1.7rem;margin:30px 0 8px;color:#1B2342;line-height:1.2}
+.foglio h2:first-of-type{margin-top:8px}
+.foglio p{margin:0 0 13px}
+.foglio .indice{border-top:1px solid #CFC6B4;border-bottom:1px solid #CFC6B4;padding:12px 0;margin-bottom:24px}
+.foglio .indice ol{margin:0;padding-left:20px;font-size:.92rem}
+.foglio .indice a{color:#7A5B23;text-decoration:none}
+.foglio .indice a:hover{text-decoration:underline}
+.uda{border:1px solid #D6CCB8;border-radius:4px;padding:14px 16px;margin:12px 0;background:#F7F3EA}
+.uda .titolo{font-family:'Instrument Serif',serif;font-size:1.35rem;color:#1B2342;line-height:1.2}
+.uda .meta{font-size:.78rem;color:#6B6151;letter-spacing:.04em;text-transform:uppercase;margin-top:4px}
+.uda p{margin:8px 0 0;font-size:.97rem}
+.uda p b{color:#7A5B23;font-weight:600}
+.pull{font-family:'Instrument Serif',serif;font-size:1.45rem;line-height:1.35;color:#7A5B23;margin:24px 0}
+.foglio ul{padding-left:18px}
+details.note{max-width:var(--lettura);margin:0 auto 30px;border-top:1px solid var(--edge);padding-top:14px}
+details.note summary{cursor:pointer;font-size:.86rem;color:var(--muted)}
+details.note .corpo{font-size:.9rem;margin-top:12px;color:var(--muted)}
+details.note li{margin-bottom:7px}
+footer.piede{border-top:1px solid var(--edge);padding:16px 0 30px;font-size:.76rem;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:640px){
+  body{font-size:16px}
+  .semi{grid-template-columns:1fr 1fr}
+  .timer{margin-left:0;width:100%}
+  .foglio{padding:22px 18px 26px;border-radius:0}
+}
+@media print{
+  body{background:#fff;color:#000}
+  .tabs,.nav,#gioco,#anno,details.note,.dl{display:none!important}
+  #mappa{display:block!important}
+  .foglio{background:#fff;max-width:none;padding:0;margin:0}
+  .uda{background:#fff;border:1px solid #999}
+  .pull{color:#000}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Classe III &nbsp;·&nbsp; Ora di accoglienza</div>
+    <h1 class="titolo">Il mazzo dell'estate</h1>
+    <div class="sub">Ventiquattro carte per raccontarsi, una carta per tutti alla fine — e poi la mappa dell'anno che comincia.</div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <button class="tab" id="t-gioco" role="tab" aria-selected="true" aria-controls="gioco">Gioco</button>
+    <button class="tab" id="t-anno" role="tab" aria-selected="false" aria-controls="anno">L'anno</button>
+    <button class="tab" id="t-mappa" role="tab" aria-selected="false" aria-controls="mappa">Mappa</button>
+    <button class="dl" id="btn-dl">Scarica la mappa</button>
+  </div>
+</nav>
+
+<!-- ================= GIOCO ================= -->
+<main id="gioco" role="tabpanel" aria-labelledby="t-gioco">
+  <div class="wrap">
+    <div class="g-testa">
+      <h2>Pesca una carta</h2>
+      <div class="contatore" id="contatore" role="status" aria-live="polite">Carte pescate: 0 di 24</div>
+    </div>
+    <p class="regola">Scegli un seme, rispondi in quaranta secondi, a voce. Si può sempre dire «passo» — ma solo una volta. Comincia chi insegna.</p>
+
+    <div class="semi" role="group" aria-label="Semi del mazzo">
+      <button class="seme" data-seme="estate"><span class="punto p-estate"></span><span class="nome">Estate</span><span class="quante" id="q-estate">7 carte</span></button>
+      <button class="seme" data-seme="attese"><span class="punto p-att"></span><span class="nome">Attese</span><span class="quante" id="q-attese">7 carte</span></button>
+      <button class="seme" data-seme="domande"><span class="punto p-dom"></span><span class="nome">Domande</span><span class="quante" id="q-domande">6 carte</span></button>
+      <button class="seme" data-seme="sfide"><span class="punto p-sfida"></span><span class="nome">Sfide</span><span class="quante" id="q-sfide">4 carte</span></button>
+    </div>
+
+    <div class="tavolo">
+      <div class="cartagioco vuota" id="carta" aria-live="polite">
+        <div class="testo">Il mazzo è coperto. Scegli un seme.</div>
+      </div>
+    </div>
+
+    <div class="strumenti">
+      <button id="qualsiasi">Carta a caso</button>
+      <button id="finale" class="primario">La carta dell'anno</button>
+      <button id="reset">Rimescola</button>
+      <div class="timer" aria-label="Timer di quaranta secondi">
+        <button id="t-avvia">Avvia 40&#8239;s</button>
+        <div class="barra" aria-hidden="true"><span id="t-barra"></span></div>
+        <div class="cifra" id="t-cifra" role="status" aria-live="off">40</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= L'ANNO ================= -->
+<main id="anno" role="tabpanel" aria-labelledby="t-anno">
+  <div class="wrap" id="palco">
+    <section class="slide on m-hook" aria-label="Slide 1">
+      <div class="fase">La domanda dell'anno</div>
+      <h2>Chi l'ha deciso?</h2>
+      <p>Nel mazzo c'era una carta che chiedeva una cosa che fate tutti i giorni senza sapere chi l'ha inventata. Quasi nessuno riesce a rispondere, ed è normale: le cose che usiamo sempre diventano invisibili.</p>
+      <p class="cap">Non era una carta a caso. È la domanda su cui lavoriamo fino a giugno.</p>
+    </section>
+
+    <section class="slide m-hook" aria-label="Slide 2">
+      <div class="fase">Perché proprio questa</div>
+      <h2>Avete sedici anni</h2>
+      <p>È l'età in cui cominciate a decidere da soli. E in cui scoprite che una quantità enorme di cose era già stata decisa prima che nasceste: come funziona una scuola, cosa può fare chi comanda, quando è giusto dire no.</p>
+      <p>Qualcuno le ha decise davvero, in un posto preciso e in un anno preciso. Quasi sempre nel Medioevo, e quasi sempre per ragioni che hanno a che fare con il cristianesimo.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 3">
+      <div class="fase">Come funziona</div>
+      <h2>Ventotto ore, sei tappe</h2>
+      <ul>
+        <li>Un'ora a settimana. Ogni tappa dura circa un mese e comincia con una domanda.</li>
+        <li>Ogni tappa dice in anticipo <b>a cosa vi serve</b> — se non serve a niente, non c'è.</li>
+        <li>A metà anno la <b>verifica rovesciata</b>: sarete voi a dire come sta andando.</li>
+        <li>L'ultima tappa è vostra: i <b>Talenti</b>.</li>
+      </ul>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 4">
+      <div class="fase">Tappa 1</div>
+      <h2>Chi ha costruito il mondo in cui vivi?</h2>
+      <p>Un ospedale che cura chiunque si presenti. Una scuola che rilascia un titolo valido ovunque. Una guerra con delle regole. Nessuna di queste tre cose è sempre esistita: ognuna ha una data e un nome.</p>
+      <p class="cap">A cosa vi serve: accorgervi che quasi niente di quello che usate era obbligatorio. Qualcuno l'ha deciso, e poteva decidere diversamente.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 5">
+      <div class="fase">Tappa 2</div>
+      <h2>Perché fai cose che non vuoi fare?</h2>
+      <p>I sette vizi capitali non sono una lista di peccatucci: sono un'analisi di come un gesto ogni tanto diventa un'abitudine, e di come un'abitudine diventa un carattere. Con un dipinto del 1933 che li usa per raccontare il crollo di una nazione.</p>
+      <p class="cap">A cosa vi serve: la differenza fra «sono fatto così» e «ho preso un'abitudine». Solo la seconda si può cambiare.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 6">
+      <div class="fase">Tappa 3</div>
+      <h2>È da stupidi credere?</h2>
+      <p>Quante delle cose che sapete per certe le avete verificate di persona? Quasi nessuna. Distingueremo quattro modi di essere sicuri: la dimostrazione, l'esperimento, la testimonianza di qualcuno, la fiducia.</p>
+      <p class="cap">A cosa vi serve: sapere di quali fonti vi fidate e perché. Vale per un professore, per un video e per una macchina che risponde a tutto.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 7">
+      <div class="fase">A metà strada</div>
+      <h2>La verifica rovesciata</h2>
+      <p>Un'ora intera in cui le domande le fate voi e rispondo io: cosa ha funzionato, cosa no, cosa cambiamo. Le attese che avete detto oggi le rileggiamo quel giorno.</p>
+      <p class="cap">Per questo oggi le scrivo tutte alla lavagna. Fotografia compresa.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 8">
+      <div class="fase">Tappa 4</div>
+      <h2>C'è un ordine che non devi eseguire?</h2>
+      <p>Un re costretto ad aspettare tre giorni sotto la neve, nel 1077, davanti a una porta chiusa. È il momento in cui l'Europa scrive per la prima volta che chi comanda non è l'ultima parola.</p>
+      <p class="cap">A cosa vi serve: un motivo per dire no che regga anche quando tutti intorno stanno dicendo sì.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 9">
+      <div class="fase">Tappa 5</div>
+      <h2>Chi sei quando nessuno ti guarda?</h2>
+      <p>Una carta del mazzo chiedeva come vi chiamano gli amici e come vi chiamano in famiglia. Quattro testi biblici fanno la stessa domanda, molto più sul serio: uno di questi è un uomo che lotta tutta la notte e alla fine riceve un nome nuovo.</p>
+      <p class="cap">A cosa vi serve: distinguere quello che gli altri registrano di voi da quello che siete.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 10">
+      <div class="fase">Tappa 6</div>
+      <h2>Talenti</h2>
+      <p>Sei ore a fine anno. In gruppo, ognuno mette in gioco davanti a un pubblico ciò che sa fare — e nel mazzo c'era già una carta che lo chiedeva.</p>
+      <p class="cap">Iniziate a pensarci oggi, non a maggio. L'anticipo è ciò che permette di scegliere davvero.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 11">
+      <div class="fase">Come si lavora</div>
+      <h2>Tre materiali per ogni lezione</h2>
+      <ul>
+        <li>Un <b>fascicolo</b> da leggere a casa, scritto come un atto: si legge, si sottolinea.</li>
+        <li>Le <b>slide</b> proiettate in aula: si vede.</li>
+        <li>Una <b>lezione interattiva</b> che si riapre dal telefono: si fa.</li>
+      </ul>
+      <p class="cap">A fine tappa, cinquanta domande in quarantacinque minuti. Tutto sta sulla piattaforma della classe.</p>
+    </section>
+
+    <section class="slide m-mappa" aria-label="Slide 12">
+      <div class="fase">Come si valuta</div>
+      <h2>Tre cose contano</h2>
+      <ul>
+        <li>Come partecipate: le domande valgono quanto le risposte.</li>
+        <li>Le verifiche di fine tappa.</li>
+        <li>I Talenti, con una griglia che conoscete in anticipo.</li>
+      </ul>
+      <p class="cap">Nessuno è valutato per ciò che crede. Tutti per ciò che capiscono e per come lo argomentano.</p>
+    </section>
+
+    <section class="slide m-patto" aria-label="Slide 13">
+      <div class="fase">Il patto</div>
+      <h2>Tre regole, valgono anche per me</h2>
+      <ul>
+        <li>Ogni affermazione ha una fonte. Chiedere «come lo sappiamo?» è sempre legittimo.</li>
+        <li>Si può dissentire, purché con argomenti.</li>
+        <li>Nessuno qui è obbligato a credere. Tutti sono invitati a capire.</li>
+      </ul>
+    </section>
+
+    <section class="slide m-patto" aria-label="Slide 14">
+      <div class="fase">La prossima ora</div>
+      <h2>Sotto casa vostra.</h2>
+      <p>A Roma, sul Tevere, c'è un edificio che a un certo punto ha cominciato a fare una cosa che nessuno al mondo faceva: curare chiunque si presentasse alla porta, senza chiedere chi fosse, da dove venisse o chi pagasse.</p>
+      <p class="cap">Tra sette giorni andiamo a vedere quando è successo, chi l'ha deciso e perché. E che cosa c'entra con il pronto soccorso in cui finite quando vi rompete un braccio.</p>
+    </section>
+
+    <section class="slide m-fine" aria-label="Slide 15">
+      <div class="fase">Chiusura</div>
+      <h2>La carta dell'anno</h2>
+      <blockquote>Una cosa che vorresti decidere tu, quest'anno.</blockquote>
+      <p class="cap">Tutti, un giro rapido. Va alla lavagna, e la rileggiamo a gennaio.</p>
+    </section>
+
+  </div>
+
+  <div class="nav">
+    <div class="wrap">
+      <button id="prev" aria-label="Slide precedente">Indietro</button>
+      <button id="next" aria-label="Slide successiva">Avanti</button>
+      <div class="barra-s" aria-hidden="true"><span id="fill"></span></div>
+      <div class="conta" id="conta" role="status" aria-live="polite">Slide 1 di 15</div>
+      <button id="fs">Schermo intero</button>
+    </div>
+  </div>
+</main>
+
+<!-- ================= MAPPA ================= -->
+<main id="mappa" role="tabpanel" aria-labelledby="t-mappa">
+  <div class="wrap">
+    <article class="foglio" id="testo-mappa">
+
+      <h2 id="m0">Chi l'ha deciso? — La mappa dell'anno</h2>
+      <div class="indice" aria-label="Indice">
+        <ol>
+          <li><a href="#m1">La domanda</a></li>
+          <li><a href="#m2">Le sei tappe</a></li>
+          <li><a href="#m3">Come si lavora e come si valuta</a></li>
+          <li><a href="#m4">Il patto</a></li>
+        </ol>
+      </div>
+
+      <h2 id="m1">1. La domanda</h2>
+      <p>Quest'anno ha una domanda sola, e nel gioco c'era già una carta che la faceva: <b>chi l'ha deciso?</b> Un ospedale che cura chiunque, una scuola che rilascia un titolo, il fatto che chi comanda debba rispettare delle regole, l'idea che tu valga qualcosa anche quando non produci niente. Sono cose che sembrano naturali e non lo sono: ognuna è stata decisa da qualcuno, in un anno preciso, spesso per ragioni religiose. Il percorso attraversa il Medioevo, che è il periodo in cui quasi tutte queste decisioni sono state prese, ma ogni tappa dice in anticipo a che cosa serve oggi.</p>
+
+      <h2 id="m2">2. Le sei tappe</h2>
+
+      <div class="uda">
+        <div class="titolo">1. Chi ha costruito il mondo in cui vivi?</div>
+        <div class="meta">Storia · circa un mese</div>
+        <p>Quattro invenzioni che usiamo ancora: l'ospedale aperto a tutti, l'università, le prime regole scritte su cosa non si può fare in guerra, il lavoro manuale che smette di essere una vergogna. Con le ombre di quegli stessi secoli, senza sconti.</p>
+        <p><b>A cosa serve:</b> accorgersi che quasi niente di ciò che usiamo era obbligatorio.</p>
+      </div>
+
+      <div class="uda">
+        <div class="titolo">2. Perché fai cose che non vuoi fare?</div>
+        <div class="meta">Teologia · circa un mese</div>
+        <p>I sette vizi capitali come analisi di come un gesto occasionale diventa abitudine e un'abitudine diventa carattere. Ogni vizio ribalta un ordine: nella gola non sei più tu a mangiare il cibo, è il cibo a mangiare te. Con un dipinto del 1933 che li usa per raccontare un Paese che sta per crollare.</p>
+        <p><b>A cosa serve:</b> la differenza fra «sono fatto così» e «ho preso un'abitudine».</p>
+      </div>
+
+      <div class="uda">
+        <div class="titolo">3. È da stupidi credere?</div>
+        <div class="meta">Filosofia · circa un mese</div>
+        <p>Quattro modi di essere sicuri di qualcosa — dimostrazione, esperimento, testimonianza, fiducia — e il fatto, scomodo, che quasi tutto ciò che sappiamo poggia sul terzo. Poi due scorciatoie speculari: chi dice che conta solo la scienza e chi dice che non conta affatto.</p>
+        <p><b>A cosa serve:</b> sapere di quali fonti ci si fida e perché.</p>
+      </div>
+
+      <p class="pull">A metà anno, la verifica rovesciata: un'ora in cui le domande le fate voi.</p>
+
+      <div class="uda">
+        <div class="titolo">4. C'è un ordine che non devi eseguire?</div>
+        <div class="meta">Politica e coscienza · circa un mese</div>
+        <p>Un re che aspetta tre giorni sotto la neve nel 1077 davanti a una porta chiusa, e la nascita dell'idea che il potere politico non sia l'ultima parola. Da lì arrivano l'obiezione di coscienza e la frase «eseguivo ordini», che a Norimberga non è bastata.</p>
+        <p><b>A cosa serve:</b> un motivo per dire no che regga anche quando tutti stanno dicendo sì.</p>
+      </div>
+
+      <div class="uda">
+        <div class="titolo">5. Chi sei quando nessuno ti guarda?</div>
+        <div class="meta">Bibbia · circa un mese</div>
+        <p>Quattro testi sul nome e sull'identità: un salmo, un uomo che lotta una notte intera e riceve un nome nuovo, la chiamata di un ragazzo troppo giovane, e una domanda fatta ai discepoli senza preavviso.</p>
+        <p><b>A cosa serve:</b> distinguere ciò che gli altri registrano di te da ciò che sei.</p>
+      </div>
+
+      <div class="uda">
+        <div class="titolo">6. Talenti</div>
+        <div class="meta">Sei ore · fine anno</div>
+        <p>In gruppo, ognuno mette in gioco davanti a un pubblico ciò che sa fare. Si sceglie da oggi, non a maggio: l'anticipo è ciò che rende possibile una scelta vera.</p>
+      </div>
+
+      <h2 id="m3">3. Come si lavora e come si valuta</h2>
+      <p>Ogni lezione ha tre materiali: un fascicolo da leggere a casa, scritto come un atto, che si sottolinea e si rilegge; le slide proiettate in aula; una lezione interattiva che si riapre dal telefono. A fine tappa, cinquanta domande in quarantacinque minuti. Tutto sta sulla piattaforma della classe.</p>
+      <p>Contano tre cose: come si partecipa — le domande valgono quanto le risposte —, le verifiche di fine tappa e i Talenti, valutati con una griglia che conoscete in anticipo. Nessuno è valutato per ciò che crede; tutti per ciò che capiscono e per come lo argomentano.</p>
+
+      <h2 id="m4">4. Il patto</h2>
+      <ul>
+        <li>Ogni affermazione ha una fonte. Chiedere «come lo sappiamo?» è sempre legittimo, anche verso chi insegna.</li>
+        <li>Si può dissentire, purché con argomenti.</li>
+        <li>Nessuno qui è obbligato a credere. Tutti sono invitati a capire.</li>
+      </ul>
+      <p>E la carta dell'anno, quella che vale per tutti: <b>una cosa che vorresti decidere tu, quest'anno.</b> Detta oggi, scritta alla lavagna, riletta a gennaio.</p>
+
+    </article>
+
+    <details class="note">
+      <summary>Note per chi insegna</summary>
+      <div class="corpo">
+        <ul>
+          <li>Chi insegna pesca per primo e risponde davvero: è il modello di misura e di sincerità che la classe copierà. In terza serve più che in quarta: a sedici anni il primo a esporsi decide il registro di tutti.</li>
+          <li>Il seme «Domande» è il ponte verso l'anno: se nessuno lo sceglie, pescarne una a caso verso la fine del giro. La carta su ciò che si fa ogni giorno senza sapere chi l'ha inventato apre direttamente la prima slide.</li>
+          <li>La carta delle Attese sui talenti («cosa sai fare che quasi nessuno qui sa») va annotata: è il primo censimento per l'UDA finale.</li>
+          <li>La carta dell'anno si fa in un giro rapido, tutti, senza commento; le parole chiave vanno alla lavagna e in una fotografia da rileggere alla verifica rovesciata.</li>
+          <li>Con più di ventidue studenti: una carta a testa, seme «Sfide» solo per i volontari. La carta sull'abitudine chiede apposta di non dire quale sia: se qualcuno la nomina va bene, ma non va chiesto.</li>
+          <li>L'artefatto non raccoglie, non salva e non trasmette alcun dato: il mazzo si rimescola ricaricando la pagina.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</main>
+
+<footer class="piede">
+  <div class="wrap">© Matteo Sestili — Tutti i diritti riservati · Riproduzione vietata</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- schede ---------- */
+  var pannelli = {gioco:document.getElementById('gioco'), anno:document.getElementById('anno'), mappa:document.getElementById('mappa')};
+  var bottoni  = {gioco:document.getElementById('t-gioco'), anno:document.getElementById('t-anno'), mappa:document.getElementById('t-mappa')};
+  var navBar = document.querySelector('.nav');
+  function apri(k){
+    Object.keys(pannelli).forEach(function(x){
+      pannelli[x].style.display = (x===k) ? 'block' : 'none';
+      bottoni[x].setAttribute('aria-selected', x===k ? 'true' : 'false');
+    });
+    navBar.style.display = (k==='anno') ? 'block' : 'none';
+    window.scrollTo({top:0});
+  }
+  Object.keys(bottoni).forEach(function(k){ bottoni[k].addEventListener('click', function(){ apri(k); }); });
+  navBar.style.display = 'none';
+
+  /* ---------- il mazzo ---------- */
+  var MAZZO = {
+    estate: {nome:'Estate', classe:'p-estate', carte:[
+      "L'estate in una parola. Poi spiegala in una frase.",
+      "Una cosa che hai fatto per la prima volta.",
+      "Il posto più bello in cui sei stato. Vale anche a due chilometri da casa.",
+      "La canzone che hai ascoltato di più. E perché non ti sei ancora stancato.",
+      "Una giornata intera passata a non fare niente: raccontala.",
+      "Una persona con cui hai passato più tempo del solito.",
+      "Una cosa che hai mangiato e che ti ricorderai."
+    ]},
+    attese: {nome:'Attese', classe:'p-att', carte:[
+      "Una cosa che vuoi fare diversamente rispetto all'anno scorso. Non vale dire «studiare di più».",
+      "Una materia che ti preoccupa quest'anno. Di' anche perché.",
+      "Cosa sai fare che quasi nessuno qui sa fare. Serve per la fine dell'anno.",
+      "Cosa ti aspetti dall'ora di religione. Vale anche «niente», ma spiegalo.",
+      "Una cosa che vuoi aver imparato entro giugno. Anche fuori dalla scuola.",
+      "Una cosa che vorresti succedesse in questa classe quest'anno.",
+      "Se potessi togliere una cosa dalla giornata di scuola, quale?"
+    ]},
+    domande: {nome:'Domande', classe:'p-dom', carte:[
+      "Una cosa che fai tutti i giorni e di cui non sai chi l'ha inventata.",
+      "Un'abitudine che vorresti toglierti. Non dire quale: di' solo da quanto tempo ce l'hai.",
+      "Una cosa che tutti danno per vera e di cui tu non sei convinto.",
+      "Ti è mai capitato di dire sì a qualcosa solo perché lo dicevano tutti?",
+      "Come ti chiamano gli amici e come ti chiamano in famiglia. È la stessa persona?",
+      "Una domanda che hai fatto a un adulto e a cui non ti ha risposto davvero."
+    ]},
+    sfide: {nome:'Sfide', classe:'p-sfida', carte:[
+      "Due verità e una bugia sulla tua estate. La classe indovina la bugia.",
+      "La tua estate in tre emoji, dette a voce. La classe le interpreta.",
+      "Il titolo del film della tua estate. Il genere è obbligatorio.",
+      "Presenta il compagno alla tua destra come se fosse un ospite famoso. Trenta secondi."
+    ]}
+  };
+  var TOTALE = 24;
+  var pescate = 0;
+  var rimaste = {};
+  var eCarta = document.getElementById('carta');
+  var eCont = document.getElementById('contatore');
+  var semiBtn = [].slice.call(document.querySelectorAll('.seme'));
+
+  function rimescola(){
+    Object.keys(MAZZO).forEach(function(k){ rimaste[k] = MAZZO[k].carte.slice(); });
+    pescate = 0;
+    aggiorna();
+    eCarta.className = 'cartagioco vuota';
+    eCarta.innerHTML = '<div class="testo">Il mazzo è coperto. Scegli un seme.</div>';
+  }
+  function aggiorna(){
+    eCont.textContent = 'Carte pescate: '+pescate+' di '+TOTALE;
+    Object.keys(MAZZO).forEach(function(k){
+      var n = rimaste[k].length;
+      document.getElementById('q-'+k).textContent = n + (n===1 ? ' carta' : ' carte');
+    });
+    semiBtn.forEach(function(b){ b.disabled = rimaste[b.getAttribute('data-seme')].length === 0; });
+  }
+  function mostraCarta(k, testo, finale){
+    eCarta.className = 'cartagioco' + (finale ? ' finale' : '');
+    eCarta.innerHTML =
+      '<div class="seme-tag"><span class="punto '+(finale ? 'p-estate' : MAZZO[k].classe)+'"></span>'+(finale ? 'La carta dell\u2019anno — per tutti' : MAZZO[k].nome)+'</div>'+
+      '<div class="testo">'+testo+'</div>'+
+      '<div class="nota">'+(finale ? 'Un giro rapido, tutti. Va alla lavagna.' : 'Quaranta secondi, a voce. «Passo» vale una volta sola.')+'</div>';
+    if(!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      eCarta.classList.remove('gira'); void eCarta.offsetWidth; eCarta.classList.add('gira');
+    }
+    resetTimer();
+  }
+  function pesca(k){
+    if(!rimaste[k] || rimaste[k].length === 0) return;
+    var i = Math.floor(Math.random()*rimaste[k].length);
+    var testo = rimaste[k].splice(i,1)[0];
+    pescate++;
+    aggiorna();
+    mostraCarta(k, testo, false);
+  }
+  semiBtn.forEach(function(b){ b.addEventListener('click', function(){ pesca(b.getAttribute('data-seme')); }); });
+  document.getElementById('qualsiasi').addEventListener('click', function(){
+    var disponibili = Object.keys(MAZZO).filter(function(k){ return rimaste[k].length > 0; });
+    if(disponibili.length === 0) return;
+    pesca(disponibili[Math.floor(Math.random()*disponibili.length)]);
+  });
+  document.getElementById('finale').addEventListener('click', function(){
+    mostraCarta('estate', 'Una cosa che vorresti fosse vera, quest\u2019anno.', true);
+  });
+  document.getElementById('reset').addEventListener('click', rimescola);
+
+  /* ---------- timer 40 s (solo visivo) ---------- */
+  var T = 40, resto = T, tick = null;
+  var eCifra = document.getElementById('t-cifra'), eBarra = document.getElementById('t-barra'), eAvvia = document.getElementById('t-avvia');
+  function resetTimer(){
+    if(tick){ clearInterval(tick); tick = null; }
+    resto = T; eCifra.textContent = String(T); eBarra.style.width = '100%';
+    eAvvia.textContent = 'Avvia 40\u202Fs';
+  }
+  eAvvia.addEventListener('click', function(){
+    if(tick){ resetTimer(); return; }
+    eAvvia.textContent = 'Ferma';
+    tick = setInterval(function(){
+      resto--;
+      eCifra.textContent = String(Math.max(0,resto));
+      eBarra.style.width = (Math.max(0,resto)/T*100)+'%';
+      if(resto <= 0){ clearInterval(tick); tick = null; eAvvia.textContent = 'Di nuovo'; }
+    }, 1000);
+  });
+  rimescola();
+
+  /* ---------- slide ---------- */
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var idx = 0;
+  var fill = document.getElementById('fill'), conta = document.getElementById('conta');
+  function vai(n){
+    idx = Math.max(0, Math.min(slides.length-1, n));
+    slides.forEach(function(s,k){ s.classList.toggle('on', k===idx); });
+    fill.style.width = ((idx+1)/slides.length*100).toFixed(1)+'%';
+    conta.textContent = 'Slide '+(idx+1)+' di '+slides.length;
+  }
+  document.getElementById('prev').addEventListener('click', function(){ vai(idx-1); });
+  document.getElementById('next').addEventListener('click', function(){ vai(idx+1); });
+  document.addEventListener('keydown', function(e){
+    if(pannelli.anno.style.display !== 'block') return;
+    if(e.key === 'ArrowRight'){ vai(idx+1); }
+    if(e.key === 'ArrowLeft'){ vai(idx-1); }
+  });
+  document.getElementById('fs').addEventListener('click', function(){
+    if(!document.fullscreenElement){ if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+    else if(document.exitFullscreen){ document.exitFullscreen(); }
+  });
+  vai(0);
+
+  /* ---------- download mappa ---------- */
+  document.getElementById('btn-dl').addEventListener('click', function(){
+    var out = [];
+    out.push('COSA \u00C8 VERO? \u2014 LA MAPPA DELL\u2019ANNO');
+    out.push('Insegnamento della Religione Cattolica - Classe III');
+    out.push('');
+    out.push('----------------------------------------');
+    var art = document.getElementById('testo-mappa');
+    [].slice.call(art.children).forEach(function(el){
+      if(el.classList.contains('indice')) return;
+      var tag = el.tagName.toLowerCase();
+      var txt = (el.textContent || '').replace(/\s+/g,' ').trim();
+      if(!txt) return;
+      if(tag === 'h2'){ out.push(''); out.push(txt.toUpperCase()); out.push(''); }
+      else if(el.classList.contains('uda')){
+        var t = el.querySelector('.titolo').textContent.trim();
+        var m = el.querySelector('.meta').textContent.trim();
+        out.push(t.toUpperCase()+' ('+m+')');
+        [].slice.call(el.querySelectorAll('p')).forEach(function(p){ out.push(p.textContent.replace(/\s+/g,' ').trim()); });
+        out.push('');
+      }
+      else if(el.classList.contains('pull')){ out.push('>>> '+txt); out.push(''); }
+      else if(tag === 'ul'){
+        [].slice.call(el.querySelectorAll('li')).forEach(function(li){ out.push('- '+li.textContent.replace(/\s+/g,' ').trim()); });
+        out.push('');
+      }
+      else { out.push(txt); out.push(''); }
+    });
+    out.push('');
+    out.push('\u00A9 Matteo Sestili \u2014 Tutti i diritti riservati \u00B7 Riproduzione vietata');
+    var blob = new Blob([out.join('\n')], {type:'text/plain;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'cosa-e-vero-mappa-dell-anno.txt';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -60,6 +60,13 @@
       "uda": "Accoglienza I",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/accoglienza-classi-1.html"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Accoglienza",
+      "anno": "3",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/accoglienza-terza-mazzo-estate-artefatto.html"
     }
   ]
 }
