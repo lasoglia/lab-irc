@@ -44,6 +44,14 @@
       "lezione": "Presentazione corso",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/apertura-dell-anno-accoglienza-artefatto.html"
+    },
+    {
+      "in_evidenza": false,
+      "anno": "5",
+      "uda": "Accoglienza 5",
+      "titolo": "Accoglienza",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/apertura-cuore-inquieto-artefatto.html"
     }
   ]
 }

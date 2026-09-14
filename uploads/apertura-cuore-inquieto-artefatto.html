@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Matteo Sestili">
+<meta name="description" content="Lezione di apertura dell'anno per la classe quinta: dall'esame di sé delle Confessioni di Agostino alla domanda dell'anno su scienza, algoritmi e coscienza.">
+<title>Il cuore inquieto — Apertura dell'anno · Classe V</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#070B18; --deep:#0D1428;
+  --panel:rgba(255,255,255,.045); --edge:rgba(255,255,255,.11);
+  --cyan:#4CE0F5; --violet:#8B7BFF; --magenta:#FF6FB5; --amber:#FFC46B;
+  --ink:#EAF0FF; --muted:rgba(234,240,255,.62);
+  --spectrum:linear-gradient(90deg,var(--cyan) 0%,var(--violet) 52%,var(--magenta) 100%);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--void); color:var(--ink);
+  font-family:"Poppins",system-ui,sans-serif; font-weight:300;
+  font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:"Instrument Serif",Georgia,serif; font-weight:400; line-height:1.12; letter-spacing:-.01em}
+a{color:var(--cyan)}
+:focus-visible{outline:2px solid var(--amber); outline-offset:3px}
+
+.testata{padding:1.5rem 1.25rem .9rem; border-bottom:1px solid var(--edge);
+  background:radial-gradient(120% 100% at 20% 0%,rgba(139,123,255,.18),transparent 60%)}
+.kicker{font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan); margin:0 0 .55rem}
+.testata h1{font-size:clamp(1.9rem,7vw,2.7rem); margin:0 0 .4rem}
+.testata p{margin:0; font-size:.85rem; color:var(--muted)}
+
+.schede{display:flex; gap:.4rem; padding:.7rem 1.25rem; background:var(--deep);
+  position:sticky; top:0; z-index:40; border-bottom:1px solid var(--edge); flex-wrap:wrap}
+.schede button{font-family:"Poppins",sans-serif; font-size:.85rem; font-weight:400;
+  background:var(--panel); color:var(--muted); border:1px solid var(--edge);
+  border-radius:999px; padding:.45rem 1rem; cursor:pointer}
+.schede button[aria-selected="true"]{background:var(--spectrum); color:#06101f; font-weight:600; border-color:transparent}
+.pannello[hidden]{display:none}
+
+/* presentazione */
+.palco{position:relative; min-height:72vh; display:flex; align-items:center; justify-content:center;
+  padding:2.4rem 1.4rem 5rem; text-align:center; overflow:hidden;
+  background:radial-gradient(70% 60% at 50% 30%,rgba(76,224,245,.10),transparent 70%),var(--void)}
+.slide{max-width:40rem; width:100%}
+.slide[hidden]{display:none}
+.slide .fase{font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--amber); margin:0 0 1rem}
+.slide h2{font-size:clamp(1.7rem,6.5vw,2.8rem); margin:0 0 .9rem}
+.slide p{font-size:clamp(1rem,3.6vw,1.15rem); color:var(--muted); margin:.55rem 0}
+.slide .mega{font-family:"Instrument Serif",serif; font-style:italic;
+  font-size:clamp(1.9rem,8.5vw,3.4rem); line-height:1.1; margin:0 0 .8rem}
+.grad{background:var(--spectrum); -webkit-background-clip:text; background-clip:text; color:transparent}
+.slide blockquote{margin:1.3rem 0 0; padding:.2rem 0 .2rem 1rem; border-left:2px solid var(--magenta);
+  text-align:left; font-family:"Instrument Serif",serif; font-style:italic;
+  font-size:clamp(1.1rem,4.3vw,1.5rem); color:#fff}
+.slide blockquote cite{display:block; font-family:"Poppins",sans-serif; font-style:normal;
+  font-size:.72rem; color:var(--muted); margin-top:.7rem}
+.slide ul{text-align:left; margin:1rem 0 0; padding-left:0; list-style:none}
+.slide li{margin:.65rem 0; color:var(--muted); padding-left:1.6rem; position:relative}
+.slide li::before{content:""; position:absolute; left:0; top:.62em; width:.7rem; height:2px; background:var(--spectrum)}
+.slide li b{color:var(--ink); font-weight:500}
+
+.comandi{position:absolute; left:0; right:0; bottom:0; display:flex; align-items:center; gap:.7rem;
+  padding:.75rem 1.1rem; background:rgba(7,11,24,.92); border-top:1px solid var(--edge)}
+.comandi button{font-family:"Poppins",sans-serif; font-size:1rem; background:var(--panel); color:var(--ink);
+  border:1px solid var(--edge); border-radius:8px; padding:.35rem .8rem; cursor:pointer; min-width:2.7rem}
+.comandi button:disabled{opacity:.3; cursor:default}
+.barra{flex:1; height:3px; background:rgba(255,255,255,.1); border-radius:2px; position:relative}
+.barra span{position:absolute; inset:0 auto 0 0; background:var(--spectrum); border-radius:2px; width:0}
+.conta{font-size:.75rem; color:var(--muted); min-width:5.4rem; text-align:right}
+
+/* studio */
+#studio{padding:1.7rem 1.25rem 3rem}
+.colonna{max-width:720px; margin:0 auto}
+.indice{border:1px solid var(--edge); background:var(--panel); border-radius:14px; padding:1rem 1.1rem; margin:0 0 2.2rem}
+.indice p{margin:0 0 .55rem; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan)}
+.indice ol{margin:0; padding-left:1.1rem; color:var(--muted)}
+.indice li{margin:.25rem 0}
+.indice a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--edge)}
+.indice a:hover{border-color:var(--cyan)}
+#studio h2{font-size:1.65rem; margin:2.6rem 0 .85rem}
+#studio h2:first-of-type{margin-top:0}
+#studio p{margin:0 0 1.05rem; color:rgba(234,240,255,.85)}
+.badge{display:inline-block; font-size:.72rem; font-weight:500; letter-spacing:.04em;
+  border:1px solid var(--edge); border-radius:999px; padding:.08rem .6rem; color:var(--amber); white-space:nowrap}
+.pull{font-family:"Instrument Serif",serif; font-style:italic; font-size:1.5rem; line-height:1.3;
+  color:#fff; border-left:3px solid transparent; border-image:var(--spectrum) 1;
+  padding-left:1.1rem; margin:2rem 0}
+.cit{background:var(--panel); border:1px solid var(--edge); border-left:3px solid var(--magenta);
+  border-radius:0 12px 12px 0; padding:1rem 1.1rem; margin:1.6rem 0}
+.cit p{font-family:"Instrument Serif",serif; font-style:italic; font-size:1.2rem; color:#fff; margin:0 0 .5rem}
+.cit .fonte{font-family:"Poppins",sans-serif; font-style:normal; font-size:.75rem; color:var(--muted); margin:0}
+.rifl{border:1px dashed var(--edge); border-radius:12px; padding:.9rem 1.1rem; margin:1.7rem 0}
+.rifl p{margin:0 0 .5rem; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--violet)}
+.rifl ul{margin:0; padding-left:1.1rem; color:var(--muted)}
+.rifl li{margin:.4rem 0}
+
+/* esercizio */
+#esercizio{padding:1.7rem 1.25rem 3rem}
+.intro-es{color:var(--muted); max-width:720px; margin:0 auto 1.6rem}
+.carta{max-width:720px; margin:0 auto; border:1px solid var(--edge); border-radius:18px;
+  background:linear-gradient(160deg,rgba(139,123,255,.10),rgba(76,224,245,.04)); padding:1.2rem 1.1rem}
+.campo{margin:0 0 1.4rem}
+.campo label{display:block; font-family:"Instrument Serif",serif; font-size:1.3rem; color:#fff; margin:0 0 .2rem}
+.campo .aiuto{display:block; font-size:.82rem; color:var(--muted); margin:0 0 .55rem}
+.campo textarea{width:100%; min-height:5.5rem; resize:vertical; background:rgba(7,11,24,.6);
+  border:1px solid var(--edge); border-radius:10px; color:var(--ink);
+  font-family:"Poppins",sans-serif; font-size:1rem; font-weight:300; padding:.7rem .8rem; line-height:1.5}
+.campo textarea::placeholder{color:rgba(234,240,255,.32)}
+.azioni{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.4rem}
+.azioni button{font-family:"Poppins",sans-serif; font-size:.92rem; border-radius:10px; padding:.6rem 1.1rem;
+  cursor:pointer; border:1px solid var(--edge); background:var(--panel); color:var(--ink)}
+.azioni button.primario{background:var(--spectrum); color:#06101f; font-weight:600; border-color:transparent}
+.esito{margin-top:1rem; font-size:.92rem; color:var(--cyan); min-height:1.4rem}
+.privacy{max-width:720px; margin:1.2rem auto 0; font-size:.78rem; color:var(--muted)}
+
+.docente{max-width:720px; margin:2.6rem auto 0; border:1px solid var(--edge); border-radius:12px; padding:.3rem 1rem}
+.docente summary{cursor:pointer; font-size:.88rem; color:var(--muted); padding:.65rem 0}
+.docente ul{padding-left:1.1rem; color:var(--muted)}
+.docente li{margin:.45rem 0; font-size:.92rem}
+
+.scarica{display:block; width:100%; max-width:720px; margin:2.4rem auto 0; background:var(--panel);
+  color:var(--ink); border:1px solid var(--edge); border-radius:12px; padding:.9rem 1rem;
+  font-family:"Poppins",sans-serif; font-size:.98rem; cursor:pointer}
+.piede{max-width:720px; margin:2.2rem auto 0; padding-top:1rem; border-top:1px solid var(--edge);
+  font-size:.75rem; color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@media (min-width:760px){body{font-size:18px} .palco{min-height:68vh}}
+@media print{
+  body{background:#fff; color:#111}
+  .schede,.comandi,#presentazione,.docente,.scarica,.azioni,.testata{display:none!important}
+  #esercizio,#studio{display:block!important}
+  .carta{border:1px solid #999; background:#fff}
+  .campo label,.cit p,.pull,#studio p,.indice,.rifl{color:#111}
+}
+</style>
+</head>
+<body>
+
+<header class="testata">
+  <p class="kicker">Classe V · Apertura dell'anno</p>
+  <h1>Il cuore inquieto</h1>
+  <p>Un fatto, un'omissione, un'attesa — e la domanda che regge l'anno.</p>
+</header>
+
+<nav class="schede" role="tablist" aria-label="Modalità">
+  <button role="tab" id="t-pres" aria-controls="presentazione" aria-selected="true">Presentazione</button>
+  <button role="tab" id="t-stud" aria-controls="studio" aria-selected="false">Studio</button>
+  <button role="tab" id="t-eser" aria-controls="esercizio" aria-selected="false">Esercizio</button>
+</nav>
+
+<!-- ==================== PRESENTAZIONE ==================== -->
+<section id="presentazione" class="pannello" role="tabpanel" aria-labelledby="t-pres">
+  <div class="palco">
+
+    <div class="slide m-hook" data-slide>
+      <p class="fase">Alla lavagna</p>
+      <p class="mega grad">inquietum est cor nostrum</p>
+      <p>Cinque parole in latino. Chi le ha scritte, quando, e perché aprono l'ultimo anno.</p>
+    </div>
+
+    <div class="slide m-prima" data-slide hidden>
+      <p class="fase">Chi le ha scritte</p>
+      <h2>Agostino, intorno al 397</h2>
+      <p>Vescovo di Ippona, quarantatré anni. Padre e Dottore della Chiesa.</p>
+      <blockquote>«ci hai fatti per te, e il nostro cuore è inquieto finché non riposa in te»<cite>Agostino, Confessioni I, 1, 1</cite></blockquote>
+    </div>
+
+    <div class="slide m-prima" data-slide hidden>
+      <p class="fase">Che cosa sono le Confessioni</p>
+      <h2>Non un diario: un esame</h2>
+      <p>Agostino rilegge la propria vita per capire che cosa cercava davvero mentre credeva di cercare altro.</p>
+      <p>Guarda tre cose: ciò che ha fatto, ciò che ha evitato, ciò che desiderava senza saperlo.</p>
+    </div>
+
+    <div class="slide m-prima" data-slide hidden>
+      <p class="fase">La consegna</p>
+      <h2>Tre righe, nessun nome</h2>
+      <p>Lo stesso esame, ridotto a un'estate e a otto minuti. Si scrive in silenzio.</p>
+      <p>I foglietti vengono mescolati: ciascuno leggerà quello di un altro.</p>
+    </div>
+
+    <div class="slide m-dopo" data-slide hidden>
+      <p class="fase">Riga 1</p>
+      <h2>Un fatto</h2>
+      <p>Il momento dell'estate che rifaresti identico.</p>
+      <p>Non il più bello da raccontare: il più bello da vivere. Spesso non coincidono.</p>
+    </div>
+
+    <div class="slide m-dopo" data-slide hidden>
+      <p class="fase">Riga 2</p>
+      <h2>Un'omissione</h2>
+      <p>Una cosa che hai rimandato, evitato o non detto.</p>
+      <p>Può essere minima. Deve essere vera.</p>
+    </div>
+
+    <div class="slide m-dopo" data-slide hidden>
+      <p class="fase">Riga 3</p>
+      <h2>Un'attesa</h2>
+      <p>Che cosa ti aspetti da quest'anno. Tre parole, non una frase.</p>
+      <p>Vale anche «niente», se è quello che pensi.</p>
+    </div>
+
+    <div class="slide m-dopo" data-slide hidden>
+      <p class="fase">Come si legge</p>
+      <h2>La riga di un altro</h2>
+      <p>Si legge ad alta voce senza commentare e senza indovinare di chi sia.</p>
+      <p>Chi preferisce non leggere passa il foglietto al vicino: non si chiede il motivo.</p>
+    </div>
+
+    <div class="slide m-perche" data-slide hidden>
+      <p class="fase">Perché si comincia da qui</p>
+      <h2>Tre operazioni, non un gioco</h2>
+      <ul>
+        <li>Nella prima riga hai <b>scelto</b> secondo un criterio.</li>
+        <li>Nella seconda hai <b>riconosciuto un limite</b>.</li>
+        <li>Nella terza hai <b>sperato</b> qualcosa che non puoi dimostrare.</li>
+      </ul>
+      <p>Nessuna macchina fa queste tre cose al posto tuo.</p>
+    </div>
+
+    <div class="slide m-perche" data-slide hidden>
+      <p class="fase">La domanda dell'anno</p>
+      <h2 class="grad">Chi ha l'ultima parola?</h2>
+      <p>La scienza, l'algoritmo o la coscienza.</p>
+      <p>È la domanda a cui rispondono, una per volta, tutte le unità di quest'anno.</p>
+    </div>
+
+    <div class="slide m-cons" data-slide hidden>
+      <p class="fase">Il metodo, in tre verbi</p>
+      <h2>Come · Perché · Fino a dove</h2>
+      <ul>
+        <li><b>Come</b> funziona il mondo: lo dice la scienza.</li>
+        <li><b>Perché</b> c'è e che senso ha: se ne occupa la fede.</li>
+        <li><b>Fino a dove</b> ci si può spingere: risponde l'etica.</li>
+      </ul>
+      <p>Far scivolare un verbo nell'altro è l'errore che rovina quasi tutte le discussioni su questi temi.</p>
+    </div>
+
+    <div class="slide m-cons" data-slide hidden>
+      <p class="fase">L'anno, in cinque domande — I</p>
+      <ul>
+        <li><b>1.</b> La scienza e la fede rispondono alla stessa domanda?</li>
+        <li><b>2.</b> Che cosa succede quando la scienza non ha più un limite?</li>
+        <li><b>3.</b> Chi decide, quando decide un algoritmo?</li>
+      </ul>
+    </div>
+
+    <div class="slide m-cons" data-slide hidden>
+      <p class="fase">L'anno, in cinque domande — II</p>
+      <ul>
+        <li><b>4.</b> Che cosa si deve a chi sta morendo?</li>
+        <li><b>5.</b> Una promessa ha ancora senso, in un mondo che ottimizza tutto?</li>
+        <li><b>+</b> <b>Talenti</b>: l'unità finale, in cui ciascuno porta davanti a un pubblico ciò che sa fare.</li>
+      </ul>
+    </div>
+
+    <div class="slide m-cons" data-slide hidden>
+      <p class="fase">Il patto</p>
+      <h2>Un'ora a settimana</h2>
+      <p>Ogni lezione porta un testo, una data e una fonte. Quando non so da dove viene una cosa che dico, lo dichiaro.</p>
+      <p>Nessuna domanda è vietata. Si può non credere e prendere il massimo: si valuta il pensiero, non l'appartenenza.</p>
+    </div>
+
+    <div class="slide m-fine" data-slide hidden>
+      <p class="fase">Chiusura</p>
+      <blockquote>«La fede e la ragione sono come le due ali con le quali lo spirito umano s'innalza verso la contemplazione della verità»<cite>Giovanni Paolo II, Fides et ratio, incipit, 14 settembre 1998</cite></blockquote>
+      <p>I foglietti restano chiusi in una scatola fino a maggio.</p>
+    </div>
+
+    <div class="comandi">
+      <button type="button" id="prec" aria-label="Slide precedente">←</button>
+      <div class="barra" aria-hidden="true"><span id="riempi"></span></div>
+      <span class="conta" id="conta" aria-live="polite">Slide 1 di 15</span>
+      <button type="button" id="succ" aria-label="Slide successiva">→</button>
+      <button type="button" id="pieno" aria-label="Schermo intero">⛶</button>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STUDIO ==================== -->
+<section id="studio" class="pannello" role="tabpanel" aria-labelledby="t-stud" hidden>
+  <div class="colonna">
+
+    <nav class="indice">
+      <p>In questa pagina</p>
+      <ol>
+        <li><a href="#s1">Cinque parole in latino</a></li>
+        <li><a href="#s2">Le Confessioni non sono un diario</a></li>
+        <li><a href="#s3">Le tre righe</a></li>
+        <li><a href="#s4">Perché queste tre righe sono già il programma</a></li>
+        <li><a href="#s5">La domanda dell'anno e i tre verbi</a></li>
+        <li><a href="#s6">Le cinque domande e il patto</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1">1. Cinque parole in latino</h2>
+    <p>Alla lavagna ci sono cinque parole: <em>inquietum est cor nostrum</em>. Le ha scritte, intorno all'anno <span class="badge">397</span>, un vescovo dell'Africa romana che aveva allora quarantatré anni: Agostino di Ippona, che la Chiesa riconosce come Padre e come Dottore. Fanno parte della prima pagina delle <em>Confessioni</em>, e sono probabilmente la frase più citata di tutta la letteratura cristiana.</p>
+    <div class="cit">
+      <p>«ci hai fatti per te, e il nostro cuore è inquieto finché non riposa in te»</p>
+      <p class="fonte">Agostino, Confessioni I, 1, 1.</p>
+    </div>
+    <p>La frase dice una cosa precisa e verificabile su di noi, prima ancora che su Dio: che l'essere umano non si accontenta. Ottiene una cosa e ne vuole un'altra; raggiunge un risultato e dopo due settimane gli sembra poco. Agostino chiama questa condizione inquietudine e la considera un indizio, non un difetto: il segno che si sta cercando qualcosa di più grande di ciò che si sta cercando.</p>
+
+    <h2 id="s2">2. Le Confessioni non sono un diario</h2>
+    <p>Le <em>Confessioni</em> vengono spesso presentate come la prima autobiografia della storia. È una descrizione imprecisa. Agostino non racconta la propria vita per farla conoscere: la rilegge per capire che cosa stesse cercando davvero negli anni in cui era convinto di cercare altro — la carriera, il successo retorico, le relazioni, le scuole filosofiche che frequentava una dopo l'altra.</p>
+    <p>Il libro è quindi un <strong>esame</strong>, e procede guardando tre cose: ciò che ha fatto, ciò che ha evitato di fare, ciò che desiderava senza saperlo nominare. Nel libro X arriva al punto in cui ammette di essere diventato, per se stesso, una domanda a cui non sa rispondere. È un'ammissione che vale la pena tenere presente: viene da un uomo che di mestiere spiegava le cose agli altri.</p>
+    <div class="pull">Chi non ha mai guardato indietro con onestà non ha materiale per decidere che cosa fare davanti.</div>
+
+    <h2 id="s3">3. Le tre righe</h2>
+    <p>L'esercizio di questa prima ora è lo stesso esame, ridotto a un'estate e a otto minuti. Su un foglietto <span class="badge">senza nome</span> si scrivono tre righe.</p>
+    <p><strong>Un fatto.</strong> Il momento dell'estate che rifaresti identico. Attenzione alla distinzione: non il momento più bello da raccontare, ma il più bello da vivere. Spesso non coincidono, e accorgersene in anticipo rende più semplice l'unità di quest'anno dedicata agli algoritmi.</p>
+    <p><strong>Un'omissione.</strong> Una cosa che hai rimandato, evitato o non detto. Può essere minima — una telefonata, una risposta, una verità detta a metà. Deve essere vera.</p>
+    <p><strong>Un'attesa.</strong> Che cosa ti aspetti da quest'anno, in tre parole. Vale anche «niente»: è un dato onesto e vale quanto gli altri.</p>
+    <p>I foglietti vengono poi mescolati e ridistribuiti, e ciascuno legge ad alta voce quello che gli è capitato, senza commentarlo e senza tentare di indovinare di chi sia. Chi preferisce non leggere passa il foglietto al vicino, e nessuno chiede il motivo. L'anonimato non serve a nascondersi: serve a permettere a una classe di dire cose che, con il nome sopra, non direbbe.</p>
+    <div class="rifl">
+      <p>Per riflettere</p>
+      <ul>
+        <li>Perché il ricordo più bello da raccontare e quello più bello da vivere spesso non coincidono?</li>
+        <li>Che cosa cambia, nell'ascoltare, quando non sai chi ha scritto la frase che stai leggendo?</li>
+      </ul>
+    </div>
+
+    <h2 id="s4">4. Perché queste tre righe sono già il programma</h2>
+    <p>Le tre righe non sono un riscaldamento. Contengono, in miniatura, le tre operazioni su cui si lavora tutto l'anno. Nella prima hai <strong>scelto</strong>: fra decine di giorni ne hai indicato uno, e per farlo hai usato un criterio, anche se non lo hai scritto. Nella seconda hai <strong>riconosciuto un limite</strong>: qualcosa che potevi fare e non hai fatto. Nella terza hai <strong>formulato un'attesa</strong>, cioè un giudizio sul futuro che non poggia su nulla di dimostrabile.</p>
+    <p>Scegliere secondo un criterio, riconoscere un limite, sperare qualcosa che non si può dimostrare: sono tre operazioni che nessuna macchina compie al posto tuo. Un modello linguistico scrive un tema sulle vacanze meglio della media di questa classe. Non può dirti quale giorno della tua estate rifaresti.</p>
+
+    <h2 id="s5">5. La domanda dell'anno e i tre verbi</h2>
+    <div class="cit">
+      <p>Chi ha l'ultima parola: la scienza, l'algoritmo o la coscienza?</p>
+      <p class="fonte">La domanda a cui rispondono, una per volta, le unità di quest'anno.</p>
+    </div>
+    <p>Il metodo per affrontarla sta in tre verbi. La scienza dice <strong>come</strong> funziona il mondo: è il suo mestiere, e lo fa con strumenti che nessun altro sapere possiede. La fede si occupa del <strong>perché</strong> il mondo ci sia e che senso abbia: una domanda che la scienza, per statuto, non pone. L'etica risponde alla terza, la più scomoda: <strong>fino a dove</strong> ci si può spingere con ciò che la scienza permette di fare.</p>
+    <p>Quasi tutte le discussioni che capita di leggere su questi temi sbagliano allo stesso modo: fanno scivolare un verbo nell'altro. Chi usa un risultato scientifico per dimostrare Dio fa scivolare il «come» nel «perché». Chi chiude un problema etico dicendo «ma la scienza dice che si può» fa scivolare il «come» nel «fino a dove». Riconoscere lo scivolamento, dargli un nome e non caderci è la competenza che resta alla fine dell'anno.</p>
+
+    <h2 id="s6">6. Le cinque domande e il patto</h2>
+    <p>Il programma è fatto di cinque domande in fila, più il lavoro finale. <strong>Uno:</strong> la scienza e la fede rispondono alla stessa domanda? È l'unità più lunga, e comincia dalla storia di un sacerdote che corregge Einstein e più tardi frena un Papa. <strong>Due:</strong> che cosa succede quando la scienza non ha più un limite? Il Novecento ha risposto con la bomba e con l'eugenetica di Stato, ed è da lì che nasce l'etica della ricerca che usiamo oggi. <strong>Tre:</strong> chi decide, quando decide un algoritmo? <strong>Quattro:</strong> che cosa si deve a chi sta morendo? <strong>Cinque:</strong> una promessa ha ancora senso, in un mondo che ottimizza tutto? Infine <strong>Talenti</strong>: l'unità in cui ciascuno porta davanti a un pubblico ciò che sa fare meglio.</p>
+    <p>Il patto è breve. Un'ora alla settimana significa nessun minuto di riempitivo: ogni lezione porta un testo, una data e una fonte, e quando affermo qualcosa senza sapere da dove viene lo dichiaro invece di farlo passare. Dall'altra parte: nessuna domanda è vietata, comprese quelle contro; si può non credere e prendere il massimo, perché qui si valuta il pensiero e non l'appartenenza; e non si giudica una posizione dal titolo, né una persona dalla sua.</p>
+    <p>Questo secondo punto non è una concessione, ma un principio che la Chiesa afferma in un documento del Concilio Vaticano II:</p>
+    <div class="cit">
+      <p>«la coscienza è il nucleo più segreto e il sacrario dell'uomo, dove egli è solo con Dio»</p>
+      <p class="fonte">Concilio Vaticano II, Gaudium et spes, n. 16, 7 dicembre 1965.</p>
+    </div>
+    <p>I foglietti delle tre righe finiscono in una scatola che non apre nessuno e si riaprono a maggio, nell'unità finale: si guarderà quali attese si siano avverate, quali siano cambiate e quali siano rimaste dove stavano. È l'unico compito di quest'ora che si consegna fra nove mesi.</p>
+    <div class="cit">
+      <p>«La fede e la ragione sono come le due ali con le quali lo spirito umano s'innalza verso la contemplazione della verità»</p>
+      <p class="fonte">Giovanni Paolo II, lettera enciclica Fides et ratio, incipit, 14 settembre 1998.</p>
+    </div>
+
+    <details class="docente">
+      <summary>Note per il docente</summary>
+      <ul>
+        <li>Occorrono solo foglietti bianchi identici (metà A5) e una scatola richiudibile.</li>
+        <li>Scrivere alla lavagna le cinque parole latine prima che la classe entri, senza traduzione e senza autore.</li>
+        <li>Rispettare il silenzio degli otto minuti: se si lascia parlare, la seconda riga diventa una battuta.</li>
+        <li>Mescolare i foglietti davanti alla classe: la fiducia nell'anonimato regge solo se è visibile.</li>
+        <li>Non commentare i foglietti durante la lettura. Se emerge qualcosa di serio, si riprende in privato e fuori dall'ora.</li>
+        <li>Le attese della terza riga sono il materiale con cui introdurre le cinque domande: agganciarne almeno due a ciò che è appena stato letto.</li>
+        <li>Sull'ammissione del libro X delle <em>Confessioni</em> (l'uomo che diventa una domanda per se stesso): il senso è documentato, la formulazione esatta varia secondo l'edizione, perciò nel testo è resa in forma indiretta e non fra virgolette.</li>
+        <li>Schema PRIMA/DOPO/PERCHÉ/CONSEGUENZE adattato: lezione laboratoriale e relazionale, non caso storico. Le classi narrative restano per coerenza di struttura.</li>
+        <li>L'artefatto non salva né trasmette alcun dato: quanto viene scritto nella scheda Esercizio resta in pagina e sparisce al ricaricamento.</li>
+      </ul>
+    </details>
+
+    <button type="button" class="scarica" id="btn-scarica">⬇ Scarica il testo di questa lezione (.txt)</button>
+    <p class="piede">© Matteo Sestili — Tutti i diritti riservati.</p>
+  </div>
+</section>
+
+<!-- ==================== ESERCIZIO ==================== -->
+<section id="esercizio" class="pannello" role="tabpanel" aria-labelledby="t-eser">
+  <p class="intro-es">La versione scritta dell'esercizio, per chi era assente o vuole rifarlo con calma. Compila le tre righe e stampale: nulla viene salvato e nulla viene inviato.</p>
+
+  <div class="carta">
+    <div class="campo">
+      <label for="c1">1 · Un fatto</label>
+      <span class="aiuto" id="a1">Il momento dell'estate che rifaresti identico — non il più bello da raccontare, il più bello da vivere.</span>
+      <textarea id="c1" aria-describedby="a1" placeholder="Una riga basta."></textarea>
+    </div>
+    <div class="campo">
+      <label for="c2">2 · Un'omissione</label>
+      <span class="aiuto" id="a2">Una cosa che hai rimandato, evitato o non detto. Può essere minima, deve essere vera.</span>
+      <textarea id="c2" aria-describedby="a2" placeholder="Una riga basta."></textarea>
+    </div>
+    <div class="campo">
+      <label for="c3">3 · Un'attesa</label>
+      <span class="aiuto" id="a3">Che cosa ti aspetti da quest'anno. Tre parole, non una frase.</span>
+      <textarea id="c3" aria-describedby="a3" placeholder="Tre parole."></textarea>
+    </div>
+    <div class="azioni">
+      <button type="button" class="primario" id="btn-stampa">Stampa le mie tre righe</button>
+      <button type="button" id="btn-pulisci">Cancella</button>
+    </div>
+    <p class="esito" id="esito" role="status"></p>
+  </div>
+
+  <p class="privacy">Nessun dato viene raccolto, salvato o trasmesso. Chiudendo o ricaricando la pagina, quanto hai scritto sparisce.</p>
+</section>
+
+<script>
+(function(){
+  var tabs=[["t-pres","presentazione"],["t-stud","studio"],["t-eser","esercizio"]];
+  function mostra(id){
+    tabs.forEach(function(p){
+      var attivo=p[0]===id;
+      document.getElementById(p[0]).setAttribute("aria-selected",attivo);
+      document.getElementById(p[1]).hidden=!attivo;
+    });
+    window.scrollTo(0,0);
+  }
+  tabs.forEach(function(p){ document.getElementById(p[0]).addEventListener("click",function(){mostra(p[0])}); });
+  mostra("t-pres");
+
+  var slides=[].slice.call(document.querySelectorAll("[data-slide]")), i=0;
+  var prec=document.getElementById("prec"), succ=document.getElementById("succ");
+  var riempi=document.getElementById("riempi"), conta=document.getElementById("conta");
+  function rendi(){
+    slides.forEach(function(s,n){ s.hidden = n!==i; });
+    prec.disabled = i===0; succ.disabled = i===slides.length-1;
+    riempi.style.width = ((i+1)/slides.length*100)+"%";
+    conta.textContent = "Slide "+(i+1)+" di "+slides.length;
+  }
+  function vai(d){ i=Math.min(slides.length-1,Math.max(0,i+d)); rendi(); }
+  prec.addEventListener("click",function(){vai(-1)});
+  succ.addEventListener("click",function(){vai(1)});
+  document.addEventListener("keydown",function(e){
+    if(document.getElementById("presentazione").hidden) return;
+    var t=e.target.tagName;
+    if(t==="TEXTAREA"||t==="INPUT") return;
+    if(e.key==="ArrowRight"||e.key===" "){ vai(1); e.preventDefault(); }
+    if(e.key==="ArrowLeft"){ vai(-1); e.preventDefault(); }
+  });
+  document.getElementById("pieno").addEventListener("click",function(){
+    var p=document.getElementById("presentazione");
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else if(p.requestFullscreen){ p.requestFullscreen(); }
+  });
+  rendi();
+
+  var campi=["c1","c2","c3"], esito=document.getElementById("esito");
+  document.getElementById("btn-stampa").addEventListener("click",function(){
+    var pieni=campi.filter(function(id){ return document.getElementById(id).value.trim()!==""; }).length;
+    if(pieni<3){ esito.textContent="Mancano ancora "+(3-pieni)+" righe su 3."; return; }
+    esito.textContent="Tre righe complete. Nessun dato è stato salvato o inviato.";
+    window.print();
+  });
+  document.getElementById("btn-pulisci").addEventListener("click",function(){
+    campi.forEach(function(id){ document.getElementById(id).value=""; });
+    esito.textContent="Cancellato.";
+  });
+
+  function testo(){
+    var out=["IL CUORE INQUIETO — APERTURA DELL'ANNO","Classe V — Un fatto, un'omissione, un'attesa",""];
+    var col=document.querySelector("#studio .colonna");
+    [].slice.call(col.children).forEach(function(el){
+      if(el.classList.contains("indice")||el.classList.contains("docente")||el.tagName==="BUTTON"||el.classList.contains("piede")) return;
+      if(el.tagName==="H2"){ out.push("","== "+el.textContent.trim().toUpperCase()+" ",""); }
+      else if(el.classList.contains("pull")){ out.push("« "+el.textContent.trim()+" »",""); }
+      else if(el.tagName==="P"){ out.push(el.textContent.trim(),""); }
+      else if(el.classList.contains("cit")){
+        var ps=el.querySelectorAll("p");
+        out.push("« "+ps[0].textContent.trim()+" »");
+        out.push(ps[1].textContent.trim(),"");
+      }
+      else if(el.classList.contains("rifl")){
+        out.push("PER RIFLETTERE");
+        [].slice.call(el.querySelectorAll("li")).forEach(function(li){ out.push("- "+li.textContent.trim()); });
+        out.push("");
+      }
+    });
+    out.push("---","© Matteo Sestili — Tutti i diritti riservati.");
+    return out.join("\n");
+  }
+  document.getElementById("btn-scarica").addEventListener("click",function(){
+    var b=new Blob([testo()],{type:"text/plain;charset=utf-8"});
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(b);
+    a.download="apertura-cuore-inquieto.txt";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(a.href);
+  });
+})();
+</script>
+</body>
+</html>
