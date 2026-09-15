@@ -19,6 +19,14 @@
     },
     {
       "in_evidenza": false,
+      "anno": "2",
+      "uda": "Accoglienza II",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/inaugurale-di-chi-mi-fido-artefatto.html",
+      "titolo": "Accoglienza II"
+    },
+    {
+      "in_evidenza": false,
       "titolo": "Accoglienza",
       "anno": "3",
       "tipo": "Artefatto interattivo",
@@ -68,14 +76,6 @@
       "titolo": "Accoglienza",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/apertura-cuore-inquieto-artefatto.html"
-    },
-    {
-      "in_evidenza": false,
-      "anno": "2",
-      "uda": "Accoglienza II",
-      "tipo": "Artefatto interattivo",
-      "file": "/uploads/inaugurale-di-chi-mi-fido-artefatto.html",
-      "titolo": "Accoglienza II"
     }
   ]
 }
