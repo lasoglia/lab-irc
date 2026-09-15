@@ -6,6 +6,10 @@
       "ordine": 1
     },
     {
+      "titolo": "Accoglienza II",
+      "anno": "2"
+    },
+    {
       "titolo": "Accoglienza III",
       "anno": "3",
       "descrizione": "",
@@ -26,10 +30,6 @@
     {
       "titolo": "Accoglienza 5",
       "anno": "5"
-    },
-    {
-      "titolo": "Accoglienza II",
-      "anno": "2"
     }
   ]
 }
