@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Di chi mi posso fidare? — Lezione inaugurale</title>
+<meta name="author" content="Matteo Sestili">
+<meta name="copyright" content="© Matteo Sestili — Tutti i diritti riservati">
+<meta name="description" content="Lezione inaugurale della classe II: un gioco sulla credibilità dei testimoni apre la domanda dell'anno, «Di chi mi posso fidare?», e presenta il percorso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#070B18; --deep:#0D1428; --deeper:#050813;
+  --panel:rgba(255,255,255,.045); --edge:rgba(255,255,255,.11);
+  --cyan:#4CE0F5; --violet:#8B7BFF; --magenta:#FF6FB5; --amber:#FFC46B;
+  --ink:#EAF0FF; --muted:rgba(234,240,255,.62); --faint:rgba(234,240,255,.38);
+  --spectrum:linear-gradient(90deg,var(--cyan) 0%,var(--violet) 52%,var(--magenta) 100%);
+  --ok:#5BE8A8; --no:#FF8E8E;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Poppins',sans-serif; background:var(--void); color:var(--ink);
+  line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:'Instrument Serif',serif; font-weight:400}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--amber); outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* header */
+.hdr{padding:1.2rem 1.4rem 1rem; border-bottom:1px solid var(--edge); background:linear-gradient(160deg,var(--deep),var(--void))}
+.hdr .rail{height:3px;width:64px;background:var(--spectrum);border-radius:99px;margin-bottom:.7rem}
+.hdr .eyebrow{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.hdr h1{margin:.2rem 0 .15rem;font-size:2rem;line-height:1.1}
+.hdr .sub{color:var(--muted);font-size:.88rem}
+
+/* tabs */
+.tabs{display:flex;gap:.35rem;padding:.6rem .9rem;background:var(--deeper);border-bottom:1px solid var(--edge);position:sticky;top:0;z-index:30;flex-wrap:wrap}
+.tab-btn{background:transparent;border:1px solid transparent;color:var(--muted);padding:.5rem 1rem;border-radius:99px;font-size:.85rem;font-weight:600}
+.tab-btn[aria-selected="true"]{background:var(--panel);border-color:var(--edge);color:var(--ink)}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ---- PRESENTAZIONE ---- */
+#pres{padding:1.2rem 1rem 2rem}
+.shell{max-width:940px;margin:0 auto}
+.stage{
+  position:relative;border:1px solid var(--edge);border-radius:20px;overflow:hidden;
+  min-height:min(64vh,480px);padding:2.4rem 2.2rem;display:flex;flex-direction:column;justify-content:center;
+  background:radial-gradient(130% 130% at 10% 0%,#16204A 0%,var(--deep) 52%,var(--deeper) 100%);
+}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 92% 88%,rgba(139,123,255,.18),transparent 55%)}
+.stage.m-hook::after{background:radial-gradient(circle at 88% 15%,rgba(255,196,107,.2),transparent 55%)}
+.stage.m-fine::after{background:radial-gradient(circle at 50% 100%,rgba(255,111,181,.2),transparent 60%)}
+.kick{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:.7rem;
+  background:var(--spectrum);-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-title{font-size:clamp(1.6rem,4vw,2.6rem);margin:0 0 .8rem;line-height:1.14}
+.s-body{font-size:clamp(1rem,1.8vw,1.18rem);max-width:66ch;color:var(--muted)}
+.s-body strong{color:var(--ink);font-weight:600}
+.s-body p{margin:.45rem 0}
+.s-body ul{margin:.5rem 0;padding-left:1.1rem}
+.s-body li{margin:.32rem 0}
+.s-body .q{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.5em;line-height:1.3;color:var(--ink);
+  border-left:3px solid var(--amber);padding-left:1rem;margin:.9rem 0}
+.pills{display:flex;gap:.45rem;flex-wrap:wrap;margin:.8rem 0}
+.pill{border:1px solid var(--edge);background:var(--panel);color:var(--ink);font-size:.78rem;font-weight:600;padding:.28rem .75rem;border-radius:99px}
+.ctrl{display:flex;align-items:center;gap:.8rem;margin-top:1rem;flex-wrap:wrap}
+.nav{width:44px;height:44px;border-radius:50%;border:1px solid var(--edge);background:var(--panel);color:var(--ink);font-size:1.2rem;display:flex;align-items:center;justify-content:center}
+.nav:disabled{opacity:.3;cursor:default}
+.bar{flex:1;min-width:90px;height:4px;background:var(--panel);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--spectrum);width:6.66%;transition:width .25s}
+.count{font-size:.78rem;color:var(--muted);font-weight:600;min-width:86px;text-align:center}
+.fs{border:1px solid var(--edge);background:transparent;color:var(--muted);border-radius:9px;padding:.4rem .75rem;font-size:.75rem;font-weight:600}
+
+/* ---- STUDIO ---- */
+#studio{padding:1.6rem 1.2rem 3rem}
+.col{max-width:720px;margin:0 auto}
+.toc{border:1px solid var(--edge);background:var(--panel);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem}
+.toc h2{font-size:.8rem;font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 .5rem}
+.toc ol{margin:0;padding-left:1.15rem;font-size:.9rem;color:var(--muted)}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(139,123,255,.45)}
+.col h2.sec{font-size:1.75rem;margin:2rem 0 .5rem}
+.col h2.sec span{color:var(--amber);font-style:italic;margin-right:.4rem}
+.col p{color:var(--muted)}
+.col p strong{color:var(--ink);font-weight:600}
+.badges{display:flex;gap:.45rem;flex-wrap:wrap;margin:.9rem 0 1.2rem}
+.badge{border:1px solid var(--edge);border-radius:8px;padding:.3rem .7rem;font-size:.76rem;font-weight:600;color:var(--ink);background:var(--panel)}
+.badge b{color:var(--cyan);font-weight:700}
+.pq{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.5rem;line-height:1.34;color:var(--ink);
+  border-left:3px solid var(--violet);padding:.2rem 0 .2rem 1.2rem;margin:1.5rem 0}
+.pq cite{display:block;font-family:'Poppins',sans-serif;font-style:normal;font-size:.74rem;color:var(--faint);margin-top:.5rem;letter-spacing:.04em}
+.ask{border:1px solid var(--edge);border-left:3px solid var(--amber);background:var(--panel);border-radius:0 12px 12px 0;padding:.9rem 1.1rem;margin:1.2rem 0;font-size:.92rem;color:var(--muted)}
+.ask b{color:var(--amber)}
+.route{border:1px solid var(--edge);border-radius:14px;padding:1rem;margin:1.3rem 0;background:var(--panel)}
+.route-row{display:flex;gap:.8rem;padding:.6rem .2rem;border-bottom:1px solid var(--edge);align-items:baseline}
+.route-row:last-child{border-bottom:none}
+.route-row .n{font-family:'Instrument Serif',serif;font-size:1.2rem;color:var(--violet);min-width:1.6rem}
+.route-row .t{font-weight:600;color:var(--ink);font-size:.95rem}
+.route-row .d{font-size:.84rem;color:var(--muted)}
+.notes{margin-top:2.4rem;border:1px dashed var(--edge);border-radius:12px;padding:.1rem 1.1rem;color:var(--muted);font-size:.87rem}
+.notes summary{cursor:pointer;font-weight:600;padding:.8rem 0;color:var(--ink)}
+.dl{margin-top:1.6rem;border:1px solid var(--edge);background:var(--panel);color:var(--ink);border-radius:11px;padding:.8rem 1.4rem;font-weight:600;font-size:.92rem}
+
+/* ---- ESERCIZIO ---- */
+#eserc{padding:1.6rem 1.2rem 3rem}
+.ex-intro{max-width:720px;margin:0 auto 1.2rem;color:var(--muted)}
+.ex-wrap{max-width:720px;margin:0 auto}
+.card{border:1px solid var(--edge);background:var(--panel);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:.8rem}
+.card .stmt{font-size:1.02rem;color:var(--ink);margin-bottom:.85rem}
+.choices{display:flex;gap:.5rem;flex-wrap:wrap}
+.ch{flex:1 1 180px;border:1px solid var(--edge);background:transparent;color:var(--muted);border-radius:10px;padding:.6rem .8rem;font-size:.86rem;font-weight:600}
+.ch[aria-pressed="true"]{border-color:var(--violet);color:var(--ink);background:rgba(139,123,255,.14)}
+.fb{margin-top:.8rem;font-size:.88rem;padding:.7rem .9rem;border-radius:9px;display:none;line-height:1.5}
+.fb.show{display:block}
+.fb.good{background:rgba(91,232,168,.1);border:1px solid rgba(91,232,168,.35);color:#CFF6E4}
+.fb.think{background:rgba(255,196,107,.1);border:1px solid rgba(255,196,107,.35);color:#FFE9C4}
+.tally{max-width:720px;margin:1.2rem auto 0;border:1px solid var(--edge);border-radius:14px;padding:1rem 1.2rem;background:var(--panel);color:var(--muted);font-size:.9rem}
+.tally b{color:var(--ink)}
+
+.foot{border-top:1px solid var(--edge);padding:1.2rem 1.4rem;color:var(--faint);font-size:.74rem;text-align:center}
+
+@media (max-width:620px){
+  .hdr h1{font-size:1.55rem}
+  .stage{padding:1.7rem 1.3rem;min-height:58vh}
+  .col h2.sec{font-size:1.4rem}
+  .count{min-width:72px;font-size:.72rem}
+}
+@media print{
+  .tabs,.ctrl,#pres,#eserc,.dl,.notes{display:none!important}
+  body{background:#fff;color:#111}
+  .col p,.toc ol{color:#333}
+  .panel{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="rail"></div>
+  <div class="eyebrow">Insegnamento della Religione Cattolica · Classe II</div>
+  <h1>Di chi mi posso fidare?</h1>
+  <div class="sub">Lezione inaugurale — il gioco, i criteri, la rotta dell'anno</div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sezioni della lezione">
+  <button class="tab-btn" role="tab" aria-selected="true" aria-controls="pres" id="t-pres" onclick="tab('pres')">Presentazione</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="studio" id="t-studio" onclick="tab('studio')">Studio</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="eserc" id="t-eserc" onclick="tab('eserc')">Esercizio</button>
+</nav>
+
+<main>
+<!-- ========== PRESENTAZIONE ========== -->
+<section id="pres" class="panel active" role="tabpanel" aria-labelledby="t-pres">
+  <div class="shell">
+    <div class="stage m-hook" id="stage" tabindex="0" aria-live="polite">
+      <div id="slide"></div>
+    </div>
+    <div class="ctrl">
+      <button class="nav" id="prev" onclick="go(-1)" aria-label="Slide precedente">‹</button>
+      <div class="bar"><i id="fill"></i></div>
+      <span class="count" id="count">Slide 1 di 15</span>
+      <button class="nav" id="next" onclick="go(1)" aria-label="Slide successiva">›</button>
+      <button class="fs" onclick="full()">Schermo intero</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== STUDIO ========== -->
+<section id="studio" class="panel" role="tabpanel" aria-labelledby="t-studio">
+  <div class="col">
+    <nav class="toc">
+      <h2>In questa lezione</h2>
+      <ol>
+        <li><a href="#x1">Il gioco che avete appena fatto</a></li>
+        <li><a href="#x2">I criteri che usate senza saperlo</a></li>
+        <li><a href="#x3">La domanda dell'anno</a></li>
+        <li><a href="#x4">Un fatto, non un'idea</a></li>
+        <li><a href="#x5">La rotta</a></li>
+        <li><a href="#x6">Il patto</a></li>
+      </ol>
+    </nav>
+
+    <h2 class="sec" id="x1"><span>I.</span>Il gioco che avete appena fatto</h2>
+    <p>Tre frasi sull'estate. Due vere, una falsa. La classe vota, e quasi sempre indovina. Sembra un gioco da festa di compleanno, e in parte lo è. Ma quello che avete fatto in quei dieci minuti ha un nome tecnico: <strong>valutazione di attendibilità di un testimone</strong>. È un'operazione che fate decine di volte al giorno, quasi sempre senza accorgervene, e che quest'anno impareremo a fare bene.</p>
+    <p>Perché avete indovinato? Non per magia. Avete usato criteri. Il problema è che nessuno ve li ha mai fatti scrivere — e finché un criterio resta implicito, non potete controllarlo, correggerlo, o applicarlo a un caso difficile.</p>
+
+    <div class="pq">Chi crede a tutto e chi non crede a niente commettono lo stesso errore: non hanno criteri.<cite>Il punto di partenza di quest'anno</cite></div>
+
+    <h2 class="sec" id="x2"><span>II.</span>I criteri che usate senza saperlo</h2>
+    <p>Quando la classe smaschera una bugia, di solito usa cinque cose. <strong>Il dettaglio</strong>: chi inventa tende a restare sul generico, perché i dettagli sono difficili da reggere. <strong>La coerenza</strong>: una frase falsa stona con quello che sappiamo già di quella persona. <strong>Il costo</strong>: se qualcuno racconta un fatto che lo mette in cattiva luce, difficilmente se lo sta inventando. <strong>La plausibilità</strong>: alcune cose semplicemente non succedono. <strong>La conoscenza pregressa</strong>: conoscete quella persona da un anno.</p>
+    <div class="badges">
+      <span class="badge"><b>1</b> Dettaglio</span>
+      <span class="badge"><b>2</b> Coerenza</span>
+      <span class="badge"><b>3</b> Costo</span>
+      <span class="badge"><b>4</b> Plausibilità</span>
+      <span class="badge"><b>5</b> Conoscenza pregressa</span>
+    </div>
+    <p>Questi cinque criteri non sono un'invenzione scolastica: sono, più o meno con questi nomi, gli stessi che uno storico applica a un documento antico e che un giudice applica a una deposizione. Il criterio del costo, per esempio, in ambito storico si chiama <em>criterio dell'imbarazzo</em>: un testo ha più probabilità di riferire un fatto realmente accaduto quando quel fatto crea problemi a chi lo racconta.</p>
+    <div class="ask"><b>Da tenere:</b> la lista che avete costruito alla lavagna non va cancellata. La ritroverete fra poche settimane, applicata a testimoni che non potete interrogare — perché sono morti da duemila anni.</div>
+
+    <h2 class="sec" id="x3"><span>III.</span>La domanda dell'anno</h2>
+    <p>L'anno scorso la domanda era <em>chi sono io?</em> e la risposta l'abbiamo cercata nella storia di un popolo che aspettava. Quest'anno la domanda cambia e diventa più scomoda, perché non riguarda voi ma tutti gli altri: <strong>di chi mi posso fidare?</strong></p>
+    <p>È una domanda che vi ponete già, e continuamente: su un amico, su un adulto, su una notizia che scorre nel feed, su una recensione, su una persona che avete conosciuto online. Non avete però quasi mai uno strumento per rispondere, e finite per oscillare fra due estremi ugualmente comodi — credere a tutto quello che conferma ciò che pensate già, o non credere a niente e chiamarlo spirito critico.</p>
+    <p>Quest'anno prendiamo un caso, uno solo, e lo mettiamo sotto ogni prova possibile: una notizia nata in una provincia periferica dell'impero romano, passata di bocca in bocca per trent'anni, poi messa per iscritto quattro volte, poi pagata con la vita da chi si rifiutava di ritrattarla, poi discussa per secoli fino a diventare una definizione ufficiale. Il cristianesimo antico non è l'argomento di quest'anno: è il <strong>laboratorio</strong> in cui impariamo a rispondere alla domanda.</p>
+
+    <h2 class="sec" id="x4"><span>IV.</span>Un fatto, non un'idea</h2>
+    <p>C'è una ragione precisa per cui questo caso funziona come laboratorio, e vale la pena dirla subito perché è il punto su cui ruota tutto. Le grandi filosofie propongono <strong>idee</strong>: vivi così, pensa così, cerca questo. Un'idea non si verifica: la si condivide o no. Il cristianesimo, invece, fin dalle sue prime righe scritte afferma che è <strong>successo qualcosa</strong> — in un luogo con un nome e in un tempo con una data.</p>
+    <p>Questo cambia completamente il tipo di domande che si possono porre. A un'idea si chiede se è bella, se è coerente, se convince. A un fatto si chiede: chi lo dice, quando, con quale interesse, e cosa aveva da perderci. Sono esattamente le domande del gioco di oggi.</p>
+    <div class="ask"><b>Attenzione, e vale per tutto l'anno:</b> il fatto che una pretesa sia <em>verificabile</em> non significa che sia <em>verificata</em>. Studiare come si indaga una testimonianza non obbliga nessuno a una conclusione. Chi in questa classe non crede può prendere dieci; chi crede senza mai aver esaminato nulla, no.</div>
+
+    <h2 class="sec" id="x5"><span>V.</span>La rotta</h2>
+    <p>Cinque tappe, più la sesta che è vostra. La sequenza non è cronologica: segue il percorso di una notizia, dal fatto alla definizione.</p>
+    <div class="route">
+      <div class="route-row"><span class="n">1</span><span><span class="t">Il fatto</span><br><span class="d">Come si verifica una notizia di duemila anni fa</span></span></div>
+      <div class="route-row"><span class="n">2</span><span><span class="t">Il testimone</span><br><span class="d">Quattro versioni dello stesso fatto: chi mente?</span></span></div>
+      <div class="route-row"><span class="n">3</span><span><span class="t">Il martire</span><br><span class="d">Quanto costa dire la verità — e cosa succede quando la verità comincia a comandare</span></span></div>
+      <div class="route-row"><span class="n">4</span><span><span class="t">La comunità</span><br><span class="d">Si può vivere mettendo tutto in comune?</span></span></div>
+      <div class="route-row"><span class="n">5</span><span><span class="t">La definizione</span><br><span class="d">Come si decide, tutti insieme, che cosa è vero</span></span></div>
+      <div class="route-row"><span class="n">6</span><span><span class="t">I talenti</span><br><span class="d">La parola torna a voi</span></span></div>
+    </div>
+    <p>Una parola da scrivere sul quaderno oggi, perché tiene insieme la seconda e la terza tappa: <strong>martys</strong>. In greco non vuol dire «martire» nel senso che gli diamo oggi. Vuol dire <strong>testimone</strong>. Chi scrive un vangelo e chi muore piuttosto che ritrattare stanno facendo, con mezzi diversissimi, la stessa cosa.</p>
+
+    <h2 class="sec" id="x6"><span>VI.</span>Il patto</h2>
+    <p>Un'ora a settimana è pochissima. Perché valga la pena, serve un accordo chiaro, e questo è il mio in quattro punti.</p>
+    <p><strong>Primo: qui si può non credere, non si può non pensare.</strong> Questa non è un'ora di catechismo e non chiede a nessuno di credere. Chiede di conoscere, ragionare, argomentare.</p>
+    <p><strong>Secondo: ogni lezione ha un prima e un dopo.</strong> Non studiamo nozioni sparse. Ricostruiamo com'era il mondo prima di una certa idea, cosa è cambiato dopo, e per quale ragione. Le date servono a questo.</p>
+    <p><strong>Terzo: le domande vere valgono più delle risposte giuste.</strong> Non tutto si chiuderà con una conclusione. Ma la domanda va posta bene: «tanto non si può sapere» non è una domanda, è una scorciatoia.</p>
+    <p><strong>Quarto: la valutazione è trasparente.</strong> Una verifica al termine di ogni unità; a metà anno una verifica rovesciata, in cui siete voi a valutare il percorso; alla fine l'unità Talenti. Nessuna sorpresa.</p>
+    <p>E un annuncio fatto apposta oggi, così avete tutto l'anno per pensarci: <strong>l'ultima unità è vostra</strong>. Si chiama Talenti, si lavora in gruppo, e ciascuno porta davanti alla classe qualcosa che sa fare davvero — anche se non c'entra nulla con la religione. Non è un premio finale. È il punto in cui il percorso torna a voi.</p>
+    <div class="ask"><b>Una domanda che resta aperta:</b> esiste qualcosa che credete fermamente e che non avete mai verificato? Non serve dirlo ad alta voce. Serve saperlo.</div>
+
+    <button class="dl" onclick="scarica()">Scarica il testo della lezione (.txt)</button>
+
+    <details class="notes">
+      <summary>Note per il docente</summary>
+      <p><strong>Tempi (50' reali).</strong> Gioco 12' · caccia ai criteri 6' · aspettative anonime 5' · presentazione dell'anno 20' · chiusura 5'.</p>
+      <p><strong>Il gioco.</strong> Non è un rompighiaccio: la classe si conosce già dal primo anno. È un rientro che produce un artefatto. Servono 6–8 volontari, non tutti: oltre gli otto turni il meccanismo si logora e il tempo per la seconda parte sparisce. Chi non gioca vota, e votare è partecipazione piena.</p>
+      <p><strong>La caccia ai criteri è il cuore, non il gioco.</strong> Dopo ogni rivelazione, una domanda sola: «cosa vi ha fatto decidere?». Si scrive alla lavagna quello che dicono loro, con le loro parole, e solo alla fine si dà il nome tecnico. Obiettivo: 5–6 criteri. Se ne escono tre, va bene lo stesso; se li detta il docente, l'attività ha fallito.</p>
+      <p><strong>Materiale analogico.</strong> Foglietti per le aspettative (una speranza, un timore, anonimi) e una busta in cui conservarli fino alla verifica rovesciata. Vanno riaperti davvero: se non lo si fa, il patto perde credibilità. La lista dei criteri va fotografata e riportata in classe alla prima lezione dell'unità 1.</p>
+      <p><strong>Non anticipare.</strong> Il denario di Tiberio, le quattro correnti giudaiche, Tacito e Plinio appartengono all'unità 1. Qui non si nomina nessuna fonte antica: oggi il materiale sono loro.</p>
+      <p><strong>Privacy.</strong> Questo file non raccoglie, non salva e non trasmette alcun dato. L'esercizio vive in memoria e si azzera ricaricando la pagina.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ========== ESERCIZIO ========== -->
+<section id="eserc" class="panel" role="tabpanel" aria-labelledby="t-eserc">
+  <div class="ex-intro">
+    <h2 class="sec" style="margin-top:0">Mi basta o non mi basta?</h2>
+    <p>Otto motivi per cui qualcuno potrebbe fidarsi di una testimonianza. Per ciascuno, decidi: <strong>è un buon motivo</strong> per considerarla attendibile, oppure <strong>non basta</strong>? Non ci sono punteggi e niente viene salvato: conta la spiegazione che compare dopo.</p>
+  </div>
+  <div class="ex-wrap" id="exWrap"></div>
+  <div class="tally" id="tally">Hai risposto a <b><span id="done">0</span> di 8</b>.</div>
+</section>
+</main>
+
+<footer class="foot">© Matteo Sestili — Tutti i diritti riservati · Riproduzione vietata</footer>
+
+<script>
+/* ---------- TABS ---------- */
+function tab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.setAttribute('aria-selected','false'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('t-'+id).setAttribute('aria-selected','true');
+}
+
+/* ---------- SLIDE ---------- */
+var slides=[
+ {m:'m-hook',k:'Il gioco',t:'Due verità e una bugia',b:"<p>Tre frasi sulla tua estate. <strong>Due vere, una falsa.</strong></p><p>La classe vota. Poi si scopre.</p><p class='q'>Chi vuole cominciare?</p>"},
+ {m:'m-prima',k:'Il prima',t:'Come avete fatto a indovinare?',b:"<p>Non per fortuna. Avete usato dei criteri.</p><p>Il problema è che nessuno ve li ha mai fatti scrivere.</p><p><strong>Ora li scriviamo.</strong></p>"},
+ {m:'m-prima',k:'Il prima',t:'I cinque criteri',b:"<ul><li><strong>Dettaglio</strong> — chi inventa resta sul generico</li><li><strong>Coerenza</strong> — stona con quello che sappiamo di te</li><li><strong>Costo</strong> — nessuno si inventa una figuraccia</li><li><strong>Plausibilità</strong> — certe cose non succedono</li><li><strong>Conoscenza</strong> — ti conosciamo da un anno</li></ul>"},
+ {m:'m-prima',k:'Il prima',t:'Non sono criteri da gioco',b:"<p>Sono, più o meno con questi nomi, gli stessi che usa uno <strong>storico</strong> su un documento antico e un <strong>giudice</strong> su una deposizione.</p><p>Il criterio del costo, in storia, si chiama <em>criterio dell'imbarazzo</em>.</p>"},
+ {m:'m-dopo',k:'Il dopo',t:'La domanda di quest\u2019anno',b:"<p>L'anno scorso: <em>chi sono io?</em></p><p class='q'>Quest'anno: di chi mi posso fidare?</p><p>Più scomoda, perché non riguarda voi. Riguarda tutti gli altri.</p>"},
+ {m:'m-dopo',k:'Il dopo',t:'Un caso, messo sotto ogni prova',b:"<p>Una notizia nata in una provincia periferica di Roma.</p><p>Passata a voce per trent'anni. Poi scritta quattro volte. Poi pagata con la vita. Poi discussa per secoli.</p>"},
+ {m:'m-dopo',k:'Il dopo',t:'Il cristianesimo antico non è l\u2019argomento',b:"<p class='q'>È il laboratorio.</p><p>L'argomento siete voi, e il modo in cui decidete a chi credere.</p>"},
+ {m:'m-dopo',k:'Il dopo',t:'La rotta, in sei tappe',b:"<ul><li><strong>1. Il fatto</strong> — come si verifica una notizia di duemila anni fa</li><li><strong>2. Il testimone</strong> — quattro versioni, chi mente?</li><li><strong>3. Il martire</strong> — quanto costa dire la verità</li><li><strong>4. La comunità</strong> — si può mettere tutto in comune?</li><li><strong>5. La definizione</strong> — come si decide cosa è vero</li><li><strong>6. I talenti</strong> — la parola torna a voi</li></ul>"},
+ {m:'m-perche',k:'Il perché',t:'Un fatto, non un\u2019idea',b:"<p>Le filosofie propongono <strong>idee</strong>: vivi così, pensa così. Un'idea non si verifica.</p><p>Il cristianesimo afferma che è <strong>successo qualcosa</strong> — in un luogo con un nome, in un tempo con una data.</p>"},
+ {m:'m-perche',k:'Il perché',t:'Ed è per questo che si può indagare',b:"<p>A un'idea chiedi se convince.</p><p>A un fatto chiedi: <strong>chi lo dice, quando, con quale interesse, cosa aveva da perderci.</strong></p><p>Le stesse domande del gioco di oggi.</p>"},
+ {m:'m-cons',k:'Aggancio',t:'Dove lo fate già ogni giorno',b:"<p>Una notizia nel feed. Una recensione. Un amico che giura. Una persona conosciuta online.</p><p>Ogni volta decidete. Quasi sempre senza sapere come.</p>"},
+ {m:'m-cons',k:'Aggancio',t:'Martys',b:"<p class='q'>In greco non vuol dire martire. Vuol dire <strong>testimone</strong>.</p><p>Chi scrive e chi muore piuttosto che ritrattare fanno la stessa cosa, con mezzi diversissimi.</p>"},
+ {m:'m-cons',k:'Il patto',t:'Qui si può non credere',b:"<p><strong>Ma non si può non pensare.</strong></p><p>Non è catechismo. Chi non crede può prendere dieci. Chi crede senza aver mai esaminato nulla, no.</p>"},
+ {m:'m-cons',k:'Il patto',t:'Come si lavora, come si valuta',b:"<ul><li>Ogni lezione ha un prima e un dopo</li><li>Le domande vere valgono più delle risposte giuste</li><li>Verifica a fine unità · verifica rovesciata a metà anno · Talenti alla fine</li></ul><p><strong>L'ultima unità è vostra.</strong></p>"},
+ {m:'m-fine',k:'Chiusura',t:'Su un foglietto, senza nome',b:"<p>Una cosa che <strong>speri</strong> da quest'anno. Una che <strong>temi</strong>.</p><p>Li chiudo in una busta e li riapriamo a metà anno.</p><p class='q'>C\u2019è qualcosa in cui credete fermamente e che non avete mai verificato?</p>"}
+];
+var cur=0;
+var stage=document.getElementById('stage'), slide=document.getElementById('slide'),
+    count=document.getElementById('count'), fill=document.getElementById('fill'),
+    prev=document.getElementById('prev'), next=document.getElementById('next');
+function draw(){
+  var s=slides[cur];
+  stage.className='stage '+s.m;
+  slide.innerHTML='<div class="kick">'+s.k+'</div><h2 class="s-title">'+s.t+'</h2><div class="s-body">'+s.b+'</div>';
+  count.textContent='Slide '+(cur+1)+' di '+slides.length;
+  fill.style.width=((cur+1)/slides.length*100)+'%';
+  prev.disabled=(cur===0); next.disabled=(cur===slides.length-1);
+}
+function go(d){var n=cur+d; if(n>=0&&n<slides.length){cur=n;draw();}}
+stage.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'){go(1);} if(e.key==='ArrowLeft'){go(-1);}
+});
+function full(){
+  var el=document.querySelector('.shell');
+  if(!document.fullscreenElement){ if(el.requestFullscreen) el.requestFullscreen(); }
+  else { if(document.exitFullscreen) document.exitFullscreen(); }
+}
+draw();
+
+/* ---------- ESERCIZIO ---------- */
+var items=[
+ {s:"Me l'ha raccontato con un sacco di dettagli precisi: l'ora, il posto, chi c'era.",good:true,
+  f:"Buon motivo. Reggere molti dettagli coerenti è difficile per chi inventa. Attenzione però: un bugiardo preparato può costruirli. Il dettaglio rafforza, da solo non dimostra."},
+ {s:"Lo dicono tutti, l'ho visto ripetuto in dieci post diversi.",good:false,
+  f:"Non basta. Dieci ripetizioni della stessa fonte non sono dieci fonti. Prima di contare le voci bisogna chiedersi da dove vengono: spesso risalgono tutte allo stesso punto."},
+ {s:"Raccontandolo ha fatto una figuraccia, e infatti era imbarazzato.",good:true,
+  f:"Buon motivo, ed è il più forte della lista. Nessuno inventa un dettaglio che lo danneggia. Gli storici lo chiamano criterio dell'imbarazzo."},
+ {s:"È una persona che mi sta simpatica.",good:false,
+  f:"Non basta, e anzi è il criterio più pericoloso: tendiamo a credere a chi ci piace e a chi conferma quello che pensiamo già. La simpatia dice qualcosa di noi, non della notizia."},
+ {s:"Due persone che non si conoscono fra loro mi hanno detto la stessa cosa.",good:true,
+  f:"Buon motivo, a una condizione: che siano davvero indipendenti. Due testimoni che hanno parlato fra loro prima, o che hanno letto la stessa fonte, valgono come uno solo."},
+ {s:"Lo ha detto una persona importante, uno che ne sa.",good:false,
+  f:"Non basta da solo. La competenza conta se riguarda proprio quel campo e se chi parla non ha interessi in gioco. Un esperto fuori dal suo campo vale quanto chiunque altro."},
+ {s:"Quello che dice si incastra con altre cose che so già per certe.",good:true,
+  f:"Buon motivo. La coerenza con dati indipendenti già verificati è uno dei controlli più solidi. Resta il limite: una ricostruzione falsa ma costruita bene può essere coerente."},
+ {s:"Non ho trovato niente che lo smentisca.",good:false,
+  f:"Non basta. L'assenza di smentite non è una conferma: può voler dire solo che nessuno ha ancora controllato. L'onere sta su chi afferma, non su chi dubita."}
+];
+var answered=0, wrap=document.getElementById('exWrap'), doneEl=document.getElementById('done');
+items.forEach(function(it,i){
+  var c=document.createElement('div'); c.className='card';
+  c.innerHTML='<div class="stmt">'+(i+1)+'. '+it.s+'</div>'+
+    '<div class="choices">'+
+      '<button class="ch" type="button" aria-pressed="false" data-v="1">Mi basta</button>'+
+      '<button class="ch" type="button" aria-pressed="false" data-v="0">Non mi basta</button>'+
+    '</div><div class="fb" id="fb'+i+'"></div>';
+  wrap.appendChild(c);
+  var btns=c.querySelectorAll('.ch'), fb=c.querySelector('.fb');
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      if(fb.classList.contains('show')===false){answered++; doneEl.textContent=answered;}
+      btns.forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      var chose = b.getAttribute('data-v')==='1';
+      fb.className='fb show '+(chose===it.good?'good':'think');
+      fb.textContent=it.f;
+    });
+  });
+});
+
+/* ---------- DOWNLOAD ---------- */
+var testo=[
+"DI CHI MI POSSO FIDARE?",
+"Insegnamento della Religione Cattolica · Classe II · Lezione inaugurale",
+"",
+"I. IL GIOCO CHE AVETE APPENA FATTO",
+"Tre frasi sull'estate. Due vere, una falsa. La classe vota, e quasi sempre indovina. Sembra un gioco da festa di compleanno, e in parte lo e'. Ma quello che avete fatto in quei dieci minuti ha un nome tecnico: valutazione di attendibilita' di un testimone. E' un'operazione che fate decine di volte al giorno, quasi sempre senza accorgervene, e che quest'anno impareremo a fare bene.",
+"Perche' avete indovinato? Non per magia. Avete usato criteri. Il problema e' che nessuno ve li ha mai fatti scrivere: finche' un criterio resta implicito, non potete controllarlo, correggerlo, o applicarlo a un caso difficile.",
+"",
+"II. I CRITERI CHE USATE SENZA SAPERLO",
+"Quando la classe smaschera una bugia, di solito usa cinque cose. Il dettaglio: chi inventa tende a restare sul generico, perche' i dettagli sono difficili da reggere. La coerenza: una frase falsa stona con quello che sappiamo gia' di quella persona. Il costo: se qualcuno racconta un fatto che lo mette in cattiva luce, difficilmente se lo sta inventando. La plausibilita': alcune cose semplicemente non succedono. La conoscenza pregressa: conoscete quella persona da un anno.",
+"Questi cinque criteri non sono un'invenzione scolastica: sono, piu' o meno con questi nomi, gli stessi che uno storico applica a un documento antico e che un giudice applica a una deposizione. Il criterio del costo, in ambito storico, si chiama criterio dell'imbarazzo: un testo ha piu' probabilita' di riferire un fatto realmente accaduto quando quel fatto crea problemi a chi lo racconta.",
+"",
+"III. LA DOMANDA DELL'ANNO",
+"L'anno scorso la domanda era: chi sono io? Quest'anno diventa: di chi mi posso fidare?",
+"E' una domanda che vi ponete gia', e continuamente: su un amico, su un adulto, su una notizia che scorre nel feed, su una recensione, su una persona conosciuta online. Non avete pero' quasi mai uno strumento per rispondere, e finite per oscillare fra due estremi ugualmente comodi: credere a tutto cio' che conferma quello che pensate gia', o non credere a niente e chiamarlo spirito critico.",
+"Quest'anno prendiamo un caso, uno solo, e lo mettiamo sotto ogni prova possibile: una notizia nata in una provincia periferica dell'impero romano, passata di bocca in bocca per trent'anni, poi messa per iscritto quattro volte, poi pagata con la vita da chi si rifiutava di ritrattarla, poi discussa per secoli fino a diventare una definizione ufficiale. Il cristianesimo antico non e' l'argomento di quest'anno: e' il laboratorio.",
+"",
+"IV. UN FATTO, NON UN'IDEA",
+"Le grandi filosofie propongono idee: vivi cosi', pensa cosi', cerca questo. Un'idea non si verifica: la si condivide o no. Il cristianesimo, invece, fin dalle sue prime righe scritte afferma che e' successo qualcosa, in un luogo con un nome e in un tempo con una data.",
+"Questo cambia il tipo di domande che si possono porre. A un'idea si chiede se e' bella, se e' coerente, se convince. A un fatto si chiede: chi lo dice, quando, con quale interesse, e cosa aveva da perderci. Sono esattamente le domande del gioco di oggi.",
+"Attenzione: il fatto che una pretesa sia verificabile non significa che sia verificata. Studiare come si indaga una testimonianza non obbliga nessuno a una conclusione.",
+"",
+"V. LA ROTTA",
+"1. Il fatto - Come si verifica una notizia di duemila anni fa",
+"2. Il testimone - Quattro versioni dello stesso fatto: chi mente?",
+"3. Il martire - Quanto costa dire la verita', e cosa succede quando la verita' comincia a comandare",
+"4. La comunita' - Si puo' vivere mettendo tutto in comune?",
+"5. La definizione - Come si decide, tutti insieme, che cosa e' vero",
+"6. I talenti - La parola torna a voi",
+"Una parola da scrivere sul quaderno: martys. In greco non vuol dire martire nel senso che gli diamo oggi. Vuol dire testimone.",
+"",
+"VI. IL PATTO",
+"1. Qui si puo' non credere, non si puo' non pensare. Non e' un'ora di catechismo e non chiede a nessuno di credere: chiede di conoscere, ragionare, argomentare.",
+"2. Ogni lezione ha un prima e un dopo. Non nozioni sparse: com'era il mondo prima di una certa idea, cosa e' cambiato dopo, e per quale ragione.",
+"3. Le domande vere valgono piu' delle risposte giuste. Ma la domanda va posta bene: «tanto non si puo' sapere» non e' una domanda, e' una scorciatoia.",
+"4. La valutazione e' trasparente: verifica a fine unita', verifica rovesciata a meta' anno, unita' Talenti alla fine.",
+"L'ultima unita' e' vostra: Talenti, lavoro di gruppo, e ciascuno porta davanti alla classe qualcosa che sa fare davvero, anche se non c'entra nulla con la religione.",
+"",
+"DOMANDE APERTE",
+"1. Quale dei cinque criteri usate piu' spesso senza accorgervene? Provate a ricostruire l'ultima volta.",
+"2. Esiste una notizia a cui avete creduto e che poi si e' rivelata falsa? Quale criterio era mancato?",
+"3. Perche' il criterio del costo (o dell'imbarazzo) e' piu' forte degli altri quattro?",
+"4. C'e' qualcosa in cui credete fermamente e che non avete mai verificato?",
+"",
+"© Matteo Sestili — Tutti i diritti riservati · Riproduzione vietata"
+].join("\n");
+function scarica(){
+  var b=new Blob([testo],{type:'text/plain;charset=utf-8'});
+  var u=URL.createObjectURL(b), a=document.createElement('a');
+  a.href=u; a.download='inaugurale-di-chi-mi-fido-testo.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(u);
+}
+</script>
+</body>
+</html>
