@@ -1,0 +1,52 @@
+<!-- @dsCard group="Components" viewport="700x440" name="Core Components" subtitle="Button, Badge, Chip, Card, Input, Nota — hover to feel the motion" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body style="margin:0;padding:21px;background:var(--lab-bg)">
+<div id="root"></div>
+<script type="text/babel">
+const { Button, Badge, Chip, Card, Input, Nota } = window.LabIrc_948687;
+const Lbl = ({ t }) => <div style={{ fontSize:10, fontWeight:800, color:'var(--lab-muted)', letterSpacing:'.2em', textTransform:'uppercase', marginBottom:8 }}>{t}</div>;
+const Row = ({ label, children }) => <div style={{ marginBottom:21 }}><Lbl t={label} /><div style={{ display:'flex', gap:13, flexWrap:'wrap', alignItems:'center' }}>{children}</div></div>;
+function Demo() {
+  const [chip, setChip] = React.useState('Tutti');
+  return (
+    <div style={{ fontFamily:'var(--lab-font-body)', display:'grid', gridTemplateColumns:'minmax(0,1.618fr) minmax(0,1fr)', gap:34 }}>
+      <div>
+        <Row label="Button">
+          <Button>Inizia →</Button><Button variant="ghost">Annulla</Button><Button variant="gold">Consegna</Button><Button variant="solemn">Chi sono</Button>
+        </Row>
+        <Row label="Button sm · disabled">
+          <Button size="sm">Apri</Button><Button size="sm" variant="ghost">Indietro</Button><Button size="sm" disabled>Non disponibile</Button>
+        </Row>
+        <Row label="Badge">
+          <Badge variant="viola">Artefatto</Badge><Badge variant="ciano">Slide</Badge><Badge variant="rosa">Video</Badge><Badge variant="verde">PDF</Badge><Badge variant="ambra">In evidenza</Badge>
+        </Row>
+        <Row label="Chip">
+          {['Tutti','Slide','PDF','Video'].map(t => <Chip key={t} active={chip===t} onClick={()=>setChip(t)}>{t}</Chip>)}
+        </Row>
+        <Nota icon="💡">Pensa al legame con «adamà», la terra da cui l'uomo è tratto.</Nota>
+      </div>
+      <div>
+        <Lbl t="Card — muovi il cursore" />
+        <Card>
+          <Badge variant="ciano">Slide</Badge>
+          <h3 style={{ fontFamily:'var(--lab-font-display)', fontSize:21, margin:'13px 0 8px' }}>Lemaître e l'origine dell'universo</h3>
+          <p style={{ color:'var(--lab-muted)', fontSize:14, margin:0 }}>Il sacerdote che ipotizzò il Big Bang.</p>
+        </Card>
+        <div style={{ marginTop:21 }}><Input label="Il tuo codice" placeholder="es. MARIO24" /></div>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

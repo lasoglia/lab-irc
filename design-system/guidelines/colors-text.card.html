@@ -1,0 +1,35 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Text Colors" subtitle="Ink hierarchy — primary, secondary, muted" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 16px 18px; background: var(--lab-bg); font-family: var(--lab-font-body); }
+.row { display: flex; flex-direction: column; gap: 10px; }
+.item { display: flex; align-items: baseline; gap: 14px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.sample { font-size: 17px; font-weight: 500; }
+.token { font-family: monospace; font-size: 11px; color: var(--lab-muted); margin-left: auto; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="item">
+    <span class="dot" style="background:#ECEAF5"></span>
+    <span class="sample" style="color:#ECEAF5">Le grandi domande meritano risposte all'altezza.</span>
+    <span class="token">--lab-ink · #ECEAF5</span>
+  </div>
+  <div class="item">
+    <span class="dot" style="background:#C7C3DA"></span>
+    <span class="sample" style="color:#C7C3DA; font-size:15px">Uno spazio per fare lezione in modo vivo.</span>
+    <span class="token">--lab-ink-soft · #C7C3DA</span>
+  </div>
+  <div class="item">
+    <span class="dot" style="background:#8E89A6"></span>
+    <span class="sample" style="color:#8E89A6; font-size:13px">12 contenuti · Anno II</span>
+    <span class="token">--lab-muted · #8E89A6</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+/* =====================================================================
+   lab-style.css — Design system "Notte studio" per lab-irc
+   ---------------------------------------------------------------------
+   Stile unico e riutilizzabile: lo usa il sito, lo possono importare le
+   lezioni e gli artefatti .html con UNA sola riga nel loro <head>:
+
+       <link rel="stylesheet" href="../assets/lab-style.css">
+
+   (regola il numero di "../" in base a dove si trova il file artefatto)
+
+   Tema SCURO di default ("Notte studio"); tema chiaro opzionale,
+   attivato mettendo  data-tema="chiaro"  sul tag <html>. L'interruttore
+   🌙/☀️ è in lab-tema.js e usa la stessa chiave dell'area verifiche.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ---------- NOTTE STUDIO (tema scuro, default) ---------- */
+:root{
+  /* superfici */
+  --lab-bg:        #14131F;   /* sfondo profondo slate/indigo */
+  --lab-bg-2:      #1A1827;   /* sezioni alternate */
+  --lab-surface:   #1E1C2E;   /* card */
+  --lab-surface-2: #272438;   /* card sollevata / hover */
+  --lab-line:      #322E45;   /* bordi sottili */
+  --lab-line-soft: #2A2739;
+
+  /* testo */
+  --lab-ink:       #ECEAF5;   /* testo principale */
+  --lab-ink-soft:  #C7C3DA;
+  --lab-muted:     #8E89A6;   /* testo secondario */
+
+  /* accenti */
+  --lab-viola:     #8B5CF6;   /* primario */
+  --lab-viola-2:   #A78BFA;
+  --lab-ciano:     #22D3EE;   /* secondario */
+  --lab-ambra:     #FBBF24;   /* terziario / evidenza */
+  --lab-rosa:      #F472B6;
+  --lab-verde:     #34D399;   /* successo */
+  --lab-rosso:     #FB7185;   /* errore / attenzione */
+
+  --lab-brand:     var(--lab-viola);
+  --lab-accent:    var(--lab-ciano);
+  --lab-on-brand:  #14131F;   /* testo sopra i colori pieni */
+
+  /* gradienti */
+  --lab-grad:      linear-gradient(135deg,#8B5CF6,#22D3EE);
+  --lab-grad-warm: linear-gradient(135deg,#F472B6,#FBBF24);
+  --lab-grad-soft: linear-gradient(160deg,#1E1C2E,#14131F);
+
+  /* ombre + bagliore */
+  --lab-shadow:    0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --lab-shadow-lg: 0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+  --lab-glow:      0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
+
+  /* forma + ritmo */
+  --lab-radius:    18px;
+  --lab-radius-sm: 12px;
+  --lab-radius-lg: 26px;
+
+  /* colori dei 5 anni (versione brillante per fondo scuro) */
+  --lab-anno-1: #FF7A59;
+  --lab-anno-2: #4FB0FF;
+  --lab-anno-3: #A78BFA;
+  --lab-anno-4: #FB7BB5;
+  --lab-anno-5: #FBBF24;
+
+  color-scheme: dark;
+}
+
+/* ---------- TEMA CHIARO (opzionale) ---------- */
+html[data-tema="chiaro"]{
+  --lab-bg:        #FAF7F1;
+  --lab-bg-2:      #F3EFE6;
+  --lab-surface:   #FFFFFF;
+  --lab-surface-2: #FBF8F2;
+  --lab-line:      #E7E0D2;
+  --lab-line-soft: #EFEADD;
+
+  --lab-ink:       #1B1822;
+  --lab-ink-soft:  #39333F;
+  --lab-muted:     #6A6472;
+
+  --lab-viola:     #6D3FE0;
+  --lab-viola-2:   #7C3AED;
+  --lab-ciano:     #0891B2;
+  --lab-ambra:     #C8941E;
+  --lab-rosa:      #DB2777;
+  --lab-verde:     #0E9E86;
+  --lab-rosso:     #E11D48;
+  --lab-on-brand:  #FFFFFF;
+
+  --lab-grad-soft: linear-gradient(160deg,#FFFFFF,#F3EFE6);
+
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+
+  --lab-anno-1: #E2603B;
+  --lab-anno-2: #2D7DD2;
+  --lab-anno-3: #6A4FB0;
+  --lab-anno-4: #C8417B;
+  --lab-anno-5: #C98A1E;
+
+  color-scheme: light;
+}
+
+/* Se l'utente non ha mai scelto, rispettiamo la preferenza di sistema
+   chiara (ma il default del sito resta "Notte studio"). */
+@media (prefers-color-scheme: light){
+  html[data-tema="auto"]{ color-scheme: light; }
+}
+
+/* ---------- BASE ---------- */
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  background:var(--lab-bg);
+  color:var(--lab-ink);
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s ease, color .3s ease;
+}
+
+h1,h2,h3,h4{
+  font-family:"Fraunces",Georgia,serif;
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:-.015em;
+  margin:0 0 .4em;
+  color:var(--lab-ink);
+}
+h1{ font-size:clamp(30px,5vw,52px); }
+h2{ font-size:clamp(24px,3.4vw,36px); }
+h3{ font-size:clamp(19px,2.2vw,24px); }
+
+p{ margin:0 0 1em; color:var(--lab-ink-soft); }
+.lab-muted{ color:var(--lab-muted); }
+.lab-piccolo{ font-size:13.5px; }
+
+a{ color:var(--lab-accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+
+::selection{ background:rgba(139,92,246,.35); color:var(--lab-ink); }
+
+/* Titolo con riempimento a gradiente (effetto "wow" misurato) */
+.lab-grad-text{
+  background:var(--lab-grad);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+}
+
+/* Sopratitolo a lettere spaziate */
+.lab-eyebrow{
+  font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
+  font-weight:800; color:var(--lab-accent); margin:0 0 8px;
+}
+
+/* ---------- LAYOUT ---------- */
+.lab-wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+
+/* ---------- HERO ---------- */
+.lab-hero{
+  position:relative; overflow:hidden;
+  border-radius:var(--lab-radius-lg);
+  padding:clamp(28px,5vw,54px);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(139,92,246,.30), transparent 55%),
+    radial-gradient(120% 140% at 100% 100%, rgba(34,211,238,.22), transparent 55%),
+    var(--lab-surface);
+  box-shadow:var(--lab-shadow);
+}
+.lab-hero h1{ margin-bottom:.25em; }
+.lab-hero p{ max-width:60ch; font-size:clamp(16px,2vw,19px); }
+
+/* ---------- CARD ---------- */
+.lab-card{
+  position:relative; overflow:hidden;
+  background:var(--lab-surface);
+  border:1px solid var(--lab-line);
+  border-radius:var(--lab-radius);
+  padding:22px 22px 20px;
+  box-shadow:var(--lab-shadow);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.lab-card:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--lab-shadow-lg);
+  border-color:color-mix(in srgb, var(--lab-viola) 40%, var(--lab-line));
+}
+/* card "anno": barretta colorata + alone */
+.lab-card.lab-anno{ --c:var(--lab-viola); padding-left:28px; }
+.lab-card.lab-anno::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--c);
+}
+.lab-card.lab-anno::after{
+  content:""; position:absolute; right:-34px; top:-34px; width:130px; height:130px;
+  border-radius:50%; background:var(--c); opacity:.14; transition:.22s ease;
+}
+.lab-card.lab-anno:hover::after{ opacity:.22; transform:scale(1.12); }
+.lab-card.lab-anno:hover{ border-color:color-mix(in srgb, var(--c) 45%, var(--lab-line)); }
+
+.lab-anno-1{ --c:var(--lab-anno-1); }
+.lab-anno-2{ --c:var(--lab-anno-2); }
+.lab-anno-3{ --c:var(--lab-anno-3); }
+.lab-anno-4{ --c:var(--lab-anno-4); }
+.lab-anno-5{ --c:var(--lab-anno-5); }
+
+.lab-num{
+  font-family:"Fraunces",serif; font-weight:600; font-size:50px;
+  line-height:.9; color:var(--c,var(--lab-viola));
+}
+
+/* ---------- GRIGLIA ---------- */
+.lab-grid{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+
+/* ---------- BOTTONI ---------- */
+.lab-btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  font-family:inherit; font-size:15px; font-weight:700;
+  padding:11px 22px; border-radius:999px; border:1px solid transparent;
+  cursor:pointer; text-decoration:none; line-height:1;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease, filter .2s ease;
+}
+.lab-btn:hover{ text-decoration:none; transform:translateY(-2px); }
+.lab-btn:active{ transform:translateY(0); }
+
+.lab-btn-primary{
+  background:var(--lab-grad); color:#fff;
+  box-shadow:0 8px 22px -10px rgba(139,92,246,.8);
+}
+.lab-btn-primary:hover{ filter:brightness(1.08); box-shadow:0 12px 28px -10px rgba(139,92,246,.9); }
+
+.lab-btn-ghost{
+  background:transparent; color:var(--lab-ink);
+  border-color:var(--lab-line);
+}
+.lab-btn-ghost:hover{ border-color:var(--lab-viola); color:var(--lab-viola-2); }
+
+.lab-btn-gold{ background:var(--lab-ambra); color:#3a2a06; }
+.lab-btn-gold:hover{ filter:brightness(1.06); }
+
+/* ---------- CHIP / FILTRI ---------- */
+.lab-chip{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13.5px; font-weight:600; padding:7px 15px; border-radius:999px;
+  border:1px solid var(--lab-line); background:var(--lab-surface);
+  color:var(--lab-ink-soft); cursor:pointer; transition:.18s ease;
+}
+.lab-chip:hover{ border-color:var(--lab-accent); color:var(--lab-accent); }
+.lab-chip.on{ background:var(--lab-accent); border-color:var(--lab-accent); color:var(--lab-on-brand); }
+
+/* ---------- BADGE ---------- */
+.lab-badge{
+  display:inline-block; font-size:11.5px; font-weight:800;
+  letter-spacing:.04em; text-transform:uppercase;
+  padding:4px 11px; border-radius:8px;
+  background:color-mix(in srgb, var(--lab-viola) 22%, transparent);
+  color:var(--lab-viola-2);
+}
+.lab-badge.ciano{ background:color-mix(in srgb, var(--lab-ciano) 22%, transparent); color:var(--lab-ciano); }
+.lab-badge.ambra{ background:color-mix(in srgb, var(--lab-ambra) 24%, transparent); color:var(--lab-ambra); }
+.lab-badge.rosa{ background:color-mix(in srgb, var(--lab-rosa) 22%, transparent); color:var(--lab-rosa); }
+.lab-badge.verde{ background:color-mix(in srgb, var(--lab-verde) 22%, transparent); color:var(--lab-verde); }
+
+/* ---------- NOTA / RIQUADRO INFORMATIVO ---------- */
+.lab-nota{
+  border-left:4px solid var(--lab-ambra);
+  background:color-mix(in srgb, var(--lab-ambra) 12%, var(--lab-surface));
+  border-radius:0 var(--lab-radius-sm) var(--lab-radius-sm) 0;
+  padding:14px 18px; color:var(--lab-ink-soft);
+}
+
+/* ---------- CAMPI MODULO ---------- */
+.lab-input, .lab-select, .lab-textarea{
+  width:100%; font-family:inherit; font-size:15px;
+  color:var(--lab-ink); background:var(--lab-surface-2);
+  border:1.5px solid var(--lab-line); border-radius:var(--lab-radius-sm);
+  padding:11px 14px; transition:border-color .15s ease, box-shadow .15s ease;
+}
+.lab-input:focus, .lab-select:focus, .lab-textarea:focus{
+  outline:none; border-color:var(--lab-viola);
+  box-shadow:0 0 0 3px rgba(139,92,246,.25);
+}
+
+/* ---------- INTERRUTTORE TEMA 🌙/☀️ ---------- */
+#labTema{
+  position:fixed; right:16px; bottom:16px; z-index:50;
+  width:46px; height:46px; border-radius:50%;
+  border:1px solid var(--lab-line); background:var(--lab-surface);
+  color:var(--lab-ink); font-size:20px; cursor:pointer;
+  box-shadow:var(--lab-shadow);
+  display:grid; place-items:center;
+  transition:transform .18s ease, box-shadow .2s ease;
+}
+#labTema:hover{ transform:translateY(-3px) scale(1.05); box-shadow:var(--lab-shadow-lg); }
+
+/* ---------- ANIMAZIONI D'INGRESSO ---------- */
+@keyframes labSu{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+.lab-in{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) both; }
+.lab-in-2{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) .08s both; }
+.lab-in-3{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) .16s both; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}

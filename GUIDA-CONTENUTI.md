@@ -27,36 +27,37 @@ tenere viva l'attenzione e rendere bene anche da proiettore o telefono. In basso
 a destra c'è un pulsante **🌙 / ☀️**: chi preferisce passa al **tema chiaro** con
 un clic. La scelta resta salvata su quel dispositivo (vale anche per le verifiche).
 
-I colori, i font e i "mattoncini" grafici stanno in un unico file riutilizzabile,
-`assets/lab-style.css`. Tutto è proporzionato sulla **sezione aurea** (φ = 1,618):
-spaziature di Fibonacci (5·8·13·21·34·55·89), titoli in scala aurea, colonne
-1,618 : 1, durate delle animazioni 144–987 ms. Tre caratteri: **Cormorant
-Garamond** per i titoli, **Cinzel** (capitali romane) per sopratitoli e numeri
-degli anni, **Figtree** per il testo. L'**oro** (`--lab-oro`) si usa solo per
-filetti e dettagli solenni.
+Il sito è costruito **esattamente come il modello di Claude Design**: la cartella
+`design-system/` è il pacchetto esportato dal designer (colori, caratteri,
+componenti come il rosone, le schede degli anni, le mascotte, A·M·D·G), e il sito
+usa proprio quei componenti. Tutto è proporzionato sulla **sezione aurea**
+(φ = 1,618): spaziature di Fibonacci, titoli in scala aurea, colonne 1,618 : 1.
+Tre caratteri: **Cormorant Garamond** per i titoli, **Cinzel** (capitali romane)
+per sopratitoli e numeri degli anni, **Figtree** per il testo.
 
-Gli effetti di movimento stanno in `assets/lab-motion.js` (luce che segue il
-cursore, schede che si inclinano, pulsanti "magnetici", apparizione allo scroll,
-spirale aurea): esistono solo con il mouse, mai su telefono, e si spengono se nel
-sistema è attivo "riduci movimento".
+Gli effetti legati al cursore (rosone che si illumina, schede che si inclinano,
+pulsanti "magnetici") esistono solo con il mouse: su telefono le schede restano
+ferme, niente "flash". Se nel sistema è attivo "riduci movimento" si spengono.
 
-C'è anche un piccolo segreto, in `assets/lab-amdg.js`: **A·M·D·G** (*Ad maiorem
-Dei gloria*). Si rivela scrivendo `amdg`, cliccando 7 volte il logo, cliccando la
-stella ✦ al centro della spirale o il marchio quasi invisibile al centro del
-footer. Non va pubblicizzato: è un dono per chi lo scopre.
+**Quando cambi il design su Claude Design:** esporta di nuovo lo zip e dallo a
+Claude: si sostituisce la cartella `design-system/` e si rigenera il sito.
+I contenuti che carichi da Decap non ne sono toccati.
 
-**Per gli artefatti/lezioni `.html` che costruiamo insieme:** ereditano lo stesso
-look (e l'interruttore tema) aggiungendo queste righe nel loro `<head>`/fine `<body>`:
+**Per gli artefatti/lezioni `.html` che costruiamo insieme:** il designer ha
+preparato un kit con lo stesso stile (colori, font, mascotte dell'anno in basso a
+destra, A·M·D·G). Bastano tre righe (esempio per un file dentro `uploads/`):
 
 ```html
-<link rel="stylesheet" href="../assets/lab-style.css">
-<script src="../assets/lab-tema.js"></script>
-<script src="../assets/lab-motion.js"></script>   <!-- facoltativo: movimento -->
-<script src="../assets/lab-amdg.js"></script>     <!-- facoltativo: A·M·D·G -->
+<link rel="stylesheet" href="../design-system/assets/artefatti/lab-artefatto.css">
+<body class="la" data-anno="3">   <!-- 1–5: sceglie colore e mascotte -->
+  …
+  <script src="../design-system/assets/artefatti/lab-artefatto.js"></script>
+</body>
 ```
 
-(regola il numero di `../` in base a dove si trova il file). Così non serve più
-pensare alla grafica: la scrivo una volta e ogni artefatto la riusa.
+Le classi disponibili (schede, pulsanti, quiz…) sono descritte in
+`design-system/assets/artefatti/README.md`. Il vecchio `assets/lab-style.css`
+resta per gli artefatti già fatti che lo usano.
 
 ---
 

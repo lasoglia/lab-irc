@@ -1,0 +1,45 @@
+<!-- @dsCard group="Colors" viewport="700x165" name="Year Colors" subtitle="Five accent colours — one per school year" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 14px 16px; background: var(--lab-bg); }
+.row { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+.sw { border-radius: 14px; padding: 14px 12px 10px; min-height: 88px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid rgba(255,255,255,.06); }
+.num { font-family: var(--lab-font-display); font-size: 36px; font-weight: 600; line-height: 1; margin-bottom: 4px; }
+.n { font-family: var(--lab-font-body); font-size: 11px; font-weight: 700; }
+.h { font-family: monospace; font-size: 10px; opacity: .75; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:rgba(255,122,89,.15); border-color:rgba(255,122,89,.3)">
+    <span class="num" style="color:#FF7A59">I</span>
+    <span class="n" style="color:#FF7A59">--lab-anno-1</span>
+    <span class="h" style="color:#FF7A59">#FF7A59</span>
+  </div>
+  <div class="sw" style="background:rgba(79,176,255,.15); border-color:rgba(79,176,255,.3)">
+    <span class="num" style="color:#4FB0FF">II</span>
+    <span class="n" style="color:#4FB0FF">--lab-anno-2</span>
+    <span class="h" style="color:#4FB0FF">#4FB0FF</span>
+  </div>
+  <div class="sw" style="background:rgba(167,139,250,.15); border-color:rgba(167,139,250,.3)">
+    <span class="num" style="color:#A78BFA">III</span>
+    <span class="n" style="color:#A78BFA">--lab-anno-3</span>
+    <span class="h" style="color:#A78BFA">#A78BFA</span>
+  </div>
+  <div class="sw" style="background:rgba(251,123,181,.15); border-color:rgba(251,123,181,.3)">
+    <span class="num" style="color:#FB7BB5">IV</span>
+    <span class="n" style="color:#FB7BB5">--lab-anno-4</span>
+    <span class="h" style="color:#FB7BB5">#FB7BB5</span>
+  </div>
+  <div class="sw" style="background:rgba(251,191,36,.15); border-color:rgba(251,191,36,.3)">
+    <span class="num" style="color:#FBBF24">V</span>
+    <span class="n" style="color:#FBBF24">--lab-anno-5</span>
+    <span class="h" style="color:#FBBF24">#FBBF24</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!-- @dsCard group="Foundations" viewport="700x260" name="Golden Ratio φ" subtitle="Fibonacci spacing, golden type scale, 1.618 : 1 layouts" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:21px;background:var(--lab-bg);font-family:var(--lab-font-body);display:grid;grid-template-columns:minmax(0,1.618fr) minmax(0,1fr);gap:34px}
+.l{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--lab-muted);margin-bottom:13px}
+.sq{display:flex;align-items:flex-end;gap:8px}
+.sq div{background:var(--lab-oro-soft);border:1px solid var(--lab-oro)}
+.sq span{font-family:monospace;font-size:9.5px;color:var(--lab-muted);display:block;text-align:center;margin-top:5px}
+.t{font-family:var(--lab-font-display);font-weight:600;color:var(--lab-ink);line-height:1.12}
+.m{font-family:monospace;font-size:9.5px;color:var(--lab-muted)}
+.r{position:relative;aspect-ratio:1.618/1;border:1px solid var(--lab-line);border-radius:5px}
+</style>
+</head>
+<body>
+<div>
+  <div class="l">Spaziature — Fibonacci</div>
+  <div class="sq">
+    <div><div style="width:5px;height:5px"></div><span>5</span></div>
+    <div><div style="width:8px;height:8px"></div><span>8</span></div>
+    <div><div style="width:13px;height:13px"></div><span>13</span></div>
+    <div><div style="width:21px;height:21px"></div><span>21</span></div>
+    <div><div style="width:34px;height:34px"></div><span>34</span></div>
+    <div><div style="width:55px;height:55px"></div><span>55</span></div>
+    <div><div style="width:89px;height:89px"></div><span>89</span></div>
+  </div>
+  <div class="l" style="margin-top:21px">Scala tipografica — ×√φ</div>
+  <div style="display:flex;align-items:baseline;gap:13px">
+    <span class="t" style="font-size:16px">Aa</span><span class="t" style="font-size:20.5px">Aa</span><span class="t" style="font-size:26px">Aa</span><span class="t" style="font-size:33px">Aa</span><span class="t" style="font-size:42px">Aa</span><span class="t" style="font-size:55px">Aa</span>
+  </div>
+  <div class="m" style="margin-top:5px">16 · 20.5 · 26 · 33 · 42 · 55 — interlinea testo 1.618</div>
+</div>
+<div>
+  <div class="l">Layout 1.618 : 1</div>
+  <div class="r">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:61.8%;border-right:1px solid var(--lab-line);display:grid;place-items:center" class="m">1.618fr</div>
+    <div style="position:absolute;right:0;top:0;bottom:0;width:38.2%;display:grid;place-items:center" class="m">1fr</div>
+  </div>
+  <div class="m" style="margin-top:8px">hero, about, schede: colonne in proporzione aurea · durate 144/233/377/610/987 ms</div>
+</div>
+</body>
+</html>

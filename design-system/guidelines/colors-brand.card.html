@@ -1,0 +1,43 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Brand Colors" subtitle="Primary violet + cyan accent palette" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 14px 16px; background: var(--lab-bg); }
+.row { display: grid; grid-template-columns: repeat(6,1fr); gap: 10px; }
+.sw { border-radius: 14px; padding: 12px 10px 10px; min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid rgba(255,255,255,.06); }
+.n { font-family: var(--lab-font-body); font-size: 11px; font-weight: 700; margin-top: 6px; }
+.h { font-family: monospace; font-size: 10px; opacity: .75; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:#8B5CF6">
+    <span class="n" style="color:#fff">--lab-viola</span>
+    <span class="h" style="color:rgba(255,255,255,.7)">#8B5CF6</span>
+  </div>
+  <div class="sw" style="background:#A78BFA">
+    <span class="n" style="color:#fff">--lab-viola-2</span>
+    <span class="h" style="color:rgba(255,255,255,.7)">#A78BFA</span>
+  </div>
+  <div class="sw" style="background:#22D3EE">
+    <span class="n" style="color:#06222a">--lab-ciano</span>
+    <span class="h" style="color:rgba(0,0,0,.5)">#22D3EE</span>
+  </div>
+  <div class="sw" style="background:#FBBF24">
+    <span class="n" style="color:#3a2a06">--lab-ambra</span>
+    <span class="h" style="color:rgba(0,0,0,.4)">#FBBF24</span>
+  </div>
+  <div class="sw" style="background:#F472B6">
+    <span class="n" style="color:#fff">--lab-rosa</span>
+    <span class="h" style="color:rgba(255,255,255,.7)">#F472B6</span>
+  </div>
+  <div class="sw" style="background:linear-gradient(135deg,#8B5CF6,#22D3EE)">
+    <span class="n" style="color:#fff">--lab-grad</span>
+    <span class="h" style="color:rgba(255,255,255,.7)">gradient</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Semantic Colors" subtitle="Success, error, and functional accents" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 14px 16px; background: var(--lab-bg); }
+.row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.sw { border-radius: 14px; padding: 12px 10px 10px; min-height: 70px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid rgba(255,255,255,.06); }
+.n { font-family: var(--lab-font-body); font-size: 11px; font-weight: 700; margin-top: 4px; }
+.h { font-family: monospace; font-size: 10px; opacity: .75; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:#34D399">
+    <span class="n" style="color:#06281d">--lab-verde</span>
+    <span class="h" style="color:rgba(0,0,0,.5)">#34D399 · successo</span>
+  </div>
+  <div class="sw" style="background:#FB7185">
+    <span class="n" style="color:#fff">--lab-rosso</span>
+    <span class="h" style="color:rgba(255,255,255,.7)">#FB7185 · errore</span>
+  </div>
+  <div class="sw" style="background:#FBBF24">
+    <span class="n" style="color:#3a2a06">--lab-ambra</span>
+    <span class="h" style="color:rgba(0,0,0,.4)">#FBBF24 · avviso</span>
+  </div>
+  <div class="sw" style="background:linear-gradient(135deg,#F472B6,#FBBF24)">
+    <span class="n" style="color:#fff">--lab-grad-warm</span>
+    <span class="h" style="color:rgba(255,255,255,.8)">gradient caldo</span>
+  </div>
+</div>
+</body>
+</html>
