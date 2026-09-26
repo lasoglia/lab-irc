@@ -1,0 +1,260 @@
+<!-- @dsCard group="Exam Platform" viewport="960x620" name="Area Verifiche" subtitle="Teacher dashboard and student exam — both views" -->
+<!-- @startingPoint section="Education" subtitle="Online exam platform — teacher and student views" viewport="960x620" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab IRC — Area Verifiche</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; font-size:16px; line-height:1.55; color:var(--ink,#1a1d24); background:var(--bg,#f4f5f8); }
+:root {
+  --blu:#1E3A8A; --blu-dark:#162a63; --blu-light:#e8edf9;
+  --gold:#D4A017; --gold-dark:#a87c0c;
+  --ok:#1c7c4a; --err:#b42318;
+  --ink:#1a1d24; --muted:#54596a; --line:#d7dae3;
+  --bg:#f4f5f8; --bg2:#ffffff;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(20,25,40,.06),0 8px 24px -16px rgba(20,25,40,.35);
+}
+input, select, textarea { font: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { ExamBadge } = window.LabIrc_948687;
+
+/* ---- SAMPLE DATA ---- */
+const ESAMI = [
+  { id:1, titolo:'La Bibbia e le sue tradizioni', classe:'2A', durata:30, stato:'pubblicata', token:'abc123' },
+  { id:2, titolo:'Gesù storico e Gesù della fede', classe:'3B', durata:45, stato:'chiusa',    token:'def456' },
+  { id:3, titolo:'Etica e biotecnologie',          classe:'4A', durata:40, stato:'bozza',     token:'ghi789' },
+  { id:4, titolo:'Il Concilio Vaticano II',        classe:'5C', durata:20, stato:'corretta',  token:'jkl012' },
+];
+const CONSEGNE = [
+  { id:1, codice:'MARIO24', classe:'2A', punti:18, max:20, perc:90, stato:'corretta'   },
+  { id:2, codice:'LUCA88',  classe:'2A', punti:14, max:20, perc:70, stato:'corretta'   },
+  { id:3, codice:'ANNA01',  classe:'2A', punti:null, max:20, perc:null, stato:'consegnata' },
+  { id:4, codice:'SOFT22',  classe:'2A', punti:null, max:20, perc:null, stato:'in_corso' },
+];
+const DOMANDE = [
+  { id:1, tipo:'scelta_multipla', testo:'Quanti libri compone il canone cattolico della Bibbia?', opzioni:['66','73','39','27'], corretta:1 },
+  { id:2, tipo:'scelta_multipla', testo:'Quale lingua fu usata per la maggior parte del Nuovo Testamento?', opzioni:['Latino','Aramaico','Greco','Ebraico'], corretta:2 },
+  { id:3, tipo:'aperta',           testo:'Descrivi in 2-3 righe la differenza tra Deuterocanonici e Protocanonici.', opzioni:[], corretta:null },
+];
+
+/* ---- SHARED ---- */
+const Btn = ({ children, variant='primary', small, onClick, style:sx }) => {
+  const [hov, setHov] = React.useState(false);
+  const base = { display:'inline-flex', alignItems:'center', gap:7, fontFamily:'inherit', fontWeight:700, cursor:'pointer', borderRadius:9, padding:small?'7px 12px':'11px 18px', fontSize:small?.85*16+'px':'1rem', border:'1.5px solid', lineHeight:1, transition:'.15s ease' };
+  const vars = {
+    primary: { background: hov?'var(--blu-dark)':'var(--blu)', borderColor:'var(--blu)', color:'#fff' },
+    ghost:   { background: hov?'var(--blu-light)':'transparent', borderColor:'var(--blu)', color:'var(--blu)' },
+    gold:    { background: hov?'var(--gold-dark)':'var(--gold)', borderColor:'var(--gold)', color: hov?'#fff':'var(--blu-dark)' },
+    danger:  { background: hov?'var(--err)':'#fff', borderColor:'var(--err)', color: hov?'#fff':'var(--err)' },
+  };
+  return <button style={{...base,...vars[variant],...sx}} onClick={onClick} onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}>{children}</button>;
+};
+
+/* ---- HEADER ---- */
+function AppHeader({ mode, setMode }) {
+  return (
+    <header style={{ background:'var(--blu)', color:'#fff', padding:'14px 0' }}>
+      <div style={{ maxWidth:880, margin:'0 auto', padding:'0 16px', display:'flex', alignItems:'center', gap:12, flexWrap:'wrap' }}>
+        <span style={{ width:36, height:36, borderRadius:9, background:'var(--gold)', color:'var(--blu-dark)', display:'grid', placeItems:'center', fontWeight:800, fontSize:18, flexShrink:0 }}>L</span>
+        <b style={{ fontSize:18 }}>Lab IRC — Area Verifiche</b>
+        <span style={{ marginLeft:'auto', display:'flex', gap:6 }}>
+          <button onClick={()=>setMode('teacher')} style={{ background:mode==='teacher'?'rgba(255,255,255,.25)':'rgba(255,255,255,.1)', border:'none', color:'#fff', fontFamily:'inherit', fontWeight:700, fontSize:13, padding:'5px 12px', borderRadius:7, cursor:'pointer' }}>👩‍🏫 Docente</button>
+          <button onClick={()=>setMode('student')} style={{ background:mode==='student'?'rgba(255,255,255,.25)':'rgba(255,255,255,.1)', border:'none', color:'#fff', fontFamily:'inherit', fontWeight:700, fontSize:13, padding:'5px 12px', borderRadius:7, cursor:'pointer' }}>👤 Studente</button>
+        </span>
+      </div>
+    </header>
+  );
+}
+
+/* ---- CARD ---- */
+const Card = ({children,style:sx}) => (
+  <div style={{ background:'var(--bg2)', border:'1px solid var(--line)', borderRadius:'var(--radius)', padding:18, boxShadow:'var(--shadow)', marginBottom:16, ...sx }}>{children}</div>
+);
+
+/* ===== TEACHER VIEWS ===== */
+function TeacherDash({ onSelect }) {
+  return (
+    <div style={{ maxWidth:880, margin:'0 auto', padding:'24px 16px 60px' }}>
+      <Card>
+        <div style={{ display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', marginBottom:16 }}>
+          <h1 style={{ margin:0, fontSize:'1.7rem' }}>Le tue verifiche</h1>
+          <span style={{ marginLeft:'auto' }}><Btn variant="gold" onClick={()=>{}}>+ Nuova verifica</Btn></span>
+        </div>
+        {ESAMI.map(e => (
+          <div key={e.id} style={{ display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', padding:'14px 0', borderBottom:'1px solid var(--line)' }}>
+            <div>
+              <div style={{ fontWeight:700 }}>{e.titolo}</div>
+              <div style={{ color:'var(--muted)', fontSize:14 }}>Classe {e.classe} · {e.durata} min</div>
+            </div>
+            <span style={{ marginLeft:'auto' }}><ExamBadge status={e.stato} /></span>
+            <span style={{ display:'flex', gap:6 }}>
+              {e.stato==='bozza' && <Btn small variant="ghost">Modifica</Btn>}
+              {e.stato==='pubblicata' && <>
+                <Btn small variant="ghost" onClick={()=>onSelect(e)}>Risultati</Btn>
+                <Btn small variant="ghost">Link</Btn>
+                <Btn small variant="danger">Chiudi</Btn>
+              </>}
+              {(e.stato==='chiusa'||e.stato==='corretta') && <Btn small variant="ghost" onClick={()=>onSelect(e)}>Risultati</Btn>}
+              {e.stato==='bozza' && <Btn small variant="primary">Pubblica</Btn>}
+            </span>
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
+
+function TeacherResults({ esame, onBack }) {
+  const media = CONSEGNE.filter(c=>c.perc!=null).reduce((s,c,_,a)=>s+c.perc/a.length,0);
+  return (
+    <div style={{ maxWidth:880, margin:'0 auto', padding:'24px 16px 60px' }}>
+      <Card>
+        <div style={{ display:'flex', alignItems:'center', gap:12, flexWrap:'wrap', marginBottom:12 }}>
+          <h1 style={{ margin:0, fontSize:'1.5rem' }}>Risultati — {esame.titolo}</h1>
+          <span style={{ marginLeft:'auto' }}><Btn small variant="ghost" onClick={onBack}>← Torna</Btn></span>
+        </div>
+        <div style={{ display:'flex', gap:24, flexWrap:'wrap', marginBottom:16, padding:'12px 0', borderBottom:'1px solid var(--line)' }}>
+          {[['Consegne',`${CONSEGNE.filter(c=>c.stato!=='in_corso').length} / ${CONSEGNE.length}`],['Media',media.toFixed(0)+'%'],['Più alta','90%'],['Da correggere','1']].map(([k,v])=>(
+            <div key={k}><div style={{ color:'var(--muted)', fontSize:13 }}>{k}</div><div style={{ fontWeight:800, fontSize:'1.4rem' }}>{v}</div></div>
+          ))}
+        </div>
+        <div style={{ overflowX:'auto' }}>
+          <table style={{ width:'100%', borderCollapse:'collapse', fontSize:'.92rem' }}>
+            <thead><tr>{['Codice','Classe','Punteggio','%','Stato','Azioni'].map(h=><th key={h} style={{ textAlign:'left', padding:'10px 8px', borderBottom:'1px solid var(--line)', fontSize:'.78rem', textTransform:'uppercase', letterSpacing:'.04em', color:'var(--muted)' }}>{h}</th>)}</tr></thead>
+            <tbody>
+              {CONSEGNE.map(c=>(
+                <tr key={c.id}>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)', fontWeight:600 }}>{c.codice}</td>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)' }}>{c.classe}</td>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)' }}>{c.punti!=null?`${c.punti} / ${c.max}`:'—'}</td>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)' }}>{c.perc!=null?c.perc+'%':'—'}</td>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)' }}><ExamBadge status={c.stato} /></td>
+                  <td style={{ padding:'10px 8px', borderBottom:'1px solid var(--line)' }}><span style={{ display:'flex', gap:6 }}>{c.stato==='consegnata'?<Btn small variant="primary">Correggi</Btn>:<Btn small variant="ghost">Rivedi</Btn>}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+/* ===== STUDENT VIEWS ===== */
+function StudentStart({ onBegin }) {
+  const [code, setCode] = React.useState('');
+  const [cls,  setCls]  = React.useState('');
+  return (
+    <div style={{ maxWidth:460, margin:'40px auto', padding:'0 16px' }}>
+      <Card>
+        <h1 style={{ margin:'0 0 4px', fontSize:'1.7rem' }}>Inizia la verifica</h1>
+        <p style={{ color:'var(--muted)', fontSize:'.85rem', marginBottom:16 }}>Inserisci il tuo codice e la classe. Il codice te lo ha dato l'insegnante.</p>
+        <label style={{ display:'block', fontWeight:600, marginBottom:5 }}>Il tuo codice</label>
+        <input value={code} onChange={e=>setCode(e.target.value)} type="text" placeholder="es. MARIO24" autoComplete="off" style={{ width:'100%', padding:'10px 12px', border:'1.5px solid var(--line)', borderRadius:9, marginBottom:12, color:'var(--ink)', background:'#fff' }} />
+        <label style={{ display:'block', fontWeight:600, marginBottom:5 }}>Classe</label>
+        <input value={cls} onChange={e=>setCls(e.target.value)} type="text" placeholder="es. 3A" autoComplete="off" style={{ width:'100%', padding:'10px 12px', border:'1.5px solid var(--line)', borderRadius:9, marginBottom:16, color:'var(--ink)', background:'#fff' }} />
+        <div style={{ background:'#fff8e6', border:'1px solid #f0dca0', borderRadius:9, padding:'12px 14px', fontSize:'.9rem', marginBottom:16 }}>
+          <b style={{ color:'var(--gold-dark)' }}>Privacy: </b>i tuoi dati restano sui server europei e servono solo per questa verifica.
+        </div>
+        <Btn variant="gold" onClick={()=>code&&cls?onBegin():null} style={{ width:'100%', justifyContent:'center' }}>Inizia →</Btn>
+      </Card>
+    </div>
+  );
+}
+
+function StudentExam({ onSubmit }) {
+  const [answers, setAnswers] = React.useState({});
+  const [seconds, setSeconds] = React.useState(30*60);
+  React.useEffect(()=>{
+    const t=setInterval(()=>setSeconds(s=>Math.max(0,s-1)),1000);
+    return ()=>clearInterval(t);
+  },[]);
+  const mm = String(Math.floor(seconds/60)).padStart(2,'0');
+  const ss = String(seconds%60).padStart(2,'0');
+  const alarm = seconds <= 60;
+  return (
+    <div>
+      <div style={{ position:'sticky', top:0, zIndex:40, background:'var(--blu)', color:'#fff', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap', padding:'12px 16px' }}>
+        <b>La Bibbia e le sue tradizioni</b>
+        <span style={{ marginLeft:'auto', fontSize:'.82rem', opacity:.9 }}>Salvato</span>
+        <span style={{ fontVariantNumeric:'tabular-nums', fontWeight:800, fontSize:'1.2rem', background: alarm?'var(--gold)':'rgba(255,255,255,.15)', color: alarm?'var(--blu-dark)':'#fff', padding:'5px 12px', borderRadius:8 }}>{mm}:{ss}</span>
+      </div>
+      <div style={{ maxWidth:880, margin:'0 auto', padding:'24px 16px 60px' }}>
+        {DOMANDE.map((d,i)=>(
+          <div key={d.id} style={{ background:'var(--bg2)', border:'1px solid var(--line)', borderRadius:'var(--radius)', padding:18, marginBottom:16, boxShadow:'var(--shadow)' }}>
+            <div style={{ color:'var(--blu)', fontWeight:800, fontSize:'.8rem', letterSpacing:'.04em' }}>Domanda {i+1} di {DOMANDE.length}</div>
+            <div style={{ fontWeight:600, fontSize:'1.05rem', margin:'4px 0 14px' }}>{d.testo}</div>
+            {d.tipo==='scelta_multipla' ? d.opzioni.map((o,j)=>(
+              <label key={j} style={{ display:'flex', alignItems:'center', gap:10, border:'1.5px solid', borderColor:answers[d.id]===j?'var(--blu)':'var(--line)', borderRadius:9, padding:12, marginBottom:8, cursor:'pointer', background:answers[d.id]===j?'var(--blu-light)':'transparent' }}>
+                <input type="radio" name={`d${d.id}`} checked={answers[d.id]===j} onChange={()=>setAnswers({...answers,[d.id]:j})} style={{ width:'auto' }} />
+                <span>{o}</span>
+              </label>
+            )) : (
+              <textarea placeholder="SCRIVI QUI LA TUA RISPOSTA" style={{ width:'100%', font:'inherit', textTransform:'uppercase', minHeight:90, padding:'10px 12px', border:'1.5px solid var(--line)', borderRadius:9, resize:'vertical', color:'var(--ink)', background:'#fff' }} />
+            )}
+          </div>
+        ))}
+        <div style={{ display:'flex', gap:10, marginTop:20 }}>
+          <Btn variant="gold" onClick={onSubmit} style={{ padding:'11px 22px' }}>Consegna la verifica</Btn>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StudentDone() {
+  return (
+    <div style={{ maxWidth:480, margin:'40px auto', padding:'0 16px' }}>
+      <Card style={{ textAlign:'center', padding:'40px 28px' }}>
+        <div style={{ fontSize:'2rem', margin:'0 0 10px' }}>✓</div>
+        <h1 style={{ margin:'0 0 8px', fontSize:'1.7rem' }}>Verifica consegnata</h1>
+        <p style={{ color:'var(--muted)' }}>La tua verifica è stata inviata correttamente. Ora è bloccata e non è più modificabile.</p>
+        <p style={{ color:'var(--muted)', fontSize:'.85rem' }}>Puoi chiudere questa pagina.</p>
+      </Card>
+    </div>
+  );
+}
+
+/* ===== APP ===== */
+function App() {
+  const [mode, setMode]     = React.useState('teacher');
+  const [tView, setTView]   = React.useState('dash'); // dash | results
+  const [selExam, setSel]   = React.useState(null);
+  const [sView, setSView]   = React.useState('start'); // start | exam | done
+
+  const handleModeSwitch = (m) => {
+    setMode(m);
+    if(m==='student') setSView('start');
+    if(m==='teacher') setTView('dash');
+  };
+
+  return (
+    <div style={{ minHeight:'100vh', background:'var(--bg)' }}>
+      <AppHeader mode={mode} setMode={handleModeSwitch} />
+      <main>
+        {mode==='teacher' && tView==='dash' && <TeacherDash onSelect={e=>{setSel(e);setTView('results');}} />}
+        {mode==='teacher' && tView==='results' && selExam && <TeacherResults esame={selExam} onBack={()=>setTView('dash')} />}
+        {mode==='student' && sView==='start' && <StudentStart onBegin={()=>setSView('exam')} />}
+        {mode==='student' && sView==='exam'  && <StudentExam  onSubmit={()=>setSView('done')} />}
+        {mode==='student' && sView==='done'  && <StudentDone />}
+      </main>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

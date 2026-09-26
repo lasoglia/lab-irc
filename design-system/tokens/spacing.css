@@ -1,0 +1,29 @@
+/* Lab IRC — Spacing & Shape. Golden ratio φ = 1.618: every step is a Fibonacci number. */
+:root {
+  --lab-phi: 1.618; /* @kind other */
+  --lab-phi-inv: 0.618; /* @kind other */
+
+  /* Fibonacci spacing: each step ≈ previous × φ */
+  --lab-space-1: 5px;
+  --lab-space-2: 8px;
+  --lab-space-3: 13px;
+  --lab-space-4: 21px;   /* card padding, grid gap, gutter */
+  --lab-space-5: 34px;
+  --lab-space-6: 55px;   /* section rhythm */
+  --lab-space-7: 89px;
+  --lab-space-8: 144px;
+
+  /* Radius — Fibonacci */
+  --lab-radius-xs:   8px;
+  --lab-radius-sm:   13px;
+  --lab-radius:      21px;
+  --lab-radius-lg:   34px;
+  --lab-radius-pill: 999px;
+  --lab-radius-icon: 13px;
+
+  /* Widths */
+  --lab-max-w:    1140px;
+  --lab-max-w-sm:  880px;
+  --lab-max-w-xs:  460px;
+  --lab-measure:   62ch;
+}

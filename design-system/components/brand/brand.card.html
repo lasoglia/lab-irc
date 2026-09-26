@@ -1,0 +1,41 @@
+<!-- @dsCard group="Components" viewport="700x200" name="AMDG Easter Egg" subtitle="Hidden mark + full-screen reveal — type amdg or click ✦" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body style="margin:0;padding:21px 34px;background:var(--lab-bg)">
+<div id="root"></div>
+<script type="text/babel">
+const NS = window.LabIrc_948687 || {};
+const { Button } = NS;
+const AmdgEgg = NS.AmdgEgg || (() => null);
+const Amdg = NS.Amdg || (() => null);
+const L = ({ t }) => <div style={{ fontSize:10, fontWeight:800, letterSpacing:'.2em', textTransform:'uppercase', color:'var(--lab-muted)', marginBottom:13 }}>{t}</div>;
+function Demo() {
+  return (
+    <div style={{ display:'grid', gridTemplateColumns:'1.618fr 1fr', gap:34, fontFamily:'var(--lab-font-body)' }}>
+      <div>
+        <L t="Marchio nascosto — passa il cursore" />
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:21, padding:'13px 21px', border:'1px solid var(--lab-line)', borderRadius:13, color:'var(--lab-muted)', fontSize:13 }}>
+          <span>© 2026 Matteo Sestili</span><Amdg size={13} />
+        </div>
+        <p style={{ fontSize:13, color:'var(--lab-muted)', margin:'13px 0 0' }}>Oppure scrivi <b style={{ color:'var(--lab-oro)' }}>amdg</b> · 7 clic sul logo · clic sull'occhio della spirale.</p>
+      </div>
+      <div>
+        <L t="Rivelazione" />
+        <Button variant="solemn" onClick={() => window.dispatchEvent(new Event('lab:amdg'))}>✦ Rivela</Button>
+      </div>
+      <AmdgEgg />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

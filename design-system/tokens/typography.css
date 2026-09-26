@@ -1,0 +1,41 @@
+/* Lab IRC — Typography. Solemn serif + inscription caps + youthful sans.
+   Golden scale: base 16px × √φ per step; body leading = φ. */
+:root {
+  --lab-font-display:     "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --lab-font-inscription: "Cinzel", "Trajan Pro", Georgia, serif;
+  --lab-font-body:        "Figtree", system-ui, -apple-system, sans-serif;
+
+  --lab-text-xs:   12.5px;
+  --lab-text-sm:   14px;
+  --lab-text-base: 16px;
+  --lab-text-md:   20.5px;
+  --lab-text-lg:   26px;
+  --lab-text-xl:   33px;
+  --lab-text-2xl:  42px;
+  --lab-text-3xl:  68px;
+  --lab-text-display-sm: clamp(23px, 2.4vw, 29px);
+  --lab-text-display-md: clamp(29px, 3.8vw, 46px);
+  --lab-text-display-lg: clamp(36px, 5.4vw, 60px);
+  --lab-text-hero:       clamp(46px, 7.4vw, 94px);
+
+  --lab-weight-regular:   400;
+  --lab-weight-medium:    500;
+  --lab-weight-semibold:  600;
+  --lab-weight-bold:      700;
+  --lab-weight-extrabold: 800;
+
+  --lab-leading-tight:   1.0;
+  --lab-leading-snug:    1.08;
+  --lab-leading-normal:  1.382;
+  --lab-leading-relaxed: 1.5;
+  --lab-leading-loose:   1.618;
+
+  --lab-tracking-tight:   -0.02em;
+  --lab-tracking-normal:  -0.01em;
+  --lab-tracking-wide:    0.04em;
+  --lab-tracking-widest:  0.18em;
+
+  --lab-eyebrow-size:    13px;
+  --lab-eyebrow-weight:  600;
+  --lab-eyebrow-spacing: 0.18em;
+}

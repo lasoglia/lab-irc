@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Surface Colors" subtitle="Background, card, and border neutrals — dark theme" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 14px 16px; background: var(--lab-bg); }
+.row { display: grid; grid-template-columns: repeat(6,1fr); gap: 8px; }
+.sw { border-radius: 12px; padding: 10px; min-height: 74px; display: flex; flex-direction: column; justify-content: flex-end; border: 1px solid rgba(255,255,255,.09); }
+.n { font-family: var(--lab-font-body); font-size: 10.5px; font-weight: 700; color: var(--lab-ink-soft); margin-top: 4px; }
+.h { font-family: monospace; font-size: 9.5px; color: var(--lab-muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="sw" style="background:#14131F"><span class="n">--lab-bg</span><span class="h">#14131F</span></div>
+  <div class="sw" style="background:#1A1827"><span class="n">--lab-bg-2</span><span class="h">#1A1827</span></div>
+  <div class="sw" style="background:#1E1C2E"><span class="n">--lab-surface</span><span class="h">#1E1C2E</span></div>
+  <div class="sw" style="background:#272438"><span class="n">--lab-surface-2</span><span class="h">#272438</span></div>
+  <div class="sw" style="background:#322E45"><span class="n">--lab-line</span><span class="h">#322E45</span></div>
+  <div class="sw" style="background:#2A2739"><span class="n">--lab-line-soft</span><span class="h">#2A2739</span></div>
+</div>
+</body>
+</html>

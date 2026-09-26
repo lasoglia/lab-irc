@@ -1,0 +1,16 @@
+{
+  "name": "lab-irc-app",
+  "private": true,
+  "description": "Sito Lab IRC in React, costruito con i componenti del design system (../design-system). Il risultato va in ../assets/app.js e ../assets/app.css.",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.2"
+  }
+}

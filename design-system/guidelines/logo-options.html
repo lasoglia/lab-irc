@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="design_doc_mode" content="canvas">
+<title>Lab IRC — Opzioni Logo</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.frame-lbl { font-family:var(--lab-font-body); font-size:13px; font-weight:700; color:#9b96b5; margin:0 0 10px 4px; letter-spacing:.04em; }
+.card { background:#14131F; border:1px solid #322E45; border-radius:20px; box-shadow:0 18px 40px -22px rgba(0,0,0,.7); overflow:hidden; }
+.light { background:#FAF7F1; border-color:#E7E0D2; }
+.grad { background:linear-gradient(135deg,#1b1830,#14131F); }
+.lockup { font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+.gradtext { background:linear-gradient(135deg,#8B5CF6,#22D3EE); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.tile { display:grid; place-items:center; color:#fff; font-family:"Cormorant Garamond",serif; font-weight:600; }
+.note { font-family:var(--lab-font-body); font-size:12.5px; color:#8E89A6; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<!-- OPTION A — Lettermark tile (current header style, refined) -->
+<div style="position:absolute; left:60px; top:60px; width:360px;">
+  <p class="frame-lbl">A · Lettermark "L" + scintilla</p>
+  <div class="card" style="padding:48px; display:flex; flex-direction:column; align-items:center; gap:26px;">
+    <div style="position:relative; width:96px; height:96px; border-radius:24px; background:linear-gradient(135deg,#8B5CF6,#22D3EE); display:grid; place-items:center;">
+      <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:56px; color:#fff;">L</span>
+      <span style="position:absolute; top:14px; right:14px; color:#FBBF24; font-size:18px;">✦</span>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:30px; color:#ECEAF5; letter-spacing:-.01em;">Lab&nbsp;<span class="gradtext">IRC</span></div>
+    <p class="note" style="text-align:center; margin:0;">La scintilla dorata richiama l'idea di "laboratorio": l'intuizione, la domanda che accende. È il segno già usato nel sito.</p>
+  </div>
+</div>
+
+<!-- OPTION B — Horizontal wordmark lockup -->
+<div style="position:absolute; left:470px; top:60px; width:420px;">
+  <p class="frame-lbl">B · Wordmark orizzontale</p>
+  <div class="card" style="padding:48px;">
+    <div style="display:flex; align-items:center; gap:18px;">
+      <div style="width:60px; height:60px; border-radius:16px; background:linear-gradient(135deg,#8B5CF6,#22D3EE); display:grid; place-items:center; flex-shrink:0;">
+        <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:36px; color:#fff;">L</span>
+      </div>
+      <div class="lockup" style="font-size:42px; letter-spacing:-.01em; color:#ECEAF5;">Lab&nbsp;<span class="gradtext">IRC</span></div>
+    </div>
+    <div style="margin-top:18px; font-family:var(--lab-font-body); font-size:12px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#22D3EE;">Laboratorio di Religione</div>
+    <p class="note" style="margin:20px 0 0;">Per header, intestazioni email, footer. Il blocco "L" funziona anche da solo come favicon / avatar.</p>
+  </div>
+</div>
+
+<!-- OPTION C — Stacked / emblem -->
+<div style="position:absolute; left:940px; top:60px; width:340px;">
+  <p class="frame-lbl">C · Emblema impilato</p>
+  <div class="card grad" style="padding:48px; display:flex; flex-direction:column; align-items:center; gap:20px;">
+    <div style="width:104px; height:104px; border-radius:28px; background:#1E1C2E; border:1px solid #322E45; display:grid; place-items:center; box-shadow:0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.5);">
+      <span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:60px;" class="gradtext">L</span>
+    </div>
+    <div style="text-align:center;">
+      <div class="lockup" style="font-size:32px; color:#ECEAF5;">Lab IRC</div>
+      <div style="font-family:var(--lab-font-body); font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:#8E89A6; margin-top:4px;">est. 2025</div>
+    </div>
+    <p class="note" style="text-align:center; margin:0;">Versione "outline": la lettera è in gradiente su tile scura. Più sobrio, adatto a contesti formali.</p>
+  </div>
+</div>
+
+<!-- USAGE ROW — on different backgrounds -->
+<div style="position:absolute; left:60px; top:470px; width:1220px;">
+  <p class="frame-lbl">Prova su sfondi diversi (opzione A)</p>
+  <div style="display:flex; gap:20px; flex-wrap:wrap;">
+    <!-- dark -->
+    <div class="card" style="flex:1; min-width:220px; padding:30px; display:flex; align-items:center; gap:14px;">
+      <div style="width:46px; height:46px; border-radius:13px; background:linear-gradient(135deg,#8B5CF6,#22D3EE); display:grid; place-items:center;"><span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:27px; color:#fff;">L</span></div>
+      <span class="lockup" style="font-size:24px; color:#ECEAF5;">Lab&nbsp;<span class="gradtext">IRC</span></span>
+    </div>
+    <!-- light -->
+    <div class="card light" style="flex:1; min-width:220px; padding:30px; display:flex; align-items:center; gap:14px;">
+      <div style="width:46px; height:46px; border-radius:13px; background:linear-gradient(135deg,#6D3FE0,#0891B2); display:grid; place-items:center;"><span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:27px; color:#fff;">L</span></div>
+      <span class="lockup" style="font-size:24px; color:#1B1822;">Lab&nbsp;<span style="background:linear-gradient(135deg,#6D3FE0,#0891B2); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">IRC</span></span>
+    </div>
+    <!-- color block -->
+    <div style="flex:1; min-width:220px; padding:30px; border-radius:20px; background:linear-gradient(135deg,#8B5CF6,#22D3EE); display:flex; align-items:center; gap:14px;">
+      <div style="width:46px; height:46px; border-radius:13px; background:rgba(255,255,255,.18); display:grid; place-items:center;"><span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:27px; color:#fff;">L</span></div>
+      <span class="lockup" style="font-size:24px; color:#fff;">Lab IRC</span>
+    </div>
+    <!-- mono -->
+    <div class="card" style="flex:1; min-width:220px; padding:30px; display:flex; align-items:center; gap:14px;">
+      <div style="width:46px; height:46px; border-radius:13px; background:#ECEAF5; display:grid; place-items:center;"><span style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:27px; color:#14131F;">L</span></div>
+      <span class="lockup" style="font-size:24px; color:#ECEAF5;">Lab IRC</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

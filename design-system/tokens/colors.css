@@ -1,0 +1,63 @@
+/* =====================================================================
+   Lab IRC Design System — Color Tokens
+   Theme "Notte Studio" — dark by default.
+   Light theme overrides live in theme-light.css.
+   ===================================================================== */
+:root {
+  /* ---- Surfaces ---- */
+  --lab-bg:        #14131F;   /* page background — deep slate/indigo */
+  --lab-bg-2:      #1A1827;   /* alternate section backgrounds */
+  --lab-surface:   #1E1C2E;   /* card surface */
+  --lab-surface-2: #272438;   /* elevated card / hover state */
+  --lab-line:      #322E45;   /* border */
+  --lab-line-soft: #2A2739;   /* subtle dividers */
+
+  /* ---- Text ---- */
+  --lab-ink:       #ECEAF5;   /* primary text */
+  --lab-ink-soft:  #C7C3DA;   /* secondary text */
+  --lab-muted:     #8E89A6;   /* tertiary / caption text */
+
+  /* ---- Accent palette ---- */
+  --lab-viola:     #8B5CF6;   /* primary brand — purple */
+  --lab-viola-2:   #A78BFA;   /* purple, lighter variant */
+  --lab-ciano:     #22D3EE;   /* secondary — cyan */
+  --lab-ambra:     #FBBF24;   /* highlight — amber */
+  --lab-rosa:      #F472B6;   /* pink */
+  --lab-verde:     #34D399;   /* success / green */
+  --lab-rosso:     #FB7185;   /* error / danger */
+  --lab-oro:       #E3C27A;   /* liturgical gold — hairlines, eyebrows, solemn accents */
+  --lab-oro-soft:  rgba(227,194,122,.16);
+
+  /* ---- Semantic aliases ---- */
+  --lab-brand:     var(--lab-viola);
+  --lab-accent:    var(--lab-ciano);
+  --lab-on-brand:  #14131F;   /* text colour on top of filled brand buttons */
+
+  /* ---- Gradients ---- */
+  --lab-grad:      linear-gradient(135deg, #8B5CF6, #22D3EE); /* @kind color */
+  --lab-grad-warm: linear-gradient(135deg, #F472B6, #FBBF24); /* @kind color */
+  --lab-grad-soft: linear-gradient(160deg, #1E1C2E, #14131F); /* @kind color */
+
+  /* ---- Year colours (dark theme — vivid) ---- */
+  --lab-anno-1:    #FF7A59;   /* 1° — orange-red */
+  --lab-anno-2:    #4FB0FF;   /* 2° — sky blue */
+  --lab-anno-3:    #A78BFA;   /* 3° — soft violet */
+  --lab-anno-4:    #FB7BB5;   /* 4° — pink */
+  --lab-anno-5:    #FBBF24;   /* 5° — amber */
+
+  /* ---- Exam platform (institutional palette) ---- */
+  --exam-blu:       #1E3A8A;
+  --exam-blu-dark:  #162a63;
+  --exam-blu-light: #e8edf9;
+  --exam-gold:      #D4A017;
+  --exam-gold-dark: #a87c0c;
+  --exam-ok:        #1c7c4a;
+  --exam-err:       #b42318;
+  --exam-bg:        #f4f5f8;
+  --exam-bg-2:      #ffffff;
+  --exam-ink:       #1a1d24;
+  --exam-muted:     #54596a;
+  --exam-line:      #d7dae3;
+
+  color-scheme: dark;
+}

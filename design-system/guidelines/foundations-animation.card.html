@@ -1,0 +1,26 @@
+<!-- @dsCard group="Foundations" viewport="700x200" name="Motion" subtitle="Fibonacci durations, calm ease-out, cursor-reactive hover" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:21px;background:var(--lab-bg);font-family:var(--lab-font-body)}
+.row{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+.b{border:1px solid var(--lab-line);border-radius:13px;padding:13px;background:var(--lab-surface)}
+.n{font-family:monospace;font-size:10.5px;color:var(--lab-oro);font-weight:700}
+.d{font-size:11px;color:var(--lab-muted);line-height:1.5;margin-top:5px}
+.bar{height:3px;border-radius:3px;background:var(--lab-oro);transform-origin:left;margin-top:13px;animation:labLine var(--t) var(--lab-ease-out) infinite alternate}
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="b" style="animation:var(--lab-anim-in)"><div class="n">144ms</div><div class="d">instant · press</div><div class="bar" style="--t:144ms"></div></div>
+  <div class="b" style="animation:labRise 987ms var(--lab-ease-out) 89ms both"><div class="n">233ms</div><div class="d">fast · hover in</div><div class="bar" style="--t:233ms"></div></div>
+  <div class="b" style="animation:labRise 987ms var(--lab-ease-out) 178ms both"><div class="n">377ms</div><div class="d">normal · fills, lights</div><div class="bar" style="--t:377ms"></div></div>
+  <div class="b" style="animation:labRise 987ms var(--lab-ease-out) 267ms both"><div class="n">610ms</div><div class="d">slow · settle back</div><div class="bar" style="--t:610ms"></div></div>
+  <div class="b" style="animation:labRise 987ms var(--lab-ease-out) 356ms both"><div class="n">987ms</div><div class="d">solemn · reveal</div><div class="bar" style="--t:987ms"></div></div>
+</div>
+<div style="font-size:11.5px;color:var(--lab-muted);margin-top:13px">Entrata: <b style="color:var(--lab-ink-soft)">labRise</b> (↑34px + blur 8px) · stagger 89ms · easing <span style="font-family:monospace">cubic-bezier(.16,1,.3,1)</span> · mai rimbalzi.</div>
+</body>
+</html>

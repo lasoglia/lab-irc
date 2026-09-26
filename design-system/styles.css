@@ -1,0 +1,13 @@
+/* =====================================================================
+   Lab IRC Design System — Root entry point
+   Import this single file in any consumer page:
+     <link rel="stylesheet" href="path/to/styles.css">
+   ===================================================================== */
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+@import './tokens/animation.css';
+@import './tokens/theme-light.css';
+@import './tokens/base.css';

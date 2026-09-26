@@ -1,0 +1,31 @@
+<!-- @dsCard group="Foundations" viewport="700x170" name="Shadows & Glow" subtitle="Elevation system — shadow, shadow-lg, brand glow" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body { margin: 0; padding: 16px 18px; background: var(--lab-bg); font-family: var(--lab-font-body); }
+.row { display: flex; gap: 20px; flex-wrap: wrap; }
+.card { border-radius: 14px; padding: 16px; width: 185px; background: var(--lab-surface); border: 1px solid var(--lab-line); }
+.title { font-size: 12px; font-weight: 700; color: var(--lab-ink-soft); margin-bottom: 2px; }
+.token { font-family: monospace; font-size: 10px; color: var(--lab-muted); }
+</style>
+</head>
+<body>
+<div class="row">
+  <div class="card" style="box-shadow: 0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70)">
+    <div class="title">--lab-shadow</div>
+    <div class="token">card resting state</div>
+  </div>
+  <div class="card" style="box-shadow: 0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80); transform:translateY(-4px)">
+    <div class="title">--lab-shadow-lg</div>
+    <div class="token">card hover state</div>
+  </div>
+  <div class="card" style="box-shadow: 0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50)">
+    <div class="title">--lab-glow</div>
+    <div class="token">brand glow / focus</div>
+  </div>
+</div>
+</body>
+</html>

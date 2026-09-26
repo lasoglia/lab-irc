@@ -1,0 +1,38 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Mascotte degli anni" subtitle="Un logo simpatico per anno — segue il cursore, parla al clic, al 7° clic AMDG" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+</head>
+<body style="margin:0;padding:55px 21px 21px;background:var(--lab-bg)">
+<div id="root"></div>
+<script type="text/babel">
+const NS = window.LabIrc_948687 || {};
+const YearMascot = NS.YearMascot || (() => null);
+const AmdgEgg = NS.AmdgEgg || (() => null);
+const ANNI = [[1,'Semino','il seme'],[2,'Ichthy','il pesce'],[3,'Navicella','la barca di Pietro'],[4,'Bussolina','la coscienza'],[5,'Terra','la casa comune']];
+const ROMAN = ['','I','II','III','IV','V'];
+function Demo() {
+  return (
+    <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:21, textAlign:'center' }}>
+      {ANNI.map(([y,n,d]) => (
+        <div key={y} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
+          <YearMascot year={y} size={60} />
+          <div style={{ fontFamily:'var(--lab-font-inscription)', fontSize:12, letterSpacing:'.18em', color:`var(--lab-anno-${y})`, marginTop:5 }}>ANNO {ROMAN[y]}</div>
+          <div style={{ fontFamily:'var(--lab-font-display)', fontWeight:600, fontSize:21, color:'var(--lab-ink)', lineHeight:1 }}>{n}</div>
+          <div style={{ fontSize:12, color:'var(--lab-muted)' }}>{d}</div>
+        </div>
+      ))}
+      <AmdgEgg />
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body>
+</html>

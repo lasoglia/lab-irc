@@ -1,0 +1,62 @@
+<!-- @dsCard group="Artefatti" viewport="1280x720" name="Esempio artefatto — Quiz" subtitle="Kit artefatti: stile del sito, mascotte dell'anno, AMDG" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz · Lemaître e l'origine dell'universo — Lab IRC</title>
+<link rel="stylesheet" href="../../assets/artefatti/lab-artefatto.css">
+<style>a{color:var(--lab-accent)}a:hover{color:var(--lab-oro)}</style>
+</head>
+<body class="la" data-anno="3">
+<main class="la-stage">
+<p class="la-eyebrow" data-reveal>Anno III · Quiz</p>
+<h1 class="la-title" data-reveal style="--i:1">Lemaître e l'origine <em>dell'universo</em></h1>
+<p class="la-lead" data-reveal style="--i:2">Quattro domande sul sacerdote che ipotizzò il Big Bang.</p>
+<div class="la-card" id="quiz" data-flat data-reveal style="--i:3"></div>
+</main>
+<script src="../../assets/artefatti/lab-artefatto.js"></script>
+<script>
+var Q = [
+  { t: 'Chi era Georges Lemaître?', o: ['Un astronomo americano', 'Un sacerdote cattolico e fisico belga', 'Un filosofo dell’antica Grecia'], a: 1, n: 'Prete e scienziato: insegnava all’Università di Lovanio.' },
+  { t: 'Che cosa propose tra il 1927 e il 1931?', o: ['Che la Terra è al centro dell’universo', 'Che l’universo è eterno e immutabile', 'Un universo in espansione nato da un «atomo primitivo»'], a: 2, n: 'È l’idea che oggi chiamiamo Big Bang.' },
+  { t: 'Chi usò per primo il nome «Big Bang»?', o: ['Fred Hoyle, un po’ per prenderlo in giro', 'Papa Pio XII', 'Albert Einstein'], a: 0, n: 'Lo disse alla radio BBC nel 1949.' },
+  { t: 'Per Lemaître, scienza e fede…', o: ['sono in contraddizione', 'sono due vie diverse verso la verità', 'dicono la stessa cosa con parole diverse'], a: 1, n: 'Per questo sconsigliò a Pio XII di usare il Big Bang come «prova» della creazione.' }
+];
+var i = 0, score = 0, locked = false, box = document.getElementById('quiz');
+
+function head(p) {
+  return '<div class="la-row"><span class="la-meta">' + (i < Q.length ? 'Domanda ' + (i + 1) + ' di ' + Q.length : 'Risultato') + '</span><span class="la-meta">' + score + ' punti</span></div><div class="la-progress"><i style="width:' + p + '%"></i></div>';
+}
+function render() {
+  locked = false;
+  if (i >= Q.length) return end();
+  var q = Q[i];
+  box.innerHTML = head(i / Q.length * 100) + '<h2 class="la-q">' + q.t + '</h2><div class="la-choices">' +
+    q.o.map(function (o, j) { return '<button class="la-choice" data-j="' + j + '"><span class="la-key">' + 'ABC'[j] + '</span>' + o + '</button>'; }).join('') +
+    '</div><div class="la-foot"></div>';
+}
+function answer(j) {
+  if (locked) return; locked = true;
+  var q = Q[i], ok = j === q.a, btns = box.querySelectorAll('.la-choice');
+  if (ok) score++;
+  btns.forEach(function (b, k) { b.disabled = true; if (k === q.a) b.classList.add('is-right'); else if (k === j) b.classList.add('is-wrong'); else b.classList.add('is-dim'); });
+  box.querySelector('.la-progress i').style.width = ((i + 1) / Q.length * 100) + '%';
+  box.querySelectorAll('.la-meta')[1].textContent = score + ' punti';
+  box.querySelector('.la-foot').innerHTML = '<p class="la-note">' + q.n + '</p><button class="la-btn" data-next>' + (i + 1 < Q.length ? 'Avanti →' : 'Vedi il risultato') + '</button>';
+  ok ? LabArtefatto.cheer() : LabArtefatto.oops();
+}
+function end() {
+  var msg = score === Q.length ? 'Perfetto: hai capito tutto.' : score >= 2 ? 'Bene! Rileggi le note e riprova.' : 'Si parte da qui: riprova con calma.';
+  box.innerHTML = head(100) + '<div class="la-score">' + score + ' / ' + Q.length + '</div><p class="la-note">' + msg + '</p><div class="la-foot"><span></span><button class="la-btn la-btn--ghost" data-restart>Rifai il quiz</button></div>';
+  if (score === Q.length) LabArtefatto.say('Perfetto! Lemaître sarebbe fiero.');
+}
+box.addEventListener('click', function (e) {
+  var c = e.target.closest('.la-choice'); if (c) return answer(+c.dataset.j);
+  if (e.target.closest('[data-next]')) { i++; render(); }
+  if (e.target.closest('[data-restart]')) { i = 0; score = 0; render(); }
+});
+render();
+</script>
+</body>
+</html>
