@@ -1,19 +1,24 @@
 /* =====================================================================
    lab-style.css — Design system "Notte studio" per lab-irc
    ---------------------------------------------------------------------
-   Stile unico e riutilizzabile: lo usa il sito, lo possono importare le
-   lezioni e gli artefatti .html con UNA sola riga nel loro <head>:
+   Unica fonte dei token: la usa il sito (index.html) e la possono
+   importare lezioni e artefatti .html con UNA riga nel loro <head>:
 
        <link rel="stylesheet" href="../assets/lab-style.css">
 
    (regola il numero di "../" in base a dove si trova il file artefatto)
 
-   Tema SCURO di default ("Notte studio"); tema chiaro opzionale,
-   attivato mettendo  data-tema="chiaro"  sul tag <html>. L'interruttore
-   🌙/☀️ è in lab-tema.js e usa la stessa chiave dell'area verifiche.
+   Tutto è proporzionato sulla sezione aurea φ = 1,618:
+   - spaziature di Fibonacci 5·8·13·21·34·55·89·144
+   - testi in scala √φ a partire da 16px, interlinea 1,618
+   - raggi 8·13·21·34, durate 144·233·377·610·987 ms, sfasamento 89 ms
+
+   Tema SCURO di default; tema chiaro con  data-tema="chiaro"  su <html>.
+   L'interruttore 🌙/☀️ è in lab-tema.js; gli effetti di movimento in
+   lab-motion.js; l'easter egg A·M·D·G in lab-amdg.js.
    ===================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700;800&display=swap');
 
 /* ---------- NOTTE STUDIO (tema scuro, default) ---------- */
 :root{
@@ -26,49 +31,114 @@
   --lab-line-soft: #2A2739;
 
   /* testo */
-  --lab-ink:       #ECEAF5;   /* testo principale */
+  --lab-ink:       #ECEAF5;
   --lab-ink-soft:  #C7C3DA;
-  --lab-muted:     #8E89A6;   /* testo secondario */
+  --lab-muted:     #8E89A6;
 
   /* accenti */
   --lab-viola:     #8B5CF6;   /* primario */
   --lab-viola-2:   #A78BFA;
   --lab-ciano:     #22D3EE;   /* secondario */
-  --lab-ambra:     #FBBF24;   /* terziario / evidenza */
+  --lab-ambra:     #FBBF24;   /* evidenza */
   --lab-rosa:      #F472B6;
   --lab-verde:     #34D399;   /* successo */
-  --lab-rosso:     #FB7185;   /* errore / attenzione */
+  --lab-rosso:     #FB7185;   /* errore */
+  --lab-oro:       #E3C27A;   /* oro liturgico: filetti, sopratitoli, focus, spirale, AMDG */
+  --lab-oro-soft:  rgba(227,194,122,.16);
 
   --lab-brand:     var(--lab-viola);
   --lab-accent:    var(--lab-ciano);
-  --lab-on-brand:  #14131F;   /* testo sopra i colori pieni */
+  --lab-on-brand:  #14131F;
 
   /* gradienti */
   --lab-grad:      linear-gradient(135deg,#8B5CF6,#22D3EE);
   --lab-grad-warm: linear-gradient(135deg,#F472B6,#FBBF24);
   --lab-grad-soft: linear-gradient(160deg,#1E1C2E,#14131F);
 
-  /* ombre + bagliore */
-  --lab-shadow:    0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
-  --lab-shadow-lg: 0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
-  --lab-glow:      0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
-
-  /* forma + ritmo */
-  --lab-radius:    18px;
-  --lab-radius-sm: 12px;
-  --lab-radius-lg: 26px;
-
-  /* colori dei 5 anni (versione brillante per fondo scuro) */
+  /* colori dei 5 anni */
   --lab-anno-1: #FF7A59;
   --lab-anno-2: #4FB0FF;
   --lab-anno-3: #A78BFA;
   --lab-anno-4: #FB7BB5;
   --lab-anno-5: #FBBF24;
 
+  /* ombre, bagliori, focus */
+  --lab-shadow:    0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --lab-shadow-lg: 0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+  --lab-glow:      0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
+  --lab-focus-ring:0 0 0 3px rgba(139,92,246,.35);
+  --lab-btn-glow:  0 8px 21px -13px rgba(139,92,246,.60);
+  --lab-btn-glow-hover: 0 13px 34px -13px rgba(139,92,246,.75);
+  --lab-luce:      rgba(139,92,246,.16);   /* luce che segue il cursore sulle schede */
+  --lab-alone:     rgba(139,92,246,.10);   /* alone del cursore sulla pagina */
+
+  /* tipografia: serif solenne + capitali lapidarie + sans giovane */
+  --lab-font-display:     "Cormorant Garamond","Cormorant",Georgia,serif;
+  --lab-font-inscription: "Cinzel","Trajan Pro",Georgia,serif;
+  --lab-font-body:        "Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --lab-text-xs:   12.5px;
+  --lab-text-sm:   14px;
+  --lab-text-base: 16px;
+  --lab-text-md:   20.5px;
+  --lab-text-lg:   26px;
+  --lab-text-xl:   33px;
+  --lab-text-2xl:  42px;
+  --lab-text-3xl:  68px;
+  --lab-text-display-sm: clamp(23px,2.4vw,29px);
+  --lab-text-display-md: clamp(29px,3.8vw,46px);
+  --lab-text-display-lg: clamp(36px,5.4vw,60px);
+  --lab-text-hero:       clamp(46px,7.4vw,94px);
+
+  --lab-leading-tight:   1.0;
+  --lab-leading-snug:    1.08;
+  --lab-leading-normal:  1.382;
+  --lab-leading-relaxed: 1.5;
+  --lab-leading-loose:   1.618;
+
+  --lab-tracking-tight:  -0.02em;
+  --lab-tracking-normal: -0.01em;
+  --lab-tracking-wide:    0.04em;
+  --lab-tracking-widest:  0.18em;
+
+  /* spaziature di Fibonacci */
+  --lab-phi:     1.618;
+  --lab-phi-inv: 0.618;
+  --lab-space-1: 5px;
+  --lab-space-2: 8px;
+  --lab-space-3: 13px;
+  --lab-space-4: 21px;   /* padding delle card, gap, margini laterali */
+  --lab-space-5: 34px;
+  --lab-space-6: 55px;
+  --lab-space-7: 89px;   /* ritmo fra le sezioni */
+  --lab-space-8: 144px;
+
+  /* raggi di Fibonacci */
+  --lab-radius-xs:   8px;
+  --lab-radius-sm:   13px;   /* campi, icone */
+  --lab-radius:      21px;   /* card */
+  --lab-radius-lg:   34px;   /* hero, riquadri grandi */
+  --lab-radius-pill: 999px;  /* bottoni */
+
+  --lab-max-w:    1140px;
+  --lab-max-w-sm:  880px;
+  --lab-measure:   62ch;
+
+  /* movimento: calmo, mai "a molla"; entrare veloce, uscire lento */
+  --lab-ease-out:    cubic-bezier(.16,1,.3,1);
+  --lab-ease-solemn: cubic-bezier(.618,0,.382,1);
+  --lab-ease-sharp:  cubic-bezier(.4,0,.2,1);
+  --lab-dur-instant: 144ms;
+  --lab-dur-fast:    233ms;
+  --lab-dur-normal:  377ms;
+  --lab-dur-slow:    610ms;
+  --lab-dur-solemn:  987ms;
+  --lab-stagger:     89ms;
+
   color-scheme: dark;
 }
 
-/* ---------- TEMA CHIARO (opzionale) ---------- */
+/* ---------- TEMA CHIARO: pergamena calda ---------- */
 html[data-tema="chiaro"]{
   --lab-bg:        #FAF7F1;
   --lab-bg-2:      #F3EFE6;
@@ -88,13 +158,12 @@ html[data-tema="chiaro"]{
   --lab-rosa:      #DB2777;
   --lab-verde:     #0E9E86;
   --lab-rosso:     #E11D48;
+  --lab-oro:       #A67C2E;
+  --lab-oro-soft:  rgba(166,124,46,.12);
   --lab-on-brand:  #FFFFFF;
 
+  --lab-grad:      linear-gradient(135deg,#6D3FE0,#0891B2);
   --lab-grad-soft: linear-gradient(160deg,#FFFFFF,#F3EFE6);
-
-  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
-  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
-  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
 
   --lab-anno-1: #E2603B;
   --lab-anno-2: #2D7DD2;
@@ -102,71 +171,96 @@ html[data-tema="chiaro"]{
   --lab-anno-4: #C8417B;
   --lab-anno-5: #C98A1E;
 
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+  --lab-focus-ring:0 0 0 3px rgba(109,63,224,.25);
+  --lab-btn-glow:  0 8px 21px -13px rgba(109,63,224,.50);
+  --lab-btn-glow-hover: 0 13px 34px -13px rgba(109,63,224,.60);
+  --lab-luce:      rgba(109,63,224,.09);
+  --lab-alone:     rgba(166,124,46,.08);
+
   color-scheme: light;
 }
 
-/* Se l'utente non ha mai scelto, rispettiamo la preferenza di sistema
-   chiara (ma il default del sito resta "Notte studio"). */
-@media (prefers-color-scheme: light){
-  html[data-tema="auto"]{ color-scheme: light; }
-}
+/* ---------- ANIMAZIONI (durate di Fibonacci) ---------- */
+@keyframes labSu     { from{ opacity:0; transform:translateY(13px); } to{ opacity:1; transform:none; } }
+@keyframes labRise   { from{ opacity:0; transform:translateY(34px); filter:blur(8px); } to{ opacity:1; transform:none; filter:none; } }
+@keyframes labFade   { from{ opacity:0; } to{ opacity:1; } }
+@keyframes labFloaty { from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(0,-21px,0) scale(1.034); } }
+@keyframes labPulse  { 0%,100%{ opacity:1; } 50%{ opacity:.5; } }
+@keyframes labLine   { from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+@keyframes labBreath { 0%,100%{ opacity:.55; transform:scale(1); } 50%{ opacity:1; transform:scale(1.13); } }
+@keyframes labSpin   { to{ transform:rotate(360deg); } }
+@keyframes labDraw   { from{ stroke-dashoffset:var(--lab-dash,1000); } to{ stroke-dashoffset:0; } }
 
 /* ---------- BASE ---------- */
-*{ box-sizing:border-box; }
+*,*::before,*::after{ box-sizing:border-box; }
 
 body{
   margin:0;
   background:var(--lab-bg);
   color:var(--lab-ink);
-  font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
-  font-size:16px;
-  line-height:1.6;
+  font-family:var(--lab-font-body);
+  font-size:var(--lab-text-base);
+  line-height:var(--lab-leading-loose);
   -webkit-font-smoothing:antialiased;
-  transition:background .3s ease, color .3s ease;
+  transition:background var(--lab-dur-slow) ease, color var(--lab-dur-slow) ease;
 }
 
 h1,h2,h3,h4{
-  font-family:"Fraunces",Georgia,serif;
+  font-family:var(--lab-font-display);
   font-weight:600;
-  line-height:1.15;
-  letter-spacing:-.015em;
-  margin:0 0 .4em;
+  line-height:var(--lab-leading-snug);
+  letter-spacing:var(--lab-tracking-normal);
+  margin:0 0 .382em;
   color:var(--lab-ink);
+  text-wrap:balance;
 }
-h1{ font-size:clamp(30px,5vw,52px); }
-h2{ font-size:clamp(24px,3.4vw,36px); }
-h3{ font-size:clamp(19px,2.2vw,24px); }
+h1{ font-size:var(--lab-text-display-lg); }
+h2{ font-size:var(--lab-text-display-md); }
+h3{ font-size:var(--lab-text-display-sm); }
 
-p{ margin:0 0 1em; color:var(--lab-ink-soft); }
+p{ margin:0 0 1em; color:var(--lab-ink-soft); text-wrap:pretty; }
 .lab-muted{ color:var(--lab-muted); }
 .lab-piccolo{ font-size:13.5px; }
 
-a{ color:var(--lab-accent); text-decoration:none; }
-a:hover{ text-decoration:underline; }
+a{ color:var(--lab-accent); text-decoration:none; transition:color var(--lab-dur-fast) ease; }
+a:hover{ color:var(--lab-oro); }
 
-::selection{ background:rgba(139,92,246,.35); color:var(--lab-ink); }
+::selection{ background:rgba(227,194,122,.35); color:var(--lab-ink); }
+:focus-visible{ outline:1.5px solid var(--lab-oro); outline-offset:3px; border-radius:5px; }
 
-/* Titolo con riempimento a gradiente (effetto "wow" misurato) */
+/* Titolo con riempimento a gradiente (solo titoli grandi, mai sul testo) */
 .lab-grad-text{
   background:var(--lab-grad);
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; color:transparent;
 }
 
-/* Sopratitolo a lettere spaziate */
+/* Sopratitolo: capitali lapidarie Cinzel in oro, con filetto */
 .lab-eyebrow{
-  font-size:12.5px; letter-spacing:.2em; text-transform:uppercase;
-  font-weight:800; color:var(--lab-accent); margin:0 0 8px;
+  display:flex; align-items:center; gap:var(--lab-space-3);
+  font-family:var(--lab-font-inscription);
+  font-size:13px; letter-spacing:var(--lab-tracking-widest); text-transform:uppercase;
+  font-weight:600; color:var(--lab-oro); margin:0 0 var(--lab-space-3);
 }
+.lab-eyebrow::before{ content:""; width:34px; height:1px; background:currentColor; opacity:.7; flex:none; }
+
+/* Numerali romani / iscrizioni */
+.lab-iscrizione{ font-family:var(--lab-font-inscription); font-weight:600; letter-spacing:.04em; }
 
 /* ---------- LAYOUT ---------- */
-.lab-wrap{ max-width:1080px; margin:0 auto; padding:0 22px; }
+.lab-wrap{ max-width:var(--lab-max-w); margin:0 auto; padding:0 var(--lab-space-4); }
+.lab-aureo{ display:grid; grid-template-columns:minmax(0,1.618fr) minmax(0,1fr); gap:var(--lab-space-5); }
+.lab-aureo-inv{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.618fr); gap:var(--lab-space-5); }
+@media (max-width:720px){ .lab-aureo,.lab-aureo-inv{ grid-template-columns:1fr; } }
 
 /* ---------- HERO ---------- */
 .lab-hero{
   position:relative; overflow:hidden;
   border-radius:var(--lab-radius-lg);
-  padding:clamp(28px,5vw,54px);
+  padding:clamp(34px,5vw,55px);
   background:
     radial-gradient(120% 140% at 0% 0%, rgba(139,92,246,.30), transparent 55%),
     radial-gradient(120% 140% at 100% 100%, rgba(34,211,238,.22), transparent 55%),
@@ -174,7 +268,7 @@ a:hover{ text-decoration:underline; }
   box-shadow:var(--lab-shadow);
 }
 .lab-hero h1{ margin-bottom:.25em; }
-.lab-hero p{ max-width:60ch; font-size:clamp(16px,2vw,19px); }
+.lab-hero p{ max-width:60ch; font-size:clamp(16px,2vw,20.5px); }
 
 /* ---------- CARD ---------- */
 .lab-card{
@@ -182,25 +276,27 @@ a:hover{ text-decoration:underline; }
   background:var(--lab-surface);
   border:1px solid var(--lab-line);
   border-radius:var(--lab-radius);
-  padding:22px 22px 20px;
+  padding:var(--lab-space-4);
   box-shadow:var(--lab-shadow);
-  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  transition:transform var(--lab-dur-slow) var(--lab-ease-out),
+             box-shadow var(--lab-dur-normal) ease,
+             border-color var(--lab-dur-normal) ease;
 }
 .lab-card:hover{
   transform:translateY(-5px);
   box-shadow:var(--lab-shadow-lg);
-  border-color:color-mix(in srgb, var(--lab-viola) 40%, var(--lab-line));
+  border-color:color-mix(in srgb, var(--lab-viola) 38%, var(--lab-line));
 }
 /* card "anno": barretta colorata + alone */
-.lab-card.lab-anno{ --c:var(--lab-viola); padding-left:28px; }
+.lab-card.lab-anno{ --c:var(--lab-viola); padding-left:34px; }
 .lab-card.lab-anno::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--c);
+  content:""; position:absolute; left:0; top:0; bottom:0; width:7px; background:var(--c);
 }
 .lab-card.lab-anno::after{
-  content:""; position:absolute; right:-34px; top:-34px; width:130px; height:130px;
-  border-radius:50%; background:var(--c); opacity:.14; transition:.22s ease;
+  content:""; position:absolute; right:-34px; top:-34px; width:120px; height:120px;
+  border-radius:50%; background:var(--c); opacity:.07; transition:var(--lab-dur-normal) ease;
 }
-.lab-card.lab-anno:hover::after{ opacity:.22; transform:scale(1.12); }
+.lab-card.lab-anno:hover::after{ opacity:.13; transform:scale(1.13); }
 .lab-card.lab-anno:hover{ border-color:color-mix(in srgb, var(--c) 45%, var(--lab-line)); }
 
 .lab-anno-1{ --c:var(--lab-anno-1); }
@@ -210,54 +306,71 @@ a:hover{ text-decoration:underline; }
 .lab-anno-5{ --c:var(--lab-anno-5); }
 
 .lab-num{
-  font-family:"Fraunces",serif; font-weight:600; font-size:50px;
+  font-family:var(--lab-font-inscription); font-weight:600; font-size:46px;
   line-height:.9; color:var(--c,var(--lab-viola));
 }
 
 /* ---------- GRIGLIA ---------- */
-.lab-grid{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+.lab-grid{ display:grid; gap:var(--lab-space-4); grid-template-columns:repeat(auto-fit,minmax(233px,1fr)); }
 
-/* ---------- BOTTONI ---------- */
+/* ---------- BOTTONI (pillola) ---------- */
 .lab-btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  font-family:inherit; font-size:15px; font-weight:700;
-  padding:11px 22px; border-radius:999px; border:1px solid transparent;
+  position:relative; overflow:hidden; isolation:isolate;
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--lab-space-2);
+  font-family:var(--lab-font-body); font-size:15px; font-weight:700; letter-spacing:.01em;
+  padding:13px 21px; border-radius:var(--lab-radius-pill); border:1px solid transparent;
   cursor:pointer; text-decoration:none; line-height:1;
-  transition:transform .15s ease, box-shadow .2s ease, background .2s ease, filter .2s ease;
+  transition:transform var(--lab-dur-slow) var(--lab-ease-out),
+             box-shadow var(--lab-dur-normal) ease,
+             border-color var(--lab-dur-normal) ease,
+             color var(--lab-dur-fast) ease, filter var(--lab-dur-fast) ease;
 }
-.lab-btn:hover{ text-decoration:none; transform:translateY(-2px); }
-.lab-btn:active{ transform:translateY(0); }
+.lab-btn:hover{ text-decoration:none; transform:translateY(-2px); transition-duration:var(--lab-dur-fast); }
+.lab-btn:active{ transform:scale(.96); }
+.lab-btn-sm{ font-size:13.5px; padding:8px 13px; }
 
-.lab-btn-primary{
-  background:var(--lab-grad); color:#fff;
-  box-shadow:0 8px 22px -10px rgba(139,92,246,.8);
-}
-.lab-btn-primary:hover{ filter:brightness(1.08); box-shadow:0 12px 28px -10px rgba(139,92,246,.9); }
+.lab-btn-primary{ background:var(--lab-grad); color:#fff; box-shadow:var(--lab-btn-glow); }
+.lab-btn-primary:hover{ color:#fff; filter:brightness(1.08); box-shadow:var(--lab-btn-glow-hover); }
 
-.lab-btn-ghost{
-  background:transparent; color:var(--lab-ink);
-  border-color:var(--lab-line);
-}
-.lab-btn-ghost:hover{ border-color:var(--lab-viola); color:var(--lab-viola-2); }
+.lab-btn-ghost{ background:transparent; color:var(--lab-ink-soft); border-color:var(--lab-line); }
+.lab-btn-ghost:hover{ border-color:var(--lab-viola); color:var(--lab-ink); }
 
 .lab-btn-gold{ background:var(--lab-ambra); color:#3a2a06; }
-.lab-btn-gold:hover{ filter:brightness(1.06); }
+.lab-btn-gold:hover{ color:#3a2a06; filter:brightness(1.06); }
+
+.lab-btn-solenne{
+  background:transparent; color:var(--lab-oro);
+  border-color:color-mix(in srgb, var(--lab-oro) 45%, transparent);
+  font-family:var(--lab-font-inscription); text-transform:uppercase; letter-spacing:.18em; font-size:13px;
+}
+.lab-btn-solenne:hover{ color:var(--lab-oro); border-color:var(--lab-oro); background:var(--lab-oro-soft); }
+
+/* lampo di luce che attraversa i bottoni pieni */
+.lab-btn-primary::after,.lab-btn-gold::after{
+  content:""; position:absolute; top:0; bottom:0; left:-60%; width:38.2%; z-index:-1;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.38),transparent);
+  transform:skewX(-20deg); pointer-events:none;
+}
+.lab-btn-primary:hover::after,.lab-btn-gold:hover::after{ left:130%; transition:left var(--lab-dur-solemn) var(--lab-ease-out); }
 
 /* ---------- CHIP / FILTRI ---------- */
 .lab-chip{
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:13.5px; font-weight:600; padding:7px 15px; border-radius:999px;
+  display:inline-flex; align-items:center; gap:var(--lab-space-1);
+  font-family:var(--lab-font-body); font-size:13.5px; font-weight:600;
+  padding:8px 13px; border-radius:var(--lab-radius-pill);
   border:1px solid var(--lab-line); background:var(--lab-surface);
-  color:var(--lab-ink-soft); cursor:pointer; transition:.18s ease;
+  color:var(--lab-ink-soft); cursor:pointer;
+  transition:transform var(--lab-dur-fast) var(--lab-ease-out), border-color var(--lab-dur-fast) ease, color var(--lab-dur-fast) ease;
 }
-.lab-chip:hover{ border-color:var(--lab-accent); color:var(--lab-accent); }
-.lab-chip.on{ background:var(--lab-accent); border-color:var(--lab-accent); color:var(--lab-on-brand); }
+.lab-chip:hover{ border-color:var(--lab-oro); color:var(--lab-ink); transform:translateY(-2px); }
+.lab-chip:active{ transform:scale(.94); }
+.lab-chip.on{ background:var(--lab-ink); border-color:var(--lab-ink); color:var(--lab-bg); }
 
 /* ---------- BADGE ---------- */
 .lab-badge{
   display:inline-block; font-size:11.5px; font-weight:800;
   letter-spacing:.04em; text-transform:uppercase;
-  padding:4px 11px; border-radius:8px;
+  padding:5px 13px; border-radius:var(--lab-radius-xs);
   background:color-mix(in srgb, var(--lab-viola) 22%, transparent);
   color:var(--lab-viola-2);
 }
@@ -265,45 +378,53 @@ a:hover{ text-decoration:underline; }
 .lab-badge.ambra{ background:color-mix(in srgb, var(--lab-ambra) 24%, transparent); color:var(--lab-ambra); }
 .lab-badge.rosa{ background:color-mix(in srgb, var(--lab-rosa) 22%, transparent); color:var(--lab-rosa); }
 .lab-badge.verde{ background:color-mix(in srgb, var(--lab-verde) 22%, transparent); color:var(--lab-verde); }
+.lab-badge.rosso{ background:color-mix(in srgb, var(--lab-rosso) 22%, transparent); color:var(--lab-rosso); }
 
 /* ---------- NOTA / RIQUADRO INFORMATIVO ---------- */
 .lab-nota{
-  border-left:4px solid var(--lab-ambra);
+  border-left:3px solid var(--lab-ambra);
   background:color-mix(in srgb, var(--lab-ambra) 12%, var(--lab-surface));
   border-radius:0 var(--lab-radius-sm) var(--lab-radius-sm) 0;
-  padding:14px 18px; color:var(--lab-ink-soft);
+  padding:13px 21px; color:var(--lab-ink-soft);
 }
 
 /* ---------- CAMPI MODULO ---------- */
-.lab-input, .lab-select, .lab-textarea{
+.lab-input,.lab-select,.lab-textarea{
   width:100%; font-family:inherit; font-size:15px;
   color:var(--lab-ink); background:var(--lab-surface-2);
   border:1.5px solid var(--lab-line); border-radius:var(--lab-radius-sm);
-  padding:11px 14px; transition:border-color .15s ease, box-shadow .15s ease;
+  padding:13px; transition:border-color var(--lab-dur-fast) ease, box-shadow var(--lab-dur-fast) ease;
 }
-.lab-input:focus, .lab-select:focus, .lab-textarea:focus{
-  outline:none; border-color:var(--lab-viola);
-  box-shadow:0 0 0 3px rgba(139,92,246,.25);
+.lab-input:focus,.lab-select:focus,.lab-textarea:focus{
+  outline:none; border-color:var(--lab-oro);
+  box-shadow:0 0 0 3px var(--lab-oro-soft);
 }
 
 /* ---------- INTERRUTTORE TEMA 🌙/☀️ ---------- */
 #labTema{
-  position:fixed; right:16px; bottom:16px; z-index:50;
-  width:46px; height:46px; border-radius:50%;
+  position:fixed; right:21px; bottom:21px; z-index:60;
+  width:47px; height:47px; border-radius:50%;
   border:1px solid var(--lab-line); background:var(--lab-surface);
-  color:var(--lab-ink); font-size:20px; cursor:pointer;
+  color:var(--lab-ink); font-size:18px; cursor:pointer;
   box-shadow:var(--lab-shadow);
   display:grid; place-items:center;
-  transition:transform .18s ease, box-shadow .2s ease;
+  transition:transform var(--lab-dur-slow) var(--lab-ease-out), box-shadow var(--lab-dur-normal) ease;
 }
-#labTema:hover{ transform:translateY(-3px) scale(1.05); box-shadow:var(--lab-shadow-lg); }
+#labTema:hover{ transform:translateY(-3px); box-shadow:var(--lab-shadow-lg); }
 
 /* ---------- ANIMAZIONI D'INGRESSO ---------- */
-@keyframes labSu{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
-.lab-in{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) both; }
-.lab-in-2{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) .08s both; }
-.lab-in-3{ animation:labSu .5s cubic-bezier(.2,.7,.3,1) .16s both; }
+.lab-in  { animation:labRise var(--lab-dur-solemn) var(--lab-ease-out) both; }
+.lab-in-2{ animation:labRise var(--lab-dur-solemn) var(--lab-ease-out) 89ms both; }
+.lab-in-3{ animation:labRise var(--lab-dur-solemn) var(--lab-ease-out) 178ms both; }
+
+/* Apparizione allo scroll (la gestisce lab-motion.js aggiungendo .lab-visto) */
+.lab-appari{ opacity:0; transform:translateY(21px); filter:blur(6px);
+  transition:opacity var(--lab-dur-solemn) var(--lab-ease-out),
+             transform var(--lab-dur-solemn) var(--lab-ease-out),
+             filter var(--lab-dur-solemn) var(--lab-ease-out); }
+.lab-appari.lab-visto{ opacity:1; transform:none; filter:none; }
 
 @media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important; }
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  .lab-appari{ opacity:1; transform:none; filter:none; }
 }

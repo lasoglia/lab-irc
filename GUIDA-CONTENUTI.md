@@ -28,15 +28,31 @@ a destra c'è un pulsante **🌙 / ☀️**: chi preferisce passa al **tema chia
 un clic. La scelta resta salvata su quel dispositivo (vale anche per le verifiche).
 
 I colori, i font e i "mattoncini" grafici stanno in un unico file riutilizzabile,
-`assets/lab-style.css`. Puoi vedere tutto lo stile dal vivo in
-`assets/anteprima-stile.html`.
+`assets/lab-style.css`. Tutto è proporzionato sulla **sezione aurea** (φ = 1,618):
+spaziature di Fibonacci (5·8·13·21·34·55·89), titoli in scala aurea, colonne
+1,618 : 1, durate delle animazioni 144–987 ms. Tre caratteri: **Cormorant
+Garamond** per i titoli, **Cinzel** (capitali romane) per sopratitoli e numeri
+degli anni, **Figtree** per il testo. L'**oro** (`--lab-oro`) si usa solo per
+filetti e dettagli solenni.
+
+Gli effetti di movimento stanno in `assets/lab-motion.js` (luce che segue il
+cursore, schede che si inclinano, pulsanti "magnetici", apparizione allo scroll,
+spirale aurea): esistono solo con il mouse, mai su telefono, e si spengono se nel
+sistema è attivo "riduci movimento".
+
+C'è anche un piccolo segreto, in `assets/lab-amdg.js`: **A·M·D·G** (*Ad maiorem
+Dei gloria*). Si rivela scrivendo `amdg`, cliccando 7 volte il logo, cliccando la
+stella ✦ al centro della spirale o il marchio quasi invisibile al centro del
+footer. Non va pubblicizzato: è un dono per chi lo scopre.
 
 **Per gli artefatti/lezioni `.html` che costruiamo insieme:** ereditano lo stesso
-look (e l'interruttore tema) aggiungendo due righe nel loro `<head>`/fine `<body>`:
+look (e l'interruttore tema) aggiungendo queste righe nel loro `<head>`/fine `<body>`:
 
 ```html
 <link rel="stylesheet" href="../assets/lab-style.css">
 <script src="../assets/lab-tema.js"></script>
+<script src="../assets/lab-motion.js"></script>   <!-- facoltativo: movimento -->
+<script src="../assets/lab-amdg.js"></script>     <!-- facoltativo: A·M·D·G -->
 ```
 
 (regola il numero di `../` in base a dove si trova il file). Così non serve più
