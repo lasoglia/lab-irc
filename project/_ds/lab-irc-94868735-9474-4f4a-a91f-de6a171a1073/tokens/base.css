@@ -1,0 +1,15 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--lab-bg); color: var(--lab-ink); font-family: var(--lab-font-body); font-size: var(--lab-text-base); line-height: var(--lab-leading-loose); -webkit-font-smoothing: antialiased; transition: background var(--lab-dur-slow) ease, color var(--lab-dur-slow) ease; }
+h1, h2, h3, h4 { font-family: var(--lab-font-display); font-weight: var(--lab-weight-semibold); line-height: var(--lab-leading-snug); letter-spacing: var(--lab-tracking-normal); margin: 0 0 .382em; color: var(--lab-ink); text-wrap: balance; }
+h1 { font-size: var(--lab-text-display-lg); }
+h2 { font-size: var(--lab-text-display-md); }
+h3 { font-size: var(--lab-text-display-sm); }
+p { margin: 0 0 1em; color: var(--lab-ink-soft); text-wrap: pretty; }
+a { color: var(--lab-accent); text-decoration: none; transition: color var(--lab-dur-fast) ease; }
+a:hover { color: var(--lab-oro); }
+::selection { background: rgba(227,194,122,.35); color: var(--lab-ink); }
+:focus-visible { outline: 1.5px solid var(--lab-oro); outline-offset: 3px; border-radius: 5px; }
+.lab-grad-text { background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.lab-eyebrow { font-family: var(--lab-font-inscription); font-size: var(--lab-eyebrow-size); letter-spacing: var(--lab-eyebrow-spacing); text-transform: uppercase; font-weight: var(--lab-eyebrow-weight); color: var(--lab-oro); margin: 0 0 13px; }
+.lab-wrap { max-width: var(--lab-max-w); margin: 0 auto; padding: 0 var(--lab-space-4); }

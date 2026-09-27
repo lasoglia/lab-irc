@@ -1,0 +1,49 @@
+/* =====================================================================
+   Lab IRC Design System — Light Theme Overrides
+   Activate by setting data-tema="chiaro" on <html>.
+   The JS toggle (assets/lab-tema.js) handles persistence via localStorage.
+   ===================================================================== */
+html[data-tema="chiaro"] {
+  /* ---- Surfaces ---- */
+  --lab-bg:        #FAF7F1;   /* warm parchment background */
+  --lab-bg-2:      #F3EFE6;
+  --lab-surface:   #FFFFFF;
+  --lab-surface-2: #FBF8F2;
+  --lab-line:      #E7E0D2;
+  --lab-line-soft: #EFEADD;
+
+  /* ---- Text ---- */
+  --lab-ink:       #1B1822;
+  --lab-ink-soft:  #39333F;
+  --lab-muted:     #6A6472;
+
+  /* ---- Accents (slightly deeper for light bg contrast) ---- */
+  --lab-viola:     #6D3FE0;
+  --lab-viola-2:   #7C3AED;
+  --lab-ciano:     #0891B2;
+  --lab-ambra:     #C8941E;
+  --lab-rosa:      #DB2777;
+  --lab-verde:     #0E9E86;
+  --lab-rosso:     #E11D48;
+  --lab-oro:       #A67C2E;
+  --lab-oro-soft:  rgba(166,124,46,.12);
+  --lab-on-brand:  #FFFFFF;
+
+  /* ---- Gradients ---- */
+  --lab-grad-soft: linear-gradient(160deg, #FFFFFF, #F3EFE6); /* @kind color */
+
+  /* ---- Shadows (lighter for bright surfaces) ---- */
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+  --lab-focus-ring: 0 0 0 3px rgba(109,63,224,.25);
+
+  /* ---- Year colours (muted for light background) ---- */
+  --lab-anno-1:    #E2603B;
+  --lab-anno-2:    #2D7DD2;
+  --lab-anno-3:    #6A4FB0;
+  --lab-anno-4:    #C8417B;
+  --lab-anno-5:    #C98A1E;
+
+  color-scheme: light;
+}

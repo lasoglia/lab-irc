@@ -1,0 +1,5 @@
+/* Lab IRC — Webfonts (Google Fonts CDN).
+   Cormorant Garamond — display serif, liturgical-book feel (titles, quotes)
+   Cinzel — Roman inscription capitals (eyebrows, numerals, AMDG)
+   Figtree — friendly, youthful sans (body + UI) */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700;800&display=swap');
