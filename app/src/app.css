@@ -13,6 +13,11 @@ a:hover{ color:var(--lab-oro); }
 body.viewing{ overflow:hidden; }
 body.viewing .lab-app, body.viewing .lab-tema, body.viewing .lab-alone{ display:none; }
 
+/* schede degli anni: tutte alte uguali nella stessa riga
+   (il testo più lungo non deve allungare solo la sua) */
+.lab-anni > *{ display:flex; flex-direction:column; }
+.lab-anni > * > *{ flex:1 1 auto; }
+
 /* ---------- telefono e tablet ---------- */
 @media (max-width:720px){
   .lab-bar{ gap:8px !important; }
