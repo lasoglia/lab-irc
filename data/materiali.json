@@ -85,6 +85,15 @@
       "lezione": "Credo, non credo, non sò",
       "tipo": "Documento/PDF",
       "file": "/uploads/i-1-1-credo-non-credo-non-so-fascicolo.pdf"
+    },
+    {
+      "in_evidenza": false,
+      "titolo": "Lez. Interattiva - Credo, non credo, non sò",
+      "anno": "1",
+      "uda": "L'uomo che cerca oltre il senso religioso",
+      "lezione": "Credo, non credo, non sò",
+      "tipo": "Artefatto interattivo",
+      "file": "/uploads/i-1-1-credo-non-credo-non-so-artefatto.html"
     }
   ]
 }
