@@ -11,9 +11,9 @@
      Default = scuro ("Notte studio"). Chiave condivisa con artefatti e verifiche. -->
 <script>try{var t=localStorage.getItem('tema_lab');if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+<!-- Font del design ospitati nel sito (niente Google Fonts): si scaricano subito i due più usati -->
+<link rel="preload" href="design-system/fonts/figtree-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="design-system/fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- Design system esportato da Claude Design (token, colori, sezione aurea) -->
 <link rel="stylesheet" href="design-system/styles.css">
@@ -28,7 +28,7 @@
 
 <!-- Il sito (React + componenti del design system), già pronto: nessuna
      libreria da internet. Per modificarlo: app/src/, poi "npm run build" in app/. -->
-<script src="assets/app.js"></script>
+<script type="module" src="assets/app.js"></script>
 
 </body>
 </html>

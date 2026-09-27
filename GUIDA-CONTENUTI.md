@@ -39,6 +39,15 @@ Gli effetti legati al cursore (rosone che si illumina, schede che si inclinano,
 pulsanti "magnetici") esistono solo con il mouse: su telefono le schede restano
 ferme, niente "flash". Se nel sistema è attivo "riduci movimento" si spengono.
 
+Nelle pagine del **quinto anno** la mascotte **Terra è in 3D**: gira piano,
+segue il cursore con lo sguardo, si può ruotare trascinandola e, se la tocchi,
+saluta (al settimo tocco… A·M·D·G). Quando arriveranno i modelli 3D delle altre
+mascotte basterà darli a Claude: si aggiungono nello stesso modo.
+
+I **font** (Cormorant Garamond, Cinzel, Figtree) sono salvati dentro il sito e
+non vengono più scaricati da Google: il sito funziona anche se la rete della
+scuola blocca siti esterni, e nessun dato di chi visita va a terzi.
+
 **Quando cambi il design su Claude Design:** esporta di nuovo lo zip e dallo a
 Claude: si sostituisce la cartella `design-system/` e si rigenera il sito.
 I contenuti che carichi da Decap non ne sono toccati.
