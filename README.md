@@ -5,7 +5,7 @@ Quiz, Vero o falso, Flashcard, Memory, Abbinamenti, Categorie, Linea del tempo,
 Completa, Cruciverba, Sfida a squadre, Sondaggio, Riflessione.
 
 - `kit/`: stili e motore dei giochi (token del design system, `lab-artefatto`, `giochi`, `giochi-2`)
-- `lezioni/`: i contenuti, un file per lezione
+- `lezioni/`: i contenuti. `<lezione>.js` sono i dati dei giochi, `<lezione>.html` le lezioni interattive
 - `giochi.html`: la pagina. Si apre così com'è per lavorarci, perché carica i file separati
 - `build.py`: crea un unico file `.html` autonomo, da caricare sul sito
 - `dist/`: i file pronti da caricare
@@ -16,6 +16,15 @@ Completa, Cruciverba, Sfida a squadre, Sondaggio, Riflessione.
    Se togli un gioco, la sua scheda sparisce.
 2. `python3 build.py lezioni/<nuova-lezione>.js`
 3. Carica `dist/giochi-<nuova-lezione>.html` dal Pannello: Materiali → Tipo "Artefatto interattivo".
+
+## Lezioni interattive
+
+`python3 build.py lezioni/<lezione>.html` crea `dist/lezione-<lezione>.html`: un file unico da caricare nello stesso modo.
+
+| Lezione | Lezione interattiva | Giochi |
+|---|---|---|
+| II · UDA 1 · L1 «Sotto l’aquila» | `dist/lezione-sotto-l-aquila.html` | `dist/giochi-sotto-l-aquila.html` |
+| III · «Religiosità, teisti, agnostici e atei» | | `dist/giochi-religiosita-teisti-agnostici-atei.html` |
 
 Il design originale da Claude Design è in `project/` e `chats/`.
 

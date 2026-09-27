@@ -68,7 +68,7 @@ a{color:var(--g-a)}a:hover{color:var(--lab-oro)}
 .g-flash .g-actions .g-btn{flex:1}
 /* cruciverba */
 .g-cruci{display:grid;grid-template-columns:auto minmax(0,1fr);gap:34px;align-items:start}
-.g-grid{--s:clamp(32px,6vw,50px);display:grid;grid-template-columns:repeat(var(--cols),var(--s));grid-auto-rows:var(--s);gap:3px}
+.g-grid{--s:min(clamp(32px,6vw,50px),calc((100vw - 110px) / var(--cols)));display:grid;grid-template-columns:repeat(var(--cols),var(--s));grid-auto-rows:var(--s);gap:3px}
 .g-grid.is-shake{animation:gShake 377ms}
 .g-cell{position:relative;display:block;border-radius:4px;background:var(--g-panel-2);border:1.5px solid var(--g-line);transition:background 233ms,border-color 233ms}
 .g-cell.is-void{background:none;border:0}

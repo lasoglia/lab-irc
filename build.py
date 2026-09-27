@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Costruisce un artefatto di giochi in un unico file .html, pronto da caricare sul sito.
+"""Costruisce un artefatto in un unico file .html, pronto da caricare sul sito.
 
-Uso:  python3 build.py lezioni/<lezione>.js   →   dist/giochi-<lezione>.html
+Uso:  python3 build.py lezioni/<lezione>.js     →   dist/giochi-<lezione>.html   (i giochi, con quei dati)
+      python3 build.py lezioni/<lezione>.html   →   dist/lezione-<lezione>.html  (una lezione interattiva)
 
 Il sito apre gli artefatti in un visore isolato e accetta un solo file: per questo
-fogli di stile, script e dati della lezione vengono incorporati nella pagina.
+fogli di stile e script locali (e i dati della lezione) vengono incorporati nella pagina.
 """
 import pathlib
 import re
@@ -13,21 +14,32 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent
 
 
-def build(lezione):
-    lezione = pathlib.Path(lezione).resolve()
-    html = (ROOT / 'giochi.html').read_text(encoding='utf-8')
+def inline(page, data=None):
+    """Incorpora nella pagina i <link rel="stylesheet"> e gli <script src> locali.
+    Se `data` è indicato, sostituisce lo script marcato con data-lezione."""
+    base = page.parent
+    html = page.read_text(encoding='utf-8')
 
     def css(m):
-        return '<style>\n' + (ROOT / m.group(1)).read_text(encoding='utf-8').strip() + '\n</style>'
+        return '<style>\n' + (base / m.group(1)).read_text(encoding='utf-8').strip() + '\n</style>'
 
     def js(m):
-        src = lezione if 'data-lezione' in m.group(0) else ROOT / m.group(1)
+        src = data if data and 'data-lezione' in m.group(0) else base / m.group(1)
         code = src.read_text(encoding='utf-8').strip().replace('</script', '<\\/script')
         return '<script>\n' + code + '\n</script>'
 
-    html = re.sub(r'<link rel="stylesheet" href="(kit/[^"]+)">', css, html)
-    html = re.sub(r'<script src="([^"]+)"[^>]*></script>', js, html)
-    out = ROOT / 'dist' / ('giochi-' + lezione.stem + '.html')
+    html = re.sub(r'<link rel="stylesheet" href="((?!https?:)[^"]+)">', css, html)
+    html = re.sub(r'<script src="((?!https?:)[^"]+)"[^>]*></script>', js, html)
+    return html
+
+
+def build(src):
+    src = pathlib.Path(src).resolve()
+    if src.suffix == '.html':
+        html, name = inline(src), 'lezione-' + src.stem
+    else:
+        html, name = inline(ROOT / 'giochi.html', src), 'giochi-' + src.stem
+    out = ROOT / 'dist' / (name + '.html')
     out.parent.mkdir(exist_ok=True)
     out.write_text(html, encoding='utf-8')
     return out

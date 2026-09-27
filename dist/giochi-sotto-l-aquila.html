@@ -544,97 +544,103 @@ html[data-tema="chiaro"] body[data-skin="arcade"]::before{opacity:.25}
 <main id="game"></main>
 </div>
 <script>
-/* Lab IRC — Dati della lezione. Per un'altra lezione: copia questo file, cambia i contenuti
-   e ricostruisci con  python3 build.py lezioni/<nome>.js
-   Un gioco senza dati non compare tra le schede. */
+/* Lab IRC — Dati della lezione. Classe II · UDA 1 «Gesù: quali tracce?» · Lezione 1 «Sotto l’aquila».
+   Contenuti tratti dal fascicolo dello studente. Ricostruisci con  python3 build.py lezioni/sotto-l-aquila.js */
 window.GIOCHI_DATI = {
-  tema: 'Religiosità, teisti, agnostici e atei',
-  anno: 3,
+  tema: 'Sotto l’aquila · Il mondo di Gesù',
+  anno: 2,
   flash: [
-    ['Religiosità', 'L’apertura dell’uomo al mistero e alle domande di senso, prima di ogni religione.'],
-    ['Religione', 'La forma organizzata – credenze, riti, comunità – con cui l’uomo si rapporta al divino.'],
-    ['Teismo', 'Fede in un Dio personale e creatore, che si prende cura del mondo.'],
-    ['Deismo', 'Dio esiste e ha creato il mondo, ma non interviene nella storia.'],
-    ['Agnosticismo', 'La ragione non può né dimostrare né negare l’esistenza di Dio.'],
-    ['Ateismo teorico', 'Nega esplicitamente, con argomenti, che Dio esista.'],
-    ['Ateismo pratico', 'Si vive come se Dio non ci fosse, senza porsi la questione.'],
-    ['Panteismo', 'Dio coincide con la natura, con il tutto.']
+    ['Prefetto', 'Il funzionario romano che amministra direttamente la Giudea: al tempo di Gesù è Ponzio Pilato.'],
+    ['Tetrarca', 'Signore di una parte del territorio, come Erode Antipa in Galilea e Perea.'],
+    ['Sinedrio', 'Il consiglio di Gerusalemme, presieduto dal sommo sacerdote, che regola le questioni religiose e giudiziarie sotto il controllo romano.'],
+    ['Farisei', 'Studiosi e interpreti della Legge, stimati dal popolo; credono nella risurrezione.'],
+    ['Sadducei', 'Pochi ma potenti, legati al Tempio e al sacerdozio; negano la risurrezione.'],
+    ['Esseni', 'Vivono in comunità, mettono in comune i beni e si tengono a distanza dal Tempio.'],
+    ['«Quarta filosofia»', 'La corrente di Giuda il Galileo: nessun signore se non Dio, quindi nessun tributo a Roma.'],
+    ['Scribi', 'Non un partito ma una professione: gli esperti della Legge, di correnti diverse.'],
+    ['Incarnazione', 'Il Figlio di Dio entra nella storia umana: in un popolo, in una terra, in un’epoca.']
   ],
   cruci: {
-    rows: 10, cols: 9,
+    rows: 11, cols: 10,
     words: [
-      { n: 1, dir: 'v', r: 0, c: 3, w: 'SACRO', clue: 'Ciò che è separato e riservato al divino' },
-      { n: 2, dir: 'v', r: 2, c: 8, w: 'DIO', clue: 'L’Essere supremo delle religioni monoteiste' },
-      { n: 3, dir: 'o', r: 4, c: 0, w: 'AGNOSTICO', clue: 'Sospende il giudizio: non si può sapere se Dio esista' },
-      { n: 3, dir: 'v', r: 4, c: 0, w: 'ATEO', clue: 'Nega l’esistenza di Dio' },
-      { n: 4, dir: 'v', r: 4, c: 5, w: 'TEISTA', clue: 'Crede in un Dio personale che ama il mondo' }
+      { n: 1, dir: 'o', r: 0, c: 4, w: 'ESSENI', clue: 'Vivono in comunità e mettono in comune i beni' },
+      { n: 2, dir: 'v', r: 0, c: 5, w: 'SINEDRIO', clue: 'Il consiglio presieduto dal sommo sacerdote' },
+      { n: 3, dir: 'v', r: 2, c: 8, w: 'TIBERIO', clue: 'L’imperatore dal 14 al 37 d.C.' },
+      { n: 4, dir: 'o', r: 3, c: 4, w: 'TEMPIO', clue: 'Sulla sua grande porta Erode fece porre l’aquila d’oro' },
+      { n: 5, dir: 'v', r: 4, c: 1, w: 'GALILEA', clue: 'La regione di Nazaret e Cafarnao' },
+      { n: 6, dir: 'o', r: 5, c: 4, w: 'ERODE', clue: '… Antipa, tetrarca della Galilea e della Perea' },
+      { n: 7, dir: 'v', r: 6, c: 3, w: 'CAIFA', clue: 'Sommo sacerdote in carica, genero di Anna' },
+      { n: 8, dir: 'o', r: 7, c: 0, w: 'PILATO', clue: 'Prefetto della Giudea dal 26 al 36' },
+      { n: 9, dir: 'o', r: 10, c: 3, w: 'AQUILA', clue: 'Quella d’oro fu abbattuta a colpi d’ascia' }
     ]
   },
   sfida: [
-    { q: 'Chi afferma che la ragione non può stabilire se Dio esista?', a: ['L’agnostico', 'L’ateo', 'Il teista', 'Il deista'], ok: 0 },
-    { q: 'Il deista crede in un Dio che…', a: ['crea il mondo ma non interviene', 'si rivela nella storia', 'coincide con la natura', 'non esiste'], ok: 0 },
-    { q: 'Religiosità e religione sono la stessa cosa.', a: ['Vero', 'Falso'], ok: 1 },
-    { q: '«Ateo» viene dal greco a-theos. Significa…', a: ['senza Dio', 'contro gli dèi', 'oltre Dio', 'prima di Dio'], ok: 0 },
-    { q: 'Chi vive come se Dio non esistesse, senza negarlo, pratica un ateismo…', a: ['teorico', 'pratico', 'militante', 'scientifico'], ok: 1 },
-    { q: 'Il panteismo identifica Dio con…', a: ['la ragione', 'la natura, il tutto', 'la comunità', 'nessuna cosa'], ok: 1 },
-    { q: 'Teista è chi…', a: ['sospende il giudizio', 'nega Dio', 'crede in un Dio personale', 'crede in molti dèi'], ok: 2 },
-    { q: 'Pascal distingue il «Dio dei filosofi» dal «Dio di Abramo». Cioè…', a: ['due religioni diverse', 'politeismo e monoteismo', 'Dio pensato e Dio che si rivela', 'fede e superstizione'], ok: 2 }
+    { q: 'Chi racconta l’episodio dell’aquila d’oro sul Tempio?', a: ['Giuseppe Flavio', 'L’evangelista Luca', 'San Paolo', 'Tiberio'], ok: 0 },
+    { q: 'Secondo i maestri Giuda e Mattia, l’aquila violava il comando di…', a: ['non uccidere', 'non farsi immagini (Es 20,4)', 'santificare il sabato', 'non rubare'], ok: 1 },
+    { q: 'Che cosa fece entrare Pilato di notte a Gerusalemme?', a: ['Una statua di Tiberio', 'Le insegne con l’effigie dell’imperatore', 'Monete d’oro', 'Un’aquila d’argento'], ok: 1 },
+    { q: 'Dove risiedeva il prefetto Pilato?', a: ['A Gerusalemme', 'A Cesarea', 'A Nazaret', 'A Roma'], ok: 1 },
+    { q: 'Chi fa uccidere Giovanni Battista?', a: ['Ponzio Pilato', 'Erode Antipa', 'Caifa', 'Filippo'], ok: 1 },
+    { q: 'Anna, che conserva grande autorità, è per Caifa…', a: ['il padre', 'il suocero', 'il maestro', 'il prefetto'], ok: 1 },
+    { q: 'A quale ambiente molti studiosi collegano i manoscritti di Qumran?', a: ['Farisei', 'Sadducei', 'Esseni', 'Scribi'], ok: 2 },
+    { q: 'Dove Gesù, di sabato, «si alzò a leggere» (Lc 4,16)?', a: ['Nel Tempio di Gerusalemme', 'Nella sinagoga di Nazaret', 'Sulla riva del lago', 'Nel palazzo di Erode'], ok: 1 }
   ],
   rifl: {
-    domanda: 'Oggi, dove ti collochi?',
-    poli: ['Credo', 'Non so', 'Non credo'],
-    spunto: 'Che cosa ti fa pensare così? Un’esperienza, una domanda, una persona…'
+    domanda: 'Quanto ti fidi di una frase letta senza contesto?',
+    poli: ['Mi fido', 'Dipende', 'Verifico sempre'],
+    spunto: 'Pensa a una frase, antica o recente, che hai capito solo dopo aver saputo dove, quando e fra chi era stata detta.'
   },
   quiz: [
-    { q: 'Che cosa indica la parola «religiosità»?', a: ['Andare a Messa ogni domenica', 'L’apertura dell’uomo alle domande di senso', 'Appartenere a una Chiesa', 'Credere nei miracoli'], ok: 1, why: 'Viene prima di ogni religione: è la domanda sul senso che ogni persona si porta dentro.' },
-    { q: 'Chi ha coniato il termine «agnostico» nel 1869?', a: ['Friedrich Nietzsche', 'Blaise Pascal', 'Thomas H. Huxley', 'Tommaso d’Aquino'], ok: 2, why: 'Il biologo inglese Huxley lo usò per chi ritiene inconoscibile l’esistenza di Dio.' },
-    { q: 'Per Feuerbach Dio è…', a: ['una proiezione dei desideri dell’uomo', 'il motore immobile', 'la natura stessa', 'una scommessa ragionevole'], ok: 0, why: 'L’uomo attribuisce a Dio le sue qualità migliori: per Feuerbach la teologia è antropologia.' },
-    { q: 'La «scommessa» di Pascal invita a…', a: ['non pensarci', 'puntare sull’esistenza di Dio', 'dimostrare Dio con la scienza', 'restare agnostici'], ok: 1, why: 'Se Dio c’è si guadagna tutto; se non c’è non si perde nulla.' },
-    { q: 'Quale di queste frasi è di un teista?', a: ['«Non lo sapremo mai»', '«Dio ha creato e poi si è ritirato»', '«Dio mi conosce e mi ama»', '«Dio è tutto ciò che esiste»'], ok: 2, why: 'Il teista crede in un Dio personale, in relazione con l’uomo.' }
+    { q: 'Chi governa la Giudea per conto di Roma quando Gesù predica?', a: ['Erode Antipa', 'Ponzio Pilato', 'Caifa', 'Filippo'], ok: 1, why: 'Pilato è prefetto dal 26 al 36. Il suo nome e il titolo compaiono su una pietra trovata a Cesarea Marittima nel 1961.' },
+    { q: 'Nazaret e Cafarnao si trovano…', a: ['in Giudea, sotto il prefetto romano', 'in Galilea, sotto Erode Antipa', 'nell’Iturea, sotto Filippo', 'a Cesarea, sotto il Sinedrio'], ok: 1, why: 'La Galilea è governata da un principe ebreo alleato di Roma; la Giudea direttamente da un funzionario romano.' },
+    { q: 'Perché la domanda sul tributo a Cesare (Mc 12,14) era una trappola?', a: ['Gesù non aveva denaro con sé', 'Con il «sì» sembrava complice di Roma, con il «no» un ribelle', 'I Romani non chiedevano tributi', 'Era una domanda sui sacrifici del Tempio'], ok: 1, why: 'Nel 6 d.C. il censimento romano aveva scatenato la rivolta di Giuda il Galileo: pagare sembrava accettare la schiavitù.' },
+    { q: 'Che cosa significa «nato sotto la Legge» (Gal 4,4)?', a: ['Nato sotto l’impero romano', 'Gesù è un ebreo', 'Nato durante un processo', 'Nato in Giudea'], ok: 1, why: 'È circonciso, prega con i salmi, va al Tempio per le feste, legge nella sinagoga di Nazaret.' },
+    { q: 'Che cosa afferma Nostra aetate n. 4 (1965)?', a: ['Gesù non era ebreo', 'La passione non può essere imputata a tutti gli Ebrei di allora né a quelli di oggi', 'Gli apostoli non erano ebrei', 'Il Tempio non aveva importanza'], ok: 1, why: 'Il Concilio ricorda che dal popolo ebraico sono nati Cristo secondo la carne e gli apostoli.' }
   ],
   vf: [
-    { s: 'L’agnostico nega l’esistenza di Dio.', v: false, why: 'Non nega: sospende il giudizio.' },
-    { s: 'Il deismo si diffonde con l’Illuminismo.', v: true, why: 'Voltaire e altri pensano a un Dio «orologiaio» che non interviene.' },
-    { s: 'Religiosità e religione sono sinonimi.', v: false, why: 'La religiosità è la domanda, la religione una risposta organizzata.' },
-    { s: '«Dio è morto» è una frase di Nietzsche.', v: true, why: 'Compare ne «La gaia scienza» (1882).' },
-    { s: 'Si può essere atei «pratici» pur dicendosi credenti.', v: true, why: 'Succede quando la fede non incide sulla vita.' },
-    { s: 'Il panteismo crede in un Dio distinto dal mondo.', v: false, why: 'Per il panteismo Dio e il mondo coincidono.' }
+    { s: 'L’aquila d’oro sul Tempio fu fatta collocare da Ponzio Pilato.', v: false, why: 'Fu Erode il Grande, negli ultimi mesi della sua vita (morì nel 4 a.C.).' },
+    { s: 'Il nome di Pilato è inciso su una pietra trovata a Cesarea Marittima.', v: true, why: 'Rinvenuta nel 1961 nel teatro, oggi è all’Israel Museum di Gerusalemme.' },
+    { s: 'Gli scribi erano un partito religioso, come i farisei.', v: false, why: 'Erano una professione: esperti della Legge, anche di correnti diverse.' },
+    { s: 'Sulla risurrezione Gesù è d’accordo con i sadducei.', v: false, why: 'Sostiene contro i sadducei la stessa posizione dei farisei (Mc 12,18-27).' },
+    { s: 'Pilato rinvia Gesù a Erode perché era sotto la sua autorità.', v: true, why: 'Gesù veniva dalla Galilea, governata da Erode Antipa (Lc 23,7).' },
+    { s: 'Gesù era ebreo, ed ebrei erano i suoi discepoli.', v: true, why: 'Ebrea era anche la prima comunità di Gerusalemme.' }
   ],
   abbina: [
-    ['Teista', 'Dio c’è ed è una Persona'],
-    ['Ateo', 'Dio non c’è'],
-    ['Agnostico', 'Non si può sapere'],
-    ['Deista', 'Dio ha creato, poi si è ritirato'],
-    ['Panteista', 'Dio è tutto ciò che esiste']
+    ['Tiberio', 'Imperatore dal 14 al 37 d.C.'],
+    ['Ponzio Pilato', 'Prefetto della Giudea dal 26 al 36'],
+    ['Erode Antipa', 'Tetrarca della Galilea e della Perea'],
+    ['Filippo', 'Tetrarca dell’Iturea e della Traconitide'],
+    ['Caifa', 'Sommo sacerdote in carica']
   ],
   seq: [
-    { t: 'Protagora: «Degli dèi non posso sapere né che sono né che non sono»', y: 'V sec. a.C.' },
-    { t: 'Tommaso d’Aquino propone le «cinque vie» verso Dio', y: 'XIII sec.' },
-    { t: 'Pascal scrive la «scommessa» nei Pensieri', y: '1670' },
-    { t: 'Feuerbach: Dio è proiezione dell’uomo', y: '1841' },
-    { t: 'Huxley conia la parola «agnostico»', y: '1869' },
-    { t: 'Nietzsche annuncia «Dio è morto»', y: '1882' }
+    { t: 'Muore Erode il Grande, poco dopo l’abbattimento dell’aquila d’oro', y: '4 a.C.' },
+    { t: 'Roma prende il controllo diretto della Giudea: censimento e rivolta di Giuda il Galileo', y: '6 d.C.' },
+    { t: 'Tiberio diventa imperatore', y: '14 d.C.' },
+    { t: 'Ponzio Pilato diventa prefetto della Giudea', y: '26 d.C.' },
+    { t: 'Quindicesimo anno di Tiberio: la parola di Dio viene su Giovanni', y: '28–29 d.C.' },
+    { t: 'Inizia la rivolta giudaica contro Roma', y: '66 d.C.' },
+    { t: 'A Cesarea Marittima si trova l’iscrizione di Pilato', y: '1961' },
+    { t: 'Il Concilio Vaticano II approva Nostra aetate', y: '1965' }
   ],
   cat: {
-    bins: ['Teista', 'Agnostico', 'Ateo'],
+    bins: ['Roma', 'Principi locali', 'Autorità religiosa'],
     items: [
-      ['Prego perché qualcuno mi ascolta', 0], ['La ragione non basta a decidere', 1], ['L’universo si spiega da solo', 2],
-      ['Dio si è fatto vicino all’uomo', 0], ['Forse sì, forse no: non lo sapremo', 1], ['Dio è un’invenzione umana', 2],
-      ['La vita ha un senso perché è donata', 0], ['Mancano prove in un senso e nell’altro', 1], ['Dopo la morte non c’è nulla', 2]
+      ['Tiberio Cesare', 0], ['Ponzio Pilato', 0], ['Il prefetto della Giudea', 0],
+      ['Erode Antipa', 1], ['Filippo', 1], ['Lisania', 1],
+      ['Anna', 2], ['Caifa', 2], ['Il Sinedrio', 2]
     ]
   },
   memory: [
-    ['Teismo', 'Dio personale'], ['Deismo', 'Dio orologiaio'], ['Agnosticismo', 'Non si può sapere'],
-    ['Ateismo', 'Dio non c’è'], ['Panteismo', 'Dio è tutto'], ['Religiosità', 'Domanda di senso']
+    ['Tiberio', 'Imperatore'], ['Pilato', 'Prefetto'], ['Antipa', 'Tetrarca'],
+    ['Caifa', 'Sommo sacerdote'], ['Farisei', 'Sì alla risurrezione'], ['Sadducei', 'No alla risurrezione']
   ],
   completa: {
-    testo: 'La {religiosità} è l’apertura dell’uomo al mistero. Chi crede in un Dio personale è {teista}; chi nega che Dio esista è {ateo}; chi ritiene che la ragione non possa decidere è {agnostico}. Quest’ultima parola fu coniata da {Huxley} nel 1869.',
-    extra: ['deista', 'Nietzsche', 'religione']
+    testo: 'Nell’anno quindicesimo dell’impero di {Tiberio} Cesare, mentre Ponzio {Pilato} era governatore della {Giudea}, {Erode} tetrarca della {Galilea}, e Filippo, suo fratello, tetrarca dell’Iturea e della Traconitide, e Lisania tetrarca dell’Abilene, sotto i sommi sacerdoti Anna e {Caifa}, la parola di Dio venne su {Giovanni}, figlio di Zaccaria, nel deserto. (Lc 3,1-2)',
+    extra: ['Augusto', 'Samaria', 'Nerone']
   },
   sondaggio: [
-    { q: 'Si può essere felici senza Dio?', a: ['Sì', 'No', 'Non so', 'Dipende'], dibattito: 'Che cosa intendiamo per «felicità»? Basta stare bene?' },
-    { q: 'La scienza rende inutile la fede?', a: ['Sì', 'No', 'In parte'], dibattito: 'Scienza e fede rispondono alle stesse domande?' },
-    { q: 'Il dubbio è nemico della fede?', a: ['Sì', 'No', 'Non so'], dibattito: 'Pensate a un personaggio biblico che ha dubitato.' }
+    { q: 'Ti è mai capitato di fraintendere un messaggio perché mancava il contesto?', a: ['Sì, spesso', 'Qualche volta', 'Mai'], dibattito: 'Che cosa vi avrebbe aiutato a capire? Dove, quando, fra chi?' },
+    { q: 'Davanti a un potere che offende la tua fede, che cosa è giusto fare?', a: ['Ribellarsi', 'Protestare senza violenza', 'Tacere', 'Non so'], dibattito: 'Confrontate i giovani dell’aquila e la folla di Cesarea davanti a Pilato: che cosa cambia?' },
+    { q: 'Si può essere buoni cittadini e credenti allo stesso tempo?', a: ['Sì', 'No', 'Dipende'], dibattito: 'Nella vostra vita, che cosa è «di Cesare» e che cosa è «di Dio»?' }
   ]
 };
 </script>

@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Matteo Sestili">
+<meta name="description" content="Classe II · UDA 1 «Gesù: quali tracce?» · Lezione 1. Giudea, Galilea e Roma: il mondo in cui visse Gesù.">
+<title>Sotto l’aquila · Classe II · Lab IRC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Lab IRC — token del design system, copiati da _ds/tokens (colori, tipografia, spazi, ombre, movimento, tema chiaro, base). */
+:root {
+  --lab-bg:        #14131F;
+  --lab-bg-2:      #1A1827;
+  --lab-surface:   #1E1C2E;
+  --lab-surface-2: #272438;
+  --lab-line:      #322E45;
+  --lab-line-soft: #2A2739;
+  --lab-ink:       #ECEAF5;
+  --lab-ink-soft:  #C7C3DA;
+  --lab-muted:     #8E89A6;
+  --lab-viola:     #8B5CF6;
+  --lab-viola-2:   #A78BFA;
+  --lab-ciano:     #22D3EE;
+  --lab-ambra:     #FBBF24;
+  --lab-rosa:      #F472B6;
+  --lab-verde:     #34D399;
+  --lab-rosso:     #FB7185;
+  --lab-oro:       #E3C27A;
+  --lab-oro-soft:  rgba(227,194,122,.16);
+  --lab-brand:     var(--lab-viola);
+  --lab-accent:    var(--lab-ciano);
+  --lab-on-brand:  #14131F;
+  --lab-grad:      linear-gradient(135deg, #8B5CF6, #22D3EE);
+  --lab-grad-warm: linear-gradient(135deg, #F472B6, #FBBF24);
+  --lab-grad-soft: linear-gradient(160deg, #1E1C2E, #14131F);
+  --lab-anno-1:    #FF7A59;
+  --lab-anno-2:    #4FB0FF;
+  --lab-anno-3:    #A78BFA;
+  --lab-anno-4:    #FB7BB5;
+  --lab-anno-5:    #FBBF24;
+  color-scheme: dark;
+}
+:root {
+  --lab-font-display:     "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --lab-font-inscription: "Cinzel", "Trajan Pro", Georgia, serif;
+  --lab-font-body:        "Figtree", system-ui, -apple-system, sans-serif;
+  --lab-text-xs:   12.5px;
+  --lab-text-sm:   14px;
+  --lab-text-base: 16px;
+  --lab-text-md:   20.5px;
+  --lab-text-lg:   26px;
+  --lab-text-xl:   33px;
+  --lab-text-2xl:  42px;
+  --lab-text-3xl:  68px;
+  --lab-text-display-sm: clamp(23px, 2.4vw, 29px);
+  --lab-text-display-md: clamp(29px, 3.8vw, 46px);
+  --lab-text-display-lg: clamp(36px, 5.4vw, 60px);
+  --lab-text-hero:       clamp(46px, 7.4vw, 94px);
+  --lab-weight-regular:   400;
+  --lab-weight-medium:    500;
+  --lab-weight-semibold:  600;
+  --lab-weight-bold:      700;
+  --lab-weight-extrabold: 800;
+  --lab-leading-tight:   1.0;
+  --lab-leading-snug:    1.08;
+  --lab-leading-normal:  1.382;
+  --lab-leading-relaxed: 1.5;
+  --lab-leading-loose:   1.618;
+  --lab-tracking-tight:   -0.02em;
+  --lab-tracking-normal:  -0.01em;
+  --lab-tracking-wide:    0.04em;
+  --lab-tracking-widest:  0.18em;
+  --lab-eyebrow-size:    13px;
+  --lab-eyebrow-weight:  600;
+  --lab-eyebrow-spacing: 0.18em;
+}
+:root {
+  --lab-phi: 1.618;
+  --lab-phi-inv: 0.618;
+  --lab-space-1: 5px;
+  --lab-space-2: 8px;
+  --lab-space-3: 13px;
+  --lab-space-4: 21px;
+  --lab-space-5: 34px;
+  --lab-space-6: 55px;
+  --lab-space-7: 89px;
+  --lab-space-8: 144px;
+  --lab-radius-xs:   8px;
+  --lab-radius-sm:   13px;
+  --lab-radius:      21px;
+  --lab-radius-lg:   34px;
+  --lab-radius-pill: 999px;
+  --lab-radius-icon: 13px;
+  --lab-max-w:    1140px;
+  --lab-max-w-sm:  880px;
+  --lab-max-w-xs:  460px;
+  --lab-measure:   62ch;
+}
+:root {
+  --lab-shadow:     0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --lab-shadow-lg:  0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+  --lab-glow:       0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
+  --lab-focus-ring: 0 0 0 3px rgba(139,92,246,.35);
+  --lab-btn-glow:   0 8px 22px -10px rgba(139,92,246,.80);
+  --lab-btn-glow-hover: 0 12px 28px -10px rgba(139,92,246,.90);
+}
+@keyframes labSu { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: none; } }
+@keyframes labFloaty { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(0,-21px,0) scale(1.034); } }
+@keyframes labPulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@keyframes labFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes labRise { from { opacity: 0; transform: translateY(34px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes labLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes labBreath { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.13); } }
+@keyframes labSpin { to { transform: rotate(360deg); } }
+:root {
+  --lab-ease-out:    cubic-bezier(.16, 1, .3, 1);
+  --lab-ease-solemn: cubic-bezier(.618, 0, .382, 1);
+  --lab-ease-spring: cubic-bezier(.2, .7, .2, 1);
+  --lab-ease-sharp:  cubic-bezier(.4, 0, .2, 1);
+  --lab-dur-instant: 144ms;
+  --lab-dur-fast:    233ms;
+  --lab-dur-normal:  377ms;
+  --lab-dur-slow:    610ms;
+  --lab-dur-solemn:  987ms;
+  --lab-dur-float:   21s;
+  --lab-stagger:     89ms;
+  --lab-anim-in:   labRise var(--lab-dur-solemn) var(--lab-ease-out) both;
+  --lab-anim-in-2: labRise var(--lab-dur-solemn) var(--lab-ease-out) 89ms both;
+  --lab-anim-in-3: labRise var(--lab-dur-solemn) var(--lab-ease-out) 178ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+html[data-tema="chiaro"] {
+  --lab-bg:        #FAF7F1;
+  --lab-bg-2:      #F3EFE6;
+  --lab-surface:   #FFFFFF;
+  --lab-surface-2: #FBF8F2;
+  --lab-line:      #E7E0D2;
+  --lab-line-soft: #EFEADD;
+  --lab-ink:       #1B1822;
+  --lab-ink-soft:  #39333F;
+  --lab-muted:     #6A6472;
+  --lab-viola:     #6D3FE0;
+  --lab-viola-2:   #7C3AED;
+  --lab-ciano:     #0891B2;
+  --lab-ambra:     #C8941E;
+  --lab-rosa:      #DB2777;
+  --lab-verde:     #0E9E86;
+  --lab-rosso:     #E11D48;
+  --lab-oro:       #A67C2E;
+  --lab-oro-soft:  rgba(166,124,46,.12);
+  --lab-on-brand:  #FFFFFF;
+  --lab-grad-soft: linear-gradient(160deg, #FFFFFF, #F3EFE6);
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+  --lab-focus-ring: 0 0 0 3px rgba(109,63,224,.25);
+  --lab-anno-1:    #E2603B;
+  --lab-anno-2:    #2D7DD2;
+  --lab-anno-3:    #6A4FB0;
+  --lab-anno-4:    #C8417B;
+  --lab-anno-5:    #C98A1E;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--lab-bg); color: var(--lab-ink); font-family: var(--lab-font-body); font-size: var(--lab-text-base); line-height: var(--lab-leading-loose); -webkit-font-smoothing: antialiased; transition: background var(--lab-dur-slow) ease, color var(--lab-dur-slow) ease; }
+h1, h2, h3, h4 { font-family: var(--lab-font-display); font-weight: var(--lab-weight-semibold); line-height: var(--lab-leading-snug); letter-spacing: var(--lab-tracking-normal); margin: 0 0 .382em; color: var(--lab-ink); text-wrap: balance; }
+h1 { font-size: var(--lab-text-display-lg); }
+h2 { font-size: var(--lab-text-display-md); }
+h3 { font-size: var(--lab-text-display-sm); }
+p { margin: 0 0 1em; color: var(--lab-ink-soft); text-wrap: pretty; }
+a { color: var(--lab-accent); text-decoration: none; transition: color var(--lab-dur-fast) ease; }
+a:hover { color: var(--lab-oro); }
+::selection { background: rgba(227,194,122,.35); color: var(--lab-ink); }
+:focus-visible { outline: 1.5px solid var(--lab-oro); outline-offset: 3px; border-radius: 5px; }
+.lab-grad-text { background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.lab-eyebrow { font-family: var(--lab-font-inscription); font-size: var(--lab-eyebrow-size); letter-spacing: var(--lab-eyebrow-spacing); text-transform: uppercase; font-weight: var(--lab-eyebrow-weight); color: var(--lab-oro); margin: 0 0 13px; }
+.lab-wrap { max-width: var(--lab-max-w); margin: 0 auto; padding: 0 var(--lab-space-4); }
+</style>
+<style>
+/* Lab IRC — Kit artefatti. Uso: <body class="la" data-anno="1-5"> + lab-artefatto.js.
+   Richiede tokens.css (e i font Cinzel, Cormorant Garamond, Figtree). */
+
+body.la{--la-accent:var(--lab-viola);margin:0;min-height:100vh;background:var(--lab-bg);color:var(--lab-ink);font-family:var(--lab-font-body);line-height:1.618}
+body[data-anno="1"]{--la-accent:var(--lab-anno-1)}
+body[data-anno="2"]{--la-accent:var(--lab-anno-2)}
+body[data-anno="3"]{--la-accent:var(--lab-anno-3)}
+body[data-anno="4"]{--la-accent:var(--lab-anno-4)}
+body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
+
+.la-stage{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:55px 21px 144px}
+.la-eyebrow{display:flex;align-items:center;gap:13px;font:600 13px/1.4 var(--lab-font-inscription);letter-spacing:.18em;text-transform:uppercase;color:var(--lab-oro);margin:0 0 13px}
+.la-eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.7}
+.la-title{font-family:var(--lab-font-display);font-weight:600;font-size:clamp(36px,5.4vw,60px);line-height:1.06;letter-spacing:-.02em;margin:0 0 13px;text-wrap:balance}
+.la-title em{font-weight:500;color:var(--la-accent)}
+.la-lead{font-size:18px;color:var(--lab-muted);max-width:52ch;margin:0 0 34px;text-wrap:pretty}
+
+.la-card{position:relative;overflow:hidden;background:var(--lab-surface);border:1px solid var(--lab-line);border-radius:21px;padding:34px;box-shadow:var(--lab-shadow);transition:transform 610ms var(--lab-ease-out),box-shadow 377ms,border-color 377ms}
+.la-card::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity 377ms;background:radial-gradient(233px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--la-accent) 18%,transparent),transparent 61.8%)}
+.la-card>*{position:relative;z-index:1}
+.la-card.is-hot{box-shadow:var(--lab-shadow-lg);border-color:color-mix(in srgb,var(--la-accent) 40%,var(--lab-line));transition:transform 144ms linear,box-shadow 377ms,border-color 377ms}
+.la-card.is-hot::after{opacity:1}
+
+.la-btn{display:inline-flex;align-items:center;gap:8px;font:700 15px/1 var(--lab-font-body);padding:13px 21px;border-radius:999px;border:1px solid transparent;background:var(--lab-grad);color:#fff;cursor:pointer;text-decoration:none;box-shadow:0 8px 21px -13px rgba(139,92,246,.6);transition:transform 233ms var(--lab-ease-out),box-shadow 377ms,filter 233ms,border-color 233ms}
+.la-btn:hover{transform:translateY(-2px);box-shadow:0 13px 34px -13px rgba(139,92,246,.75);filter:brightness(1.06)}
+.la-btn:active{transform:scale(.96)}
+.la-btn--ghost{background:transparent;color:var(--lab-ink);border-color:var(--lab-line);box-shadow:none}
+.la-btn--ghost:hover{border-color:var(--la-accent);box-shadow:none}
+.la-btn--gold{background:var(--lab-ambra);color:#3a2a06;box-shadow:none}
+
+.la-row{display:flex;justify-content:space-between;gap:13px;margin-bottom:8px}
+.la-meta{font:600 12.5px/1.4 var(--lab-font-inscription);letter-spacing:.14em;text-transform:uppercase;color:var(--lab-muted)}
+.la-progress{height:5px;border-radius:5px;background:var(--lab-line-soft);overflow:hidden}
+.la-progress>i{display:block;height:100%;border-radius:5px;background:var(--la-accent);transition:width 610ms var(--lab-ease-out)}
+.la-q{font:600 clamp(25px,3vw,34px)/1.2 var(--lab-font-display);margin:34px 0 21px;color:var(--lab-ink);text-wrap:balance}
+.la-choices{display:grid;gap:13px}
+.la-choice{display:flex;align-items:center;gap:13px;width:100%;text-align:left;font:500 16px/1.4 var(--lab-font-body);color:var(--lab-ink);background:var(--lab-surface-2);border:1.5px solid var(--lab-line);border-radius:13px;padding:13px 21px 13px 13px;cursor:pointer;transition:transform 233ms var(--lab-ease-out),border-color 233ms,background 233ms,opacity 377ms}
+.la-choice:hover:not(:disabled){border-color:var(--lab-oro);transform:translateX(5px)}
+.la-choice:active:not(:disabled){transform:scale(.98)}
+.la-choice:disabled{cursor:default}
+.la-key{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:600 14px/1 var(--lab-font-inscription);color:var(--la-accent);border:1px solid currentColor}
+.la-choice.is-right{border-color:var(--lab-verde);background:color-mix(in srgb,var(--lab-verde) 14%,var(--lab-surface-2))}
+.la-choice.is-right .la-key{background:var(--lab-verde);color:#06281d;border-color:transparent}
+.la-choice.is-wrong{border-color:var(--lab-rosso);background:color-mix(in srgb,var(--lab-rosso) 12%,var(--lab-surface-2));animation:laShake 377ms}
+.la-choice.is-dim{opacity:.45}
+.la-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:13px;min-height:55px;margin-top:21px}
+.la-note{font-size:15px;color:var(--lab-muted);margin:0;max-width:48ch}
+.la-score{font:600 clamp(55px,9vw,89px)/1 var(--lab-font-inscription);color:var(--la-accent);margin:34px 0 13px}
+
+[data-reveal]{animation:labRise 987ms var(--lab-ease-out) both;animation-delay:calc(var(--i,0) * 89ms)}
+
+.la-halo{position:fixed;left:0;top:0;width:466px;height:466px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity 610ms;background:radial-gradient(circle,color-mix(in srgb,var(--la-accent) 12%,transparent),rgba(227,194,122,.04) 38.2%,transparent 61.8%)}
+
+.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;width:55px;height:55px;padding:0;border:0;background:none;cursor:pointer;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
+.la-mascot svg{display:block;width:100%;height:100%;overflow:visible;transition:transform 377ms var(--lab-ease-out),filter 377ms}
+.la-mascot:hover svg{transform:rotate(-8deg) scale(1.13);filter:drop-shadow(0 5px 8px rgba(0,0,0,.35))}
+.la-mascot:active svg{transform:scale(.92)}
+.la-lid{transition:transform 89ms}
+.la-mascot.blink .la-lid{transform:scaleY(.12)}
+.la-bubble{position:absolute;right:0;bottom:calc(100% + 8px);width:max-content;max-width:233px;background:var(--lab-surface);color:var(--lab-ink);border:1px solid var(--lab-oro);border-radius:13px;padding:8px 13px;font:500 13.5px/1.4 var(--lab-font-body);text-align:left;box-shadow:var(--lab-shadow);animation:labRise 377ms var(--lab-ease-out) both;pointer-events:none}
+.la-bubble[hidden]{display:none}
+
+.la-amdg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;text-align:center;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(227,194,122,.18),rgba(10,9,16,.95) 61.8%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:labFade 610ms ease-out both;transition:opacity 610ms}
+.la-amdg.is-out{opacity:0}
+.la-amdg-star{color:#E3C27A;font-size:34px;margin-bottom:21px;animation:labBreath 2.6s ease-in-out infinite}
+.la-amdg-letters{display:flex;justify-content:center;align-items:baseline;gap:.2em;font:600 clamp(55px,11vw,144px)/1 var(--lab-font-inscription);color:#F3E7C6;text-shadow:0 0 34px rgba(227,194,122,.45)}
+.la-amdg-letters b{font-weight:600;display:inline-block;animation:labRise 987ms var(--lab-ease-out) both}
+.la-amdg-letters i{font-style:normal;color:#E3C27A;font-size:.382em;animation:labFade 987ms ease both}
+.la-amdg-line{height:1px;width:min(377px,61.8vw);margin:34px auto 21px;background:linear-gradient(90deg,transparent,#E3C27A,transparent);animation:labLine 987ms var(--lab-ease-out) 987ms both}
+.la-amdg-lat{font:italic 500 clamp(23px,2.8vw,30px)/1.3 var(--lab-font-display);color:rgba(243,231,198,.92);animation:labRise 987ms var(--lab-ease-out) 1220ms both}
+.la-amdg-it{font:600 12.5px/1.4 var(--lab-font-inscription);letter-spacing:.2em;text-transform:uppercase;color:rgba(227,194,122,.75);margin-top:13px;animation:labFade 987ms ease 1600ms both}
+
+@keyframes laShake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes laPeek{from{transform:translateY(89px);opacity:0}to{transform:none;opacity:1}}
+</style>
+<style>
+html{scroll-padding-top:72px}
+body.la{--roma:var(--lab-ambra);--principi:var(--lab-anno-2);--religiosa:var(--lab-viola-2);overflow-x:hidden}
+.la-stage{padding-top:34px}
+p{color:var(--lab-ink-soft)}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:8px 13px;margin:0 -13px 21px;background:color-mix(in srgb,var(--lab-bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--lab-line-soft)}
+.top nav{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex:1}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{flex:none;display:grid;place-items:center;min-width:38px;height:38px;padding:0 10px;border-radius:999px;border:1px solid var(--lab-line);font:600 13px/1 var(--lab-font-inscription);color:var(--lab-muted);transition:all 233ms}
+.top nav a:hover{color:var(--lab-ink);border-color:var(--la-accent)}
+.top nav a.is-on{background:var(--la-accent);border-color:var(--la-accent);color:var(--lab-bg)}
+.top nav a.is-seen:not(.is-on){color:var(--la-accent);border-color:color-mix(in srgb,var(--la-accent) 50%,var(--lab-line))}
+.tool{flex:none;height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--lab-line);background:var(--lab-surface);color:var(--lab-muted);font:700 13px/1 var(--lab-font-body);cursor:pointer}
+.tool:hover{color:var(--lab-ink)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:34px;align-items:center;margin-bottom:34px}
+.hero .la-lead{margin-bottom:0}
+.eagle{width:100%;color:var(--lab-oro);filter:drop-shadow(0 0 21px color-mix(in srgb,var(--lab-oro) 35%,transparent));animation:labRise 987ms var(--lab-ease-out) 233ms both}
+.intro{font:italic 500 clamp(20px,2.3vw,24px)/1.5 var(--lab-font-display);color:var(--lab-ink);border-left:2px solid var(--lab-oro);padding:4px 0 4px 21px;margin:0 0 55px}
+
+section{scroll-margin-top:72px;margin:0 0 89px}
+.sec-k{display:flex;align-items:center;gap:13px;font:600 13px/1.4 var(--lab-font-inscription);letter-spacing:.18em;text-transform:uppercase;color:var(--lab-oro);margin:0 0 8px}
+.sec-k b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid currentColor;font-weight:700;letter-spacing:0}
+h2{font-size:clamp(30px,4vw,44px);margin:0 0 21px}
+h3{font-size:clamp(23px,2.6vw,28px);margin:34px 0 13px}
+.hint{font:700 12px/1.3 var(--lab-font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--la-accent);margin:0 0 13px}
+.la-card{margin:21px 0;padding:28px}
+.la-card[data-flat]{transform:none!important}
+
+blockquote{margin:21px 0;padding:21px 24px;border-radius:13px;background:var(--lab-surface);border:1px solid var(--lab-line);border-left:3px solid var(--lab-oro)}
+blockquote p{font:italic 500 clamp(20px,2.3vw,24px)/1.45 var(--lab-font-display);color:var(--lab-ink);margin:0}
+blockquote cite{display:block;margin-top:10px;font:600 12px/1.3 var(--lab-font-inscription);letter-spacing:.12em;font-style:normal;color:var(--lab-muted)}
+.key{margin:21px 0;padding:18px 21px;border-radius:13px;background:color-mix(in srgb,var(--la-accent) 12%,var(--lab-surface));border:1px solid color-mix(in srgb,var(--la-accent) 45%,var(--lab-line));color:var(--lab-ink);font-size:17px}
+.key strong{color:var(--la-accent)}
+
+/* A · racconto a tappe */
+.story-dots{display:flex;gap:6px;margin-bottom:21px}
+.story-dots i{flex:1;height:4px;border-radius:4px;background:var(--lab-line);transition:background 377ms}
+.story-dots i.is-on{background:var(--la-accent)}
+.story-when{font:600 13px/1.3 var(--lab-font-inscription);letter-spacing:.14em;text-transform:uppercase;color:var(--lab-oro)}
+.story-t{font:600 clamp(24px,3vw,30px)/1.15 var(--lab-font-display);color:var(--lab-ink);margin:8px 0 13px}
+.story-p{font-size:18px;margin:0;min-height:5.2em}
+.story-p.is-in{animation:labSu 610ms var(--lab-ease-out) both}
+.story-src{margin-top:13px;font-size:14px;color:var(--lab-muted)}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:13px;margin-top:21px}
+.la-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+.sort{display:grid;gap:13px}
+.sort-i{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:13px;align-items:center;padding:13px 13px 13px 18px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);transition:border-color 233ms}
+.sort-i p{margin:0;color:var(--lab-ink);font-size:17px}
+.sort-i .why{grid-column:1/-1;font-size:15px;color:var(--lab-muted);display:none}
+.sort-i.is-done .why{display:block;animation:labSu 377ms both}
+.sort-i.is-ok{border-color:var(--lab-verde)}.sort-i.is-ko{border-color:var(--lab-rosso)}
+.seg{display:flex;gap:6px}
+.seg button{min-height:40px;padding:8px 13px;border-radius:999px;border:1.5px solid var(--lab-line);background:var(--lab-surface);color:var(--lab-ink-soft);font:700 13px/1.1 var(--lab-font-body);cursor:pointer}
+.seg button:hover:not(:disabled){border-color:var(--la-accent);color:var(--lab-ink)}
+.seg button.is-pick.is-right{background:var(--lab-verde);border-color:var(--lab-verde);color:#06281d}
+.seg button.is-pick.is-wrong{background:var(--lab-rosso);border-color:var(--lab-rosso);color:#2a0710}
+.seg button:disabled{cursor:default}
+.seg button:disabled:not(.is-pick){opacity:.4}
+
+/* B · trappola */
+.trap-q{font:600 clamp(26px,3.4vw,36px)/1.2 var(--lab-font-display);color:var(--lab-ink);margin:0 0 21px;text-align:center}
+.trap-btns{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.trap-b{position:relative;padding:18px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);color:var(--lab-ink);font:800 20px/1.2 var(--lab-font-body);cursor:pointer;text-align:center;transition:border-color 233ms,transform 233ms}
+.trap-b:hover{transform:translateY(-2px);border-color:var(--la-accent)}
+.trap-b small{display:block;margin-top:10px;font:500 15px/1.4 var(--lab-font-body);color:var(--lab-rosso);opacity:0;max-height:0;overflow:hidden;transition:opacity 377ms,max-height 377ms}
+.trap-b.is-open{border-color:var(--lab-rosso)}
+.trap-b.is-open small{opacity:1;max-height:120px}
+.ctx{margin-top:21px;display:grid;gap:8px}
+.ctx-i{display:flex;gap:13px;padding:13px 16px;border-radius:13px;background:var(--lab-surface-2);border:1px dashed var(--lab-line);font-size:16px;color:var(--lab-ink-soft)}
+.ctx-i b{flex:none;font:700 13px/1.6 var(--lab-font-inscription);color:var(--lab-oro);letter-spacing:.06em}
+.ctx-i[hidden]{display:none}
+.answer[hidden]{display:none}
+.answer{animation:labRise 987ms var(--lab-ease-out) both}
+
+/* C · mappa del potere */
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0 0 13px;font:600 13px/1.3 var(--lab-font-body);color:var(--lab-muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.lc{font:italic 500 clamp(21px,2.5vw,26px)/1.75 var(--lab-font-display);color:var(--lab-ink)}
+.nm{font:inherit;font-style:normal;font-weight:700;color:var(--lab-ink);background:color-mix(in srgb,var(--la-accent) 10%,transparent);border:0;border-bottom:2px dashed var(--la-accent);border-radius:5px 5px 0 0;padding:0 5px;cursor:pointer;transition:background 233ms,color 233ms}
+.nm:hover{background:color-mix(in srgb,var(--la-accent) 22%,transparent)}
+.nm.is-sel{outline:2px solid var(--la-accent);outline-offset:2px}
+.nm[data-done="roma"]{--c:var(--roma)}.nm[data-done="principi"]{--c:var(--principi)}.nm[data-done="religiosa"]{--c:var(--religiosa)}
+.nm[data-done]{border-bottom:2px solid var(--c);background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--lab-ink)}
+.who{margin-top:21px;padding:21px;border-radius:13px;background:var(--lab-surface-2);border:1px solid var(--lab-line);min-height:120px}
+.who-empty{margin:0;color:var(--lab-muted)}
+.who h4{margin:0 0 5px;font:600 26px/1.1 var(--lab-font-display)}
+.who .seg{flex-wrap:wrap;margin:13px 0}
+.who-info{display:none;margin:0;color:var(--lab-ink-soft)}
+.who.is-done .who-info{display:block;animation:labSu 377ms both}
+.who-res{font:700 14px/1.3 var(--lab-font-body);margin:0 0 8px}
+.who-res.ok{color:var(--lab-verde)}.who-res.ko{color:var(--lab-rosso)}
+.count{font:600 13px/1.3 var(--lab-font-inscription);letter-spacing:.12em;color:var(--lab-muted)}
+
+.gov{display:grid;grid-template-columns:1fr auto 1fr;gap:13px;align-items:stretch;margin-top:13px}
+.gov-r{position:relative;padding:18px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);transition:border-color 377ms,box-shadow 377ms}
+.gov-r h4{margin:0 0 8px;font:600 26px/1 var(--lab-font-display)}
+.gov-r ul{margin:0;padding:0;list-style:none;display:grid;gap:5px;font-size:15px;color:var(--lab-ink-soft)}
+.gov-r li b{color:var(--lab-ink)}
+.gov-r.is-here{border-color:var(--la-accent);box-shadow:0 0 0 1px var(--la-accent),0 0 34px -10px var(--la-accent)}
+.gov-r .pin{position:absolute;top:13px;right:13px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--la-accent);color:var(--lab-bg);font:800 13px/1 var(--lab-font-body);opacity:0;transform:scale(.4);transition:all 377ms var(--lab-ease-spring)}
+.gov-r.is-here .pin{opacity:1;transform:none}
+.gov-arrow{display:grid;place-items:center;color:var(--lab-oro);font-size:28px}
+.gov-now{margin:13px 0 0;font-size:16px;color:var(--lab-ink)}
+.gov-now b{color:var(--la-accent)}
+.small{font-size:13px;color:var(--lab-muted);margin:8px 0 0}
+
+/* C.1 · correnti */
+.flips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:13px}
+.flip{position:relative;min-height:190px;padding:0;border:0;background:none;cursor:pointer;perspective:1000px;color:inherit;font:inherit;text-align:left}
+.flip-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 610ms var(--lab-ease-out)}
+.flip.is-open .flip-in{transform:rotateY(180deg)}
+.flip-f{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:21px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.flip-f b{font:600 30px/1 var(--lab-font-display);color:var(--lab-ink)}
+.flip-f small{font:700 12px/1.3 var(--lab-font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--lab-muted)}
+.flip-back{transform:rotateY(180deg);border-color:var(--la-accent);font-size:15.5px;line-height:1.5;color:var(--lab-ink-soft)}
+.flip-back strong{font:600 20px/1 var(--lab-font-display);color:var(--la-accent)}
+
+/* D */
+.signs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin:21px 0}
+.sign{padding:16px 18px;border-radius:13px;background:var(--lab-surface-2);border:1px solid var(--lab-line);font-size:15.5px;color:var(--lab-ink-soft)}
+.sign b{display:block;font:600 21px/1.15 var(--lab-font-display);color:var(--lab-ink);margin-bottom:5px}
+
+/* E */
+.wrong{text-align:center;margin:13px 0 21px}
+.wrong s{font:600 clamp(28px,4vw,40px)/1.2 var(--lab-font-display);color:var(--lab-ink);text-decoration-color:transparent;text-decoration-thickness:3px;transition:text-decoration-color 610ms,color 610ms}
+.wrong.is-struck s{text-decoration-color:var(--lab-rosso);color:var(--lab-muted)}
+.facts{display:grid;gap:8px}
+.fact{display:flex;align-items:center;gap:13px;width:100%;padding:13px 16px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);color:var(--lab-ink);font:600 16px/1.4 var(--lab-font-body);text-align:left;cursor:pointer;transition:border-color 233ms,background 233ms}
+.fact::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;border:2px solid var(--lab-line);transition:all 233ms}
+.fact:hover{border-color:var(--la-accent)}
+.fact.is-on{border-color:var(--lab-verde);background:color-mix(in srgb,var(--lab-verde) 10%,var(--lab-surface-2))}
+.fact.is-on::before{background:var(--lab-verde);border-color:var(--lab-verde);box-shadow:inset 0 0 0 4px var(--lab-surface-2)}
+.method{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:13px}
+.method div{padding:18px;border-radius:13px;border:1px solid var(--lab-line);background:var(--lab-surface)}
+.method b{display:block;font:600 34px/1 var(--lab-font-inscription);color:var(--lab-oro);margin-bottom:8px}
+.method p{margin:0;color:var(--lab-ink);font-weight:600}
+
+/* F */
+.qs{list-style:none;margin:0;padding:0;display:grid;gap:21px}
+.qs label{display:block;font:600 17px/1.45 var(--lab-font-body);color:var(--lab-ink);margin-bottom:8px}
+.qs label b{color:var(--la-accent);margin-right:6px}
+textarea{width:100%;min-height:110px;resize:vertical;padding:13px 16px;border-radius:13px;border:1.5px solid var(--lab-line);background:var(--lab-surface-2);color:var(--lab-ink);font:500 16px/1.5 var(--lab-font-body);outline:none;transition:border-color 233ms}
+textarea:focus{border-color:var(--la-accent)}
+.saved{font-size:14px;color:var(--lab-verde);min-height:1.4em;margin:0}
+
+/* G */
+.motto{text-align:center;font:600 clamp(28px,4.2vw,44px)/1.2 var(--lab-font-display);color:var(--lab-ink);margin:34px auto;max-width:22ch;text-wrap:balance}
+.motto em{color:var(--la-accent)}
+details{margin-top:34px;border-top:1px solid var(--lab-line);padding-top:21px}
+summary{cursor:pointer;font:600 13px/1.4 var(--lab-font-inscription);letter-spacing:.16em;text-transform:uppercase;color:var(--lab-oro)}
+details ul{margin:13px 0 0;padding-left:18px;display:grid;gap:6px;font-size:14px;color:var(--lab-muted)}
+footer{margin-top:55px;padding-top:21px;border-top:1px solid var(--lab-line-soft);font-size:13px;color:var(--lab-muted);text-align:center}
+
+@media (max-width:700px){
+  .hero{grid-template-columns:1fr;gap:13px}.eagle{width:120px;order:-1}
+  .trap-btns,.flips,.method,.gov{grid-template-columns:1fr}
+  .gov-arrow{transform:rotate(90deg)}
+  .sort-i{grid-template-columns:1fr}
+  .la-card{padding:21px}
+}
+</style>
+</head>
+<body class="la" data-anno="2">
+<div class="la-stage">
+
+<div class="top">
+  <nav aria-label="Sezioni">
+    <a href="#a">A</a><a href="#b">B</a><a href="#c">C</a><a href="#c1">C.1</a><a href="#d">D</a><a href="#e">E</a><a href="#f">F</a><a href="#g">G</a>
+  </nav>
+  <button class="tool" type="button" data-tema>Tema</button>
+</div>
+
+<header class="hero">
+  <div>
+    <p class="la-eyebrow" data-reveal>Classe II · UDA 1 · Lezione 1</p>
+    <h1 class="la-title" data-reveal style="--i:1">Sotto l’<em>aquila</em></h1>
+    <p class="la-lead" data-reveal style="--i:2">Giudea, Galilea e Roma: il mondo in cui visse Gesù, e perché una frase cambia significato quando se ne conosce il contesto.</p>
+  </div>
+  <svg class="eagle" viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+    <g fill="currentColor">
+      <path id="ala" d="M55 52C44 42 29 35 15 36c6 5 9 10 14 15-6 2-11 6-13 12 10 1 20-1 29-4-5 4-9 10-9 17 8-4 15-9 19-14z"/>
+      <use href="#ala" transform="matrix(-1 0 0 1 120 0)"/>
+      <ellipse cx="60" cy="62" rx="7" ry="17"/>
+      <circle cx="60" cy="38" r="7"/>
+      <path d="M66 36l7 3-7 3z"/>
+      <path d="M53 76l7 15 7-15z"/>
+    </g>
+  </svg>
+</header>
+
+<p class="intro">Nel terzo capitolo del Vangelo di Luca c’è una frase che molti lettori saltano: un elenco di nomi, titoli e territori. Per chi la leggeva nel I secolo era invece una mappa: diceva dove, quando e sotto quali poteri accade ciò che viene narrato subito dopo. Proviamo a leggere quella mappa.</p>
+
+<!-- A -->
+<section id="a">
+  <p class="sec-k"><b>A</b>Un’aquila sulla porta del Tempio</p>
+  <h2>Un’immagine sul Tempio</h2>
+  <p>Lo storico ebreo Giuseppe Flavio, alla fine del I secolo, racconta due episodi. Scorri il racconto una tappa alla volta.</p>
+  <div class="la-card" data-flat>
+    <div class="story-dots" aria-hidden="true"></div>
+    <div class="story-when" data-story="when"></div>
+    <div class="story-t" data-story="t"></div>
+    <p class="story-p" data-story="p"></p>
+    <p class="story-src" data-story="src"></p>
+    <div class="row">
+      <button class="la-btn la-btn--ghost" type="button" data-story="prev">← Indietro</button>
+      <span class="count" data-story="n"></span>
+      <button class="la-btn" type="button" data-story="next">Avanti →</button>
+    </div>
+  </div>
+
+  <h3>Fonte o interpretazione?</h3>
+  <p>Giuseppe Flavio racconta dei fatti; gli storici li interpretano. Per ogni frase decidi: lo dice la fonte, o è una lettura degli studiosi?</p>
+  <div class="sort" data-sort></div>
+
+  <div class="key">Due episodi, un’unica domanda: <strong>fin dove un popolo che crede in un solo Dio può obbedire a un potere straniero che mostra le proprie immagini?</strong></div>
+</section>
+
+<!-- B -->
+<section id="b">
+  <p class="sec-k"><b>B</b>La questione</p>
+  <h2>Una frase senza contesto</h2>
+  <p>Nel Vangelo di Marco alcuni interlocutori chiedono a Gesù una cosa che, letta oggi, sembra una domanda sulle tasse. Il testo però dice che volevano «coglierlo in fallo nel discorso» (Mc 12,13). Mettiti al posto di Gesù.</p>
+  <div class="la-card" data-flat>
+    <p class="hint">Che cosa rispondi?</p>
+    <p class="trap-q">«È lecito o no pagare il tributo a Cesare?»</p>
+    <p class="count" style="text-align:center;margin:-13px 0 21px">Mc 12,14</p>
+    <div class="trap-btns">
+      <button class="trap-b" type="button" data-trap="si">Sì, è lecito<small>Appari complice dell’occupante romano davanti al tuo popolo.</small></button>
+      <button class="trap-b" type="button" data-trap="no">No, non è lecito<small>Appari un ribelle davanti ai Romani.</small></button>
+    </div>
+    <div class="ctx">
+      <div class="ctx-i" data-ctx hidden><b>6 d.C.</b><span>Roma prende il controllo diretto della Giudea e ordina un censimento per imporre il tributo.</span></div>
+      <div class="ctx-i" data-ctx hidden><b>Giuda il Galileo</b><span>Guida una rivolta: pagare equivale ad accettare la schiavitù, perché soltanto Dio è signore d’Israele.</span></div>
+    </div>
+    <div class="row">
+      <span class="count" data-trap-note>Prova entrambe le risposte.</span>
+      <button class="la-btn" type="button" data-trap-go disabled>E Gesù che cosa risponde?</button>
+    </div>
+  </div>
+  <div class="answer" data-answer hidden>
+    <blockquote><p>«Quello che è di Cesare rendetelo a Cesare, e quello che è di Dio, a Dio». E rimasero ammirati di lui.</p><cite>Mc 12,17 · Bibbia CEI 2008</cite></blockquote>
+    <p>Senza la mappa, la frase diventa un proverbio sul pagare le tasse. Con la mappa, si vede che Gesù <strong>rifiuta entrambe le caselle</strong> che gli erano state preparate e sposta il piano del discorso.</p>
+    <div class="key"><strong>Una notizia non si capisce se non si sa dove, quando e fra chi è stata detta.</strong> Vale per un versetto del Vangelo come per uno screenshot girato in una chat.</div>
+  </div>
+</section>
+
+<!-- C -->
+<section id="c">
+  <p class="sec-k"><b>C</b>La mappa del potere</p>
+  <h2>Sciogliere la frase di Luca</h2>
+  <p>Questa frase apre il racconto della predicazione di Giovanni Battista e, subito dopo, di Gesù. Tocca ogni nome sottolineato e decidi chi è: <strong>Roma</strong>, un <strong>principe locale</strong> o un’<strong>autorità religiosa</strong>?</p>
+  <div class="la-card" data-flat>
+    <div class="legend"><span style="--c:var(--roma)"><i></i>Roma</span><span style="--c:var(--principi)"><i></i>Principi locali</span><span style="--c:var(--religiosa)"><i></i>Autorità religiosa</span></div>
+    <p class="lc">Nell’anno quindicesimo dell’impero di <button class="nm" type="button" data-nm="tiberio">Tiberio Cesare</button>, mentre <button class="nm" type="button" data-nm="pilato">Ponzio Pilato</button> era governatore della Giudea, <button class="nm" type="button" data-nm="erode">Erode</button> tetrarca della Galilea, e <button class="nm" type="button" data-nm="filippo">Filippo</button>, suo fratello, tetrarca dell’Iturea e della Traconitide, e <button class="nm" type="button" data-nm="lisania">Lisania</button> tetrarca dell’Abilene, sotto i sommi sacerdoti <button class="nm" type="button" data-nm="anna">Anna</button> e <button class="nm" type="button" data-nm="caifa">Caifa</button>, la parola di Dio venne su Giovanni, figlio di Zaccaria, nel deserto.</p>
+    <p class="count">Lc 3,1-2 · Bibbia CEI 2008 · <span data-nm-count></span></p>
+    <div class="who" data-who><p class="who-empty">Tocca un nome nel testo.</p></div>
+  </div>
+
+  <h3>Galilea e Giudea: due governi</h3>
+  <p>Quando Gesù va a Gerusalemme passa da un governo all’altro. Seguilo.</p>
+  <div class="la-card" data-flat>
+    <div class="gov">
+      <div class="gov-r is-here" data-gov="0"><span class="pin">Gesù</span><h4>Galilea</h4><ul><li><b>Nazaret, Cafarnao</b></li><li>Governa un principe ebreo, <b>Erode Antipa</b>, alleato di Roma</li></ul></div>
+      <div class="gov-arrow" aria-hidden="true">→</div>
+      <div class="gov-r" data-gov="1"><span class="pin">Gesù</span><h4>Giudea</h4><ul><li><b>Gerusalemme</b></li><li>Amministrata direttamente da un funzionario romano, il prefetto <b>Ponzio Pilato</b>, che risiede a Cesarea</li></ul></div>
+    </div>
+    <p class="gov-now" data-gov-now></p>
+    <div class="row"><p class="small">Schema, non in scala.</p><button class="la-btn" type="button" data-gov-go>Gesù sale a Gerusalemme</button></div>
+  </div>
+  <p>Luca lo mostra nel processo: Pilato, «saputo che stava sotto l’autorità di Erode», glielo rinvia (Lc 23,7).</p>
+</section>
+
+<!-- C.1 -->
+<section id="c1">
+  <p class="sec-k"><b>C.1</b>Un popolo, molte voci</p>
+  <h2>La fede delle persone</h2>
+  <p>Il potere è solo metà della mappa. Tutti riconoscevano il Dio unico, la Legge di Mosè e il Tempio, ma discutevano su come vivere quella fedeltà. Giuseppe Flavio descrive quattro correnti, che chiama «filosofie». Gira le carte.</p>
+  <div class="flips">
+    <button class="flip" type="button"><span class="flip-in"><span class="flip-f"><small>Corrente 1</small><b>Farisei</b></span><span class="flip-f flip-back"><strong>Farisei</strong>Studiosi e interpreti della Legge, molto stimati dal popolo; credono nella risurrezione e cercano di portare la santità nella vita quotidiana.</span></span></button>
+    <button class="flip" type="button"><span class="flip-in"><span class="flip-f"><small>Corrente 2</small><b>Sadducei</b></span><span class="flip-f flip-back"><strong>Sadducei</strong>Pochi, ma delle famiglie più potenti, legate al Tempio e al sacerdozio; negano la risurrezione (Mc 12,18).</span></span></button>
+    <button class="flip" type="button"><span class="flip-in"><span class="flip-f"><small>Corrente 3</small><b>Esseni</b></span><span class="flip-f flip-back"><strong>Esseni</strong>Circa quattromila; vivono in comunità, mettono in comune i beni e si tengono a distanza dal Tempio. Molti studiosi collegano a loro i manoscritti di Qumran.</span></span></button>
+    <button class="flip" type="button"><span class="flip-in"><span class="flip-f"><small>Corrente 4</small><b>«Quarta filosofia»</b></span><span class="flip-f flip-back"><strong>Quarta filosofia</strong>Fondata da Giuda il Galileo: nessun signore se non Dio, quindi nessun tributo a Roma. Da questo clima nascono i gruppi armati della rivolta del 66 d.C.</span></span></button>
+  </div>
+  <div class="key">La maggior parte della gente non apparteneva a nessuno di questi gruppi: contadini, pescatori, artigiani che pregavano nella sinagoga del villaggio e salivano a Gerusalemme per le feste. Gli <strong>scribi</strong> non sono un partito ma una professione: gli esperti della Legge, anche di correnti diverse.</div>
+</section>
+
+<!-- D -->
+<section id="d">
+  <p class="sec-k"><b>D</b>Il significato teologico</p>
+  <h2>Nato sotto la Legge</h2>
+  <p>Perché un Vangelo apre con una lista di governanti? Luca vuole dire che ciò che racconta è accaduto in un anno preciso, sotto persone che si possono nominare e che altri documenti conoscono. La fede cristiana non nasce da un mito ambientato «una volta, in un luogo lontano», ma da una vicenda storica. È il senso dell’<strong>incarnazione</strong>: il Figlio di Dio entra nella storia non in generale, ma in un popolo, in una terra, in un’epoca.</p>
+  <blockquote><p>Ma quando venne la pienezza del tempo, Dio mandò il suo Figlio, nato da donna, nato sotto la Legge, per riscattare quelli che erano sotto la Legge.</p><cite>Gal 4,4-5 · Bibbia CEI 2008</cite></blockquote>
+  <p>«Nato sotto la Legge» significa: <strong>Gesù è un ebreo</strong>.</p>
+  <div class="signs">
+    <div class="sign"><b>Circonciso</b>Come ogni bambino del suo popolo.</div>
+    <div class="sign"><b>Prega con i salmi</b>E va al Tempio per le feste.</div>
+    <div class="sign"><b>Legge in sinagoga</b>«Secondo il suo solito, di sabato» (Lc 4,16).</div>
+    <div class="sign"><b>Discute dentro il giudaismo</b>Sulla risurrezione sta con i farisei, contro i sadducei (Mc 12,18-27).</div>
+  </div>
+  <p>Nel 1965 il Concilio Vaticano II, nella dichiarazione <em>Nostra aetate</em>, ricorda che dal popolo ebraico «è nato Cristo secondo la carne» e «sono nati gli apostoli», e afferma:</p>
+  <blockquote><p>E se autorità ebraiche con i propri seguaci si sono adoperate per la morte di Cristo, tuttavia quanto è stato commesso durante la sua passione, non può essere imputato né indistintamente a tutti gli Ebrei allora viventi, né agli Ebrei del nostro tempo.</p><cite>Concilio Vaticano II, Nostra aetate, n. 4</cite></blockquote>
+</section>
+
+<!-- E -->
+<section id="e">
+  <p class="sec-k"><b>E</b>Le conseguenze</p>
+  <h2>Una frase sbagliata</h2>
+  <p>Chi conosce la mappa non può più dirla. Seleziona i fatti che la smentiscono.</p>
+  <div class="la-card" data-flat>
+    <p class="wrong" data-wrong><s>«Gesù contro gli ebrei»</s></p>
+    <div class="facts">
+      <button class="fact" type="button">Gesù era ebreo.</button>
+      <button class="fact" type="button">Ebrei erano i suoi discepoli.</button>
+      <button class="fact" type="button">Ebrea era la prima comunità di Gerusalemme.</button>
+      <button class="fact" type="button">Ebrei erano alcuni suoi avversari, come lo erano i suoi amici.</button>
+    </div>
+    <p class="count" style="margin-top:13px" data-facts-n></p>
+  </div>
+  <p>Dire «gli ebrei» per indicare soltanto chi si oppose a lui significa cancellare metà dei personaggi del Vangelo. Per secoli questa semplificazione ha alimentato l’accusa, rivolta a un intero popolo, di aver ucciso Cristo, con conseguenze gravissime. <em>Nostra aetate</em> la respinge <strong>perché è falsa</strong>, non per cortesia diplomatica.</p>
+  <h3>Il metodo</h3>
+  <p>Vale oltre questa lezione. Davanti a una frase, antica o recente, chiediti:</p>
+  <div class="method">
+    <div><b>I</b><p>Chi comanda in quel luogo?</p></div>
+    <div><b>II</b><p>Quali gruppi ci vivono e che cosa temono?</p></div>
+    <div><b>III</b><p>A chi conviene una certa risposta?</p></div>
+  </div>
+  <p style="margin-top:21px">Non è diffidenza verso tutto: è il modo per dare fiducia a una testimonianza sapendo che cosa sta dicendo davvero.</p>
+</section>
+
+<!-- F -->
+<section id="f">
+  <p class="sec-k"><b>F</b>Le domande</p>
+  <h2>Tocca a te</h2>
+  <ol class="qs">
+    <li><label for="q1"><b>1.</b>Nella frase di Lc 3,1-2 individua chi governa per conto di Roma, chi è un principe locale e chi ha un’autorità religiosa. Perché Luca li nomina tutti?</label><textarea id="q1" data-q></textarea></li>
+    <li><label for="q2"><b>2.</b>Gesù cresce a Nazaret. Sotto quale autorità vive? E quando entra a Gerusalemme?</label><textarea id="q2" data-q></textarea></li>
+    <li><label for="q3"><b>3.</b>Spiega in tre righe perché la domanda sul tributo (Mc 12,14) era una trappola.</label><textarea id="q3" data-q></textarea></li>
+    <li><label for="q4"><b>4.</b>Riscrivi la frase «Gesù era contro gli ebrei» in una forma storicamente corretta, usando almeno due informazioni di questa lezione.</label><textarea id="q4" data-q></textarea></li>
+  </ol>
+  <div class="row">
+    <p class="saved" data-saved></p>
+    <span style="display:flex;gap:8px;flex-wrap:wrap"><button class="la-btn la-btn--ghost" type="button" data-copy>Copia le risposte</button><button class="la-btn" type="button" data-dl>Scarica le risposte</button></span>
+  </div>
+</section>
+
+<!-- G -->
+<section id="g">
+  <p class="sec-k"><b>G</b>Conclusione</p>
+  <h2>Dentro il suo popolo</h2>
+  <p>Gesù non è vissuto in un luogo qualsiasi. È vissuto in una piccola terra divisa fra governi diversi, sotto un impero che mostrava le sue immagini e davanti a un popolo che discuteva su come restare fedele al suo Dio. Conoscere questa mappa non dimostra la fede cristiana; permette però di leggere i Vangeli senza fraintenderli e di collocare Gesù dove è stato davvero: <strong>dentro il suo popolo, non contro di esso</strong>.</p>
+  <p class="motto">Una frase si capisce quando si sa <em>dove</em>, <em>quando</em> e <em>fra chi</em> è stata detta.</p>
+  <details>
+    <summary>Fonti</summary>
+    <ul>
+      <li>Bibbia CEI 2008: Es 20,4; Mc 12,13-27; Lc 3,1-2; 4,16; 23,6-7; Gal 4,4-5.</li>
+      <li>Giuseppe Flavio, <em>Guerra giudaica</em> I,33,2-4 (l’aquila d’oro); <em>Antichità giudaiche</em> XVII,6,2-4 (l’aquila d’oro); XVIII,1,1-6 (le quattro «filosofie», Giuda il Galileo); XVIII,3,1 (Pilato e le insegne).</li>
+      <li>Concilio Vaticano II, dichiarazione <em>Nostra aetate</em>, 28 ottobre 1965, n. 4.</li>
+      <li>Iscrizione di Ponzio Pilato, Cesarea Marittima, rinvenuta nel 1961; Gerusalemme, Israel Museum.</li>
+      <li>Per la cronologia dei governanti: P. Franchi, dispense di Storia della Chiesa antica e di Nuovo Testamento.</li>
+    </ul>
+  </details>
+</section>
+
+<footer>© Matteo Sestili · Tutti i diritti riservati · Lab IRC</footer>
+</div>
+
+<script>
+/* Lab IRC — Kit artefatti. Mettere in fondo al <body class="la" data-anno="1-5"> (o dopo i dati di una lezione con `anno`).
+   Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno, easter egg AMDG.
+   API: LabArtefatto.say(testo) · .cheer() · .oops() · .amdg() */
+(function () {
+  var d = document, w = window;
+  try { var t = localStorage.getItem('tema_lab'); if (t) d.documentElement.dataset.tema = t; } catch (e) {}
+  if (!d.body.hasAttribute('data-anno') && w.GIOCHI_DATI && w.GIOCHI_DATI.anno) d.body.setAttribute('data-anno', w.GIOCHI_DATI.anno);
+  var reduce = w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var M = {
+    1: { name: 'Semino', eyes: [[19.5, 30], [28.5, 30]], smile: 'M20.5 35.5 Q24 38.5 27.5 35.5',
+      body: '<path d="M24 19V12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><ellipse cx="17" cy="11" rx="7" ry="4" fill="currentColor" transform="rotate(-25 17 11)"/><ellipse cx="31" cy="10" rx="7" ry="4" fill="currentColor" transform="rotate(25 31 10)"/><circle cx="24" cy="31" r="13" fill="currentColor"/>',
+      lines: ['Ogni grande albero è stato un seme.', 'Da dove vengo? Bella domanda!', 'In principio… c’era una domanda.'] },
+    2: { name: 'Ichthy', eyes: [[13, 22]], smile: 'M7.5 27 Q9.5 28.8 11.5 27',
+      body: '<path d="M34 24 L46 14 L46 34 Z" fill="currentColor"/><ellipse cx="21" cy="24" rx="16" ry="11" fill="currentColor"/>',
+      lines: ['ΙΧΘΥΣ: Gesù Cristo, Figlio di Dio, Salvatore.', 'I primi cristiani mi disegnavano in segreto.', 'Venite dietro a me! (Mc 1,17)'] },
+    3: { name: 'Navicella', eyes: [[18.5, 32], [29.5, 32]], smile: 'M21.5 36.5 Q24 38.3 26.5 36.5',
+      body: '<path d="M24 6V28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M26.5 8 L40 25 H26.5 Z" fill="currentColor" fill-opacity=".7"/><path d="M4 28 H44 L37 41 H11 Z" fill="currentColor"/>',
+      lines: ['Duc in altum! Prendi il largo. (Lc 5,4)', 'Duemila anni di mare… e ancora a galla.', 'Tempesta? Non temete!'] },
+    4: { name: 'Bussolina', eyes: [], smile: null, needle: true,
+      body: '<circle cx="24" cy="24" r="18" fill="currentColor"/><circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/><path d="M24 7.5v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',
+      lines: ['La coscienza è la mia bussola.', 'E la tua, dove punta?', 'Libertà non è andare ovunque: è sapere dove.'] },
+    5: { name: 'Terra', eyes: [[19, 27], [29, 27]], smile: 'M20.5 32.5 Q24 35.5 27.5 32.5',
+      body: '<circle cx="24" cy="27" r="16" fill="currentColor"/><path d="M11 22 Q24 30 37 22" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/><path d="M24 11.5 C24 5 30 2 36.5 3 C36.5 9.5 31 12.5 24 11.5 Z" fill="#34D399"/>',
+      lines: ['Laudato si’! Custodisci la casa comune.', 'Tutto è connesso.', 'Il futuro comincia adesso.'] }
+  };
+  var CHEER = ['Esatto!', 'Bravissimo!', 'Proprio così!', 'Ottimo!'];
+  var OOPS = ['Quasi… riprova!', 'Mmm, pensaci ancora.', 'Non proprio. Coraggio!'];
+  var pick = function (a) { return a[Math.floor(Math.random() * a.length)]; };
+  var NEEDLE = '<g class="la-needle"><path d="M24 12 L27.5 24 L20.5 24 Z" fill="#fff"/><path d="M24 36 L27.5 24 L20.5 24 Z" fill="#14131F" fill-opacity=".55"/><circle cx="24" cy="24" r="2.4" fill="#fff"/></g>';
+  var EYE = function (p) { return '<g transform="translate(' + p[0] + ' ' + p[1] + ')"><g class="la-lid"><circle r="3.4" fill="#fff"/><circle class="la-pupil" r="1.7" fill="#14131F"/></g></g>'; };
+
+  var egg = null;
+  function amdg() {
+    if (egg) return;
+    egg = d.createElement('div');
+    egg.className = 'la-amdg'; egg.setAttribute('role', 'dialog'); egg.setAttribute('aria-label', 'Ad maiorem Dei gloria');
+    egg.innerHTML = '<div><div class="la-amdg-star">✦</div><div class="la-amdg-letters">' +
+      ['A', 'M', 'D', 'G'].map(function (l, i) { return (i ? '<i style="animation-delay:' + (233 + i * 89) + 'ms">·</i>' : '') + '<b style="animation-delay:' + (233 + i * 144) + 'ms">' + l + '</b>'; }).join('') +
+      '</div><div class="la-amdg-line"></div><div class="la-amdg-lat">Ad maiorem Dei gloria</div><div class="la-amdg-it">Per la maggior gloria di Dio</div></div>';
+    d.body.appendChild(egg);
+    var el = egg, timer;
+    var close = function () { if (egg !== el) return; egg = null; clearTimeout(timer); d.removeEventListener('keydown', esc); el.classList.add('is-out'); setTimeout(function () { el.remove(); }, 610); };
+    var esc = function (e) { if (e.key === 'Escape') close(); };
+    el.addEventListener('click', close); d.addEventListener('keydown', esc); timer = setTimeout(close, 6180);
+  }
+
+  function mascot() {
+    var y = +(d.body.getAttribute('data-anno') || 0), m = M[y];
+    if (!m) return null;
+    var el = d.createElement('button');
+    el.type = 'button'; el.className = 'la-mascot'; el.setAttribute('aria-label', m.name);
+    el.style.color = 'var(--lab-anno-' + y + ')';
+    el.innerHTML = '<span class="la-bubble" hidden></span><svg viewBox="0 0 48 48" aria-hidden="true">' + m.body + (m.needle ? NEEDLE : '') +
+      m.eyes.map(EYE).join('') + (m.smile ? '<path d="' + m.smile + '" fill="none" stroke="#14131F" stroke-width="1.6" stroke-linecap="round" stroke-opacity=".7"/>' : '') + '</svg>';
+    d.body.appendChild(el);
+    var bub = el.querySelector('.la-bubble'), pupils = el.querySelectorAll('.la-pupil'), needle = el.querySelector('.la-needle'), n = 0, bt;
+    w.addEventListener('mousemove', function (e) {
+      var r = el.getBoundingClientRect(), x = e.clientX - (r.left + r.width / 2), yy = e.clientY - (r.top + r.height / 2);
+      var dd = Math.hypot(x, yy) || 1, k = Math.min(1, dd / 144);
+      for (var i = 0; i < pupils.length; i++) { pupils[i].setAttribute('cx', (x / dd * 1.4 * k).toFixed(2)); pupils[i].setAttribute('cy', (yy / dd * 1.4 * k).toFixed(2)); }
+      if (needle) needle.setAttribute('transform', 'rotate(' + (Math.atan2(yy, x) * 180 / Math.PI + 90).toFixed(1) + ' 24 24)');
+    });
+    (function blink() { setTimeout(function () { el.classList.add('blink'); setTimeout(function () { el.classList.remove('blink'); blink(); }, 144); }, 2584 + Math.random() * 2584); })();
+    function say(txt) {
+      bub.textContent = txt; bub.hidden = false;
+      bub.style.animation = 'none'; void bub.offsetWidth; bub.style.animation = '';
+      clearTimeout(bt); bt = setTimeout(function () { bub.hidden = true; }, 2618);
+    }
+    el.addEventListener('click', function () {
+      n++;
+      if (n >= 7) { n = 0; bub.hidden = true; amdg(); return; }
+      say(n === 1 ? 'Ciao, sono ' + m.name + '!' : m.lines[(n - 2) % m.lines.length]);
+    });
+    return { say: say };
+  }
+
+  function init() {
+    var mas = mascot();
+
+    if (!reduce) {
+      var h = d.createElement('div'); h.className = 'la-halo'; h.setAttribute('aria-hidden', 'true'); d.body.appendChild(h);
+      var hx = innerWidth / 2, hy = innerHeight / 3, tx = hx, ty = hy;
+      w.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; h.style.opacity = 1; });
+      (function loop() { hx += (tx - hx) * .1618; hy += (ty - hy) * .1618; h.style.transform = 'translate(' + (hx - 233) + 'px,' + (hy - 233) + 'px)'; requestAnimationFrame(loop); })();
+    }
+
+    var hot = null;
+    d.addEventListener('mousemove', function (e) {
+      var c = e.target.closest ? e.target.closest('.la-card') : null;
+      if (hot && hot !== c) { hot.classList.remove('is-hot'); hot.style.transform = ''; }
+      hot = c; if (!c) return;
+      var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      c.classList.add('is-hot'); c.style.setProperty('--mx', (px * 100).toFixed(1) + '%'); c.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      if (!c.hasAttribute('data-flat') && !reduce) c.style.transform = 'perspective(987px) rotateX(' + ((.5 - py) * 4).toFixed(2) + 'deg) rotateY(' + ((px - .5) * 4).toFixed(2) + 'deg) translateY(-3px)';
+    });
+    d.addEventListener('animationend', function (e) { if (e.animationName === 'labRise' && e.target.hasAttribute && e.target.hasAttribute('data-reveal')) e.target.removeAttribute('data-reveal'); });
+
+    var buf = '';
+    d.addEventListener('keydown', function (e) {
+      var tag = (e.target.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable || !e.key || e.key.length !== 1) return;
+      buf = (buf + e.key.toLowerCase()).slice(-4); if (buf === 'amdg') amdg();
+    });
+    w.addEventListener('lab:amdg', amdg);
+
+    var say = function (t) { if (mas) mas.say(t); };
+    w.LabArtefatto = { say: say, cheer: function () { say(pick(CHEER)); }, oops: function () { say(pick(OOPS)); }, amdg: amdg };
+    console.log('%cA · M · D · G', 'font: 600 21px Cinzel, Georgia, serif; color: #E3C27A; letter-spacing: .3em');
+  }
+
+  w.LabArtefatto = { say: function () {}, cheer: function () {}, oops: function () {}, amdg: amdg };
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script>
+(function () {
+  var d = document;
+  var $ = function (s, r) { return (r || d).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
+  var L = function () { return window.LabArtefatto; };
+
+  /* tema */
+  $('[data-tema]').onclick = function () {
+    var c = d.documentElement.dataset.tema === 'chiaro' ? 'scuro' : 'chiaro';
+    d.documentElement.dataset.tema = c; try { localStorage.setItem('tema_lab', c); } catch (e) {}
+  };
+
+  /* navigazione per sezioni */
+  var links = $$('.top nav a'), secs = links.map(function (a) { return $(a.getAttribute('href')); });
+  function spy() {
+    var y = innerHeight * .35, cur = 0;
+    secs.forEach(function (s, i) { if (s.getBoundingClientRect().top < y) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('is-on', i === cur); if (i <= cur) a.classList.add('is-seen'); });
+    var on = links[cur]; if (on && on.parentNode.scrollWidth > on.parentNode.clientWidth) on.parentNode.scrollLeft = on.offsetLeft - 40;
+  }
+  addEventListener('scroll', spy, { passive: true }); spy();
+
+  /* A · racconto a tappe */
+  var STORY = [
+    { when: 'Gerusalemme · poco prima del 4 a.C.', t: 'Un’aquila d’oro', p: 'Negli ultimi mesi della sua vita, il re Erode il Grande fa collocare sopra la grande porta del Tempio di Gerusalemme una grande aquila d’oro.' },
+    { when: 'I maestri', t: 'Un’immagine proibita', p: 'Due maestri della Legge, Giuda e Mattia, insegnano ai loro allievi che quell’immagine viola la Legge di Dio, che proibisce di farsi immagini (Es 20,4).' },
+    { when: 'Il gesto', t: 'A colpi d’ascia', p: 'Si diffonde la voce che il re sta morendo. Alcuni giovani si calano con funi dal tetto del Tempio, in pieno giorno e davanti alla folla, e abbattono l’aquila a colpi d’ascia.' },
+    { when: 'La repressione', t: 'Erode non era morto', p: 'Circa quaranta giovani vengono arrestati. Quelli che si erano calati dal tetto e i loro due maestri sono bruciati vivi; gli altri consegnati per l’esecuzione.', src: 'Giuseppe Flavio riporta il fatto in due opere: la Guerra giudaica e le Antichità giudaiche.' },
+    { when: 'Una trentina d’anni dopo', t: 'Le insegne di Pilato', p: 'Il governatore romano Ponzio Pilato fa entrare di notte a Gerusalemme le insegne militari con l’effigie dell’imperatore. Una folla va a supplicarlo per giorni a Cesarea; circondati dai soldati, quegli uomini si dicono pronti a morire piuttosto che veder violata la Legge. Pilato fa riportare le insegne a Cesarea.' }
+  ];
+  var si = 0, dots = $('.story-dots');
+  STORY.forEach(function () { dots.appendChild(d.createElement('i')); });
+  function story() {
+    var s = STORY[si];
+    $('[data-story="when"]').textContent = s.when; $('[data-story="t"]').textContent = s.t;
+    var p = $('[data-story="p"]'); p.textContent = s.p; p.classList.remove('is-in'); void p.offsetWidth; p.classList.add('is-in');
+    $('[data-story="src"]').textContent = s.src || '';
+    $$('i', dots).forEach(function (x, i) { x.classList.toggle('is-on', i <= si); });
+    $('[data-story="n"]').textContent = (si + 1) + ' / ' + STORY.length;
+    $('[data-story="prev"]').disabled = si === 0; $('[data-story="next"]').disabled = si === STORY.length - 1;
+  }
+  $('[data-story="prev"]').onclick = function () { if (si > 0) { si--; story(); } };
+  $('[data-story="next"]').onclick = function () { if (si < STORY.length - 1) { si++; story(); if (si === STORY.length - 1) L().say('Due episodi, un’unica domanda.'); } };
+  story();
+
+  var SORT = [
+    { s: 'Erode fece collocare un’aquila d’oro sulla porta del Tempio.', f: 1, why: 'Lo racconta Giuseppe Flavio.' },
+    { s: 'Per i maestri Giuda e Mattia l’aquila violava il divieto di farsi immagini.', f: 1, why: 'È il motivo riportato dalla fonte.' },
+    { s: 'Per Erode l’aquila era un omaggio a Roma, di cui era un emblema.', f: 0, why: 'Molti storici la leggono così, ma la fonte non lo dice: aiuta però a capire la tensione di quegli anni.' },
+    { s: 'Pilato fece riportare le insegne a Cesarea.', f: 1, why: 'Lo racconta ancora Giuseppe Flavio.' }
+  ];
+  var sortOk = 0, sortDone = 0;
+  SORT.forEach(function (it) {
+    var el = d.createElement('div'); el.className = 'sort-i';
+    el.innerHTML = '<p></p><div class="seg"><button type="button" data-f="1">Lo dice la fonte</button><button type="button" data-f="0">Interpretazione</button></div><span class="why"></span>';
+    $('p', el).textContent = it.s; $('.why', el).textContent = it.why;
+    $$('button', el).forEach(function (b) {
+      b.onclick = function () {
+        var ok = +b.dataset.f === it.f;
+        $$('button', el).forEach(function (x) { x.disabled = true; });
+        b.classList.add('is-pick', ok ? 'is-right' : 'is-wrong');
+        el.classList.add('is-done', ok ? 'is-ok' : 'is-ko');
+        sortDone++; if (ok) sortOk++;
+        if (ok) L().cheer(); else L().oops();
+        if (sortDone === SORT.length) setTimeout(function () { L().say(sortOk + ' su ' + SORT.length + '. Distinguere fatto e lettura è già metodo storico!'); }, 900);
+      };
+    });
+    $('[data-sort]').appendChild(el);
+  });
+
+  /* B · trappola */
+  var tried = {};
+  $$('[data-trap]').forEach(function (b) {
+    b.onclick = function () {
+      b.classList.add('is-open'); tried[b.dataset.trap] = 1;
+      var n = Object.keys(tried).length;
+      $$('[data-ctx]').forEach(function (c, i) { if (i < n) c.hidden = false; });
+      $('[data-trap-note]').textContent = n < 2 ? 'Ora prova l’altra risposta.' : 'Qualunque risposta è una trappola.';
+      $('[data-trap-go]').disabled = n < 2;
+      if (n === 2) L().say('Sì o no: in entrambi i casi, trappola!');
+    };
+  });
+  $('[data-trap-go]').onclick = function () { var a = $('[data-answer]'); a.hidden = false; a.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+
+  /* C · nomi di Lc 3,1-2 */
+  var CAT = { roma: 'Roma', principi: 'Principe locale', religiosa: 'Autorità religiosa' };
+  var WHO = {
+    tiberio: { c: 'roma', t: 'Tiberio Cesare', i: 'È l’imperatore, al potere dal 14 al 37 d.C.: il suo quindicesimo anno cade intorno al 28–29.' },
+    pilato: { c: 'roma', t: 'Ponzio Pilato', i: 'Governa la Giudea per conto di Roma dal 26 al 36. Nel 1961, negli scavi del teatro di Cesarea Marittima, è stata trovata una pietra con un’iscrizione latina che ne riporta il nome e il titolo di praefectus della Giudea: oggi è all’Israel Museum di Gerusalemme. È una delle pochissime iscrizioni coeve che nominano un personaggio dei Vangeli.' },
+    erode: { c: 'principi', t: 'Erode Antipa', i: 'Figlio di Erode il Grande, che alla sua morte aveva diviso il regno. È tetrarca, cioè signore di una parte del territorio, della Galilea e della Perea dal 4 a.C. al 39 d.C. È lui che fa uccidere Giovanni Battista.' },
+    filippo: { c: 'principi', t: 'Filippo', i: 'Fratello di Antipa, anche lui figlio di Erode il Grande: governa le regioni a nord-est del lago di Tiberiade.' },
+    lisania: { c: 'principi', t: 'Lisania', i: 'Tetrarca dell’Abilene: anche lui, come Erode e Filippo, governa una parte del territorio.' },
+    anna: { c: 'religiosa', t: 'Anna', i: 'Suocero di Caifa: era stato sommo sacerdote prima di lui e conserva una grande autorità.' },
+    caifa: { c: 'religiosa', t: 'Caifa', i: 'È il sommo sacerdote in carica. Il sommo sacerdote presiede il Sinedrio, il consiglio che a Gerusalemme regola le questioni religiose e giudiziarie della comunità, sotto il controllo romano.' }
+  };
+  var nms = $$('[data-nm]'), who = $('[data-who]'), right = 0;
+  function count() { var n = nms.filter(function (x) { return x.dataset.done; }).length; $('[data-nm-count]').textContent = n + ' di ' + nms.length + ' nomi sciolti'; return n; }
+  function open(b) {
+    var w = WHO[b.dataset.nm];
+    nms.forEach(function (x) { x.classList.toggle('is-sel', x === b); });
+    who.className = 'who'; who.innerHTML = '<h4></h4><p class="who-res" hidden></p><div class="seg">' +
+      Object.keys(CAT).map(function (k) { return '<button type="button" data-c="' + k + '">' + CAT[k] + '</button>'; }).join('') + '</div><p class="who-info"></p>';
+    $('h4', who).textContent = w.t; $('.who-info', who).textContent = w.i;
+    function reveal(pick) {
+      var ok = pick === w.c;
+      $$('.seg button', who).forEach(function (x) { x.disabled = true; if (x.dataset.c === pick) x.classList.add('is-pick', ok ? 'is-right' : 'is-wrong'); if (x.dataset.c === w.c) x.classList.add('is-pick', 'is-right'); });
+      var r = $('.who-res', who); r.hidden = false; r.className = 'who-res ' + (ok ? 'ok' : 'ko'); r.textContent = (ok ? 'Esatto: ' : 'Non proprio. Risposta giusta: ') + CAT[w.c] + '.';
+      who.classList.add('is-done');
+      if (!b.dataset.done) { b.dataset.done = w.c; if (ok) right++; if (ok) L().cheer(); else L().oops();
+        if (count() === nms.length) setTimeout(function () { L().say('Mappa completa! ' + right + ' su ' + nms.length + ' al primo colpo.'); }, 900); }
+    }
+    if (b.dataset.done) reveal(b.dataset.done);
+    else $$('.seg button', who).forEach(function (x) { x.onclick = function () { reveal(x.dataset.c); }; });
+  }
+  nms.forEach(function (b) { b.onclick = function () { open(b); }; });
+  count();
+
+  /* C · due governi */
+  var here = 0;
+  function gov() {
+    $$('[data-gov]').forEach(function (g, i) { g.classList.toggle('is-here', i === here); });
+    $('[data-gov-now]').innerHTML = here ? 'Ora Gesù è sotto l’autorità di <b>Ponzio Pilato</b>, prefetto romano.' : 'Gesù vive sotto l’autorità di <b>Erode Antipa</b>, principe ebreo alleato di Roma.';
+    $('[data-gov-go]').textContent = here ? 'Torna in Galilea' : 'Gesù sale a Gerusalemme';
+  }
+  $('[data-gov-go]').onclick = function () { here = 1 - here; gov(); if (here) L().say('Cambio di governo!'); };
+  gov();
+
+  /* C.1 · carte */
+  $$('.flip').forEach(function (f) { f.onclick = function () { f.classList.toggle('is-open'); }; });
+
+  /* E · fatti */
+  var facts = $$('.fact');
+  function fcount() {
+    var n = facts.filter(function (x) { return x.classList.contains('is-on'); }).length;
+    $('[data-facts-n]').textContent = n + ' di ' + facts.length + ' fatti';
+    $('[data-wrong]').classList.toggle('is-struck', n === facts.length);
+    return n;
+  }
+  facts.forEach(function (f) { f.onclick = function () { f.classList.toggle('is-on'); if (fcount() === facts.length) L().say('Frase smentita. Ora riscrivila nella domanda 4!'); }; });
+  fcount();
+
+  /* F · risposte */
+  var qs = $$('[data-q]'), KEY = 'lez_sotto_aquila';
+  try { var sv = JSON.parse(localStorage.getItem(KEY) || '[]'); qs.forEach(function (q, i) { q.value = sv[i] || ''; }); } catch (e) {}
+  qs.forEach(function (q) { q.addEventListener('input', function () { try { localStorage.setItem(KEY, JSON.stringify(qs.map(function (x) { return x.value; }))); } catch (e) {} }); });
+  function text() {
+    return 'Sotto l’aquila · Classe II · UDA 1 · Lezione 1\n\n' + qs.map(function (q, i) {
+      return $('label[for="' + q.id + '"]').textContent.trim().replace(/^(\d\.)/, '$1 ') + '\n' + (q.value.trim() || '(senza risposta)');
+    }).join('\n\n') + '\n';
+  }
+  function note(t) { var s = $('[data-saved]'); s.textContent = t; clearTimeout(note.t); note.t = setTimeout(function () { s.textContent = ''; }, 3000); }
+  $('[data-copy]').onclick = function () {
+    var t = text();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { note('Risposte copiate.'); }, fallback); else fallback();
+    function fallback() { var a = d.createElement('textarea'); a.value = t; d.body.appendChild(a); a.select(); try { d.execCommand('copy'); note('Risposte copiate.'); } catch (e) { note('Copia non riuscita: seleziona il testo a mano.'); } a.remove(); }
+  };
+  $('[data-dl]').onclick = function () {
+    var a = d.createElement('a'); a.href = URL.createObjectURL(new Blob([text()], { type: 'text/plain;charset=utf-8' }));
+    a.download = 'sotto-l-aquila-risposte.txt'; d.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000); note('File scaricato.');
+  };
+})();
+</script>
+</body>
+</html>
