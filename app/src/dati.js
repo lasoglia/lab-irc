@@ -73,6 +73,26 @@ export function ytId(u) {
   return m ? m[1] : "";
 }
 
+/* "/uploads/i-1-1-credo-non-so_fascicolo.pdf" → "I 1 1 credo non so fascicolo" */
+function nomeDaFile(p) {
+  if (/^https?:\/\//i.test(String(p || ""))) {
+    try { return new URL(p).hostname.replace(/^www\./, ""); } catch (e) { /* prosegue */ }
+  }
+  let base = String(p || "").split(/[?#]/)[0].split("/").pop() || "";
+  try { base = decodeURIComponent(base); } catch (e) { /* nome con % strani: resta com'è */ }
+  base = base.replace(/\.[a-z0-9]+$/i, "");
+  const t = base.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+  return t ? t.charAt(0).toUpperCase() + t.slice(1) : "Materiale";
+}
+
+function tipoDaFile(file, link) {
+  const f = String(file || "").toLowerCase().split(/[?#]/)[0];
+  if (/\.html?$/.test(f)) return "Artefatto interattivo";
+  if (/\.(pptx?|odp|key)$/.test(f)) return "Slide";
+  if (f) return "Documento/PDF";
+  return link ? "Link" : "Documento/PDF";
+}
+
 function byOrdine(a, b) {
   const oa = a.ordine == null || a.ordine === "" ? 999 : +a.ordine;
   const ob = b.ordine == null || b.ordine === "" ? 999 : +b.ordine;
@@ -95,8 +115,26 @@ export async function caricaDati() {
   const UDA = pickArr(uda, "uda");
   const LEZ = pickArr(lez, "lezioni");
 
+  /* i file caricati dentro una lezione ("File della lezione") diventano
+     materiali di quella lezione: anno e UDA sono quelli della lezione */
+  const DALLE_LEZIONI = [];
+  LEZ.forEach((l) => {
+    (Array.isArray(l.materiali) ? l.materiali : []).forEach((m) => {
+      if (!m || (!m.file && !m.link)) return;
+      DALLE_LEZIONI.push({
+        ...m,
+        anno: l.anno,
+        uda: l.uda,
+        lezione: l.titolo,
+        titolo: String(m.titolo || "").trim() || nomeDaFile(m.file || m.link),
+        tipo: m.tipo || tipoDaFile(m.file, m.link),
+      });
+    });
+  });
+
   const ITEMS = [
     ...MAT.map((x) => ({ kind: "materiale", ...x })),
+    ...DALLE_LEZIONI.map((x) => ({ kind: "materiale", ...x })),
     ...STR.map((x) => ({ kind: "strumento", tipo: "Strumento", ...x })),
     ...VID.map((x) => ({ kind: "video", tipo: "Video", ...x })),
   ];

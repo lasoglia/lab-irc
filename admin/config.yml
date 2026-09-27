@@ -82,6 +82,9 @@ collections:
             name: uda
             widget: list
             label_singular: "UDA"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine si decide col campo "Ordine"
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
             summary: "{{fields.titolo}} — {{fields.anno}}° anno"
             fields:
               - { label: "Titolo dell'UDA", name: titolo, widget: string, hint: "Es. 'Le grandi domande'. Diventa una cartella nella pagina dell'anno." }
@@ -102,6 +105,7 @@ collections:
   # ===========================================================
   - name: lezioni
     label: "📖  Lezioni (dentro le UDA)"
+    description: "Dentro ogni lezione puoi caricare tutti i suoi file (slide, PDF, artefatti) in «File della lezione»."
     delete: false
     editor: { preview: false }
     files:
@@ -113,6 +117,9 @@ collections:
             name: lezioni
             widget: list
             label_singular: "lezione"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine si decide col campo "Ordine"
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
             summary: "{{fields.titolo}} — {{fields.uda}} ({{fields.anno}}° anno)"
             fields:
               - { label: "Titolo della lezione", name: titolo, widget: string, hint: "Es. 'Lezione 1 — Il caso Galileo'. Diventa una sottocartella dentro l'UDA." }
@@ -136,12 +143,34 @@ collections:
                 hint: "L'unità (cartella) dentro cui sta questa lezione. Deve essere dello stesso anno."
               - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Breve presentazione, mostrata sulla sottocartella e nella sua pagina" }
               - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo: 1, 2, 3… per decidere l'ordine delle lezioni" }
+              - label: "File della lezione"
+                name: materiali
+                widget: list
+                required: false
+                label_singular: "file"
+                allow_reorder: false
+                summary: "{{fields.titolo | default('(titolo dal nome del file)')}} — {{fields.file}}{{fields.link}}"
+                hint: "Aggiungi qui tutti i file di questa lezione (slide, PDF, artefatti .html): ognuno diventa una scheda nella pagina della lezione. Anno e UDA sono già quelli della lezione."
+                fields:
+                  - { label: "File (slide, PDF o artefatto .html)", name: file, widget: file, required: false }
+                  - { label: "Titolo", name: titolo, widget: string, required: false, hint: "Facoltativo: se lo lasci vuoto usiamo il nome del file" }
+                  - label: "Tipo"
+                    name: tipo
+                    widget: select
+                    required: false
+                    options: ["Slide", "Documento/PDF", "Artefatto interattivo", "Link"]
+                    hint: "Facoltativo: se lo lasci vuoto lo capiamo dal file (.html = artefatto, .pdf = documento, .ppt/.pptx = slide)"
+                  - { label: "Oppure un link esterno", name: link, widget: string, required: false, hint: "https://… — usato solo se non carichi un file" }
+                  - { label: "Descrizione", name: descrizione, widget: text, required: false }
+                  - { label: "Immagine di copertina", name: immagine, widget: image, required: false }
+                  - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
 
   # ===========================================================
   #  Materiali (slide, documenti, link) per anno
   # ===========================================================
   - name: materiali
     label: "📄  Materiali"
+    description: "Per mettere più file nella stessa lezione è più comodo aprire la lezione (📖 Lezioni) e aggiungerli in «File della lezione»: anno e UDA non vanno ripetuti."
     delete: false
     editor: { preview: false }
     files:
@@ -153,6 +182,9 @@ collections:
             name: materiali
             widget: list
             label_singular: "materiale"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine si decide col campo "Ordine"
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
             summary: "{{fields.titolo}} — {{fields.anno}}° anno"
             fields:
               - { label: "Titolo", name: titolo, widget: string }
@@ -212,6 +244,9 @@ collections:
             name: strumenti
             widget: list
             label_singular: "strumento"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine si decide col campo "Ordine"
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
             summary: "{{fields.titolo}}"
             fields:
               - { label: "Titolo", name: titolo, widget: string }
@@ -268,6 +303,9 @@ collections:
             name: video
             widget: list
             label_singular: "video"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine si decide col campo "Ordine"
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
             summary: "{{fields.titolo}}"
             fields:
               - { label: "Titolo", name: titolo, widget: string }
