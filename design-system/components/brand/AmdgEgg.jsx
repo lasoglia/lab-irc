@@ -71,9 +71,6 @@ export function AmdgEgg({ secret = 'amdg', clicks = 7, duration = 6180 }) {
         <div style={{ fontFamily: 'var(--lab-font-display, Georgia, serif)', fontStyle: 'italic', fontWeight: 500, fontSize: 'clamp(20px, 2.6vw, 26px)', color: 'rgba(243,231,198,.9)', animation: 'labRise 987ms cubic-bezier(.16,1,.3,1) 1220ms both' }}>
           Ad maiorem Dei gloria
         </div>
-        <div style={{ fontFamily: 'var(--lab-font-body, sans-serif)', fontSize: 12.5, fontWeight: 800, letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(227,194,122,.7)', marginTop: 13, animation: 'labFade 987ms ease 1600ms both' }}>
-          Per la maggior gloria di Dio
-        </div>
       </div>
     </div>
   );
