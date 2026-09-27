@@ -162,11 +162,42 @@ function Header({ titolo, onHome, q, setQ }) {
 const PETAL = "M0 -40 C15 -52 15 -80 0 -93 C-15 -80 -15 -52 0 -40 Z";
 const CROSS = "M-2 -12 H2 V-5 H8 V-1 H2 V12 H-2 V-1 H-8 V-5 H-2 Z";
 
+/* Il rosone in 3D si carica dopo la pagina, solo se il dispositivo lo regge
+   e la connessione non è a risparmio dati; fino ad allora (o se qualcosa va
+   storto) resta il rosone disegnato, identico al modello di Claude Design. */
+const ROSONE_3D = "assets/3d/lab-irc-rosone.glb";
+function puo3D() {
+  const c = navigator.connection;
+  if (c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ""))) return false;
+  if (!(window.CSS && CSS.supports && CSS.supports("aspect-ratio", "1 / 1"))) return false;
+  return webglDisponibile();
+}
+
 function Rosone({ anni, onYear }) {
   const ref = useRef(null);
+  const ref3d = useRef(null);
   const [c, setC] = useState({ a: -90, p: 0.35, tx: 0, ty: 0 });
   const [hi, setHi] = useState(null);
   const [ch, setCh] = useState(false);
+  const [tre, setTre] = useState(false);
+  const onYearRef = useRef(onYear);
+  onYearRef.current = onYear;
+  useEffect(() => {
+    if (!puo3D()) return;
+    let ctrl = null, annullato = false;
+    const avvia = () => import("./mascotte3d.js")
+      .then((m) => annullato ? null : m.montaRosone3D(ref3d.current, resolvePath(ROSONE_3D), {
+        ridotto: movimentoRidotto(),
+        onSopra: setHi,
+        onAnno: (y) => onYearRef.current(y),
+        onCroce: () => window.dispatchEvent(new Event("lab:amdg")),
+      }))
+      .then((x) => { if (!x) return; if (annullato) x.distruggi(); else { ctrl = x; setTre(true); } })
+      .catch(() => {});
+    /* aspetta che la pagina sia pronta e l'animazione d'ingresso finita */
+    const id = setTimeout(avvia, 1200);
+    return () => { annullato = true; clearTimeout(id); if (ctrl) ctrl.distruggi(); };
+  }, []);
   useEffect(() => {
     if (!conMouse()) return;
     const mv = (e) => {
@@ -184,6 +215,8 @@ function Rosone({ anni, onYear }) {
   return (
     <div style={{ position: "relative", maxWidth: 440, margin: "0 auto" }}>
       <div aria-hidden="true" style={{ position: "absolute", inset: "-21%", borderRadius: "50%", pointerEvents: "none", background: `conic-gradient(from ${c.a + 90 - 13}deg, rgba(227,194,122,0) 0deg, rgba(227,194,122,${(0.26 * c.p).toFixed(3)}) 13deg, rgba(227,194,122,0) 26deg, rgba(227,194,122,0) 360deg)`, WebkitMaskImage: "radial-gradient(circle, #000 21%, transparent 70%)", maskImage: "radial-gradient(circle, #000 21%, transparent 70%)" }} />
+      <div ref={ref3d} className="lab-rosone-3d" aria-hidden="true" style={{ position: "absolute", left: "-5%", top: "-5%", width: "110%", aspectRatio: "1 / 1", zIndex: 1, opacity: tre ? 1 : 0, pointerEvents: tre ? "auto" : "none", transition: `opacity 1597ms ${EASE}` }} />
+      <div style={{ position: "relative", opacity: tre ? 0 : 1, pointerEvents: tre ? "none" : "auto", transition: `opacity 1597ms ${EASE}` }}>
       <div ref={ref} style={{ position: "relative", transform: `perspective(987px) rotateX(${(-c.ty * 8).toFixed(2)}deg) rotateY(${(c.tx * 8).toFixed(2)}deg)`, transition: `transform 610ms ${EASE}`, animation: `labRise 1597ms ${EASE} 233ms both` }}>
         <svg viewBox="-100 -100 200 200" role="img" aria-label="Rosone: scegli l'anno" style={{ width: "100%", display: "block", overflow: "visible" }} onMouseLeave={() => setHi(null)}>
           <circle r="98" style={{ fill: "var(--lab-bg-2)", stroke: "var(--lab-oro)", strokeWidth: 1.5, strokeOpacity: 0.85 }} />
@@ -205,6 +238,7 @@ function Rosone({ anni, onYear }) {
             <path d={CROSS} style={{ fill: "var(--lab-oro)" }} />
           </g>
         </svg>
+      </div>
       </div>
       <div style={{ textAlign: "center", marginTop: 21, minHeight: 55, fontFamily: "var(--lab-font-inscription)", fontWeight: 600, fontSize: 12.5, letterSpacing: ".18em", textTransform: "uppercase", color: info ? `var(--lab-anno-${info.year})` : "var(--lab-muted)", transition: "color 377ms" }}>
         {info ? (
@@ -343,9 +377,15 @@ function Briciole({ voci }) {
 }
 
 /* ---------- mascotte in 3D ----------
-   Per aggiungere le altre mascotte basta mettere il modello in assets/3d/
-   e scriverlo qui (i pezzi con gli stessi nomi di Terra si animano da soli). */
-const MODELLI_3D = { 5: "assets/3d/lab-irc-terra.glb" };
+   Un modello per anno in assets/3d/. Le animazioni si agganciano ai nomi
+   dei pezzi del modello (vedi mascotte3d.js). */
+const MODELLI_3D = {
+  1: "assets/3d/lab-irc-semino.glb",
+  2: "assets/3d/lab-irc-ichthy.glb",
+  3: "assets/3d/lab-irc-navicella.glb",
+  4: "assets/3d/lab-irc-bussolina.glb",
+  5: "assets/3d/lab-irc-terra.glb",
+};
 const BATTUTE = {
   1: { nome: "Semino", righe: ["Ogni grande albero è stato un seme.", "Da dove vengo? Bella domanda!", "In principio… c’era una domanda."] },
   2: { nome: "Ichthy", righe: ["ΙΧΘΥΣ: Gesù Cristo, Figlio di Dio, Salvatore.", "I primi cristiani mi disegnavano in segreto.", "Venite dietro a me! (Mc 1,17)"] },

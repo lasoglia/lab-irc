@@ -39,10 +39,13 @@ Gli effetti legati al cursore (rosone che si illumina, schede che si inclinano,
 pulsanti "magnetici") esistono solo con il mouse: su telefono le schede restano
 ferme, niente "flash". Se nel sistema è attivo "riduci movimento" si spengono.
 
-Nelle pagine del **quinto anno** la mascotte **Terra è in 3D**: gira piano,
-segue il cursore con lo sguardo, si può ruotare trascinandola e, se la tocchi,
-saluta (al settimo tocco… A·M·D·G). Quando arriveranno i modelli 3D delle altre
-mascotte basterà darli a Claude: si aggiungono nello stesso modo.
+Ogni anno ha la sua **mascotte in 3D** nella testata della pagina: Semino (I),
+Ichthy (II), Navicella (III), Bussolina (IV), Terra (V). Seguono il cursore con lo
+sguardo (la bussola con l'ago!), si ruotano trascinandole e, se le tocchi,
+saltellano e dicono una frase (al settimo tocco… A·M·D·G).
+Anche il **rosone della home è in 3D**: le vetrate si accendono dove passa il
+cursore e toccandone una si apre l'anno. Sui dispositivi che non reggono il 3D
+(o con il risparmio dati) resta il rosone disegnato.
 
 I **font** (Cormorant Garamond, Cinzel, Figtree) sono salvati dentro il sito e
 non vengono più scaricati da Google: il sito funziona anche se la rete della
