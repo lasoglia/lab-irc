@@ -19,13 +19,16 @@ const qui = path.dirname(fileURLToPath(import.meta.url));
 const osserva = process.argv.includes("--watch");
 
 const opzioni = {
-  entryPoints: [path.join(qui, "src/main.jsx")],
+  entryPoints: { app: path.join(qui, "src/main.jsx") },
   bundle: true,
   minify: !osserva,
   sourcemap: false,
-  format: "iife",
+  format: "esm",
+  splitting: true,          /* il 3D (three.js) finisce in un file a parte, caricato solo se serve */
   target: ["es2019", "chrome80", "firefox78", "safari13"],
-  outfile: path.join(qui, "../assets/app.js"),
+  outdir: path.join(qui, "../assets"),
+  entryNames: "[name]",
+  chunkNames: "app-parti/[name]-[hash]",
   jsx: "transform",
   loader: { ".js": "jsx", ".jsx": "jsx" },
   /* i componenti del design system importano "react": lo risolviamo da qui */

@@ -22,3 +22,24 @@ npm run build    # scrive ../assets/app.js e ../assets/app.css
 ## Nuovo design da Claude Design
 
 Si esporta lo zip, si sostituisce il contenuto di `design-system/` e si rilancia `npm run build`.
+
+## Mascotte in 3D
+
+I modelli stanno in `assets/3d/` e si elencano in `MODELLI_3D` dentro `src/main.jsx`
+(oggi: anno 5 → Terra). Il 3D (three.js) è in un file a parte (`assets/app-parti/`)
+che si scarica solo nelle pagine che lo mostrano. Prima di aggiungere un modello
+conviene comprimerlo (da 1,6 MB a ~230 KB, stesso aspetto):
+
+```bash
+npx @gltf-transform/cli dedup in.glb t1.glb
+npx @gltf-transform/cli weld t1.glb t2.glb
+npx @gltf-transform/cli meshopt t2.glb assets/3d/lab-irc-NOME.glb
+```
+
+Si animano da soli i pezzi con gli stessi nomi di Terra: `asse` (gira),
+`occhio_*_pupilla` (seguono il cursore), `occhio_*` (sbattono), `foglia` (ondeggia).
+
+## Font
+
+Sono nel sito (`design-system/fonts/`, licenza OFL), non più da Google Fonts:
+`design-system/tokens/fonts.css` li dichiara.
