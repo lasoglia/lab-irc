@@ -1,14 +1,20 @@
 {
   "lezioni": [
     {
-      "titolo": "Lemaitre e Einstein",
-      "anno": "5",
-      "uda": "Scienza e fede"
+      "titolo": "Credo, non credo, non sò",
+      "anno": "1",
+      "uda": "L'uomo che cerca oltre il senso religioso",
+      "ordine": 1
     },
     {
       "titolo": "Presentazione corso",
       "anno": "4",
       "uda": "Accoglienza "
+    },
+    {
+      "titolo": "Lemaitre e Einstein",
+      "anno": "5",
+      "uda": "Scienza e fede"
     }
   ]
 }
