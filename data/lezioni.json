@@ -1,6 +1,24 @@
 {
   "lezioni": [
     {
+      "uda": "UDA 1 - Riformare una Chiesa, cambiare una cultura",
+      "anno": "4",
+      "titolo": "Lezione 1  riformare una chiesa cambiare una cultura indulgenze",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv1-1r~1.htm",
+          "titolo": "Lezione interattiva"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv1-1r~1.pdf",
+          "titolo": "Fascicolo di studio"
+        }
+      ]
+    },
+    {},
+    {
       "titolo": "Credo, non credo, non sò",
       "anno": "1",
       "uda": "L'uomo che cerca oltre il senso religioso",
