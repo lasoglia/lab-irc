@@ -31,7 +31,8 @@ body.viewing .lab-app, body.viewing .lab-tema, body.viewing .lab-alone{ display:
   .lab-tools{ grid-template-columns:1fr !important; }
   .lab-about{ grid-template-columns:1fr !important; gap:21px !important; padding:34px 21px !important; }
   .lab-pagina-hero{ padding:34px 21px !important; border-radius:21px !important; }
-  .lab-pagina-mascotte{ right:21px !important; top:21px !important; transform:scale(.75); transform-origin:top right; }
+  .lab-pagina-mascotte{ right:13px !important; top:13px !important; transform:scale(.618); transform-origin:top right; }
+  .lab-pagina-hero h2{ padding-right:89px !important; }
   .lab-glifo{ font-size:144px !important; }
   .lab-griglia{ grid-template-columns:1fr !important; }
   .lab-footer{ grid-template-columns:1fr auto !important; }

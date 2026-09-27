@@ -52,7 +52,7 @@ export function YearCard({ year = 1, name, description, count, href = '#', onCli
       )}
       {mascot && (
         <span style={{ position: 'absolute', right: 13, bottom: 13, zIndex: 2, transform: `translateY(${hov ? -5 : 0}px)`, transition: settle }}>
-          <YearMascot year={year} size={34} />
+          <YearMascot year={year} size={55} />
         </span>
       )}
     </a>

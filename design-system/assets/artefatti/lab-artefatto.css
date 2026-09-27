@@ -52,14 +52,7 @@ body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
 
 .la-halo{position:fixed;left:0;top:0;width:466px;height:466px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity 610ms;background:radial-gradient(circle,color-mix(in srgb,var(--la-accent) 12%,transparent),rgba(227,194,122,.04) 38.2%,transparent 61.8%)}
 
-.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;width:55px;height:55px;padding:0;border:0;background:none;cursor:pointer;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
-.la-mascot svg{display:block;width:100%;height:100%;overflow:visible;transition:transform 377ms var(--lab-ease-out),filter 377ms}
-.la-mascot:hover svg{transform:rotate(-8deg) scale(1.13);filter:drop-shadow(0 5px 8px rgba(0,0,0,.35))}
-.la-mascot:active svg{transform:scale(.92)}
-.la-mascot svg{animation:labBob 3.2s ease-in-out infinite}
-.la-mascot:hover svg{animation:none}
-.la-bubble{position:absolute;right:0;bottom:calc(100% + 8px);width:max-content;max-width:233px;background:var(--lab-surface);color:var(--lab-ink);border:1px solid var(--lab-oro);border-radius:13px;padding:8px 13px;font:500 13.5px/1.4 var(--lab-font-body);text-align:left;box-shadow:var(--lab-shadow);animation:labRise 377ms var(--lab-ease-out) both;pointer-events:none}
-.la-bubble[hidden]{display:none}
+.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;width:89px;height:89px;line-height:0;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
 
 .la-amdg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;text-align:center;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(227,194,122,.18),rgba(10,9,16,.95) 61.8%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:labFade 610ms ease-out both;transition:opacity 610ms}
 .la-amdg.is-out{opacity:0}
