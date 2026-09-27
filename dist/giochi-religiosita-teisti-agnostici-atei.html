@@ -235,12 +235,8 @@ body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
 
 .la-halo{position:fixed;left:0;top:0;width:466px;height:466px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity 610ms;background:radial-gradient(circle,color-mix(in srgb,var(--la-accent) 12%,transparent),rgba(227,194,122,.04) 38.2%,transparent 61.8%)}
 
-.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;width:55px;height:55px;padding:0;border:0;background:none;cursor:pointer;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
-.la-mascot svg{display:block;width:100%;height:100%;overflow:visible;transition:transform 377ms var(--lab-ease-out),filter 377ms}
-.la-mascot:hover svg{transform:rotate(-8deg) scale(1.13);filter:drop-shadow(0 5px 8px rgba(0,0,0,.35))}
-.la-mascot:active svg{transform:scale(.92)}
-.la-lid{transition:transform 89ms}
-.la-mascot.blink .la-lid{transform:scaleY(.12)}
+.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;line-height:0;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
+.la-mascot:focus-visible{outline:1.5px solid var(--lab-oro);outline-offset:5px;border-radius:50%}
 .la-bubble{position:absolute;right:0;bottom:calc(100% + 8px);width:max-content;max-width:233px;background:var(--lab-surface);color:var(--lab-ink);border:1px solid var(--lab-oro);border-radius:13px;padding:8px 13px;font:500 13.5px/1.4 var(--lab-font-body);text-align:left;box-shadow:var(--lab-shadow);animation:labRise 377ms var(--lab-ease-out) both;pointer-events:none}
 .la-bubble[hidden]{display:none}
 
@@ -639,8 +635,140 @@ window.GIOCHI_DATI = {
 };
 </script>
 <script>
-/* Lab IRC — Kit artefatti. Mettere in fondo al <body class="la" data-anno="1-5"> (o dopo i dati di una lezione con `anno`).
-   Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno, easter egg AMDG.
+/* Lab IRC — Mascotte 2D. Web component senza dipendenze.
+   Uso: <script src="lab-mascotte.js"><\/script>  <lab-mascotte anno="1" size="89"></lab-mascotte>
+   Attributi: anno 1–5 · size px (default 89) · aureola="false" · parla="false" · statica (niente occhi che seguono)
+   Al 7° clic emette window 'lab:amdg'. */
+(() => {
+  const C = { 1: '#FF7A59', 2: '#4FB0FF', 3: '#A78BFA', 4: '#FB7BB5', 5: '#FBBF24' };
+  const O = '#E3C27A', K = '#14131F', G = '#34D399';
+  const eyes = pts => `<g data-occhi>${pts.map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="3.4" ry="5.5" fill="${K}"/><circle data-luce cx="${x - 1}" cy="${y - 2}" r="1.3" fill="#fff"/>`).join('')}</g>`;
+  const smile = d => `<path d="${d}" fill="none" stroke="${K}" stroke-width="2.5" stroke-linecap="round"/>`;
+  const leaf = (rot, c) => `<g transform="translate(72 36) rotate(${rot})"><path d="M0 0 Q17 -13 34 0 Q17 13 0 0Z" fill="${c}"/><path d="M5 0 H26" stroke="${O}" stroke-width="1" stroke-linecap="round"/></g>`;
+  const HALO = `<circle cx="72" cy="72" r="68" fill="none" stroke="${O}" stroke-width=".8" stroke-opacity=".5"/>`;
+
+  const BODY = {
+    1: () => `<path d="M72 57 V36" stroke="${C[1]}" stroke-width="5" stroke-linecap="round"/>${leaf(-34, C[1])}${leaf(-146, C[1])}
+      <circle cx="72" cy="89" r="34" fill="${C[1]}"/>${eyes([[61.5, 85], [82.5, 85]])}${smile('M66 99 Q72 104 78 99')}`,
+    2: () => `<path d="M94 89 L123 68 Q115 89 123 110 Z" fill="${C[2]}" stroke-linejoin="round"/>
+      <path d="M21 89 A47 47 0 0 1 102 89 A47 47 0 0 1 21 89 Z" fill="${C[2]}"/>
+      <path d="M68 71 Q76 89 68 107" fill="none" stroke="${O}" stroke-width="1" stroke-linecap="round"/>${eyes([[42, 84]])}${smile('M29 95 Q33 98 37 95')}`,
+    3: () => `<path d="M72 89 V21" stroke="${C[3]}" stroke-width="4" stroke-linecap="round"/>
+      <path d="M72 5 V18 M66 10 H78" stroke="${O}" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M78 26 L112 81 H78 Z" fill="${C[3]}" fill-opacity=".618" stroke-linejoin="round"/>
+      <path d="M66 47 L45 81 H66 Z" fill="${C[3]}" fill-opacity=".382"/>
+      <path d="M18 89 H126 Q120 112 102 120 H42 Q24 112 18 89 Z" fill="${C[3]}"/>
+      <path d="M21 89 H123" stroke="${O}" stroke-width="1.2" stroke-linecap="round"/>${eyes([[61.5, 101], [82.5, 101]])}${smile('M67 110 Q72 114 77 110')}`,
+    4: () => `<circle cx="72" cy="30" r="5" fill="none" stroke="${O}" stroke-width="2"/><rect x="67" y="35" width="10" height="7" rx="2" fill="${O}"/>
+      <circle cx="72" cy="89" r="47" fill="${C[4]}" stroke="${O}" stroke-width="1.2"/>
+      <circle cx="72" cy="89" r="29" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>
+      <path d="M72 55 V61 M72 117 V123 M38 89 H44 M100 89 H106" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+      <g data-ago><path d="M72 63 L77 89 L67 89 Z" fill="#fff"/><path d="M72 115 L77 89 L67 89 Z" fill="${K}" fill-opacity=".55"/></g>
+      <circle cx="72" cy="89" r="3.4" fill="${O}"/>`,
+    5: uid => `<defs><clipPath id="${uid}"><circle cx="72" cy="89" r="42"/></clipPath></defs>
+      <g transform="rotate(23.4 72 89)"><path d="M72 39 A50 50 0 0 1 72 139" fill="none" stroke="${O}" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="72" cy="39" r="3" fill="${O}"/><circle cx="72" cy="139" r="3" fill="${O}"/></g>
+      <circle cx="72" cy="89" r="42" fill="${C[5]}"/>
+      <g clip-path="url(#${uid})" fill="${G}">
+        <path d="M26 64 C38 58 50 64 48 75 C46 84 38 86 41 96 C44 105 37 112 28 108 Z"/>
+        <path d="M76 49 C90 45 106 52 114 64 C106 70 97 65 93 72 C86 71 79 63 76 56 Z"/>
+        <path d="M96 106 C104 101 114 106 112 115 C105 122 95 117 96 106 Z"/>
+        <path d="M48 124 C60 117 78 119 88 128 C78 136 58 136 48 124 Z"/></g>
+      <circle cx="72" cy="89" r="42" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="1.2"/>
+      ${eyes([[61.5, 87], [82.5, 87]])}${smile('M66 100 Q72 105 78 100')}`,
+  };
+
+  const INFO = {
+    1: { nome: 'Semino', frasi: ['Ogni grande albero è stato un seme.', 'Da dove vengo? Bella domanda!', 'In principio… c’era una domanda.'] },
+    2: { nome: 'Ichthy', frasi: ['ΙΧΘΥΣ: Gesù Cristo, Figlio di Dio, Salvatore.', 'I primi cristiani mi disegnavano in segreto.', 'Venite dietro a me! (Mc 1,17)'] },
+    3: { nome: 'Navicella', frasi: ['Duc in altum! Prendi il largo. (Lc 5,4)', 'Duemila anni di mare… e ancora a galla.', 'Tempesta? Non temete!'] },
+    4: { nome: 'Bussolina', frasi: ['La coscienza è la mia bussola.', 'E la tua, dove punta?', 'Libertà non è andare ovunque: è sapere dove.'] },
+    5: { nome: 'Terra', frasi: ['Laudato si’! Custodisci la casa comune.', 'Tutto è connesso.', 'Il futuro comincia adesso.'] },
+  };
+
+  let uidN = 0;
+  function svg(n, { aureola = true, uid = 'lab-terra-' + (++uidN) } = {}) {
+    n = C[n] ? +n : 1;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" role="img" aria-label="${INFO[n].nome}" style="overflow:visible">${aureola ? HALO : ''}${BODY[n](uid)}</svg>`;
+  }
+  window.LabMascotte = { svg, INFO, COLORI: C };
+
+  if (typeof customElements === 'undefined' || customElements.get('lab-mascotte')) return;
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  class El extends HTMLElement {
+    static get observedAttributes() { return ['anno', 'size', 'aureola']; }
+    connectedCallback() {
+      if (!this.shadowRoot) this.attachShadow({ mode: 'open' });
+      this.render();
+      this.clicks = 0;
+      this.onMove = e => this.look(e);
+      if (!this.hasAttribute('statica')) { addEventListener('mousemove', this.onMove); this.blinkLoop(); }
+    }
+    disconnectedCallback() { removeEventListener('mousemove', this.onMove); clearTimeout(this.bt); clearTimeout(this.bt2); clearTimeout(this.mt); }
+    attributeChangedCallback() { if (this.shadowRoot) this.render(); }
+    render() {
+      const n = +this.getAttribute('anno') || 1, s = +this.getAttribute('size') || 89;
+      this.n = C[n] ? n : 1;
+      this.shadowRoot.innerHTML = `<style>
+        :host{display:inline-block;position:relative;width:${s}px;height:${s}px;line-height:0;cursor:pointer;vertical-align:middle}
+        .m{display:block;width:100%;height:100%;transition:transform 610ms cubic-bezier(.16,1,.3,1)}
+        :host(:hover) .m{transform:translateY(-5px) rotate(-5deg);transition-duration:233ms}
+        :host(:active) .m{transform:scale(.94)}
+        svg{width:100%;height:100%}
+        [data-occhi]{transition:transform 144ms linear}
+        .b{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:189px;z-index:20;pointer-events:none;
+          background:var(--lab-surface,#1E1C2E);color:var(--lab-ink,#ECEAF5);border:1px solid var(--lab-oro,#E3C27A);border-radius:13px;padding:8px 13px;
+          font:500 13px/1.4 var(--lab-font-body,'Figtree',system-ui,sans-serif);text-align:left;box-shadow:0 8px 21px rgba(0,0,0,.3);animation:r 377ms cubic-bezier(.16,1,.3,1) both}
+        @keyframes r{from{opacity:0;transform:translate(-50%,8px)}}
+        @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}}
+      </style><span class="m">${svg(this.n, { aureola: this.getAttribute('aureola') !== 'false' })}</span>`;
+      this.shadowRoot.querySelector('.m').onclick = e => this.click(e);
+      this.occhi = [...this.shadowRoot.querySelectorAll('[data-occhi]')];
+      this.ago = this.shadowRoot.querySelector('[data-ago]');
+    }
+    look(e) {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => {
+        this.raf = null;
+        const r = this.getBoundingClientRect();
+        const x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height * .6);
+        const d = Math.hypot(x, y) || 1, k = Math.min(1, d / 144);
+        this.occhi.forEach(g => g.setAttribute('transform', `translate(${(x / d * 1.6 * k).toFixed(2)} ${(y / d * 1.6 * k).toFixed(2)})`));
+        if (this.ago) this.ago.setAttribute('transform', `rotate(${(Math.atan2(y, x) * 180 / Math.PI + 90).toFixed(1)} 72 89)`);
+      });
+    }
+    blinkLoop() {
+      if (reduce()) return;
+      this.bt = setTimeout(() => {
+        const set = (ry, v) => this.shadowRoot.querySelectorAll('[data-occhi] ellipse').forEach(el => el.setAttribute('ry', ry)) ||
+          this.shadowRoot.querySelectorAll('[data-luce]').forEach(el => el.style.visibility = v);
+        set(.8, 'hidden');
+        this.bt2 = setTimeout(() => { set(5.5, 'visible'); this.blinkLoop(); }, 144);
+      }, 2584 + Math.random() * 2584);
+    }
+    click(e) {
+      e.preventDefault(); e.stopPropagation();
+      this.clicks++;
+      if (this.clicks >= 7) { this.clicks = 0; this.bubble(null); dispatchEvent(new Event('lab:amdg')); return; }
+      if (this.getAttribute('parla') === 'false') return;
+      const i = INFO[this.n];
+      this.bubble(this.clicks === 1 ? `Ciao, sono ${i.nome}!` : i.frasi[(this.clicks - 2) % i.frasi.length]);
+    }
+    bubble(t) {
+      this.shadowRoot.querySelector('.b')?.remove(); clearTimeout(this.mt);
+      if (!t) return;
+      const b = document.createElement('span'); b.className = 'b'; b.textContent = t;
+      this.shadowRoot.appendChild(b);
+      this.mt = setTimeout(() => b.remove(), 2618);
+    }
+  }
+  customElements.define('lab-mascotte', El);
+})();
+</script>
+<script>
+/* Lab IRC — Kit artefatti. Mettere in fondo al <body class="la" data-anno="1-5"> (o dopo i dati di una lezione con `anno`),
+   dopo lab-mascotte.js. Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno, easter egg AMDG.
    API: LabArtefatto.say(testo) · .cheer() · .oops() · .amdg() */
 (function () {
   var d = document, w = window;
@@ -648,29 +776,9 @@ window.GIOCHI_DATI = {
   if (!d.body.hasAttribute('data-anno') && w.GIOCHI_DATI && w.GIOCHI_DATI.anno) d.body.setAttribute('data-anno', w.GIOCHI_DATI.anno);
   var reduce = w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var M = {
-    1: { name: 'Semino', eyes: [[19.5, 30], [28.5, 30]], smile: 'M20.5 35.5 Q24 38.5 27.5 35.5',
-      body: '<path d="M24 19V12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><ellipse cx="17" cy="11" rx="7" ry="4" fill="currentColor" transform="rotate(-25 17 11)"/><ellipse cx="31" cy="10" rx="7" ry="4" fill="currentColor" transform="rotate(25 31 10)"/><circle cx="24" cy="31" r="13" fill="currentColor"/>',
-      lines: ['Ogni grande albero è stato un seme.', 'Da dove vengo? Bella domanda!', 'In principio… c’era una domanda.'] },
-    2: { name: 'Ichthy', eyes: [[13, 22]], smile: 'M7.5 27 Q9.5 28.8 11.5 27',
-      body: '<path d="M34 24 L46 14 L46 34 Z" fill="currentColor"/><ellipse cx="21" cy="24" rx="16" ry="11" fill="currentColor"/>',
-      lines: ['ΙΧΘΥΣ: Gesù Cristo, Figlio di Dio, Salvatore.', 'I primi cristiani mi disegnavano in segreto.', 'Venite dietro a me! (Mc 1,17)'] },
-    3: { name: 'Navicella', eyes: [[18.5, 32], [29.5, 32]], smile: 'M21.5 36.5 Q24 38.3 26.5 36.5',
-      body: '<path d="M24 6V28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M26.5 8 L40 25 H26.5 Z" fill="currentColor" fill-opacity=".7"/><path d="M4 28 H44 L37 41 H11 Z" fill="currentColor"/>',
-      lines: ['Duc in altum! Prendi il largo. (Lc 5,4)', 'Duemila anni di mare… e ancora a galla.', 'Tempesta? Non temete!'] },
-    4: { name: 'Bussolina', eyes: [], smile: null, needle: true,
-      body: '<circle cx="24" cy="24" r="18" fill="currentColor"/><circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/><path d="M24 7.5v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',
-      lines: ['La coscienza è la mia bussola.', 'E la tua, dove punta?', 'Libertà non è andare ovunque: è sapere dove.'] },
-    5: { name: 'Terra', eyes: [[19, 27], [29, 27]], smile: 'M20.5 32.5 Q24 35.5 27.5 32.5',
-      body: '<circle cx="24" cy="27" r="16" fill="currentColor"/><path d="M11 22 Q24 30 37 22" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/><path d="M24 11.5 C24 5 30 2 36.5 3 C36.5 9.5 31 12.5 24 11.5 Z" fill="#34D399"/>',
-      lines: ['Laudato si’! Custodisci la casa comune.', 'Tutto è connesso.', 'Il futuro comincia adesso.'] }
-  };
   var CHEER = ['Esatto!', 'Bravissimo!', 'Proprio così!', 'Ottimo!'];
   var OOPS = ['Quasi… riprova!', 'Mmm, pensaci ancora.', 'Non proprio. Coraggio!'];
   var pick = function (a) { return a[Math.floor(Math.random() * a.length)]; };
-  var NEEDLE = '<g class="la-needle"><path d="M24 12 L27.5 24 L20.5 24 Z" fill="#fff"/><path d="M24 36 L27.5 24 L20.5 24 Z" fill="#14131F" fill-opacity=".55"/><circle cx="24" cy="24" r="2.4" fill="#fff"/></g>';
-  var EYE = function (p) { return '<g transform="translate(' + p[0] + ' ' + p[1] + ')"><g class="la-lid"><circle r="3.4" fill="#fff"/><circle class="la-pupil" r="1.7" fill="#14131F"/></g></g>'; };
-
   var egg = null;
   function amdg() {
     if (egg) return;
@@ -686,32 +794,30 @@ window.GIOCHI_DATI = {
     el.addEventListener('click', close); d.addEventListener('keydown', esc); timer = setTimeout(close, 6180);
   }
 
+  /* Mascotte: il web component <lab-mascotte> (lab-mascotte.js) disegna, anima e al 7° clic lancia 'lab:amdg'.
+     Qui le frasi passano dal fumetto del kit, allineato a destra perché la mascotte sta nell'angolo. */
   function mascot() {
-    var y = +(d.body.getAttribute('data-anno') || 0), m = M[y];
-    if (!m) return null;
-    var el = d.createElement('button');
-    el.type = 'button'; el.className = 'la-mascot'; el.setAttribute('aria-label', m.name);
-    el.style.color = 'var(--lab-anno-' + y + ')';
-    el.innerHTML = '<span class="la-bubble" hidden></span><svg viewBox="0 0 48 48" aria-hidden="true">' + m.body + (m.needle ? NEEDLE : '') +
-      m.eyes.map(EYE).join('') + (m.smile ? '<path d="' + m.smile + '" fill="none" stroke="#14131F" stroke-width="1.6" stroke-linecap="round" stroke-opacity=".7"/>' : '') + '</svg>';
+    var y = +(d.body.getAttribute('data-anno') || 0), L = w.LabMascotte;
+    if (!L || !L.INFO[y]) return null;
+    var m = L.INFO[y], el = d.createElement('div');
+    el.className = 'la-mascot'; el.tabIndex = 0; el.setAttribute('role', 'button'); el.setAttribute('aria-label', m.nome);
+    el.innerHTML = '<span class="la-bubble" hidden></span><lab-mascotte anno="' + y + '" size="' + (innerWidth < 700 ? 55 : 89) + '" parla="false"></lab-mascotte>';
     d.body.appendChild(el);
-    var bub = el.querySelector('.la-bubble'), pupils = el.querySelectorAll('.la-pupil'), needle = el.querySelector('.la-needle'), n = 0, bt;
-    w.addEventListener('mousemove', function (e) {
-      var r = el.getBoundingClientRect(), x = e.clientX - (r.left + r.width / 2), yy = e.clientY - (r.top + r.height / 2);
-      var dd = Math.hypot(x, yy) || 1, k = Math.min(1, dd / 144);
-      for (var i = 0; i < pupils.length; i++) { pupils[i].setAttribute('cx', (x / dd * 1.4 * k).toFixed(2)); pupils[i].setAttribute('cy', (yy / dd * 1.4 * k).toFixed(2)); }
-      if (needle) needle.setAttribute('transform', 'rotate(' + (Math.atan2(yy, x) * 180 / Math.PI + 90).toFixed(1) + ' 24 24)');
-    });
-    (function blink() { setTimeout(function () { el.classList.add('blink'); setTimeout(function () { el.classList.remove('blink'); blink(); }, 144); }, 2584 + Math.random() * 2584); })();
+    var bub = el.querySelector('.la-bubble'), comp = el.querySelector('lab-mascotte'), n = 0, bt;
     function say(txt) {
       bub.textContent = txt; bub.hidden = false;
       bub.style.animation = 'none'; void bub.offsetWidth; bub.style.animation = '';
       clearTimeout(bt); bt = setTimeout(function () { bub.hidden = true; }, 2618);
     }
+    /* in cattura: il componente ferma la propagazione del clic */
     el.addEventListener('click', function () {
       n++;
-      if (n >= 7) { n = 0; bub.hidden = true; amdg(); return; }
-      say(n === 1 ? 'Ciao, sono ' + m.name + '!' : m.lines[(n - 2) % m.lines.length]);
+      if (n >= 7) { n = 0; bub.hidden = true; return; }
+      say(n === 1 ? 'Ciao, sono ' + m.nome + '!' : m.frasi[(n - 2) % m.frasi.length]);
+    }, true);
+    el.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault(); var inner = comp.shadowRoot && comp.shadowRoot.querySelector('.m'); if (inner) inner.click();
     });
     return { say: say };
   }

@@ -4,7 +4,7 @@ Kit di 12 giochi interattivi in stile **Arcade notturno** per le lezioni di Lab 
 Quiz, Vero o falso, Flashcard, Memory, Abbinamenti, Categorie, Linea del tempo,
 Completa, Cruciverba, Sfida a squadre, Sondaggio, Riflessione.
 
-- `kit/`: stili e motore dei giochi (token del design system, `lab-artefatto`, `giochi`, `giochi-2`)
+- `kit/`: stili e motore dei giochi (token del design system, `lab-artefatto`, `giochi`, `giochi-2`) e le mascotte definitive (`lab-mascotte.js`, versioni statiche in `kit/mascotte/svg/`)
 - `lezioni/`: i contenuti. `<lezione>.js` sono i dati dei giochi, `<lezione>.html` le lezioni interattive
 - `giochi.html`: la pagina. Si apre così com'è per lavorarci, perché carica i file separati
 - `build.py`: crea un unico file `.html` autonomo, da caricare sul sito
