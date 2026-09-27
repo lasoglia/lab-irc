@@ -25,10 +25,9 @@ Si esporta lo zip, si sostituisce il contenuto di `design-system/` e si rilancia
 
 ## Mascotte
 
-Disegnate in SVG, stile anime, in `design-system/components/brand/mascotte-arte.js`
-(usato da `YearMascot.jsx`). Il kit degli artefatti
-(`design-system/assets/artefatti/lab-artefatto.js`) ne contiene una copia: se si
-cambia il disegno, aggiornare entrambi.
+Pacchetto di Claude Design in `assets/mascotte/` (web component `<lab-mascotte>`,
+vedi `ISTRUZIONI.md`). `YearMascot.jsx` lo usa e lo include nel bundle; il kit degli
+artefatti lo carica da solo. Per aggiornarle basta sostituire quella cartella.
 
 ## Font
 

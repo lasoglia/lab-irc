@@ -352,9 +352,9 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte }) {
       onMouseLeave={segui ? () => setP({ x: 0, y: 0 }) : undefined}
       style={{ position: "relative", padding: "55px 34px", borderRadius: 34, margin: "21px 0 34px", overflow: "hidden", color: "#fff", background: `linear-gradient(130deg, ${color}, color-mix(in srgb, ${color} 50%, #14101a))`, animation: `labRise 987ms ${EASE} both` }}>
       <div aria-hidden="true" className="lab-glifo" style={{ position: "absolute", right: 21, bottom: -34, fontSize: 199, opacity: 0.14, fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
-      {mascotte && <div className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 34, zIndex: 2 }}><YearMascot year={mascotte} size={96} /></div>}
+      {mascotte && <div className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 55, zIndex: 2 }}><YearMascot year={mascotte} size={144} /></div>}
       <Eyebrow color="rgba(255,255,255,.85)">{eyebrow}</Eyebrow>
-      <h2 style={{ fontSize: "clamp(33px,5vw,55px)", margin: "0 0 8px", color: "#fff", paddingRight: mascotte ? 110 : 0 }}>{titolo}</h2>
+      <h2 style={{ fontSize: "clamp(33px,5vw,55px)", margin: "0 0 8px", color: "#fff", paddingRight: mascotte ? 165 : 0 }}>{titolo}</h2>
       {desc && <p style={{ margin: 0, maxWidth: "46ch", color: "rgba(255,255,255,.9)" }}>{desc}</p>}
     </div>
   );
@@ -425,7 +425,7 @@ function MatCard({ item, color, apri }) {
           {yt && <span aria-hidden="true" style={{ width: 55, height: 55, borderRadius: "50%", background: "rgba(255,255,255,.92)", boxShadow: "0 8px 21px rgba(0,0,0,.3)", display: "grid", placeItems: "center", color: "#14131F", fontSize: 21, paddingLeft: 4 }}>▶</span>}
         </div>
       )}
-      {anno && !video ? <span style={{ position: "absolute", right: 13, top: 119, zIndex: 2 }}><YearMascot year={anno} size={42} /></span> : null}
+      {anno && !video ? <span style={{ position: "absolute", right: 13, top: 119, zIndex: 2 }}><YearMascot year={anno} size={34} aureola={false} /></span> : null}
       {item.in_evidenza && <span style={{ position: "absolute", top: 13, left: 13, background: "var(--lab-ambra)", color: "#3a2a06", fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", padding: "5px 8px", borderRadius: 999, zIndex: 2 }}>In evidenza</span>}
       <div style={{ padding: 21, display: "flex", flexDirection: "column", gap: 13, flex: 1 }}>
         <div><Badge variant={varianteBadge(item)}>{item.tipo || "Materiale"}</Badge></div>

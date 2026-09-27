@@ -7,5 +7,5 @@ Mascot of a school year — a small friendly logo that follows the cursor and hi
 ```
 
 - 1 Semino · 2 Ichthy · 3 Navicella · 4 Bussolina · 5 Terra
-- Click → greeting (happy ^ ^ eyes, open mouth), then year-themed lines.
+- Click → greeting, then year-themed lines.
 - In plain-HTML artefacts use `assets/artefatti/lab-artefatto.js` with `<body data-anno="N">` — same figure, same behaviour.
