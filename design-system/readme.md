@@ -136,7 +136,7 @@ Activates with `data-tema="chiaro"` on `<html>`. Surface: warm parchment (`#FAF7
 
 ## Easter eggs — A·M·D·G
 
-*Ad maiorem Dei gloria.* Hidden, never advertised. Mount `<AmdgEgg />` once per page; it reveals a full-screen gold "A · M · D · G" when:
+*Ad maiorem Dei gloria.* Hidden, never advertised. Mount `<AmdgEgg />` once per page; it reveals a full-screen gold "A · M · D · G" with the Latin line only (no Italian translation) when:
 1. the visitor types **amdg** anywhere;
 2. they click the **logo 7 times** quickly (`data-amdg-trigger`);
 3. they click the **cross at the centre of the rose window**;
@@ -148,7 +148,8 @@ Activates with `data-tema="chiaro"` on `<html>`. Surface: warm parchment (`#FAF7
 
 Each school year has a small friendly mascot (`YearMascot`), used on the year card, the year page, every material card and every lesson artefact of that year — the same figure everywhere:
 1 **Semino** (seed — le radici) · 2 **Ichthy** (fish — Gesù) · 3 **Navicella** (Peter's boat — la Chiesa) · 4 **Bussolina** (compass — la coscienza) · 5 **Terra** (earth with leaf — la casa comune).
-Eyes follow the cursor (Bussolina's needle points at it), they blink, a click shows a year-themed line (e.g. "Duc in altum!"), the 7th click opens AMDG.
+Eyes follow the cursor (Bussolina's needle points at it), they blink, a click shows a year-themed line (e.g. "Duc in altum!"). No AMDG on repeated clicks.
+The figures come from the Claude Design package in `/assets/mascotte/` (web component `<lab-mascotte>`, golden halo, 144×144 grid); `YearMascot` wraps it. Sizes: 34 (material card, no halo) · 55 (year card) · 89 (artefact) · 144 (year page).
 
 ## Lesson artefacts kit
 
@@ -182,7 +183,7 @@ Icons are embedded directly in HTML as `<svg>` elements with `stroke="currentCol
 styles.css                    # Global CSS entry point (@imports only)
 
 tokens/
-  fonts.css                   # Google Fonts @import (Cormorant Garamond + Figtree)
+  fonts.css                   # Self-hosted @font-face (Cormorant Garamond, Cinzel, Figtree)
   colors.css                  # All color custom properties
   typography.css              # Font family, size, weight, tracking tokens
   spacing.css                 # Spacing scale + border radius + max-widths
@@ -250,7 +251,7 @@ SKILL.md                     # Claude Code agent skill file
 
 ## Contributing & Iteration
 
-**Font files:** The design system currently links Cormorant Garamond, Cinzel and Figtree from Google Fonts CDN. For offline or production use, download the `.woff2` files and replace the `@import` in `tokens/fonts.css` with self-hosted `@font-face` rules.
+**Font files:** Cormorant Garamond, Cinzel and Figtree are self-hosted in `fonts/` (OFL) and declared with `@font-face` in `tokens/fonts.css` — no Google Fonts.
 
 **New components:** Add `<Name>.jsx` + `<Name>.d.ts` to `components/core/` or `components/exam/`. Update the relevant `.card.html` specimen file to include the new component.
 
