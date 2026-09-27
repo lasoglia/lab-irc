@@ -141,7 +141,28 @@ pulsante per tornare indietro. Perfetto da proiettare o da far usare ai ragazzi.
 
 ---
 
-## 4. Aggiungere un artefatto interattivo a una lezione (come materiale)
+## 4. Mettere più file nella stessa lezione (il modo più comodo)
+
+Non serve creare un materiale per ogni file:
+
+1. Pannello → **📖 Lezioni** → apri la lezione (o creane una con *Aggiungi lezione*:
+   titolo, anno, UDA).
+2. In fondo trovi **File della lezione** → *Aggiungi file* → carica il file.
+3. Ripeti *Aggiungi file* per ogni file: slide, PDF, artefatti `.html`, anche link.
+4. **Publish**.
+
+Titolo e tipo sono facoltativi: se li lasci vuoti il sito usa il nome del file
+e capisce da solo il tipo (`.html` = artefatto che si apre nel sito, `.pdf` =
+documento, `.ppt/.pptx` = slide). Anno e UDA sono quelli della lezione.
+
+Nel pannello le liste lunghe (materiali, lezioni, UDA…) si mostrano **chiuse**,
+una riga per elemento: clicca la freccia › per aprirne una. Gli elementi non si
+trascinano più (deformava la pagina): l'ordine si decide col campo **Ordine**.
+Quando aggiungi un elemento nuovo compare **in cima** alla lista.
+
+---
+
+## 5. Aggiungere un artefatto interattivo a una lezione (come materiale singolo)
 
 Gli artefatti `.html` delle **lezioni** non vanno in una sezione a parte: si
 caricano come **materiali**, dentro la loro struttura naturale
