@@ -6,6 +6,7 @@
 @keyframes labRise { from { opacity: 0; transform: translateY(34px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes labLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes labBreath { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.13); } }
+@keyframes labBob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5%) rotate(-2deg); } }
 @keyframes labSpin { to { transform: rotate(360deg); } }
 
 :root {

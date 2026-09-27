@@ -23,26 +23,12 @@ npm run build    # scrive ../assets/app.js e ../assets/app.css
 
 Si esporta lo zip, si sostituisce il contenuto di `design-system/` e si rilancia `npm run build`.
 
-## Mascotte in 3D
+## Mascotte
 
-I modelli stanno in `assets/3d/` e si elencano in `MODELLI_3D` dentro `src/main.jsx`
-(1 Semino, 2 Ichthy, 3 Navicella, 4 Bussolina, 5 Terra). Il rosone della home
-è `assets/3d/lab-irc-rosone.glb` (`montaRosone3D`): si carica dopo la pagina, solo con
-WebGL e senza risparmio dati; altrimenti resta il rosone SVG del design. Il 3D (three.js) è in un file a parte (`assets/app-parti/`)
-che si scarica solo nelle pagine che lo mostrano. Prima di aggiungere un modello
-conviene comprimerlo (da 1,6 MB a ~230 KB, stesso aspetto):
-
-```bash
-npx @gltf-transform/cli dedup in.glb t1.glb
-npx @gltf-transform/cli weld t1.glb t2.glb
-npx @gltf-transform/cli meshopt t2.glb assets/3d/lab-irc-NOME.glb
-```
-
-Le animazioni (`src/mascotte3d.js`) si agganciano ai nomi dei pezzi: `asse` (gira),
-`occhio_*_pupilla` (seguono il cursore), `occhio_*` (sbattono), `foglia*` (ondeggiano),
-`braccio_*` (salutano al tocco), `coda` e `bolla_N` (Ichthy), `barca` (dondola),
-`ago` (punta il cursore). Rosone: `petalo_N` → anno dal materiale `vetro_anno_N`,
-`croce`/`medaglione` → A·M·D·G.
+Disegnate in SVG, stile anime, in `design-system/components/brand/mascotte-arte.js`
+(usato da `YearMascot.jsx`). Il kit degli artefatti
+(`design-system/assets/artefatti/lab-artefatto.js`) ne contiene una copia: se si
+cambia il disegno, aggiornare entrambi.
 
 ## Font
 

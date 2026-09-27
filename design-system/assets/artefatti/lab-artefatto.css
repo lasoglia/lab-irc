@@ -56,8 +56,8 @@ body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
 .la-mascot svg{display:block;width:100%;height:100%;overflow:visible;transition:transform 377ms var(--lab-ease-out),filter 377ms}
 .la-mascot:hover svg{transform:rotate(-8deg) scale(1.13);filter:drop-shadow(0 5px 8px rgba(0,0,0,.35))}
 .la-mascot:active svg{transform:scale(.92)}
-.la-lid{transition:transform 89ms}
-.la-mascot.blink .la-lid{transform:scaleY(.12)}
+.la-mascot svg{animation:labBob 3.2s ease-in-out infinite}
+.la-mascot:hover svg{animation:none}
 .la-bubble{position:absolute;right:0;bottom:calc(100% + 8px);width:max-content;max-width:233px;background:var(--lab-surface);color:var(--lab-ink);border:1px solid var(--lab-oro);border-radius:13px;padding:8px 13px;font:500 13.5px/1.4 var(--lab-font-body);text-align:left;box-shadow:var(--lab-shadow);animation:labRise 377ms var(--lab-ease-out) both;pointer-events:none}
 .la-bubble[hidden]{display:none}
 
@@ -69,7 +69,6 @@ body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
 .la-amdg-letters i{font-style:normal;color:#E3C27A;font-size:.382em;animation:labFade 987ms ease both}
 .la-amdg-line{height:1px;width:min(377px,61.8vw);margin:34px auto 21px;background:linear-gradient(90deg,transparent,#E3C27A,transparent);animation:labLine 987ms var(--lab-ease-out) 987ms both}
 .la-amdg-lat{font:italic 500 clamp(23px,2.8vw,30px)/1.3 var(--lab-font-display);color:rgba(243,231,198,.92);animation:labRise 987ms var(--lab-ease-out) 1220ms both}
-.la-amdg-it{font:600 12.5px/1.4 var(--lab-font-inscription);letter-spacing:.2em;text-transform:uppercase;color:rgba(227,194,122,.75);margin-top:13px;animation:labFade 987ms ease 1600ms both}
 
 @keyframes laShake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 @keyframes laPeek{from{transform:translateY(89px);opacity:0}to{transform:none;opacity:1}}
