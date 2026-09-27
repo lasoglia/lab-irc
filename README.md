@@ -1,3 +1,26 @@
+# Giochi Lezione · Lab IRC
+
+Kit di 12 giochi interattivi in stile **Arcade notturno** per le lezioni di Lab IRC:
+Quiz, Vero o falso, Flashcard, Memory, Abbinamenti, Categorie, Linea del tempo,
+Completa, Cruciverba, Sfida a squadre, Sondaggio, Riflessione.
+
+- `kit/`: stili e motore dei giochi (token del design system, `lab-artefatto`, `giochi`, `giochi-2`)
+- `lezioni/`: i contenuti, un file per lezione
+- `giochi.html`: la pagina. Si apre così com'è per lavorarci, perché carica i file separati
+- `build.py`: crea un unico file `.html` autonomo, da caricare sul sito
+- `dist/`: i file pronti da caricare
+
+## Nuova lezione
+
+1. Copia `lezioni/religiosita-teisti-agnostici-atei.js` e cambia i contenuti (`tema`, `anno` e i giochi).
+   Se togli un gioco, la sua scheda sparisce.
+2. `python3 build.py lezioni/<nuova-lezione>.js`
+3. Carica `dist/giochi-<nuova-lezione>.html` dal Pannello: Materiali → Tipo "Artefatto interattivo".
+
+Il design originale da Claude Design è in `project/` e `chats/`.
+
+---
+
 # CODING AGENTS: READ THIS FIRST
 
 This is a **handoff bundle** from Claude Design (claude.ai/design).

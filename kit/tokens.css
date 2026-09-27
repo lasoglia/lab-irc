@@ -1,0 +1,171 @@
+/* Lab IRC — token del design system, copiati da _ds/tokens (colori, tipografia, spazi, ombre, movimento, tema chiaro, base). */
+:root {
+  --lab-bg:        #14131F;
+  --lab-bg-2:      #1A1827;
+  --lab-surface:   #1E1C2E;
+  --lab-surface-2: #272438;
+  --lab-line:      #322E45;
+  --lab-line-soft: #2A2739;
+  --lab-ink:       #ECEAF5;
+  --lab-ink-soft:  #C7C3DA;
+  --lab-muted:     #8E89A6;
+  --lab-viola:     #8B5CF6;
+  --lab-viola-2:   #A78BFA;
+  --lab-ciano:     #22D3EE;
+  --lab-ambra:     #FBBF24;
+  --lab-rosa:      #F472B6;
+  --lab-verde:     #34D399;
+  --lab-rosso:     #FB7185;
+  --lab-oro:       #E3C27A;
+  --lab-oro-soft:  rgba(227,194,122,.16);
+  --lab-brand:     var(--lab-viola);
+  --lab-accent:    var(--lab-ciano);
+  --lab-on-brand:  #14131F;
+  --lab-grad:      linear-gradient(135deg, #8B5CF6, #22D3EE);
+  --lab-grad-warm: linear-gradient(135deg, #F472B6, #FBBF24);
+  --lab-grad-soft: linear-gradient(160deg, #1E1C2E, #14131F);
+  --lab-anno-1:    #FF7A59;
+  --lab-anno-2:    #4FB0FF;
+  --lab-anno-3:    #A78BFA;
+  --lab-anno-4:    #FB7BB5;
+  --lab-anno-5:    #FBBF24;
+  color-scheme: dark;
+}
+:root {
+  --lab-font-display:     "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --lab-font-inscription: "Cinzel", "Trajan Pro", Georgia, serif;
+  --lab-font-body:        "Figtree", system-ui, -apple-system, sans-serif;
+  --lab-text-xs:   12.5px;
+  --lab-text-sm:   14px;
+  --lab-text-base: 16px;
+  --lab-text-md:   20.5px;
+  --lab-text-lg:   26px;
+  --lab-text-xl:   33px;
+  --lab-text-2xl:  42px;
+  --lab-text-3xl:  68px;
+  --lab-text-display-sm: clamp(23px, 2.4vw, 29px);
+  --lab-text-display-md: clamp(29px, 3.8vw, 46px);
+  --lab-text-display-lg: clamp(36px, 5.4vw, 60px);
+  --lab-text-hero:       clamp(46px, 7.4vw, 94px);
+  --lab-weight-regular:   400;
+  --lab-weight-medium:    500;
+  --lab-weight-semibold:  600;
+  --lab-weight-bold:      700;
+  --lab-weight-extrabold: 800;
+  --lab-leading-tight:   1.0;
+  --lab-leading-snug:    1.08;
+  --lab-leading-normal:  1.382;
+  --lab-leading-relaxed: 1.5;
+  --lab-leading-loose:   1.618;
+  --lab-tracking-tight:   -0.02em;
+  --lab-tracking-normal:  -0.01em;
+  --lab-tracking-wide:    0.04em;
+  --lab-tracking-widest:  0.18em;
+  --lab-eyebrow-size:    13px;
+  --lab-eyebrow-weight:  600;
+  --lab-eyebrow-spacing: 0.18em;
+}
+:root {
+  --lab-phi: 1.618;
+  --lab-phi-inv: 0.618;
+  --lab-space-1: 5px;
+  --lab-space-2: 8px;
+  --lab-space-3: 13px;
+  --lab-space-4: 21px;
+  --lab-space-5: 34px;
+  --lab-space-6: 55px;
+  --lab-space-7: 89px;
+  --lab-space-8: 144px;
+  --lab-radius-xs:   8px;
+  --lab-radius-sm:   13px;
+  --lab-radius:      21px;
+  --lab-radius-lg:   34px;
+  --lab-radius-pill: 999px;
+  --lab-radius-icon: 13px;
+  --lab-max-w:    1140px;
+  --lab-max-w-sm:  880px;
+  --lab-max-w-xs:  460px;
+  --lab-measure:   62ch;
+}
+:root {
+  --lab-shadow:     0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --lab-shadow-lg:  0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+  --lab-glow:       0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
+  --lab-focus-ring: 0 0 0 3px rgba(139,92,246,.35);
+  --lab-btn-glow:   0 8px 22px -10px rgba(139,92,246,.80);
+  --lab-btn-glow-hover: 0 12px 28px -10px rgba(139,92,246,.90);
+}
+@keyframes labSu { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: none; } }
+@keyframes labFloaty { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(0,-21px,0) scale(1.034); } }
+@keyframes labPulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@keyframes labFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes labRise { from { opacity: 0; transform: translateY(34px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes labLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes labBreath { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.13); } }
+@keyframes labSpin { to { transform: rotate(360deg); } }
+:root {
+  --lab-ease-out:    cubic-bezier(.16, 1, .3, 1);
+  --lab-ease-solemn: cubic-bezier(.618, 0, .382, 1);
+  --lab-ease-spring: cubic-bezier(.2, .7, .2, 1);
+  --lab-ease-sharp:  cubic-bezier(.4, 0, .2, 1);
+  --lab-dur-instant: 144ms;
+  --lab-dur-fast:    233ms;
+  --lab-dur-normal:  377ms;
+  --lab-dur-slow:    610ms;
+  --lab-dur-solemn:  987ms;
+  --lab-dur-float:   21s;
+  --lab-stagger:     89ms;
+  --lab-anim-in:   labRise var(--lab-dur-solemn) var(--lab-ease-out) both;
+  --lab-anim-in-2: labRise var(--lab-dur-solemn) var(--lab-ease-out) 89ms both;
+  --lab-anim-in-3: labRise var(--lab-dur-solemn) var(--lab-ease-out) 178ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+html[data-tema="chiaro"] {
+  --lab-bg:        #FAF7F1;
+  --lab-bg-2:      #F3EFE6;
+  --lab-surface:   #FFFFFF;
+  --lab-surface-2: #FBF8F2;
+  --lab-line:      #E7E0D2;
+  --lab-line-soft: #EFEADD;
+  --lab-ink:       #1B1822;
+  --lab-ink-soft:  #39333F;
+  --lab-muted:     #6A6472;
+  --lab-viola:     #6D3FE0;
+  --lab-viola-2:   #7C3AED;
+  --lab-ciano:     #0891B2;
+  --lab-ambra:     #C8941E;
+  --lab-rosa:      #DB2777;
+  --lab-verde:     #0E9E86;
+  --lab-rosso:     #E11D48;
+  --lab-oro:       #A67C2E;
+  --lab-oro-soft:  rgba(166,124,46,.12);
+  --lab-on-brand:  #FFFFFF;
+  --lab-grad-soft: linear-gradient(160deg, #FFFFFF, #F3EFE6);
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+  --lab-focus-ring: 0 0 0 3px rgba(109,63,224,.25);
+  --lab-anno-1:    #E2603B;
+  --lab-anno-2:    #2D7DD2;
+  --lab-anno-3:    #6A4FB0;
+  --lab-anno-4:    #C8417B;
+  --lab-anno-5:    #C98A1E;
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--lab-bg); color: var(--lab-ink); font-family: var(--lab-font-body); font-size: var(--lab-text-base); line-height: var(--lab-leading-loose); -webkit-font-smoothing: antialiased; transition: background var(--lab-dur-slow) ease, color var(--lab-dur-slow) ease; }
+h1, h2, h3, h4 { font-family: var(--lab-font-display); font-weight: var(--lab-weight-semibold); line-height: var(--lab-leading-snug); letter-spacing: var(--lab-tracking-normal); margin: 0 0 .382em; color: var(--lab-ink); text-wrap: balance; }
+h1 { font-size: var(--lab-text-display-lg); }
+h2 { font-size: var(--lab-text-display-md); }
+h3 { font-size: var(--lab-text-display-sm); }
+p { margin: 0 0 1em; color: var(--lab-ink-soft); text-wrap: pretty; }
+a { color: var(--lab-accent); text-decoration: none; transition: color var(--lab-dur-fast) ease; }
+a:hover { color: var(--lab-oro); }
+::selection { background: rgba(227,194,122,.35); color: var(--lab-ink); }
+:focus-visible { outline: 1.5px solid var(--lab-oro); outline-offset: 3px; border-radius: 5px; }
+.lab-grad-text { background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.lab-eyebrow { font-family: var(--lab-font-inscription); font-size: var(--lab-eyebrow-size); letter-spacing: var(--lab-eyebrow-spacing); text-transform: uppercase; font-weight: var(--lab-eyebrow-weight); color: var(--lab-oro); margin: 0 0 13px; }
+.lab-wrap { max-width: var(--lab-max-w); margin: 0 auto; padding: 0 var(--lab-space-4); }
