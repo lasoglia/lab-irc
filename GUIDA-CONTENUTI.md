@@ -39,10 +39,10 @@ Gli effetti legati al cursore (rosone che si illumina, schede che si inclinano,
 pulsanti "magnetici") esistono solo con il mouse: su telefono le schede restano
 ferme, niente "flash". Se nel sistema è attivo "riduci movimento" si spengono.
 
-Ogni anno ha la sua **mascotte in stile anime**: Semino (I), Ichthy (II),
-Navicella (III), Bussolina (IV), Terra (V). Seguono il cursore con gli occhioni
-(Bussolina con l'ago), sbattono le ciglia e, se le tocchi, sorridono e dicono una
-frase. Sono le stesse nel sito e negli artefatti.
+Ogni anno ha la sua **mascotte in stile anime** (tratto alla Hunter × Hunter,
+proporzioni sulla sezione aurea): Semino (I), Ichthy (II), Navicella (III),
+Bussolina (IV), Terra (V). Seguono il cursore con lo sguardo (Bussolina con l'ago),
+sbattono le ciglia e, se le tocchi, sorridono e dicono una frase. Sono le stesse nel sito e negli artefatti.
 
 I **font** (Cormorant Garamond, Cinzel, Figtree) sono salvati dentro il sito e
 non vengono più scaricati da Google: il sito funziona anche se la rete della

@@ -59,7 +59,7 @@ export function YearMascot({ year = 1, size = 48, speak = true }) {
       style={{ position: 'relative', display: 'inline-block', width: size, height: size, lineHeight: 0, color: `var(--lab-anno-${year})`, cursor: 'pointer' }}
     >
       <span className="lab-mascotte-bob" style={{ display: 'inline-block', animation: 'labBob 3.2s ease-in-out infinite' }}>
-        <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden="true"
+        <svg viewBox="0 0 89 89" width={size} height={size} aria-hidden="true"
           style={{ overflow: 'visible', transform: `rotate(${hov ? -8 : 0}deg) scale(${felice ? 1.16 : hov ? 1.1 : 1})`, transition: 'transform 377ms cubic-bezier(.34,1.56,.64,1)', filter: hov ? 'drop-shadow(0 5px 8px rgba(0,0,0,.35))' : 'drop-shadow(0 2px 3px rgba(0,0,0,.18))' }}
           dangerouslySetInnerHTML={{ __html: svg }} />
       </span>

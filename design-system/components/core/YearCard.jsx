@@ -46,7 +46,7 @@ export function YearCard({ year = 1, name, description, count, href = '#', onCli
       {description && <p style={{ position: 'relative', color: 'var(--lab-muted)', fontSize: 14, lineHeight: 1.5, margin: '8px 0 0', flex: 1 }}>{description}</p>}
       {count != null && (
         <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8, fontSize: 11.5, fontWeight: 800, letterSpacing: '.13em', textTransform: 'uppercase', color, marginTop: 21 }}>
-          {count} contenuti
+          {count} {count === 1 ? 'contenuto' : 'contenuti'}
           <span style={{ transform: `translateX(${hov ? 5 : 0}px)`, opacity: hov ? 1 : 0, transition: '377ms cubic-bezier(.16,1,.3,1)' }}>→</span>
         </span>
       )}
