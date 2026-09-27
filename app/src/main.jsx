@@ -80,6 +80,7 @@ function CursorHalo() {
     addEventListener("mousemove", mv);
     return () => { cancelAnimationFrame(raf); removeEventListener("mousemove", mv); };
   }, []);
+  if (!conMouse()) return null; /* sul telefono non serve (e non deve allargare la pagina) */
   return <div ref={ref} className="lab-alone" aria-hidden="true" style={{ position: "fixed", left: 0, top: 0, width: 466, height: 466, borderRadius: "50%", pointerEvents: "none", zIndex: 0, opacity: 0, transition: "opacity 610ms", background: "radial-gradient(circle, rgba(139,92,246,.10), rgba(227,194,122,.04) 38.2%, transparent 61.8%)" }} />;
 }
 
@@ -183,7 +184,7 @@ function Rosone({ anni, onYear }) {
   const info = hi ? anni.find((x) => x.year === hi) : null;
   return (
     <div style={{ position: "relative", maxWidth: 440, margin: "0 auto" }}>
-      <div aria-hidden="true" style={{ position: "absolute", inset: "-21%", borderRadius: "50%", pointerEvents: "none", background: `conic-gradient(from ${c.a + 90 - 13}deg, rgba(227,194,122,0) 0deg, rgba(227,194,122,${(0.26 * c.p).toFixed(3)}) 13deg, rgba(227,194,122,0) 26deg, rgba(227,194,122,0) 360deg)`, WebkitMaskImage: "radial-gradient(circle, #000 21%, transparent 70%)", maskImage: "radial-gradient(circle, #000 21%, transparent 70%)" }} />
+      <div aria-hidden="true" className="lab-rosone-luce" style={{ position: "absolute", inset: "-21%", borderRadius: "50%", pointerEvents: "none", background: `conic-gradient(from ${c.a + 90 - 13}deg, rgba(227,194,122,0) 0deg, rgba(227,194,122,${(0.26 * c.p).toFixed(3)}) 13deg, rgba(227,194,122,0) 26deg, rgba(227,194,122,0) 360deg)`, WebkitMaskImage: "radial-gradient(circle, #000 21%, transparent 70%)", maskImage: "radial-gradient(circle, #000 21%, transparent 70%)" }} />
       <div ref={ref} style={{ position: "relative", transform: `perspective(987px) rotateX(${(-c.ty * 8).toFixed(2)}deg) rotateY(${(c.tx * 8).toFixed(2)}deg)`, transition: `transform 610ms ${EASE}`, animation: `labRise 1597ms ${EASE} 233ms both` }}>
         <svg viewBox="-100 -100 200 200" role="img" aria-label="Rosone: scegli l'anno" style={{ width: "100%", display: "block", overflow: "visible" }} onMouseLeave={() => setHi(null)}>
           <circle r="98" style={{ fill: "var(--lab-bg-2)", stroke: "var(--lab-oro)", strokeWidth: 1.5, strokeOpacity: 0.85 }} />

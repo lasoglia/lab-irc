@@ -6,6 +6,10 @@
 
 html{ -webkit-tap-highlight-color:transparent; }
 body{ overflow-x:hidden; }
+/* niente sporge oltre i bordi dello schermo: sul telefono la pagina non si
+   allarga e non serve rimpicciolire per vedere il pulsante giorno/notte
+   (clip, a differenza di hidden, non blocca la testata che resta in alto) */
+html, body, .lab-app{ max-width:100%; overflow-x:clip; }
 a{ color:var(--lab-accent); }
 a:hover{ color:var(--lab-oro); }
 
@@ -27,6 +31,8 @@ body.viewing .lab-app, body.viewing .lab-tema, body.viewing .lab-alone{ display:
   .lab-nav-opt{ display:none !important; }
 
   .lab-hero{ padding:55px 21px 21px !important; gap:34px !important; }
+  .lab-rosone-luce{ inset:-3% !important; }
+  .lab-anni a > p{ padding-right:55px; }   /* il testo non passa sotto la mascotte */
   .lab-shead{ grid-template-columns:1fr !important; gap:8px !important; margin:55px 0 21px !important; }
   .lab-tools{ grid-template-columns:1fr !important; }
   .lab-about{ grid-template-columns:1fr !important; gap:21px !important; padding:34px 21px !important; }
