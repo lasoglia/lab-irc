@@ -9,7 +9,13 @@
     {
       "titolo": "Presentazione corso",
       "anno": "4",
-      "uda": "Accoglienza "
+      "uda": "Accoglienza ",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html"
+        }
+      ]
     },
     {
       "titolo": "Lemaitre e Einstein",
