@@ -1,6 +1,22 @@
 {
   "lezioni": [
     {
+      "titolo": "Gesù sotto il segno dell'aquila",
+      "anno": "2",
+      "uda": "Gesù quali tracce ",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-artefatto.html",
+          "titolo": "Lez. Interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
       "titolo": "La visione cosmologica di Lemaitre",
       "anno": "5",
       "uda": "Le due vie di Lemaitre",
