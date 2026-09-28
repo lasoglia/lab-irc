@@ -1,6 +1,25 @@
 {
   "lezioni": [
     {
+      "anno": "3",
+      "titolo": "i benedettini",
+      "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf",
+          "titolo": "Fascicolo di studio",
+          "tipo": "Documento/PDF"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-artefatto.html",
+          "titolo": "Lez. Interattiva",
+          "tipo": "Artefatto interattivo"
+        }
+      ]
+    },
+    {
       "uda": "UDA 1 - Riformare una Chiesa, cambiare una cultura",
       "anno": "4",
       "titolo": "Lezione 1  riformare una chiesa cambiare una cultura indulgenze",
