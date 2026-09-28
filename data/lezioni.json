@@ -1,6 +1,25 @@
 {
   "lezioni": [
     {
+      "titolo": "La visione cosmologica di Lemaitre",
+      "anno": "5",
+      "uda": "Le due vie di Lemaitre",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/v1-1il~1.htm",
+          "titolo": "Lez. Interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/v1-1il~1.pdf",
+          "titolo": "Fascicolo",
+          "tipo": "Documento/PDF"
+        }
+      ]
+    },
+    {
       "anno": "3",
       "titolo": "i benedettini",
       "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
