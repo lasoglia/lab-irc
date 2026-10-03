@@ -18,9 +18,14 @@
             "group": [
               "assets/**",
               "assets/artefatti/**",
+              "assets/artefatti/giochi/**",
+              "assets/artefatti/lezione/**",
+              "assets/mascotte/**",
               "components/brand/**",
               "components/core/**",
-              "components/exam/**"
+              "components/exam/**",
+              "ui_kits/giochi/**",
+              "ui_kits/lezione/**"
             ],
             "message": "Import design-system components from 'index.js', not component internals."
           }
@@ -106,8 +111,8 @@
         "message": "<YearCard> doesn't accept that prop. Declared props: year, name, description, count, href, onClick, mascot."
       },
       {
-        "selector": "JSXOpeningElement[name.name='YearMascot'] > JSXAttribute > JSXIdentifier[name!=/^(?:year|size|speak|key|ref|className|style|children)$/]",
-        "message": "<YearMascot> doesn't accept that prop. Declared props: year, size, speak."
+        "selector": "JSXOpeningElement[name.name='YearMascot'] > JSXAttribute > JSXIdentifier[name!=/^(?:year|size|speak|halo|still|key|ref|className|style|children)$/]",
+        "message": "<YearMascot> doesn't accept that prop. Declared props: year, size, speak, halo, still."
       }
     ]
   },
@@ -204,6 +209,9 @@
       "--lab-font-body",
       "--lab-font-display",
       "--lab-font-inscription",
+      "--lab-gap-group",
+      "--lab-gap-section",
+      "--lab-gap-within",
       "--lab-glow",
       "--lab-grad",
       "--lab-grad-soft",
@@ -215,6 +223,15 @@
       "--lab-leading-relaxed",
       "--lab-leading-snug",
       "--lab-leading-tight",
+      "--lab-lim-body",
+      "--lab-lim-caption",
+      "--lab-lim-lead",
+      "--lab-lim-measure",
+      "--lab-lim-question",
+      "--lab-lim-score",
+      "--lab-lim-target",
+      "--lab-lim-term",
+      "--lab-lim-unit",
       "--lab-line",
       "--lab-line-soft",
       "--lab-max-w",
@@ -233,6 +250,7 @@
       "--lab-radius-pill",
       "--lab-radius-sm",
       "--lab-radius-xs",
+      "--lab-recede",
       "--lab-rosa",
       "--lab-rosso",
       "--lab-shadow",
@@ -370,7 +388,7 @@
       "--lab-shadow": "shadow",
       "--lab-shadow-lg": "shadow",
       "--lab-glow": "shadow",
-      "--lab-focus-ring": "shadow",
+      "--lab-focus-ring": "color",
       "--lab-btn-glow": "shadow",
       "--lab-btn-glow-hover": "shadow",
       "--exam-shadow": "shadow",
@@ -387,7 +405,20 @@
       "--lab-stagger": "other",
       "--lab-anim-in": "other",
       "--lab-anim-in-2": "other",
-      "--lab-anim-in-3": "other"
+      "--lab-anim-in-3": "other",
+      "--lab-gap-within": "spacing",
+      "--lab-gap-group": "spacing",
+      "--lab-gap-section": "spacing",
+      "--lab-recede": "other",
+      "--lab-lim-unit": "spacing",
+      "--lab-lim-caption": "color",
+      "--lab-lim-body": "color",
+      "--lab-lim-lead": "color",
+      "--lab-lim-question": "color",
+      "--lab-lim-term": "color",
+      "--lab-lim-score": "color",
+      "--lab-lim-target": "color",
+      "--lab-lim-measure": "spacing"
     },
     "fontFamilies": [
       "Cinzel",
