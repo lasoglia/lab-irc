@@ -1,25 +1,32 @@
 /* Lab IRC — Kit artefatti. Mettere in fondo al <body class="la" data-anno="1-5">.
-   Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno, easter egg AMDG.
-   API: LabArtefatto.say(testo) · .cheer() · .oops() · .amdg() */
+   Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno (<lab-mascotte>, caricata da /assets/mascotte/ del sito), easter egg AMDG.
+   API: LabArtefatto.say(testo) · .cheer() · .oops() · .amdg() · .lim(true|false)
+   Modalità LIM: pulsante «LIM», tasto L o ?lim=1 → <html data-lim> (vedi lab-percezione.css). */
 (function () {
+  var cs = document.currentScript;
+  if (cs && cs.src && !/lab-artefatto\.js/.test(cs.src)) return; /* incluso in un altro file (bundle): non fare nulla; inline va bene */
   var d = document, w = window;
   try { var t = localStorage.getItem('tema_lab'); if (t) d.documentElement.dataset.tema = t; } catch (e) {}
+  var root = d.documentElement, mascotEl = null, limBtn = null;
+  var isLim = function () { return root.hasAttribute('data-lim'); };
+  try {
+    var qm = /[?&]lim=(1|0)/.exec(location.search);
+    if (qm) localStorage.setItem('lim_lab', qm[1]);
+    if (localStorage.getItem('lim_lab') === '1') root.setAttribute('data-lim', '');
+  } catch (e) {}
+  function setLim(on) {
+    if (on) root.setAttribute('data-lim', ''); else root.removeAttribute('data-lim');
+    try { localStorage.setItem('lim_lab', on ? '1' : '0'); } catch (e) {}
+    if (limBtn) limBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (mascotEl) mascotEl.setAttribute('size', on ? '144' : '89');
+    w.dispatchEvent(new CustomEvent('lab:lim', { detail: on }));
+  }
   var reduce = w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* le mascotte arrivano dal pacchetto assets/mascotte/ (web component <lab-mascotte>) */
-  var qui = d.currentScript && d.currentScript.src;
-  var NOMI = { 1: 'Semino', 2: 'Ichthy', 3: 'Navicella', 4: 'Bussolina', 5: 'Terra' };
-  function caricaMascotte() {
-    if (w.customElements && w.customElements.get('lab-mascotte')) return;
-    if (d.querySelector('script[data-lab-mascotte]')) return;
-    var s = d.createElement('script');
-    s.src = new URL('../../../assets/mascotte/lab-mascotte.js', qui || location.href).href;
-    s.setAttribute('data-lab-mascotte', '');
-    d.head.appendChild(s);
-  }
   var CHEER = ['Esatto!', 'Bravissimo!', 'Proprio così!', 'Ottimo!'];
   var OOPS = ['Quasi… riprova!', 'Mmm, pensaci ancora.', 'Non proprio. Coraggio!'];
   var pick = function (a) { return a[Math.floor(Math.random() * a.length)]; };
+  var SELF = (d.currentScript && d.currentScript.src) || '';
 
   var egg = null;
   function amdg() {
@@ -36,23 +43,36 @@
     el.addEventListener('click', close); d.addEventListener('keydown', esc); timer = setTimeout(close, 6180);
   }
 
+  function loadMascotte() {
+    if (w.customElements && customElements.get('lab-mascotte')) return;
+    if (d.querySelector('script[data-lab-mascotte]')) return;
+    var sc = d.createElement('script');
+    /* la mascotte del sito (niente AMDG al 7° clic): /assets/mascotte/ alla radice del sito */
+    sc.src = new URL('../../../assets/mascotte/lab-mascotte.js', SELF || location.href).href;
+    sc.setAttribute('data-lab-mascotte', ''); d.head.appendChild(sc);
+  }
   function mascot() {
     var y = +(d.body.getAttribute('data-anno') || 0);
-    if (!NOMI[y]) return null;
-    caricaMascotte();
-    var el = d.createElement('div');
-    el.className = 'la-mascot';
-    el.innerHTML = '<lab-mascotte anno="' + y + '" size="89" fumetto="sinistra"></lab-mascotte>';
-    d.body.appendChild(el);
-    var m = el.firstChild;
-    function say(txt) {
-      if (w.customElements) w.customElements.whenDefined('lab-mascotte').then(function () { if (m.bubble) m.bubble(txt); });
-    }
-    return { say: say };
+    if (!(y >= 1 && y <= 5) || d.body.hasAttribute('data-no-mascotte')) return null;
+    loadMascotte();
+    var wrap = d.createElement('div'); wrap.className = 'la-mascot';
+    var el = d.createElement('lab-mascotte'); el.setAttribute('anno', y); el.setAttribute('size', isLim() ? '144' : '89'); mascotEl = el; el.setAttribute('fumetto', 'sinistra');
+    wrap.appendChild(el); d.body.appendChild(wrap);
+    return { say: function (t) { if (w.customElements) w.customElements.whenDefined('lab-mascotte').then(function () { if (el.bubble) el.bubble(t); }); } };
   }
 
   function init() {
     var mas = mascot();
+
+    var tools = d.querySelector('.g-tools, .ll-tools');
+    if (!d.body.classList.contains('ll')) { /* la lezione React disegna il suo pulsante LIM nella testata */
+    limBtn = d.createElement('button'); limBtn.type = 'button'; limBtn.textContent = 'LIM';
+    limBtn.setAttribute('data-lim-toggle', ''); limBtn.title = 'Modalità LIM: caratteri grandi (tasto L)';
+    limBtn.setAttribute('aria-pressed', isLim() ? 'true' : 'false');
+    limBtn.className = !tools ? 'la-lim-btn' : tools.classList.contains('g-tools') ? 'g-tool' : 'll-tool';
+    limBtn.addEventListener('click', function () { setLim(!isLim()); });
+    if (tools) tools.insertBefore(limBtn, tools.firstChild); else d.body.appendChild(limBtn);
+    }
 
     if (!reduce) {
       var h = d.createElement('div'); h.className = 'la-halo'; h.setAttribute('aria-hidden', 'true'); d.body.appendChild(h);
@@ -68,7 +88,7 @@
       hot = c; if (!c) return;
       var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
       c.classList.add('is-hot'); c.style.setProperty('--mx', (px * 100).toFixed(1) + '%'); c.style.setProperty('--my', (py * 100).toFixed(1) + '%');
-      if (!c.hasAttribute('data-flat') && !reduce) c.style.transform = 'perspective(987px) rotateX(' + ((.5 - py) * 4).toFixed(2) + 'deg) rotateY(' + ((px - .5) * 4).toFixed(2) + 'deg) translateY(-3px)';
+      if (!c.hasAttribute('data-flat') && !reduce && !isLim()) c.style.transform = 'perspective(987px) rotateX(' + ((.5 - py) * 4).toFixed(2) + 'deg) rotateY(' + ((px - .5) * 4).toFixed(2) + 'deg) translateY(-3px)';
     });
     d.addEventListener('animationend', function (e) { if (e.animationName === 'labRise' && e.target.hasAttribute && e.target.hasAttribute('data-reveal')) e.target.removeAttribute('data-reveal'); });
 
@@ -76,12 +96,13 @@
     d.addEventListener('keydown', function (e) {
       var tag = (e.target.tagName || '').toLowerCase();
       if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable || !e.key || e.key.length !== 1) return;
+      if ((e.key === 'l' || e.key === 'L') && !e.ctrlKey && !e.metaKey && !e.altKey) setLim(!isLim());
       buf = (buf + e.key.toLowerCase()).slice(-4); if (buf === 'amdg') amdg();
     });
     w.addEventListener('lab:amdg', amdg);
 
     var say = function (t) { if (mas) mas.say(t); };
-    w.LabArtefatto = { say: say, cheer: function () { say(pick(CHEER)); }, oops: function () { say(pick(OOPS)); }, amdg: amdg };
+    w.LabArtefatto = { say: say, cheer: function () { say(pick(CHEER)); }, oops: function () { say(pick(OOPS)); }, amdg: amdg, lim: setLim };
     console.log('%cA · M · D · G', 'font: 600 21px Cinzel, Georgia, serif; color: #E3C27A; letter-spacing: .3em');
   }
 

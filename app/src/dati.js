@@ -25,7 +25,8 @@ export const ANNI = [
   { n: "5", rom: "V", nome: "Quinto anno", key: "quinto" },
 ];
 
-export const colore = (n) => (annoMeta(n) ? `var(--lab-anno-${n})` : "var(--lab-viola)");
+/* il colore dell'anno significa solo "anno": chi non ha anno resta neutro */
+export const colore = (n) => (annoMeta(n) ? `var(--lab-anno-${n})` : "var(--lab-muted)");
 
 export function annoMeta(n) {
   return ANNI.find((a) => a.n === String(n));
@@ -237,4 +238,122 @@ export function varianteBadge(it) {
   if (t.includes("artefatto") || t.includes("interattiv")) return "viola";
   if (t === "link") return "ambra";
   return "verde";
+}
+
+/* =====================================================================
+   PERCORSO — le "orme" dello studente, SOLO in questo browser.
+   Niente account, niente server, niente orari o conteggi di visite:
+   la lista dei materiali aperti e l'ultima lezione/unità visitata.
+   Se il browser non permette di salvare, si ricorda solo finché la
+   pagina resta aperta (come una prima visita). In modalità LIM (lavagna
+   di classe) non si legge e non si scrive nulla.
+   ===================================================================== */
+const CHIAVE_PERCORSO = "percorso_lab";
+const VUOTO = { v: 1, aperti: [], ultima: null };
+const MAX_APERTI = 377;
+
+function leggiPercorso() {
+  try {
+    const x = JSON.parse(localStorage.getItem(CHIAVE_PERCORSO) || "null");
+    if (x && x.v === 1 && Array.isArray(x.aperti)) {
+      return { v: 1, aperti: x.aperti.filter((k) => typeof k === "string").slice(-MAX_APERTI), ultima: x.ultima && typeof x.ultima.hash === "string" ? x.ultima : null };
+    }
+  } catch (e) { /* storage bloccato o dati rovinati: si riparte vuoti */ }
+  return VUOTO;
+}
+
+let statoPercorso = leggiPercorso();
+const limAttivo = () => document.documentElement.hasAttribute("data-lim");
+
+function salvaPercorso(n) {
+  statoPercorso = n;
+  try { localStorage.setItem(CHIAVE_PERCORSO, JSON.stringify(n)); } catch (e) { /* resta in memoria */ }
+  window.dispatchEvent(new Event("lab:percorso"));
+}
+
+export const percorso = () => statoPercorso;
+
+export function iscriviPercorso(f) {
+  const su = (e) => {
+    if (e.type === "storage") {
+      if (e.key !== CHIAVE_PERCORSO && e.key !== null) return;
+      statoPercorso = leggiPercorso();
+    }
+    f();
+  };
+  window.addEventListener("lab:percorso", su);
+  window.addEventListener("storage", su);
+  return () => { window.removeEventListener("lab:percorso", su); window.removeEventListener("storage", su); };
+}
+
+/* chiave stabile di un contenuto (non dipende dall'ordine nella lista) */
+export const chiaveItem = (it) =>
+  [it.kind || "", it.anno || "", normT(it.uda), normT(it.lezione), normT(it.file || it.link || it.youtube || it.titolo)].join("|");
+
+export function segnaAperto(it) {
+  if (limAttivo()) return;
+  const k = chiaveItem(it);
+  if (statoPercorso.aperti.includes(k)) return;
+  salvaPercorso({ ...statoPercorso, aperti: [...statoPercorso.aperti, k].slice(-MAX_APERTI) });
+}
+
+export function segnaUltima(u) {
+  if (limAttivo() || !u || !u.hash) return;
+  if (statoPercorso.ultima && statoPercorso.ultima.hash === u.hash) return;
+  salvaPercorso({ ...statoPercorso, ultima: { hash: u.hash, anno: String(u.anno), uda: u.uda || "", lezione: u.lezione || "", titolo: u.titolo || "" } });
+}
+
+export function dimenticaPercorso() {
+  try { localStorage.removeItem(CHIAVE_PERCORSO); } catch (e) { /* niente */ }
+  statoPercorso = VUOTO;
+  window.dispatchEvent(new Event("lab:percorso"));
+}
+
+export const contaAperti = (items, set) => items.reduce((n, it) => n + (set.has(chiaveItem(it)) ? 1 : 0), 0);
+
+/* posizione di un elemento in una lista ordinata (lezioni di un'unità, unità di un anno) */
+export function vicini(list, titolo) {
+  const i = list.findIndex((x) => normT(x.titolo) === normT(titolo));
+  return { pos: i + 1, tot: list.length, prec: i > 0 ? list[i - 1] : null, succ: i >= 0 && i < list.length - 1 ? list[i + 1] : null };
+}
+
+export const slug = (s) => encodeURIComponent(String(s || "").trim());
+export const hrefUda = (n, uda) => `#anno/${n}/uda/${slug(uda)}`;
+export const hrefLezione = (n, uda, lez) => `#anno/${n}/uda/${slug(uda)}/lezione/${slug(lez)}`;
+
+/* ordine "naturale" di una lezione: prima l'attività interattiva (aggancio),
+   poi slide/video/link (scoperta), infine documenti e PDF (ripasso).
+   L'ordine scelto dal docente (campo "ordine", "in evidenza") vince sempre. */
+export function ruolo(it) {
+  const t = normT(it.tipo);
+  if (it.kind === "strumento" || azione(it).tipo === "visore" || /interattiv|artefatto/.test(t)) return 0;
+  if (it.kind === "video" || t === "slide" || t === "link") return 1;
+  return 2;
+}
+
+export function ordinaPercorso(items) {
+  const ord = (x) => (x.ordine === "" || x.ordine == null || isNaN(+x.ordine) ? Infinity : +x.ordine);
+  return items
+    .map((it, i) => ({ it, i }))
+    .sort((a, b) => ord(a.it) - ord(b.it) || (b.it.in_evidenza ? 1 : 0) - (a.it.in_evidenza ? 1 : 0) || ruolo(a.it) - ruolo(b.it) || a.i - b.i)
+    .map((x) => x.it);
+}
+
+/* ---------- ricerca: senza accenti, anche su unità e lezioni ---------- */
+export const norm = (s) => String(s == null ? "" : s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+export function cerca(D, q) {
+  const k = norm(q);
+  const ha = (...v) => v.some((x) => norm(x).includes(k));
+  const items = D.ITEMS.filter((it) => ha(it.titolo, it.descrizione, it.tipo, it.uda, it.lezione));
+  const cartelle = [];
+  ANNI.forEach((a) => {
+    udaForYear(D, a.n).forEach((u) => {
+      if (ha(u.titolo, u.descrizione)) cartelle.push({ tipo: "uda", titolo: u.titolo, anno: a.n, href: hrefUda(a.n, u.titolo) });
+      lezioniForUda(D, a.n, u.titolo).forEach((l) => {
+        if (ha(l.titolo, l.descrizione)) cartelle.push({ tipo: "lezione", titolo: l.titolo, uda: u.titolo, anno: a.n, href: hrefLezione(a.n, u.titolo, l.titolo) });
+      });
+    });
+  });
+  return { cartelle, items };
 }

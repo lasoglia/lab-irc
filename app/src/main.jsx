@@ -5,8 +5,19 @@
 
    I componenti (YearCard, Card, Button, Badge, Chip, YearMascot, AmdgEgg,
    Amdg) sono quelli del design system, importati così come sono.
+
+   PERCEZIONE (design-system/tokens/perception.css, guidelines/perception):
+   - prossimità a tre livelli: 8 dentro un gruppo, 21 tra gruppi, 55 tra sezioni;
+   - una sola figura e UN solo accento per vista: il pulsante pieno indica
+     il prossimo passo del percorso, tutti gli altri sono "ghost";
+   - continuità: il colore dell'anno accompagna dalla vetrata alla lezione;
+   - chiusura: anelli e sigilli d'oro sui materiali già aperti, ogni
+     pagina finisce con "Per continuare" (mai un vicolo cieco);
+   - movimento calmo (durate di Fibonacci), fermo con "riduci movimento";
+   - modalità LIM per la lavagna di classe (pulsante LIM, tasto L, ?lim=1).
+   Le "orme" dello studente restano SOLO nel suo browser (vedi dati.js).
    ===================================================================== */
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useSyncExternalStore } from "react";
 import { createRoot } from "react-dom/client";
 
 import { YearCard } from "../../design-system/components/core/YearCard.jsx";
@@ -21,7 +32,8 @@ import { Amdg } from "../../design-system/components/brand/Amdg.jsx";
 import {
   ANNI, annoMeta, colore, caricaDati, descAnno, itemsAnno, udaForYear, itemsInUda,
   lezioniForUda, itemsInLezione, trovaUda, trovaLezione, normT, resolvePath, ytId,
-  azione, varianteBadge,
+  azione, varianteBadge, percorso, iscriviPercorso, chiaveItem, segnaAperto, segnaUltima,
+  dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
 } from "./dati.js";
 
 import "./app.css";
@@ -30,44 +42,76 @@ const EASE = "cubic-bezier(.16,1,.3,1)";
 const ROMAN = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V" };
 const conMouse = () => window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
 const movimentoRidotto = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-const slug = (s) => encodeURIComponent(String(s || "").trim());
 const plurale = (n) => n + " " + (n === 1 ? "contenuto" : "contenuti");
+const lezioni = (n) => n + " " + (n === 1 ? "lezione" : "lezioni");
+const breve = (s, n) => { s = String(s || "").trim(); return s.length > n ? s.slice(0, n - 1).trimEnd() + "…" : s; };
+
+/* scorrimento immediato (anche se il CSS chiede "smooth") */
+function vaiA(y) {
+  const h = document.documentElement;
+  h.style.scrollBehavior = "auto";
+  window.scrollTo(0, y);
+  requestAnimationFrame(() => { h.style.scrollBehavior = ""; });
+}
+
+/* ---------- modalità LIM (lavagna di classe) ----------
+   Come nel modello del design system: pulsante «LIM», tasto L o ?lim=1
+   nell'indirizzo; la scelta resta salvata in 'lim_lab'. */
+function initLim() {
+  const r = document.documentElement;
+  const q = /[?&]lim=(1|0)/.exec(location.search);
+  let on = false;
+  try {
+    if (q) localStorage.setItem("lim_lab", q[1]);
+    on = localStorage.getItem("lim_lab") === "1";
+  } catch (e) { /* storage bloccato: vale solo l'indirizzo */ }
+  if (q) on = q[1] === "1";
+  r.toggleAttribute("data-lim", on);
+}
+function setLim(on) {
+  document.documentElement.toggleAttribute("data-lim", on);
+  try { localStorage.setItem("lim_lab", on ? "1" : "0"); } catch (e) { /* niente */ }
+  window.dispatchEvent(new CustomEvent("lab:lim", { detail: on }));
+}
+const leggiLim = () => document.documentElement.hasAttribute("data-lim");
+const iscriviLim = (f) => { addEventListener("lab:lim", f); return () => removeEventListener("lab:lim", f); };
+const useLim = () => useSyncExternalStore(iscriviLim, leggiLim);
+initLim();
+
+/* le orme dello studente, come le vede la pagina (vuote in LIM) */
+const NESSUNA_ORMA = { set: new Set(), ultima: null, vuoto: true };
+function usePercorsoVisibile() {
+  const st = useSyncExternalStore(iscriviPercorso, percorso);
+  const lim = useLim();
+  return useMemo(() => (lim ? NESSUNA_ORMA : { set: new Set(st.aperti), ultima: st.ultima, vuoto: !st.aperti.length && !st.ultima }), [st, lim]);
+}
 
 /* ---------- aiuti di movimento (dal modello) ---------- */
-function Reveal({ children, delay = 0, style, className }) {
+/* griglia: entrata insieme ("destino comune"), sfalsata di 55ms, senza sfocatura */
+function Reveal({ children, delay = 0, style, className, griglia }) {
   const ref = useRef(null);
   const [on, setOn] = useState(false);
   useEffect(() => {
     if (on) return;
-    const check = () => { const el = ref.current; if (el && el.getBoundingClientRect().top < innerHeight * 0.92) setOn(true); };
-    check();
-    let io;
-    if ("IntersectionObserver" in window && ref.current) {
+    const el = ref.current;
+    if (el && el.getBoundingClientRect().top < innerHeight * 0.92) { setOn(true); return; }
+    let io, check;
+    if ("IntersectionObserver" in window && el) {
       io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setOn(true); }, { threshold: 0.12 });
-      io.observe(ref.current);
+      io.observe(el);
+    } else {
+      check = () => { const x = ref.current; if (x && x.getBoundingClientRect().top < innerHeight * 0.92) setOn(true); };
+      addEventListener("scroll", check, { passive: true });
     }
-    addEventListener("scroll", check, { passive: true });
     const safety = setTimeout(() => setOn(true), 1618);
-    return () => { io && io.disconnect(); removeEventListener("scroll", check); clearTimeout(safety); };
+    return () => { io && io.disconnect(); check && removeEventListener("scroll", check); clearTimeout(safety); };
   }, [on]);
-  const tr = `987ms ${EASE} ${delay}ms`;
-  return (
-    <div ref={ref} className={className} style={{ opacity: on ? 1 : 0, transform: on ? "none" : "translateY(21px)", filter: on ? "none" : "blur(6px)", transition: `opacity ${tr}, transform ${tr}, filter ${tr}`, ...style }}>
-      {children}
-    </div>
-  );
+  const st = griglia
+    ? { opacity: on ? 1 : 0, transform: on ? "none" : "translateY(13px)", transition: `opacity 610ms ${EASE} ${delay}ms, transform 610ms ${EASE} ${delay}ms` }
+    : { opacity: on ? 1 : 0, transform: on ? "none" : "translateY(21px)", filter: on ? "none" : "blur(6px)", transition: `opacity 987ms ${EASE} ${delay}ms, transform 987ms ${EASE} ${delay}ms, filter 987ms ${EASE} ${delay}ms` };
+  return <div ref={ref} className={className} style={{ ...st, ...style }}>{children}</div>;
 }
-
-function useMouse() {
-  const [m, setM] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    if (!conMouse()) return;
-    const f = (e) => setM({ x: (e.clientX / innerWidth) * 2 - 1, y: (e.clientY / innerHeight) * 2 - 1 });
-    addEventListener("mousemove", f);
-    return () => removeEventListener("mousemove", f);
-  }, []);
-  return m;
-}
+const ritardo = (i) => Math.min(i, 3) * 55;
 
 function CursorHalo() {
   const ref = useRef(null);
@@ -81,35 +125,37 @@ function CursorHalo() {
     return () => { cancelAnimationFrame(raf); removeEventListener("mousemove", mv); };
   }, []);
   if (!conMouse()) return null; /* sul telefono non serve (e non deve allargare la pagina) */
-  return <div ref={ref} className="lab-alone" aria-hidden="true" style={{ position: "fixed", left: 0, top: 0, width: 466, height: 466, borderRadius: "50%", pointerEvents: "none", zIndex: 0, opacity: 0, transition: "opacity 610ms", background: "radial-gradient(circle, rgba(139,92,246,.10), rgba(227,194,122,.04) 38.2%, transparent 61.8%)" }} />;
+  return <div ref={ref} className="lab-alone" data-halo="" aria-hidden="true" style={{ position: "fixed", left: 0, top: 0, width: 466, height: 466, borderRadius: "50%", pointerEvents: "none", zIndex: 0, opacity: 0, transition: "opacity 610ms", background: "radial-gradient(circle, rgba(139,92,246,.10), rgba(227,194,122,.04) 38.2%, transparent 61.8%)" }} />;
 }
 
 /* ---------- piccoli pezzi ---------- */
-function Eyebrow({ children, color = "var(--lab-oro)" }) {
+function Eyebrow({ children, color = "var(--lab-oro-text)" }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 13, whiteSpace: "nowrap", fontFamily: "var(--lab-font-inscription)", fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color, marginBottom: 13 }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 13, whiteSpace: "nowrap", fontFamily: "var(--lab-font-inscription)", fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color, marginBottom: 13, minWidth: 0 }}>
       <span style={{ width: 34, height: 1, background: "currentColor", opacity: 0.7, flexShrink: 0 }} />
       <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{children}</span>
     </div>
   );
 }
 
-function SectionHead({ eyebrow, title, sub, small }) {
+function SectionHead({ eyebrow, title, sub, small, h1 }) {
+  const T = h1 ? "h1" : "h2";
   return (
     <Reveal className="lab-shead" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.618fr) minmax(0,1fr)", alignItems: "end", gap: 34, margin: small ? "55px 0 21px" : "89px 0 34px" }}>
-      <div><Eyebrow>{eyebrow}</Eyebrow><h2 style={{ fontSize: small ? "clamp(24px,3vw,33px)" : "clamp(26px,3.6vw,42px)", margin: 0 }}>{title}</h2></div>
-      {sub && <p style={{ color: "var(--lab-muted)", fontSize: 15, margin: 0 }}>{sub}</p>}
+      <div style={{ minWidth: 0 }}><Eyebrow>{eyebrow}</Eyebrow><T style={{ fontSize: small ? "clamp(24px,3vw,33px)" : "clamp(26px,3.6vw,42px)", margin: 0, overflowWrap: "anywhere" }}>{title}</T></div>
+      {sub && <p style={{ color: "var(--lab-ink-soft)", fontSize: 16, lineHeight: 1.5, margin: 0, maxWidth: "38ch", textWrap: "pretty" }}>{sub}</p>}
     </Reveal>
   );
 }
 
-function NavLink({ children, href, className }) {
+function NavLink({ children, href, className, attivo }) {
   const [h, setH] = useState(false);
+  const acceso = h || attivo;
   return (
-    <a href={href} className={className} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ position: "relative", color: h ? "var(--lab-ink)" : "var(--lab-ink-soft)", textDecoration: "none", fontWeight: 600, fontSize: 14.5, padding: "8px 13px", transition: "color 233ms", whiteSpace: "nowrap" }}>
+    <a href={href} className={className} aria-current={attivo ? "page" : undefined} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+      style={{ position: "relative", color: acceso ? "var(--lab-ink)" : "var(--lab-ink-soft)", textDecoration: "none", fontWeight: 600, fontSize: 14.5, padding: "8px 13px", transition: "color 233ms", whiteSpace: "nowrap" }}>
       {children}
-      <span style={{ position: "absolute", left: 13, right: 13, bottom: 3, height: 1.5, background: "var(--lab-oro)", transform: `scaleX(${h ? 1 : 0})`, transition: `transform 377ms ${EASE}` }} />
+      <span style={{ position: "absolute", left: 13, right: 13, bottom: 3, height: 1.5, background: "var(--lab-oro)", transform: `scaleX(${acceso ? 1 : 0})`, transition: `transform 377ms ${EASE}` }} />
     </a>
   );
 }
@@ -119,7 +165,7 @@ function Logo({ titolo, onHome }) {
   const parole = String(titolo || "Lab IRC").trim().split(/\s+/);
   const ultima = parole.length > 1 ? parole.pop() : null;
   return (
-    <a href="#" data-amdg-trigger className="lab-logo" onClick={(e) => { e.preventDefault(); onHome(); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+    <a href="#" data-amdg-trigger className="lab-logo" aria-label={(titolo || "Lab IRC") + " — home"} onClick={(e) => { e.preventDefault(); onHome(); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
       style={{ display: "flex", alignItems: "center", gap: 13, marginRight: "auto", textDecoration: "none", color: "var(--lab-ink)" }}>
       <span style={{ position: "relative", width: 42, height: 42, borderRadius: 13, background: "var(--lab-grad)", display: "grid", placeItems: "center", flexShrink: 0, transform: `rotate(${h ? -6 : 0}deg) scale(${h ? 1.06 : 1})`, transition: `transform 610ms ${EASE}` }}>
         <span style={{ fontFamily: "var(--lab-font-display)", fontWeight: 600, fontSize: 24, color: "#fff" }}>{(parole[0] || "L").charAt(0).toUpperCase()}</span>
@@ -135,26 +181,28 @@ function Logo({ titolo, onHome }) {
 function Search({ value, onChange }) {
   const [f, setF] = useState(false);
   return (
-    <div className="lab-search" style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--lab-bg-2)", border: "1px solid", borderColor: f ? "var(--lab-oro)" : "var(--lab-line)", borderRadius: 999, padding: "8px 13px", width: f ? 233 : 170, transition: `width 377ms ${EASE}, border-color 233ms` }}>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ color: "var(--lab-muted)", flexShrink: 0 }}><circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" /></svg>
-      <input value={value} onChange={(e) => onChange(e.target.value)} onFocus={() => setF(true)} onBlur={() => setF(false)} type="search" placeholder="Cerca…" aria-label="Cerca nei contenuti" autoComplete="off"
-        style={{ border: "none", outline: "none", background: "none", font: "inherit", fontSize: 14, width: "100%", minWidth: 0, color: "var(--lab-ink)" }} />
+    <div className="lab-search" style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--lab-bg-2)", border: "1px solid", borderColor: f ? "var(--lab-oro)" : "var(--lab-line)", borderRadius: 999, padding: "6px 13px", width: f ? 233 : 170, transition: `width 377ms ${EASE}, border-color 233ms` }}>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true" style={{ color: "var(--lab-muted)", flexShrink: 0 }}><circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" /></svg>
+      <input value={value} onChange={(e) => onChange(e.target.value)} onKeyDown={(e) => { if (e.key === "Escape") onChange(""); }} onFocus={() => setF(true)} onBlur={() => setF(false)} type="search" placeholder="Cerca…" aria-label="Cerca nei contenuti" autoComplete="off"
+        style={{ border: "none", outline: "none", background: "none", font: "inherit", fontSize: 16, width: "100%", minWidth: 0, color: "var(--lab-ink)" }} />
     </div>
   );
 }
 
-function Header({ titolo, onHome, q, setQ }) {
+function Header({ titolo, onHome, q, setQ, anno, rotta, conStrumenti, conVideo }) {
   return (
     <header style={{ position: "sticky", top: 0, zIndex: 40, background: "color-mix(in srgb, var(--lab-bg) 80%, transparent)", backdropFilter: "saturate(160%) blur(13px)", WebkitBackdropFilter: "saturate(160%) blur(13px)", borderBottom: "1px solid var(--lab-line-soft)" }}>
       <div className="lab-bar" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px", display: "flex", alignItems: "center", gap: 13, height: 68 }}>
         <Logo titolo={titolo} onHome={onHome} />
         <Search value={q} onChange={setQ} />
-        <nav style={{ display: "flex", gap: 5 }}>
-          <NavLink href="#strumenti" className="lab-nav-opt">Strumenti</NavLink>
-          <NavLink href="#video" className="lab-nav-opt">Video</NavLink>
+        <nav aria-label="Sezioni" style={{ display: "flex", gap: 5 }}>
+          {conStrumenti && <NavLink href="#strumenti" className="lab-nav-opt" attivo={rotta === "strumenti"}>Strumenti</NavLink>}
+          {conVideo && <NavLink href="#video" className="lab-nav-opt" attivo={rotta === "video"}>Video</NavLink>}
           <NavLink href="esami/">Verifiche</NavLink>
         </nav>
       </div>
+      {/* continuità: il filo del colore dell'anno resta sotto la testata */}
+      {anno && <span aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, bottom: -1, height: 2, background: `var(--lab-anno-${anno})` }} />}
     </header>
   );
 }
@@ -217,8 +265,7 @@ function Rosone({ anni, onYear }) {
 }
 
 /* ---------- home ---------- */
-function Hero({ site, anni, onStart, onYear }) {
-  useMouse();
+function Hero({ site, anni, onStart, onYear, riprendi }) {
   const parole = String(site.sottotitolo || "Il laboratorio di Religione").trim().split(/\s+/);
   const ultima = parole.pop();
   return (
@@ -230,11 +277,19 @@ function Hero({ site, anni, onStart, onYear }) {
           {parole.length > 0 && <br />}
           <span style={{ display: "inline-block", paddingBottom: ".14em", paddingRight: ".06em", fontStyle: "italic", fontWeight: 500, animation: `labRise 987ms ${EASE} ${89 + parole.length * 89}ms both` }} className="lab-grad-text">{ultima}</span>
         </h1>
-        <p style={{ fontSize: "clamp(16px,1.6vw,20.5px)", color: "var(--lab-muted)", maxWidth: "38ch", margin: "0 0 34px", animation: `labRise 987ms ${EASE} 445ms both` }}>
+        <p style={{ fontSize: "clamp(16px,1.6vw,20.5px)", lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "38ch", margin: "0 0 34px", animation: `labRise 987ms ${EASE} 445ms both` }}>
           {site.intro}<span aria-hidden="true" style={{ color: "transparent" }}> A·M·D·G</span>
         </p>
-        <div style={{ display: "flex", gap: 13, flexWrap: "wrap", animation: `labRise 987ms ${EASE} 534ms both` }}>
-          <Button onClick={onStart}>Inizia il percorso →</Button>
+        <div style={{ animation: `labRise 987ms ${EASE} 534ms both` }}>
+          <div style={{ display: "flex", gap: 13, flexWrap: "wrap" }}>
+            {riprendi ? (
+              <>
+                <Button href={riprendi.href}>{riprendi.etichetta}</Button>
+                <Button variant="ghost" onClick={onStart}>Inizia il percorso →</Button>
+              </>
+            ) : <Button onClick={onStart}>Inizia il percorso →</Button>}
+          </div>
+          {riprendi && <div className="lab-riprendi-nota" style={{ marginTop: 8, fontSize: 13.5, color: "var(--lab-ink-soft)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{riprendi.didascalia}</div>}
         </div>
       </div>
       <div style={{ flex: "1 1 320px", minWidth: 0 }}><Rosone anni={anni} onYear={onYear} /></div>
@@ -242,37 +297,43 @@ function Hero({ site, anni, onStart, onYear }) {
   );
 }
 
+/* il finale della home: il "pensiero guida" (picco e fine) */
 function Quote({ testo }) {
   if (!testo) return null;
   return (
-    <Reveal style={{ margin: "89px 0 0", textAlign: "center", padding: "55px 21px" }}>
-      <div style={{ color: "var(--lab-oro)", fontSize: 13, marginBottom: 21, animation: "labBreath 3.2s ease-in-out infinite" }}>✦</div>
+    <Reveal style={{ margin: "89px 0 0", textAlign: "center", padding: "55px 21px 21px" }}>
+      <div aria-hidden="true" style={{ color: "var(--lab-oro)", fontSize: 13, marginBottom: 21, animation: "labBreath 3.2s ease-in-out 3" }}>✦</div>
       <blockquote style={{ margin: "0 auto", maxWidth: "22ch", fontFamily: "var(--lab-font-display)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(26px,3.6vw,42px)", lineHeight: 1.2, color: "var(--lab-ink)", textWrap: "balance" }}>«{testo}»</blockquote>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 13, marginTop: 34 }}>
         <span style={{ width: 55, height: 1, background: "var(--lab-oro)", opacity: 0.6 }} />
-        <span style={{ fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 800, color: "var(--lab-oro)" }}>Pensiero guida</span>
+        <span style={{ fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 800, color: "var(--lab-oro-text)" }}>Pensiero guida</span>
         <span style={{ width: 55, height: 1, background: "var(--lab-oro)", opacity: 0.6 }} />
       </div>
     </Reveal>
   );
 }
 
-function Tools() {
+/* Strumenti & Video: superfici neutre (il colore resta il significato dell'anno) */
+function Tools({ nS, nV }) {
   const t = [
-    { label: "Interattivi", title: "Strumenti", desc: "Quiz, bacheche e attività digitali per la classe.", icon: "⚙", bg: "linear-gradient(135deg,#7A5AC9,#4A338C)", href: "#strumenti" },
-    { label: "Guardare insieme", title: "Video", desc: "Clip e documentari selezionati per ogni tema.", icon: "▶", bg: "linear-gradient(135deg,#D24F86,#9E2D5E)", href: "#video" },
-  ];
+    nS > 0 && { label: "Interattivi", title: "Strumenti", desc: "Quiz, bacheche e attività digitali per la classe.", icon: "⚙", n: nS, href: "#strumenti" },
+    nV > 0 && { label: "Guardare insieme", title: "Video", desc: "Clip e documentari selezionati per ogni tema.", icon: "▶", n: nV, href: "#video" },
+  ].filter(Boolean);
+  if (!t.length) return null;
   return (
-    <div className="lab-tools" style={{ display: "grid", gridTemplateColumns: "minmax(0,1.618fr) minmax(0,1fr)", gap: 21 }}>
+    <div className="lab-tools" style={t.length === 2 ? { display: "grid", gridTemplateColumns: "minmax(0,1.618fr) minmax(0,1fr)", gap: 21 } : { display: "grid", gridTemplateColumns: "minmax(0,1fr)", maxWidth: 610 }}>
       {t.map((x, i) => (
-        <Reveal key={x.title} delay={i * 89}>
-          <a href={x.href} className="ds-calmo" style={{ display: "block", textDecoration: "none", color: "inherit" }}>
-            <Card onClick={() => {}} glow="rgba(255,255,255,.22)" style={{ background: x.bg, border: 0, color: "#fff", padding: 34, minHeight: 233 }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-end", height: "100%", minHeight: 165 }}>
-                <span aria-hidden="true" style={{ position: "absolute", right: -8, top: -21, fontSize: 110, opacity: 0.14, lineHeight: 1 }}>{x.icon}</span>
-                <span style={{ fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 800, opacity: 0.85 }}>{x.label}</span>
-                <h3 style={{ fontSize: 33, margin: "5px 0 8px", color: "#fff" }}>{x.title}</h3>
-                <p style={{ margin: 0, fontSize: 15, color: "rgba(255,255,255,.88)", maxWidth: "34ch" }}>{x.desc}</p>
+        <Reveal key={x.title} delay={ritardo(i)} griglia style={{ height: "100%" }}>
+          <a href={x.href} className="ds-calmo" style={{ display: "block", textDecoration: "none", color: "inherit", height: "100%" }}>
+            <Card onClick={() => {}} style={{ padding: 34, minHeight: 233, height: "100%" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 13, height: "100%", minHeight: 165 }}>
+                <span aria-hidden="true" style={{ width: 42, height: 42, borderRadius: "50%", background: "var(--lab-oro-soft)", color: "var(--lab-oro)", display: "grid", placeItems: "center", fontSize: 21 }}>{x.icon}</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: "auto" }}>
+                  <span style={{ fontFamily: "var(--lab-font-inscription)", fontSize: 12.5, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color: "var(--lab-oro-text)" }}>{x.label}</span>
+                  <h3 style={{ fontSize: 33, margin: 0 }}>{x.title}</h3>
+                  <p style={{ margin: 0, fontSize: 16, lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "34ch" }}>{x.desc}</p>
+                </div>
+                <span style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: ".13em", textTransform: "uppercase", color: "var(--lab-ink-soft)" }}>{plurale(x.n)}</span>
               </div>
             </Card>
           </a>
@@ -287,96 +348,199 @@ const BIO = "Insegno Religione Cattolica nella scuola secondaria. Qui raccolgo i
 function About({ site }) {
   return (
     <Reveal className="lab-about" style={{ margin: "89px 0 0", padding: "55px 34px", borderRadius: 34, border: "1px solid var(--lab-line)", background: "var(--lab-grad-soft)", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.618fr)", gap: 55, alignItems: "center" }}>
-      <div id="chisono">
+      <div id="chisono" style={{ minWidth: 0 }}>
         <Eyebrow>Chi sono</Eyebrow>
         <h2 style={{ fontSize: "clamp(26px,3.2vw,42px)", margin: 0 }}>{site.autore || "L'insegnante"}</h2>
       </div>
-      <div>
-        <p style={{ fontSize: 17, margin: "0 0 21px" }}>{site.bio || BIO}</p>
+      <div style={{ minWidth: 0 }}>
+        <p style={{ fontSize: 17, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: "0 0 21px" }}>{site.bio || BIO}</p>
         {site.email && <Button variant="ghost" size="sm" href={"mailto:" + site.email}>Scrivimi</Button>}
       </div>
     </Reveal>
   );
 }
 
+/* "Riprendi": l'ultima lezione/unità aperta, solo se esiste ancora nei dati */
+function calcolaRiprendi(D, ultima, set) {
+  if (!ultima) return null;
+  const n = ultima.anno, meta = annoMeta(n);
+  if (!meta) return null;
+  const u = udaForYear(D, n).find((x) => normT(x.titolo) === normT(ultima.uda));
+  if (!u) return null;
+  if (ultima.lezione) {
+    const lez = lezioniForUda(D, n, u.titolo);
+    const L = lez.find((x) => normT(x.titolo) === normT(ultima.lezione));
+    if (!L) return null;
+    const items = itemsInLezione(D, n, u.titolo, L.titolo);
+    if (items.length && contaAperti(items, set) === items.length) {
+      const v = vicini(lez, L.titolo);
+      return v.succ ? { href: hrefLezione(n, u.titolo, v.succ.titolo), etichetta: "Vai alla lezione successiva →", didascalia: `«${breve(v.succ.titolo, 34)}» · Anno ${meta.rom}` } : null;
+    }
+    return { href: hrefLezione(n, u.titolo, L.titolo), etichetta: "Riprendi la lezione →", didascalia: `«${breve(L.titolo, 34)}» · Anno ${meta.rom}` };
+  }
+  const items = itemsInUda(D, n, u.titolo);
+  if (items.length && contaAperti(items, set) === items.length) return null;
+  return { href: hrefUda(n, u.titolo), etichetta: "Riprendi l'unità →", didascalia: `«${breve(u.titolo, 34)}» · Anno ${meta.rom}` };
+}
+
 function HomePage({ D, onYear }) {
   const anniRef = useRef(null);
+  const orme = usePercorsoVisibile();
   const anni = ANNI.map((a) => ({ year: +a.n, nome: a.nome, desc: descAnno(D, a.n), count: itemsAnno(D, a.n).length }));
+  const nS = D.ITEMS.filter((it) => it.kind === "strumento").length;
+  const nV = D.ITEMS.filter((it) => it.kind === "video").length;
+  const riprendi = useMemo(() => calcolaRiprendi(D, orme.ultima, orme.set), [D, orme]);
   const vaiAgliAnni = () => {
     const el = anniRef.current; if (!el) return;
-    window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 68, behavior: movimentoRidotto() ? "auto" : "smooth" });
+    const hdr = document.querySelector(".lab-app header");
+    const alto = hdr ? hdr.getBoundingClientRect().height : 68;
+    window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - alto, behavior: movimentoRidotto() ? "auto" : "smooth" });
   };
   return (
     <>
-      <Hero site={D.SITE} anni={anni} onStart={vaiAgliAnni} onYear={onYear} />
+      <Hero site={D.SITE} anni={anni} onStart={vaiAgliAnni} onYear={onYear} riprendi={riprendi} />
       <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
         <div ref={anniRef} />
         <SectionHead eyebrow="Percorso" title="Gli anni di corso" sub="Scegli l'anno per trovare slide, documenti, video e strumenti." />
         <div className="lab-anni" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(199px,1fr))", gap: 21 }}>
           {anni.map((a, i) => (
-            <Reveal key={a.year} delay={i * 89} className="ds-calmo">
+            <Reveal key={a.year} delay={ritardo(i)} griglia className="ds-calmo">
               <YearCard year={a.year} name={a.nome} description={a.desc} count={a.count} href={"#anno/" + a.year} />
             </Reveal>
           ))}
         </div>
-        <Quote testo={D.SITE.pensiero} />
-        <SectionHead eyebrow="Per fare lezione" title="Strumenti & Video" sub="Risorse interattive e clip per animare le lezioni." />
-        <Tools />
+        {nS + nV > 0 && (
+          <>
+            <SectionHead eyebrow="Per fare lezione" title={nS && nV ? "Strumenti & Video" : nS ? "Strumenti" : "Video"} sub="Risorse interattive e clip per animare le lezioni." />
+            <Tools nS={nS} nV={nV} />
+          </>
+        )}
         <About site={D.SITE} />
+        <Quote testo={D.SITE.pensiero} />
       </div>
     </>
   );
 }
 
 /* ---------- pagine interne ---------- */
-function Briciole({ voci }) {
+/* briciole: il filo da sinistra a destra; sul telefono un solo "‹ su" grande */
+function Briciole({ voci, su }) {
+  const home = (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); };
   return (
-    <nav aria-label="Percorso" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", fontSize: 14, color: "var(--lab-muted)", margin: "34px 0 0" }}>
-      <a href="#" style={{ fontWeight: 600 }} onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); }}>← Home</a>
-      {voci.map((v, i) => (
-        <React.Fragment key={i}>
-          <span style={{ opacity: 0.4 }}>›</span>
-          {v.href ? <a href={v.href} style={{ fontWeight: 600 }}>{v.testo}</a> : <span>{v.testo}</span>}
-        </React.Fragment>
-      ))}
+    <nav aria-label="Percorso" className="lab-briciole" style={{ fontSize: 14, color: "var(--lab-muted)", margin: "34px 0 0" }}>
+      <div className="lab-briciole-full" style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        <a href="#" style={{ fontWeight: 600 }} onClick={home}>← Home</a>
+        {voci.map((v, i) => (
+          <React.Fragment key={i}>
+            <span aria-hidden="true" style={{ opacity: 0.4 }}>›</span>
+            {v.href ? <a href={v.href} style={{ fontWeight: 600 }}>{v.testo}</a> : <span aria-current="page">{v.testo}</span>}
+          </React.Fragment>
+        ))}
+      </div>
+      {su && (
+        <a className="lab-su" href={su.href || "#"} onClick={su.href ? undefined : home}>
+          <span aria-hidden="true">‹</span> <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{su.testo}</span>
+        </a>
+      )}
     </nav>
   );
 }
 
-/* testata colorata della pagina (numero romano con parallasse + mascotte) */
-function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte }) {
+/* schermo stretto (telefono): alcune misure cambiano davvero, non solo in scala */
+const STRETTO = "(max-width: 720px)";
+const iscriviStretto = (f) => { const m = matchMedia(STRETTO); m.addEventListener ? m.addEventListener("change", f) : m.addListener(f); return () => (m.removeEventListener ? m.removeEventListener("change", f) : m.removeListener(f)); };
+const useStretto = () => useSyncExternalStore(iscriviStretto, () => matchMedia(STRETTO).matches);
+
+/* la mascotte della testata parla al massimo una volta per pagina e per sessione */
+function giaSalutato(chiave) {
+  try {
+    const l = JSON.parse(sessionStorage.getItem("saluti_lab") || "[]");
+    if (l.includes(chiave)) return true;
+    sessionStorage.setItem("saluti_lab", JSON.stringify([...l, chiave].slice(-55)));
+    return false;
+  } catch (e) { return false; }
+}
+function faiParlare(ref, testo) {
+  const m = ref && ref.current && ref.current.querySelector("lab-mascotte");
+  if (m && typeof m.bubble === "function" && testo) m.bubble(testo);
+}
+
+/* testata colorata della pagina: il "picco" visivo (una sola figura: la mascotte) */
+function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, neutro, saluto, mascotteRef }) {
   const [p, setP] = useState({ x: 0, y: 0 });
-  const segui = conMouse();
+  const segui = conMouse() && !movimentoRidotto();
+  const lim = useLim();
+  const proprio = useRef(null);
+  const mRef = mascotteRef || proprio;
+  useEffect(() => {
+    if (!mascotte || !saluto || lim) return;
+    if (giaSalutato(location.hash)) return;
+    const t = setTimeout(() => faiParlare(mRef, saluto), 1597);
+    return () => clearTimeout(t);
+  }, []); // solo all'arrivo
+  const sfondo = neutro
+    ? { background: "linear-gradient(130deg, var(--lab-surface-2), var(--lab-bg-2))", border: "1px solid var(--lab-line)", color: "var(--lab-ink)" }
+    : { background: `linear-gradient(130deg, color-mix(in srgb, ${color} 55%, #14101a), color-mix(in srgb, ${color} 30%, #14101a))`, boxShadow: `inset 8px 0 0 ${color}`, color: "#fff" };
+  const testo = neutro ? "var(--lab-ink-soft)" : "#fff";
+  const conM = !!mascotte;
+  const stretto = useStretto();
   return (
     <div className="lab-pagina-hero"
       onMouseMove={segui ? (e) => { const r = e.currentTarget.getBoundingClientRect(); setP({ x: (e.clientX - r.left) / r.width - 0.5, y: (e.clientY - r.top) / r.height - 0.5 }); } : undefined}
       onMouseLeave={segui ? () => setP({ x: 0, y: 0 }) : undefined}
-      style={{ position: "relative", padding: "55px 34px", borderRadius: 34, margin: "21px 0 34px", overflow: "hidden", color: "#fff", background: `linear-gradient(130deg, ${color}, color-mix(in srgb, ${color} 50%, #14101a))`, animation: `labRise 987ms ${EASE} both` }}>
-      <div aria-hidden="true" className="lab-glifo" style={{ position: "absolute", right: 21, bottom: -34, fontSize: 199, opacity: 0.14, fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
-      {mascotte && <div className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 55, zIndex: 2 }}><YearMascot year={mascotte} size={144} /></div>}
-      <Eyebrow color="rgba(255,255,255,.85)">{eyebrow}</Eyebrow>
-      <h2 style={{ fontSize: "clamp(33px,5vw,55px)", margin: "0 0 8px", color: "#fff", paddingRight: mascotte ? 165 : 0 }}>{titolo}</h2>
-      {desc && <p style={{ margin: 0, maxWidth: "46ch", color: "rgba(255,255,255,.9)" }}>{desc}</p>}
+      style={{ position: "relative", padding: "55px 34px", borderRadius: 34, margin: "21px 0 55px", animation: `labRise 987ms ${EASE} both`, ...sfondo }}>
+      {/* solo il grande numero romano resta ritagliato: il fumetto della mascotte deve poter uscire */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, borderRadius: "inherit", overflow: "hidden", pointerEvents: "none" }}>
+        <div className="lab-glifo" style={{ position: "absolute", right: 21, bottom: -34, fontSize: 199, opacity: 0.14, color: neutro ? "var(--lab-oro)" : "#fff", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
+      </div>
+      {conM && <div ref={mRef} className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 21, zIndex: 2 }}><YearMascot year={mascotte} size={stretto ? 89 : 144} /></div>}
+      <div className="lab-pagina-testo" style={{ position: "relative", paddingRight: conM ? 165 : 0, minWidth: 0 }}>
+        <div className="lab-pagina-eyebrow" style={{ display: "flex", alignItems: "flex-start", gap: 13, fontFamily: "var(--lab-font-inscription)", fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color: neutro ? "var(--lab-oro-text)" : "#fff", marginBottom: 13, animation: `labSu 610ms ${EASE} both` }}>
+          <span style={{ width: 34, height: 1, marginTop: ".6em", background: "currentColor", opacity: 0.7, flexShrink: 0 }} />
+          <span style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", minWidth: 0 }}>{eyebrow}</span>
+        </div>
+        <h1 style={{ fontSize: compatto ? "clamp(26px,4vw,42px)" : "clamp(33px,5vw,55px)", margin: "0 0 8px", color: neutro ? "var(--lab-ink)" : "#fff", textWrap: "balance", overflowWrap: "anywhere", animation: `labSu 610ms ${EASE} 89ms both` }}>{titolo}</h1>
+        {desc && <p style={{ margin: 0, fontSize: 17, lineHeight: 1.5, maxWidth: "46ch", color: testo, textWrap: "pretty", animation: `labSu 610ms ${EASE} 178ms both` }}>{desc}</p>}
+      </div>
     </div>
   );
 }
 
-/* cartella (UDA o lezione) */
-function Cartella({ href, color, titolo, desc, count, icona, i }) {
+/* icone (stile Lucide, come nel design system) */
+const IconaCartella = () => <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" /></svg>;
+const IconaLibro = () => <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>;
+
+/* il tag d'oro del "prossimo passo" (al massimo uno per vista) */
+const Tag = ({ children }) => <span className="lab-tag">{children}</span>;
+
+/* cartella (UDA o lezione): l'anello d'oro si chiude man mano che apri i materiali */
+function Cartella({ href, color, titolo, desc, count, aperti = 0, tag, icona, i }) {
+  const a = count > 0 ? Math.min(1, aperti / count) : 0;
+  const vuota = count === 0;
+  const tinta = `color-mix(in srgb, ${color} var(--lab-tinta-testo), var(--lab-ink))`;
   return (
-    <Reveal delay={i * 89} className="ds-calmo">
-      <a href={href} style={{ display: "block", textDecoration: "none", color: "inherit", height: "100%" }}>
+    <Reveal delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
+      <a href={href} className="lab-fig" style={{ display: "block", textDecoration: "none", color: "inherit", height: "100%" }}>
         <Card onClick={() => {}} glow={`color-mix(in srgb, ${color} 22%, transparent)`} style={{ padding: "21px 21px 21px 34px", height: "100%" }}>
-          <span aria-hidden="true" style={{ position: "absolute", left: -34, top: -21, bottom: -21, width: 5, background: color }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 5, height: "100%" }}>
-            <span style={{ width: 42, height: 42, borderRadius: 13, display: "grid", placeItems: "center", color, background: `color-mix(in srgb, ${color} 16%, transparent)`, marginBottom: 8 }}>
-              {icona === "lezione"
-                ? <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
-                : <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" /></svg>}
+          <span aria-hidden="true" style={{ position: "absolute", left: -34, top: -21, bottom: -21, width: 5, background: vuota ? `repeating-linear-gradient(to bottom, ${color} 0 5px, transparent 5px 8px)` : color, opacity: vuota ? 0.6 : 1 }} />
+          {tag && <span style={{ position: "absolute", top: 0, right: 0 }}><Tag>{tag}</Tag></span>}
+          <div style={{ display: "flex", flexDirection: "column", height: "100%", minWidth: 0 }}>
+            <span style={{ position: "relative", width: 42, height: 42, borderRadius: "50%", display: "grid", placeItems: "center", color, background: `color-mix(in srgb, ${color} 16%, transparent)`, marginBottom: 13, flexShrink: 0 }}>
+              {icona === "lezione" ? <IconaLibro /> : <IconaCartella />}
+              {a > 0 && <span className="lab-anello" aria-hidden="true" style={{ "--lz-a": a }} />}
             </span>
-            <h3 style={{ fontSize: 24, margin: 0 }}>{titolo}</h3>
-            {desc && <p style={{ fontSize: 14, color: "var(--lab-muted)", margin: 0, lineHeight: 1.5 }}>{desc}</p>}
-            <span style={{ marginTop: "auto", paddingTop: 13, fontSize: 11.5, fontWeight: 800, letterSpacing: ".13em", textTransform: "uppercase", color }}>{plurale(count)}</span>
+            <div style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
+              <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere", paddingRight: tag ? 8 : 0 }}>{titolo}</h3>
+              {desc && <p className="lab-3righe" style={{ fontSize: 15, color: "var(--lab-ink-soft)", margin: 0, lineHeight: 1.5 }}>{desc}</p>}
+            </div>
+            <span style={{ marginTop: "auto", paddingTop: 21, fontSize: 11.5, fontWeight: 800, letterSpacing: ".13em", textTransform: "uppercase", color: vuota ? "var(--lab-muted)" : tinta }}>
+              {vuota ? "In preparazione" : plurale(count)}
+              {!vuota && aperti > 0 && (
+                a >= 1
+                  ? <span className="lab-mio" style={{ color: "var(--lab-oro-text)" }}>{count === 1 ? " · aperto ✓" : " · tutti aperti ✓"}</span>
+                  : <span className="lab-mio" style={{ color: "var(--lab-ink-soft)" }}>{" · " + aperti + (aperti === 1 ? " aperto" : " aperti")}</span>
+              )}
+            </span>
           </div>
         </Card>
       </a>
@@ -384,33 +548,48 @@ function Cartella({ href, color, titolo, desc, count, icona, i }) {
   );
 }
 
-function Griglia({ children }) {
-  return <div className="lab-griglia" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(288px,1fr))", gap: 21 }}>{children}</div>;
+/* griglia che si adatta a 1–2 elementi (una scheda sola non resta "sperduta") */
+function Griglia({ n, children }) {
+  const cols = n === 1 ? "minmax(0,1fr)" : n === 2 ? "repeat(auto-fit,minmax(288px,1fr))" : "repeat(auto-fill,minmax(288px,1fr))";
+  return <div className="lab-griglia" style={{ display: "grid", gridTemplateColumns: cols, gap: 21, maxWidth: n === 1 ? 610 : undefined }}>{children}</div>;
 }
 
-function Vuoto() {
+/* mai una pagina vuota: chi arriva trova un volto amico e una strada */
+function Vuoto({ anno, titolo, testo, indietro, children }) {
   return (
-    <div style={{ textAlign: "center", padding: "55px 21px", color: "var(--lab-muted)", border: "1.5px dashed var(--lab-line)", borderRadius: 21, background: "var(--lab-surface)" }}>
-      <b style={{ fontFamily: "var(--lab-font-display)", color: "var(--lab-ink)", display: "block", fontSize: 24, marginBottom: 8, fontWeight: 600 }}>Ancora nessun contenuto</b>
-      Apri l'<a href="admin/">area gestione</a> per aggiungerne.
+    <div className="lab-vuoto" style={{ textAlign: "center", padding: "55px 21px", border: "1.5px dashed var(--lab-line)", borderRadius: 21, background: "var(--lab-surface)", display: "flex", flexDirection: "column", alignItems: "center", gap: 21 }}>
+      {anno ? <YearMascot year={anno} size={89} /> : <span aria-hidden="true" style={{ fontSize: 34, lineHeight: 1, color: "var(--lab-oro)" }}>✦</span>}
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+        <b style={{ fontFamily: "var(--lab-font-display)", color: "var(--lab-ink)", fontSize: 26, fontWeight: 600, lineHeight: 1.2, textWrap: "balance" }}>{titolo}</b>
+        {testo && <p style={{ margin: 0, fontSize: 16, lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "38ch" }}>{testo}</p>}
+      </div>
+      {children}
+      {indietro && <Button variant="ghost" size="sm" href={indietro.href} onClick={indietro.onClick}>{indietro.testo}</Button>}
     </div>
   );
 }
 
+const ETICHETTE_RIAPRI = { "Apri": "Riapri", "Apri ↗": "Riapri ↗", "Scarica": "Scarica di nuovo", "Guarda ▶": "Riguarda ▶" };
+
 /* scheda di un contenuto (come la "MatCard" del modello) */
-function MatCard({ item, color, apri }) {
+function MatCard({ item, color, apri, primario, tag, mascotte, contesto, aperto }) {
   const [video, setVideo] = useState(false);
+  const [appena, setAppena] = useState(false);
   const act = azione(item);
   const anno = annoMeta(item.anno) ? +item.anno : 0;
   const yt = item.kind === "video" ? ytId(item.youtube) : "";
   const immagine = item.immagine ? resolvePath(item.immagine) : yt ? `https://img.youtube.com/vi/${yt}/hqdefault.jpg` : "";
   const glifo = item.kind === "video" ? "▶" : anno ? ROMAN[anno] : "✦";
+  const attivo = act.tipo !== "nessuna";
 
   const esegui = () => {
+    if (!attivo) return;
+    if (!aperto) { segnaAperto(item); setAppena(true); }
     if (act.tipo === "video") setVideo(true);
-    else if (act.tipo === "visore") apri(act.href, item.titolo);
+    else if (act.tipo === "visore") apri(act.href, item.titolo, color);
     else if (act.tipo === "esterno") window.open(act.href, "_blank", "noopener");
   };
+  const testoBottone = aperto && ETICHETTE_RIAPRI[act.testo] ? ETICHETTE_RIAPRI[act.testo] : act.testo;
 
   return (
     <Card style={{ padding: 0, height: "100%" }} glow={`color-mix(in srgb, ${color} 22%, transparent)`}>
@@ -420,22 +599,29 @@ function MatCard({ item, color, apri }) {
           <iframe src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&modestbranding=1`} title={item.titolo || "Video"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowFullScreen style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }} />
         </div>
       ) : (
-        <div onClick={yt ? () => setVideo(true) : undefined}
-          style={{ position: "relative", height: 144, background: immagine ? `center/cover no-repeat url("${immagine.replace(/"/g, "%22")}")` : `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 45%, #14101a))`, display: "grid", placeItems: "center", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, fontSize: 46, color: "rgba(255,255,255,.85)", cursor: yt ? "pointer" : "default" }}>
+        <div onClick={attivo ? esegui : undefined} aria-hidden="true"
+          style={{ position: "relative", height: 144, background: immagine ? `center/cover no-repeat url("${immagine.replace(/"/g, "%22")}")` : `linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 45%, #14101a))`, display: "grid", placeItems: "center", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, fontSize: 46, color: "rgba(255,255,255,.85)", cursor: attivo ? "pointer" : "default" }}>
           {!immagine && glifo}
-          {yt && <span aria-hidden="true" style={{ width: 55, height: 55, borderRadius: "50%", background: "rgba(255,255,255,.92)", boxShadow: "0 8px 21px rgba(0,0,0,.3)", display: "grid", placeItems: "center", color: "#14131F", fontSize: 21, paddingLeft: 4 }}>▶</span>}
+          {yt && <span style={{ width: 55, height: 55, borderRadius: "50%", background: "rgba(255,255,255,.92)", boxShadow: "0 8px 21px rgba(0,0,0,.3)", display: "grid", placeItems: "center", color: "#14131F", fontSize: 21, paddingLeft: 4 }}>▶</span>}
         </div>
       )}
-      {anno && !video ? <span style={{ position: "absolute", right: 13, top: 119, zIndex: 2 }}><YearMascot year={anno} size={34} aureola={false} /></span> : null}
-      {item.in_evidenza && <span style={{ position: "absolute", top: 13, left: 13, background: "var(--lab-ambra)", color: "#3a2a06", fontSize: 10.5, fontWeight: 800, letterSpacing: ".08em", textTransform: "uppercase", padding: "5px 8px", borderRadius: 999, zIndex: 2 }}>In evidenza</span>}
-      <div style={{ padding: 21, display: "flex", flexDirection: "column", gap: 13, flex: 1 }}>
-        <div><Badge variant={varianteBadge(item)}>{item.tipo || "Materiale"}</Badge></div>
-        <h3 style={{ fontSize: 24, margin: 0 }}>{item.titolo || "Senza titolo"}</h3>
-        {item.descrizione && <p style={{ fontSize: 14, color: "var(--lab-muted)", margin: 0 }}>{item.descrizione}</p>}
-        <div style={{ marginTop: "auto" }}>
-          {act.tipo === "nessuna"
+      {mascotte && anno && !video ? <span style={{ position: "absolute", right: 13, top: 127, zIndex: 2 }}><YearMascot year={anno} size={34} halo={false} still /></span> : null}
+      {item.in_evidenza && <span className="lab-evidenza">In evidenza</span>}
+      {aperto && !video && <span className={"lab-sigillo" + (appena ? " lab-sigillo--nuovo" : "")} role="img" aria-label="già aperto"><span aria-hidden="true">✓</span></span>}
+      <div style={{ padding: 21, display: "flex", flexDirection: "column", gap: 13, flex: 1, minWidth: 0 }}>
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <Badge variant={varianteBadge(item)}>{item.tipo || "Materiale"}</Badge>
+          {tag && <Tag>{tag}</Tag>}
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
+          {contesto && <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--lab-muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contesto}</span>}
+          <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere" }}>{item.titolo || "Senza titolo"}</h3>
+          {item.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{item.descrizione}</p>}
+        </div>
+        <div style={{ marginTop: "auto", paddingTop: 8 }}>
+          {!attivo
             ? <Button size="sm" variant="ghost" disabled>{act.testo}</Button>
-            : <Button size="sm" variant={item.kind === "video" ? "ghost" : "primary"} onClick={esegui}>{act.testo}</Button>}
+            : <Button size="sm" variant={primario ? "primary" : "ghost"} onClick={esegui}>{testoBottone}</Button>}
         </div>
       </div>
       </div>
@@ -443,53 +629,137 @@ function MatCard({ item, color, apri }) {
   );
 }
 
-/* contenuti con filtro per tipo */
-function Contenuti({ items, color, apri }) {
+/* contesto di un contenuto: "Anno V › Scienza e fede › Lemaitre e Einstein" */
+const contestoDi = (m) => [annoMeta(m.anno) ? "Anno " + annoMeta(m.anno).rom : "", m.uda, m.lezione].map((x) => String(x || "").trim()).filter(Boolean).join(" › ");
+
+/* contenuti con filtro per tipo.
+   percorso: il primo materiale non ancora aperto è il "prossimo passo"
+   (l'unico pulsante pieno, con il tag d'oro); altrimenti l'unico pieno è
+   il primo "in evidenza". Niente è bloccato: è solo un invito. */
+function Contenuti({ items, color, apri, percorso: inPercorso = false, mascotte = false, contesto = false }) {
   const [chip, setChip] = useState("Tutti");
-  const tipi = useMemo(() => [...new Set(items.map((m) => m.tipo || "Materiale"))], [items]);
-  const mostrati = chip === "Tutti" ? items : items.filter((m) => (m.tipo || "Materiale") === chip);
-  if (!items.length) return <Vuoto />;
+  const orme = usePercorsoVisibile();
+  const lista = useMemo(() => (inPercorso ? ordinaPercorso(items) : items), [items, inPercorso]);
+  const tipi = useMemo(() => [...new Set(lista.map((m) => m.tipo || "Materiale"))], [lista]);
+  const aperto = (m) => orme.set.has(chiaveItem(m));
+  let p, tag = null;
+  if (inPercorso) {
+    p = lista.findIndex((m) => !aperto(m) && azione(m).tipo !== "nessuna");
+    if (p >= 0) tag = lista.some(aperto) ? "Prossimo" : "Inizia da qui";
+  } else p = lista.findIndex((m) => m.in_evidenza && azione(m).tipo !== "nessuna");
+  const conChip = lista.length >= 5 && tipi.length > 1;
+  const mostrati = conChip && chip !== "Tutti" ? lista.filter((m) => (m.tipo || "Materiale") === chip) : lista;
+  const col = (m) => (typeof color === "function" ? color(m) : color);
+  if (!items.length) return null;
   return (
     <>
-      {tipi.length > 1 && (
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 34 }}>
+      {conChip && (
+        <div role="group" aria-label="Filtra per tipo" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 21 }}>
           {["Tutti", ...tipi].map((t) => <Chip key={t} active={chip === t} onClick={() => setChip(t)}>{t}</Chip>)}
         </div>
       )}
-      <Griglia>
-        {mostrati.map((m, i) => (
-          <Reveal key={(m.titolo || "") + i + chip} delay={Math.min(i, 8) * 89} className="ds-calmo" style={{ height: "100%" }}>
-            <MatCard item={m} color={color} apri={apri} />
-          </Reveal>
-        ))}
+      <Griglia n={mostrati.length}>
+        {mostrati.map((m, i) => {
+          const idx = lista.indexOf(m);
+          return (
+            <Reveal key={chiaveItem(m)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
+              <div className="lab-fig" style={{ height: "100%" }}>
+                <MatCard item={m} color={col(m)} apri={apri} aperto={aperto(m)} primario={idx === p} tag={idx === p ? tag : null} mascotte={mascotte} contesto={contesto ? contestoDi(m) : ""} />
+              </div>
+            </Reveal>
+          );
+        })}
       </Griglia>
     </>
   );
 }
 
+/* "Per continuare": ogni pagina di unità e di lezione finisce con una strada */
+function Continua({ tiles, chiama, color, stretto }) {
+  if (!tiles.length) return null;
+  const due = tiles.length === 2;
+  return (
+    <nav aria-label="Per continuare" className="lab-continua" style={{ display: "grid", gridTemplateColumns: due ? "minmax(0,1.618fr) minmax(0,1fr)" : "minmax(0,1fr)", maxWidth: due ? undefined : 610, gap: 21, marginTop: stretto ? 21 : 55 }}>
+      {tiles.map((t, i) => (
+        <a key={i} href={t.href} onClick={t.onClick} className={"lab-avanti" + (t.main ? " lab-avanti--main" : "") + (t.main && chiama ? " lab-avanti--chiama" : "")} style={{ "--c": color }}>
+          <span className="lab-avanti-eb">{t.eyebrow}</span>
+          <b>{t.titolo}</b>
+          {t.meta && <span className="lab-avanti-meta">{t.meta}</span>}
+          <span aria-hidden="true" className="lab-avanti-freccia">{t.indietro ? "↩" : "→"}</span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+const Fine = ({ children }) => (
+  <p className="lab-fine"><span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>✦ </span>{children}</p>
+);
+
+/* quando l'ultimo materiale viene aperto in questa visita, la strada avanti
+   "chiama" due volte (picco e fine); mai di nuovo al ricaricare */
+function useChiama(aperti, tot) {
+  const prima = useRef(aperti);
+  const [chiama, setChiama] = useState(false);
+  useEffect(() => {
+    if (tot > 0 && prima.current < tot && aperti >= tot) setChiama(true);
+    prima.current = aperti;
+  }, [aperti, tot]);
+  return chiama;
+}
+
+/* la mascotte commenta un progresso appena fatto (una frase, senza giudizi) */
+function useVoceProgresso(mRef, aperti, frase) {
+  const prima = useRef(aperti);
+  useEffect(() => {
+    if (aperti > prima.current && !leggiLim()) {
+      prima.current = aperti;
+      let f = null;
+      const t = setTimeout(() => {
+        if (document.body.classList.contains("viewing")) {
+          f = () => { removeEventListener("lab:visore-chiuso", f); f = null; setTimeout(() => faiParlare(mRef, frase()), 610); };
+          addEventListener("lab:visore-chiuso", f);
+        } else faiParlare(mRef, frase());
+      }, 377);
+      return () => { clearTimeout(t); if (f) removeEventListener("lab:visore-chiuso", f); };
+    }
+    prima.current = aperti;
+  }, [aperti]);
+}
+
 function AnnoPage({ D, n, apri }) {
   const meta = annoMeta(n);
   const color = colore(n);
+  const orme = usePercorsoVisibile();
   const udas = udaForYear(D, n);
   const loose = itemsAnno(D, n).filter((it) => !normT(it.uda));
+  const conteggi = udas.map((u) => { const it = itemsInUda(D, n, u.titolo); return { n: it.length, a: contaAperti(it, orme.set) }; });
+  const bersaglio = conteggi.findIndex((c) => c.n > 0 && c.a < c.n);
+  const nome = (window.LabMascotte && LabMascotte.INFO && LabMascotte.INFO[n] && LabMascotte.INFO[n].nome) || "";
+  const vuoto = !udas.length && !loose.length;
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
-      <Briciole voci={[{ testo: "Anno " + meta.rom }]} />
-      <PaginaHero color={color} glifo={meta.rom} eyebrow={"Anno " + meta.rom} titolo={meta.nome} desc={descAnno(D, n)} mascotte={+n} />
+      <Briciole voci={[{ testo: "Anno " + meta.rom }]} su={{ testo: "Home" }} />
+      <PaginaHero color={color} glifo={meta.rom} eyebrow={udas.length ? `Anno ${meta.rom} · ${udas.length} unità` : "Anno " + meta.rom} titolo={meta.nome} desc={descAnno(D, n)} mascotte={+n}
+        saluto={nome ? `Sono ${nome}: ti accompagno nel ${meta.nome.toLowerCase()}.` : ""} />
       {udas.length > 0 && (
         <>
-          <SectionHead small eyebrow="Percorsi" title="Unità di apprendimento" sub="Le cartelle con i materiali di ogni unità." />
-          <Griglia>
-            {udas.map((u, i) => <Cartella key={u.titolo} i={i} href={`#anno/${n}/uda/${slug(u.titolo)}`} color={color} titolo={u.titolo} desc={u.descrizione} count={itemsInUda(D, n, u.titolo).length} />)}
+          <SectionHead small eyebrow="Percorsi" title="Unità di apprendimento" />
+          <Griglia n={udas.length}>
+            {udas.map((u, i) => (
+              <Cartella key={u.titolo} i={i} href={hrefUda(n, u.titolo)} color={color} titolo={u.titolo} desc={u.descrizione}
+                count={conteggi[i].n} aperti={conteggi[i].a} tag={i === bersaglio ? (conteggi[i].a ? "Riprendi da qui" : "Inizia da qui") : null} />
+            ))}
           </Griglia>
         </>
       )}
-      {(loose.length > 0 || !udas.length) && (
+      {loose.length > 0 && (
         <>
-          {udas.length > 0 && <SectionHead small eyebrow="Fuori dalle cartelle" title="Altri contenuti" />}
-          <Contenuti items={loose} color={color} apri={apri} />
+          {udas.length > 0 && <SectionHead small eyebrow="Fuori dalle unità" title="Altri contenuti" />}
+          <Contenuti items={loose} color={color} apri={apri} percorso={udas.length === 0} />
         </>
       )}
+      {vuoto && <Vuoto anno={+n} titolo="Quest'anno è in preparazione" testo="I materiali arriveranno presto." indietro={{ testo: "← Torna alla home", onClick: (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); } }} />}
     </div>
   );
 }
@@ -497,27 +767,61 @@ function AnnoPage({ D, n, apri }) {
 function UdaPage({ D, n, uda, apri }) {
   const meta = annoMeta(n);
   const color = colore(n);
+  const orme = usePercorsoVisibile();
+  const mRef = useRef(null);
   const u = trovaUda(D, n, uda);
   const lez = lezioniForUda(D, n, uda);
   const loose = itemsInUda(D, n, uda).filter((it) => !normT(it.lezione));
+  const tutti = itemsInUda(D, n, uda);
+  const aperti = contaAperti(tutti, orme.set);
+  const conteggi = lez.map((l) => { const it = itemsInLezione(D, n, uda, l.titolo); return { n: it.length, a: contaAperti(it, orme.set) }; });
+  const bersaglio = conteggi.findIndex((c) => c.n > 0 && c.a < c.n);
+  const completa = tutti.length > 0 && aperti === tutti.length;
+  const chiama = useChiama(aperti, tutti.length);
+
+  /* memoria della "ultima tappa" solo per le unità senza lezioni */
+  useEffect(() => { if (!lez.length && tutti.length) segnaUltima({ hash: hrefUda(n, u.titolo), anno: n, uda: u.titolo, titolo: u.titolo }); }, [n, uda]);
+
+  let saluto;
+  if (lez.length) {
+    const t = bersaglio >= 0 ? lez[bersaglio] : null;
+    if (completa) saluto = "Hai aperto tutti i materiali di questa unità.";
+    else if (t && conteggi.some((c) => c.a > 0)) saluto = `Eccoti! Riprendi da «${breve(t.titolo, 28)}».`;
+    else saluto = lez.length === 1 ? "Una lezione ti aspetta: entriamo?" : `${lez.length} lezioni ti aspettano: si parte dalla prima.`;
+  } else if (tutti.length) saluto = completa ? "Hai aperto tutti i materiali di questa unità." : "Si comincia da qui.";
+  useVoceProgresso(mRef, aperti, () => (aperti >= tutti.length ? "Fatto! Tutti i materiali sono aperti." : `Ne ${tutti.length - aperti === 1 ? "manca uno: ci siamo quasi." : "mancano " + (tutti.length - aperti) + "."}`));
+
+  const udas = udaForYear(D, n);
+  const v = vicini(udas, u.titolo);
+  const tornaAnno = { eyebrow: "Torna all'anno", titolo: meta.nome, meta: `${udas.length} unità`, href: "#anno/" + n, indietro: true };
+  const tiles = v.succ
+    ? [{ main: true, eyebrow: "Unità successiva", titolo: v.succ.titolo, meta: plurale(itemsInUda(D, n, v.succ.titolo).length), href: hrefUda(n, v.succ.titolo) }, tornaAnno]
+    : [{ ...tornaAnno, main: true }];
+
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
-      <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo }]} />
-      <PaginaHero color={color} glifo={meta.rom} eyebrow={meta.nome + " · Unità di apprendimento"} titolo={u.titolo} desc={u.descrizione} mascotte={+n} />
+      <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo }]} su={{ testo: "Anno " + meta.rom, href: "#anno/" + n }} />
+      <PaginaHero color={color} glifo={meta.rom} eyebrow={meta.nome + " · Unità di apprendimento"} titolo={u.titolo} desc={u.descrizione} mascotte={+n} compatto saluto={saluto} mascotteRef={mRef} />
       {lez.length > 0 && (
         <>
-          <SectionHead small eyebrow="Percorso" title="Lezioni" sub="Le sottocartelle con i materiali di ogni lezione." />
-          <Griglia>
-            {lez.map((l, i) => <Cartella key={l.titolo} i={i} icona="lezione" href={`#anno/${n}/uda/${slug(uda)}/lezione/${slug(l.titolo)}`} color={color} titolo={l.titolo} desc={l.descrizione} count={itemsInLezione(D, n, uda, l.titolo).length} />)}
+          <SectionHead small eyebrow="Percorso" title="Lezioni" />
+          <Griglia n={lez.length}>
+            {lez.map((l, i) => (
+              <Cartella key={l.titolo} i={i} icona="lezione" href={hrefLezione(n, uda, l.titolo)} color={color} titolo={l.titolo} desc={l.descrizione}
+                count={conteggi[i].n} aperti={conteggi[i].a} tag={i === bersaglio ? (conteggi[i].a ? "Riprendi da qui" : "Inizia da qui") : null} />
+            ))}
           </Griglia>
         </>
       )}
-      {(loose.length > 0 || !lez.length) && (
+      {loose.length > 0 && (
         <>
           {lez.length > 0 && <SectionHead small eyebrow="Fuori dalle lezioni" title="Altri contenuti" />}
-          <Contenuti items={loose} color={color} apri={apri} />
+          <Contenuti items={loose} color={color} apri={apri} percorso={lez.length === 0} />
         </>
       )}
+      {!lez.length && !loose.length && <Vuoto anno={+n} titolo="Questa unità è in preparazione" testo="Le lezioni arriveranno presto. Intanto puoi tornare all'anno." indietro={{ testo: "← Torna al " + meta.nome.toLowerCase(), href: "#anno/" + n }} />}
+      {completa && <Fine>Unità completa: tutti i materiali aperti.</Fine>}
+      <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa} />
     </div>
   );
 }
@@ -525,72 +829,162 @@ function UdaPage({ D, n, uda, apri }) {
 function LezionePage({ D, n, uda, lezione, apri }) {
   const meta = annoMeta(n);
   const color = colore(n);
+  const orme = usePercorsoVisibile();
+  const mRef = useRef(null);
   const u = trovaUda(D, n, uda);
   const L = trovaLezione(D, n, uda, lezione);
+  const items = itemsInLezione(D, n, uda, lezione);
+  const lista = useMemo(() => ordinaPercorso(items), [items]);
+  const aperti = contaAperti(items, orme.set);
+  const completa = items.length > 0 && aperti === items.length;
+  const chiama = useChiama(aperti, items.length);
+  const lez = lezioniForUda(D, n, uda);
+  const v = vicini(lez, L.titolo);
+
+  useEffect(() => { if (items.length) segnaUltima({ hash: hrefLezione(n, u.titolo, L.titolo), anno: n, uda: u.titolo, lezione: L.titolo, titolo: L.titolo }); }, [n, uda, lezione]);
+
+  const primo = lista.find((m) => !orme.set.has(chiaveItem(m)));
+  const resto = items.length - aperti;
+  const saluto = !items.length ? "" : completa ? "Tutti i materiali aperti. Avanti?" : aperti === 0 ? `Si comincia da «${breve(primo && primo.titolo, 28)}».` : resto === 1 ? "Ne manca uno: ci siamo quasi." : `Ne mancano ${resto}.`;
+  useVoceProgresso(mRef, aperti, () => (aperti >= items.length ? "Fatto! Tutti i materiali sono aperti." : resto === 1 ? "Ne manca uno: ci siamo quasi." : `Ne mancano ${resto}.`));
+
+  /* strada avanti: prossima lezione → unità successiva → torna all'unità */
+  const udas = udaForYear(D, n);
+  const vu = vicini(udas, u.titolo);
+  const tornaUnita = { eyebrow: "Torna all'unità", titolo: u.titolo, meta: lezioni(lez.length || 1), href: hrefUda(n, u.titolo), indietro: true };
+  let tiles;
+  if (v.succ) tiles = [{ main: true, eyebrow: "Prossima lezione", titolo: v.succ.titolo, meta: plurale(itemsInLezione(D, n, uda, v.succ.titolo).length), href: hrefLezione(n, uda, v.succ.titolo) }, tornaUnita];
+  else if (vu.succ) tiles = [{ main: true, eyebrow: "Unità successiva", titolo: vu.succ.titolo, meta: plurale(itemsInUda(D, n, vu.succ.titolo).length), href: hrefUda(n, vu.succ.titolo) }, tornaUnita];
+  else tiles = [{ ...tornaUnita, main: true }, { eyebrow: "Torna all'anno", titolo: meta.nome, meta: `${udas.length} unità`, href: "#anno/" + n, indietro: true }];
+
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
-      <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo, href: `#anno/${n}/uda/${slug(u.titolo)}` }, { testo: L.titolo }]} />
-      <PaginaHero color={color} glifo={meta.rom} eyebrow={u.titolo + " · Lezione"} titolo={L.titolo} desc={L.descrizione} mascotte={+n} />
-      <Contenuti items={itemsInLezione(D, n, uda, lezione)} color={color} apri={apri} />
+      <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo, href: hrefUda(n, u.titolo) }, { testo: L.titolo }]} su={{ testo: u.titolo, href: hrefUda(n, u.titolo) }} />
+      <PaginaHero color={color} glifo={meta.rom} eyebrow={v.tot >= 2 && v.pos > 0 ? `Lezione ${v.pos} di ${v.tot}` : "Lezione"} titolo={L.titolo} desc={L.descrizione} mascotte={+n} compatto saluto={saluto} mascotteRef={mRef} />
+      {items.length
+        ? <Contenuti items={items} color={color} apri={apri} percorso />
+        : <Vuoto anno={+n} titolo="Questa lezione è in preparazione" testo="I materiali arriveranno presto. Intanto puoi tornare all'unità." indietro={{ testo: "← Torna all'unità", href: hrefUda(n, u.titolo) }} />}
+      {completa && <Fine>Lezione completa: tutti i materiali aperti.</Fine>}
+      <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa} />
     </div>
   );
 }
 
 function ListaPage({ D, tipo, apri }) {
   const strumenti = tipo === "strumenti";
-  const color = strumenti ? "var(--lab-anno-3)" : "var(--lab-anno-4)";
   const items = D.ITEMS.filter((it) => it.kind === (strumenti ? "strumento" : "video"));
+  const home = { testo: "← Torna alla home", onClick: (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); } };
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
-      <Briciole voci={[{ testo: strumenti ? "Strumenti" : "Video" }]} />
-      <PaginaHero color={color} glifo={strumenti ? "✦" : "▶"} eyebrow={strumenti ? "Interattivi" : "Guardare insieme"} titolo={strumenti ? "Strumenti" : "Video"}
+      <Briciole voci={[{ testo: strumenti ? "Strumenti" : "Video" }]} su={{ testo: "Home" }} />
+      <PaginaHero neutro glifo={strumenti ? "✦" : "▶"} eyebrow={strumenti ? "Interattivi" : "Guardare insieme"} titolo={strumenti ? "Strumenti" : "Video"}
         desc={strumenti ? "Quiz, bacheche e attività digitali da usare con la classe." : "Clip e documentari selezionati per ogni tema."} />
-      <Contenuti items={items} color={color} apri={apri} />
+      {items.length
+        ? <Contenuti items={items} color={(m) => colore(m.anno)} apri={apri} mascotte />
+        : strumenti
+          ? <Vuoto titolo="Gli strumenti sono in preparazione" testo="Presto qui quiz e attività per la classe." indietro={home} />
+          : <Vuoto titolo="I video sono in preparazione" testo="Presto qui clip e documentari per ogni tema." indietro={home} />}
     </div>
   );
 }
 
-function RicercaPage({ D, q, apri }) {
-  const lq = q.toLowerCase();
-  const items = D.ITEMS.filter((it) => (it.titolo || "").toLowerCase().includes(lq) || (it.descrizione || "").toLowerCase().includes(lq));
+/* ricerca: mostra anche DOVE stanno le cose (unità e lezioni) */
+function RicercaPage({ D, q, apri, setQ }) {
+  const { cartelle, items } = useMemo(() => cerca(D, q), [D, q]);
+  const [tutte, setTutte] = useState(false);
+  const tot = cartelle.length + items.length;
+  const righe = tutte ? cartelle : cartelle.slice(0, 4);
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
-      <Briciole voci={[{ testo: `Ricerca: «${q}»` }]} />
-      <SectionHead small eyebrow="Ricerca" title={`${items.length} risultat${items.length === 1 ? "o" : "i"}`} sub={`per «${q}»`} />
-      {items.length ? (
-        <Griglia>
-          {items.map((m, i) => (
-            <Reveal key={(m.titolo || "") + i} delay={Math.min(i, 8) * 89} className="ds-calmo" style={{ height: "100%" }}>
-              <MatCard item={m} color={colore(m.anno)} apri={apri} />
-            </Reveal>
+      <Briciole voci={[{ testo: "Ricerca" }]} su={{ testo: "Home" }} />
+      <SectionHead small h1 eyebrow="Ricerca" title={`${tot} ${tot === 1 ? "risultato" : "risultati"}`} sub={`per «${q}»`} />
+      {cartelle.length > 0 && (
+        <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 21 }}>
+          <Eyebrow>Unità e lezioni</Eyebrow>
+          {righe.map((c) => {
+            const col = colore(c.anno);
+            return (
+              <a key={c.href} href={c.href} className="lab-riga" onClick={() => setQ("")}>
+                <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: col, background: `color-mix(in srgb, ${col} 16%, transparent)` }}>{c.tipo === "lezione" ? <IconaLibro /> : <IconaCartella />}</span>
+                <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+                  <b style={{ fontSize: 16, color: "var(--lab-ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{c.titolo}</b>
+                  <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Anno {annoMeta(c.anno).rom} · {c.tipo === "lezione" ? "Lezione · " + c.uda : "Unità di apprendimento"}</span>
+                </span>
+                <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
+              </a>
+            );
+          })}
+          {!tutte && cartelle.length > 4 && <div style={{ marginTop: 13 }}><Button size="sm" variant="ghost" onClick={() => setTutte(true)}>Mostra tutte ({cartelle.length})</Button></div>}
+        </div>
+      )}
+      {items.length > 0 && (
+        <Griglia n={items.length}>
+          {items.map((m) => (
+            <div key={chiaveItem(m)} className="lab-fig" style={{ height: "100%" }}>
+              <MatCardRicerca item={m} apri={apri} primario={items.findIndex((x) => x.in_evidenza && azione(x).tipo !== "nessuna") === items.indexOf(m)} />
+            </div>
           ))}
         </Griglia>
-      ) : (
-        <p style={{ color: "var(--lab-muted)" }}>Nessun contenuto trovato. Prova con un'altra parola.</p>
+      )}
+      {!tot && (
+        <Vuoto titolo={`Nessun risultato per «${q}»`} testo="Prova con un'altra parola, oppure scegli un anno:">
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+            {ANNI.map((a) => <Chip key={a.n} onClick={() => { setQ(""); location.hash = "anno/" + a.n; }}>Anno {a.rom}</Chip>)}
+          </div>
+        </Vuoto>
       )}
     </div>
   );
+}
+function MatCardRicerca({ item, apri, primario }) {
+  const orme = usePercorsoVisibile();
+  return <MatCard item={item} color={colore(item.anno)} apri={apri} aperto={orme.set.has(chiaveItem(item))} primario={primario} mascotte contesto={contestoDi(item)} />;
 }
 
 /* ---------- visore degli artefatti ---------- */
 /* SICUREZZA: niente "allow-same-origin": un artefatto caricato in /uploads non
    può leggere lo storage del sito (es. la sessione del docente in /esami). */
-function Visore({ href, titolo, onChiudi }) {
+function Visore({ href, titolo, color, onChiudi }) {
+  const btn = useRef(null);
+  const [pronto, setPronto] = useState(false);
+  const [lento, setLento] = useState(false);
+  useEffect(() => {
+    if (btn.current) btn.current.focus();
+    const esc = (e) => { if (e.key === "Escape") onChiudi(); };
+    addEventListener("keydown", esc);
+    const t1 = setTimeout(() => setLento(true), 233);
+    const t2 = setTimeout(() => setPronto(true), 4181);
+    return () => { removeEventListener("keydown", esc); clearTimeout(t1); clearTimeout(t2); };
+  }, []);
   return (
-    <div className="lab-visore" style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", flexDirection: "column", background: "var(--lab-bg)" }}>
-      <div style={{ height: 55, background: "#191726", color: "#fff", display: "flex", alignItems: "center", gap: 13, padding: "0 13px", flex: "none" }}>
-        <button onClick={onChiudi} style={{ display: "flex", alignItems: "center", gap: 5, background: "rgba(255,255,255,.1)", border: "none", color: "#fff", font: "inherit", fontSize: 13.5, fontWeight: 700, cursor: "pointer", padding: "8px 13px", borderRadius: 999, whiteSpace: "nowrap" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 12H5M5 12l7-7M5 12l7 7" /></svg>
+    <div className="lab-visore" role="dialog" aria-modal="true" aria-label={titolo || "Contenuto interattivo"} style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", flexDirection: "column", background: "var(--lab-bg)" }}>
+      <div style={{ height: 55, background: "var(--lab-surface)", color: "var(--lab-ink)", borderBottom: "1px solid var(--lab-line)", boxShadow: `inset 0 -2px 0 ${color || "var(--lab-oro)"}`, display: "flex", alignItems: "center", gap: 13, padding: "0 13px", flex: "none" }}>
+        <button ref={btn} type="button" onClick={onChiudi} style={{ display: "flex", alignItems: "center", gap: 5, background: "var(--lab-surface-2)", border: "1px solid var(--lab-line)", color: "var(--lab-ink)", font: "inherit", fontSize: 13.5, fontWeight: 700, cursor: "pointer", padding: "8px 13px", borderRadius: 999, whiteSpace: "nowrap", minHeight: 40 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M19 12H5M5 12l7-7M5 12l7 7" /></svg>
           Torna al sito
         </button>
-        <div style={{ fontFamily: "var(--lab-font-display)", fontSize: 19, fontWeight: 600, flex: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", padding: "0 8px", opacity: 0.92 }}>{titolo}</div>
+        <div style={{ fontFamily: "var(--lab-font-display)", fontSize: 19, fontWeight: 600, flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", padding: "0 8px" }}>{titolo}</div>
       </div>
-      <iframe src={href} title="Contenuto interattivo" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads" allow="fullscreen; clipboard-write" style={{ flex: 1, border: "none", background: "#fff", width: "100%" }} />
+      <div style={{ position: "relative", flex: 1, display: "flex" }}>
+        {!pronto && lento && (
+          <div className="lab-carico-visore" style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", background: "var(--lab-bg)" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <span aria-hidden="true" style={{ fontSize: 21, color: "var(--lab-oro)", animation: "labBreath 3.2s ease-in-out infinite" }}>✦</span>
+              <span style={{ fontSize: 14, color: "var(--lab-ink-soft)" }}>Carico il contenuto…</span>
+            </div>
+          </div>
+        )}
+        <iframe src={href} title={titolo || "Contenuto interattivo"} onLoad={() => setPronto(true)} sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads" allow="fullscreen; clipboard-write"
+          style={{ flex: 1, border: "none", background: "#fff", width: "100%", opacity: pronto ? 1 : 0, transition: "opacity 233ms ease" }} />
+      </div>
     </div>
   );
 }
 
 /* ---------- cornice ---------- */
+const Sole = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>;
+const Luna = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>;
+
 function ThemeToggle() {
   const [dark, setDark] = useState(document.documentElement.dataset.tema !== "chiaro");
   const [n, setN] = useState(0);
@@ -601,19 +995,48 @@ function ThemeToggle() {
     setDark(!dark); setN(n + 1);
   };
   return (
-    <button onClick={toggle} aria-label="Cambia tema chiaro/scuro" className="lab-tema"
-      style={{ position: "fixed", right: 21, bottom: 21, zIndex: 60, width: 47, height: 47, borderRadius: "50%", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", color: "var(--lab-ink)", fontSize: 18, cursor: "pointer", boxShadow: "var(--lab-shadow)", display: "grid", placeItems: "center", transform: `rotate(${n * 180}deg)`, transition: `transform 610ms ${EASE}` }}>
-      {dark ? "☀️" : "🌙"}
+    <button type="button" onClick={toggle} aria-label="Cambia tema chiaro/scuro" aria-pressed={!dark} className="lab-tema"
+      style={{ position: "fixed", right: 21, bottom: 21, zIndex: 60, width: 47, height: 47, borderRadius: "50%", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", color: dark ? "var(--lab-oro)" : "var(--lab-ink)", cursor: "pointer", boxShadow: "var(--lab-shadow)", display: "grid", placeItems: "center", transform: `rotate(${n * 180}deg)`, transition: `transform 610ms ${EASE}` }}>
+      {dark ? <Sole /> : <Luna />}
     </button>
+  );
+}
+
+function LimToggle() {
+  const lim = useLim();
+  return (
+    <button type="button" className="lab-lim" aria-pressed={lim} title="Modalità LIM: caratteri grandi (tasto L)" onClick={() => setLim(!lim)}>LIM</button>
+  );
+}
+
+/* "Dimentica": le orme restano solo su questo dispositivo e si cancellano con un tocco */
+function Dimentica() {
+  const orme = usePercorsoVisibile();
+  const [fase, setFase] = useState(0); // 0 chiuso · 1 conferma · 2 fatto
+  useEffect(() => { if (fase !== 2) return; const t = setTimeout(() => setFase(0), 2618); return () => clearTimeout(t); }, [fase]);
+  if (orme.vuoto && fase !== 2) return null;
+  const link = { background: "none", border: "none", padding: "0 2px", font: "inherit", color: "inherit", textDecoration: "underline", cursor: "pointer", minHeight: 44 };
+  return (
+    <div className="lab-mio" style={{ gridColumn: "1 / -1", fontSize: 13.5, color: "var(--lab-muted)" }}>
+      {fase === 2 ? "Fatto: nessuna traccia." : (
+        <>
+          Il tuo percorso resta solo su questo dispositivo ·{" "}
+          {fase === 0
+            ? <button type="button" style={link} onClick={() => setFase(1)}>Dimentica</button>
+            : <>Sicuro? <button type="button" style={link} onClick={() => { dimenticaPercorso(); setFase(2); }}>Sì, dimentica</button> · <button type="button" style={link} onClick={() => setFase(0)}>Annulla</button></>}
+        </>
+      )}
+    </div>
   );
 }
 
 function Footer({ autore }) {
   return (
-    <footer className="lab-footer" style={{ maxWidth: 1140, margin: "0 auto", padding: "34px 21px 55px", borderTop: "1px solid var(--lab-line-soft)", color: "var(--lab-muted)", fontSize: 13.5, display: "grid", gridTemplateColumns: "minmax(0,1.618fr) auto minmax(0,1fr)", alignItems: "center", gap: 21 }}>
+    <footer className="lab-footer" style={{ maxWidth: 1140, margin: "0 auto", padding: "34px 21px 144px", borderTop: "1px solid var(--lab-line-soft)", color: "var(--lab-muted)", fontSize: 13.5, display: "grid", gridTemplateColumns: "minmax(0,1.618fr) auto minmax(0,1fr)", alignItems: "center", gap: 21 }}>
       <span>© {new Date().getFullYear()} {autore} · Tutti i diritti riservati</span>
       <Amdg />
       <a href="admin/" style={{ justifySelf: "end", whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Area gestione</a>
+      <Dimentica />
     </footer>
   );
 }
@@ -632,32 +1055,76 @@ function useHash() {
 
 function dec(s) { try { return decodeURIComponent(s); } catch (e) { return s; } }
 
+/* artefatto in LIM: anche lui si apre a caratteri grandi */
+function conLim(href) {
+  const [base, frag] = String(href).split("#");
+  return base + (base.includes("?") ? "&" : "?") + "lim=1" + (frag !== undefined ? "#" + frag : "");
+}
+
+function Carico() {
+  const [vedi, setVedi] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setVedi(true), 233); return () => clearTimeout(t); }, []);
+  return (
+    <div className="lab-carico" style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
+      {vedi && (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, animation: "labFade 377ms ease both" }}>
+          <span aria-hidden="true" style={{ fontSize: 21, color: "var(--lab-oro)", animation: "labBreath 3.2s ease-in-out infinite" }}>✦</span>
+          <span style={{ fontSize: 14, color: "var(--lab-ink-soft)" }}>Carico…</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function App() {
   const [D, setD] = useState(null);
   const [q, setQ] = useState("");
   const [visore, setVisore] = useState(null);
   const hash = useHash();
+  const lim = useLim();
+  const yRef = useRef(null);
+  const openerRef = useRef(null);
 
   useEffect(() => {
     caricaDati().then((d) => {
       setD(d);
-      document.title = (d.SITE.titolo || "Lab IRC") + " · Religione Cattolica";
       const md = document.querySelector('meta[name="description"]');
       if (md && d.SITE.intro) md.setAttribute("content", d.SITE.intro);
     });
+  }, []);
+
+  /* tasto L = modalità LIM (non mentre si scrive o col visore aperto) */
+  useEffect(() => {
+    const f = (e) => {
+      if (e.key !== "l" && e.key !== "L") return;
+      if (e.ctrlKey || e.metaKey || e.altKey || document.body.classList.contains("viewing")) return;
+      const t = e.target, tag = (t && t.tagName ? t.tagName : "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select" || (t && t.isContentEditable)) return;
+      setLim(!leggiLim());
+    };
+    addEventListener("keydown", f);
+    return () => removeEventListener("keydown", f);
   }, []);
 
   /* cambio pagina: si riparte dall'alto */
   const primo = useRef(true);
   useEffect(() => {
     if (primo.current) { primo.current = false; return; }
-    window.scrollTo(0, 0);
+    vaiA(0);
   }, [hash]);
 
-  /* visore: una voce nella cronologia, così il tasto "indietro" lo chiude */
-  const apri = (href, titolo) => {
+  /* entrando nella ricerca si torna in cima ai risultati */
+  const cercaAttiva = q.trim().length > 1;
+  const eraAttiva = useRef(false);
+  useEffect(() => { if (cercaAttiva && !eraAttiva.current) vaiA(0); eraAttiva.current = cercaAttiva; }, [cercaAttiva]);
+
+  /* visore: una voce nella cronologia, così il tasto "indietro" lo chiude;
+     al ritorno si torna nello stesso punto, con il focus sul pulsante usato */
+  const apri = (href, titolo, color) => {
     if (!href || href === "#") return;
-    setVisore({ href, titolo: titolo || "" });
+    yRef.current = scrollY;
+    openerRef.current = document.activeElement;
+    setVisore({ href: leggiLim() ? conLim(href) : href, titolo: titolo || "", color });
     history.pushState({ visore: true }, "");
   };
   const chiudi = () => { if (history.state && history.state.visore) history.back(); else setVisore(null); };
@@ -666,41 +1133,74 @@ function App() {
     addEventListener("popstate", f);
     return () => removeEventListener("popstate", f);
   }, []);
-  useEffect(() => { document.body.classList.toggle("viewing", !!visore); }, [visore]);
+  useEffect(() => {
+    document.body.classList.toggle("viewing", !!visore);
+    if (!visore && yRef.current != null) {
+      const y = yRef.current, chi = openerRef.current;
+      yRef.current = null;
+      requestAnimationFrame(() => {
+        vaiA(y);
+        if (chi && chi.focus && document.contains(chi)) { try { chi.focus({ preventScroll: true }); } catch (e) { chi.focus(); } }
+        window.dispatchEvent(new Event("lab:visore-chiuso"));
+      });
+    }
+  }, [visore]);
 
-  const home = () => { setQ(""); if (location.hash) location.hash = ""; else window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const home = () => { setQ(""); if (location.hash) location.hash = ""; else window.scrollTo({ top: 0, behavior: movimentoRidotto() ? "auto" : "smooth" }); };
   useEffect(() => {
     addEventListener("lab:home", home);
     return () => removeEventListener("lab:home", home);
   });
   const vaiAnno = (y) => { setQ(""); location.hash = "anno/" + y; };
 
-  if (!D) return <div style={{ minHeight: "100vh" }} />;
-
-  let pagina;
-  const cerca = q.trim();
+  const cercaQ = q.trim();
   const parti = hash.split("/");
-  if (cerca.length > 1) pagina = <RicercaPage D={D} q={cerca} apri={apri} />;
-  else if (parti[0] === "anno" && annoMeta(parti[1])) {
+  const annoRotta = parti[0] === "anno" && annoMeta(parti[1]) ? parti[1] : null;
+
+  /* titolo della scheda del browser: dove sono */
+  useEffect(() => {
+    if (!D) return;
+    const sito = D.SITE.titolo || "Lab IRC";
+    let t = sito + " · Religione Cattolica";
+    if (cercaQ.length > 1) t = `Ricerca: ${cercaQ} · ${sito}`;
+    else if (annoRotta) {
+      const m = annoMeta(annoRotta);
+      if (parti[2] === "uda" && parti[3]) t = parti[4] === "lezione" && parti[5] ? `${dec(parti[5])} · Anno ${m.rom} · ${sito}` : `${dec(parti[3])} · Anno ${m.rom} · ${sito}`;
+      else t = `${m.nome} · ${sito}`;
+    } else if (hash === "strumenti") t = "Strumenti · " + sito;
+    else if (hash === "video") t = "Video · " + sito;
+    document.title = t;
+  }, [D, hash, cercaQ]);
+
+  if (!D) return <Carico />;
+
+  let pagina, rotta = "";
+  if (cercaQ.length > 1) { pagina = <RicercaPage D={D} q={cercaQ} apri={apri} setQ={setQ} />; rotta = "ricerca"; }
+  else if (annoRotta) {
     if (parti[2] === "uda" && parti[3]) {
       pagina = parti[4] === "lezione" && parti[5]
         ? <LezionePage key={hash} D={D} n={parti[1]} uda={dec(parti[3])} lezione={dec(parti[5])} apri={apri} />
         : <UdaPage key={hash} D={D} n={parti[1]} uda={dec(parti[3])} apri={apri} />;
     } else pagina = <AnnoPage key={hash} D={D} n={parti[1]} apri={apri} />;
-  } else if (hash === "strumenti" || hash === "video") pagina = <ListaPage key={hash} D={D} tipo={hash} apri={apri} />;
-  else pagina = <HomePage D={D} onYear={vaiAnno} />;
+    rotta = "anno";
+  } else if (hash === "strumenti" || hash === "video") { pagina = <ListaPage key={hash} D={D} tipo={hash} apri={apri} />; rotta = hash; }
+  else { pagina = <HomePage D={D} onYear={vaiAnno} />; rotta = "home"; }
+
+  const nS = D.ITEMS.some((it) => it.kind === "strumento");
+  const nV = D.ITEMS.some((it) => it.kind === "video");
 
   return (
     <>
-      <CursorHalo />
+      {rotta === "home" && <CursorHalo />}
       <div className="lab-app" style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
-        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} />
+        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : null} rotta={rotta} conStrumenti={nS} conVideo={nV} />
         <main>{pagina}</main>
         <Footer autore={D.SITE.autore || ""} />
       </div>
+      <LimToggle />
       <ThemeToggle />
       <AmdgEgg />
-      {visore && <Visore href={visore.href} titolo={visore.titolo} onChiudi={chiudi} />}
+      {visore && <Visore href={visore.href} titolo={visore.titolo} color={visore.color} onChiudi={chiudi} />}
     </>
   );
 }

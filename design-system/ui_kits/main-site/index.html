@@ -12,7 +12,18 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="../../_ds_bundle.js"></script>
-<style>body{overflow-x:hidden}a{color:var(--lab-accent)}a:hover{color:var(--lab-oro)}</style>
+<style>body{overflow-x:hidden}a{color:var(--lab-accent)}a:hover{color:var(--lab-oro)}
+:where(a,button,[role="button"],input,textarea,select):focus-visible{outline:3px solid var(--lab-oro);outline-offset:3px}
+html[data-lim]{--lab-muted:var(--lab-ink-soft)}
+html[data-lim] [data-halo]{display:none}
+@media (min-width:1100px){html[data-lim] #root{zoom:1.618}}
+.ms-lim{position:fixed;right:21px;bottom:81px;z-index:60;font:800 13px/1 var(--lab-font-body);letter-spacing:.08em;padding:0 16px;min-height:40px;border-radius:999px;border:1px solid var(--lab-line);background:var(--lab-surface);color:var(--lab-ink);cursor:pointer}
+.ms-lim[aria-pressed="true"]{background:var(--lab-oro);color:#241a02;border-color:transparent}
+html[data-lim] .ms-lim{font-size:18px;min-height:55px;padding:0 21px}</style>
+<script>(function(){var r=document.documentElement;try{var q=/[?&]lim=(1|0)/.exec(location.search);if(q)localStorage.setItem('lim_lab',q[1]);if(localStorage.getItem('lim_lab')==='1')r.setAttribute('data-lim','')}catch(e){}
+function set(on){if(on)r.setAttribute('data-lim','');else r.removeAttribute('data-lim');try{localStorage.setItem('lim_lab',on?'1':'0')}catch(e){}var b=document.querySelector('.ms-lim');if(b)b.setAttribute('aria-pressed',on?'true':'false')}
+addEventListener('DOMContentLoaded',function(){var b=document.createElement('button');b.type='button';b.className='ms-lim';b.textContent='LIM';b.title='Modalità LIM: caratteri grandi (tasto L)';b.setAttribute('aria-pressed',r.hasAttribute('data-lim')?'true':'false');b.onclick=function(){set(!r.hasAttribute('data-lim'))};document.body.appendChild(b)});
+addEventListener('keydown',function(e){var t=(e.target.tagName||'').toLowerCase();if(t==='input'||t==='textarea'||e.target.isContentEditable||e.ctrlKey||e.metaKey||e.altKey)return;if(e.key==='l'||e.key==='L')set(!r.hasAttribute('data-lim'))})})();</script>
 </head>
 <body>
 <div id="root"></div>
@@ -82,7 +93,7 @@ function CursorHalo() {
     loop(); addEventListener('mousemove', mv);
     return () => { cancelAnimationFrame(raf); removeEventListener('mousemove', mv); };
   }, []);
-  return <div ref={ref} aria-hidden="true" style={{ position:'fixed', left:0, top:0, width:466, height:466, borderRadius:'50%', pointerEvents:'none', zIndex:0, opacity:0, transition:'opacity 610ms', background:'radial-gradient(circle, rgba(139,92,246,.10), rgba(227,194,122,.04) 38.2%, transparent 61.8%)' }} />;
+  return <div ref={ref} data-halo aria-hidden="true" style={{ position:'fixed', left:0, top:0, width:466, height:466, borderRadius:'50%', pointerEvents:'none', zIndex:0, opacity:0, transition:'opacity 610ms', background:'radial-gradient(circle, rgba(139,92,246,.10), rgba(227,194,122,.04) 38.2%, transparent 61.8%)' }} />;
 }
 
 /* ---------- small pieces ---------- */
@@ -93,7 +104,7 @@ function SectionHead({ eyebrow, title, sub }) {
   return (
     <Reveal style={{ display:'grid', gridTemplateColumns:'minmax(0,1.618fr) minmax(0,1fr)', alignItems:'end', gap:34, margin:'89px 0 34px' }}>
       <div><Eyebrow>{eyebrow}</Eyebrow><h2 style={{ fontSize:'clamp(26px,3.6vw,42px)', margin:0 }}>{title}</h2></div>
-      {sub && <p style={{ color:'var(--lab-muted)', fontSize:15, margin:0 }}>{sub}</p>}
+      {sub && <p style={{ color:'var(--lab-ink-soft)', fontSize:16, lineHeight:1.5, margin:0, maxWidth:'38ch', textWrap:'pretty' }}>{sub}</p>}
     </Reveal>
   );
 }
@@ -189,7 +200,7 @@ function Rosone({ onYear }) {
         </svg>
       </div>
       <div style={{ textAlign:'center', marginTop:21, minHeight:55, fontFamily:'var(--lab-font-inscription)', fontWeight:600, fontSize:12.5, letterSpacing:'.18em', textTransform:'uppercase', color: info ? `var(--lab-anno-${info.year})` : 'var(--lab-muted)', transition:'color 377ms' }}>
-        {info ? <>Anno {ROMAN[info.year]} · {info.nome}<div style={{ fontFamily:'var(--lab-font-body)', fontWeight:500, textTransform:'none', letterSpacing:0, fontSize:13.5, color:'var(--lab-muted)', marginTop:5 }}>{info.desc}</div></> : 'Passa il cursore sulle vetrate'}
+        {info ? <>Anno {ROMAN[info.year]} · {info.nome}<div style={{ fontFamily:'var(--lab-font-body)', fontWeight:500, textTransform:'none', letterSpacing:0, fontSize:13.5, color:'var(--lab-muted)', marginTop:5 }}>{info.desc}</div></> : 'Scegli una vetrata: è il tuo anno'}
       </div>
     </div>
   );
@@ -208,7 +219,7 @@ function Hero({ onStart, onYear }) {
           <br />
           <span style={{ display:'inline-block', paddingBottom:'.14em', paddingRight:'.06em', fontStyle:'italic', fontWeight:500, animation:'labRise 987ms cubic-bezier(.16,1,.3,1) 356ms both' }} className="lab-grad-text">Religione</span>
         </h1>
-        <p style={{ fontSize:'clamp(16px,1.6vw,20.5px)', color:'var(--lab-muted)', maxWidth:'38ch', margin:'0 0 34px', animation:'labRise 987ms cubic-bezier(.16,1,.3,1) 445ms both' }}>
+        <p style={{ fontSize:'clamp(16px,1.6vw,20.5px)', color:'var(--lab-ink-soft)', maxWidth:'38ch', margin:'0 0 34px', animation:'labRise 987ms cubic-bezier(.16,1,.3,1) 445ms both' }}>
           {SITE.intro}<span aria-hidden="true" style={{ color:'transparent' }}> A·M·D·G</span>
         </p>
         <div style={{ display:'flex', gap:13, flexWrap:'wrap', animation:'labRise 987ms cubic-bezier(.16,1,.3,1) 534ms both' }}>
@@ -249,7 +260,7 @@ function Tools() {
               <span style={{ position:'absolute', right:-8, top:-21, fontSize:110, opacity:.14, lineHeight:1 }}>{x.icon}</span>
               <span style={{ fontSize:12.5, letterSpacing:'.2em', textTransform:'uppercase', fontWeight:800, opacity:.85 }}>{x.label}</span>
               <h3 style={{ fontSize:33, margin:'5px 0 8px', color:'#fff' }}>{x.title}</h3>
-              <p style={{ margin:0, fontSize:15, color:'rgba(255,255,255,.88)', maxWidth:'34ch' }}>{x.desc}</p>
+              <p style={{ margin:0, fontSize:16, lineHeight:1.5, color:'#fff', maxWidth:'34ch' }}>{x.desc}</p>
             </div>
           </Card>
         </Reveal>
@@ -298,13 +309,15 @@ function MatCard({ item, color }) {
       <div style={{ height:144, background:`linear-gradient(135deg, ${color}, color-mix(in srgb, ${color} 45%, #14101a))`, display:'grid', placeItems:'center', fontFamily:'var(--lab-font-inscription)', fontWeight:600, fontSize:46, color:'rgba(255,255,255,.85)' }}>
         {item.tipo === 'Video' ? '▶' : item.anno ? ROMAN[item.anno] : '✦'}
       </div>
-      {item.anno ? <span style={{ position:'absolute', right:13, top:119, zIndex:2 }}><YearMascot year={item.anno} size={42} /></span> : null}
+      {item.anno ? <span style={{ position:'absolute', right:13, top:127, zIndex:2 }}><YearMascot year={item.anno} size={34} halo={false} /></span> : null}
       {item.feat && <span style={{ position:'absolute', top:13, left:13, background:'var(--lab-ambra)', color:'#3a2a06', fontSize:10.5, fontWeight:800, letterSpacing:'.08em', textTransform:'uppercase', padding:'5px 8px', borderRadius:999 }}>In evidenza</span>}
       <div style={{ padding:21, display:'flex', flexDirection:'column', gap:13 }}>
         <div><Badge variant={BADGE[item.tipo]}>{item.tipo}</Badge></div>
-        <h3 style={{ fontSize:24, margin:0 }}>{item.titolo}</h3>
-        <p style={{ fontSize:14, color:'var(--lab-muted)', margin:0 }}>{item.desc}</p>
-        <div><Button size="sm" variant={item.tipo === 'Video' ? 'ghost' : 'primary'}>{item.tipo === 'Video' ? 'Guarda ▶' : item.tipo === 'Artefatto' ? 'Apri' : 'Scarica'}</Button></div>
+        <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+          <h3 style={{ fontSize:24, margin:0, textWrap:'balance' }}>{item.titolo}</h3>
+          <p style={{ fontSize:15, lineHeight:1.5, color:'var(--lab-ink-soft)', margin:0, textWrap:'pretty' }}>{item.desc}</p>
+        </div>
+        <div style={{ marginTop:8 }}><Button size="sm" variant={item.feat ? 'primary' : 'ghost'}>{item.tipo === 'Video' ? 'Guarda ▶' : item.tipo === 'Artefatto' ? 'Apri' : 'Scarica'}</Button></div>
       </div>
     </Card>
   );
@@ -322,14 +335,14 @@ function YearPage({ year, onBack }) {
         <a href="#" onClick={e => { e.preventDefault(); onBack(); }} style={{ fontWeight:600 }}>← Home</a><span style={{ opacity:.4 }}>›</span><span>Anno {ROMAN[year]}</span>
       </div>
       <div onMouseMove={e => { const r = e.currentTarget.getBoundingClientRect(); setP({ x:(e.clientX - r.left) / r.width - .5, y:(e.clientY - r.top) / r.height - .5 }); }} onMouseLeave={() => setP({ x:0, y:0 })}
-        style={{ position:'relative', padding:'55px 34px', borderRadius:34, margin:'21px 0 34px', overflow:'hidden', color:'#fff', background:`linear-gradient(130deg, ${color}, color-mix(in srgb, ${color} 50%, #14101a))`, animation:'labRise 987ms cubic-bezier(.16,1,.3,1) both' }}>
+        style={{ position:'relative', padding:'55px 34px', borderRadius:34, margin:'21px 0 55px', overflow:'hidden', color:'#fff', background:`linear-gradient(130deg, ${color}, color-mix(in srgb, ${color} 50%, #14101a))`, animation:'labRise 987ms cubic-bezier(.16,1,.3,1) both' }}>
         <div aria-hidden="true" style={{ position:'absolute', right:21, bottom:-34, fontSize:199, opacity:.14, fontFamily:'var(--lab-font-inscription)', fontWeight:600, lineHeight:1, transform:`translate(${p.x * 34}px, ${p.y * 21}px)`, transition:'transform 610ms cubic-bezier(.16,1,.3,1)' }}>{ROMAN[year]}</div>
-        <div style={{ position:'absolute', right:34, top:34, zIndex:2 }}><YearMascot year={year} size={72} /></div>
+        <div style={{ position:'absolute', right:34, top:21, zIndex:2 }}><YearMascot year={year} size={144} /></div>
         <Eyebrow color="rgba(255,255,255,.85)">Anno {ROMAN[year]}</Eyebrow>
         <h2 style={{ fontSize:'clamp(33px,5vw,55px)', margin:'0 0 8px', color:'#fff' }}>{a.nome}</h2>
         <p style={{ margin:0, maxWidth:'46ch', color:'rgba(255,255,255,.9)' }}>{a.desc}</p>
       </div>
-      <div style={{ display:'flex', gap:8, flexWrap:'wrap', marginBottom:34 }}>{types.map(t => <Chip key={t} active={chip === t} onClick={() => setChip(t)}>{t}</Chip>)}</div>
+      <div style={{ display:'flex', gap:8, flexWrap:'wrap', marginBottom:21 }}>{types.map(t => <Chip key={t} active={chip === t} onClick={() => setChip(t)}>{t}</Chip>)}</div>
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(288px,1fr))', gap:21 }}>
         {shown.map((m, i) => <Reveal key={m.id + chip} delay={i * 89}><MatCard item={m} color={color} /></Reveal>)}
       </div>

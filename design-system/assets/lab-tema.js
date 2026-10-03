@@ -16,6 +16,8 @@
        if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
    ===================================================================== */
 (function(){
+  var cs = document.currentScript;
+  if (cs && cs.src && !/lab-tema\.js/.test(cs.src)) return; /* incluso in un altro file (bundle): non fare nulla */
   var CHIAVE = "tema_lab";
 
   function corrente(){

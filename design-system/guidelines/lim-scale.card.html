@@ -1,0 +1,48 @@
+<!-- @dsCard group="Foundations" viewport="760x420" name="Scala LIM" subtitle="Caratteri per la lavagna: Fibonacci / 10 in % di larghezza — <html data-lim>" -->
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+body{margin:0;padding:21px;background:var(--lab-bg);color:var(--lab-ink);font-family:var(--lab-font-body);display:grid;grid-template-columns:minmax(0,1.618fr) minmax(0,1fr);gap:34px}
+a{color:var(--lab-accent)}a:hover{color:var(--lab-oro)}
+.h{font:600 11px/1.3 var(--lab-font-inscription);letter-spacing:.18em;text-transform:uppercase;color:var(--lab-oro);margin:0 0 13px}
+.board{container-type:inline-size;aspect-ratio:16/9;border:5px solid #2a2836;border-radius:8px;background:var(--lab-surface);padding:3.4cqw;display:flex;flex-direction:column;gap:1.6cqw}
+.q{font:800 3.4cqw/1.15 var(--lab-font-body)}
+.o{display:flex;align-items:center;gap:1.6cqw;min-height:5.5cqw;padding:0 2.1cqw 0 1.3cqw;border:.25cqw solid var(--lab-line);border-radius:1.3cqw;font:600 2.67cqw/1.2 var(--lab-font-body);background:var(--lab-surface-2)}
+.o i{flex:none;width:4.4cqw;height:4.4cqw;border-radius:50%;border:.2cqw solid var(--lab-accent);color:var(--lab-accent);display:grid;place-items:center;font:600 2.1cqw/1 var(--lab-font-inscription);font-style:normal}
+.o.ok{border-color:var(--lab-verde)}
+.cap{font:800 1.3cqw/1 var(--lab-font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--lab-ink-soft)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td{padding:6px 0;border-bottom:1px solid var(--lab-line-soft);color:var(--lab-ink-soft)}
+td:first-child{font-weight:700;color:var(--lab-ink)}td:last-child{text-align:right;font-family:monospace}
+p{margin:13px 0 0;font-size:11.5px;line-height:1.5;color:var(--lab-ink-soft);text-wrap:pretty}
+</style>
+</head>
+<body>
+<div>
+<p class="h">Come appare sulla LIM</p>
+<div class="board">
+<span class="cap">Quiz · 3 di 8</span>
+<div class="q">Chi era Georges Lemaître?</div>
+<div class="o"><i>A</i>Un astronomo americano</div>
+<div class="o ok"><i>B</i>Sacerdote e fisico belga</div>
+</div>
+</div>
+<div>
+<p class="h">Scala · % larghezza</p>
+<table>
+<tr><td>Didascalia</td><td>1.3</td><td>25px</td></tr>
+<tr><td>Testo</td><td>2.1</td><td>40px</td></tr>
+<tr><td>Opzioni</td><td>2.67</td><td>51px</td></tr>
+<tr><td>Domanda</td><td>3.4</td><td>65px</td></tr>
+<tr><td>Termine</td><td>5.5</td><td>106px</td></tr>
+<tr><td>Punteggio</td><td>8.9</td><td>171px</td></tr>
+<tr><td>Area tocco min.</td><td>5.5</td><td>106px</td></tr>
+</table>
+<p>px a 1920 di larghezza. Passi ×φ, quindi il rapporto aureo resta. Sulla LIM conta la frazione di lavagna, non i pixel: su un proiettore 1024×768 lo stesso testo resta grande uguale.</p>
+<p>In LIM: domande in Figtree 800 (x-height alta; Cormorant è troppo sottile a 6–8 m), grigi schiariti, bordi 3px, niente bagliori né effetti sotto il testo.</p>
+</div>
+</body>
+</html>

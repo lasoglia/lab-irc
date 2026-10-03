@@ -9,5 +9,6 @@
 @import './tokens/spacing.css';
 @import './tokens/shadows.css';
 @import './tokens/animation.css';
+@import './tokens/perception.css';
 @import './tokens/theme-light.css';
 @import './tokens/base.css';

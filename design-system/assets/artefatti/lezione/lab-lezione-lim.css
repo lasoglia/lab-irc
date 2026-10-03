@@ -1,0 +1,26 @@
+/* Lab IRC — Lezione in modalità LIM (<html data-lim>: pulsante «LIM» in testata, tasto L, ?lim=1).
+   Un solo principio: tutto cresce in proporzione aurea, non regola per regola.
+   Oltre 1100 px la scena cresce di φ (1,618) e testata e barra di √φ (1,272); sotto, la scena di √φ e i comandi di φ^¼.
+   Così titoli, testo, spazi e aree di tocco mantengono fra loro gli stessi rapporti del disegno normale. */
+:root[data-lim]{--ll-z:1.272;--ll-zc:1.128}
+@media (min-width:1100px){:root[data-lim]{--ll-z:1.618;--ll-zc:1.272}}
+:root[data-lim] body.ll .ll-top,:root[data-lim] body.ll .ll-nav{zoom:var(--ll-zc)}
+:root[data-lim] body.ll .ll-scroll>*,:root[data-lim] body.ll .ll-pop,:root[data-lim] body.ll .ll-glos,:root[data-lim] body.ll .la-amdg{zoom:var(--ll-z)}
+:root[data-lim] body.ll .ll-glos{width:min(420px,calc(100vw / var(--ll-z)))}
+:root[data-lim] body.ll .ll-pop{width:min(360px,calc((100vw - 26px) / var(--ll-z)))}
+
+/* i token LIM del kit artefatti (pensati senza zoom) tornano alle misure normali: lo zoom fa il resto, una volta sola */
+:root[data-lim] body.ll{--lab-lim-caption:12.5px;--lab-lim-body:16px;--lab-lim-lead:17px;--lab-lim-question:clamp(25px,3vw,30px);--lab-lim-term:40px;--lab-lim-score:55px;--lab-lim-target:55px;--lab-lim-measure:62ch;--lu:6.18px}
+
+/* leggibilità a 6–8 metri: tinte piene, pesi più alti, domande in sans 800 (stessa scala, più contrasto) */
+:root[data-lim] body.ll .ll-p,:root[data-lim] body.ll .ll-lead,:root[data-lim] body.ll .lp-p,:root[data-lim] body.ll .ll-hint{color:var(--lab-ink)}
+:root[data-lim] body.ll .ll-p,:root[data-lim] body.ll .ll-lead{font-weight:500}
+:root[data-lim] body.ll .ll-h{font-weight:700}
+:root[data-lim] body.ll .ll-h em{font-weight:600}
+:root[data-lim] body.ll .la-q,:root[data-lim] body.ll .ll-block-h{font-family:var(--lab-font-body);font-weight:800;letter-spacing:-.01em}
+:root[data-lim] body.ll .ll-dfn{text-decoration-thickness:3px}
+:root[data-lim] body.ll .la-halo{display:none}
+
+/* mascotte nella sua corsia della barra, alla stessa scala dei comandi */
+:root[data-lim] body.ll .la-mascot{right:13px;bottom:3px;transform:none}
+:root[data-lim] body.ll .la-mascot lab-mascotte{width:calc(55px * var(--ll-zc))!important;height:calc(55px * var(--ll-zc))!important}

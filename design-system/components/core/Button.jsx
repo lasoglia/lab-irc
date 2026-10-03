@@ -16,7 +16,7 @@ export function Button({ children, variant = 'primary', size = 'md', href, onCli
   const leave = () => { setHov(false); setDown(false); setOff({ x: 0, y: 0 }); };
 
   const vars = {
-    primary: { background: 'var(--lab-grad)', color: '#fff', boxShadow: hov ? '0 13px 34px -13px rgba(139,92,246,.75)' : '0 8px 21px -13px rgba(139,92,246,.6)' },
+    primary: { background: 'var(--lab-grad-cta, var(--lab-grad))', color: '#fff', boxShadow: hov ? '0 13px 34px -13px rgba(139,92,246,.75)' : '0 8px 21px -13px rgba(139,92,246,.6)' },
     ghost: { background: 'transparent', color: hov ? 'var(--lab-ink)' : 'var(--lab-ink-soft)', borderColor: hov ? 'var(--lab-viola)' : 'var(--lab-line)' },
     gold: { background: 'var(--lab-ambra)', color: '#3a2a06', boxShadow: hov ? '0 13px 34px -13px rgba(251,191,36,.6)' : 'none' },
     solemn: { background: 'transparent', color: 'var(--lab-oro)', borderColor: hov ? 'var(--lab-oro)' : 'color-mix(in srgb, var(--lab-oro) 45%, transparent)', fontFamily: 'var(--lab-font-inscription)', textTransform: 'uppercase', letterSpacing: '.18em', fontSize: sm ? 12 : 13, fontWeight: 700 },

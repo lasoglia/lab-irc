@@ -1,0 +1,22 @@
+/* Lab IRC — Percezione. Gestalt + attenzione + scala LIM.
+   Prossimità: dentro un gruppo ≈ φ² più vicino che tra gruppi (8 → 21 → 55).
+   LIM: la dimensione fisica sulla lavagna dipende dalla % di larghezza, non dai px →
+   unità = 1vw (limitata in altezza). Scala = Fibonacci / 10: 1.3 · 2.1 · 3.4 · 5.5 · 8.9 (passi ×φ). */
+:root {
+  --lab-gap-within:  8px;
+  --lab-gap-group:   21px;
+  --lab-gap-section: 55px;
+  --lab-recede:      .382; /* @kind other */
+  --lab-stagger:     55ms; /* @kind other */
+  --lab-focus-ring:  0 0 0 3px var(--lab-oro);
+
+  --lab-lim-unit:     min(1vw, 1.9vh); /* @kind spacing */
+  --lab-lim-caption:  max(16px, calc(var(--lab-lim-unit) * 1.3));
+  --lab-lim-body:     max(20px, calc(var(--lab-lim-unit) * 2.1));
+  --lab-lim-lead:     max(23px, calc(var(--lab-lim-unit) * 2.67));
+  --lab-lim-question: max(28px, calc(var(--lab-lim-unit) * 3.4));
+  --lab-lim-term:     max(40px, calc(var(--lab-lim-unit) * 5.5));
+  --lab-lim-score:    max(64px, calc(var(--lab-lim-unit) * 8.9));
+  --lab-lim-target:   max(56px, calc(var(--lab-lim-unit) * 5.5));
+  --lab-lim-measure:  32ch;
+}

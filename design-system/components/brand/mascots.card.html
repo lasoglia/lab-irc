@@ -1,4 +1,4 @@
-<!-- @dsCard group="Brand" viewport="700x200" name="Mascotte degli anni" subtitle="Un logo simpatico per anno — segue il cursore, parla al clic, al 7° clic AMDG" -->
+<!-- @dsCard group="Brand" viewport="700x250" name="Mascotte degli anni" subtitle="Un logo simpatico per anno — segue il cursore, parla al clic, al 7° clic AMDG" -->
 <!doctype html>
 <html lang="it">
 <head>
@@ -22,7 +22,7 @@ function Demo() {
     <div style={{ display:'grid', gridTemplateColumns:'repeat(5,1fr)', gap:21, textAlign:'center' }}>
       {ANNI.map(([y,n,d]) => (
         <div key={y} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
-          <YearMascot year={y} size={60} />
+          <YearMascot year={y} size={89} />
           <div style={{ fontFamily:'var(--lab-font-inscription)', fontSize:12, letterSpacing:'.18em', color:`var(--lab-anno-${y})`, marginTop:5 }}>ANNO {ROMAN[y]}</div>
           <div style={{ fontFamily:'var(--lab-font-display)', fontWeight:600, fontSize:21, color:'var(--lab-ink)', lineHeight:1 }}>{n}</div>
           <div style={{ fontSize:12, color:'var(--lab-muted)' }}>{d}</div>

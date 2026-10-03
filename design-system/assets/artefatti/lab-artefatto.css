@@ -1,6 +1,7 @@
 /* Lab IRC — Kit artefatti. Uso: <body class="la" data-anno="1-5"> + lab-artefatto.js.
    Richiede styles.css + tokens/ alla radice del sito. */
 @import url('../../styles.css');
+@import url('lab-percezione.css');
 
 body.la{--la-accent:var(--lab-viola);margin:0;min-height:100vh;background:var(--lab-bg);color:var(--lab-ink);font-family:var(--lab-font-body);line-height:1.618}
 body[data-anno="1"]{--la-accent:var(--lab-anno-1)}
@@ -52,7 +53,7 @@ body[data-anno="5"]{--la-accent:var(--lab-anno-5)}
 
 .la-halo{position:fixed;left:0;top:0;width:466px;height:466px;border-radius:50%;pointer-events:none;z-index:0;opacity:0;transition:opacity 610ms;background:radial-gradient(circle,color-mix(in srgb,var(--la-accent) 12%,transparent),rgba(227,194,122,.04) 38.2%,transparent 61.8%)}
 
-.la-mascot{position:fixed;right:21px;bottom:21px;z-index:50;width:89px;height:89px;line-height:0;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
+.la-mascot{position:fixed;right:55px;bottom:21px;z-index:50;line-height:0;animation:laPeek 987ms var(--lab-ease-out) 1618ms both}
 
 .la-amdg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;text-align:center;cursor:pointer;background:radial-gradient(circle at 50% 45%,rgba(227,194,122,.18),rgba(10,9,16,.95) 61.8%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:labFade 610ms ease-out both;transition:opacity 610ms}
 .la-amdg.is-out{opacity:0}
