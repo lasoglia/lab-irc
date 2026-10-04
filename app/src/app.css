@@ -238,10 +238,17 @@ html[data-lim]:not([data-tema="chiaro"]) .lab-pagina-hero--anno{ background:line
   .lab-tag{ letter-spacing:.08em; padding:5px 6px; }   /* badge + tag stanno in una riga a 390px */
   .lab-avanti{ min-height:0; padding:21px 55px 21px 21px; }
   .lab-avanti-freccia{ top:50%; bottom:auto; transform:translateY(-50%); }
-  .lab-footer{ grid-template-columns:1fr !important; gap:13px 21px !important; padding-bottom:55px !important; }   /* una colonna: il copyright non si spezza parola per parola */
+  /* meno vuoto prima del fondo pagina (un passo di Fibonacci in meno) */
+  .lab-pagina{ padding-bottom:55px !important; }
+  .lab-pensiero{ margin-top:55px !important; padding-top:34px !important; }
+  /* il fondo pagina sul telefono: una sola colonna centrata, righe nello stesso ordine
+     di lettura (© · comandi · percorso · dedica), spazi uguali */
+  .lab-footer{ grid-template-columns:1fr !important; justify-items:center; text-align:center; gap:13px !important; padding:34px 21px 55px !important; }
+  .lab-footer > *{ justify-self:center !important; max-width:100%; }
   .lab-footer > :nth-child(2){ display:none; }
   .lab-diritti{ display:none; }
-  .lab-mio{ display:flex; flex-wrap:wrap; align-items:center; gap:0 8px; }
+  .lab-mio{ order:3; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0 8px; }
+  .lab-dedica{ order:4; margin-top:8px; }
   .lab-briciole-full{ display:none !important; }
   .lab-su{ display:inline-flex; }
   .lab-lim{ display:none; }

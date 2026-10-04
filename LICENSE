@@ -1,0 +1,31 @@
+Lab IRC — Il laboratorio di Religione
+© 2026 Matteo Sestili. Tutti i diritti riservati.
+
+Questo repository (codice del sito, grafica, testi, lezioni interattive,
+fascicoli, slide e ogni altro materiale didattico) è pubblicato su GitHub
+soltanto per permettere il funzionamento del sito e la sua consultazione.
+
+Non è consentito, senza il permesso scritto dell'autore:
+- copiare, modificare o ridistribuire il codice, la grafica o i materiali;
+- pubblicarli altrove, in tutto o in parte, anche con modifiche;
+- usarli a fini commerciali.
+
+La consultazione online del sito e l'uso dei materiali da parte degli
+studenti delle classi dell'autore, nell'ambito delle sue lezioni, sono
+naturalmente consentiti.
+
+Per richieste di utilizzo (ad esempio da parte di altri insegnanti):
+matteo.sestili@istitutotorricelli.edu.it
+
+Componenti di terze parti inclusi o richiamati, che restano soggetti alle
+rispettive licenze:
+- React e react-dom (MIT), htm (MIT) — design-system/assets/vendor/
+- caratteri Cinzel, Cormorant Garamond e Figtree (SIL Open Font License 1.1)
+  — design-system/fonts/ (vedi LICENZE.txt nella stessa cartella)
+- Decap CMS (MIT), caricato dal pannello di gestione
+
+----------------------------------------------------------------------
+English summary: All rights reserved. The code, design and teaching
+materials in this repository may be viewed online but may not be copied,
+modified, redistributed or used commercially without the author's written
+permission. Third-party components keep their own licenses (listed above).
