@@ -1,8 +1,10 @@
 {
   "titolo": "Lab IRC",
   "sottotitolo": "Il laboratorio di Religione",
-  "intro": "Uno spazio per fare lezione in modo vivo: slide, documenti, video e strumenti interattivi, organizzati per anno di corso. Un luogo di riflessione critica, approfondimento storico-teologico e crescita umana.",
+  "intro": "Uno spazio per fare lezione in modo vivo: slide, documenti, video e strumenti interattivi, organizzati per anno di corso.",
   "pensiero": "Le grandi domande meritano risposte all'altezza.",
   "autore": "Matteo Sestili",
-  "email": "matteo.sestili@istitutotorricelli.edu.it"
+  "email": "matteo.sestili@istitutotorricelli.edu.it",
+  "bio": "Insegno Religione Cattolica nella scuola secondaria. Qui raccolgo i materiali che uso in classe, perché ogni domanda seria merita tempo, cura e bellezza. Un luogo di riflessione critica, approfondimento storico-teologico e crescita umana.",
+  "dedica": "Dedicato a san Carlo Acutis"
 }

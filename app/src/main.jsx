@@ -34,7 +34,7 @@ import {
   lezioniForUda, itemsInLezione, trovaUda, trovaLezione, normT, resolvePath, ytId,
   azione, varianteBadge, percorso, iscriviPercorso, chiaveItem, segnaAperto, segnaUltima,
   dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
-  titoloPulito, titoloMateriale, breve, ruolo,
+  titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
 } from "./dati.js";
 
 import "./app.css";
@@ -1198,15 +1198,22 @@ function Dimentica() {
   );
 }
 
-function Footer({ autore }) {
+function Footer({ autore, dedica }) {
   return (
     <footer className="lab-footer" style={{ maxWidth: 1140, margin: "0 auto", padding: "34px 21px 144px", borderTop: "1px solid var(--lab-line-soft)", color: "var(--lab-muted)", fontSize: 13.5, display: "grid", gridTemplateColumns: "minmax(0,1.618fr) auto minmax(0,1fr)", alignItems: "center", gap: 21 }}>
       <span>© {new Date().getFullYear()} {autore}<span className="lab-diritti"> · Tutti i diritti riservati</span></span>
       <Amdg />
       <span style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: 13 }}>
         <a href="admin/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Accesso docente</a>
+        {/* la via breve per caricare le lezioni: discreta, ma c'è */}
+        <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Importa</a>
         <ThemeToggle inFooter />
       </span>
+      {dedica && (
+        <span className="lab-dedica" style={{ gridColumn: "1 / -1", textAlign: "center", fontFamily: "var(--lab-font-inscription)", fontSize: 12.5, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lab-oro-text)" }}>
+          <span aria-hidden="true">✦ </span>{dedica}
+        </span>
+      )}
       <Dimentica />
     </footer>
   );
@@ -1348,6 +1355,15 @@ function App() {
   const parti = hash.split("/");
   const annoRotta = parti[0] === "anno" && annoMeta(parti[1]) ? parti[1] : null;
 
+  /* link con i vecchi titoli (già condivisi): si passa in silenzio al titolo nuovo */
+  useEffect(() => {
+    if (!D || !annoRotta || parti[2] !== "uda" || !parti[3]) return;
+    const udaRaw = dec(parti[3]), udaR = risolviUda(D, annoRotta, udaRaw);
+    const lezRaw = parti[4] === "lezione" && parti[5] ? dec(parti[5]) : "";
+    const lezR = lezRaw ? risolviLezione(D, annoRotta, udaR, lezRaw) : "";
+    if (udaR !== udaRaw || lezR !== lezRaw) location.replace(lezR ? hrefLezione(annoRotta, udaR, lezR) : hrefUda(annoRotta, udaR));
+  }, [D, hash]);
+
   /* titolo della scheda del browser: dove sono */
   useEffect(() => {
     if (!D) return;
@@ -1386,7 +1402,7 @@ function App() {
       <div className="lab-app" style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
         <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : null} rotta={rotta} conStrumenti={nS} conVideo={nV} />
         <main>{pagina}</main>
-        <Footer autore={D.SITE.autore || ""} />
+        <Footer autore={D.SITE.autore || ""} dedica={D.SITE.dedica} />
       </div>
       <LimToggle />
       <ThemeToggle />
