@@ -223,6 +223,24 @@ scegli un altro "tipo".
 
 ---
 
+## Ordine delle lezioni, titoli e dedica
+
+- **Ordine**: nelle pagine le unità e le lezioni vanno da sinistra a destra
+  seguendo il campo **Ordine** del pannello. Se manca, il sito usa il numero
+  nel nome dei file (`ii-1-2-…` = anno II, unità 1, lezione 2). L'importazione
+  rapida mette la lezione nuova dopo quelle che ci sono già.
+- **Titoli**: sul sito i titoli compaiono "puliti" (prima lettera maiuscola,
+  senza «UDA 1 -» o «Lezione 1», che diventano il numero nella riga sopra).
+  I titoli dei file dentro una lezione sono «Lezione interattiva»,
+  «Fascicolo di studio», «Slide». Se rinomini un'unità o una lezione, i link
+  vecchi smettono di funzionare: meglio farlo a inizio anno.
+- **Dedica e Chi sono**: in ⚙️ Impostazioni del sito trovi «Dedica (footer)»
+  (oggi «Dedicato a san Carlo Acutis») e «Presentazione (Chi sono)».
+- Il link **Importa**, in fondo a ogni pagina accanto ad «Accesso docente»,
+  porta alla pagina di importazione rapida (è volutamente poco visibile).
+
+---
+
 ## 6. Caricare molte lezioni in una volta (importazione rapida)
 
 Quando hai tante lezioni da mettere online, farle una alla volta dal pannello
