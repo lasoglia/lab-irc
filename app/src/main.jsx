@@ -321,7 +321,7 @@ function Hero({ site, anni, onStart, onYear, riprendi }) {
 function Quote({ testo }) {
   if (!testo) return null;
   return (
-    <Reveal style={{ margin: "89px 0 0", textAlign: "center", padding: "55px 21px 21px" }}>
+    <Reveal className="lab-pensiero" style={{ margin: "89px 0 0", textAlign: "center", padding: "55px 21px 21px" }}>
       <div aria-hidden="true" style={{ color: "var(--lab-oro)", fontSize: 13, marginBottom: 21, animation: "labBreath 3.2s ease-in-out 3" }}>✦</div>
       <blockquote style={{ margin: "0 auto", maxWidth: "22ch", fontFamily: "var(--lab-font-display)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(26px,3.6vw,42px)", lineHeight: 1.2, color: "var(--lab-ink)", textWrap: "balance" }}>«{testo}»</blockquote>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 13, marginTop: 34 }}>
@@ -427,7 +427,7 @@ function HomePage({ D, onYear }) {
   return (
     <>
       <Hero site={D.SITE} anni={anni} onStart={vaiAgliAnni} onYear={onYear} riprendi={riprendi} />
-      <div style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
+      <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
         <div ref={anniRef} />
         <SectionHead eyebrow="Percorso" title="Gli anni di corso" sub="Ogni anno ha le sue domande: entra nel tuo e trovi unità e lezioni, in ordine." />
         <div className="lab-anni" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(199px,1fr))", gap: stretto ? 13 : 21 }}>

@@ -6,6 +6,9 @@ gestiscono da un pannello in italiano su `/admin`.
 
 **Per metterlo online la prima volta, segui `GUIDA-AVVIO.md`.**
 
+**Licenza:** tutti i diritti riservati (vedi `LICENSE`). I materiali si possono
+consultare online, non copiare o ripubblicare senza permesso dell'autore.
+
 Struttura:
 - `index.html` — la pagina pubblica del sito
 - `admin/` — il pannello di gestione (Decap CMS)
