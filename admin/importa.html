@@ -439,7 +439,9 @@ td.stretta{width:1%;white-space:nowrap}
   function leggiBase64(file) {
     return new Promise(function (ok, ko) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result).split(',')[1]); }; fr.onerror = ko; fr.readAsDataURL(file); });
   }
-  function ordineMax(lista, filtro) { return lista.filter(filtro).reduce(function (m, x) { var o = +x.ordine; return isNaN(o) ? m : Math.max(m, o); }, 0); }
+  /* la nuova lezione va DOPO quelle che ci sono già: si guarda sia l'ordine massimo sia quante sono
+     (una lezione vecchia senza «ordine» altrimenti finirebbe dopo la nuova) */
+  function ordineMax(lista, filtro) { var q = lista.filter(filtro); return Math.max(q.length, q.reduce(function (m, x) { var o = +x.ordine; return isNaN(o) ? m : Math.max(m, o); }, 0)); }
   function datiNuovi() {
     var p = piano();
     var uda = JSON.parse(JSON.stringify(dati.uda)), lez = JSON.parse(JSON.stringify(dati.lezioni)), mat = JSON.parse(JSON.stringify(dati.materiali));

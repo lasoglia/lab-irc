@@ -1,95 +1,11 @@
 {
   "lezioni": [
     {
-      "titolo": "Gesù sotto il segno dell'aquila",
-      "anno": "2",
-      "uda": "Gesù quali tracce ",
-      "materiali": [
-        {
-          "in_evidenza": false,
-          "file": "/uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-artefatto.html",
-          "titolo": "Lez. Interattiva",
-          "tipo": "Artefatto interattivo"
-        },
-        {
-          "in_evidenza": false,
-          "file": "/uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf",
-          "titolo": "Fascicolo",
-          "tipo": "Documento/PDF"
-        }
-      ]
-    },
-    {
-      "titolo": "La visione cosmologica di Lemaitre",
-      "anno": "5",
-      "uda": "Le due vie di Lemaitre",
-      "materiali": [
-        {
-          "in_evidenza": false,
-          "file": "/uploads/v1-1il~1.htm",
-          "titolo": "Lez. Interattiva",
-          "tipo": "Artefatto interattivo"
-        },
-        {
-          "in_evidenza": false,
-          "file": "/uploads/v1-1il~1.pdf",
-          "titolo": "Fascicolo",
-          "tipo": "Documento/PDF"
-        }
-      ]
-    },
-    {
-      "anno": "3",
-      "titolo": "i benedettini",
-      "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
-      "materiali": [
-        {
-          "in_evidenza": false,
-          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf",
-          "titolo": "Fascicolo di studio",
-          "tipo": "Documento/PDF"
-        },
-        {
-          "in_evidenza": false,
-          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-artefatto.html",
-          "titolo": "Lez. Interattiva",
-          "tipo": "Artefatto interattivo"
-        }
-      ]
-    },
-    {
-      "uda": "UDA 1 - Riformare una Chiesa, cambiare una cultura",
-      "anno": "4",
-      "titolo": "Lezione 1  riformare una chiesa cambiare una cultura indulgenze",
-      "materiali": [
-        {
-          "in_evidenza": false,
-          "file": "/uploads/iv1-1r~1.htm",
-          "titolo": "Lezione interattiva"
-        },
-        {
-          "in_evidenza": false,
-          "file": "/uploads/iv1-1r~1.pdf",
-          "titolo": "Fascicolo di studio"
-        }
-      ]
-    },
-    {
-      "titolo": "Credo, non credo, non sò",
+      "titolo": "Credo, non credo, non so",
       "anno": "1",
       "uda": "L'uomo che cerca oltre il senso religioso",
-      "ordine": 1
-    },
-    {
-      "titolo": "Presentazione corso",
-      "anno": "4",
-      "uda": "Accoglienza ",
-      "materiali": [
-        {
-          "in_evidenza": false,
-          "file": "/uploads/iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html"
-        }
-      ]
+      "ordine": 1,
+      "materiali": []
     },
     {
       "titolo": "Segni e simboli",
@@ -99,43 +15,83 @@
       "materiali": [
         {
           "file": "/uploads/i-1-2-segni-simboli-sacro-e-profano-artefatto.html",
-          "titolo": "Segni simboli sacro e profano artefatto",
+          "titolo": "Lezione interattiva",
           "tipo": "Artefatto interattivo",
           "in_evidenza": false
         },
         {
           "file": "/uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf",
-          "titolo": "Segni simboli sacro e profano fascicolo",
+          "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF",
           "in_evidenza": false
         }
       ]
     },
     {
-      "titolo": "lo screenshot non basta",
+      "titolo": "Gesù sotto il segno dell'aquila",
       "anno": "2",
       "uda": "Gesù quali tracce",
-      "ordine": 1,
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf",
+          "titolo": "Fascicolo di studio",
+          "tipo": "Documento/PDF"
+        }
+      ],
+      "ordine": 1
+    },
+    {
+      "titolo": "Lo screenshot non basta",
+      "anno": "2",
+      "uda": "Gesù quali tracce",
+      "ordine": 2,
       "materiali": [
         {
           "file": "/uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-artefatto.html",
-          "titolo": "lezione interattiva",
+          "titolo": "Lezione interattiva",
           "tipo": "Artefatto interattivo",
           "in_evidenza": false
         },
         {
           "file": "/uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf",
-          "titolo": "fascicolo",
+          "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF",
           "in_evidenza": false
         }
       ]
     },
     {
+      "anno": "3",
+      "titolo": "I benedettini",
+      "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf",
+          "titolo": "Fascicolo di studio",
+          "tipo": "Documento/PDF"
+        }
+      ],
+      "ordine": 1
+    },
+    {
       "titolo": "Chi può insegnare a chi",
       "anno": "3",
       "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
-      "ordine": 1,
+      "ordine": 2,
       "materiali": [
         {
           "file": "/uploads/iii-1-2-chi-puo-insegnare-a-chi-artefatto.html",
@@ -145,17 +101,51 @@
         },
         {
           "file": "/uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf",
-          "titolo": "Fascicolo",
+          "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF",
           "in_evidenza": false
         }
       ]
     },
     {
-      "titolo": "Lutero a worms",
+      "titolo": "Presentazione corso",
       "anno": "4",
-      "uda": "UDA 1 - Riformare una Chiesa, cambiare una cultura",
-      "ordine": 1,
+      "uda": "Accoglienza",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo"
+        }
+      ],
+      "ordine": 1
+    },
+    {
+      "uda": "Riformare una Chiesa, cambiare una cultura",
+      "anno": "4",
+      "titolo": "Riformare una Chiesa: le indulgenze",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv1-1r~1.htm",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/iv1-1r~1.pdf",
+          "titolo": "Fascicolo di studio",
+          "tipo": "Documento/PDF"
+        }
+      ],
+      "ordine": 1
+    },
+    {
+      "titolo": "Lutero a Worms",
+      "anno": "4",
+      "uda": "Riformare una Chiesa, cambiare una cultura",
+      "ordine": 2,
       "materiali": [
         {
           "file": "/uploads/iv-1-2-ritratta-lutero-a-worms-artefatto.html",
@@ -165,27 +155,47 @@
         },
         {
           "file": "/uploads/iv-1-2-ritratta-lutero-a-worms-fascicolo.pdf",
-          "titolo": "Fascicolo",
+          "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF",
           "in_evidenza": false
         }
       ]
     },
     {
+      "titolo": "La visione cosmologica di Lemaître",
+      "anno": "5",
+      "uda": "Le due vie di Lemaître",
+      "materiali": [
+        {
+          "in_evidenza": false,
+          "file": "/uploads/v1-1il~1.htm",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo"
+        },
+        {
+          "in_evidenza": false,
+          "file": "/uploads/v1-1il~1.pdf",
+          "titolo": "Fascicolo di studio",
+          "tipo": "Documento/PDF"
+        }
+      ],
+      "ordine": 1
+    },
+    {
       "titolo": "Creazione e primo istante",
       "anno": "5",
-      "uda": "Le due vie di Lemaitre",
-      "ordine": 1,
+      "uda": "Le due vie di Lemaître",
+      "ordine": 2,
       "materiali": [
         {
           "file": "/uploads/v-1-2-creazione-e-primo-istante-artefatto.html",
-          "titolo": "Creazione e primo istante artefatto",
+          "titolo": "Lezione interattiva",
           "tipo": "Artefatto interattivo",
           "in_evidenza": false
         },
         {
           "file": "/uploads/v-1-2-creazione-e-primo-istante-fascicolo.pdf",
-          "titolo": "Creazione e primo istante fascicolo",
+          "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF",
           "in_evidenza": false
         }

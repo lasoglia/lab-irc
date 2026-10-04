@@ -4,17 +4,17 @@
       "in_evidenza": false,
       "titolo": "Accoglienza",
       "anno": "1",
-      "uda": "Accoglienza I",
+      "uda": "Accoglienza",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/accoglienza-classi-1.html"
     },
     {
       "in_evidenza": false,
       "anno": "2",
-      "uda": "Accoglienza II",
+      "uda": "Accoglienza",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/accoglienza-mi-fido-perche-artefatto-classe-2.html",
-      "titolo": "Accoglienza II"
+      "titolo": "Accoglienza"
     },
     {
       "in_evidenza": false,
@@ -22,31 +22,31 @@
       "anno": "3",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/accoglienza-terza-mazzo-estate-artefatto.html",
-      "uda": "Accoglienza III"
+      "uda": "Accoglienza"
     },
     {
       "in_evidenza": false,
       "anno": "5",
-      "uda": "Accoglienza 5",
+      "uda": "Accoglienza",
       "titolo": "Accoglienza",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/apertura-cuore-inquieto-artefatto.html"
     },
     {
       "in_evidenza": false,
-      "titolo": "Fascicolo - Credo, non credo, non sò",
+      "titolo": "Fascicolo di studio",
       "anno": "1",
       "uda": "L'uomo che cerca oltre il senso religioso",
-      "lezione": "Credo, non credo, non sò",
+      "lezione": "Credo, non credo, non so",
       "tipo": "Documento/PDF",
       "file": "/uploads/i-1-1-credo-non-credo-non-so-fascicolo.pdf"
     },
     {
       "in_evidenza": false,
-      "titolo": "Lez. Interattiva - Credo, non credo, non sò",
+      "titolo": "Lezione interattiva",
       "anno": "1",
       "uda": "L'uomo che cerca oltre il senso religioso",
-      "lezione": "Credo, non credo, non sò",
+      "lezione": "Credo, non credo, non so",
       "tipo": "Artefatto interattivo",
       "file": "/uploads/i-1-1-credo-non-credo-non-so-artefatto.html"
     }

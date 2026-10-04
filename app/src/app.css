@@ -180,6 +180,10 @@ html[data-lim] .lab-anteprima{ display:none; }
 .lab-lim{ position:fixed; right:21px; bottom:81px; z-index:60; font:800 13px/1 var(--lab-font-body); letter-spacing:.08em; padding:0 16px; min-height:40px; border-radius:999px; border:1px solid var(--lab-line); background:var(--lab-surface); color:var(--lab-ink); cursor:pointer; box-shadow:var(--lab-shadow); }
 .lab-lim[aria-pressed="true"]{ background:var(--lab-oro); color:#241a02; border-color:transparent; }
 .lab-tema-footer{ display:none; }   /* il pulsante tema nel footer serve solo sul telefono */
+/* la via breve per caricare le lezioni: quasi invisibile, piena al passaggio o da tastiera */
+.lab-importa{ opacity:.45; text-decoration:none; transition:opacity 233ms; }
+.lab-importa:hover, .lab-importa:focus-visible{ opacity:1; color:var(--lab-oro); }
+.lab-dedica{ text-wrap:balance; }
 
 /* ---------- modalità LIM (lavagna): stesse pagine, leggibili da lontano ---------- */
 html[data-lim]{ --lab-muted:var(--lab-ink-soft); }

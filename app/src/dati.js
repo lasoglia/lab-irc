@@ -135,10 +135,64 @@ export const breve = (s, n = 34) => {
   return (c.includes(" ") ? c.replace(/\s+\S*$/, "") : c) + "…";
 };
 
-function byOrdine(a, b) {
-  const oa = a.ordine == null || a.ordine === "" ? 999 : +a.ordine;
-  const ob = b.ordine == null || b.ordine === "" ? 999 : +b.ordine;
-  return oa - ob || String(a.titolo).localeCompare(String(b.titolo), "it");
+/* Ordine di unità e lezioni: il campo «Ordine» del pannello; se manca, il numero
+   nel nome dei file («ii-1-2-…» = anno II, unità 1, lezione 2), così da sinistra a
+   destra si segue sempre il percorso del corso; altrimenti l'ordine di inserimento. */
+const PREFISSO_FILE = /^(?:i|ii|iii|iv|v)-(\d+)-(\d+)-/i;
+function numeroDaFile(x, pos) {
+  const files = [...(Array.isArray(x.materiali) ? x.materiali : []), ...(x._items || [])].map((m) => String(m.file || "").split("/").pop());
+  for (const f of files) { const m = PREFISSO_FILE.exec(f); if (m) return +m[pos]; }
+  return null;
+}
+function ordineDi(x, pos) {
+  if (x.ordine != null && x.ordine !== "" && !isNaN(+x.ordine)) return +x.ordine;
+  const n = numeroDaFile(x, pos);
+  return n == null ? 999 : n;
+}
+const byOrdineLezione = (a, b) => ordineDi(a, 2) - ordineDi(b, 2) || (a._i || 0) - (b._i || 0);
+const byOrdineUda = (a, b) => ordineDi(a, 1) - ordineDi(b, 1) || (a._i || 0) - (b._i || 0);
+
+/* indirizzi delle pagine */
+export const slug = (s) => encodeURIComponent(String(s || "").trim());
+export const hrefUda = (n, uda) => `#anno/${n}/uda/${slug(uda)}`;
+export const hrefLezione = (n, uda, lez) => `#anno/${n}/uda/${slug(uda)}/lezione/${slug(lez)}`;
+
+/* ---------- vecchi titoli → nuovi (i link già condivisi continuano a funzionare) ----------
+   chiave: anno + "|" + titolo vecchio (confrontato con normT) */
+const ALIAS_UDA = {
+  "1|accoglienza i": "Accoglienza",
+  "2|accoglienza ii": "Accoglienza",
+  "3|accoglienza iii": "Accoglienza",
+  "4|uda 1 - riformare una chiesa, cambiare una cultura": "Riformare una Chiesa, cambiare una cultura",
+  "5|accoglienza 5": "Accoglienza",
+  "5|le due vie di lemaitre": "Le due vie di Lemaître",
+};
+const ALIAS_LEZ = {
+  "1|credo, non credo, non sò": "Credo, non credo, non so",
+  "4|lezione 1  riformare una chiesa cambiare una cultura indulgenze": "Riformare una Chiesa: le indulgenze",
+  "5|la visione cosmologica di lemaitre": "La visione cosmologica di Lemaître",
+};
+export function risolviUda(D, n, titolo) {
+  const t = normT(titolo);
+  if (!t) return titolo;
+  const u = D.UDA.find((x) => String(x.anno) === String(n) && normT(x.titolo) === t);
+  if (u) return u.titolo;   /* anche solo spazi o maiuscole diverse: si usa il titolo com'è nel pannello */
+  return ALIAS_UDA[String(n) + "|" + t] || titolo;
+}
+export function risolviLezione(D, n, uda, titolo) {
+  const t = normT(titolo);
+  if (!t) return titolo;
+  const l = D.LEZ.find((x) => String(x.anno) === String(n) && normT(x.uda) === normT(uda) && normT(x.titolo) === t);
+  if (l) return l.titolo;
+  return ALIAS_LEZ[String(n) + "|" + t] || titolo;
+}
+/* le orme salvate con i vecchi titoli restano valide */
+function migraChiave(k) {
+  const p = String(k).split("|");
+  if (p.length < 5) return k;
+  const u = ALIAS_UDA[p[1] + "|" + p[2]]; if (u) p[2] = normT(u);
+  const l = ALIAS_LEZ[p[1] + "|" + p[3]]; if (l) p[3] = normT(l);
+  return p.join("|");
 }
 
 export async function caricaDati() {
@@ -193,6 +247,10 @@ export async function caricaDati() {
   const visti = new Set();
   const UNICI = ITEMS.filter((it) => { const k = chiaveItem(it); if (visti.has(k)) return false; visti.add(k); return true; });
 
+  /* posizione d'inserimento e materiali collegati: servono all'ordinamento quando manca «ordine» */
+  UDA.forEach((u, i) => { u._i = i; u._items = UNICI.filter((it) => String(it.anno) === String(u.anno) && normT(it.uda) === normT(u.titolo)); });
+  LEZ.forEach((l, i) => { l._i = i; l._items = UNICI.filter((it) => String(it.anno) === String(l.anno) && normT(it.lezione) === normT(l.titolo)); });
+
   return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS: UNICI };
 }
 
@@ -213,10 +271,10 @@ export function udaForYear(D, n) {
     const t = normT(it.uda);
     if (matchAnno(it, n) && t && !titles.has(t)) {
       titles.add(t);
-      list.push({ titolo: String(it.uda).trim(), anno: String(n) });
+      list.push({ titolo: String(it.uda).trim(), anno: String(n), _i: 1000 + list.length, _items: D.ITEMS.filter((x) => matchAnno(x, n) && normT(x.uda) === t) });
     }
   });
-  return list.sort(byOrdine);
+  return list.sort(byOrdineUda);
 }
 
 export const itemsInUda = (D, n, titolo) =>
@@ -229,10 +287,10 @@ export function lezioniForUda(D, n, udaTitolo) {
     const t = normT(it.lezione);
     if (matchAnno(it, n) && normT(it.uda) === normT(udaTitolo) && t && !titles.has(t)) {
       titles.add(t);
-      list.push({ titolo: String(it.lezione).trim(), anno: String(n), uda: udaTitolo });
+      list.push({ titolo: String(it.lezione).trim(), anno: String(n), uda: udaTitolo, _i: 1000 + list.length, _items: D.ITEMS.filter((x) => matchAnno(x, n) && normT(x.uda) === normT(udaTitolo) && normT(x.lezione) === t) });
     }
   });
-  return list.sort(byOrdine);
+  return list.sort(byOrdineLezione);
 }
 
 export const itemsInLezione = (D, n, udaT, lezT) =>
@@ -301,7 +359,17 @@ function leggiPercorso() {
   try {
     const x = JSON.parse(localStorage.getItem(CHIAVE_PERCORSO) || "null");
     if (x && x.v === 1 && Array.isArray(x.aperti)) {
-      return { v: 1, aperti: x.aperti.filter((k) => typeof k === "string").slice(-MAX_APERTI), ultima: x.ultima && typeof x.ultima.hash === "string" ? x.ultima : null };
+      const aperti = [...new Set(x.aperti.filter((k) => typeof k === "string").map(migraChiave))].slice(-MAX_APERTI);
+      let ultima = x.ultima && typeof x.ultima.hash === "string" ? x.ultima : null;
+      if (ultima) {
+        const u = ALIAS_UDA[String(ultima.anno) + "|" + normT(ultima.uda)];
+        const l = ALIAS_LEZ[String(ultima.anno) + "|" + normT(ultima.lezione)];
+        if (u || l) {
+          const uda = u || ultima.uda, lez = l || ultima.lezione;
+          ultima = { ...ultima, uda, lezione: lez || "", titolo: l || u || ultima.titolo, hash: lez ? hrefLezione(ultima.anno, uda, lez) : hrefUda(ultima.anno, uda) };
+        }
+      }
+      return { v: 1, aperti, ultima };
     }
   } catch (e) { /* storage bloccato o dati rovinati: si riparte vuoti */ }
   return VUOTO;
@@ -362,9 +430,6 @@ export function vicini(list, titolo) {
   return { pos: i + 1, tot: list.length, prec: i > 0 ? list[i - 1] : null, succ: i >= 0 && i < list.length - 1 ? list[i + 1] : null };
 }
 
-export const slug = (s) => encodeURIComponent(String(s || "").trim());
-export const hrefUda = (n, uda) => `#anno/${n}/uda/${slug(uda)}`;
-export const hrefLezione = (n, uda, lez) => `#anno/${n}/uda/${slug(uda)}/lezione/${slug(lez)}`;
 
 /* ordine "naturale" di una lezione: prima l'attività interattiva (aggancio),
    poi slide/video/link (scoperta), infine documenti e PDF (ripasso).
