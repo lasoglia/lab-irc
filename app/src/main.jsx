@@ -558,8 +558,9 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, n
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, borderRadius: "inherit", overflow: "hidden", pointerEvents: "none" }}>
         <div className="lab-glifo" style={{ position: "absolute", right: conM ? 199 : 21, bottom: -34, fontSize: 199, fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
       </div>
+      {/* onClickCapture: il componente ferma la propagazione del clic, la cattura arriva prima */}
       {conM && (
-        <div ref={mRef} className="lab-pagina-mascotte" onClick={tocca} style={{ position: "absolute", right: 34, top: 21, zIndex: 2 }}>
+        <div ref={mRef} className="lab-pagina-mascotte" onClickCapture={tocca} style={{ position: "absolute", right: 34, top: 21, zIndex: 2 }}>
           <YearMascot year={mascotte} size={stretto || lim ? 89 : 144} fumetto="sotto" speak={!stretto} />
         </div>
       )}
@@ -1113,8 +1114,9 @@ function Visore({ href, item, color, onChiudi, uscendo }) {
   return (
     <div className={"lab-visore" + (uscendo ? " lab-visore--via" : "")} role="dialog" aria-modal="true" aria-label={dove ? `${titolo} · ${dove}` : titolo}
       style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", flexDirection: "column", background: "#14131F", animation: `labSu 377ms ${EASE} both` }}>
-      <div className="lab-visore-barra" style={{ position: "relative", height: stretto ? 44 : 55, background: "#1E1C2E", color: "#ECEAF5", borderBottom: "1px solid #322E45", display: "flex", alignItems: "center", gap: 13, padding: "0 13px", flex: "none" }}>
-        <button ref={btn} type="button" onClick={onChiudi} style={{ display: "flex", alignItems: "center", gap: 5, background: "#272438", border: "1px solid #322E45", color: "#ECEAF5", font: "inherit", fontSize: 13.5, fontWeight: 700, cursor: "pointer", padding: stretto ? "6px 13px" : "8px 13px", borderRadius: 999, whiteSpace: "nowrap", minHeight: stretto ? 34 : 40 }}>
+      <div className="lab-visore-barra" style={{ position: "relative", height: stretto ? 50 : 55, background: "#1E1C2E", color: "#ECEAF5", borderBottom: "1px solid #322E45", display: "flex", alignItems: "center", gap: 13, padding: "0 8px 0 3px", flex: "none" }}>
+        {/* bersaglio tattile ≥44px anche sul telefono */}
+        <button ref={btn} type="button" onClick={onChiudi} style={{ display: "flex", alignItems: "center", gap: 5, background: "#272438", border: "1px solid #322E45", color: "#ECEAF5", font: "inherit", fontSize: 13.5, fontWeight: 700, cursor: "pointer", padding: "0 13px", borderRadius: 999, whiteSpace: "nowrap", minHeight: 44 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M19 12H5M5 12l7-7M5 12l7 7" /></svg>
           {indietro}
         </button>
