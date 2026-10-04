@@ -283,11 +283,22 @@ function Rosone({ anni, onYear }) {
   );
 }
 
+/* ---------- il santo patrono: il laboratorio è intitolato a lui, come una parrocchia ----------
+   festa: "gg-mm" dal pannello; quel giorno la home lo dice e la lapide si illumina */
+function festaOggi(festa) {
+  const m = /^\s*(\d{1,2})\s*[-/.]\s*(\d{1,2})\s*$/.exec(String(festa || ""));
+  if (!m) return false;
+  const oggi = new Date();
+  return oggi.getDate() === +m[1] && oggi.getMonth() + 1 === +m[2];
+}
+
 /* ---------- home ---------- */
 function Hero({ site, anni, onStart, onYear, riprendi }) {
   const parole = String(site.sottotitolo || "Il laboratorio di Religione").trim().split(/\s+/);
   const ultima = parole.pop();
   const prima = usePrimaVista();
+  const patrono = String(site.patrono || "").trim();
+  const festa = patrono && festaOggi(site.patrono_festa);
   return (
     <section className="lab-hero" style={{ maxWidth: 1140, margin: "0 auto", padding: "89px 21px 34px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: 55 }}>
       <div style={{ flex: "1.618 1 420px", minWidth: 0 }}>
@@ -297,6 +308,13 @@ function Hero({ site, anni, onStart, onYear, riprendi }) {
           {parole.length > 0 && <br />}
           <span style={{ display: "inline-block", paddingBottom: ".14em", paddingRight: ".06em", fontStyle: "italic", fontWeight: 500, animation: entrata(prima, 89 + parole.length * 89) }} className="lab-grad-text">{ultima}</span>
         </h1>
+        {/* la "facciata": il nome del santo titolare, inciso sotto il titolo */}
+        {patrono && (
+          <div className={"lab-patrono" + (festa ? " lab-patrono--festa" : "")} style={{ display: "flex", alignItems: "center", gap: 13, margin: "0 0 21px", fontFamily: "var(--lab-font-inscription)", fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color: "var(--lab-oro-text)", minWidth: 0, animation: entrata(prima, 377) }}>
+            <span aria-hidden="true" style={{ width: 34, height: 1, background: "currentColor", opacity: 0.7, flexShrink: 0 }} />
+            <span style={{ textWrap: "balance" }}>{patrono} · {festa ? "oggi è la sua festa" : "patrono"}</span>
+          </div>
+        )}
         <p style={{ fontSize: "clamp(16px,1.6vw,20.5px)", lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "38ch", margin: "0 0 34px", textWrap: "pretty", animation: entrata(prima, 445) }}>
           {site.intro}<span aria-hidden="true" style={{ color: "transparent" }}> A·M·D·G</span>
         </p>
@@ -326,7 +344,7 @@ function Quote({ testo }) {
       <blockquote style={{ margin: "0 auto", maxWidth: "22ch", fontFamily: "var(--lab-font-display)", fontStyle: "italic", fontWeight: 500, fontSize: "clamp(26px,3.6vw,42px)", lineHeight: 1.2, color: "var(--lab-ink)", textWrap: "balance" }}>«{testo}»</blockquote>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 13, marginTop: 34 }}>
         <span style={{ width: 55, height: 1, background: "var(--lab-oro)", opacity: 0.6 }} />
-        <span style={{ fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 800, color: "var(--lab-oro-text)" }}>Pensiero guida</span>
+        <span className="lab-pensiero-eb" style={{ fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 800, color: "var(--lab-oro-text)", whiteSpace: "nowrap" }}>Pensiero guida</span>
         <span style={{ width: 55, height: 1, background: "var(--lab-oro)", opacity: 0.6 }} />
       </div>
     </Reveal>
@@ -1200,7 +1218,20 @@ function Dimentica() {
   );
 }
 
-function Footer({ autore, dedica }) {
+/* la lapide di dedicazione, come sul portale di una chiesa: una riga per riga del pannello */
+function Lapide({ testo, festa }) {
+  const righe = String(testo || "").split(/\r?\n/).map((r) => r.trim()).filter(Boolean);
+  if (!righe.length) return null;
+  return (
+    <div className={"lab-lapide" + (festa ? " lab-lapide--festa" : "")} role="note" aria-label="Lapide di dedicazione" style={{ gridColumn: "1 / -1", justifySelf: "center", textAlign: "center", padding: "13px 21px", borderTop: "1px solid color-mix(in srgb, var(--lab-oro) 35%, transparent)", borderBottom: "1px solid color-mix(in srgb, var(--lab-oro) 35%, transparent)", fontFamily: "var(--lab-font-inscription)", fontSize: 12.5, letterSpacing: ".2em", textTransform: "uppercase", fontWeight: 600, lineHeight: 1.9, color: "var(--lab-oro-text)" }}>
+      <span aria-hidden="true" style={{ display: "block", fontSize: 11, letterSpacing: 0, lineHeight: 1.4, opacity: 0.85 }}>✦</span>
+      {righe.map((r, i) => <span key={i} style={{ display: "block", textWrap: "balance" }}>{r}</span>)}
+      {festa && <span style={{ display: "block", marginTop: 5, fontSize: 11.5, letterSpacing: ".18em", color: "var(--lab-oro)" }}>Oggi, festa del patrono</span>}
+    </div>
+  );
+}
+
+function Footer({ autore, iscrizione, festa }) {
   return (
     <footer className="lab-footer" style={{ maxWidth: 1140, margin: "0 auto", padding: "34px 21px 144px", borderTop: "1px solid var(--lab-line-soft)", color: "var(--lab-muted)", fontSize: 13.5, display: "grid", gridTemplateColumns: "minmax(0,1.618fr) auto minmax(0,1fr)", alignItems: "center", gap: 21 }}>
       <span>© {new Date().getFullYear()} {autore}<span className="lab-diritti"> · Tutti i diritti riservati</span></span>
@@ -1211,11 +1242,7 @@ function Footer({ autore, dedica }) {
         <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap" }}>Importa</a>
         <ThemeToggle inFooter />
       </span>
-      {dedica && (
-        <span className="lab-dedica" style={{ gridColumn: "1 / -1", textAlign: "center", fontFamily: "var(--lab-font-inscription)", fontSize: 12.5, letterSpacing: ".18em", textTransform: "uppercase", color: "var(--lab-oro-text)" }}>
-          <span aria-hidden="true">✦ </span>{dedica}
-        </span>
-      )}
+      <Lapide testo={iscrizione} festa={festa} />
       <Dimentica />
     </footer>
   );
@@ -1410,7 +1437,7 @@ function App() {
       <div className="lab-app" style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
         <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : null} rotta={rotta} conStrumenti={nS} conVideo={nV} />
         <main>{pagina}</main>
-        <Footer autore={D.SITE.autore || ""} dedica={D.SITE.dedica} />
+        <Footer autore={D.SITE.autore || ""} iscrizione={D.SITE.iscrizione || D.SITE.dedica} festa={!!String(D.SITE.patrono || "").trim() && festaOggi(D.SITE.patrono_festa)} />
       </div>
       <LimToggle />
       <ThemeToggle />

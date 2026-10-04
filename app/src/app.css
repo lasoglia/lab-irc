@@ -185,7 +185,11 @@ html[data-lim] .lab-anteprima{ display:none; }
 /* la via breve per caricare le lezioni: quasi invisibile, piena al passaggio o da tastiera */
 .lab-importa{ color:var(--lab-muted); opacity:.45; text-decoration:none; transition:opacity 233ms, color 233ms; }
 .lab-importa:hover, .lab-importa:focus-visible{ opacity:1; color:var(--lab-oro); }
-.lab-dedica{ text-wrap:balance; }
+/* il santo titolare: la riga incisa in home e la lapide in fondo; il giorno della festa, la luce d'oro */
+.lab-patrono--festa{ color:var(--lab-oro); text-shadow:0 0 21px color-mix(in srgb, var(--lab-oro) 45%, transparent); }
+.lab-lapide{ max-width:420px; }
+.lab-lapide--festa{ box-shadow:0 0 34px color-mix(in srgb, var(--lab-oro) 28%, transparent); border-color:var(--lab-oro) !important; color:var(--lab-oro); animation:labFade 987ms ease both; }
+.lab-lapide--festa > span:first-child{ animation:labBreath 3.2s ease-in-out 3; }
 
 /* ---------- modalità LIM (lavagna): stesse pagine, leggibili da lontano ---------- */
 html[data-lim]{ --lab-muted:var(--lab-ink-soft); }
@@ -248,7 +252,7 @@ html[data-lim]:not([data-tema="chiaro"]) .lab-pagina-hero--anno{ background:line
   .lab-footer > :nth-child(2){ display:none; }
   .lab-diritti{ display:none; }
   .lab-mio{ order:3; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:0 8px; }
-  .lab-dedica{ order:4; margin-top:8px; }
+  .lab-lapide{ order:4; margin-top:8px; }
   .lab-briciole-full{ display:none !important; }
   .lab-su{ display:inline-flex; }
   .lab-lim{ display:none; }
@@ -264,6 +268,7 @@ html[data-lim]:not([data-tema="chiaro"]) .lab-pagina-hero--anno{ background:line
   .lab-pagina-hero{ padding:21px 21px 34px !important; }
   .lab-pagina-hero h1{ font-size:23px !important; }
   .lab-pagina-mascotte{ zoom:.618; }   /* 89 → 55px: il titolo riprende larghezza */
+  .lab-pensiero-eb{ letter-spacing:.12em !important; font-size:11.5px !important; }
   .lab-griglia .lab-copertina + div{ padding-top:13px !important; gap:8px !important; }
 }
 /* sul telefono e sui touch l'entrata è breve: niente blur, 610ms (il rosone, nella hero, resta com'è) */

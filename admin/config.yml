@@ -46,7 +46,9 @@ collections:
           - { label: "Testo di apertura (home)", name: intro, widget: text, hint: "Una frase sola, breve: compare sotto il titolo grande della home" }
           - { label: "Presentazione (Chi sono)", name: bio, widget: text, required: false, hint: "Il testo nel riquadro «Chi sono» in fondo alla home" }
           - { label: "Pensiero / frase d'apertura", name: pensiero, widget: string, required: false, hint: "Breve frase mostrata in cima alla home" }
-          - { label: "Dedica (footer)", name: dedica, widget: string, required: false, hint: "Una riga in fondo a ogni pagina. Es. Dedicato a san Carlo Acutis" }
+          - { label: "Santo patrono", name: patrono, widget: string, required: false, hint: "Il santo a cui è intitolato il laboratorio: compare in home sotto il titolo («San Carlo Acutis · patrono»)" }
+          - { label: "Festa del patrono (giorno-mese)", name: patrono_festa, widget: string, required: false, hint: "Es. 12-10. In quel giorno la home dice «oggi è la sua festa» e la lapide in fondo si illumina" }
+          - { label: "Lapide di dedicazione (in fondo a ogni pagina)", name: iscrizione, widget: text, required: false, hint: "Una riga per ogni riga della lapide. Es. D·O·M / Et Sancto Carolo Acutis dicatum / A·D·MMXXVI" }
           - { label: "Nome autore (per il copyright)", name: autore, widget: string, hint: "Compare nel footer: © anno NOME — Tutti i diritti riservati" }
           - { label: "Email di contatto", name: email, widget: string, required: false }
 
