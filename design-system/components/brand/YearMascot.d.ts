@@ -1,17 +1,25 @@
 /**
- * The mascot ("logo simpatico") of a school year. Same figure appears on the YearCard,
- * the year page, material cards and every lesson artefact of that year.
+ * The 2D mascot of a school year — same figure on the year card, year page, material cards and every
+ * lesson artefact/game of that year. Wraps the dependency-free web component <lab-mascotte>
+ * (site-root /assets/mascotte/lab-mascotte.js); static SVGs in assets/mascotte/svg/.
  * 1 Semino (seme) · 2 Ichthy (pesce) · 3 Navicella (barca di Pietro) · 4 Bussolina (coscienza) · 5 Terra (casa comune).
- * Eyes follow the cursor (Bussolina's needle points at it), it blinks and speaks a line on click.
- * Rendered by the <lab-mascotte> web component (assets/mascotte/lab-mascotte.js).
+ * 144×144 Fibonacci geometry, gold halo. Eyes follow the cursor (Bussolina's needle points at it), blinks,
+ * speaks on click (no AMDG on repeated clicks).
+ * Sizes: 34 material card (halo=false) · 55 year card · 89 artefact · 144 year page.
  */
 export interface YearMascotProps {
-  /** School year 1–5 — picks figure, colour (--lab-anno-N) and lines */
+  /** School year 1–5 */
   year: 1 | 2 | 3 | 4 | 5;
-  /** Pixel size — default 55 (consigliati 34 · 55 · 89 · 144) */
+  /** Pixel size — default 55. Use 34 · 55 · 89 · 144 */
   size?: number;
-  /** Show the speech bubble on click — default true */
+  /** Speech bubble on click — default true */
   speak?: boolean;
-  /** Golden halo ring — default true */
+  /** Gold halo ring — default true; false on small material cards */
+  halo?: boolean;
+  /** Eyes don't follow the cursor, no blinking — default false */
+  still?: boolean;
+  /** Speech-bubble direction: "sinistra" (default, near the right edge) or "sotto" (opens below) */
+  fumetto?: "sinistra" | "sotto";
+  /** @deprecated use halo */
   aureola?: boolean;
 }

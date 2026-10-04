@@ -470,6 +470,8 @@ function faiParlare(ref, testo) {
 
 /* testata colorata della pagina: il "picco" visivo (una sola figura: la mascotte) */
 function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, neutro, saluto, mascotteRef }) {
+  const conM = !!mascotte;
+  const stretto = useStretto();
   const [p, setP] = useState({ x: 0, y: 0 });
   const segui = conMouse() && !movimentoRidotto();
   const lim = useLim();
@@ -489,8 +491,6 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, n
     ? { background: "linear-gradient(130deg, var(--lab-surface-2), var(--lab-bg-2))", border: "1px solid var(--lab-line)", color: "var(--lab-ink)" }
     : { background: `linear-gradient(130deg, color-mix(in srgb, ${color} 55%, #14101a), color-mix(in srgb, ${color} 30%, #14101a))`, boxShadow: `inset 8px 0 0 ${color}`, color: "#fff" };
   const testo = neutro ? "var(--lab-ink-soft)" : "#fff";
-  const conM = !!mascotte;
-  const stretto = useStretto();
   return (
     <div className="lab-pagina-hero"
       onMouseMove={segui ? (e) => { const r = e.currentTarget.getBoundingClientRect(); setP({ x: (e.clientX - r.left) / r.width - 0.5, y: (e.clientY - r.top) / r.height - 0.5 }); } : undefined}
@@ -498,9 +498,9 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, n
       style={{ position: "relative", padding: "55px 34px", borderRadius: 34, margin: "21px 0 55px", animation: `labRise 987ms ${EASE} both`, ...sfondo }}>
       {/* solo il grande numero romano resta ritagliato: il fumetto della mascotte deve poter uscire */}
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, borderRadius: "inherit", overflow: "hidden", pointerEvents: "none" }}>
-        <div className="lab-glifo" style={{ position: "absolute", right: 21, bottom: -34, fontSize: 199, opacity: 0.14, color: neutro ? "var(--lab-oro)" : "#fff", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
+        <div className="lab-glifo" style={{ position: "absolute", right: conM ? 199 : 21, bottom: -34, fontSize: 199, opacity: 0.14, color: neutro ? "var(--lab-oro)" : "#fff", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, lineHeight: 1, transform: `translate(${p.x * 34}px, ${p.y * 21}px)`, transition: `transform 610ms ${EASE}` }}>{glifo}</div>
       </div>
-      {conM && <div ref={mRef} className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 21, zIndex: 2 }}><YearMascot year={mascotte} size={stretto ? 89 : 144} /></div>}
+      {conM && <div ref={mRef} className="lab-pagina-mascotte" style={{ position: "absolute", right: 34, top: 21, zIndex: 2 }}><YearMascot year={mascotte} size={stretto ? 89 : 144} fumetto="sotto" /></div>}
       <div className="lab-pagina-testo" style={{ position: "relative", paddingRight: conM ? 165 : 0, minWidth: 0 }}>
         <div className="lab-pagina-eyebrow" style={{ display: "flex", alignItems: "flex-start", gap: 13, fontFamily: "var(--lab-font-inscription)", fontSize: 13, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 600, color: neutro ? "var(--lab-oro-text)" : "#fff", marginBottom: 13, animation: `labSu 610ms ${EASE} both` }}>
           <span style={{ width: 34, height: 1, marginTop: ".6em", background: "currentColor", opacity: 0.7, flexShrink: 0 }} />
@@ -557,7 +557,7 @@ function Cartella({ href, color, titolo, desc, count, aperti = 0, tag, icona, i 
 
 /* griglia che si adatta a 1–2 elementi (una scheda sola non resta "sperduta") */
 function Griglia({ n, children }) {
-  const cols = n === 1 ? "minmax(0,1fr)" : n === 2 ? "repeat(auto-fit,minmax(288px,1fr))" : "repeat(auto-fill,minmax(288px,1fr))";
+  const cols = n === 1 ? "minmax(0,1fr)" : n === 2 ? "repeat(auto-fit,minmax(min(288px,100%),1fr))" : "repeat(auto-fill,minmax(min(288px,100%),1fr))";
   return <div className="lab-griglia" style={{ display: "grid", gridTemplateColumns: cols, gap: 21, maxWidth: n === 1 ? 610 : undefined }}>{children}</div>;
 }
 
@@ -594,7 +594,7 @@ function MatCard({ item, color, apri, primario, tag, mascotte, contesto, aperto 
     if (!attivo) return;
     const b = azioneRef.current && azioneRef.current.querySelector("button");
     if (b && document.activeElement !== b) { try { b.focus({ preventScroll: true }); } catch (e) { /* niente */ } }
-    if (!aperto) { segnaAperto(item); setAppena(true); }
+    if (!aperto && !leggiLim()) { segnaAperto(item); setAppena(true); }
     if (act.tipo === "video") setVideo(true);
     else if (act.tipo === "visore") apri(act.href, item.titolo, color);
     else if (act.tipo === "esterno") window.open(act.href, "_blank", "noopener");
@@ -709,20 +709,25 @@ const Fine = ({ children }) => (
 /* quando l'ultimo materiale viene aperto in questa visita, la strada avanti
    "chiama" due volte (picco e fine); mai di nuovo al ricaricare */
 function useChiama(aperti, tot) {
-  const prima = useRef(aperti);
+  const lim = useLim();
+  const prima = useRef(aperti), limPrima = useRef(lim);
   const [chiama, setChiama] = useState(false);
   useEffect(() => {
+    /* entrare/uscire dalla LIM cambia ciò che si vede, non ciò che si è fatto */
+    if (lim || limPrima.current !== lim) { prima.current = aperti; limPrima.current = lim; return; }
     if (tot > 0 && prima.current < tot && aperti >= tot) setChiama(true);
     prima.current = aperti;
-  }, [aperti, tot]);
-  return chiama;
+  }, [aperti, tot, lim]);
+  return chiama && !lim;
 }
 
 /* la mascotte commenta un progresso appena fatto (una frase, senza giudizi) */
 function useVoceProgresso(mRef, aperti, frase) {
-  const prima = useRef(aperti);
+  const lim = useLim();
+  const prima = useRef(aperti), limPrima = useRef(lim);
   useEffect(() => {
-    if (aperti > prima.current && !leggiLim()) {
+    if (lim || limPrima.current !== lim) { prima.current = aperti; limPrima.current = lim; return; }
+    if (aperti > prima.current) {
       prima.current = aperti;
       let f = null;
       const t = setTimeout(() => {
@@ -734,7 +739,7 @@ function useVoceProgresso(mRef, aperti, frase) {
       return () => { clearTimeout(t); if (f) removeEventListener("lab:visore-chiuso", f); };
     }
     prima.current = aperti;
-  }, [aperti]);
+  }, [aperti, lim]);
 }
 
 function AnnoPage({ D, n, apri }) {
@@ -861,7 +866,7 @@ function LezionePage({ D, n, uda, lezione, apri }) {
   /* strada avanti: prossima lezione → unità successiva → torna all'unità */
   const udas = udaForYear(D, n);
   const vu = vicini(udas, u.titolo);
-  const tornaUnita = { eyebrow: "Torna all'unità", titolo: u.titolo, meta: lezioni(lez.length || 1), href: hrefUda(n, u.titolo), indietro: true };
+  const tornaUnita = { eyebrow: "Torna all'unità", titolo: u.titolo, meta: lez.length ? lezioni(lez.length) : "", href: hrefUda(n, u.titolo), indietro: true };
   let tiles;
   if (v.succ) tiles = [{ main: true, eyebrow: "Prossima lezione", titolo: v.succ.titolo, meta: plurale(itemsInLezione(D, n, uda, v.succ.titolo).length), href: hrefLezione(n, uda, v.succ.titolo) }, tornaUnita];
   else if (vu.succ) tiles = [{ main: true, eyebrow: "Unità successiva", titolo: vu.succ.titolo, meta: plurale(itemsInUda(D, n, vu.succ.titolo).length), href: hrefUda(n, vu.succ.titolo) }, tornaUnita];
@@ -902,6 +907,7 @@ function ListaPage({ D, tipo, apri }) {
 function RicercaPage({ D, q, apri, setQ }) {
   const { cartelle, items } = useMemo(() => cerca(D, q), [D, q]);
   const [tutte, setTutte] = useState(false);
+  useEffect(() => setTutte(false), [q]);
   const tot = cartelle.length + items.length;
   const righe = tutte ? cartelle : cartelle.slice(0, 4);
   return (

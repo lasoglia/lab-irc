@@ -2,6 +2,7 @@
    Uso: <script src="lab-mascotte.js"></script>  <lab-mascotte anno="1" size="89"></lab-mascotte>
    Attributi: anno 1–5 · size px (default 89) · aureola="false" · parla="false" · statica (niente occhi che seguono)
    · fumetto="sinistra" (il fumetto si apre verso sinistra: per le mascotte vicino al bordo destro)
+   · fumetto="sotto" (si apre sotto la mascotte, allineato a destra: per le mascotte in cima alla pagina)
    Al clic saluta e dice una frase (niente A·M·D·G al 7° clic, per scelta del sito).
    Da JS: elemento.bubble('testo') mostra un fumetto (lo usa il kit degli artefatti). */
 (() => {
@@ -88,6 +89,8 @@
         @keyframes r{from{opacity:0;transform:translate(-50%,8px)}}
         :host([fumetto="sinistra"]) .b{left:auto;right:0;transform:none;animation-name:r2}
         @keyframes r2{from{opacity:0;transform:translateY(8px)}}
+        :host([fumetto="sotto"]) .b{left:auto;right:0;bottom:auto;top:calc(100% + 8px);transform:none;animation-name:r3}
+        @keyframes r3{from{opacity:0;transform:translateY(-8px)}}
         @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}}
       </style><span class="m">${svg(this.n, { aureola: this.getAttribute('aureola') !== 'false' })}</span>`;
       this.shadowRoot.querySelector('.m').onclick = e => this.click(e);

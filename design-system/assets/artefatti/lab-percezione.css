@@ -19,9 +19,11 @@ body[data-skin="arcade"]:has(.g-board)::before{opacity:.35}
 /* ---------- Modalità LIM ---------- */
 :root[data-lim]{--lu:var(--lab-lim-unit);--lab-muted:var(--lab-ink-soft)}
 :root[data-lim] .la-halo{display:none}
-:root[data-lim] .la-lim-btn{font-size:var(--lab-lim-caption);min-height:calc(var(--lu)*4.4);padding:0 calc(var(--lu)*2.1)}
+:root[data-lim] .la-lim-btn{font-size:var(--lab-lim-caption);min-height:max(40px,calc(var(--lu)*4.4));padding:0 calc(var(--lu)*2.1)}
 :root[data-lim] .la-mascot{right:calc(var(--lu)*1.3);bottom:calc(var(--lu)*1.3);transform-origin:bottom right;transition:transform 377ms var(--lab-ease-out)}
-:root[data-lim] body:has(.g-board) .la-mascot,:root[data-lim] body:has(.la-choices) .la-mascot{transform:scale(.618)}
+:root[data-lim] body:has(.g-board) .la-mascot,:root[data-lim] body:has(.la-choices) .la-mascot{scale:.618}
+/* telefono: l'ultima risposta deve poter scorrere oltre la mascotte */
+@media (max-width:720px){body.g,body.la{padding-bottom:144px}}
 :root[data-lim] .g-tool,:root[data-lim] .g-seg button{white-space:nowrap}
 
 /* artefatti */
@@ -48,7 +50,7 @@ body[data-skin="arcade"]:has(.g-board)::before{opacity:.35}
 :root[data-lim] .g-shell{max-width:min(96vw,1760px);padding:calc(var(--lu)*2.1) calc(var(--lu)*2.1) calc(var(--lu)*13)}
 :root[data-lim] .g-top{gap:calc(var(--lu)*2.1);margin-bottom:calc(var(--lu)*2.1)}
 :root[data-lim] .g-brand b{font-size:var(--lab-lim-body)}
-:root[data-lim] .g-seg button,:root[data-lim] .g-tool{font-size:var(--lab-lim-caption);min-height:calc(var(--lu)*4.4);padding:0 calc(var(--lu)*1.6)}
+:root[data-lim] .g-seg button,:root[data-lim] .g-tool{font-size:var(--lab-lim-caption);min-height:max(40px,calc(var(--lu)*4.4));padding:0 calc(var(--lu)*1.6)}
 :root[data-lim] .g-tabs{gap:calc(var(--lu)*.8);margin-bottom:calc(var(--lu)*2.1)}
 :root[data-lim] .g-tabs button{font-size:max(16px,calc(var(--lu)*1.6));min-height:var(--lab-lim-target);padding:calc(var(--lu)*.8) calc(var(--lu)*1.3);border-width:2px;justify-content:center}
 :root[data-lim] .g-tabs button small,:root[data-lim] .g-tab-link small{display:none}

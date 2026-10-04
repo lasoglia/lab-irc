@@ -71,6 +71,29 @@ resta per gli artefatti già fatti che lo usano.
 
 ---
 
+## Il percorso dello studente (percezione e attenzione)
+
+Il sito segue le regole di **percezione** del design system (Gestalt):
+- ogni pagina ha **un solo pulsante pieno**: indica il prossimo passo
+  ("Inizia da qui", poi "Prossimo"); gli altri pulsanti sono leggeri;
+- quando uno studente apre un materiale compare un **sigillo d'oro ✓**; le
+  cartelle di unità e lezioni mostrano un **anello** che si chiude man mano
+  ("2 contenuti · 1 aperto");
+- in home compare **"Riprendi la lezione"** dall'ultima lezione lasciata a metà;
+- in fondo a ogni unità e lezione c'è **"Per continuare"** (lezione o unità
+  successiva, oppure il ritorno): nessuna pagina è un vicolo cieco;
+- la mascotte dell'anno saluta una volta e commenta i progressi, senza mai
+  rimproverare.
+
+Tutto questo resta **solo nel browser dello studente**: niente account, niente
+dati inviati. In fondo alla pagina c'è "Dimentica" per cancellare tutto.
+
+**Modalità LIM (lavagna):** pulsante **LIM** in basso a destra, oppure tasto
+**L**. Ingrandisce tutto per la proiezione e nasconde i progressi personali.
+Anche gli artefatti aperti dal sito si aprono in modalità LIM.
+
+---
+
 ## 1. Aggiungere immagini accattivanti (anche con l'AI)
 
 Ogni materiale e ogni strumento ha un campo **"Immagine di copertina"**:

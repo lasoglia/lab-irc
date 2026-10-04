@@ -8,7 +8,7 @@ import '../../../assets/mascotte/lab-mascotte.js';
  * Props come nel design system: year, size, speak, halo, still.
  * `aureola` resta come vecchio nome di `halo`.
  */
-export function YearMascot({ year = 1, size = 55, speak = true, halo, aureola, still = false }) {
+export function YearMascot({ year = 1, size = 55, speak = true, halo, aureola, still = false, fumetto = 'sinistra' }) {
   const conAureola = halo ?? aureola ?? true;
   return React.createElement('lab-mascotte', {
     anno: String(year),
@@ -16,6 +16,6 @@ export function YearMascot({ year = 1, size = 55, speak = true, halo, aureola, s
     aureola: conAureola ? undefined : 'false',
     parla: speak ? undefined : 'false',
     statica: still ? '' : undefined,
-    fumetto: 'sinistra',
+    fumetto,
   });
 }

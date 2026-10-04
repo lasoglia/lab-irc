@@ -12,7 +12,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 
 ## Quick reference
 
-**Fonts:** Cormorant Garamond (display: titles, quotes) · Cinzel (inscription caps: eyebrows, Roman numerals, AMDG) · Figtree (body/UI). All in `tokens/fonts.css`.
+**Fonts:** Cormorant Garamond (display: titles, quotes) · Cinzel (inscription caps: eyebrows, Roman numerals, AMDG) · Figtree (body/UI). All in `tokens/fonts.css`, self-hosted in `fonts/` (no Google Fonts/CDN).
 
 **Primary colour:** `#8B5CF6` (violet/purple). Gradient brand: `linear-gradient(135deg,#8B5CF6,#22D3EE)`.
 
@@ -34,6 +34,6 @@ If the user invokes this skill without any other guidance, ask them what they wa
 
 **Typography:** Cormorant 600 for headings, italic 500 for the coloured word. Eyebrows: Cinzel 600, UPPERCASE, tracking .18em, `--lab-oro`. Figtree 400 body, 700 buttons.
 
-**Mascots:** every year surface/artefact carries its `YearMascot` (1 Semino · 2 Ichthy · 3 Navicella · 4 Bussolina · 5 Terra). Plain-HTML lesson artefacts: use `assets/artefatti/` kit with `<body class="la" data-anno="N">`.
+**Mascots:** every year surface/artefact carries its `YearMascot` (1 Semino · 2 Ichthy · 3 Navicella · 4 Bussolina · 5 Terra). 2D web component `<lab-mascotte anno="N">` (site-root `/assets/mascotte/`; no AMDG on repeated clicks). Plain-HTML lesson artefacts: `assets/artefatti/` kit with `<body class="la" data-anno="N">`; lesson games: `assets/artefatti/giochi/` + one `giochi-dati.js` (copy `ui_kits/giochi/`).
 
 **Always use Italian** for all UI copy.
