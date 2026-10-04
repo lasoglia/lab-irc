@@ -11,6 +11,7 @@ export function Badge({ children, variant = 'viola' }) {
     rosa:  { bg: 'rgba(244,114,182,.22)', color: 'var(--lab-rosa, #F472B6)'   },
     verde: { bg: 'rgba(52,211,153,.22)',  color: 'var(--lab-verde, #34D399)'  },
     rosso: { bg: 'rgba(251,113,133,.22)', color: 'var(--lab-rosso, #FB7185)'  },
+    neutro: { bg: 'color-mix(in srgb, var(--lab-ink) 8%, transparent)', color: 'var(--lab-ink-soft)' },
   };
 
   const p = palette[variant] ?? palette.viola;

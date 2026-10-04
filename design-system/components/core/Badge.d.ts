@@ -7,6 +7,6 @@ import React from 'react';
 export interface BadgeProps {
   /** Badge label */
   children: React.ReactNode;
-  /** Colour variant — maps to a Lab IRC accent colour; default: 'viola' */
-  variant?: 'viola' | 'ciano' | 'ambra' | 'rosa' | 'verde' | 'rosso';
+  /** Colour variant — maps to a Lab IRC accent colour ('neutro' is ink-tinted grey for generic/secondary labels); default: 'viola' */
+  variant?: 'viola' | 'ciano' | 'ambra' | 'rosa' | 'verde' | 'rosso' | 'neutro';
 }

@@ -922,6 +922,16 @@ body[data-masc-scena="1"] .la-mascot{animation:none;opacity:0;visibility:hidden;
 
 
 </style>
+<script>try{if(/[?&]in=visore(?:&|$)/.test(location.search))document.documentElement.setAttribute('data-visore','')}catch(e){}</script>
+<style>
+/* Lab IRC · aggiornamento del kit (4/10/2026): telefono e modalità «in visore» (?in=visore, dentro il Visore del sito che ha già la sua barra da 55 px) */
+@media (max-width:480px){.ll-nav{gap:8px;padding:8px}}
+@media (max-width:720px){.la-lim-btn,[data-lim-toggle]{display:none!important}}
+:root[data-visore] body.ll .ll-brand,:root[data-visore] body.ll .ll-tools .ll-icon[aria-label="Schermo intero"]{display:none}
+:root[data-visore] body.ll .ll-top{grid-template-columns:1fr;box-sizing:border-box;min-height:55px;padding:3px 13px}
+:root[data-visore] body.ll .ll-tools{justify-content:flex-start}
+:root[data-visore] body.ll .ll-tools>.ll-icon{margin-left:auto}
+</style>
 </head>
 <body class="la g ll" data-anno="3" data-skin="arcade" data-skin-fixed="arcade" data-modo="lezione">
 <div id="app"></div>
@@ -1238,7 +1248,10 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 /* Lab IRC — Mascotte 2D. Web component senza dipendenze.
    Uso: <script src="lab-mascotte.js"><\/script>  <lab-mascotte anno="1" size="89"></lab-mascotte>
    Attributi: anno 1–5 · size px (default 89) · aureola="false" · parla="false" · statica (niente occhi che seguono)
-   Al 7° clic emette window 'lab:amdg'. */
+   · fumetto="sinistra" (il fumetto si apre verso sinistra: per le mascotte vicino al bordo destro)
+   · fumetto="sotto" (si apre sotto la mascotte, allineato a destra: per le mascotte in cima alla pagina)
+   Al clic saluta e dice una frase (niente A·M·D·G al 7° clic, per scelta del sito).
+   Da JS: elemento.bubble('testo') mostra un fumetto (lo usa il kit degli artefatti): dura in proporzione al testo (2618–4181 ms) e si dissolve in 377 ms. */
 (() => {
   const C = { 1: '#FF7A59', 2: '#4FB0FF', 3: '#A78BFA', 4: '#FB7BB5', 5: '#FBBF24' };
   const O = '#E3C27A', K = '#14131F', G = '#34D399';
@@ -1305,7 +1318,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
       this.onMove = e => this.look(e);
       if (!this.hasAttribute('statica')) { addEventListener('mousemove', this.onMove); this.blinkLoop(); }
     }
-    disconnectedCallback() { removeEventListener('mousemove', this.onMove); clearTimeout(this.bt); clearTimeout(this.bt2); clearTimeout(this.mt); }
+    disconnectedCallback() { removeEventListener('mousemove', this.onMove); clearTimeout(this.bt); clearTimeout(this.bt2); clearTimeout(this.mt); clearTimeout(this.mt2); }
     attributeChangedCallback() { if (this.shadowRoot) this.render(); }
     render() {
       const n = +this.getAttribute('anno') || 1, s = +this.getAttribute('size') || 89;
@@ -1319,9 +1332,19 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
         [data-occhi]{transition:transform 144ms linear}
         .b{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:189px;z-index:20;pointer-events:none;
           background:var(--lab-surface,#1E1C2E);color:var(--lab-ink,#ECEAF5);border:1px solid var(--lab-oro,#E3C27A);border-radius:13px;padding:8px 13px;
-          font:500 13px/1.4 var(--lab-font-body,'Figtree',system-ui,sans-serif);text-align:left;box-shadow:0 8px 21px rgba(0,0,0,.3);animation:r 377ms cubic-bezier(.16,1,.3,1) both}
+          font:500 13px/1.4 var(--lab-font-body,'Figtree',system-ui,sans-serif);text-align:left;box-shadow:var(--lab-shadow,0 8px 21px rgba(0,0,0,.3));animation:r 377ms cubic-bezier(.16,1,.3,1) both}
         @keyframes r{from{opacity:0;transform:translate(-50%,8px)}}
-        @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}}
+        :host([fumetto="sinistra"]) .b{left:auto;right:0;transform:none;animation-name:r2}
+        @keyframes r2{from{opacity:0;transform:translateY(8px)}}
+        :host([fumetto="sotto"]) .b{left:auto;right:0;bottom:auto;top:calc(100% + 8px);transform:none;animation-name:r3}
+        @keyframes r3{from{opacity:0;transform:translateY(-8px)}}
+        .b.via{animation:via 377ms cubic-bezier(.16,1,.3,1) forwards}
+        @keyframes via{to{opacity:0;transform:translate(-50%,5px)}}
+        :host([fumetto="sinistra"]) .b.via{animation-name:via2}
+        @keyframes via2{to{opacity:0;transform:translateY(5px)}}
+        :host([fumetto="sotto"]) .b.via{animation-name:via3}
+        @keyframes via3{to{opacity:0;transform:translateY(-5px)}}
+        @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}.b.via{animation:none;opacity:0}}
       </style><span class="m">${svg(this.n, { aureola: this.getAttribute('aureola') !== 'false' })}</span>`;
       this.shadowRoot.querySelector('.m').onclick = e => this.click(e);
       this.occhi = [...this.shadowRoot.querySelectorAll('[data-occhi]')];
@@ -1350,17 +1373,18 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     click(e) {
       e.preventDefault(); e.stopPropagation();
       this.clicks++;
-      /* niente AMDG al 7° clic sulla mascotte (scelta del sito) */
       if (this.getAttribute('parla') === 'false') return;
       const i = INFO[this.n];
       this.bubble(this.clicks === 1 ? `Ciao, sono ${i.nome}!` : i.frasi[(this.clicks - 2) % i.frasi.length]);
     }
     bubble(t) {
-      this.shadowRoot.querySelector('.b')?.remove(); clearTimeout(this.mt);
+      this.shadowRoot.querySelectorAll('.b').forEach(b => b.remove()); clearTimeout(this.mt); clearTimeout(this.mt2);
       if (!t) return;
       const b = document.createElement('span'); b.className = 'b'; b.textContent = t;
       this.shadowRoot.appendChild(b);
-      this.mt = setTimeout(() => b.remove(), 2618);
+      /* resta in proporzione al testo (2618 ms fino a 30 caratteri, +55 ms a carattere, massimo 4181), poi si dissolve in 377 ms */
+      const durata = Math.min(4181, 2618 + Math.max(0, t.length - 30) * 55);
+      this.mt = setTimeout(() => { b.classList.add('via'); this.mt2 = setTimeout(() => b.remove(), 377); }, durata);
     }
   }
   customElements.define('lab-mascotte', El);

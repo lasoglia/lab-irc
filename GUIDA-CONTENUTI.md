@@ -250,7 +250,9 @@ Funziona così:
 
    Vanno bene anche file sciolti: li sistemi nella tabella.
 3. **Controlla la tabella.** Per ogni file la pagina propone anno, unità,
-   lezione, tipo e titolo (dal nome del file). Puoi cambiare tutto: mentre
+   lezione, tipo e titolo. Dentro una lezione il titolo dice che cosa è il
+   file («Lezione interattiva», «Fascicolo di studio», «Slide»); per i file
+   sciolti viene dal nome del file. Puoi cambiare tutto: mentre
    scrivi compaiono i nomi delle unità e delle lezioni che esistono già, così
    li riusi senza errori di battitura. Le unità e le lezioni che non esistono
    vengono create da sole.
@@ -263,6 +265,9 @@ Note utili:
   lezione**: con *Collega a una lezione* li sistemi senza ricaricarli.
 - I nomi dei file vengono "puliti" (minuscole, senza spazi né accenti); se un
   nome esiste già, viene aggiunto un numero.
+- Se una cartella si chiama «Lezione 2 - Il caso Galileo» (o «UDA 3 - …»),
+  il numero diventa l'**ordine** e sul sito il titolo compare pulito
+  («Il caso Galileo»); nel pannello resta il nome intero.
 - Limite di GitHub: **95 MB a file**. Le slide molto pesanti vanno alleggerite
   (o esportate in PDF).
 - Per un singolo file o una correzione, il pannello Decap resta la strada più

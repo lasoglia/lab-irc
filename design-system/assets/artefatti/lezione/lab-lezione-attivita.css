@@ -233,5 +233,12 @@ button.lx-box:hover i{transform:translateX(5px)}
   .lx-etym{padding:21px}
   .ll-chip{padding:0 12px}
 }
+/* telefono: il cronometro si riduce al solo pulsante ▶ da 44 px (il «0:00» a larghezza fissa finiva sopra «Indietro») */
+@media (max-width:480px){
+  .ll-clock{flex:none;width:44px;padding:4px;box-sizing:border-box;justify-content:center}
+  .ll-clock-t{display:none}
+  .ll-nav{gap:8px;padding:8px}
+  .ll-navc{gap:8px}
+}
 @media (prefers-reduced-motion:reduce){.ll-pop,.ll-glos,.lx-opt,.lx-ok,.lx-word,.lx-stars i,.lx-take-l li,.lx-quiz-q,.lx-ref{animation:none!important}.lx-opt.is-voted .lx-ok{opacity:1;transform:translateY(-50%)}.lx-bar{transition:none}}
 @media print{.ll-pop,.ll-glos{display:none!important}.ll-dfn{text-decoration:none}}

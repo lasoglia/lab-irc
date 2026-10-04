@@ -12,3 +12,4 @@ Base card with cursor-reactive tilt and following light. Container for all card-
 
 - `tilt={false}` for dense/list contexts.
 - `glow` tints the cursor light (use the year colour or white on coloured cards).
+- `tint` is the colour mixed into the border on hover (45% over `--lab-line`); default `var(--lab-viola)` — pass the year colour (e.g. `tint="var(--lab-anno-3)"`) so year-tinted cards don't turn violet.

@@ -27,6 +27,12 @@ body.ll[data-modo="lezione"]::before,body.ll[data-modo="studio"]::before{display
 .ll-icon:active{transform:scale(.9)}
 .ll-icon:focus-visible{outline:1.5px solid var(--lab-oro);outline-offset:3px}
 .ll-icon svg{width:19px;height:19px}
+/* in visore (?in=visore → <html data-visore>, da lab-artefatto.js): il Visore del sito ha già una barra da 55 px con titolo e schermo intero,
+   quindi restano solo le schede (e il tema) in una riga da 55 px; il titolo della lezione resta nel corpo */
+:root[data-visore] body.ll .ll-brand,:root[data-visore] body.ll .ll-tools [data-lim-toggle],:root[data-visore] body.ll .ll-tools .ll-icon--schermo{display:none}
+:root[data-visore] body.ll .ll-top{grid-template-columns:1fr;box-sizing:border-box;min-height:55px;padding:3px 13px}
+:root[data-visore] body.ll .ll-tools{justify-content:flex-start}
+:root[data-visore] body.ll .ll-tools>.ll-icon{margin-left:auto}
 
 /* ---------- palco della lezione ---------- */
 .ll-stage{max-width:960px;margin:0 auto;padding:34px 21px 55px}

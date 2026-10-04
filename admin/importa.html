@@ -288,6 +288,17 @@ td.stretta{width:1%;white-space:nowrap}
     var b = nome.replace(/\.[a-z0-9]+$/i, '').replace(/^(i|ii|iii|iv|v)[-_ ]\d+[-_ ]\d+[-_ ]/i, '').replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
     return b ? b.charAt(0).toUpperCase() + b.slice(1) : '';
   }
+  /* dentro una lezione il file dice solo che cosa è (la lezione ha già il suo titolo) */
+  function titoloPerTipo(nome) {
+    var e = (nome.split('.').pop() || '').toLowerCase();
+    if (/^html?$/.test(e)) return 'Lezione interattiva';
+    if (/^pdf$/.test(e)) return 'Fascicolo di studio';
+    if (/^(pptx?|odp|key)$/.test(e)) return 'Slide';
+    return titoloDa(nome);
+  }
+  /* «Lezione 2 - Il caso Galileo» → ordine 2 (il titolo resta intero: il sito lo mostra pulito) */
+  function numeroDa(titolo) { var m = /^(?:uda|unità|unita|lezione|lez\.?)\s*(\d+)\b/i.exec(String(titolo || '').trim()); return m ? +m[1] : 0; }
+  var pulisci = function (s) { return String(s || '').replace(/\s+/g, ' ').trim(); };
   function annoDa(testo) {
     var m = /(^|[\/\s_-])(i|ii|iii|iv|v)(?=[-_ ]\d|[-_ ]|$)/i.exec(testo || '');
     if (m) return ROM[m[2].toLowerCase()];
@@ -313,7 +324,7 @@ td.stretta{width:1%;white-space:nowrap}
       else if (cartelle.length === 1) { if (trovaUda(cartelle[0])) uda = cartelle[0]; else { lez = cartelle[0]; var L = trovaLez(lez); if (L) uda = L.uda; } }
       var anno = annoDa(nome) || annoDa(cartelle.join('/')) || (trovaUda(uda) || {}).anno || (trovaLez(lez) || {}).anno || annoGlobale || '';
       if (f.size > MAX) { alert('«' + nome + '» supera i 95 MB: GitHub non lo accetta. Carica un file più leggero.'); return; }
-      righe.push({ file: f, nome: nome, anno: String(anno), uda: uda.trim(), lezione: lez.trim(), tipo: tipoDa(nome), titolo: titoloDa(nome), evidenza: false, esistente: false });
+      righe.push({ file: f, nome: nome, anno: String(anno), uda: pulisci(uda), lezione: pulisci(lez), tipo: tipoDa(nome), titolo: lez ? titoloPerTipo(nome) : titoloDa(nome), evidenza: false, esistente: false });
     });
     disegna();
   }
@@ -351,7 +362,7 @@ td.stretta{width:1%;white-space:nowrap}
     var dl2 = document.getElementById(id); dl2.innerHTML = '';
     lista.forEach(function (v) { dl2.appendChild(el('option', { value: v })); });
     var i = el('input', { type: 'text', value: r[chiave], placeholder: placeholder, list: id, 'aria-label': aria });
-    i.addEventListener('change', function () { r[chiave] = i.value.trim(); if (chiave === 'uda') { var U = trovaUda(r.uda, r.anno); if (U && !r.anno) r.anno = String(U.anno); } disegna(); });
+    i.addEventListener('change', function () { r[chiave] = pulisci(i.value); if (chiave === 'uda') { var U = trovaUda(r.uda, r.anno); if (U && !r.anno) r.anno = String(U.anno); } disegna(); });
     return i;
   }
   function disegna() {
@@ -432,8 +443,8 @@ td.stretta{width:1%;white-space:nowrap}
   function datiNuovi() {
     var p = piano();
     var uda = JSON.parse(JSON.stringify(dati.uda)), lez = JSON.parse(JSON.stringify(dati.lezioni)), mat = JSON.parse(JSON.stringify(dati.materiali));
-    p.udaNuove.forEach(function (u) { uda.push({ titolo: u.titolo, anno: u.anno, ordine: ordineMax(uda, function (x) { return String(x.anno) === u.anno; }) + 1 }); });
-    p.lezNuove.forEach(function (l) { lez.push({ titolo: l.titolo, anno: l.anno, uda: l.uda, ordine: ordineMax(lez, function (x) { return String(x.anno) === l.anno && norm(x.uda) === norm(l.uda); }) + 1, materiali: [] }); });
+    p.udaNuove.forEach(function (u) { uda.push({ titolo: u.titolo, anno: u.anno, ordine: numeroDa(u.titolo) || ordineMax(uda, function (x) { return String(x.anno) === u.anno; }) + 1 }); });
+    p.lezNuove.forEach(function (l) { lez.push({ titolo: l.titolo, anno: l.anno, uda: l.uda, ordine: numeroDa(l.titolo) || ordineMax(lez, function (x) { return String(x.anno) === l.anno && norm(x.uda) === norm(l.uda); }) + 1, materiali: [] }); });
     Object.keys(p.perLez).forEach(function (k) {
       var g = p.perLez[k], L = lez.find(function (x) { return String(x.anno) === g.anno && norm(x.titolo) === norm(g.lez) && (norm(x.uda) === norm(g.uda) || !x.uda); });
       if (!L) return;

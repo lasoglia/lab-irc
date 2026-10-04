@@ -42,7 +42,8 @@ Una lezione è un file di dati (`window.LEZIONE`: scene e blocchi) montato dal m
 - **Strumenti** (`-plus.js`): catena · animazione a fotogrammi · strati · bilancia · stima · lente · leggi la fonte · ordina · bivio · varianti del laboratorio · consegna con timer · aggancio. Base: testo, rivela, tappe, confronto, carte, citazione, verifica, smista, mappa, parola, immagine, nota, mascotte, gioco.
 - **Attività di classe** (`-attivita.js`): `domanda` (sondaggio; `id` + `confronta: 'ingresso'` per il prima/dopo col tratteggio d'oro) · `nuvola` · `spettro` · `chi` (chi lo dice?) · `quiz` (più domande, stelle) · `idee` · `continua` · `etimo` · `agenda`. Voti e parole restano in memoria cambiando scena; nulla viene salvato.
 - **Parole nuove (sempre)**: `{parola}` o `{forma|lemma}` in qualunque testo → sottolineatura d'oro puntinata, fumetto con etimologia e spiegazione. Le schede vengono da `LEZIONE.glossario` e, da sole, dai blocchi `parola`, `etimo`, `spettro`; pulsante **Glossario** in testata.
-- **LIM**: pulsante in testata, tasto L, `?lim=1`. Scena ×φ (oltre 1100 px; ×√φ sotto), comandi ×√φ: stesse proporzioni, più contrasto, domande in Figtree 800.
+- **LIM**: pulsante in testata, tasto L, `?lim=1`. Scena ×φ (oltre 1100 px; ×√φ sotto), comandi ×√φ: stesse proporzioni, più contrasto, domande in Figtree 800. Sotto i 720 px il pulsante LIM sparisce (come nel sito) e sotto i 480 px il cronometro si riduce al solo pulsante ▶.
+- **In visore**: `?in=visore` (lo aggiunge il Visore del sito, un iframe con sandbox senza storage e con la sua barra da 55 px) → `<html data-visore>`: la testata perde logo, «Lab IRC · anno», titolo, ⛶ e LIM e resta una sola riga da 55 px con le schede e il tema; il titolo della lezione resta nel corpo. Da JS: `LabArtefatto.visore`.
 
 Esempi: `ui_kits/lezione/index.html` (religiosità, tutte le attività) · `ui_kits/lezione/benedetto.html` (La misura dei più deboli: animazione, fonte, varianti). Skill per l'HTML offline: `assets/artefatti/skill/` (`build_artefatto.py` incorpora tutto in un file).
 
@@ -87,6 +88,6 @@ Togli dal `nav` i pulsanti dei giochi che non ti servono. Skin: `arcade` o `tavo
 
 `data-anno` → 1 Semino · 2 Ichthy · 3 Navicella · 4 Bussolina · 5 Terra, in basso a destra (web component `<lab-mascotte>` da `/assets/mascotte/` alla radice del sito, caricato in automatico; `data-no-mascotte` sul body per toglierla). Segue il cursore con lo sguardo, parla quando la clicchi (niente AMDG al 7° clic). Scrivere «amdg» apre l'easter egg, solo con «Ad maiorem Dei gloria».
 
-Dal gioco puoi farla parlare: `LabArtefatto.cheer()` (risposta giusta), `LabArtefatto.oops()` (sbagliata), `LabArtefatto.say('…')`.
+Dal gioco puoi farla parlare: `LabArtefatto.cheer()` (risposta giusta), `LabArtefatto.oops()` (sbagliata), `LabArtefatto.say('…')`. Il fumetto resta in proporzione al testo (2618 ms fino a 30 caratteri, +55 ms a carattere, massimo 4181) e poi si dissolve in 377 ms (classe `via`; con `prefers-reduced-motion` sparisce senza animazione).
 
 Esempi: `ui_kits/artefatto/index.html` (quiz singolo) · `ui_kits/giochi/index.html` (12 giochi).

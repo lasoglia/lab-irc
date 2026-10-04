@@ -99,6 +99,7 @@ The whole system is proportioned on φ:
 - **Base card:** `--lab-surface` bg, `1px solid --lab-line`, `21px` radius, 21px padding, `--lab-shadow`.
 - **Hover:** `translateY(-5px)` lift, shadow upgrades to `--lab-shadow-lg`, border gains a violet tint via `color-mix`.
 - **Anno card:** left-bar `7px wide` in the year colour + a `120px` circular glow orb top-right (opacity 7→13% on hover).
+- **Site adaptations (app/):** `Card` takes `tint` (hover border colour, default violet), `Badge` has a `neutro` variant (ink-tinted grey), `YearCard` has a year-tinted surface/border and a `compatto` phone layout (one ~110–130px row). The site sets `--lab-tinta-card` (year colour in the card surface, default 10%, light theme 7%) and `--lab-tinta-icona` (year colour in the numeral/count text, default 100%, light theme 80%) next to its existing `--lab-tinta-testo`.
 - **Featured card:** gold `outline: 2px solid --lab-ambra` + "In evidenza" badge at top.
 
 ### Buttons

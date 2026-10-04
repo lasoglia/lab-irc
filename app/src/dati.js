@@ -94,6 +94,47 @@ function tipoDaFile(file, link) {
   return link ? "Link" : "Documento/PDF";
 }
 
+/* titolo di default di un file DENTRO una lezione: la lezione ha già il suo
+   titolo, il file dice solo che cosa è (mai il nome del file) */
+function titoloDefault(file, link) {
+  const f = String(file || "").toLowerCase().split(/[?#]/)[0];
+  if (/\.html?$/.test(f)) return "Lezione interattiva";
+  if (/\.pdf$/.test(f)) return "Fascicolo di studio";
+  if (/\.(pptx?|odp|key)$/.test(f)) return "Slide";
+  return nomeDaFile(file || link);
+}
+
+/* ---------- titoli puliti (SOLO per la visualizzazione) ----------
+   Gli indirizzi (#anno/…) e le chiavi del percorso restano sul titolo grezzo,
+   così i link condivisi e i sigilli non cambiano. */
+const PREFISSO_NUMERO = /^(?:uda|unità|unita|lezione|lez\.?)\s*(\d+)\s*[-–—:.·]?\s*/i;
+export function titoloPulito(t) {
+  t = String(t == null ? "" : t).replace(/\s+/g, " ").trim();
+  let numero = null;
+  const m = PREFISSO_NUMERO.exec(t);
+  if (m && t.length > m[0].length) { numero = +m[1]; t = t.slice(m[0].length).trim(); }
+  if (t) t = t.charAt(0).toUpperCase() + t.slice(1);
+  return { titolo: t, numero };
+}
+const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/* «Lez. Interattiva - <titolo lezione>» → «Lezione interattiva» */
+export function titoloMateriale(t, lez) {
+  t = String(t == null ? "" : t).replace(/\s+/g, " ").trim();
+  if (lez) {
+    const L = escRe(String(lez).replace(/\s+/g, " ").trim());
+    if (L) t = t.replace(new RegExp("^\\s*" + L + "\\s*[-–—:·]\\s*", "i"), "").replace(new RegExp("\\s*[-–—:·]\\s*" + L + "\\s*$", "i"), "");
+  }
+  t = t.replace(/^Lez\.\s*(\S)/i, (m, c) => "Lezione " + c.toLowerCase()).trim();
+  return t || "Materiale";
+}
+/* accorcia sull'ultimo spazio, mai a metà parola */
+export const breve = (s, n = 34) => {
+  s = String(s || "").replace(/\s+/g, " ").trim();
+  if (s.length <= n) return s;
+  const c = s.slice(0, n);
+  return (c.includes(" ") ? c.replace(/\s+\S*$/, "") : c) + "…";
+};
+
 function byOrdine(a, b) {
   const oa = a.ordine == null || a.ordine === "" ? 999 : +a.ordine;
   const ob = b.ordine == null || b.ordine === "" ? 999 : +b.ordine;
@@ -127,7 +168,7 @@ export async function caricaDati() {
         anno: l.anno,
         uda: l.uda,
         lezione: l.titolo,
-        titolo: String(m.titolo || "").trim() || nomeDaFile(m.file || m.link),
+        titolo: String(m.titolo || "").trim() || titoloDefault(m.file, m.link),
         tipo: m.tipo || tipoDaFile(m.file, m.link),
       });
     });

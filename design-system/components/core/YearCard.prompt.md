@@ -19,4 +19,7 @@ Year navigation card — the primary entry-point grid on the Lab IRC homepage.
 | 4 | `--lab-anno-4` | `#FB7BB5` pink |
 | 5 | `--lab-anno-5` | `#FBBF24` amber |
 
-The left-bar and Roman numeral always use the year colour. Hover lifts + expands the glow orb.
+The left-bar and the glow orb always use the full year colour; the surface is a soft year-tinted gradient (`--lab-tinta-card`, default 10%) and the border mixes 22% year colour (45% on hover). Hover lifts + expands the glow orb.
+
+- `compatto` (phone layout): one ~110–130px row — numeral (33px) and name (22px) on the same baseline, no description, count below, mascot centred on the right. `<YearCard compatto year={3} name="Terzo anno" count={14} href="#anno/3" />`
+- Numeral and count text use `color-mix(in srgb, <year colour> var(--lab-tinta-icona, 100%), var(--lab-ink))` — the host page lowers `--lab-tinta-icona` (e.g. 80%) and `--lab-tinta-card` (e.g. 7%) in the light theme to keep contrast ≥3:1 on amber.

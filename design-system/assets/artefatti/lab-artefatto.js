@@ -1,7 +1,8 @@
 /* Lab IRC — Kit artefatti. Mettere in fondo al <body class="la" data-anno="1-5">.
    Aggiunge: tema salvato, luce che segue il cursore, schede reattive, mascotte dell'anno (<lab-mascotte>, caricata da /assets/mascotte/ del sito), easter egg AMDG.
    API: LabArtefatto.say(testo) · .cheer() · .oops() · .amdg() · .lim(true|false)
-   Modalità LIM: pulsante «LIM», tasto L o ?lim=1 → <html data-lim> (vedi lab-percezione.css). */
+   Modalità LIM: pulsante «LIM», tasto L o ?lim=1 → <html data-lim> (vedi lab-percezione.css).
+   In visore: ?in=visore (lo aggiunge il Visore del sito, che ha già la sua barra da 55 px) → <html data-visore>: la testata della lezione si riduce alla riga delle schede. */
 (function () {
   var cs = document.currentScript;
   if (cs && cs.src && !/lab-artefatto\.js/.test(cs.src)) return; /* incluso in un altro file (bundle): non fare nulla; inline va bene */
@@ -14,6 +15,9 @@
   if (qm) { if (qm[1] === '1') root.setAttribute('data-lim', ''); }
   else { try { if (localStorage.getItem('lim_lab') === '1') root.setAttribute('data-lim', ''); } catch (e) {} }
   try { if (qm) localStorage.setItem('lim_lab', qm[1]); } catch (e) {}
+  /* ?in=visore: dentro l'iframe del sito (sandbox senza storage) niente logo, titolo, schermo intero e LIM doppi */
+  var inVisore = /[?&]in=visore(?:&|$)/.test(location.search);
+  if (inVisore) root.setAttribute('data-visore', '');
   function setLim(on) {
     if (on) root.setAttribute('data-lim', ''); else root.removeAttribute('data-lim');
     try { localStorage.setItem('lim_lab', on ? '1' : '0'); } catch (e) {}
@@ -102,10 +106,10 @@
     w.addEventListener('lab:amdg', amdg);
 
     var say = function (t) { if (mas) mas.say(t); };
-    w.LabArtefatto = { say: say, cheer: function () { say(pick(CHEER)); }, oops: function () { say(pick(OOPS)); }, amdg: amdg, lim: setLim };
+    w.LabArtefatto = { say: say, cheer: function () { say(pick(CHEER)); }, oops: function () { say(pick(OOPS)); }, amdg: amdg, lim: setLim, visore: inVisore };
     console.log('%cA · M · D · G', 'font: 600 21px Cinzel, Georgia, serif; color: #E3C27A; letter-spacing: .3em');
   }
 
-  w.LabArtefatto = { say: function () {}, cheer: function () {}, oops: function () {}, amdg: amdg };
+  w.LabArtefatto = { say: function () {}, cheer: function () {}, oops: function () {}, amdg: amdg, visore: inVisore };
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', init); else init();
 })();
