@@ -13,4 +13,6 @@ export interface CardProps {
   tilt?: boolean;
   /** Colour of the cursor-following light — default soft violet */
   glow?: string;
+  /** Colour mixed into the border on hover (45% over --lab-line) — default 'var(--lab-viola)'; pass the year colour on year-tinted cards */
+  tint?: string;
 }

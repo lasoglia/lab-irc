@@ -435,9 +435,9 @@
         <div className="ll-tools">
           <div className="ll-modes" role="tablist" aria-label="Modalità">${modi.map(function (x) { return html`<button key=${x[0]} role="tab" aria-selected=${modo === x[0]} onClick=${function () { if (x[0] === 'giochi') { setStart(null); setRitorno(modo === 'lezione'); } setModo(x[0]); }}>${x[1]}</button>`; })}</div>
           ${voci.length > 0 && html`<button className="ll-chip" data-glos-btn="" aria-pressed=${glos} onClick=${function () { setPop(null); setGlos(!glos); }} title="Le parole nuove della lezione">Glossario<b>${voci.length}</b></button>`}
-          <button className="ll-chip" aria-pressed=${lim} onClick=${toggleLim} title="Modalità LIM: tutto più grande in proporzione aurea (tasto L)">LIM</button>
+          <button className="ll-chip" data-lim-toggle="" aria-pressed=${lim} onClick=${toggleLim} title="Modalità LIM: tutto più grande in proporzione aurea (tasto L)">LIM</button>
           <button className="ll-icon" onClick=${tema} aria-label=${chiaro ? 'Passa al tema scuro' : 'Passa al tema chiaro'} title="Tema">${chiaro ? '🌙' : '☀️'}</button>
-          <button className="ll-icon" onClick=${schermo} aria-label="Schermo intero" title="Schermo intero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          <button className="ll-icon ll-icon--schermo" onClick=${schermo} aria-label="Schermo intero" title="Schermo intero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
         </div>
       </header>
       <div className="ll-lezione" style=${{ display: modo === 'lezione' ? 'contents' : 'none' }}><${Lezione} L=${L} ctx=${ctx} attiva=${modo === 'lezione'} onScena=${setScena} /></div>

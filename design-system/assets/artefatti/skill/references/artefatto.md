@@ -100,7 +100,9 @@ Blocchi di `lab-lezione-attivita.js` (stato solo in memoria: voti e parole resta
 
 **Parole nuove.** In ogni testo `{parola}` o `{forma|lemma}` diventa una parola sottolineata d'oro: si tocca e mostra etimologia e spiegazione. Le schede vengono da `LEZIONE.glossario` (`{ lemma: { etim, def, parola } }`) e, da sole, dai blocchi `parola`, `etimo` e `spettro`; il pulsante «Glossario» in testata le elenca in ordine alfabetico.
 
-**LIM.** Pulsante «LIM» in testata, tasto L o `?lim=1`: la scena cresce di φ (oltre 1100 px; √φ sotto), testata e barra di √φ; pesi più alti e domande in sans 800. Le proporzioni restano quelle del disegno normale. La barra delle scene non copre mai il contenuto e la mascotte ha la sua corsia a destra.
+**LIM.** Pulsante «LIM» in testata, tasto L o `?lim=1`: la scena cresce di φ (oltre 1100 px; √φ sotto), testata e barra di √φ; pesi più alti e domande in sans 800. Le proporzioni restano quelle del disegno normale. La barra delle scene non copre mai il contenuto e la mascotte ha la sua corsia a destra. Sul telefono (≤ 720 px) il pulsante LIM non compare e sotto i 480 px il cronometro mostra solo ▶.
+
+**In visore.** Il sito apre l'artefatto in un iframe con sandbox (niente storage) aggiungendo `?in=visore`: il kit mette `data-visore` su `<html>` e la testata si riduce a una riga da 55 px con le sole schede Lezione · Studio · Giochi (e il tema), senza logo, eyebrow, titolo, ⛶ e LIM, che il Visore ha già nella sua barra. Il fumetto della mascotte (`bubble`) dura in proporzione al testo (2618–4181 ms) e si dissolve in 377 ms con la classe `via`.
 
 ## Componenti propri (React con htm)
 

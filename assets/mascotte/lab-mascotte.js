@@ -4,7 +4,7 @@
    · fumetto="sinistra" (il fumetto si apre verso sinistra: per le mascotte vicino al bordo destro)
    · fumetto="sotto" (si apre sotto la mascotte, allineato a destra: per le mascotte in cima alla pagina)
    Al clic saluta e dice una frase (niente A·M·D·G al 7° clic, per scelta del sito).
-   Da JS: elemento.bubble('testo') mostra un fumetto (lo usa il kit degli artefatti). */
+   Da JS: elemento.bubble('testo') mostra un fumetto (lo usa il kit degli artefatti): dura in proporzione al testo (2618–4181 ms) e si dissolve in 377 ms. */
 (() => {
   const C = { 1: '#FF7A59', 2: '#4FB0FF', 3: '#A78BFA', 4: '#FB7BB5', 5: '#FBBF24' };
   const O = '#E3C27A', K = '#14131F', G = '#34D399';
@@ -71,7 +71,7 @@
       this.onMove = e => this.look(e);
       if (!this.hasAttribute('statica')) { addEventListener('mousemove', this.onMove); this.blinkLoop(); }
     }
-    disconnectedCallback() { removeEventListener('mousemove', this.onMove); clearTimeout(this.bt); clearTimeout(this.bt2); clearTimeout(this.mt); }
+    disconnectedCallback() { removeEventListener('mousemove', this.onMove); clearTimeout(this.bt); clearTimeout(this.bt2); clearTimeout(this.mt); clearTimeout(this.mt2); }
     attributeChangedCallback() { if (this.shadowRoot) this.render(); }
     render() {
       const n = +this.getAttribute('anno') || 1, s = +this.getAttribute('size') || 89;
@@ -85,13 +85,19 @@
         [data-occhi]{transition:transform 144ms linear}
         .b{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);width:max-content;max-width:189px;z-index:20;pointer-events:none;
           background:var(--lab-surface,#1E1C2E);color:var(--lab-ink,#ECEAF5);border:1px solid var(--lab-oro,#E3C27A);border-radius:13px;padding:8px 13px;
-          font:500 13px/1.4 var(--lab-font-body,'Figtree',system-ui,sans-serif);text-align:left;box-shadow:0 8px 21px rgba(0,0,0,.3);animation:r 377ms cubic-bezier(.16,1,.3,1) both}
+          font:500 13px/1.4 var(--lab-font-body,'Figtree',system-ui,sans-serif);text-align:left;box-shadow:var(--lab-shadow,0 8px 21px rgba(0,0,0,.3));animation:r 377ms cubic-bezier(.16,1,.3,1) both}
         @keyframes r{from{opacity:0;transform:translate(-50%,8px)}}
         :host([fumetto="sinistra"]) .b{left:auto;right:0;transform:none;animation-name:r2}
         @keyframes r2{from{opacity:0;transform:translateY(8px)}}
         :host([fumetto="sotto"]) .b{left:auto;right:0;bottom:auto;top:calc(100% + 8px);transform:none;animation-name:r3}
         @keyframes r3{from{opacity:0;transform:translateY(-8px)}}
-        @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}}
+        .b.via{animation:via 377ms cubic-bezier(.16,1,.3,1) forwards}
+        @keyframes via{to{opacity:0;transform:translate(-50%,5px)}}
+        :host([fumetto="sinistra"]) .b.via{animation-name:via2}
+        @keyframes via2{to{opacity:0;transform:translateY(5px)}}
+        :host([fumetto="sotto"]) .b.via{animation-name:via3}
+        @keyframes via3{to{opacity:0;transform:translateY(-5px)}}
+        @media (prefers-reduced-motion:reduce){.m,.b,[data-occhi]{transition:none;animation:none}.b.via{animation:none;opacity:0}}
       </style><span class="m">${svg(this.n, { aureola: this.getAttribute('aureola') !== 'false' })}</span>`;
       this.shadowRoot.querySelector('.m').onclick = e => this.click(e);
       this.occhi = [...this.shadowRoot.querySelectorAll('[data-occhi]')];
@@ -125,11 +131,13 @@
       this.bubble(this.clicks === 1 ? `Ciao, sono ${i.nome}!` : i.frasi[(this.clicks - 2) % i.frasi.length]);
     }
     bubble(t) {
-      this.shadowRoot.querySelector('.b')?.remove(); clearTimeout(this.mt);
+      this.shadowRoot.querySelectorAll('.b').forEach(b => b.remove()); clearTimeout(this.mt); clearTimeout(this.mt2);
       if (!t) return;
       const b = document.createElement('span'); b.className = 'b'; b.textContent = t;
       this.shadowRoot.appendChild(b);
-      this.mt = setTimeout(() => b.remove(), 2618);
+      /* resta in proporzione al testo (2618 ms fino a 30 caratteri, +55 ms a carattere, massimo 4181), poi si dissolve in 377 ms */
+      const durata = Math.min(4181, 2618 + Math.max(0, t.length - 30) * 55);
+      this.mt = setTimeout(() => { b.classList.add('via'); this.mt2 = setTimeout(() => b.remove(), 377); }, durata);
     }
   }
   customElements.define('lab-mascotte', El);

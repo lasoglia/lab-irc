@@ -1,7 +1,7 @@
 import React from 'react';
 
 /** Content card: subtle 3D tilt toward the cursor plus a light that follows it. */
-export function Card({ children, style: extra, onClick, tilt = true, glow = 'rgba(139,92,246,.16)' }) {
+export function Card({ children, style: extra, onClick, tilt = true, glow = 'rgba(139,92,246,.16)', tint = 'var(--lab-viola)' }) {
   const ref = React.useRef(null);
   const [hov, setHov] = React.useState(false);
   const [down, setDown] = React.useState(false);
@@ -27,7 +27,7 @@ export function Card({ children, style: extra, onClick, tilt = true, glow = 'rgb
       style={{
         position: 'relative', overflow: 'hidden',
         background: 'var(--lab-surface)', border: '1px solid',
-        borderColor: hov ? 'color-mix(in srgb, var(--lab-viola) 38%, var(--lab-line))' : 'var(--lab-line)',
+        borderColor: hov ? `color-mix(in srgb, ${tint} 45%, var(--lab-line))` : 'var(--lab-line)',
         borderRadius: 'var(--lab-radius)', padding: 21,
         boxShadow: hov ? 'var(--lab-shadow-lg)' : 'var(--lab-shadow)',
         transform: `perspective(987px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(${hov ? -5 : 0}px) scale(${down ? 0.985 : 1})`,
