@@ -90,6 +90,26 @@
           "file": "/uploads/iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html"
         }
       ]
+    },
+    {
+      "titolo": "Segni e simboli",
+      "anno": "1",
+      "uda": "L'uomo che cerca oltre il senso religioso",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/i-1-2-segni-simboli-sacro-e-profano-artefatto.html",
+          "titolo": "Segni simboli sacro e profano artefatto",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf",
+          "titolo": "Segni simboli sacro e profano fascicolo",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
