@@ -1,51 +1,64 @@
 {
   "uda": [
     {
-      "titolo": "Gesù quali tracce ",
-      "anno": "2"
-    },
-    {
-      "titolo": "Le due vie di Lemaitre",
-      "anno": "5"
-    },
-    {
-      "titolo": "I luoghi che cambiano la vita - regola di san Benedetto",
-      "anno": "3"
-    },
-    {
-      "titolo": "UDA 1 - Riformare una Chiesa, cambiare una cultura",
-      "anno": "4",
-      "ordine": ""
-    },
-    {
-      "titolo": "Accoglienza I",
+      "titolo": "Accoglienza",
       "anno": "1",
-      "ordine": 1
+      "ordine": 1,
+      "descrizione": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno."
     },
     {
       "titolo": "L'uomo che cerca oltre il senso religioso",
       "anno": "1",
-      "ordine": 2
+      "ordine": 2,
+      "descrizione": "Credere, non credere, non sapere: da dove nasce la domanda su Dio?"
     },
     {
-      "titolo": "Accoglienza II",
-      "anno": "2"
+      "titolo": "Accoglienza",
+      "anno": "2",
+      "ordine": 1,
+      "descrizione": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno."
     },
     {
-      "titolo": "Accoglienza III",
+      "titolo": "Gesù quali tracce",
+      "anno": "2",
+      "ordine": 2,
+      "descrizione": "Che cosa sappiamo davvero di Gesù? Le tracce nella storia e nei Vangeli."
+    },
+    {
+      "titolo": "Accoglienza",
       "anno": "3",
-      "descrizione": "",
+      "descrizione": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno.",
       "ordine": 1
     },
     {
-      "titolo": "Accoglienza ",
-      "anno": "4",
-      "ordine": 1,
-      "descrizione": "Nuovo anno scolastico "
+      "titolo": "I luoghi che cambiano la vita - regola di san Benedetto",
+      "anno": "3",
+      "ordine": 2,
+      "descrizione": "Una Regola di 1500 anni fa che parla ancora di tempo, silenzio e telefoni."
     },
     {
-      "titolo": "Accoglienza 5",
-      "anno": "5"
+      "titolo": "Accoglienza",
+      "anno": "4",
+      "ordine": 1,
+      "descrizione": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno."
+    },
+    {
+      "titolo": "Riformare una Chiesa, cambiare una cultura",
+      "anno": "4",
+      "ordine": 2,
+      "descrizione": "Lutero, le indulgenze e una Chiesa che cambia cultura."
+    },
+    {
+      "titolo": "Accoglienza",
+      "anno": "5",
+      "ordine": 1,
+      "descrizione": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno."
+    },
+    {
+      "titolo": "Le due vie di Lemaître",
+      "anno": "5",
+      "ordine": 2,
+      "descrizione": "Un prete e il Big Bang: scienza e fede possono parlarsi?"
     }
   ]
 }
