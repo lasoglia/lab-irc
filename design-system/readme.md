@@ -146,14 +146,19 @@ Activates with `data-tema="chiaro"` on `<html>`. Surface: warm parchment (`#FAF7
 
 ## Year mascots
 
-Each school year has a small friendly mascot (`YearMascot`), used on the year card, the year page, every material card and every lesson artefact of that year — the same figure everywhere:
+Each school year has a small friendly **2D** mascot — the web component `<lab-mascotte anno="N">` in `/assets/mascotte/lab-mascotte.js` at the site root (a byte-identical copy sits in `design-system/assets/mascotte/` for the artefact skill; React wrapper `YearMascot`; static SVGs in `assets/mascotte/svg/`). 144×144 Fibonacci geometry with a thin gold halo. Sizes: 34 material card (no halo) · 55 year card · 89 artefact · 144 year page. It is used on the year card, the year page, every material card and every lesson artefact of that year — the same figure everywhere:
 1 **Semino** (seed — le radici) · 2 **Ichthy** (fish — Gesù) · 3 **Navicella** (Peter's boat — la Chiesa) · 4 **Bussolina** (compass — la coscienza) · 5 **Terra** (earth with leaf — la casa comune).
-Eyes follow the cursor (Bussolina's needle points at it), they blink, a click shows a year-themed line (e.g. "Duc in altum!"). No AMDG on repeated clicks.
-The figures come from the Claude Design package in `/assets/mascotte/` (web component `<lab-mascotte>`, golden halo, 144×144 grid); `YearMascot` wraps it. Sizes: 34 (material card, no halo) · 55 (year card) · 89 (artefact) · 144 (year page).
+Eyes follow the cursor (Bussolina's needle points at it), they blink, a click shows a year-themed line (e.g. "Duc in altum!"). No AMDG on repeated clicks. Props of `YearMascot`: year, size, speak, halo, still, fumetto ("sinistra" near the right edge, "sotto" at the top of a page).
 
 ## Lesson artefacts kit
 
-`assets/artefatti/lab-artefatto.css` + `lab-artefatto.js` give plain-HTML artefacts and games the same style: `<body class="la" data-anno="N">`, classes `.la-card`, `.la-btn`, `.la-choice`…, the year mascot bottom-right, cursor halo and AMDG. See `assets/artefatti/README.md` and the example `ui_kits/artefatto/index.html`.
+`assets/artefatti/lab-artefatto.css` + `lab-artefatto.js` give plain-HTML artefacts and games the same style: `<body class="la" data-anno="N">`, classes `.la-card`, `.la-btn`, `.la-choice`…, the year mascot bottom-right, cursor halo and AMDG. The **games engine** (`assets/artefatti/giochi/`) adds 12 lesson games — quiz, true/false, flashcards, memory, matching, categories, timeline, fill-in, crossword, team challenge, poll, reflection — driven by one `giochi-dati.js` per lesson. See `assets/artefatti/README.md`, examples `ui_kits/artefatto/index.html` and `ui_kits/giochi/index.html`.
+
+## Perception — Gestalt, attention, LIM
+
+`tokens/perception.css`. **Gestalt:** proximity 8 / 21 / 55px (within group / between groups / sections, ×φ²); similarity (same shape = same role, colour only for meaning); common region (question + answers in one card); figure–ground (one foreground figure, decoration recedes during play); continuity (progress bars, timelines); common fate (options enter together, 55ms stagger); closure (stars, rings). **Attention:** one accent per view (isolation effect), ≤4 options and one question per screen (working-memory limit), feedback within 233ms with a "why", polished peak/end moments.
+
+**LIM mode** (`<html data-lim>`, toggle via button, key L or `?lim=1`): sizes in % of board width — Fibonacci/10 scale `--lab-lim-caption 1.3 · body 2.1 · lead 2.67 · question 3.4 · term 5.5 · score 8.9`, touch target ≥5.5. Questions switch to Figtree 800, muted greys lift to ink-soft, no text glow or scanlines. Rules in `assets/artefatti/lab-percezione.css`. Cards: *Percezione*, *Scala LIM*.
 
 ## Iconography
 
@@ -183,7 +188,7 @@ Icons are embedded directly in HTML as `<svg>` elements with `stroke="currentCol
 styles.css                    # Global CSS entry point (@imports only)
 
 tokens/
-  fonts.css                   # Self-hosted @font-face (Cormorant Garamond, Cinzel, Figtree)
+  fonts.css                   # Self-hosted @font-face (Cormorant Garamond, Cinzel, Figtree) — files in fonts/
   colors.css                  # All color custom properties
   typography.css              # Font family, size, weight, tracking tokens
   spacing.css                 # Spacing scale + border radius + max-widths
@@ -196,6 +201,8 @@ assets/
   lab-style.css               # Original monolithic CSS (source of truth; reference only)
   lab-tema.js                 # Theme toggle script (include at end of <body>)
   artefatti/                  # Kit for lesson artefacts: lab-artefatto.css / .js / README.md
+    giochi/                   # Games engine: giochi.css, giochi-2.css, giochi.js, giochi-2.js
+  mascotte/                   # lab-mascotte.js web component + svg/1-semino … 5-terra + README.md
 
 components/
   core/
@@ -242,6 +249,8 @@ ui_kits/
     index.html               # Interactive exam platform (teacher + student views)
   artefatto/
     index.html               # Example lesson artefact (quiz) built with the artefacts kit
+  giochi/
+    index.html + giochi-dati*.js  # 12-game lesson page (Anno III, religiosità)
 
 readme.md                    # This file
 SKILL.md                     # Claude Code agent skill file
@@ -251,7 +260,7 @@ SKILL.md                     # Claude Code agent skill file
 
 ## Contributing & Iteration
 
-**Font files:** Cormorant Garamond, Cinzel and Figtree are self-hosted in `fonts/` (OFL) and declared with `@font-face` in `tokens/fonts.css` — no Google Fonts.
+**Font files:** Cormorant Garamond, Cinzel and Figtree are self-hosted in `fonts/` (OFL) and declared with `@font-face` in `tokens/fonts.css` — no Google Fonts, no CDN.
 
 **New components:** Add `<Name>.jsx` + `<Name>.d.ts` to `components/core/` or `components/exam/`. Update the relevant `.card.html` specimen file to include the new component.
 

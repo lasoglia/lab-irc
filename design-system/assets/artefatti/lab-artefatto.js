@@ -9,11 +9,11 @@
   try { var t = localStorage.getItem('tema_lab'); if (t) d.documentElement.dataset.tema = t; } catch (e) {}
   var root = d.documentElement, mascotEl = null, limBtn = null;
   var isLim = function () { return root.hasAttribute('data-lim'); };
-  try {
-    var qm = /[?&]lim=(1|0)/.exec(location.search);
-    if (qm) localStorage.setItem('lim_lab', qm[1]);
-    if (localStorage.getItem('lim_lab') === '1') root.setAttribute('data-lim', '');
-  } catch (e) {}
+  /* l'indirizzo (?lim=1, usato anche dal visore del sito) vale anche dove lo storage è bloccato */
+  var qm = /[?&]lim=(1|0)/.exec(location.search);
+  if (qm) { if (qm[1] === '1') root.setAttribute('data-lim', ''); }
+  else { try { if (localStorage.getItem('lim_lab') === '1') root.setAttribute('data-lim', ''); } catch (e) {} }
+  try { if (qm) localStorage.setItem('lim_lab', qm[1]); } catch (e) {}
   function setLim(on) {
     if (on) root.setAttribute('data-lim', ''); else root.removeAttribute('data-lim');
     try { localStorage.setItem('lim_lab', on ? '1' : '0'); } catch (e) {}

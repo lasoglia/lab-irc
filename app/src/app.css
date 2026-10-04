@@ -15,6 +15,13 @@
   --lab-grad-cta:linear-gradient(135deg,#6D3FE0,#0E7490);
 }
 html[data-tema="chiaro"]{ --lab-oro-text:#8A6420; --lab-tinta-testo:70%; }
+/* tema chiaro: testi piccoli colorati abbastanza scuri da leggersi (WCAG AA) */
+html[data-tema="chiaro"] .lab-app{ --lab-accent:#0E7490; --lab-verde:#0B6B5B; --lab-viola-2:#6D28D9; --lab-ciano:#0E7490; }
+html[data-tema="chiaro"] .lab-anni a > span:has(> span){
+  --lab-anno-1:color-mix(in srgb,#E2603B 60%,var(--lab-ink)); --lab-anno-2:color-mix(in srgb,#2D7DD2 60%,var(--lab-ink));
+  --lab-anno-3:color-mix(in srgb,#6A4FB0 60%,var(--lab-ink)); --lab-anno-4:color-mix(in srgb,#C8417B 60%,var(--lab-ink));
+  --lab-anno-5:color-mix(in srgb,#C98A1E 60%,var(--lab-ink)); }
+html[data-tema="chiaro"] .lab-avanti--main .lab-avanti-eb{ color:#7A5718; }
 @property --lz-a{ syntax:'<number>'; inherits:false; initial-value:1; }
 
 html{ -webkit-tap-highlight-color:transparent; }
@@ -40,7 +47,10 @@ body.viewing .lab-app, body.viewing .lab-tema, body.viewing .lab-lim, body.viewi
    (il testo più lungo non deve allungare solo la sua) */
 .lab-anni > *{ display:flex; flex-direction:column; }
 .lab-anni > * > *{ flex:1 1 auto; }
-.lab-anni a > span:has(> span){ padding-right:68px; }   /* il conteggio non passa sotto la mascotte */
+.lab-anni a > span:has(> span){ padding-right:50px; white-space:nowrap; }   /* il conteggio non passa sotto la mascotte */
+.lab-griglia > *, .lab-continua > *{ min-width:0; }
+/* una scheda sola: anche "Per continuare" resta nella stessa colonna */
+.lab-griglia:not(:has(> :nth-child(2))) ~ .lab-continua{ max-width:610px; }
 
 /* ---------- percorso: il tag del prossimo passo (uno per vista) ---------- */
 .lab-tag{ display:inline-flex; align-items:center; font:600 11.5px/1 var(--lab-font-inscription); letter-spacing:.14em; text-transform:uppercase; color:var(--lab-oro-text); border:1px solid color-mix(in srgb, var(--lab-oro) 50%, transparent); border-radius:999px; padding:5px 8px; white-space:nowrap; background:var(--lab-surface); }
@@ -128,7 +138,10 @@ html[data-lim] .lab-lim{ font-size:18px; min-height:55px; padding:0 21px; bottom
   .lab-pagina-mascotte{ right:13px !important; top:13px !important; }   /* a 89px (vedi useStretto), il fumetto resta leggibile */
   .lab-pagina-hero:has(.lab-pagina-mascotte) .lab-pagina-testo{ padding-right:89px !important; }
   .lab-glifo{ font-size:144px !important; }
-  .lab-griglia, .lab-continua{ grid-template-columns:1fr !important; }
+  .lab-griglia, .lab-continua{ grid-template-columns:minmax(0,1fr) !important; }
+  .lab-pagina-hero:has(.lab-pagina-mascotte) .lab-glifo{ display:none; }
+  .lab-pagina-eyebrow{ letter-spacing:.08em !important; gap:8px !important; }
+  .lab-pagina-eyebrow > span:first-child{ display:none; }
   .lab-footer{ grid-template-columns:1fr auto !important; padding-bottom:89px !important; }
   .lab-footer > :nth-child(2){ display:none; }
   .lab-briciole-full{ display:none !important; }

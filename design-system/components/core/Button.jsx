@@ -30,7 +30,7 @@ export function Button({ children, variant = 'primary', size = 'md', href, onCli
     fontFamily: 'var(--lab-font-body)', fontWeight: 700, lineHeight: 1, letterSpacing: '.01em',
     fontSize: sm ? 13.5 : 15, padding: sm ? '8px 13px' : '13px 21px',
     borderRadius: 'var(--lab-radius-pill)', border: '1px solid transparent',
-    cursor: disabled ? 'not-allowed' : 'pointer', textDecoration: 'none', opacity: disabled ? 0.5 : 1,
+    cursor: disabled ? 'not-allowed' : 'pointer', textDecoration: 'none', ...(disabled ? { opacity: 0.5 } : {}),
     transform: `translate(${off.x}px, ${off.y}px) scale(${down ? 0.96 : 1})`,
     transition: `transform ${hov ? 233 : 610}ms var(--lab-ease-out), box-shadow 377ms ease, border-color 377ms ease, color 233ms ease`,
     ...v,

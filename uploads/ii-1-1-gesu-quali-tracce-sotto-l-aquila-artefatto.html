@@ -1376,7 +1376,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     click(e) {
       e.preventDefault(); e.stopPropagation();
       this.clicks++;
-      if (this.clicks >= 7) { this.clicks = 0; this.bubble(null); dispatchEvent(new Event('lab:amdg')); return; }
+      /* niente AMDG al 7° clic sulla mascotte (scelta del sito) */
       if (this.getAttribute('parla') === 'false') return;
       const i = INFO[this.n];
       this.bubble(this.clicks === 1 ? `Ciao, sono ${i.nome}!` : i.frasi[(this.clicks - 2) % i.frasi.length]);
@@ -1414,7 +1414,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     egg.className = 'la-amdg'; egg.setAttribute('role', 'dialog'); egg.setAttribute('aria-label', 'Ad maiorem Dei gloria');
     egg.innerHTML = '<div><div class="la-amdg-star">✦</div><div class="la-amdg-letters">' +
       ['A', 'M', 'D', 'G'].map(function (l, i) { return (i ? '<i style="animation-delay:' + (233 + i * 89) + 'ms">·</i>' : '') + '<b style="animation-delay:' + (233 + i * 144) + 'ms">' + l + '</b>'; }).join('') +
-      '</div><div class="la-amdg-line"></div><div class="la-amdg-lat">Ad maiorem Dei gloria</div><div class="la-amdg-it">Per la maggior gloria di Dio</div></div>';
+      '</div><div class="la-amdg-line"></div><div class="la-amdg-lat">Ad maiorem Dei gloria</div></div>';
     d.body.appendChild(egg);
     var el = egg, timer;
     var close = function () { if (egg !== el) return; egg = null; clearTimeout(timer); d.removeEventListener('keydown', esc); el.classList.add('is-out'); setTimeout(function () { el.remove(); }, 610); };
