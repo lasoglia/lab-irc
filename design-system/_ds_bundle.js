@@ -1605,10 +1605,10 @@ try { (() => {
     egg = d.createElement('div');
     egg.className = 'la-amdg';
     egg.setAttribute('role', 'dialog');
-    egg.setAttribute('aria-label', 'Ad maiorem Dei gloria');
+    egg.setAttribute('aria-label', 'Ad maiorem Dei gloriam');
     egg.innerHTML = '<div><div class="la-amdg-star">✦</div><div class="la-amdg-letters">' + ['A', 'M', 'D', 'G'].map(function (l, i) {
       return (i ? '<i style="animation-delay:' + (233 + i * 89) + 'ms">·</i>' : '') + '<b style="animation-delay:' + (233 + i * 144) + 'ms">' + l + '</b>';
-    }).join('') + '</div><div class="la-amdg-line"></div><div class="la-amdg-lat">Ad maiorem Dei gloria</div><div class="la-amdg-it">Per la maggior gloria di Dio</div></div>';
+    }).join('') + '</div><div class="la-amdg-line"></div><div class="la-amdg-lat">Ad maiorem Dei gloriam</div><div class="la-amdg-it">Per la maggior gloria di Dio</div></div>';
     d.body.appendChild(egg);
     var el = egg,
       timer;
@@ -4503,7 +4503,7 @@ function AmdgEgg({
     if (!window.__labAmdgLogged) {
       window.__labAmdgLogged = true;
       console.log('%cA · M · D · G', 'font: 600 21px Cinzel, Georgia, serif; color: #E3C27A; letter-spacing: .3em');
-      console.log('%cAd maiorem Dei gloria — prova a scrivere "amdg".', 'font: italic 13px Georgia, serif; color: #8E89A6');
+      console.log('%cAd maiorem Dei gloriam — prova a scrivere "amdg".', 'font: italic 13px Georgia, serif; color: #8E89A6');
     }
     return () => {
       window.removeEventListener('keydown', key);
@@ -4525,7 +4525,7 @@ function AmdgEgg({
   if (phase === 'off') return null;
   return /*#__PURE__*/React.createElement("div", {
     role: "dialog",
-    "aria-label": "Ad maiorem Dei gloria",
+    "aria-label": "Ad maiorem Dei gloriam",
     onClick: () => setPhase('out'),
     style: {
       position: 'fixed',
@@ -4596,7 +4596,7 @@ function AmdgEgg({
       color: 'rgba(243,231,198,.9)',
       animation: 'labRise 987ms cubic-bezier(.16,1,.3,1) 1220ms both'
     }
-  }, "Ad maiorem Dei gloria"), /*#__PURE__*/React.createElement("div", {
+  }, "Ad maiorem Dei gloriam"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: 'var(--lab-font-body, sans-serif)',
       fontSize: 12.5,
