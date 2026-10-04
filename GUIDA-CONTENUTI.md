@@ -94,6 +94,20 @@ Anche gli artefatti aperti dal sito si aprono in modalità LIM.
 
 ---
 
+## Le lezioni interattive nel nuovo stile
+
+Le lezioni di accoglienza dei cinque anni sono ora nel formato del **kit lezione**
+del design system: scene in sequenza (frecce ←/→), scaletta con i minuti, modalità
+Studio per lo studente, giochi quando ci sono, glossario, mascotte dell'anno,
+pulsante LIM. Ogni lezione è un unico file autonomo: funziona anche senza internet.
+
+I testi "sorgente" di queste lezioni stanno in `sorgenti-lezioni/` (uno per lezione,
+più una nota su come è stata trasposta la versione precedente). Per cambiare una
+lezione si modifica il suo sorgente e si riassembla con lo script indicato nel
+`README.md` di quella cartella; oppure la chiedi a Claude.
+
+---
+
 ## 1. Aggiungere immagini accattivanti (anche con l'AI)
 
 Ogni materiale e ogni strumento ha un campo **"Immagine di copertina"**:
