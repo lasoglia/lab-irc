@@ -55,16 +55,17 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--la
 .drop.sopra{border-color:var(--lab-oro);background:var(--lab-oro-soft)}
 .drop b{display:block;font:600 24px var(--lab-font-display);margin-bottom:8px}
 .drop input{display:none}
-.tab-wrap{overflow-x:auto;margin-top:21px;border:1px solid var(--lab-line);border-radius:13px}
-table{width:100%;border-collapse:collapse;font-size:14px;min-width:1120px}
-td input[type=text]{min-width:170px}
+.tab-wrap{overflow-x:auto;margin-top:21px;border:1px solid var(--lab-line);border-radius:13px;background:linear-gradient(to right,var(--lab-surface) 30%,transparent),linear-gradient(to left,var(--lab-surface) 30%,transparent),linear-gradient(to right,rgba(0,0,0,.14),transparent 13px),linear-gradient(to left,rgba(0,0,0,.14),transparent 13px);background-position:left,right,left,right;background-size:34px 100%,34px 100%,13px 100%,13px 100%;background-repeat:no-repeat;background-attachment:local,local,scroll,scroll}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:0}
+td input[type=text]{min-width:120px}
+td:first-child{max-width:210px}
 th{font:600 11.5px var(--lab-font-inscription);letter-spacing:.13em;text-transform:uppercase;color:var(--lab-oro);text-align:left;padding:13px 10px;border-bottom:1px solid var(--lab-line);white-space:nowrap}
-td{padding:8px 10px;border-bottom:1px solid var(--lab-line-soft);vertical-align:middle}
+td{padding:8px 6px;border-bottom:1px solid var(--lab-line-soft);vertical-align:middle}
 tr.gruppo td{background:var(--lab-bg-2);font-weight:600;color:var(--lab-ink);padding:10px}
 td input[type=text],td select{min-height:38px;padding:6px 10px;font-size:14px;width:100%}
-td.stretta select{width:auto;min-width:150px}
+td.stretta select{width:auto;min-width:0}
 td .file{display:flex;flex-direction:column;gap:2px;min-width:0}
-td .file b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+td .file b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:190px}
 td .file small{color:var(--lab-muted)}
 td.stretta{width:1%;white-space:nowrap}
 .x{background:none;border:none;color:var(--lab-muted);cursor:pointer;font-size:18px;line-height:1;padding:8px;border-radius:999px;min-width:36px;min-height:36px}

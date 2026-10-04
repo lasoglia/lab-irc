@@ -455,7 +455,7 @@ export const norm = (s) => String(s == null ? "" : s).normalize("NFD").replace(/
 export function cerca(D, q) {
   const k = norm(q);
   const ha = (...v) => v.some((x) => norm(x).includes(k));
-  const items = D.ITEMS.filter((it) => ha(it.titolo, it.descrizione, it.tipo, it.uda, it.lezione));
+  const items = ordinaPercorso(D.ITEMS.filter((it) => ha(it.titolo, it.descrizione, it.tipo, it.uda, it.lezione)));
   const cartelle = [];
   ANNI.forEach((a) => {
     udaForYear(D, a.n).forEach((u) => {

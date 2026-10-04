@@ -43,9 +43,11 @@ const EASE = "cubic-bezier(.16,1,.3,1)";
 const ROMAN = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V" };
 const conMouse = () => window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
 const movimentoRidotto = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-const plurale = (n) => n + " " + (n === 1 ? "contenuto" : "contenuti");
-const lezioni = (n) => n + " " + (n === 1 ? "lezione" : "lezioni");
-const materiali = (n) => n + " " + (n === 1 ? "materiale" : "materiali");
+/* numero e parola non si separano mai a capo (spazio unificatore) */
+const plurale = (n) => n + " " + (n === 1 ? "contenuto" : "contenuti");
+const lezioni = (n) => n + " " + (n === 1 ? "lezione" : "lezioni");
+const materiali = (n) => n + " " + (n === 1 ? "materiale" : "materiali");
+const metaConteggio = (n) => (n ? plurale(n) : "In preparazione");
 const pulito = (t) => titoloPulito(t).titolo;
 
 /* cambio di tema o di LIM: un solo crossfade (View Transitions), dove c'è */
@@ -909,7 +911,7 @@ function UdaPage({ D, n, uda, apri }) {
   const v = vicini(udas, u.titolo);
   const tornaAnno = { eyebrow: "Torna all'anno", titolo: meta.nome, meta: `${udas.length} unità`, href: "#anno/" + n, indietro: true };
   const tiles = v.succ
-    ? [{ main: true, eyebrow: "Unità successiva", titolo: v.succ.titolo, meta: plurale(itemsInUda(D, n, v.succ.titolo).length), href: hrefUda(n, v.succ.titolo) }, tornaAnno]
+    ? [{ main: true, eyebrow: "Unità successiva", titolo: v.succ.titolo, meta: metaConteggio(itemsInUda(D, n, v.succ.titolo).length), href: hrefUda(n, v.succ.titolo) }, tornaAnno]
     : [{ ...tornaAnno, main: true }];
 
   /* un indirizzo che non corrisponde a nulla nei dati: lo si dice, senza fingere "in preparazione" */
@@ -917,7 +919,7 @@ function UdaPage({ D, n, uda, apri }) {
   if (!esiste) return <NonTrovata n={n} meta={meta} />;
 
   const numero = titoloPulito(u.titolo).numero;
-  const eyebrow = `Anno ${meta.rom} · Unità ${numero != null ? numero : v.pos}${v.tot >= 2 && numero == null ? ` di ${v.tot}` : ""}`;
+  const eyebrow = `Anno ${meta.rom} · Unità ${numero != null ? numero : v.pos}${v.tot >= 2 && numero == null ? ` di ${v.tot}` : ""}`;
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo }]} su={{ testo: "Anno " + meta.rom, href: "#anno/" + n }} />
@@ -927,7 +929,7 @@ function UdaPage({ D, n, uda, apri }) {
           <SectionHead small eyebrow="Percorso" title="Lezioni" />
           <Griglia n={lez.length}>
             {lez.map((l, i) => {
-              const tipi = [...new Set(itemsInLezione(D, n, uda, l.titolo).map((m) => titoloMateriale(m.titolo, l.titolo)))];
+              const tipi = [...new Set(ordinaPercorso(itemsInLezione(D, n, uda, l.titolo)).map((m) => titoloMateriale(m.titolo, l.titolo)))];
               return (
                 <Cartella key={l.titolo} i={i} icona="lezione" href={hrefLezione(n, uda, l.titolo)} color={color} titolo={l.titolo} desc={l.descrizione}
                   anteprima={!l.descrizione && tipi.length ? tipi.slice(0, 3).join(" · ") : ""}
@@ -994,15 +996,15 @@ function LezionePage({ D, n, uda, lezione, apri }) {
   const vu = vicini(udas, u.titolo);
   const tornaUnita = { eyebrow: "Torna all'unità", titolo: u.titolo, meta: lez.length ? lezioni(lez.length) : "", href: hrefUda(n, u.titolo), indietro: true };
   let tiles;
-  if (v.succ) tiles = [{ main: true, eyebrow: "Prossima lezione", titolo: v.succ.titolo, meta: plurale(itemsInLezione(D, n, uda, v.succ.titolo).length), href: hrefLezione(n, uda, v.succ.titolo) }, tornaUnita];
-  else if (vu.succ) tiles = [{ main: true, eyebrow: "Unità successiva", titolo: vu.succ.titolo, meta: plurale(itemsInUda(D, n, vu.succ.titolo).length), href: hrefUda(n, vu.succ.titolo) }, tornaUnita];
+  if (v.succ) tiles = [{ main: true, eyebrow: "Prossima lezione", titolo: v.succ.titolo, meta: metaConteggio(itemsInLezione(D, n, uda, v.succ.titolo).length), href: hrefLezione(n, uda, v.succ.titolo) }, tornaUnita];
+  else if (vu.succ) tiles = [{ main: true, eyebrow: "Unità successiva", titolo: vu.succ.titolo, meta: metaConteggio(itemsInUda(D, n, vu.succ.titolo).length), href: hrefUda(n, vu.succ.titolo) }, tornaUnita];
   else tiles = [{ ...tornaUnita, main: true }, { eyebrow: "Torna all'anno", titolo: meta.nome, meta: `${udas.length} unità`, href: "#anno/" + n, indietro: true }];
 
   /* lezione che non esiste nei dati (né come scheda né come materiali): si dice */
   const esiste = D.LEZ.some((x) => String(x.anno) === String(n) && normT(x.uda) === normT(uda) && normT(x.titolo) === normT(lezione)) || items.length > 0;
   if (!esiste) return <NonTrovata n={n} meta={meta} />;
 
-  const eyebrow = `${v.tot >= 2 && v.pos > 0 ? `Lezione ${v.pos} di ${v.tot}` : "Lezione"} · ${materiali(items.length)}`;
+  const eyebrow = `${v.tot >= 2 && v.pos > 0 ? `Lezione ${v.pos} di ${v.tot}` : "Lezione"}${items.length ? ` · ${materiali(items.length)}` : ""}`;
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Anno " + meta.rom, href: "#anno/" + n }, { testo: u.titolo, href: hrefUda(n, u.titolo) }, { testo: L.titolo }]} su={{ testo: u.titolo, livello: "Unità", href: hrefUda(n, u.titolo) }} />
@@ -1188,10 +1190,10 @@ function Dimentica() {
     <div className="lab-mio" role="status" aria-live="polite" style={{ gridColumn: "1 / -1", fontSize: 13.5, color: "var(--lab-muted)" }}>
       {fase === 2 ? <span ref={fatto} tabIndex={-1}>Fatto: nessuna traccia.</span> : (
         <>
-          Il percorso resta su questo dispositivo ·{" "}
+          Il percorso resta su questo dispositivo{" "}
           {fase === 0
-            ? <button type="button" style={link} onClick={() => setFase(1)}>Dimentica</button>
-            : <>Sicuro? <button type="button" style={link} onClick={() => { dimenticaPercorso(); setFase(2); }}>Sì, dimentica</button> · <button ref={annulla} type="button" style={link} onClick={() => setFase(0)}>Annulla</button></>}
+            ? <span style={{ whiteSpace: "nowrap" }}>· <button type="button" style={link} onClick={() => setFase(1)}>Dimentica</button></span>
+            : <span style={{ whiteSpace: "nowrap" }}>· Sicuro? <button type="button" style={link} onClick={() => { dimenticaPercorso(); setFase(2); }}>Sì, dimentica</button> · <button ref={annulla} type="button" style={link} onClick={() => setFase(0)}>Annulla</button></span>}
         </>
       )}
     </div>
@@ -1206,7 +1208,7 @@ function Footer({ autore, dedica }) {
       <span style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: 13 }}>
         <a href="admin/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Accesso docente</a>
         {/* la via breve per caricare le lezioni: discreta, ma c'è */}
-        <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Importa</a>
+        <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap" }}>Importa</a>
         <ThemeToggle inFooter />
       </span>
       {dedica && (
@@ -1324,6 +1326,8 @@ function App() {
   }, []);
   useEffect(() => {
     document.body.classList.toggle("viewing", !!visore);
+    /* la pagina sotto il visore resta nel DOM (nessuna ri-animazione al ritorno) ma è inerte */
+    const app = document.querySelector(".lab-app"); if (app) app.inert = !!visore;
     if (!visore) { chiudendo.current = false; setUscendo(false); }
     if (!visore && yRef.current != null) {
       const y = yRef.current, chi = openerRef.current;
@@ -1372,8 +1376,12 @@ function App() {
     if (cercaQ.length > 1) t = `Ricerca: ${cercaQ} · ${sito}`;
     else if (annoRotta) {
       const m = annoMeta(annoRotta);
-      if (parti[2] === "uda" && parti[3]) t = parti[4] === "lezione" && parti[5] ? `${pulito(dec(parti[5]))} · Anno ${m.rom} · ${sito}` : `${pulito(dec(parti[3]))} · Anno ${m.rom} · ${sito}`;
-      else t = `${m.nome} · ${sito}`;
+      if (parti[2] === "uda" && parti[3]) {
+        const uda = dec(parti[3]), lez = parti[4] === "lezione" && parti[5] ? dec(parti[5]) : "";
+        const udaOk = D.UDA.some((x) => String(x.anno) === String(annoRotta) && normT(x.titolo) === normT(uda)) || itemsInUda(D, annoRotta, uda).length > 0 || D.LEZ.some((x) => String(x.anno) === String(annoRotta) && normT(x.uda) === normT(uda));
+        const lezOk = !lez || (udaOk && (D.LEZ.some((x) => String(x.anno) === String(annoRotta) && normT(x.uda) === normT(uda) && normT(x.titolo) === normT(lez)) || itemsInLezione(D, annoRotta, uda, lez).length > 0));
+        t = udaOk && lezOk ? `${pulito(lez || uda)} · Anno ${m.rom} · ${sito}` : `Pagina non trovata · ${sito}`;
+      } else t = `${m.nome} · ${sito}`;
     } else if (hash === "strumenti") t = "Strumenti · " + sito;
     else if (hash === "video") t = "Video · " + sito;
     document.title = t;
