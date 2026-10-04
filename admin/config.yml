@@ -105,7 +105,7 @@ collections:
   # ===========================================================
   - name: lezioni
     label: "📖  Lezioni (dentro le UDA)"
-    description: "Dentro ogni lezione puoi caricare tutti i suoi file (slide, PDF, artefatti) in «File della lezione»."
+    description: "Dentro ogni lezione puoi caricare tutti i suoi file (slide, PDF, artefatti) in «File della lezione». Per caricare molte lezioni in una volta usa la pagina admin/importa.html del sito."
     delete: false
     editor: { preview: false }
     files:

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importazione rapida · Lab IRC</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="../design-system/assets/logo-lettermark.svg">
+<script>try{var t=localStorage.getItem('tema_lab');if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+<link rel="stylesheet" href="../design-system/styles.css">
+<style>
+/* Importazione rapida: molte lezioni in una volta, dal computer a GitHub.
+   Stile: token del design system (colori, font, spazi φ). */
+body{margin:0;background:var(--lab-bg);color:var(--lab-ink);font-family:var(--lab-font-body);line-height:1.5}
+.wrap{max-width:1140px;margin:0 auto;padding:0 21px 144px}
+header.top{display:flex;align-items:center;gap:13px;min-height:68px;padding:8px 0;border-bottom:1px solid var(--lab-line-soft)}
+header.top .logo{width:42px;height:42px;border-radius:13px;background:var(--lab-grad);display:grid;place-items:center;color:#fff;font:600 24px var(--lab-font-display)}
+header.top b{font:600 23px var(--lab-font-display)}
+header.top nav{margin-left:auto;display:flex;gap:5px}
+header.top nav a{color:var(--lab-ink-soft);text-decoration:none;font-weight:600;font-size:14.5px;padding:8px 13px}
+header.top nav a:hover{color:var(--lab-ink)}
+.eyebrow{display:flex;align-items:center;gap:13px;font:600 13px var(--lab-font-inscription);letter-spacing:.18em;text-transform:uppercase;color:var(--lab-oro);margin:55px 0 13px}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor;opacity:.7;flex:none}
+h1{font:600 clamp(33px,5vw,55px)/1.08 var(--lab-font-display);margin:0 0 13px;letter-spacing:-.02em}
+h1 em{font-style:italic;font-weight:500;background:var(--lab-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font:600 clamp(24px,3vw,33px)/1.15 var(--lab-font-display);margin:0 0 8px}
+p{color:var(--lab-ink-soft);max-width:68ch;text-wrap:pretty}
+.lead{font-size:17px;max-width:56ch;margin:0 0 34px}
+.passo{position:relative;border:1px solid var(--lab-line);border-radius:var(--lab-radius);background:var(--lab-surface);padding:34px;margin-top:55px}
+.passo > .n{position:absolute;top:-21px;left:34px;width:42px;height:42px;border-radius:50%;background:var(--lab-bg);border:1px solid var(--lab-oro);color:var(--lab-oro);display:grid;place-items:center;font:600 18px var(--lab-font-inscription)}
+.passo.ok > .n{background:var(--lab-oro);color:#241a02}
+.riga{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 15px var(--lab-font-body);padding:13px 21px;border-radius:999px;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:transform 233ms var(--lab-ease-out),box-shadow 377ms,border-color 233ms,color 233ms;min-height:44px}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.btn.primario{background:linear-gradient(135deg,#6D3FE0,#0E7490);color:#fff;box-shadow:0 8px 21px -13px rgba(139,92,246,.6)}
+.btn.ghost{background:transparent;color:var(--lab-ink-soft);border-color:var(--lab-line)}
+.btn.ghost:hover{color:var(--lab-ink);border-color:var(--lab-viola)}
+.btn.sm{font-size:13.5px;padding:8px 13px;min-height:36px}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+input[type=text],input[type=password],select{font:inherit;font-size:15px;color:var(--lab-ink);background:var(--lab-bg-2);border:1px solid var(--lab-line);border-radius:13px;padding:10px 13px;min-height:44px;max-width:100%}
+input:focus-visible,select:focus-visible,.btn:focus-visible,a:focus-visible,label:focus-within{outline:3px solid var(--lab-oro);outline-offset:3px}
+input[type=text]:focus,input[type=password]:focus,select:focus{border-color:var(--lab-oro);outline:none}
+.hint{font-size:13.5px;color:var(--lab-muted);margin:8px 0 0}
+.stato{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid var(--lab-line);color:var(--lab-ink-soft)}
+.stato.ok{border-color:color-mix(in srgb,var(--lab-verde) 50%,transparent);color:var(--lab-verde)}
+.stato.ko{border-color:color-mix(in srgb,var(--lab-rosso) 50%,transparent);color:var(--lab-rosso)}
+details{margin-top:21px;border-top:1px solid var(--lab-line-soft);padding-top:13px}
+summary{cursor:pointer;font-weight:600;color:var(--lab-ink-soft)}
+summary:hover{color:var(--lab-ink)}
+details ol{color:var(--lab-ink-soft);padding-left:21px;line-height:1.6}
+details li+li{margin-top:5px}
+code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--lab-bg-2);padding:2px 6px;border-radius:5px}
+.drop{margin-top:21px;border:1.5px dashed var(--lab-line);border-radius:21px;padding:55px 21px;text-align:center;background:var(--lab-bg-2);transition:border-color 233ms,background 233ms}
+.drop.sopra{border-color:var(--lab-oro);background:var(--lab-oro-soft)}
+.drop b{display:block;font:600 24px var(--lab-font-display);margin-bottom:8px}
+.drop input{display:none}
+.tab-wrap{overflow-x:auto;margin-top:21px;border:1px solid var(--lab-line);border-radius:13px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:980px}
+th{font:600 11.5px var(--lab-font-inscription);letter-spacing:.13em;text-transform:uppercase;color:var(--lab-oro);text-align:left;padding:13px 10px;border-bottom:1px solid var(--lab-line);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--lab-line-soft);vertical-align:middle}
+tr.gruppo td{background:var(--lab-bg-2);font-weight:600;color:var(--lab-ink);padding:10px}
+td input[type=text],td select{min-height:38px;padding:6px 10px;font-size:14px;width:100%}
+td.stretta select{width:auto;min-width:150px}
+td .file{display:flex;flex-direction:column;gap:2px;min-width:0}
+td .file b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+td .file small{color:var(--lab-muted)}
+td.stretta{width:1%;white-space:nowrap}
+.x{background:none;border:none;color:var(--lab-muted);cursor:pointer;font-size:18px;line-height:1;padding:8px;border-radius:999px;min-width:36px;min-height:36px}
+.x:hover{color:var(--lab-rosso);background:var(--lab-bg-2)}
+.riassunto{margin-top:21px;padding:21px;border-radius:13px;background:var(--lab-bg-2);border:1px solid var(--lab-line-soft)}
+.riassunto ul{margin:8px 0 0;padding-left:21px;color:var(--lab-ink-soft)}
+.esito{margin-top:21px;padding:21px;border-radius:13px;border:1px solid var(--lab-line)}
+.esito.ok{border-color:color-mix(in srgb,var(--lab-verde) 50%,transparent)}
+.esito.ko{border-color:color-mix(in srgb,var(--lab-rosso) 50%,transparent)}
+.barra{height:5px;border-radius:5px;background:var(--lab-line-soft);overflow:hidden;margin-top:13px}
+.barra i{display:block;height:100%;width:0;background:var(--lab-oro);transition:width 377ms var(--lab-ease-out)}
+.orfani{margin-top:21px}
+.orfani li{display:flex;align-items:center;gap:13px;padding:8px 0;border-bottom:1px solid var(--lab-line-soft);color:var(--lab-ink-soft)}
+.orfani li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tema{position:fixed;right:21px;bottom:21px;width:47px;height:47px;border-radius:50%;border:1px solid var(--lab-line);background:var(--lab-surface);color:var(--lab-oro);cursor:pointer;display:grid;place-items:center;box-shadow:var(--lab-shadow)}
+.sr{position:absolute;left:-9999px}
+@media (max-width:720px){.passo{padding:34px 21px}.passo > .n{left:21px}.eyebrow{margin-top:34px}header.top b{font-size:19px}header.top nav a{padding:8px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="logo" aria-hidden="true">L</span><b>Lab IRC · gestione</b>
+    <nav><a href="./">Pannello</a><a href="../">Sito</a></nav>
+  </header>
+
+  <p class="eyebrow">Importazione rapida</p>
+  <h1>Molte lezioni, <em>una volta sola</em></h1>
+  <p class="lead">Trascina qui le cartelle delle tue lezioni così come le tieni sul computer (unità → lezione → file). La tabella si compila da sola: controlli, correggi e pubblichi tutto con un clic. Niente più materiali uno alla volta.</p>
+
+  <!-- 1 · collegamento -->
+  <section class="passo" id="p1">
+    <span class="n" aria-hidden="true">1</span>
+    <h2>Collegamento a GitHub</h2>
+    <p>Serve una chiave personale di GitHub, una sola volta: resta salvata solo su questo computer, come la password del pannello.</p>
+    <div class="riga" style="margin-top:13px">
+      <label class="sr" for="token">Chiave di accesso GitHub</label>
+      <input type="password" id="token" placeholder="github_pat_…" autocomplete="off" style="flex:1 1 320px">
+      <button class="btn ghost" id="prova">Prova il collegamento</button>
+      <span class="stato" id="stato-token">Non collegato</span>
+    </div>
+    <label class="hint" style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="ricorda" checked> Ricorda la chiave su questo computer</label>
+    <details>
+      <summary>Come si crea la chiave (5 minuti, una volta sola)</summary>
+      <ol>
+        <li>Su GitHub, in alto a destra, apri la tua foto → <b>Settings</b>.</li>
+        <li>In fondo al menu a sinistra: <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li>
+        <li>Nome: <code>Lab IRC importazione</code>. Scadenza: 1 anno. In <b>Repository access</b> scegli <b>Only select repositories</b> → <code>lab-irc</code>.</li>
+        <li>In <b>Permissions → Repository permissions</b> metti <b>Contents</b> su <b>Read and write</b>. Nient'altro.</li>
+        <li><b>Generate token</b>, copia la chiave (inizia con <code>github_pat_</code>) e incollala qui sopra. GitHub la mostra una volta sola.</li>
+      </ol>
+      <p class="hint">La chiave permette solo di scrivere file in questo sito. Puoi revocarla in qualsiasi momento dalla stessa pagina di GitHub.</p>
+    </details>
+  </section>
+
+  <!-- 2 · file -->
+  <section class="passo" id="p2">
+    <span class="n" aria-hidden="true">2</span>
+    <h2>Scegli le cartelle</h2>
+    <p>Struttura consigliata: una cartella per unità, dentro una cartella per lezione, dentro i file (slide, PDF, artefatti <code>.html</code>). Vanno bene anche file sciolti: li sistemi nella tabella.</p>
+    <div class="riga" style="margin-top:13px">
+      <label for="anno" style="font-weight:600">Anno di corso</label>
+      <select id="anno">
+        <option value="">— scegli —</option>
+        <option value="1">1° — Primo anno</option><option value="2">2° — Secondo anno</option><option value="3">3° — Terzo anno</option><option value="4">4° — Quarto anno</option><option value="5">5° — Quinto anno</option>
+      </select>
+      <span class="hint" style="margin:0">Si applica ai file nuovi; ogni riga si può cambiare.</span>
+    </div>
+    <div class="drop" id="drop">
+      <b>Trascina qui le cartelle</b>
+      <span style="color:var(--lab-ink-soft)">oppure</span>
+      <div class="riga" style="justify-content:center;margin-top:13px">
+        <label class="btn ghost">Scegli una cartella <input type="file" id="cartella" webkitdirectory directory multiple></label>
+        <label class="btn ghost">Scegli dei file <input type="file" id="files" multiple></label>
+      </div>
+      <p class="hint">Formati: PDF, slide (ppt, pptx, odp, key), lezioni interattive .html, immagini. Massimo 95 MB a file.</p>
+    </div>
+    <div class="orfani" id="orfani" hidden>
+      <p class="eyebrow" style="margin-top:21px">File già su GitHub ma non collegati a nessuna lezione</p>
+      <ul id="lista-orfani" style="list-style:none;padding:0;margin:0"></ul>
+    </div>
+  </section>
+
+  <!-- 3 · tabella -->
+  <section class="passo" id="p3" hidden>
+    <span class="n" aria-hidden="true">3</span>
+    <h2>Controlla la tabella</h2>
+    <p>Per ogni file: anno, unità (UDA), lezione, tipo, titolo. Le unità e le lezioni che non esistono ancora vengono create. Scrivi «—» nella lezione per lasciare il file direttamente nell'unità.</p>
+    <div class="tab-wrap"><table id="tab">
+      <thead><tr><th>File</th><th>Anno</th><th>Unità (UDA)</th><th>Lezione</th><th>Tipo</th><th>Titolo</th><th title="In evidenza">★</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <div class="riassunto" id="riassunto"></div>
+  </section>
+
+  <!-- 4 · pubblica -->
+  <section class="passo" id="p4" hidden>
+    <span class="n" aria-hidden="true">4</span>
+    <h2>Pubblica</h2>
+    <p>Tutto finisce su GitHub in un solo salvataggio; il sito si aggiorna in 1–2 minuti. Il pannello Decap vedrà le nuove lezioni come se le avessi create lì.</p>
+    <div class="riga" style="margin-top:13px">
+      <button class="btn primario" id="pubblica">Pubblica su GitHub</button>
+      <span class="stato" id="stato-pub" hidden></span>
+    </div>
+    <div class="barra" id="barra" hidden><i></i></div>
+    <div class="esito" id="esito" hidden></div>
+  </section>
+</div>
+<button class="tema" id="tema" aria-label="Cambia tema chiaro/scuro">◐</button>
+
+<script>
+(function () {
+  'use strict';
+  var OWNER = 'lasoglia', REPO = 'lab-irc', RAMO = 'main', API = 'https://api.github.com';
+  var ANNI = { 1: 'Primo anno', 2: 'Secondo anno', 3: 'Terzo anno', 4: 'Quarto anno', 5: 'Quinto anno' };
+  var ROM = { i: '1', ii: '2', iii: '3', iv: '4', v: '5' };
+  var TIPI = ['Slide', 'Documento/PDF', 'Artefatto interattivo', 'Link'];
+  var MAX = 95 * 1024 * 1024;
+  var $ = function (s) { return document.querySelector(s); };
+  var el = function (tag, attrs, kids) { var e = document.createElement(tag); Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') e.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]); else e.setAttribute(k, attrs[k]); }); (kids || []).forEach(function (c) { e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); }); return e; };
+  var norm = function (s) { return String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim().replace(/\s+/g, ' '); };
+
+  /* ---------- tema ---------- */
+  $('#tema').addEventListener('click', function () {
+    var r = document.documentElement, n = r.dataset.tema === 'chiaro' ? 'scuro' : 'chiaro';
+    r.dataset.tema = n; try { localStorage.setItem('tema_lab', n); } catch (e) {}
+  });
+
+  /* ---------- stato ---------- */
+  var dati = { uda: [], lezioni: [], materiali: [], uploads: [] };   /* com'è su GitHub (main) */
+  var righe = [];   /* i file da importare */
+  var token = '';
+  try { token = localStorage.getItem('gh_token_lab') || ''; } catch (e) {}
+  if (token) { $('#token').value = token; }
+
+  /* ---------- GitHub ---------- */
+  function gh(path, opt) {
+    opt = opt || {};
+    var h = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
+    if (token) h.Authorization = 'Bearer ' + token;
+    if (opt.body) h['Content-Type'] = 'application/json';
+    return fetch(API + path, { method: opt.method || 'GET', headers: h, body: opt.body ? JSON.stringify(opt.body) : undefined })
+      .then(function (r) {
+        if (r.status === 204) return null;
+        return r.json().then(function (j) { if (!r.ok) { var e = new Error((j && j.message) || ('Errore ' + r.status)); e.status = r.status; throw e; } return j; });
+      });
+  }
+  function leggiJson(p) { /* da GitHub (main), con ripiego sulla copia pubblicata */
+    return gh('/repos/' + OWNER + '/' + REPO + '/contents/' + p + '?ref=' + RAMO)
+      .then(function (j) { return JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g, ''))))); })
+      .catch(function () { return fetch('../' + p, { cache: 'no-store' }).then(function (r) { return r.json(); }); });
+  }
+  function caricaDati() {
+    return Promise.all([leggiJson('data/uda.json'), leggiJson('data/lezioni.json'), leggiJson('data/materiali.json'),
+      gh('/repos/' + OWNER + '/' + REPO + '/contents/uploads?ref=' + RAMO).catch(function () { return []; })])
+      .then(function (r) {
+        dati.uda = (r[0] && r[0].uda) || []; dati.lezioni = (r[1] && r[1].lezioni) || []; dati.materiali = (r[2] && r[2].materiali) || [];
+        dati.uploads = Array.isArray(r[3]) ? r[3].map(function (f) { return f.name; }) : [];
+        mostraOrfani();
+      });
+  }
+
+  /* ---------- 1 · token ---------- */
+  function statoToken(testo, cls) { var s = $('#stato-token'); s.textContent = testo; s.className = 'stato ' + (cls || ''); $('#p1').classList.toggle('ok', cls === 'ok'); }
+  $('#prova').addEventListener('click', function () {
+    token = $('#token').value.trim();
+    if (!token) { statoToken('Incolla la chiave', 'ko'); return; }
+    statoToken('Verifico…');
+    gh('/repos/' + OWNER + '/' + REPO).then(function (r) {
+      if (!r.permissions || !r.permissions.push) throw new Error('La chiave non ha il permesso di scrivere (Contents: Read and write).');
+      if ($('#ricorda').checked) { try { localStorage.setItem('gh_token_lab', token); } catch (e) {} } else { try { localStorage.removeItem('gh_token_lab'); } catch (e) {} }
+      statoToken('Collegato a ' + r.full_name, 'ok');
+      caricaDati();
+    }).catch(function (e) { statoToken(e.status === 401 ? 'Chiave non valida o scaduta' : e.message, 'ko'); });
+  });
+  if (token) $('#prova').click(); else caricaDati();
+
+  /* ---------- 2 · file ---------- */
+  var drop = $('#drop');
+  ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('sopra'); }); });
+  ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('sopra'); }); });
+  drop.addEventListener('drop', function (e) {
+    var items = e.dataTransfer.items, promesse = [];
+    if (items && items.length && items[0].webkitGetAsEntry) {
+      for (var i = 0; i < items.length; i++) { var en = items[i].webkitGetAsEntry(); if (en) promesse.push(leggiEntry(en, '')); }
+      Promise.all(promesse).then(function (liste) { aggiungiFile([].concat.apply([], liste)); });
+    } else aggiungiFile(Array.prototype.map.call(e.dataTransfer.files, function (f) { return { file: f, rel: f.name }; }));
+  });
+  function leggiEntry(entry, base) {
+    return new Promise(function (ok) {
+      if (entry.isFile) entry.file(function (f) { ok([{ file: f, rel: base + f.name }]); }, function () { ok([]); });
+      else if (entry.isDirectory) {
+        var reader = entry.createReader(), tutti = [];
+        (function leggi() {
+          reader.readEntries(function (ents) {
+            if (!ents.length) { Promise.all(tutti).then(function (l) { ok([].concat.apply([], l)); }); return; }
+            ents.forEach(function (x) { tutti.push(leggiEntry(x, base + entry.name + '/')); });
+            leggi();
+          }, function () { ok([]); });
+        })();
+      } else ok([]);
+    });
+  }
+  $('#cartella').addEventListener('change', function () { aggiungiFile(Array.prototype.map.call(this.files, function (f) { return { file: f, rel: f.webkitRelativePath || f.name }; })); this.value = ''; });
+  $('#files').addEventListener('change', function () { aggiungiFile(Array.prototype.map.call(this.files, function (f) { return { file: f, rel: f.name }; })); this.value = ''; });
+
+  /* dal percorso relativo e dal nome si deducono anno, UDA, lezione, tipo, titolo */
+  function slugFile(nome) {
+    var i = nome.lastIndexOf('.'), base = i > 0 ? nome.slice(0, i) : nome, ext = i > 0 ? nome.slice(i + 1).toLowerCase() : '';
+    base = norm(base).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'file';
+    return ext ? base + '.' + ext : base;
+  }
+  function tipoDa(nome) {
+    var e = (nome.split('.').pop() || '').toLowerCase();
+    if (/^html?$/.test(e)) return 'Artefatto interattivo';
+    if (/^(pptx?|odp|key)$/.test(e)) return 'Slide';
+    return 'Documento/PDF';
+  }
+  function titoloDa(nome) {
+    var b = nome.replace(/\.[a-z0-9]+$/i, '').replace(/^(i|ii|iii|iv|v)[-_ ]\d+[-_ ]\d+[-_ ]/i, '').replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim();
+    return b ? b.charAt(0).toUpperCase() + b.slice(1) : '';
+  }
+  function annoDa(testo) {
+    var m = /(^|[\/\s_-])(i|ii|iii|iv|v)(?=[-_ ]\d|[-_ ]|$)/i.exec(testo || '');
+    if (m) return ROM[m[2].toLowerCase()];
+    m = /(prim|second|terz|quart|quint)[ao]|classe\s*([1-5])|anno\s*(I{1,3}|IV|V)\b/i.exec(testo || '');
+    if (m) { if (m[2]) return m[2]; if (m[3]) return ROM[m[3].toLowerCase()]; return { prim: '1', second: '2', terz: '3', quart: '4', quint: '5' }[m[1].toLowerCase()]; }
+    return '';
+  }
+  function trovaUda(nome, anno) { var n = norm(nome); return dati.uda.find(function (u) { return norm(u.titolo) === n && (!anno || String(u.anno) === String(anno)); }); }
+  function trovaLez(nome, anno) { var n = norm(nome); return dati.lezioni.find(function (l) { return norm(l.titolo) === n && (!anno || String(l.anno) === String(anno)); }); }
+
+  function aggiungiFile(lista) {
+    var annoGlobale = $('#anno').value;
+    lista.forEach(function (x) {
+      var f = x.file, parti = String(x.rel || f.name).split('/').filter(Boolean);
+      var nome = parti.pop();
+      if (!nome || /^\./.test(nome)) return;                          /* file nascosti (.DS_Store…) */
+      if (righe.some(function (r) { return r.file && r.file.name === f.name && r.file.size === f.size; })) return;
+      var cartelle = parti.slice();
+      /* la prima cartella è spesso quella trascinata: se non è un'UDA conosciuta e ci sono altri livelli, la si salta */
+      if (cartelle.length > 2) cartelle = cartelle.slice(-2);
+      var uda = '', lez = '';
+      if (cartelle.length === 2) { uda = cartelle[0]; lez = cartelle[1]; }
+      else if (cartelle.length === 1) { if (trovaUda(cartelle[0])) uda = cartelle[0]; else { lez = cartelle[0]; var L = trovaLez(lez); if (L) uda = L.uda; } }
+      var anno = annoDa(nome) || annoDa(cartelle.join('/')) || (trovaUda(uda) || {}).anno || (trovaLez(lez) || {}).anno || annoGlobale || '';
+      if (f.size > MAX) { alert('«' + nome + '» supera i 95 MB: GitHub non lo accetta. Carica un file più leggero.'); return; }
+      righe.push({ file: f, nome: nome, anno: String(anno), uda: uda.trim(), lezione: lez.trim(), tipo: tipoDa(nome), titolo: titoloDa(nome), evidenza: false, esistente: false });
+    });
+    disegna();
+  }
+
+  /* file già su GitHub non collegati */
+  function mostraOrfani() {
+    var usati = {};
+    dati.materiali.forEach(function (m) { if (m.file) usati[m.file.replace(/^\/?uploads\//, '')] = 1; });
+    dati.lezioni.forEach(function (l) { (l.materiali || []).forEach(function (m) { if (m.file) usati[m.file.replace(/^\/?uploads\//, '')] = 1; }); });
+    var orfani = dati.uploads.filter(function (n) { return !usati[n] && !/\.(jpe?g|png|gif|webp|svg)$/i.test(n) && !righe.some(function (r) { return r.esistente && r.nome === n; }); });
+    $('#orfani').hidden = !orfani.length;
+    var ul = $('#lista-orfani'); ul.innerHTML = '';
+    orfani.forEach(function (n) {
+      ul.appendChild(el('li', {}, [el('span', { text: n }), el('button', { class: 'btn ghost sm', type: 'button', onclick: function () {
+        righe.push({ file: null, nome: n, anno: annoDa(n) || $('#anno').value || '', uda: '', lezione: '', tipo: tipoDa(n), titolo: titoloDa(n), evidenza: false, esistente: true });
+        disegna(); mostraOrfani();
+      } }, ['Collega a una lezione'])]));
+    });
+  }
+
+  /* ---------- 3 · tabella ---------- */
+  function selectAnno(r) {
+    var s = el('select', { 'aria-label': 'Anno' });
+    s.appendChild(el('option', { value: '', text: '—' }));
+    Object.keys(ANNI).forEach(function (k) { var o = el('option', { value: k, text: k + '° · ' + ANNI[k] }); if (r.anno === k) o.selected = true; s.appendChild(o); });
+    s.addEventListener('change', function () { r.anno = s.value; disegna(); });
+    return s;
+  }
+  function campoTesto(r, chiave, lista, placeholder, aria) {
+    /* un elenco di suggerimenti per anno (UDA) o per anno+unità (lezioni) */
+    var id = 'dl-' + chiave + '-' + (r.anno || 'x') + (chiave === 'lezione' ? '-' + norm(r.uda).replace(/[^a-z0-9]/g, '') : '');
+    if (!document.getElementById(id)) {
+      var dl = el('datalist', { id: id }); document.body.appendChild(dl);
+    }
+    var dl2 = document.getElementById(id); dl2.innerHTML = '';
+    lista.forEach(function (v) { dl2.appendChild(el('option', { value: v })); });
+    var i = el('input', { type: 'text', value: r[chiave], placeholder: placeholder, list: id, 'aria-label': aria });
+    i.addEventListener('change', function () { r[chiave] = i.value.trim(); if (chiave === 'uda') { var U = trovaUda(r.uda, r.anno); if (U && !r.anno) r.anno = String(U.anno); } disegna(); });
+    return i;
+  }
+  function disegna() {
+    var tb = $('#tab tbody'); tb.innerHTML = '';
+    $('#p3').hidden = !righe.length;
+    $('#p4').hidden = !righe.length && $('#esito').hidden;   /* dopo la pubblicazione l'esito resta visibile */
+    if (!righe.length) { $('#riassunto').textContent = ''; $('#pubblica').disabled = true; return; }
+    /* raggruppate per anno → UDA → lezione, nell'ordine di arrivo */
+    var ordinate = righe.slice().sort(function (a, b) { return (a.anno + '|' + norm(a.uda) + '|' + norm(a.lezione)).localeCompare(b.anno + '|' + norm(b.uda) + '|' + norm(b.lezione)) || righe.indexOf(a) - righe.indexOf(b); });
+    var gruppo = null;
+    ordinate.forEach(function (r) {
+      var g = (r.anno ? ANNI[r.anno] : 'Anno da scegliere') + ' › ' + (r.uda || 'Unità da scegliere') + (r.lezione && r.lezione !== '—' ? ' › ' + r.lezione : '');
+      if (g !== gruppo) { gruppo = g; tb.appendChild(el('tr', { class: 'gruppo' }, [el('td', { colspan: 8, text: g })])); }
+      var tr = el('tr');
+      tr.appendChild(el('td', {}, [el('div', { class: 'file' }, [el('b', { text: r.nome, title: r.nome }), el('small', { text: r.esistente ? 'già su GitHub' : (r.file.size / 1024 / 1024 >= 1 ? (r.file.size / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(r.file.size / 1024)) + ' KB') + ' → uploads/' + nomeFinale(r) })])]));
+      tr.appendChild(el('td', { class: 'stretta' }, [selectAnno(r)]));
+      var udas = dati.uda.filter(function (u) { return !r.anno || String(u.anno) === r.anno; }).map(function (u) { return u.titolo.trim(); });
+      righe.forEach(function (x) { if (x.uda && x.anno === r.anno && udas.indexOf(x.uda) < 0) udas.push(x.uda); });
+      tr.appendChild(el('td', {}, [campoTesto(r, 'uda', udas, 'Nome dell\'unità', 'Unità')]));
+      var lezs = dati.lezioni.filter(function (l) { return (!r.anno || String(l.anno) === r.anno) && (!r.uda || norm(l.uda) === norm(r.uda)); }).map(function (l) { return l.titolo.trim(); });
+      righe.forEach(function (x) { if (x.lezione && x.lezione !== '—' && norm(x.uda) === norm(r.uda) && lezs.indexOf(x.lezione) < 0) lezs.push(x.lezione); });
+      lezs.unshift('—');
+      tr.appendChild(el('td', {}, [campoTesto(r, 'lezione', lezs, '— oppure nome', 'Lezione')]));
+      var st = el('select', { 'aria-label': 'Tipo' }); TIPI.forEach(function (t) { var o = el('option', { value: t, text: t }); if (r.tipo === t) o.selected = true; st.appendChild(o); }); st.addEventListener('change', function () { r.tipo = st.value; });
+      tr.appendChild(el('td', { class: 'stretta' }, [st]));
+      var ti = el('input', { type: 'text', value: r.titolo, 'aria-label': 'Titolo', placeholder: 'dal nome del file' }); ti.addEventListener('change', function () { r.titolo = ti.value.trim(); });
+      tr.appendChild(el('td', {}, [ti]));
+      var ev = el('input', { type: 'checkbox', 'aria-label': 'In evidenza' }); ev.checked = r.evidenza; ev.addEventListener('change', function () { r.evidenza = ev.checked; });
+      tr.appendChild(el('td', { class: 'stretta' }, [ev]));
+      tr.appendChild(el('td', { class: 'stretta' }, [el('button', { class: 'x', type: 'button', 'aria-label': 'Togli ' + r.nome, text: '×', onclick: function () { righe.splice(righe.indexOf(r), 1); disegna(); mostraOrfani(); } })]));
+      tb.appendChild(tr);
+    });
+    riassumi();
+  }
+  function nomeFinale(r) {
+    if (r.esistente) return r.nome;
+    var s = slugFile(r.nome), base = s.replace(/\.[^.]+$/, ''), ext = s.slice(base.length), n = 1, out = s;
+    var occupati = dati.uploads.concat(righe.filter(function (x) { return x !== r && !x.esistente; }).map(function (x) { return x._nome || ''; }));
+    while (occupati.indexOf(out) >= 0) { n++; out = base + '-' + n + ext; }
+    r._nome = out; return out;
+  }
+  function piano() {
+    /* che cosa cambia nei dati: UDA nuove, lezioni nuove, file per lezione, file fuori dalle lezioni */
+    var udaNuove = [], lezNuove = [], perLez = {}, sciolti = [], errori = [];
+    righe.forEach(function (r) {
+      if (!r.anno) errori.push('«' + r.nome + '»: manca l\'anno.');
+      if (!r.uda) errori.push('«' + r.nome + '»: manca l\'unità.');
+      if (!r.anno || !r.uda) return;
+      if (!trovaUda(r.uda, r.anno) && !udaNuove.some(function (u) { return norm(u.titolo) === norm(r.uda) && u.anno === r.anno; })) udaNuove.push({ titolo: r.uda, anno: r.anno });
+      var lez = r.lezione && r.lezione !== '—' ? r.lezione : '';
+      if (lez) {
+        var k = r.anno + '|' + norm(r.uda) + '|' + norm(lez);
+        if (!trovaLez(lez, r.anno) && !lezNuove.some(function (l) { return l.k === k; })) lezNuove.push({ k: k, titolo: lez, anno: r.anno, uda: r.uda });
+        (perLez[k] = perLez[k] || { anno: r.anno, uda: r.uda, lez: lez, file: [] }).file.push(r);
+      } else sciolti.push(r);
+    });
+    return { udaNuove: udaNuove, lezNuove: lezNuove, perLez: perLez, sciolti: sciolti, errori: errori };
+  }
+  function riassumi() {
+    var p = piano(), box = $('#riassunto'), nF = righe.filter(function (r) { return !r.esistente; }).length;
+    box.innerHTML = '';
+    var voci = [];
+    voci.push(nF + (nF === 1 ? ' file da caricare' : ' file da caricare') + (righe.length - nF ? ' · ' + (righe.length - nF) + ' già su GitHub da collegare' : ''));
+    if (p.udaNuove.length) voci.push('Unità nuove: ' + p.udaNuove.map(function (u) { return '«' + u.titolo + '» (' + ANNI[u.anno] + ')'; }).join(', '));
+    if (p.lezNuove.length) voci.push('Lezioni nuove: ' + p.lezNuove.map(function (l) { return '«' + l.titolo + '»'; }).join(', '));
+    var nLez = Object.keys(p.perLez).length; if (nLez) voci.push(nLez + (nLez === 1 ? ' lezione riceve file' : ' lezioni ricevono file'));
+    if (p.sciolti.length) voci.push(p.sciolti.length + (p.sciolti.length === 1 ? ' file resta' : ' file restano') + ' fuori dalle lezioni, dentro l\'unità');
+    box.appendChild(el('b', { text: p.errori.length ? 'Manca qualcosa' : 'Pronto da pubblicare' }));
+    var ul = el('ul'); (p.errori.length ? p.errori : voci).forEach(function (v) { ul.appendChild(el('li', { text: v })); }); box.appendChild(ul);
+    $('#pubblica').disabled = !!p.errori.length;
+  }
+
+  /* ---------- 4 · pubblica (un solo commit con tutti i file e i dati) ---------- */
+  function leggiBase64(file) {
+    return new Promise(function (ok, ko) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result).split(',')[1]); }; fr.onerror = ko; fr.readAsDataURL(file); });
+  }
+  function ordineMax(lista, filtro) { return lista.filter(filtro).reduce(function (m, x) { var o = +x.ordine; return isNaN(o) ? m : Math.max(m, o); }, 0); }
+  function datiNuovi() {
+    var p = piano();
+    var uda = JSON.parse(JSON.stringify(dati.uda)), lez = JSON.parse(JSON.stringify(dati.lezioni)), mat = JSON.parse(JSON.stringify(dati.materiali));
+    p.udaNuove.forEach(function (u) { uda.push({ titolo: u.titolo, anno: u.anno, ordine: ordineMax(uda, function (x) { return String(x.anno) === u.anno; }) + 1 }); });
+    p.lezNuove.forEach(function (l) { lez.push({ titolo: l.titolo, anno: l.anno, uda: l.uda, ordine: ordineMax(lez, function (x) { return String(x.anno) === l.anno && norm(x.uda) === norm(l.uda); }) + 1, materiali: [] }); });
+    Object.keys(p.perLez).forEach(function (k) {
+      var g = p.perLez[k], L = lez.find(function (x) { return String(x.anno) === g.anno && norm(x.titolo) === norm(g.lez) && (norm(x.uda) === norm(g.uda) || !x.uda); });
+      if (!L) return;
+      L.materiali = L.materiali || [];
+      g.file.forEach(function (r) { L.materiali.push({ file: '/uploads/' + nomeFinale(r), titolo: r.titolo || '', tipo: r.tipo, in_evidenza: !!r.evidenza }); });
+    });
+    p.sciolti.forEach(function (r) { mat.push({ titolo: r.titolo || titoloDa(r.nome), anno: r.anno, uda: r.uda, tipo: r.tipo, file: '/uploads/' + nomeFinale(r), in_evidenza: !!r.evidenza }); });
+    return { uda: { uda: uda }, lezioni: { lezioni: lez }, materiali: { materiali: mat } };
+  }
+  function avanz(f, testo) { var b = $('#barra'); b.hidden = false; b.querySelector('i').style.width = Math.round(f * 100) + '%'; var s = $('#stato-pub'); s.hidden = false; s.className = 'stato'; s.textContent = testo; }
+  $('#pubblica').addEventListener('click', function () {
+    token = $('#token').value.trim();
+    if (!token) { $('#p1').scrollIntoView({ behavior: 'smooth' }); statoToken('Serve la chiave (passo 1)', 'ko'); return; }
+    var btn = $('#pubblica'); btn.disabled = true; $('#esito').hidden = true;
+    var base = '/repos/' + OWNER + '/' + REPO + '/git/';
+    var nuovi = righe.filter(function (r) { return !r.esistente; }), fatti = 0, albero = [];
+    avanz(0.02, 'Leggo lo stato di GitHub…');
+    caricaDati()                                                          /* dati freschi: qualcuno può aver salvato da Decap nel frattempo */
+      .then(function () { return gh(base + 'ref/heads/' + RAMO); })
+      .then(function (ref) {
+        var sha = ref.object.sha;
+        return gh(base + 'commits/' + sha).then(function (c) { return { sha: sha, tree: c.tree.sha }; });
+      })
+      .then(function (testa) {
+        var catena = Promise.resolve();
+        nuovi.forEach(function (r) {
+          catena = catena.then(function () { avanz(0.05 + 0.75 * (fatti / Math.max(1, nuovi.length)), 'Carico «' + r.nome + '»…'); return leggiBase64(r.file); })
+            .then(function (b64) { return gh(base + 'blobs', { method: 'POST', body: { content: b64, encoding: 'base64' } }); })
+            .then(function (b) { albero.push({ path: 'uploads/' + nomeFinale(r), mode: '100644', type: 'blob', sha: b.sha }); fatti++; });
+        });
+        return catena.then(function () { return testa; });
+      })
+      .then(function (testa) {
+        avanz(0.85, 'Aggiorno le lezioni…');
+        var d = datiNuovi();
+        ['uda', 'lezioni', 'materiali'].forEach(function (k) { albero.push({ path: 'data/' + k + '.json', mode: '100644', type: 'blob', content: JSON.stringify(d[k], null, 2) + '\n' }); });
+        return gh(base + 'trees', { method: 'POST', body: { base_tree: testa.tree, tree: albero } }).then(function (t) { return { testa: testa, tree: t.sha }; });
+      })
+      .then(function (x) {
+        avanz(0.92, 'Salvo…');
+        var p = piano(), msg = 'Importati ' + nuovi.length + ' file' + (p.lezNuove.length ? ', ' + p.lezNuove.length + (p.lezNuove.length === 1 ? ' lezione nuova' : ' lezioni nuove') : '') + (p.udaNuove.length ? ', ' + p.udaNuove.length + (p.udaNuove.length === 1 ? ' unità nuova' : ' unità nuove') : '') + ' (importazione rapida)';
+        return gh(base + 'commits', { method: 'POST', body: { message: msg, tree: x.tree, parents: [x.testa.sha] } });
+      })
+      .then(function (c) { return gh(base + 'refs/heads/' + RAMO, { method: 'PATCH', body: { sha: c.sha, force: false } }).then(function () { return c; }); })
+      .then(function (c) {
+        avanz(1, 'Fatto');
+        var e = $('#esito'); e.hidden = false; e.className = 'esito ok'; e.innerHTML = '';
+        e.appendChild(el('b', { text: 'Pubblicato. ' })); e.appendChild(document.createTextNode('Il sito si aggiorna in 1–2 minuti. '));
+        e.appendChild(el('a', { href: c.html_url, target: '_blank', rel: 'noopener', text: 'Vedi il salvataggio su GitHub ↗' }));
+        righe = []; disegna(); caricaDati();
+      })
+      .catch(function (err) {
+        var e = $('#esito'); e.hidden = false; e.className = 'esito ko';
+        e.textContent = 'Non sono riuscito a pubblicare: ' + (err && err.message ? err.message : err) + (err && (err.status === 409 || err.status === 422) ? ' — forse qualcuno ha salvato nel frattempo: riprova, i tuoi file sono ancora qui.' : '');
+        $('#stato-pub').hidden = true; $('#barra').hidden = true; btn.disabled = false;
+      });
+  });
+})();
+</script>
+</body>
+</html>

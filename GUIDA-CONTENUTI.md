@@ -223,6 +223,55 @@ scegli un altro "tipo".
 
 ---
 
+## 6. Caricare molte lezioni in una volta (importazione rapida)
+
+Quando hai tante lezioni da mettere online, farle una alla volta dal pannello
+è lento. C'è una pagina apposta:
+
+**`https://lasoglia.github.io/lab-irc/admin/importa.html`**
+
+Funziona così:
+
+1. **Collegamento a GitHub (solo la prima volta).** Serve una "chiave
+   personale" di GitHub: la pagina spiega passo passo come crearla (5 minuti).
+   La chiave dà il permesso di scrivere **solo** nel sito `lab-irc`, resta
+   salvata nel tuo browser e si può revocare in ogni momento da GitHub.
+2. **Scegli l'anno** e **trascina le cartelle** delle lezioni così come le
+   tieni sul computer. La struttura consigliata è:
+
+   ```
+   Nome dell'unità (UDA)/
+   ├── Nome della lezione/
+   │   ├── slide.pptx
+   │   ├── fascicolo.pdf
+   │   └── lezione-interattiva.html
+   └── un file sciolto.pdf     ← resta nell'unità, fuori dalle lezioni
+   ```
+
+   Vanno bene anche file sciolti: li sistemi nella tabella.
+3. **Controlla la tabella.** Per ogni file la pagina propone anno, unità,
+   lezione, tipo e titolo (dal nome del file). Puoi cambiare tutto: mentre
+   scrivi compaiono i nomi delle unità e delle lezioni che esistono già, così
+   li riusi senza errori di battitura. Le unità e le lezioni che non esistono
+   vengono create da sole.
+4. **Pubblica su GitHub.** Tutti i file e le lezioni finiscono online con un
+   solo salvataggio. Il sito si aggiorna in 1–2 minuti e nel pannello Decap
+   le nuove lezioni compaiono come se le avessi create lì.
+
+Note utili:
+- La pagina mostra anche i **file già su GitHub ma non collegati a nessuna
+  lezione**: con *Collega a una lezione* li sistemi senza ricaricarli.
+- I nomi dei file vengono "puliti" (minuscole, senza spazi né accenti); se un
+  nome esiste già, viene aggiunto un numero.
+- Limite di GitHub: **95 MB a file**. Le slide molto pesanti vanno alleggerite
+  (o esportate in PDF).
+- Per un singolo file o una correzione, il pannello Decap resta la strada più
+  semplice (punto 4).
+- La prima volta prova con **una lezione sola**, controlla che compaia sul sito
+  e poi carica il resto.
+
+---
+
 ## Aggiornare il sito (file da sostituire su GitHub)
 
 Se stai passando dalla versione precedente, su GitHub sostituisci/aggiungi:
