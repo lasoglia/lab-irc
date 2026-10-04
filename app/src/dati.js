@@ -148,7 +148,11 @@ export async function caricaDati() {
     }
   });
 
-  return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS };
+  /* lo stesso file messo sia tra i Materiali sia dentro la lezione conta una volta sola */
+  const visti = new Set();
+  const UNICI = ITEMS.filter((it) => { const k = chiaveItem(it); if (visti.has(k)) return false; visti.add(k); return true; });
+
+  return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS: UNICI };
 }
 
 export const matchAnno = (item, n) => String(item.anno) === String(n);

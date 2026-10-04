@@ -379,7 +379,10 @@ function calcolaRiprendi(D, ultima, set) {
     return { href: hrefLezione(n, u.titolo, L.titolo), etichetta: "Riprendi la lezione →", didascalia: `«${breve(L.titolo, 34)}» · Anno ${meta.rom}` };
   }
   const items = itemsInUda(D, n, u.titolo);
-  if (items.length && contaAperti(items, set) === items.length) return null;
+  if (items.length && contaAperti(items, set) === items.length) {
+    const vu = vicini(udaForYear(D, n), u.titolo);
+    return vu.succ ? { href: hrefUda(n, vu.succ.titolo), etichetta: "Vai all'unità successiva →", didascalia: `«${breve(vu.succ.titolo, 34)}» · Anno ${meta.rom}` } : null;
+  }
   return { href: hrefUda(n, u.titolo), etichetta: "Riprendi l'unità →", didascalia: `«${breve(u.titolo, 34)}» · Anno ${meta.rom}` };
 }
 
@@ -474,8 +477,12 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, n
   const mRef = mascotteRef || proprio;
   useEffect(() => {
     if (!mascotte || !saluto || lim) return;
-    if (giaSalutato(location.hash)) return;
-    const t = setTimeout(() => faiParlare(mRef, saluto), 1597);
+    const chiave = location.hash;
+    const t = setTimeout(() => {
+      if (document.body.classList.contains("viewing") || location.hash !== chiave) return;
+      if (giaSalutato(chiave)) return;
+      faiParlare(mRef, saluto);
+    }, 1597);
     return () => clearTimeout(t);
   }, []); // solo all'arrivo
   const sfondo = neutro
@@ -582,8 +589,11 @@ function MatCard({ item, color, apri, primario, tag, mascotte, contesto, aperto 
   const glifo = item.kind === "video" ? "▶" : anno ? ROMAN[anno] : "✦";
   const attivo = act.tipo !== "nessuna";
 
+  const azioneRef = useRef(null);
   const esegui = () => {
     if (!attivo) return;
+    const b = azioneRef.current && azioneRef.current.querySelector("button");
+    if (b && document.activeElement !== b) { try { b.focus({ preventScroll: true }); } catch (e) { /* niente */ } }
     if (!aperto) { segnaAperto(item); setAppena(true); }
     if (act.tipo === "video") setVideo(true);
     else if (act.tipo === "visore") apri(act.href, item.titolo, color);
@@ -618,7 +628,7 @@ function MatCard({ item, color, apri, primario, tag, mascotte, contesto, aperto 
           <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere" }}>{item.titolo || "Senza titolo"}</h3>
           {item.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{item.descrizione}</p>}
         </div>
-        <div style={{ marginTop: "auto", paddingTop: 8 }}>
+        <div ref={azioneRef} style={{ marginTop: "auto", paddingTop: 8 }}>
           {!attivo
             ? <Button size="sm" variant="ghost" disabled>{act.testo}</Button>
             : <Button size="sm" variant={primario ? "primary" : "ghost"} onClick={esegui}>{testoBottone}</Button>}
@@ -780,7 +790,7 @@ function UdaPage({ D, n, uda, apri }) {
   const chiama = useChiama(aperti, tutti.length);
 
   /* memoria della "ultima tappa" solo per le unità senza lezioni */
-  useEffect(() => { if (!lez.length && tutti.length) segnaUltima({ hash: hrefUda(n, u.titolo), anno: n, uda: u.titolo, titolo: u.titolo }); }, [n, uda]);
+  useEffect(() => { if (!lez.length && tutti.length && !completa) segnaUltima({ hash: hrefUda(n, u.titolo), anno: n, uda: u.titolo, titolo: u.titolo }); }, [n, uda]);
 
   let saluto;
   if (lez.length) {
@@ -841,7 +851,7 @@ function LezionePage({ D, n, uda, lezione, apri }) {
   const lez = lezioniForUda(D, n, uda);
   const v = vicini(lez, L.titolo);
 
-  useEffect(() => { if (items.length) segnaUltima({ hash: hrefLezione(n, u.titolo, L.titolo), anno: n, uda: u.titolo, lezione: L.titolo, titolo: L.titolo }); }, [n, uda, lezione]);
+  useEffect(() => { if (items.length && !completa) segnaUltima({ hash: hrefLezione(n, u.titolo, L.titolo), anno: n, uda: u.titolo, lezione: L.titolo, titolo: L.titolo }); }, [n, uda, lezione]);
 
   const primo = lista.find((m) => !orme.set.has(chiaveItem(m)));
   const resto = items.length - aperti;
@@ -1013,17 +1023,19 @@ function LimToggle() {
 function Dimentica() {
   const orme = usePercorsoVisibile();
   const [fase, setFase] = useState(0); // 0 chiuso · 1 conferma · 2 fatto
+  const annulla = useRef(null), fatto = useRef(null);
+  useEffect(() => { if (fase === 1 && annulla.current) annulla.current.focus(); if (fase === 2 && fatto.current) fatto.current.focus(); }, [fase]);
   useEffect(() => { if (fase !== 2) return; const t = setTimeout(() => setFase(0), 2618); return () => clearTimeout(t); }, [fase]);
   if (orme.vuoto && fase !== 2) return null;
   const link = { background: "none", border: "none", padding: "0 2px", font: "inherit", color: "inherit", textDecoration: "underline", cursor: "pointer", minHeight: 44 };
   return (
-    <div className="lab-mio" style={{ gridColumn: "1 / -1", fontSize: 13.5, color: "var(--lab-muted)" }}>
-      {fase === 2 ? "Fatto: nessuna traccia." : (
+    <div className="lab-mio" role="status" aria-live="polite" style={{ gridColumn: "1 / -1", fontSize: 13.5, color: "var(--lab-muted)" }}>
+      {fase === 2 ? <span ref={fatto} tabIndex={-1}>Fatto: nessuna traccia.</span> : (
         <>
           Il tuo percorso resta solo su questo dispositivo ·{" "}
           {fase === 0
             ? <button type="button" style={link} onClick={() => setFase(1)}>Dimentica</button>
-            : <>Sicuro? <button type="button" style={link} onClick={() => { dimenticaPercorso(); setFase(2); }}>Sì, dimentica</button> · <button type="button" style={link} onClick={() => setFase(0)}>Annulla</button></>}
+            : <>Sicuro? <button type="button" style={link} onClick={() => { dimenticaPercorso(); setFase(2); }}>Sì, dimentica</button> · <button ref={annulla} type="button" style={link} onClick={() => setFase(0)}>Annulla</button></>}
         </>
       )}
     </div>
@@ -1127,7 +1139,8 @@ function App() {
     setVisore({ href: leggiLim() ? conLim(href) : href, titolo: titolo || "", color });
     history.pushState({ visore: true }, "");
   };
-  const chiudi = () => { if (history.state && history.state.visore) history.back(); else setVisore(null); };
+  const chiudendo = useRef(false);
+  const chiudi = () => { if (chiudendo.current) return; chiudendo.current = true; if (history.state && history.state.visore) history.back(); else setVisore(null); };
   useEffect(() => {
     const f = () => setVisore(null);
     addEventListener("popstate", f);
@@ -1135,6 +1148,7 @@ function App() {
   }, []);
   useEffect(() => {
     document.body.classList.toggle("viewing", !!visore);
+    if (!visore) chiudendo.current = false;
     if (!visore && yRef.current != null) {
       const y = yRef.current, chi = openerRef.current;
       yRef.current = null;
