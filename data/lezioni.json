@@ -110,6 +110,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "lo screenshot non basta",
+      "anno": "2",
+      "uda": "Gesù quali tracce",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-artefatto.html",
+          "titolo": "lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf",
+          "titolo": "fascicolo",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
