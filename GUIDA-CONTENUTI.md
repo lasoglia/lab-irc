@@ -234,8 +234,15 @@ scegli un altro "tipo".
   I titoli dei file dentro una lezione sono «Lezione interattiva»,
   «Fascicolo di studio», «Slide». Se rinomini un'unità o una lezione, i link
   vecchi smettono di funzionare: meglio farlo a inizio anno.
-- **Dedica e Chi sono**: in ⚙️ Impostazioni del sito trovi «Dedica (footer)»
-  (oggi «Dedicato a san Carlo Acutis») e «Presentazione (Chi sono)».
+- **Santo patrono**: il laboratorio è intitolato a san Carlo Acutis, come una
+  parrocchia al suo santo. In ⚙️ Impostazioni del sito trovi tre campi:
+  «Santo patrono» (compare in home sotto il titolo: «San Carlo Acutis ·
+  patrono»), «Festa del patrono» (12-10: quel giorno la home dice «oggi è la
+  sua festa» e la lapide in fondo si illumina d'oro) e «Lapide di
+  dedicazione», la formula latina in fondo a ogni pagina, una riga per riga
+  (D·O·M = *Deo Optimo Maximo*, «a Dio ottimo massimo»; *Et Sancto Carolo
+  Acutis dicatum* = «e dedicato a san Carlo Acutis»; A·D·MMXXVI = anno 2026).
+  Lì trovi anche «Presentazione (Chi sono)».
 - Il link **Importa**, in fondo a ogni pagina accanto ad «Accesso docente»,
   porta alla pagina di importazione rapida (è volutamente poco visibile).
 
