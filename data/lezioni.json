@@ -130,6 +130,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Chi può insegnare a chi",
+      "anno": "3",
+      "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iii-1-2-chi-puo-insegnare-a-chi-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf",
+          "titolo": "Fascicolo",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
