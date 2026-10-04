@@ -76,7 +76,7 @@ export function YearCard({ year = 1, name, description, count, href = '#', onCli
       )}
       {mascot && (
         <span style={compatto
-          ? { position: 'absolute', right: 8, top: '50%', zIndex: 2, transform: `translateY(calc(-50% + ${hov ? -5 : 0}px))`, transition: settle }
+          ? { position: 'absolute', right: 8, top: 'calc(50% - 27.5px)', zIndex: 2, transform: `translateY(${hov ? -5 : 0}px)`, transition: settle }   /* centred without transform: touch devices neutralise transforms */
           : { position: 'absolute', right: 8, bottom: 8, zIndex: 2, transform: `translateY(${hov ? -5 : 0}px)`, transition: settle }}>
           <YearMascot year={year} size={55} />
         </span>
