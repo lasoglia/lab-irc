@@ -1118,21 +1118,40 @@ function MatCardRicerca({ item, apri, primario }) {
    DOVE sei (anno · lezione): il titolo del materiale lo porta già l'artefatto. */
 function Visore({ href, item, color, onChiudi, uscendo }) {
   const btn = useRef(null);
+  const radice = useRef(null);
   const [pronto, setPronto] = useState(false);
   const stretto = useStretto();
+  /* schermo intero: la lezione occupa tutto lo schermo (LIM, proiettore). Dove il
+     browser non lo permette (iPhone) il pulsante non compare. */
+  const puoSchermo = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+  const [pieno, setPieno] = useState(false);
+  const schermoIntero = () => {
+    const el = radice.current; if (!el) return;
+    const dentro = document.fullscreenElement || document.webkitFullscreenElement;
+    if (dentro) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else (el.requestFullscreen || el.webkitRequestFullscreen).call(el);
+  };
   useEffect(() => {
     if (btn.current) btn.current.focus();
-    const esc = (e) => { if (e.key === "Escape") onChiudi(); };
+    const esc = (e) => { if (e.key === "Escape" && !(document.fullscreenElement || document.webkitFullscreenElement)) onChiudi(); };
+    const fs = () => setPieno(!!(document.fullscreenElement || document.webkitFullscreenElement));
     addEventListener("keydown", esc);
+    document.addEventListener("fullscreenchange", fs);
+    document.addEventListener("webkitfullscreenchange", fs);
     const t2 = setTimeout(() => setPronto(true), 4181);
-    return () => { removeEventListener("keydown", esc); clearTimeout(t2); };
+    return () => {
+      removeEventListener("keydown", esc); clearTimeout(t2);
+      document.removeEventListener("fullscreenchange", fs); document.removeEventListener("webkitfullscreenchange", fs);
+      /* chiudendo il visore si esce anche dallo schermo intero */
+      if (document.fullscreenElement || document.webkitFullscreenElement) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { /* niente */ } }
+    };
   }, []);
   const meta = item ? annoMeta(item.anno) : null;
   const dove = item ? [meta ? "Anno " + meta.rom : "", pulito(item.lezione || item.uda || item.titolo)].filter(Boolean).join(" · ") : "";
   const titolo = item ? titoloMateriale(item.titolo, item.lezione) : "Contenuto interattivo";
   const indietro = item && normT(item.lezione) ? "Torna alla lezione" : item && normT(item.uda) ? "Torna all'unità" : "Torna al sito";
   return (
-    <div className={"lab-visore" + (uscendo ? " lab-visore--via" : "")} role="dialog" aria-modal="true" aria-label={dove ? `${titolo} · ${dove}` : titolo}
+    <div ref={radice} className={"lab-visore" + (uscendo ? " lab-visore--via" : "")} role="dialog" aria-modal="true" aria-label={dove ? `${titolo} · ${dove}` : titolo}
       style={{ position: "fixed", inset: 0, zIndex: 100, display: "flex", flexDirection: "column", background: "#14131F", animation: `labSu 377ms ${EASE} both` }}>
       <div className="lab-visore-barra" style={{ position: "relative", height: stretto ? 50 : 55, background: "#1E1C2E", color: "#ECEAF5", borderBottom: "1px solid #322E45", display: "flex", alignItems: "center", gap: 13, padding: "0 8px 0 3px", flex: "none" }}>
         {/* bersaglio tattile ≥44px anche sul telefono */}
@@ -1141,6 +1160,14 @@ function Visore({ href, item, color, onChiudi, uscendo }) {
           {indietro}
         </button>
         {dove && <span style={{ font: "600 12.5px/1 var(--lab-font-inscription)", letterSpacing: ".14em", textTransform: "uppercase", color: "#E3C27A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", flex: 1, minWidth: 0, textAlign: stretto ? "right" : "left" }}>{dove}</span>}
+        {puoSchermo && (
+          <button type="button" className="lab-visore-schermo" onClick={schermoIntero} aria-pressed={pieno} aria-label={pieno ? "Esci dallo schermo intero" : "Schermo intero"} title={pieno ? "Esci dallo schermo intero" : "Schermo intero"}
+            style={{ marginLeft: dove ? 0 : "auto", flex: "none", display: "grid", placeItems: "center", width: 44, height: 44, background: "#272438", border: "1px solid #322E45", color: "#ECEAF5", cursor: "pointer", borderRadius: 999 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              {pieno ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}
+            </svg>
+          </button>
+        )}
         {/* il filo del colore dell'anno si disegna da sinistra: continuità con la pagina */}
         <span aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, bottom: -1, height: 2, background: color || "#E3C27A", transformOrigin: "left", animation: `labLine 610ms ${EASE} 144ms both` }} />
       </div>
