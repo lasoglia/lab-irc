@@ -137,7 +137,7 @@ Activates with `data-tema="chiaro"` on `<html>`. Surface: warm parchment (`#FAF7
 
 ## Easter eggs — A·M·D·G
 
-*Ad maiorem Dei gloria.* Hidden, never advertised. Mount `<AmdgEgg />` once per page; it reveals a full-screen gold "A · M · D · G" with the Latin line only (no Italian translation) when:
+*Ad maiorem Dei gloriam.* Hidden, never advertised. Mount `<AmdgEgg />` once per page; it reveals a full-screen gold "A · M · D · G" with the Latin line only (no Italian translation) when:
 1. the visitor types **amdg** anywhere;
 2. they click the **logo 7 times** quickly (`data-amdg-trigger`);
 3. they click the **cross at the centre of the rose window**;
@@ -160,6 +160,20 @@ Eyes follow the cursor (Bussolina's needle points at it), they blink, a click sh
 `tokens/perception.css`. **Gestalt:** proximity 8 / 21 / 55px (within group / between groups / sections, ×φ²); similarity (same shape = same role, colour only for meaning); common region (question + answers in one card); figure–ground (one foreground figure, decoration recedes during play); continuity (progress bars, timelines); common fate (options enter together, 55ms stagger); closure (stars, rings). **Attention:** one accent per view (isolation effect), ≤4 options and one question per screen (working-memory limit), feedback within 233ms with a "why", polished peak/end moments.
 
 **LIM mode** (`<html data-lim>`, toggle via button, key L or `?lim=1`): sizes in % of board width — Fibonacci/10 scale `--lab-lim-caption 1.3 · body 2.1 · lead 2.67 · question 3.4 · term 5.5 · score 8.9`, touch target ≥5.5. Questions switch to Figtree 800, muted greys lift to ink-soft, no text glow or scanlines. Rules in `assets/artefatti/lab-percezione.css`. Cards: *Percezione*, *Scala LIM*.
+
+## Site rules — October 2026 (read before designing new artefacts)
+
+These rules come from the live site (lasoglia.github.io/lab-irc) after a Gestalt/attention review. Every new page or lesson artefact should follow them.
+
+- **Patron saint.** The lab is dedicated to **San Carlo Acutis**, like a parish to its titular saint — never a "dedica" in the thesis sense. Home: an inscription line under the hero title, Cinzel 13px, `.18em`, gold: `SAN CARLO ACUTIS · PATRONO`. Footer: a dedication plaque between two thin gold rules, centred, Cinzel uppercase: `D·O·M` / `ET SANCTO CAROLO ACUTIS DICATUM` / `A·D·MMXXVI`. On the feast (12 October) the line reads `… · OGGI È LA SUA FESTA` and the plaque glows gold. Never add Italian translations under Latin inscriptions.
+- **One figure, one accent.** One filled primary button per view (`--lab-grad-cta`), one gold `.lab-tag` ("Inizia da qui" / "Prossimo"). Everything else is ghost. Colour means "school year" only: breadcrumbs and secondary links are ink, not cyan.
+- **Page band (year/unit/lesson).** Dark theme: stained-glass glow — `radial-gradient(89% 144% at 100% 0%, year 61.8%, transparent 61.8%)` over `linear-gradient(130deg, year 42% on #14101a, year 24% on #14101a)`, inset 8px year bar, thin gold top line, white text. Light theme: tinted parchment (year 22% → 8%), ink text. Eyebrow says *where you are*: `ANNO I · UNITÀ 2 DI 2`, `LEZIONE 1 DI 2 · 2 MATERIALI` (numbers glued with non-breaking spaces).
+- **Material cards.** Cover without image = soft year gradient (61.8% → 21% on surface) with the Roman numeral in the year colour, never a saturated slab. Type badges are neutral inside year pages, coloured only in search. Material titles come from a fixed list: «Lezione interattiva», «Fascicolo di studio», «Slide», «Video».
+- **Clean titles on screen.** "UDA 1 - …" / "Lezione 1 …" prefixes move into the eyebrow; first letter capitalised; lining numerals (`font-variant-numeric: lining-nums`) in every Cormorant title.
+- **Path, closure, peak-end.** Gold seal ✓ on opened materials, gold ring on folders, every page ends with "Per continuare" tiles (next lesson → next unit → back). Progress lives only in the student's browser.
+- **Phone first.** First "Apri" above the fold at 390×664; buttons ≥44px, full-width in cards; mascot floats right of the band title; the mascot's voice is a ribbon under the band, never a bubble over the title; footer is one centred column; theme toggle lives in the footer on phones.
+- **Lesson artefacts inside the site viewer.** The site opens artefacts in an iframe (sandbox without `allow-same-origin`) with `?in=visore` (one 55px tab row, no logo/eyebrow/fullscreen/LIM inside — the site's bar has "← Torna alla lezione", the location in gold and the fullscreen button) and `?lim=1` in classroom mode. Phones ≤480px: timer shows only ▶, never overlapping "Indietro". Mascot bubble lasts `min(4181, 2618 + (len−30)·55)` ms and fades out.
+- **Motion.** First page of a visit enters with `labRise 987ms`; later pages with `labSu 610ms` (no blur). Theme/LIM change = one View Transition crossfade (377ms). Reduced motion stops everything.
 
 ## Iconography
 
