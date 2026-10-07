@@ -23,7 +23,7 @@ body[data-skin="arcade"]:has(.g-board)::before{opacity:.35}
 :root[data-lim] .la-mascot{right:calc(var(--lu)*1.3);bottom:calc(var(--lu)*1.3);transform-origin:bottom right;transition:transform 377ms var(--lab-ease-out)}
 :root[data-lim] body:has(.g-board) .la-mascot,:root[data-lim] body:has(.la-choices) .la-mascot{scale:.618}
 /* telefono: l'ultima risposta deve poter scorrere oltre la mascotte */
-@media (max-width:720px){body.g,body.la{padding-bottom:144px}}
+@media (max-width:720px){body.g,body.la:not(.ll){padding-bottom:144px}}
 :root[data-lim] .g-tool,:root[data-lim] .g-seg button{white-space:nowrap}
 
 /* artefatti */
