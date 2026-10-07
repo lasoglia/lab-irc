@@ -1,42 +1,42 @@
 # Sorgenti delle lezioni interattive
 
-Qui stanno i file `lezione.js` da cui si assemblano gli artefatti in `uploads/`
-(un unico file HTML autonomo: niente richieste a internet, font inclusi,
-mascotte del sito, modalità LIM, modalità «in visore» con `?in=visore`).
+Da ottobre 2026 le lezioni si scrivono con la skill **«IRC · Artefatto interattivo
+della lezione»**, installata in `design-system/assets/artefatti/skill-lezione/`
+(leggi lì `SKILL.md`). Il kit è quello definitivo del 5 ottobre 2026 e include
+già modalità visore, LIM, telefono, mascotte senza AMDG e AMDG solo in latino.
+La lezione-modello scelta dal docente è
+`ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta.js`.
 
-Per riassemblare una lezione dopo una modifica:
+Per assemblare una lezione:
 
 ```bash
-python3 design-system/assets/artefatti/skill/scripts/build_artefatto_sito.py \
-  sorgenti-lezioni/i-0-1-accoglienza-il-nome-e-la-domanda.js \
-  -o uploads/accoglienza-classi-1.html --anno 1 \
-  --titolo "Il nome e la domanda" --descrizione "Primo giorno, classe I"
+python3 -I design-system/assets/artefatti/skill-lezione/scripts/build_artefatto.py \
+  sorgenti-lezioni/<sorgente>.js -o uploads/<file-pubblicato>.html \
+  --anno <1-5> --titolo "<titolo>" --descrizione "<una riga>"
+node design-system/assets/artefatti/skill-lezione/scripts/esporta_testo.js \
+  sorgenti-lezioni/<sorgente>.js sorgenti-lezioni/<sorgente>.testo.txt
 ```
+
+Per ogni lezione ci sono tre file: il sorgente `.js`, le note del docente
+`.docente.md` (scheda, regia, piano dei 50 minuti, traccia orale, soluzioni,
+fonti) e il testo di studio `.testo.txt`.
 
 | Sorgente | Artefatto in `uploads/` | Anno |
 |---|---|---|
 | `i-0-1-accoglienza-il-nome-e-la-domanda.js` | `accoglienza-classi-1.html` | I |
 | `ii-0-1-accoglienza-di-chi-mi-posso-fidare.js` | `accoglienza-mi-fido-perche-artefatto-classe-2.html` | II |
+| `ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta.js` | `ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-artefatto.html` | II |
 | `iii-0-1-accoglienza-il-mazzo-dell-estate.js` | `accoglienza-terza-mazzo-estate-artefatto.html` | III |
+| `iv-0-1-accoglienza-vero-possibile-giusto.js` | `iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html` | IV |
 | `v-0-1-apertura-il-cuore-inquieto.js` | `apertura-cuore-inquieto-artefatto.html` | V |
 
 I nomi dei file in `uploads/` restano quelli vecchi, così i collegamenti nel
-pannello Decap continuano a funzionare. Ogni `*.note.md` racconta come la
-lezione originale è stata trasposta nel nuovo formato e che cosa è cambiato.
-Dopo ogni modifica al kit (`design-system/assets/artefatti/`) o alla mascotte
-(`assets/mascotte/lab-mascotte.js`) vanno riassemblati tutti e quattro, perché
-il kit è incorporato nel file. Titolo e descrizione da passare allo script sono
-il `<title>` (senza « · Lab IRC») e il `<meta name="description">` del file in
-`uploads/`.
+pannello continuano a funzionare.
 
-Gli altri artefatti collegati dal sito (`iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html`
-per l'accoglienza dell'anno IV, `i-1-1-…`, `ii-1-1-…`, `iii-1-1-…`,
-`iv1-1r~1.htm`, `v1-1il~1.htm`) sono file autonomi di una generazione
-precedente senza sorgente qui: non si rigenerano; alla mascotte inline e al
-`<head>` si applicano solo patch mirate (modalità «in visore», LIM, telefono).
-Se un giorno servirà modificare la lezione dell'anno IV, il suo testo sta nel
-blocco `<script>` che comincia con `/* ---- lezione ---- */` dentro il file in
-`uploads/`: si estrae, si salva qui come sorgente e si riassembla con `--anno 4`.
+Le altre lezioni già pubblicate (`i-1-1-…`, `i-1-2-…`, `ii-1-1-…`, `iii-1-1-…`,
+`iii-1-2-…`, `iv1-1r~1.htm`, `iv-1-2-…`, `v1-1il~1.htm`, `v-1-2-…`) non hanno
+ancora un sorgente qui: verranno rifatte con la skill una alla volta. Fino ad
+allora hanno solo patch mirate (visore, LIM, telefono, mascotte).
 
-Il formato di `lezione.js` è descritto in
-`design-system/assets/artefatti/skill/references/artefatto.md` e `strumenti.md`.
+Il vecchio script `design-system/assets/artefatti/skill/scripts/build_artefatto_sito.py`
+resta per riferimento ma non si usa più per le lezioni nuove.

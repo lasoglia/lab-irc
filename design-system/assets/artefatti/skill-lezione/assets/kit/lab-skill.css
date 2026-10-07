@@ -1,0 +1,18 @@
+/* Lab IRC — Correzioni della skill al kit del design system «Lab-Irc» (3 ottobre 2026), caricate per ultime.
+   Barra delle scene sotto i 720 px (telefono, tablet in verticale): il tempo del cronometro usciva dal suo riquadro
+   e finiva sotto «Indietro»; la mascotte (55 px) copriva «Avanti» invece di stare nella sua corsia (44 px). */
+@media (max-width:720px){
+  body.ll .ll-clock{flex:none}
+  body.ll .la-mascot,:root[data-lim] body.ll .la-mascot{right:8px;bottom:9px}
+  body.ll .la-mascot lab-mascotte,:root[data-lim] body.ll .la-mascot lab-mascotte{width:44px!important;height:44px!important}
+}
+/* Sul telefono il cronometro, strumento del docente alla LIM, lascia il posto alle scene e ai comandi. */
+@media (max-width:440px){
+  body.ll .ll-clock{display:none}
+}
+/* Stati :active che il kit non dichiara: ogni elemento interattivo ha hover, focus-visible e active espliciti. */
+.ll-dfn:active,.lp-seg:active{background:color-mix(in srgb,var(--lab-oro) 34%,transparent)}
+.ll-amdg:active{opacity:1}
+.g-opt:active:not(:disabled){transform:scale(.97)}
+.g-tool{transition:color 144ms,border-color 233ms,transform 144ms}
+.g-tool:active{transform:scale(.95)}

@@ -1,0 +1,292 @@
+/* Lab IRC — Token del design system (colori, tipografia, spazi φ, ombre, movimento, percezione e scala LIM, tema chiaro, base).
+   Fonte: pacchetto «Lab-Irc» (Lab IRC Design System), 05/10/2026: tokens/*.css nell'ordine di styles.css, senza fonts.css.
+   I font sono incorporati dallo script di assemblaggio. */
+/* --- colors --- */
+/* =====================================================================
+   Lab IRC Design System — Color Tokens
+   Theme "Notte Studio" — dark by default.
+   Light theme overrides live in theme-light.css.
+   ===================================================================== */
+:root {
+  /* ---- Surfaces ---- */
+  --lab-bg:        #14131F;   /* page background — deep slate/indigo */
+  --lab-bg-2:      #1A1827;   /* alternate section backgrounds */
+  --lab-surface:   #1E1C2E;   /* card surface */
+  --lab-surface-2: #272438;   /* elevated card / hover state */
+  --lab-line:      #322E45;   /* border */
+  --lab-line-soft: #2A2739;   /* subtle dividers */
+
+  /* ---- Text ---- */
+  --lab-ink:       #ECEAF5;   /* primary text */
+  --lab-ink-soft:  #C7C3DA;   /* secondary text */
+  --lab-muted:     #8E89A6;   /* tertiary / caption text */
+
+  /* ---- Accent palette ---- */
+  --lab-viola:     #8B5CF6;   /* primary brand — purple */
+  --lab-viola-2:   #A78BFA;   /* purple, lighter variant */
+  --lab-ciano:     #22D3EE;   /* secondary — cyan */
+  --lab-ambra:     #FBBF24;   /* highlight — amber */
+  --lab-rosa:      #F472B6;   /* pink */
+  --lab-verde:     #34D399;   /* success / green */
+  --lab-rosso:     #FB7185;   /* error / danger */
+  --lab-oro:       #E3C27A;   /* liturgical gold — hairlines, eyebrows, solemn accents */
+  --lab-oro-soft:  rgba(227,194,122,.16);
+
+  /* ---- Semantic aliases ---- */
+  --lab-brand:     var(--lab-viola);
+  --lab-accent:    var(--lab-ciano);
+  --lab-on-brand:  #14131F;   /* text colour on top of filled brand buttons */
+
+  /* ---- Gradients ---- */
+  --lab-grad:      linear-gradient(135deg, #8B5CF6, #22D3EE); /* @kind color */
+  --lab-grad-warm: linear-gradient(135deg, #F472B6, #FBBF24); /* @kind color */
+  --lab-grad-soft: linear-gradient(160deg, #1E1C2E, #14131F); /* @kind color */
+
+  /* ---- Year colours (dark theme — vivid) ---- */
+  --lab-anno-1:    #FF7A59;   /* 1° — orange-red */
+  --lab-anno-2:    #4FB0FF;   /* 2° — sky blue */
+  --lab-anno-3:    #A78BFA;   /* 3° — soft violet */
+  --lab-anno-4:    #FB7BB5;   /* 4° — pink */
+  --lab-anno-5:    #FBBF24;   /* 5° — amber */
+
+  /* ---- Exam platform (institutional palette) ---- */
+  --exam-blu:       #1E3A8A;
+  --exam-blu-dark:  #162a63;
+  --exam-blu-light: #e8edf9;
+  --exam-gold:      #D4A017;
+  --exam-gold-dark: #a87c0c;
+  --exam-ok:        #1c7c4a;
+  --exam-err:       #b42318;
+  --exam-bg:        #f4f5f8;
+  --exam-bg-2:      #ffffff;
+  --exam-ink:       #1a1d24;
+  --exam-muted:     #54596a;
+  --exam-line:      #d7dae3;
+
+  color-scheme: dark;
+}
+
+/* --- typography --- */
+/* Lab IRC — Typography. Solemn serif + inscription caps + youthful sans.
+   Golden scale: base 16px × √φ per step; body leading = φ. */
+:root {
+  --lab-font-display:     "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --lab-font-inscription: "Cinzel", "Trajan Pro", Georgia, serif;
+  --lab-font-body:        "Figtree", system-ui, -apple-system, sans-serif;
+
+  --lab-text-xs:   12.5px;
+  --lab-text-sm:   14px;
+  --lab-text-base: 16px;
+  --lab-text-md:   20.5px;
+  --lab-text-lg:   26px;
+  --lab-text-xl:   33px;
+  --lab-text-2xl:  42px;
+  --lab-text-3xl:  68px;
+  --lab-text-display-sm: clamp(23px, 2.4vw, 29px);
+  --lab-text-display-md: clamp(29px, 3.8vw, 46px);
+  --lab-text-display-lg: clamp(36px, 5.4vw, 60px);
+  --lab-text-hero:       clamp(46px, 7.4vw, 94px);
+
+  --lab-weight-regular:   400;
+  --lab-weight-medium:    500;
+  --lab-weight-semibold:  600;
+  --lab-weight-bold:      700;
+  --lab-weight-extrabold: 800;
+
+  --lab-leading-tight:   1.0;
+  --lab-leading-snug:    1.08;
+  --lab-leading-normal:  1.382;
+  --lab-leading-relaxed: 1.5;
+  --lab-leading-loose:   1.618;
+
+  --lab-tracking-tight:   -0.02em;
+  --lab-tracking-normal:  -0.01em;
+  --lab-tracking-wide:    0.04em;
+  --lab-tracking-widest:  0.18em;
+
+  --lab-eyebrow-size:    13px;
+  --lab-eyebrow-weight:  600;
+  --lab-eyebrow-spacing: 0.18em;
+}
+
+/* --- spacing --- */
+/* Lab IRC — Spacing & Shape. Golden ratio φ = 1.618: every step is a Fibonacci number. */
+:root {
+  --lab-phi: 1.618; /* @kind other */
+  --lab-phi-inv: 0.618; /* @kind other */
+
+  /* Fibonacci spacing: each step ≈ previous × φ */
+  --lab-space-1: 5px;
+  --lab-space-2: 8px;
+  --lab-space-3: 13px;
+  --lab-space-4: 21px;   /* card padding, grid gap, gutter */
+  --lab-space-5: 34px;
+  --lab-space-6: 55px;   /* section rhythm */
+  --lab-space-7: 89px;
+  --lab-space-8: 144px;
+
+  /* Radius — Fibonacci */
+  --lab-radius-xs:   8px;
+  --lab-radius-sm:   13px;
+  --lab-radius:      21px;
+  --lab-radius-lg:   34px;
+  --lab-radius-pill: 999px;
+  --lab-radius-icon: 13px;
+
+  /* Widths */
+  --lab-max-w:    1140px;
+  --lab-max-w-sm:  880px;
+  --lab-max-w-xs:  460px;
+  --lab-measure:   62ch;
+}
+
+/* --- shadows --- */
+/* =====================================================================
+   Lab IRC Design System — Shadow & Elevation Tokens
+   ===================================================================== */
+:root {
+  /* ---- Card shadows (dark theme) ---- */
+  --lab-shadow:     0 2px 6px rgba(0,0,0,.30), 0 18px 40px -22px rgba(0,0,0,.70);
+  --lab-shadow-lg:  0 4px 10px rgba(0,0,0,.35), 0 36px 60px -28px rgba(0,0,0,.80);
+
+  /* ---- Brand glow (focus / active highlight) ---- */
+  --lab-glow:       0 0 0 1px rgba(139,92,246,.35), 0 0 30px -6px rgba(139,92,246,.50);
+
+  /* ---- Focus ring ---- */
+  --lab-focus-ring: 0 0 0 3px rgba(139,92,246,.35);
+
+  /* ---- Button glow ---- */
+  --lab-btn-glow:   0 8px 22px -10px rgba(139,92,246,.80);
+  --lab-btn-glow-hover: 0 12px 28px -10px rgba(139,92,246,.90);
+
+  /* ---- Exam platform (light, subtle) ---- */
+  --exam-shadow:    0 1px 2px rgba(20,25,40,.06), 0 8px 24px -16px rgba(20,25,40,.35);
+}
+
+/* --- animation --- */
+/* Lab IRC — Motion. Durations are Fibonacci milliseconds; stagger 89ms. Calm, never bouncy. */
+@keyframes labSu { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: none; } }
+@keyframes labFloaty { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(0,-21px,0) scale(1.034); } }
+@keyframes labPulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@keyframes labFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes labRise { from { opacity: 0; transform: translateY(34px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes labLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes labBreath { 0%,100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.13); } }
+@keyframes labBob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5%) rotate(-2deg); } }
+@keyframes labSpin { to { transform: rotate(360deg); } }
+
+:root {
+  --lab-ease-out:    cubic-bezier(.16, 1, .3, 1); /* @kind other */
+  --lab-ease-solemn: cubic-bezier(.618, 0, .382, 1); /* @kind other */
+  --lab-ease-spring: cubic-bezier(.2, .7, .2, 1); /* @kind other */
+  --lab-ease-sharp:  cubic-bezier(.4, 0, .2, 1); /* @kind other */
+
+  --lab-dur-instant: 144ms; /* @kind other */
+  --lab-dur-fast:    233ms; /* @kind other */
+  --lab-dur-normal:  377ms; /* @kind other */
+  --lab-dur-slow:    610ms; /* @kind other */
+  --lab-dur-solemn:  987ms; /* @kind other */
+  --lab-dur-float:   21s; /* @kind other */
+  --lab-stagger:     89ms; /* @kind other */
+
+  --lab-anim-in:   labRise var(--lab-dur-solemn) var(--lab-ease-out) both; /* @kind other */
+  --lab-anim-in-2: labRise var(--lab-dur-solemn) var(--lab-ease-out) 89ms both; /* @kind other */
+  --lab-anim-in-3: labRise var(--lab-dur-solemn) var(--lab-ease-out) 178ms both; /* @kind other */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* --- perception --- */
+/* Lab IRC — Percezione. Gestalt + attenzione + scala LIM.
+   Prossimità: dentro un gruppo ≈ φ² più vicino che tra gruppi (8 → 21 → 55).
+   LIM: la dimensione fisica sulla lavagna dipende dalla % di larghezza, non dai px →
+   unità = 1vw (limitata in altezza). Scala = Fibonacci / 10: 1.3 · 2.1 · 3.4 · 5.5 · 8.9 (passi ×φ). */
+:root {
+  --lab-gap-within:  8px;
+  --lab-gap-group:   21px;
+  --lab-gap-section: 55px;
+  --lab-recede:      .382; /* @kind other */
+  --lab-stagger:     55ms; /* @kind other */
+  --lab-focus-ring:  0 0 0 3px var(--lab-oro);
+
+  --lab-lim-unit:     min(1vw, 1.9vh); /* @kind spacing */
+  --lab-lim-caption:  max(16px, calc(var(--lab-lim-unit) * 1.3));
+  --lab-lim-body:     max(20px, calc(var(--lab-lim-unit) * 2.1));
+  --lab-lim-lead:     max(23px, calc(var(--lab-lim-unit) * 2.67));
+  --lab-lim-question: max(28px, calc(var(--lab-lim-unit) * 3.4));
+  --lab-lim-term:     max(40px, calc(var(--lab-lim-unit) * 5.5));
+  --lab-lim-score:    max(64px, calc(var(--lab-lim-unit) * 8.9));
+  --lab-lim-target:   max(56px, calc(var(--lab-lim-unit) * 5.5));
+  --lab-lim-measure:  32ch;
+}
+
+/* --- theme-light --- */
+/* =====================================================================
+   Lab IRC Design System — Light Theme Overrides
+   Activate by setting data-tema="chiaro" on <html>.
+   The JS toggle (assets/lab-tema.js) handles persistence via localStorage.
+   ===================================================================== */
+html[data-tema="chiaro"] {
+  /* ---- Surfaces ---- */
+  --lab-bg:        #FAF7F1;   /* warm parchment background */
+  --lab-bg-2:      #F3EFE6;
+  --lab-surface:   #FFFFFF;
+  --lab-surface-2: #FBF8F2;
+  --lab-line:      #E7E0D2;
+  --lab-line-soft: #EFEADD;
+
+  /* ---- Text ---- */
+  --lab-ink:       #1B1822;
+  --lab-ink-soft:  #39333F;
+  --lab-muted:     #6A6472;
+
+  /* ---- Accents (slightly deeper for light bg contrast) ---- */
+  --lab-viola:     #6D3FE0;
+  --lab-viola-2:   #7C3AED;
+  --lab-ciano:     #0891B2;
+  --lab-ambra:     #C8941E;
+  --lab-rosa:      #DB2777;
+  --lab-verde:     #0E9E86;
+  --lab-rosso:     #E11D48;
+  --lab-oro:       #A67C2E;
+  --lab-oro-soft:  rgba(166,124,46,.12);
+  --lab-on-brand:  #FFFFFF;
+
+  /* ---- Gradients ---- */
+  --lab-grad-soft: linear-gradient(160deg, #FFFFFF, #F3EFE6); /* @kind color */
+
+  /* ---- Shadows (lighter for bright surfaces) ---- */
+  --lab-shadow:    0 1px 2px rgba(27,24,34,.04), 0 14px 32px -20px rgba(27,24,34,.28);
+  --lab-shadow-lg: 0 2px 4px rgba(27,24,34,.05), 0 30px 50px -28px rgba(27,24,34,.40);
+  --lab-glow:      0 0 0 1px rgba(109,63,224,.25), 0 0 26px -8px rgba(109,63,224,.35);
+  --lab-focus-ring: 0 0 0 3px rgba(109,63,224,.25);
+
+  /* ---- Year colours (muted for light background) ---- */
+  --lab-anno-1:    #E2603B;
+  --lab-anno-2:    #2D7DD2;
+  --lab-anno-3:    #6A4FB0;
+  --lab-anno-4:    #C8417B;
+  --lab-anno-5:    #C98A1E;
+
+  color-scheme: light;
+}
+
+/* --- base --- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--lab-bg); color: var(--lab-ink); font-family: var(--lab-font-body); font-size: var(--lab-text-base); line-height: var(--lab-leading-loose); -webkit-font-smoothing: antialiased; transition: background var(--lab-dur-slow) ease, color var(--lab-dur-slow) ease; }
+h1, h2, h3, h4 { font-family: var(--lab-font-display); font-weight: var(--lab-weight-semibold); line-height: var(--lab-leading-snug); letter-spacing: var(--lab-tracking-normal); margin: 0 0 .382em; color: var(--lab-ink); text-wrap: balance; }
+h1 { font-size: var(--lab-text-display-lg); }
+h2 { font-size: var(--lab-text-display-md); }
+h3 { font-size: var(--lab-text-display-sm); }
+p { margin: 0 0 1em; color: var(--lab-ink-soft); text-wrap: pretty; }
+a { color: var(--lab-accent); text-decoration: none; transition: color var(--lab-dur-fast) ease; }
+a:hover { color: var(--lab-oro); }
+::selection { background: rgba(227,194,122,.35); color: var(--lab-ink); }
+:focus-visible { outline: 1.5px solid var(--lab-oro); outline-offset: 3px; border-radius: 5px; }
+.lab-grad-text { background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.lab-eyebrow { font-family: var(--lab-font-inscription); font-size: var(--lab-eyebrow-size); letter-spacing: var(--lab-eyebrow-spacing); text-transform: uppercase; font-weight: var(--lab-eyebrow-weight); color: var(--lab-oro); margin: 0 0 13px; }
+.lab-wrap { max-width: var(--lab-max-w); margin: 0 auto; padding: 0 var(--lab-space-4); }
+

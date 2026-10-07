@@ -1,0 +1,76 @@
+/* Lab IRC — Percezione nella lezione: Gestalt + neuropsicologia grafica. Solo token del design system; durate φ.
+   Tre livelli, dal basso verso l'alto: SGUARDO (contrasto, un solo punto focale, movimento solo su ciò che cambia)
+   → EMOZIONE (ricompensa entro 233 ms, chiusura, attesa) → RAGIONE (il «perché» subito dopo l'esito, testo leggibile). */
+@property --lz-a{syntax:'<number>';inherits:false;initial-value:0}
+
+/* ---------- 1. regia dello sguardo: l'ingresso segue la gerarchia (continuità + destino comune) ---------- */
+.ll-scene.is-next,.ll-scene.is-prev{animation-duration:987ms}
+.ll-scene .ll-moment,.ll-scene .ll-h,.ll-scene .ll-lead,.ll-scene>.ll-p,.ll-scene .ll-blocks>.ll-block{animation:lzRise 987ms var(--lab-ease-out) backwards}
+.ll-scene .ll-h{animation-delay:89ms}
+.ll-scene .ll-lead{animation-delay:178ms}
+.ll-scene>.ll-p{animation-delay:267ms}
+.ll-scene .ll-blocks>.ll-block:nth-child(1){animation-delay:356ms}
+.ll-scene .ll-blocks>.ll-block:nth-child(2){animation-delay:445ms}
+.ll-scene .ll-blocks>.ll-block:nth-child(3){animation-delay:534ms}
+.ll-scene .ll-blocks>.ll-block:nth-child(n+4){animation-delay:623ms}
+/* punto focale: la parola in colore riceve un filo d'oro che si traccia dopo il titolo */
+.ll-h em{background:linear-gradient(var(--lab-oro),var(--lab-oro)) 0 94%/0 1.5px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;animation:lzUnder 987ms var(--lab-ease-out) 610ms forwards}
+
+/* ---------- 2. figura–sfondo: mentre si lavora su un riquadro, il resto arretra ---------- */
+.ll-blocks>.ll-block{transition:opacity 377ms var(--lab-ease-out),filter 377ms var(--lab-ease-out)}
+@media (hover:hover){
+  .ll-blocks:has(>.ll-block:hover:not([data-tipo="testo"],[data-tipo="nota"],[data-tipo="aggancio"],[data-tipo="mascotte"],[data-tipo="immagine"],[data-tipo="citazione"]))>.ll-block:not(:hover){opacity:var(--lz-recede,.5);filter:saturate(.5);transition-duration:610ms;transition-delay:233ms}
+}
+.ll-blocks:has(>.ll-block :focus-visible)>.ll-block:not(:focus-within){opacity:var(--lz-recede,.5);filter:saturate(.5)}
+/* regione comune: l'aggancio appartiene al blocco sopra e resta in primo piano con lui */
+.ll-blocks>.ll-block:is(:hover,:focus-within)+.ll-block[data-tipo="aggancio"]{opacity:1!important;filter:none!important}
+/* somiglianza: ogni riquadro interattivo risponde allo stesso modo (bordo che si tinge) */
+.ll-block:is([data-tipo="catena"],[data-tipo="animazione"],[data-tipo="strati"],[data-tipo="bilancia"],[data-tipo="lente"],[data-tipo="leggi"],[data-tipo="ordina"],[data-tipo="tappe"],[data-tipo="rivela"],[data-tipo="domanda"]){transition:opacity 377ms var(--lab-ease-out),filter 377ms var(--lab-ease-out),border-color 233ms}
+.ll-block:is([data-tipo="catena"],[data-tipo="animazione"],[data-tipo="strati"],[data-tipo="bilancia"],[data-tipo="lente"],[data-tipo="leggi"],[data-tipo="ordina"],[data-tipo="tappe"],[data-tipo="rivela"],[data-tipo="domanda"]):hover,.ll-check:hover,.lp-fork:hover,.lp-est:hover{border-color:color-mix(in srgb,var(--la-accent) 38%,var(--lab-line))}
+
+/* ---------- 3. chiusura: un compito risolto si «chiude» con un anello d'oro ---------- */
+.ll-blocks>.ll-block:has(.ll-why.is-ok)::before,.ll-blocks>.ll-block[data-tipo="smista"]:not(:has(.ll-bin))::before{content:"";position:absolute;z-index:3;top:-13px;right:21px;width:34px;height:34px;border-radius:50%;background:conic-gradient(var(--lab-oro) calc(var(--lz-a)*360deg),transparent 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.5px));animation:lzRing 987ms var(--lab-ease-out) forwards;pointer-events:none}
+.ll-blocks>.ll-block:has(.ll-why.is-ok)::after,.ll-blocks>.ll-block[data-tipo="smista"]:not(:has(.ll-bin))::after{content:"✓";position:absolute;z-index:2;top:-13px;right:21px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--lab-bg);color:var(--lab-oro);font:700 15px/1 var(--lab-font-body);animation:lzSeal 610ms var(--lab-ease-out) 610ms backwards;pointer-events:none}
+
+/* ---------- 4. ricompensa: la risposta giusta si accende entro 233 ms, poi arriva il perché ---------- */
+:is(.la-choice,.ll-bin,.lp-ord-i).is-right,.lp-pt.is-key{animation:lzReward 987ms var(--lab-ease-out)}
+.ll-why{animation-duration:610ms}
+
+/* ---------- 5. continuità e attesa: il filo della lezione (effetto Zeigarnik, picco–fine) ---------- */
+body[data-modo="lezione"] .ll-top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--lab-oro),var(--la-accent));transform-origin:0 50%;transform:scaleX(var(--lz-prog,0));transition:transform 987ms var(--lab-ease-out),box-shadow 987ms;pointer-events:none}
+body[data-lz-ultima] .ll-top::after{background:var(--lab-oro);box-shadow:0 0 13px var(--lab-oro)}
+.ll-dots{position:relative;align-items:center}
+.ll-dots::before{content:"";position:absolute;left:8px;right:8px;top:50%;height:1.5px;margin-top:-.75px;background:linear-gradient(90deg,var(--la-accent) calc(var(--lz-rail,0)*100%),var(--lab-line) 0);pointer-events:none}
+.ll-dot{position:relative;z-index:1;background:var(--lab-surface)}
+.ll-dot.is-seen{background:color-mix(in srgb,var(--la-accent) 45%,var(--lab-surface))}
+/* compito chiuso nella scena → «Avanti» invita, due volte e poi tace */
+body:has(.ll-blocks>.ll-block .ll-why.is-ok) .ll-navbtn--go:not(:disabled){animation:lzCall 2618ms var(--lab-ease-out) 987ms 2}
+
+/* ---------- 6. pausa gioco: figura calma, una sola azione piena (prima era un secondo punto focale caldo) ---------- */
+.ll-play{position:relative;overflow:hidden;isolation:isolate;background:var(--lab-surface);color:var(--lab-ink);border:1px solid color-mix(in srgb,var(--lab-oro) 40%,var(--lab-line));transition:border-color 233ms,transform 610ms var(--lab-ease-out),box-shadow 610ms}
+.ll-play::after{content:"";position:absolute;z-index:-1;right:-34px;top:-55px;width:144px;height:144px;border-radius:50%;background:var(--la-accent);opacity:.07;transition:opacity 610ms}
+.ll-play:hover{border-color:var(--lab-oro);transform:translateY(-3px);box-shadow:var(--lab-shadow-lg);transition-duration:233ms}
+.ll-play:hover::after{opacity:.13}
+.ll-play b{color:var(--lab-ink)}
+.ll-play p{color:var(--lab-ink-soft);opacity:1}
+.ll-play .ll-btn{background:var(--la-accent);color:#14131F}
+html[data-tema="chiaro"] .ll-play .ll-btn{color:#fff}
+
+/* ---------- 7. lettura (neocorteccia): misura e respiro ---------- */
+.ll-p,.ll-lead{hanging-punctuation:first}
+.ll-p strong{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--la-accent) 16%,transparent) 0)}
+
+@keyframes lzRise{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+@keyframes lzUnder{to{background-size:100% 1.5px}}
+@keyframes lzRing{to{--lz-a:1}}
+@keyframes lzSeal{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes lzReward{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--lab-verde) 55%,transparent)}61.8%,100%{box-shadow:0 0 0 13px transparent}}
+@keyframes lzCall{0%,100%{box-shadow:var(--lab-btn-glow)}38.2%{box-shadow:0 0 0 8px color-mix(in srgb,var(--la-accent) 22%,transparent),var(--lab-btn-glow-hover)}}
+
+@media (prefers-reduced-motion:reduce){
+  .ll-scene .ll-moment,.ll-scene .ll-h,.ll-scene .ll-lead,.ll-scene>.ll-p,.ll-scene .ll-blocks>.ll-block,.ll-navbtn--go,:is(.la-choice,.ll-bin,.lp-ord-i).is-right,.lp-pt.is-key{animation:none!important}
+  .ll-h em{animation:none;background-size:100% 1.5px}
+  .ll-blocks>.ll-block::before,.ll-blocks>.ll-block::after{animation:none!important;--lz-a:1}
+  body[data-modo="lezione"] .ll-top::after,.ll-play{transition:none}
+}
+@media print{body .ll-top::after,.ll-dots::before{display:none}.ll-blocks>.ll-block{opacity:1!important;filter:none!important}}

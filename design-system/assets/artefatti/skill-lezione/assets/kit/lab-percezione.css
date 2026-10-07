@@ -1,0 +1,163 @@
+/* Lab IRC — Percezione (sempre attiva) + Modalità LIM (<html data-lim>).
+   Attiva la LIM: pulsante «LIM», tasto L, oppure ?lim=1 nell'indirizzo (resta salvata). */
+
+/* ---------- Gestalt, sempre ---------- */
+/* destino comune: le opzioni entrano insieme, a cascata breve → si leggono come un solo gruppo */
+.la-choices>.la-choice:not(.is-wrong){animation:labRise 610ms var(--lab-ease-out) both}
+.g-quiz.is-in .g-opt:not(.is-wrong){animation:gIn 610ms var(--lab-ease-out) both}
+.la-choices>:nth-child(2),.g-quiz.is-in .g-opt:nth-child(2){animation-delay:55ms}
+.la-choices>:nth-child(3),.g-quiz.is-in .g-opt:nth-child(3){animation-delay:110ms}
+.la-choices>:nth-child(4),.g-quiz.is-in .g-opt:nth-child(4){animation-delay:165ms}
+/* figura–sfondo: durante il gioco la decorazione arretra */
+body[data-skin="arcade"]:has(.g-board)::before{opacity:.35}
+/* un solo punto focale visibile anche da tastiera */
+:where(.la-choice,.la-btn,.g-opt,.g-btn,.g-pill,.g-chip-d,.g-word,.g-vf-b,.g-tabs button,.g-tool):focus-visible{outline:3px solid var(--lab-oro);outline-offset:3px}
+
+.la-lim-btn{position:fixed;top:13px;right:13px;z-index:60;font:800 13px/1 var(--lab-font-body);letter-spacing:.08em;padding:0 16px;min-height:40px;border-radius:999px;border:1px solid var(--lab-line);background:var(--lab-surface);color:var(--lab-ink);cursor:pointer}
+.la-lim-btn[aria-pressed="true"],.g-tool[data-lim-toggle][aria-pressed="true"]{background:var(--lab-oro);color:#241a02;border-color:transparent}
+
+/* ---------- Modalità LIM ---------- */
+:root[data-lim]{--lu:var(--lab-lim-unit);--lab-muted:var(--lab-ink-soft)}
+:root[data-lim] .la-halo{display:none}
+:root[data-lim] .la-lim-btn{font-size:var(--lab-lim-caption);min-height:max(40px,calc(var(--lu)*4.4));padding:0 calc(var(--lu)*2.1)}
+:root[data-lim] .la-mascot{right:calc(var(--lu)*1.3);bottom:calc(var(--lu)*1.3);transform-origin:bottom right;transition:transform 377ms var(--lab-ease-out)}
+:root[data-lim] body:has(.g-board) .la-mascot,:root[data-lim] body:has(.la-choices) .la-mascot{scale:.618}
+/* telefono: l'ultima risposta deve poter scorrere oltre la mascotte */
+@media (max-width:720px){body.g,body.la{padding-bottom:144px}}
+:root[data-lim] .g-tool,:root[data-lim] .g-seg button{white-space:nowrap}
+
+/* artefatti */
+:root[data-lim] .la-stage{max-width:min(96vw,1680px);padding:calc(var(--lu)*5.5) calc(var(--lu)*3.4) calc(var(--lu)*13)}
+:root[data-lim] .la-eyebrow{font-size:var(--lab-lim-caption);letter-spacing:.12em;margin-bottom:calc(var(--lu)*1.3)}
+:root[data-lim] .la-eyebrow::before{width:calc(var(--lu)*3.4);height:2px}
+:root[data-lim] .la-title{font-size:var(--lab-lim-term);font-weight:700;line-height:1.05;margin-bottom:calc(var(--lu)*1.3)}
+:root[data-lim] .la-lead{font-size:var(--lab-lim-lead);line-height:1.382;max-width:var(--lab-lim-measure);margin-bottom:calc(var(--lu)*3.4)}
+:root[data-lim] .la-card{padding:calc(var(--lu)*3.4);border-width:2px;border-radius:calc(var(--lu)*2.1)}
+:root[data-lim] .la-meta{font-size:var(--lab-lim-caption);letter-spacing:.08em}
+:root[data-lim] .la-row{margin-bottom:calc(var(--lu)*.8)}
+:root[data-lim] .la-progress,:root[data-lim] .la-progress>i{height:calc(var(--lu)*.8)}
+:root[data-lim] .la-q{font:800 var(--lab-lim-question)/1.15 var(--lab-font-body);letter-spacing:-.01em;margin:calc(var(--lu)*3.4) 0 calc(var(--lu)*2.1)}
+:root[data-lim] .la-choices{gap:calc(var(--lu)*1.3)}
+:root[data-lim] .la-choice{font:600 var(--lab-lim-lead)/1.25 var(--lab-font-body);min-height:var(--lab-lim-target);padding:calc(var(--lu)*1.3) calc(var(--lu)*2.1) calc(var(--lu)*1.3) calc(var(--lu)*1.3);gap:calc(var(--lu)*1.6);border-width:3px;border-radius:calc(var(--lu)*1.3)}
+:root[data-lim] .la-key{width:calc(var(--lu)*4.4);height:calc(var(--lu)*4.4);font-size:var(--lab-lim-body);border-width:2px}
+:root[data-lim] .la-foot{min-height:var(--lab-lim-target);margin-top:calc(var(--lu)*3.4);gap:calc(var(--lu)*2.1)}
+:root[data-lim] .la-note{font-size:var(--lab-lim-body);max-width:var(--lab-lim-measure)}
+:root[data-lim] .la-score{font-size:var(--lab-lim-score)}
+:root[data-lim] .la-btn{font-size:var(--lab-lim-body);min-height:var(--lab-lim-target);padding:0 calc(var(--lu)*3.4);gap:calc(var(--lu)*1.3)}
+
+/* giochi: struttura */
+:root[data-lim] body.g{--g-head:800 var(--lab-lim-question)/1.12 var(--lab-font-body);--g-label-font:800 var(--lab-lim-caption)/1.25 var(--lab-font-body);--g-label-track:.08em;--g-r:var(--lu);--g-r-lg:calc(var(--lu)*1.6)}
+:root[data-lim] .g-shell{max-width:min(96vw,1760px);padding:calc(var(--lu)*2.1) calc(var(--lu)*2.1) calc(var(--lu)*13)}
+:root[data-lim] .g-top{gap:calc(var(--lu)*2.1);margin-bottom:calc(var(--lu)*2.1)}
+:root[data-lim] .g-brand b{font-size:var(--lab-lim-body)}
+:root[data-lim] .g-seg button,:root[data-lim] .g-tool{font-size:var(--lab-lim-caption);min-height:max(40px,calc(var(--lu)*4.4));padding:0 calc(var(--lu)*1.6)}
+:root[data-lim] .g-tabs{gap:calc(var(--lu)*.8);margin-bottom:calc(var(--lu)*2.1)}
+:root[data-lim] .g-tabs button{font-size:max(16px,calc(var(--lu)*1.6));min-height:var(--lab-lim-target);padding:calc(var(--lu)*.8) calc(var(--lu)*1.3);border-width:2px;justify-content:center}
+:root[data-lim] .g-tabs button small,:root[data-lim] .g-tab-link small{display:none}
+:root[data-lim] .g-tab-link{font-size:max(16px,calc(var(--lu)*1.6));min-height:var(--lab-lim-target);padding:calc(var(--lu)*.8) calc(var(--lu)*1.3);justify-content:center;border-width:2px}
+:root[data-lim] .g-num{font-size:calc(var(--lu)*4.4)}
+:root[data-lim] .g-num--sm{font-size:calc(var(--lu)*2.6)}
+:root[data-lim] .g-num--xl{font-size:var(--lab-lim-score)}
+:root[data-lim] .g-note{font-size:var(--lab-lim-body);max-width:var(--lab-lim-measure)}
+:root[data-lim] .g-hud{gap:calc(var(--lu)*2.1);padding:calc(var(--lu)*1.3) calc(var(--lu)*2.1);border-width:2px}
+:root[data-lim] .g-prog{height:calc(var(--lu)*1.3)}
+:root[data-lim] .g-life{width:calc(var(--lu)*2.6);height:calc(var(--lu)*2.6)}
+:root[data-lim] .g-board{padding:calc(var(--lu)*3.4);border-width:2px}
+:root[data-lim] .g-actions{gap:calc(var(--lu)*1.6);margin-top:calc(var(--lu)*3.4)}
+:root[data-lim] .g-btn{font-size:var(--lab-lim-body);min-height:var(--lab-lim-target);padding:0 calc(var(--lu)*3.4);border-width:3px}
+:root[data-lim] .g-float{font-size:var(--lab-lim-question)}
+:root[data-lim] .g-h{margin:calc(var(--lu)*.8) 0 calc(var(--lu)*2.1)}
+/* flashcard */
+:root[data-lim] .g-deck,:root[data-lim] .g-flash .g-actions{width:min(100%,calc(var(--lu)*89))}
+:root[data-lim] .g-face{padding:calc(var(--lu)*3.4);gap:calc(var(--lu)*1.6);border-width:3px}
+:root[data-lim] .g-term{font-size:var(--lab-lim-term)}
+:root[data-lim] .g-def{font-size:var(--lab-lim-lead);line-height:1.35;max-width:26ch}
+:root[data-lim] .g-hint{font-size:var(--lab-lim-caption)}
+/* cruciverba */
+:root[data-lim] .g-cruci{gap:calc(var(--lu)*3.4)}
+:root[data-lim] .g-grid{--s:calc(var(--lu)*4.4)}
+:root[data-lim] .g-cell small{font-size:calc(var(--lu)*1)}
+:root[data-lim] .g-clues li button{font-size:var(--lab-lim-body);padding:calc(var(--lu)*.8) calc(var(--lu)*1.3);border-width:2px}
+:root[data-lim] .g-clues li b{width:calc(var(--lu)*3)}
+/* sfida / quiz */
+:root[data-lim] .g-team-in input,:root[data-lim] .g-turn b{font-size:var(--lab-lim-lead)}
+:root[data-lim] .g-steal{font-size:var(--lab-lim-caption);padding:calc(var(--lu)*.6) calc(var(--lu)*1.3)}
+:root[data-lim] .g-timer{gap:calc(var(--lu)*1.3)}
+:root[data-lim] .g-timer::before,:root[data-lim] .g-timer i{height:calc(var(--lu)*1.3)}
+:root[data-lim] .g-timer i{margin-top:calc(var(--lu)*-.65);max-width:calc(100% - var(--lu)*6)}
+:root[data-lim] .g-q{margin:calc(var(--lu)*3.4) 0 calc(var(--lu)*2.1)}
+:root[data-lim] .g-opts{gap:calc(var(--lu)*1.6)}
+:root[data-lim] .g-opt{font-size:var(--lab-lim-lead);min-height:calc(var(--lu)*8.9);padding:calc(var(--lu)*1.3) calc(var(--lu)*2.1);gap:calc(var(--lu)*1.6);border-width:3px}
+:root[data-lim] .g-key{width:calc(var(--lu)*4.4);height:calc(var(--lu)*4.4);font-size:var(--lab-lim-body);border-width:3px}
+/* riflessione */
+:root[data-lim] .g-spectrum input{height:calc(var(--lu)*2.1)}
+:root[data-lim] .g-spectrum input::-webkit-slider-thumb{width:var(--lab-lim-target);height:var(--lab-lim-target)}
+:root[data-lim] .g-spectrum input::-moz-range-thumb{width:var(--lab-lim-target);height:var(--lab-lim-target)}
+:root[data-lim] .g-poles span{font-size:var(--lab-lim-body)}
+:root[data-lim] .g-write textarea{font-size:var(--lab-lim-body);min-height:calc(var(--lu)*13)}
+:root[data-lim] .g-paper{width:min(100%,calc(var(--lu)*68));padding:calc(var(--lu)*3.4)}
+:root[data-lim] .g-paper p{font-size:var(--lab-lim-lead)}
+:root[data-lim] .g-chip{font-size:var(--lab-lim-caption);padding:calc(var(--lu)*.8) calc(var(--lu)*1.6)}
+/* fine partita */
+:root[data-lim] .g-end-in{max-width:calc(var(--lu)*89);gap:calc(var(--lu)*2.1)}
+:root[data-lim] .g-end-title{font-size:var(--lab-lim-term)}
+:root[data-lim] .g-end-msg{font-size:var(--lab-lim-lead)}
+:root[data-lim] .g-stars{gap:calc(var(--lu)*1.3)}
+:root[data-lim] .g-stars i{width:calc(var(--lu)*5.5);height:calc(var(--lu)*5.5)}
+/* vero/falso */
+:root[data-lim] .g-why{font-size:var(--lab-lim-body);padding:calc(var(--lu)*1.6) calc(var(--lu)*2.1);margin-top:calc(var(--lu)*2.1)}
+:root[data-lim] .g-streak{font-size:var(--lab-lim-caption)}
+:root[data-lim] .g-stmt{font-size:calc(var(--lu)*4.4);max-width:24ch}
+:root[data-lim] .g-vf-btns,:root[data-lim] .g-vf .g-why{width:min(100%,calc(var(--lu)*110));max-width:none}
+:root[data-lim] .g-vf-btns{gap:calc(var(--lu)*3.4)}
+:root[data-lim] .g-vf-b{min-height:calc(var(--lu)*13);border-width:3px}
+:root[data-lim] .g-vf-b b{font-size:calc(var(--lu)*4.4)}
+:root[data-lim] .g-vf-b small{font-size:var(--lab-lim-caption)}
+/* abbinamenti — colonne in rapporto aureo */
+:root[data-lim] .g-cols{grid-template-columns:minmax(0,1fr) minmax(0,1.618fr);gap:calc(var(--lu)*3.4)}
+:root[data-lim] .g-col{gap:calc(var(--lu)*1.3)}
+:root[data-lim] .g-pill{font-size:var(--lab-lim-body);min-height:var(--lab-lim-target);padding:calc(var(--lu)*1.3) calc(var(--lu)*1.6);border-width:3px}
+:root[data-lim] .g-pill.is-done{padding-right:calc(var(--lu)*5.5)}
+:root[data-lim] .g-pill.is-done::after{width:calc(var(--lu)*3);height:calc(var(--lu)*3);margin-top:calc(var(--lu)*-1.5);font-size:calc(var(--lu)*1.4)}
+/* sequenza */
+:root[data-lim] .g-seq-list{gap:calc(var(--lu)*1.3)}
+:root[data-lim] .g-seq-item{grid-template-columns:calc(var(--lu)*4.4) minmax(0,1fr) auto auto;gap:calc(var(--lu)*1.6);padding:var(--lu);border-width:3px}
+:root[data-lim] .g-seq-n{font-size:calc(var(--lu)*2.6)}
+:root[data-lim] .g-seq-t{font-size:var(--lab-lim-body)}
+:root[data-lim] .g-seq-y{font-size:var(--lab-lim-caption)}
+:root[data-lim] .g-seq-mv{gap:calc(var(--lu)*.8)}
+:root[data-lim] .g-seq-mv button{width:var(--lab-lim-target);height:var(--lab-lim-target);font-size:var(--lab-lim-body)}
+/* categorie */
+:root[data-lim] .g-pool{gap:calc(var(--lu)*1.3);margin-bottom:calc(var(--lu)*3.4)}
+:root[data-lim] .g-chip-d{font-size:var(--lab-lim-body);min-height:var(--lab-lim-target);padding:var(--lu) calc(var(--lu)*2.1);border-width:3px}
+:root[data-lim] .g-chip-d.is-in{font-size:var(--lab-lim-caption);padding:calc(var(--lu)*.6) calc(var(--lu)*1.3)}
+:root[data-lim] .g-bins{gap:calc(var(--lu)*2.1)}
+:root[data-lim] .g-bin{min-height:calc(var(--lu)*21);padding:calc(var(--lu)*1.6);border-width:3px}
+:root[data-lim] .g-bin-h{font-size:calc(var(--lu)*2.6)}
+/* memory */
+:root[data-lim] .g-mem-grid{gap:calc(var(--lu)*1.6)}
+:root[data-lim] .g-mem-f{padding:var(--lu);border-width:3px}
+:root[data-lim] .g-mem-back{font-size:calc(var(--lu)*4.4)}
+:root[data-lim] .g-mem-face{font-size:var(--lab-lim-body)}
+/* completa */
+:root[data-lim] .g-text{font-size:var(--lab-lim-lead);line-height:1.9}
+:root[data-lim] .g-blank{min-width:calc(var(--lu)*13);border-bottom-width:4px}
+:root[data-lim] .g-bank{gap:calc(var(--lu)*1.3);padding-top:calc(var(--lu)*2.1)}
+:root[data-lim] .g-word{font-size:var(--lab-lim-body);min-height:var(--lab-lim-target);padding:0 calc(var(--lu)*2.1)}
+/* sondaggio */
+:root[data-lim] .g-poll-opts{gap:calc(var(--lu)*1.6)}
+:root[data-lim] .g-poll-row{grid-template-columns:minmax(0,1fr) var(--lab-lim-target);gap:var(--lu)}
+:root[data-lim] .g-poll-b{min-height:calc(var(--lu)*6.8);padding:0 calc(var(--lu)*2.1)}
+:root[data-lim] .g-poll-a,:root[data-lim] .g-poll-minus{font-size:calc(var(--lu)*2.6)}
+:root[data-lim] .g-poll-n{font-size:var(--lab-lim-caption)}
+:root[data-lim] .g-poll-ok{height:calc(var(--lu)*3);margin-top:calc(var(--lu)*-1.5);padding:0 calc(var(--lu)*1.3);font-size:var(--lab-lim-caption);right:calc(var(--lu)*1.6)}
+:root[data-lim] .g-debate p{font-size:var(--lab-lim-lead)}
+
+/* proiettore: niente bagliori sul testo né righe CRT (sfocano e abbassano il contrasto) */
+:root[data-lim] .g-num,:root[data-lim] .g-term,:root[data-lim] .g-bin-h,:root[data-lim] .g-mem-back,:root[data-lim] .g-streak,:root[data-lim] .g-float{text-shadow:none}
+:root[data-lim] body[data-skin="arcade"] .g-board::after{display:none}
+:root[data-lim] body[data-skin="arcade"]::before{opacity:.18}
+
+@media (max-width:900px){:root[data-lim] .g-cruci,:root[data-lim] .g-opts,:root[data-lim] .g-cols,:root[data-lim] .g-bins{grid-template-columns:1fr}}
+/* corsia libera per la mascotte (ridotta a ~89px durante il gioco) quando lo schermo non ha margini laterali */
+@media (max-width:1700px){:root[data-lim] body:not([data-no-mascotte]) .g-shell,:root[data-lim] body:not([data-no-mascotte]) .la-stage{padding-right:110px}}
