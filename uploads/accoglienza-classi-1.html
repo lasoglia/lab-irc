@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Il nome e la domanda · Lab IRC</title>
-<meta name="description" content="Lezione inaugurale di IRC per la classe prima: il gioco dei nomi, la domanda dell&#x27;anno, la mappa delle quattro tappe, il patto e la scatola delle domande.">
+<meta name="description" content="Lezione inaugurale di IRC per la classe prima: il gioco dei nomi, la domanda dell’anno, la mappa delle quattro tappe, il patto e la scatola delle domande.">
 <meta name="author" content="Matteo Sestili">
 <meta name="copyright" content="© Matteo Sestili — Tutti i diritti riservati">
 <meta name="generator" content="Lab IRC · kit definitivo 2026-10-05">
@@ -1898,6 +1898,16 @@ button.lx-box:hover i{transform:translateX(5px)}
 .g-opt:active:not(:disabled){transform:scale(.97)}
 .g-tool{transition:color 144ms,border-color 233ms,transform 144ms}
 .g-tool:active{transform:scale(.95)}
+/* Sito, 7 ottobre 2026. Nella lezione la barra delle scene è fissa in basso: lo spazio di 144 px che lab-percezione.css
+   lascia sotto i 720 px (per la mascotte delle pagine di gioco) qui alza la barra e lascia una fascia vuota. */
+@media (max-width:720px){ body.la.ll{padding-bottom:0} }
+/* Dentro il visore del sito, sul telefono, la riga di schede e strumenti resta una sola. */
+@media (max-width:440px){
+  :root[data-visore] body.ll .ll-tools{flex-wrap:nowrap;gap:5px;min-width:0}
+  :root[data-visore] body.ll .ll-modes button{padding:8px 9px;font-size:13px;min-height:38px}
+  :root[data-visore] body.ll .ll-tools .ll-chip{padding-inline:9px;font-size:13px}
+  :root[data-visore] body.ll .ll-tools>.ll-icon{width:36px;height:36px;flex:none}
+}
 
 
 </style>
