@@ -1,0 +1,13 @@
+/* Catalogo degli strumenti — CSS della lezione (solo token del design system). Serve al componente proprio «Orologio». */
+.cat-clock{padding:21px}
+.cat-clock-g{position:relative;aspect-ratio:1;max-width:420px;margin:13px auto}
+.cat-clock-g svg{position:absolute;inset:0;width:100%;height:100%}
+.cat-ora{position:absolute;transform:translate(-50%,-50%);min-height:44px;padding:0 13px;border-radius:999px;border:1px solid var(--lab-line);background:var(--lab-surface-2);color:var(--lab-ink);font:600 14px/1 var(--lab-font-body);cursor:pointer;transition:transform 233ms var(--lab-ease-out),border-color 233ms,background 233ms,color 233ms}
+.cat-ora:hover{border-color:var(--lab-oro);transform:translate(-50%,-50%) scale(1.05)}
+.cat-ora:active{transform:translate(-50%,-50%) scale(.96)}
+.cat-ora.is-on{background:var(--lab-oro);color:#241a02;border-color:transparent}
+.cat-ora:focus-visible{outline:3px solid var(--lab-oro);outline-offset:3px}
+.cat-clock-c{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;display:grid;gap:4px;max-width:55%}
+.cat-clock-c small{font:600 12.5px/1.4 var(--lab-font-inscription);letter-spacing:.14em;text-transform:uppercase;color:var(--lab-oro)}
+.cat-clock-c b{font:600 clamp(26px,4vw,40px)/1 var(--lab-font-display);color:var(--lab-ink)}
+@media (max-width:480px){.cat-ora{font-size:12px;padding:0 9px;min-height:40px}.cat-clock{padding:13px}}
