@@ -1,0 +1,94 @@
+﻿Le due vie di Lemaître
+Un sacerdote, l’universo in espansione e il limite di ciò che una scoperta può dimostrare.
+
+LA DOMANDA
+
+Nel marzo 2025 la collaborazione DESI, che ha mappato la posizione di milioni di galassie, ha annunciato indizi più forti che l’energia oscura possa cambiare nel tempo: se fossero confermati, il modello cosmologico standard andrebbe ritoccato. Nel luglio 2026 una nuova misura dello stesso progetto, basata sulla luce dei quasar filtrata dal gas intergalattico, si è avvicinata di nuovo al modello standard, senza chiudere la questione: gli stessi ricercatori ammettono che gli indizi potrebbero svanire, oppure che servirà un modello più complesso, e i primi risultati sui cinque anni completi di osservazioni sono attesi nel 2027. La cosmologia funziona così: propone, controlla, corregge.
+
+Per questo vale la pena chiedersi se una fede possa appoggiarsi a un modello dell’universo. Novant’anni fa se lo chiese, con molta lucidità, l’uomo che per primo propose che l’universo avesse un inizio. Era un prete.
+
+UN PRETE CHE FA I CONTI
+
+Georges Lemaître nasce a Charleroi, in Belgio, nel 1894. Dopo la Prima guerra mondiale entra in seminario e il 22 settembre 1923 è ordinato sacerdote dal cardinale Mercier. Va subito a Cambridge a studiare con Arthur Eddington, uno dei maggiori astrofisici del tempo; poi negli Stati Uniti, all’osservatorio di Harvard e al Massachusetts Institute of Technology. Dal 1925 insegna a Lovanio. Non smetterà mai di essere, insieme, prete e fisico.
+
+Nel 1927 pubblica negli Annales de la Société scientifique de Bruxelles una soluzione delle equazioni della relatività generale in cui l’universo è in espansione, e ne ricava che le galassie si allontanano con una velocità proporzionale alla loro distanza. Un dettaglio conta più di quanto sembri: quel primo modello non aveva un inizio. Partiva, nel passato remoto, dall’universo statico di Einstein e tendeva, nel futuro, a un universo sempre più rarefatto. Il sacerdote non era andato a cercare nella fisica la prima pagina della Genesi. Nello stesso anno, a Bruxelles, Einstein respinse la fisica del modello con una frase famosa, giunta a noi in versioni diverse: se ne conosce con certezza il senso, non le parole.
+
+L’articolo esce in una rivista poco letta fuori dal Belgio; nel 1929 Edwin Hubble pubblica la stessa relazione su dati propri, e per decenni si parlerà di «legge di Hubble». Quando nel 1931 l’articolo viene tradotto in inglese manca proprio il calcolo che dava a Lemaître la precedenza, e a lungo si è sospettata una censura. Nel 2011 l’astrofisico Mario Livio ha reso noto di aver trovato negli archivi della Royal Astronomical Society una lettera in cui Lemaître scrive di non ritenere opportuno ristampare la sua discussione provvisoria: il taglio era suo. Nel 2018 l’Unione Astronomica Internazionale ha raccomandato di chiamare la relazione «legge di Hubble-Lemaître», con il 78 per cento dei 4.060 voti espressi.
+
+TRE PIANI DA DISTINGUERE
+
+Un sacerdote propone un universo in espansione, e presto anche un inizio: la conclusione rapida arriva da due lati opposti. Per alcuni è stata la fede a suggerirgli la teoria, che dunque è sospetta; per altri è la teoria a dimostrare la fede. Prima di valutarle servono tre distinzioni.
+
+Il risultato scientifico è un’affermazione su grandezze misurabili, che si controlla con le osservazioni: il suo valore non dipende da chi l’ha formulata. Il dato biografico, la biografia, dice chi era l’autore e che cosa credeva: spiega come è nata una ricerca, ma non la conferma e non la smentisce. L’interpretazione attribuisce a un risultato un significato rispetto a domande che la fisica non pone, per esempio perché esista qualcosa: è legittima, ma va dichiarata e argomentata.
+
+Il risultato scientifico ha lo statuto di un’ipotesi: la parola viene dal greco hypóthesis, affine al verbo che significa «porre sotto». È ciò che si mette alla base di un ragionamento per metterlo alla prova, non un’opinione arbitraria né una verità definitiva; Lemaître intitolò il suo libro del 1946 L’hypothèse de l’atome primitif. Mescolare risultato e biografia significa giudicare la persona invece della tesi: screditarlo perché prete e arruolarlo perché prete sono lo stesso errore. Mescolare risultato e interpretazione è più insidioso, perché il salto si presenta come una conseguenza.
+
+UN INIZIO CHE FA SOSPETTARE
+
+L’inizio arriva nel 1931, e arriva dalla fisica. Nel marzo di quell’anno Eddington scrive su «Nature» che l’idea di un inizio dell’ordine presente della natura gli risulta filosoficamente ripugnante. Lemaître risponde con una lettera di 457 parole, pubblicata dalla stessa rivista il 9 maggio: con la teoria quantistica, se si segue l’espansione all’indietro, si può pensare a uno stato iniziale densissimo, che chiamerà atomo primitivo. È l’antenato di quello che oggi chiamiamo Big Bang; il nome glielo darà nel 1949, alla radio della BBC, un suo avversario, l’astronomo Fred Hoyle. Risalendo verso quello stato le equazioni a un certo punto smettono di essere affidabili: anche questo limite fa parte del risultato.
+
+Perché un inizio suscitava tanta diffidenza? Anche perché ricordava un’idea con una lunga storia. La filosofia greca, con Aristotele, pensava il mondo eterno; la Bibbia e la tradizione cristiana parlano invece di un mondo che ha cominciato a esistere per la libera decisione di Dio. Quell’idea era entrata così a fondo nella cultura europea che, secondo il biografo di Lemaître Dominique Lambert, Einstein diffidava dell’atomo primitivo perché gli sembrava implicare la fede in una creazione iniziale.
+
+UN INIZIO NON È LA CREAZIONE
+
+Lemaître poteva approfittarne. Fece il contrario. Nel dattiloscritto della lettera a «Nature», conservato negli Archives Lemaître dell’Università di Lovanio, c’è una frase finale che l’autore cancellò e che non fu mai pubblicata: «Penso che chiunque creda in un essere supremo che sostiene ogni essere e ogni agire creda anche che Dio sia essenzialmente nascosto, e possa rallegrarsi di vedere come la fisica attuale fornisca un velo che nasconde la creazione» (traduzione dall’inglese). La frase non presenta la fisica come una prova di Dio: dice che la fisica la vela.
+
+Negli anni successivi Lemaître precisò il suo pensiero distinguendo tre cose che nel linguaggio comune si confondono: l’inizio naturale, cioè lo stato iniziale che la fisica descrive; l’inizio metafisico, cioè il fatto che il mondo esista invece di non esistere, domanda della metafisica; e la creazione in senso teologico, la relazione per cui Dio pone il mondo nell’essere. Il suo atomo primitivo, osservava, non è neppure un inizio assoluto: è il dispiegarsi di una realtà fisica a partire da un’altra realtà fisica. Nel 1958, a un congresso di astrofisici a Bruxelles, lo disse così: «Personalmente ritengo che [l’ipotesi] rimanga interamente al di fuori di ogni questione metafisica o religiosa. Essa permette al materialista anche di negare ogni essere trascendente. […] Per il credente essa esclude ogni tentativo di familiarità con Dio […]. E si accorda anche con i versetti di Isaia quando parlano del “Dio nascosto”, nascosto anche all’inizio della creazione» (traduzione italiana riportata da Lambert).
+
+Il versetto è Isaia 45,15: «Veramente tu sei un Dio nascosto, Dio d’Israele, salvatore» (CEI 2008). In un’intervista del 1933, riferita da Lambert, Lemaître aveva riassunto la sua posizione: «Esistono due vie per arrivare alla verità. Ho deciso di seguirle entrambe». E amava ripetere: «Ho troppo rispetto per Dio per poterne fare un’ipotesi scientifica».
+
+CHE COSA AFFERMA LA FEDE
+
+La distinzione di Lemaître non è un compromesso: corrisponde a ciò che la Chiesa intende per creazione, che comprende due affermazioni. La prima è la dipendenza: tutto ciò che esiste riceve l’essere da Dio, dal nulla, e non solo una volta ma in ogni istante. Tommaso d’Aquino paragonava le creature all’aria, che resta illuminata solo finché il sole la illumina (Summa theologiae I, q. 104, a. 1); la prossima lezione svilupperà questo punto. La seconda è l’inizio del tempo. Il Concilio Vaticano I, riprendendo il Lateranense IV del 1215, insegna che Dio «con liberissima decisione fin dal principio del tempo produsse dal nulla» ogni creatura (Dei Filius, cap. I; traduzione dal latino), e il Catechismo afferma che «il mondo ha avuto inizio quando è stato tratto dal nulla dalla Parola di Dio» (n. 338).
+
+Eppure questo inizio si conosce per fede. Tommaso sosteneva che la ragione non può dimostrare né che il mondo sia sempre esistito né che abbia cominciato: la novità del mondo si tiene per sola fede (Summa theologiae I, q. 46, aa. 1-2). Ne segue un punto decisivo. Un modello fisico che mostri uno stato iniziale non dimostra la creazione, perché descrive una realtà fisica che viene da un’altra; un modello che non preveda un inizio non la smentisce, perché la fede non l’ha ricavato dalla fisica. La domanda più profonda riguarda il senso: «Non si tratta soltanto di sapere quando e come sia sorto materialmente il cosmo, né quando sia apparso l’uomo, quanto piuttosto di scoprire quale sia il senso di tale origine» (CCC 284).
+
+QUANDO I PIANI SI SCAVALCANO
+
+Il 22 novembre 1951 Pio XII parla alla Pontificia Accademia delle Scienze. Passa in rassegna i dati dell’astronomia del tempo, compreso l’allontanamento delle galassie, e conclude: «La creazione nel tempo, quindi; e perciò un Creatore; dunque Dio!». Nello stesso discorso aveva precisato che, sulla creazione nel tempo, «i fatti fin qui accertati non sono argomento di prova assoluta». La cautela c’è; ma la sequenza che resta impressa va dal dato astronomico al Creatore, e molti la lessero come un’adesione del Papa all’ipotesi di Lemaître. Il passaggio di piano avviene già nella prima parola: chiamare «creazione» lo stato iniziale descritto dai dati significa sostituire l’inizio naturale con l’atto di Dio; «Creatore» e «Dio» seguono poi dalla parola scelta.
+
+Lemaître, membro dell’Accademia dal 1936, ne fu contrariato per due ragioni. La prima è quella di questa lezione: il passaggio dal modello al Creatore scavalca i piani. La seconda è scientifica: in quegli anni nessuna osservazione permetteva di escludere la teoria rivale dello stato stazionario, che non prevedeva alcun inizio. Secondo Lambert chiese di essere ricevuto dal Papa, probabilmente con l’aiuto del gesuita Daniel O’Connell della Specola Vaticana; del colloquio non esiste una prova scritta. Di certo nel discorso agli astronomi del 7 settembre 1952 Pio XII non ripeté l’accostamento. Dal 1960 al 1966 Lemaître fu presidente dell’Accademia.
+
+L’argomento di Lemaître difendeva la fede, non soltanto la scienza: chi lega la creazione al Big Bang dovrà rinunciare alla creazione il giorno in cui il Big Bang venisse corretto. L’errore opposto, oggi più diffuso, presenta la cosmologia come la prova che un creatore non serve: è lo stesso scavalcamento, con la conclusione rovesciata.
+
+DISTINGUERE NON È SEPARARE
+
+Il concordismo (da concordia) cerca un accordo diretto fra le affermazioni della fede e i risultati della scienza: «il Big Bang conferma la Genesi». Il fideismo è l’errore opposto: tratta fede e ragione come due mondi isolati, che non hanno nulla da dirsi. Il dialogo fra scienza e fede evita entrambi.
+
+Un’obiezione seria va presa sul serio: se scienza e fede rispondono a domande diverse, la fede non rischia di diventare un sentimento privato che non dice nulla del mondo reale? Lo stesso Lambert riconosce che la distinzione di Lemaître, spinta troppo in là, rischia di suggerire che un dialogo fra cosmologia e teologia non sia pertinente. La risposta cattolica non è la separazione. Il Vaticano I parla di un «duplice ordine di conoscenza», afferma che fra fede e ragione non può esservi «nessun vero dissenso» e che le due «si aiutano anche a vicenda» (Dei Filius, cap. IV; traduzione dal latino). Il Catechismo ne trae la conseguenza: la ricerca metodica, se procede in modo veramente scientifico e secondo le norme morali, «non sarà mai in reale contrasto con la fede» (n. 159, che riprende Gaudium et spes 36).
+
+Il dialogo passa per la filosofia, che interpreta i dati senza confonderli con la teologia, e sa vivere anche i disaccordi. Il fisico e teologo Robert John Russell propone di cercare fra teorie scientifiche e teologiche sia le consonanze sia le dissonanze: quando un modello cambia, la dissonanza non è una minaccia ma l’occasione di capire meglio. È la situazione da cui siamo partiti: i dati DESI possono rafforzare o indebolire un modello, ma non toccano la fede di chi non ha mai affidato a un modello la propria fede.
+
+DOMANDE PER LO STUDIO
+
+1. Il modello del 1927 non prevedeva un inizio. Perché questo fatto aiuta a distinguere il dato biografico dal risultato scientifico?
+
+2. Spiega la differenza fra inizio naturale, inizio metafisico e creazione, con un esempio per ciascuno.
+
+3. Nella frase di Pio XII «La creazione nel tempo, quindi; e perciò un Creatore; dunque Dio!» indica dove il discorso lascia il piano della fisica, e motiva.
+
+4. Domanda aperta: Lemaître diceva di avere «troppo rispetto per Dio» per farne un’ipotesi scientifica. Che cosa significa, secondo te? Motiva con un elemento della lezione.
+
+LA RISPOSTA
+
+L’inizio che la fisica descrive non è la creazione: il modello di Lemaître non la dimostra e non la smentisce, e la fede del suo autore non aggiunge né toglie nulla al suo valore scientifico. La fede cattolica afferma che tutto dipende da Dio e che il mondo ha avuto inizio, ma lo sa per fede e con l’aiuto della ragione filosofica, non con le equazioni; per questo non ha bisogno che la cosmologia resti ferma. Distinguere i piani, però, non significa separarli: le due vie restano distinte e si parlano.
+
+Il 17 giugno 1966, tre giorni prima di morire, in ospedale, a Lemaître riferirono la scoperta della radiazione cosmica di fondo, la traccia osservabile di quella fase calda e densa. Rispose: «Je suis content… maintenant on a la preuve», «sono contento, adesso abbiamo la prova». Parlava del suo modello.
+
+Prossima lezione: Creazione e primo istante. Se un inizio fisico non è la creazione, che cosa significa «creare»? Soltanto far cominciare il mondo? Leggeremo Genesi 1 e vedremo che cosa vuol dire dipendere da Dio anche adesso.
+
+FONTI
+
+- D. Lambert, voce «Lemaître, Georges Edouard», in G. Tanzella-Nitti – A. Strumia (a cura di), Dizionario interdisciplinare di scienza e fede, Città Nuova, Roma 2002, vol. II, pp. 1908-1917.
+- Th. Hertog, «The Figure and Legacy of Monseigneur Georges Lemaître», Pontificia Accademia delle Scienze — www.pas.va.
+- J.-P. Luminet, «Editorial note to: The beginning of the world from the point of view of quantum theory», arXiv:1105.6271 (2011). G. Lemaître, «The Beginning of the World from the Point of View of Quantum Theory», Nature 127, n. 3210 (9 maggio 1931), p. 706. A. S. Eddington, «The End of the World (from the Standpoint of Mathematical Physics)», Nature 127 (21 marzo 1931).
+- M. Livio, «Mystery of the missing text solved», Nature 479 (10 novembre 2011), pp. 171-173.
+- Unione Astronomica Internazionale, comunicato iau1812 (29 ottobre 2018) — www.iau.org.
+- Pio XII, discorso alla Pontificia Accademia delle Scienze del 22 novembre 1951 e discorso agli astronomi del 7 settembre 1952.
+- Concilio Vaticano I, Dei Filius, capp. I e IV (Denzinger-Hünermann 3001-3002, 3015-3019); Catechismo della Chiesa Cattolica, nn. 159, 284, 338 — www.vatican.va; Isaia 45,15 (Bibbia CEI 2008).
+- Tommaso d’Aquino, Summa theologiae I, q. 46, aa. 1-2; q. 104, a. 1. R. J. Russell, voce «Dialogo scienze-teologia», Dizionario interdisciplinare di scienza e fede.
+- DESI, annunci del 19 marzo 2025 (DR2), dell’aprile 2026 (completate le osservazioni dei cinque anni) e del 30 luglio 2026 (foresta Lyman-alfa) — www.desi.lbl.gov.
+- Vocabolario Treccani, voci «cosmologia», «modello», «ipotesi», «biografia», «interpretazione», «espansione», «atomo», «metafisica», «creazione», «trascendente», «concordia», «fideismo», «dialogo».
+- Traduzioni dall’inglese (frase cancellata del 1931) e dal latino (Dei Filius) a cura dell’autore; le frasi del 1933 e del 1958 come le riporta in italiano Lambert.
+
+© Matteo Sestili — Tutti i diritti riservati
