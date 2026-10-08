@@ -26,3 +26,9 @@
   :root[data-visore] body.ll .ll-tools .ll-chip{padding-inline:9px;font-size:13px}
   :root[data-visore] body.ll .ll-tools>.ll-icon{width:36px;height:36px;flex:none}
 }
+/* Sito, 8 ottobre 2026. In LIM la scena è ingrandita (zoom 1,272 o 1,618) e il palco delle animazioni, alto 46vh nel
+   disegno normale, diventava alto quasi tre quarti dello schermo: didascalia e comandi finivano sotto la barra delle scene.
+   Qui il palco si misura sullo schermo vero e lascia il posto a testata, didascalia, comandi e barra (a 1366×768 come a 1920×1080). */
+:root[data-lim] body.ll .ll-scene .lp-stage{max-height:calc((100vh - 470px) / var(--ll-z,1));min-height:calc(200px / var(--ll-z,1))}
+/* se l'animazione ha un titolo proprio, anche il titolo deve stare nella stessa schermata */
+:root[data-lim] body.ll .ll-scene .lp-anim:has(> .ll-block-h) .lp-stage{max-height:calc((100vh - 470px) / var(--ll-z,1) - 55px)}
