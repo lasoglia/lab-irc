@@ -173,9 +173,11 @@ Nessun punteggio sulle convinzioni: i due sondaggi e la riflessione non hanno ri
 
 ## 10. Consegna e collaudo
 
-File: `uploads/apertura-cuore-inquieto-artefatto.html` (695 KB, stesso nome del precedente: il record di `data/materiali.json` resta valido e non è stato toccato) · `sorgenti-lezioni/v-0-1-apertura-il-cuore-inquieto.js` · `sorgenti-lezioni/v-0-1-apertura-il-cuore-inquieto.testo.txt`. Stato: **pronto da caricare** (non pubblicato).
+File: `uploads/apertura-cuore-inquieto-artefatto.html` (697 KB, stesso nome del precedente: il record di `data/materiali.json` resta valido e non è stato toccato) · `sorgenti-lezioni/v-0-1-apertura-il-cuore-inquieto.js` · `sorgenti-lezioni/v-0-1-apertura-il-cuore-inquieto.testo.txt`. Stato: **pubblicato** (7 ottobre 2026; ricostruito l’8 ottobre con il kit corretto per la LIM).
 
 Collaudo in Chromium (Playwright), 7 ottobre 2026: 91 controlli superati su 91 — 12 scene avanti e indietro (pulsanti e frecce), somma 50; ogni blocco con errore e risposta giusta (leggi, smista, quiz, sfida); animazione fotogramma per fotogramma a 1280 e 360 px senza attori sovrapposti né fuori dal palco; pausa gioco e ritorno alla scena 8; Sfida a squadre (avvio, nomi collettivi, errore e rubata a 50 punti, turni alternati, punteggio, fine con vincitore); tutte le schede dei giochi; glossario e parole nuove (nessuna orfana); Studio e download identico al `.txt` esportato; tema chiaro e scuro; LIM con pulsante, tasto L e `?lim=1`; visore con testata di una riga a 1100, 390 e 360 px; 360 px e iPhone 13 senza scorrimento orizzontale, barra delle scene che non copre il contenuto; iframe con sandbox `allow-scripts allow-forms allow-modals allow-popups allow-downloads`; console senza errori, nessuna richiesta di rete esterna.
+
+Ricontrollo dell’8 ottobre 2026, dopo la correzione del kit per la LIM (`lab-skill.css`): in LIM a 1366×768 e 1280×800 l’animazione sta in una schermata in tutti i fotogrammi (titolo, palco, didascalia e comandi; margine minimo 54 px sopra la barra delle scene), e c’è posto anche a 1920×1080; dentro il visore del sito, su computer, Android e iPhone: testata di una riga da 55 px, barra delle scene in fondo, nessuno scorrimento orizzontale, nessun errore.
 
 ## 11. Che cosa è cambiato rispetto alla versione precedente
 
