@@ -1908,6 +1908,11 @@ button.lx-box:hover i{transform:translateX(5px)}
   :root[data-visore] body.ll .ll-tools .ll-chip{padding-inline:9px;font-size:13px}
   :root[data-visore] body.ll .ll-tools>.ll-icon{width:36px;height:36px;flex:none}
 }
+/* LIM, 8 ottobre 2026. Lo zoom della scena (--ll-z, lab-lezione-lim.css) moltiplica anche il limite del palco delle animazioni
+   (46vh, minimo 240px, lab-lezione-plus.css): a 1366×768 il palco prendeva 572 px su 594 visibili e didascalia e comandi
+   finivano sotto la barra delle scene. Diviso per lo zoom, il palco torna al 46% dello schermo e sta con la didascalia
+   in una schermata, come chiede references/strumenti.md. */
+:root[data-lim] body.ll .ll-scene .lp-stage{max-height:calc(46vh / var(--ll-z,1));min-height:calc(240px / var(--ll-z,1))}
 
 
 </style>
@@ -4251,9 +4256,6 @@ window.LEZIONE = {
     '@media (max-width:640px){.lm-ti-g{grid-template-columns:1fr}.lm-ti-svg{max-width:300px}.lm-ti-d{font-size:19px}.lm-sa-seg{font-size:18px}}',
     '@media (prefers-reduced-motion:reduce){.lm-ti-ring circle{transition:none}.lm-ti-ring.is-now circle{animation:none}}',
     ':root[data-lim] .lm-ti-d{font-size:28px}',
-    /* LIM: lo zoom del kit moltiplica anche il limite del palco (46vh, min 240px); qui lo si riporta al 46% dello schermo,
-       così a 1366×768 e 1280×800 palco, didascalia e comandi dell'animazione stanno in una schermata */
-    ':root[data-lim] body.ll .ll-scene .lp-stage{max-height:calc(46vh / var(--ll-z,1));min-height:calc(240px / var(--ll-z,1))}',
     ':root[data-lim] .lm-sa-seg{font-size:26px}'
   ].join('\n');
   try {

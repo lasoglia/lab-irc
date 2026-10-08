@@ -26,3 +26,8 @@
   :root[data-visore] body.ll .ll-tools .ll-chip{padding-inline:9px;font-size:13px}
   :root[data-visore] body.ll .ll-tools>.ll-icon{width:36px;height:36px;flex:none}
 }
+/* LIM, 8 ottobre 2026. Lo zoom della scena (--ll-z, lab-lezione-lim.css) moltiplica anche il limite del palco delle animazioni
+   (46vh, minimo 240px, lab-lezione-plus.css): a 1366×768 il palco prendeva 572 px su 594 visibili e didascalia e comandi
+   finivano sotto la barra delle scene. Diviso per lo zoom, il palco torna al 46% dello schermo e sta con la didascalia
+   in una schermata, come chiede references/strumenti.md. */
+:root[data-lim] body.ll .ll-scene .lp-stage{max-height:calc(46vh / var(--ll-z,1));min-height:calc(240px / var(--ll-z,1))}
