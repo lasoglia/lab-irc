@@ -469,9 +469,7 @@ window.LEZIONE = {
     '@media (max-width:640px){.lm-ti-g{grid-template-columns:1fr}.lm-ti-svg{max-width:300px}.lm-ti-d{font-size:19px}.lm-sa-seg{font-size:18px}}',
     '@media (prefers-reduced-motion:reduce){.lm-ti-ring circle{transition:none}.lm-ti-ring.is-now circle{animation:none}}',
     ':root[data-lim] .lm-ti-d{font-size:28px}',
-    /* LIM: lo zoom del kit moltiplica anche il limite del palco (46vh, min 240px); qui lo si riporta al 46% dello schermo,
-       così a 1366×768 e 1280×800 palco, didascalia e comandi dell'animazione stanno in una schermata */
-    ':root[data-lim] body.ll .ll-scene .lp-stage{max-height:calc(46vh / var(--ll-z,1));min-height:calc(240px / var(--ll-z,1))}',
+    /* LIM: il limite del palco delle animazioni è nel kit (lab-skill.css, 8 ottobre 2026) */
     ':root[data-lim] .lm-sa-seg{font-size:26px}'
   ].join('\n');
   try {
