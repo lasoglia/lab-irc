@@ -200,6 +200,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Gerusalemme, una città di memorie",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-1-gerusalemme-tre-fedi-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-1-gerusalemme-tre-fedi-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
