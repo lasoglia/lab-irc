@@ -274,9 +274,19 @@ Funziona così:
    ```
 
    Vanno bene anche file sciolti: li sistemi nella tabella.
+
+   Dall'**archivio delle lezioni** puoi trascinare la cartella `da-caricare`
+   preparata dallo script, oppure direttamente le cartelle delle lezioni.
+   Le cartelle `docente` e `sorgenti` vengono saltate, la cartella `pubblica`
+   (e la stessa `da-caricare`) non conta come livello. Vengono presi solo i
+   file che vanno sul sito: PDF, slide (ppt, pptx, odp, key), lezioni
+   interattive `.html` e immagini; gli altri (testi, note, sorgenti) sono
+   contati nel riepilogo come «ignorati».
 3. **Controlla la tabella.** Per ogni file la pagina propone anno, unità,
    lezione, tipo e titolo. Dentro una lezione il titolo dice che cosa è il
-   file («Lezione interattiva», «Fascicolo di studio», «Slide»); per i file
+   file: «Lezione interattiva» per gli `.html`, «Slide» per le slide e per i
+   PDF che finiscono in `-slide.pdf`, «Fascicolo di approfondimento» per i PDF
+   che finiscono in `-fascicolo.pdf`, «Documento» per gli altri PDF; per i file
    sciolti viene dal nome del file. Puoi cambiare tutto: mentre
    scrivi compaiono i nomi delle unità e delle lezioni che esistono già, così
    li riusi senza errori di battitura. Le unità e le lezioni che non esistono
@@ -288,8 +298,18 @@ Funziona così:
 Note utili:
 - La pagina mostra anche i **file già su GitHub ma non collegati a nessuna
   lezione**: con *Collega a una lezione* li sistemi senza ricaricarli.
-- I nomi dei file vengono "puliti" (minuscole, senza spazi né accenti); se un
-  nome esiste già, viene aggiunto un numero.
+- **Aggiornare una lezione già online**: ricarica il file con lo **stesso
+  nome**. La pagina lo riconosce (anche i nomi vecchi come `iv1-1r~1.htm`),
+  lo lascia nella lezione dov'è già e lo **sostituisce**, senza doppioni né
+  collegamenti ripetuti; in tabella c'è scritto «→ sostituisce uploads/…».
+  Un file nuovo nella **stessa cartella** di un file già online (per esempio
+  le slide aggiunte dopo) va nella stessa lezione.
+- I nomi dei file nuovi vengono "puliti" (minuscole, senza spazi né accenti);
+  se il nome esiste già ma il file non è lo stesso (due file con lo stesso nome
+  nella stessa importazione), viene aggiunto un numero («-2»). Per questo i
+  nomi dei file conviene che siano specifici della lezione (come quelli
+  dell'archivio, `ii-1-2-…-fascicolo.pdf`), non generici come `slide.pdf`:
+  un `slide.pdf` già sul sito verrebbe sostituito.
 - Se una cartella si chiama «Lezione 2 - Il caso Galileo» (o «UDA 3 - …»),
   il numero diventa l'**ordine** e sul sito il titolo compare pulito
   («Il caso Galileo»); nel pannello resta il nome intero.
