@@ -260,6 +260,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Un concilio può cambiare ciò che vediamo",
+      "anno": "4",
+      "uda": "Riformare una Chiesa, cambiare una cultura",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iv-1-3-trento-immagini-e-riforma-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-1-3-trento-immagini-e-riforma-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
