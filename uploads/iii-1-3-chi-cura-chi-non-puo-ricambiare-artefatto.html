@@ -1945,6 +1945,15 @@ button.lx-box:hover i{transform:translateX(5px)}
 
 
 </style>
+<style>/* III 1-3 · solo in LIM (14 ottobre 2026). Con lo zoom della LIM il palco dell’animazione della scena 3 superava la schermata e didascalia e comandi finivano sotto la barra; schiacciarlo in altezza (correzione generale del kit dell’8 ottobre) tagliava le etichette. Qui il blocco diventa a due colonne: palco a sinistra con le sue proporzioni, didascalia e comandi a destra; etichette un po’ più piccole. */
+:root[data-lim] body.ll .ll-scene .lp-anim{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-rows:auto auto;column-gap:34px;align-items:center}
+:root[data-lim] body.ll .ll-scene .lp-anim>.lp-stage{grid-row:1/3;grid-column:1;max-height:calc((100vh - 200px) / var(--ll-z,1))}
+:root[data-lim] body.ll .ll-scene .lp-anim>.lp-cap{grid-column:2;align-self:end;margin:0}
+:root[data-lim] body.ll .ll-scene .lp-anim>.lp-ctrl{grid-column:2;align-self:start;margin-top:13px}
+:root[data-lim] body.ll .ll-scene .lp-anim .lp-actor{font-size:11.5px;white-space:nowrap}
+/* Telefono (correzione del kit del 7 ottobre 2026): i 144 px che lab-percezione.css lascia sotto i 720 px alzavano la barra delle scene e lasciavano una fascia vuota in fondo. */
+@media (max-width:720px){ body.la.ll{padding-bottom:0} }
+</style>
 </head>
 <body class="la g ll" data-anno="3" data-skin="arcade" data-skin-fixed="arcade" data-modo="lezione">
 <div id="app"></div>
@@ -3816,11 +3825,17 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
 /* ---- lezione ---- */
 /* Classe III · UDA 1 «Luoghi che cambiano la vita» · Lezione 3 (ora annuale 04)
    «Chi cura chi non può ricambiare?» — Santo Spirito in Sassia: dalla carità alla cura organizzata.
-   Sorgente dell’artefatto LAB-IRC. Assemblare con build_artefatto.py --anno 3.
+   Sorgente dell’artefatto LAB-IRC, assemblato con il kit che contiene la «Guida del docente» (regia e guida).
+   NON ricostruire con design-system/…/build_artefatto.py: quel kit non ha la Guida e la perderebbe.
+   Per aggiornare l’artefatto si sostituisce questo script dentro uploads/iii-1-3-chi-cura-chi-non-puo-ricambiare-artefatto.html
+   (vedi sorgenti-lezioni/README.md).
    Contenuti dal dossier sorgenti/III 1-3 chi-cura-chi-non-puo-ricambiare-contenuti.md (rivisto l’8 ottobre 2026)
    e dal fascicolo (fonte dei contenuti; in classe non si usa: è il materiale di studio a casa);
    progetto in sorgenti/III 1-3 chi-cura-chi-non-puo-ricambiare-progetto-artefatto.md.
-   Citazioni bibliche: Bibbia CEI 2008. Nessun componente proprio, nessuna immagine. © Matteo Sestili */
+   14 ottobre 2026: filo logico ricucito. Santo Spirito in Sassia è il filo dell’ora fin dalla prima scena, che mostra
+   la domanda e il percorso in quattro passi (un’idea, un problema, una soluzione, che cosa ne resta); ogni scena
+   comincia riprendendo la precedente. Stesso ordine delle scene, stessi strumenti, stessi contenuti e fonti.
+   Citazioni bibliche: Bibbia CEI 2008. Nessun componente proprio, nessuna immagine. © Matteo Sestili — Tutti i diritti riservati */
 
 window.LEZIONE = {
   slug: 'iii-1-3-chi-cura-chi-non-puo-ricambiare',
@@ -3842,12 +3857,13 @@ window.LEZIONE = {
   },
 
   guida: {
-    "inBreve": "Domanda: chi cura chi non può ricambiare? Con il solo artefatto alla LIM la classe legge Lc 14,12–14, capisce che «gratuito per chi riceve» non vuol dire «senza costi» e che perché l’aiuto duri serve un’istituzione, segue la nascita dell’ospedale di Santo Spirito a Roma (1198–1204), distingue norma, pratica e memoria e decide un caso immaginario. Alla fine sa dire che la dignità non dipende da ciò che una persona produce o restituisce. Il fascicolo è il materiale di studio a casa: in classe non serve.",
+    "inBreve": "Domanda: chi cura chi non può ricambiare? Il filo dell’ora è un luogo che esiste ancora, l’ospedale di Santo Spirito in Sassia a Roma, terzo «luogo che cambia la vita» dopo il monastero e l’università. Quattro passi: un’idea (Lc 14,12–14, la gratuità); un problema (gratuito non vuol dire senza costi: serve un’istituzione); una soluzione (l’hospitale che un papa e una comunità costruiscono fra il 1198 e il 1204, e come sappiamo che cosa faceva); che cosa ne resta (la dignità di chi non può restituire, un caso di oggi, i criteri della Chiesa). Alla fine si torna al Lungotevere e alla domanda. Il fascicolo è il materiale di studio a casa: in classe non serve.",
     "materiali": [
       "L’artefatto alla LIM: il file «III 1-3 chi-cura-chi-non-puo-ricambiare-artefatto.html» (si apre con un doppio clic e funziona senza internet). Testi, fonti e attività sono tutti sullo schermo: nessuna fotocopia, nessun foglio, la lavagna non serve.",
       "Il fascicolo «Chi cura chi non può ricambiare?» (file «III 1-3 chi-cura-chi-non-puo-ricambiare-fascicolo.pdf») è il materiale di **studio a casa**: in classe non si stampa e non si usa. Contiene in prosa gli stessi contenuti dell’ora. Caricalo sul registro elettronico (o indica dove trovarlo sul sito) e assegnalo alla fine dell’ora, nella scena 10, con le quattro domande di «Per lo studio». Se non puoi caricarlo (per esempio se sei un supplente), il compito si detta e il fascicolo lo carica il docente della classe."
     ],
     "prima": [
+      "La scena 1 mostra il percorso dell’ora in quattro passi (un’idea, un problema, una soluzione, che cosa ne resta): è la bussola della classe. All’inizio di ogni scena la frase della regia dice a che passo siete: leggila, così nessuno si chiede perché si cambia argomento.",
       "Nella scena 3 prova la freccia → sotto l’animazione; alla LIM il tasto L ingrandisce tutto.",
       "Leggi le sei domande della Sfida con le soluzioni (scena 7): le ragioni le leggi tu, il gioco non le mostra."
     ],
@@ -3975,19 +3991,22 @@ window.LEZIONE = {
       "Scena 8: dopo l’esito positivo premi «Da capo» e percorrete apposta le strade che finiscono male; chiedi che cosa le rende convincenti a prima vista (sembra giusto dare a tutti lo stesso; la donazione sembra utile a tutti).",
       "Dopo la scena 10: modalità «Giochi» (in alto), scheda «Vero o falso» o «Linea del tempo» per ripassare equivoci e date."
     ],
-    "senzaProiettore": "Senza LIM l’ora si fa con voce e lavagna, usando l’appendice di questa guida con i testi dello schermo. Scena 1: scrivi alla lavagna le parole dette dai ragazzi. Scena 2: leggi tu Lc 14,12–14 e chiedi quale frase dà il motivo dell’invito. Scena 3: disegna due riquadri, «Chi accoglie» e «Poveri, storpi, zoppi, ciechi», con la freccia dell’invito; poi aggiungi i costi (pasto, letto, assistenza), chi li sostiene (donazioni, terre, lasciti) e infine persone incaricate e regola, e scrivi «un’istituzione». Scene 4–6: leggi le frasi da smistare e la classe vota per alzata di mano; le sei date di Santo Spirito scrivile alla lavagna. Scena 7: Sfida a voce, due squadre, con le sei domande delle soluzioni lette come domande aperte (senza opzioni): un punto per la risposta e uno per la ragione. Scena 8: leggi il caso e fai votare a ogni bivio. Scene 9–10: leggi i tre dubbi e le tre domande della prova; la frase finale scrivila alla lavagna. Il fascicolo resta per casa."
+    "senzaProiettore": "Senza LIM l’ora si fa con voce e lavagna, usando l’appendice di questa guida con i testi dello schermo. Scena 1: scrivi alla lavagna le parole dette dai ragazzi e, in un angolo, i quattro passi dell’ora (un’idea, un problema, una soluzione, che cosa ne resta), da spuntare man mano. Scena 2: leggi tu Lc 14,12–14 e chiedi quale frase dà il motivo dell’invito. Scena 3: disegna due riquadri, «Chi accoglie» e «Poveri, storpi, zoppi, ciechi», con la freccia dell’invito; poi aggiungi i costi (pasto, letto, assistenza), chi li sostiene (donazioni, terre, lasciti) e infine persone incaricate e regola, e scrivi «un’istituzione». Scene 4–6: leggi le frasi da smistare e la classe vota per alzata di mano; le sei date di Santo Spirito scrivile alla lavagna. Scena 7: Sfida a voce, due squadre, con le sei domande delle soluzioni lette come domande aperte (senza opzioni): un punto per la risposta e uno per la ragione. Scena 8: leggi il caso e fai votare a ogni bivio. Scene 9–10: leggi i tre dubbi e le tre domande della prova; la frase finale scrivila alla lavagna. Il fascicolo resta per casa."
   },
 
   scene: [
 
     /* 1 · APERTURA ---------------------------------------------------- */
-    { fase: 'Aggancio', momento: 'Apertura', minuti: 3, titolo: 'Chi resta *fuori*?',
-      lead: 'Immaginate un aiuto riservato a chi può restituire qualcosa.',
+    { fase: 'Aggancio', momento: 'Apertura', minuti: 4, titolo: 'Un ospedale di *ottocento* anni',
+      lead: 'Dopo il monastero e l’università, il terzo luogo che cambia la vita è un ospedale: Santo Spirito in Sassia, a Roma, accanto al Vaticano. Lo fece costruire un papa più di ottocento anni fa, ed è ancora un ospedale pubblico. All’inizio accoglieva poveri, malati e neonati abbandonati: persone che non potevano restituire nulla.',
       regia: {
-        "obiettivo": "Se l’aiuto va solo a chi può ricambiare, resta fuori proprio chi ne ha più bisogno: la domanda dell’ora riguarda il criterio con cui si decide chi accogliere.",
+        "obiettivo": "Il filo dell’ora è un luogo che esiste ancora, Santo Spirito in Sassia. Se l’aiuto va solo a chi può ricambiare, resta fuori proprio chi ne ha più bisogno: la domanda è chi cura queste persone e perché qualcuno ha costruito un luogo per farlo. La classe vede subito dove arriverà l’ora: quattro passi.",
         "passi": [
           {
-            "di": "Oggi partiamo da una domanda semplice. Immaginate che ogni aiuto, un pasto, un letto, una cura, fosse riservato solo a chi può restituire qualcosa. Chi resterebbe fuori? Ditemi una parola alla volta: una persona o una situazione."
+            "di": "Nell’unità «I luoghi che cambiano la vita», dopo il monastero, con la Regola di Benedetto, e l’università, oggi il terzo luogo è un ospedale. A Roma, sul Lungotevere in Sassia, accanto al Vaticano, c’è l’ospedale di Santo Spirito: lo fece costruire un papa più di ottocento anni fa, ed è ancora un ospedale pubblico. All’inizio accoglieva poveri, malati e neonati abbandonati: persone che non potevano restituire nulla. Prima di entrarci, partiamo da voi."
+          },
+          {
+            "di": "Immaginate che ogni aiuto, un pasto, un letto, una cura, fosse riservato solo a chi può restituire qualcosa. Chi resterebbe fuori? Ditemi una parola alla volta: una persona o una situazione."
           },
           {
             "fai": "Scrivi nel riquadro «Scrivi una parola…» ogni parola detta dai ragazzi e premi «Aggiungi»; se una parola è già scritta, toccala: cresce. Fermati a 8–10 parole (circa un minuto e mezzo). Se la classe tace, proponi tu «un neonato» o «un malato grave» e chiedi chi altro."
@@ -3997,24 +4016,29 @@ window.LEZIONE = {
             "r": "Hanno più bisogno degli altri e possono restituire poco o nulla: il neonato, il malato grave, l’anziano non autosufficiente, il povero. Se qualcuno dice «chi non lavora», accogli e precisa: «Il punto non è il lavoro ma il bisogno: chi ha più bisogno è spesso chi può restituire meno»."
           },
           {
-            "di": "Allora la domanda di oggi è questa: chi cura chi non può ricambiare? E con quale criterio si decide chi accogliere? Seguiamo un testo del Vangelo e un luogo di Roma che esiste ancora, l’ospedale di Santo Spirito in Sassia, accanto al Vaticano. Alla fine torneremo alla domanda."
+            "di": "Proprio queste persone accoglieva Santo Spirito. Allora la domanda di oggi è questa, la vedete sotto la nuvola: chi cura chi non può ricambiare? E perché qualcuno costruisce un luogo per farlo? Ci arriviamo in quattro passi. Un’idea: perché aiutare chi non può restituire. Un problema: chi paga, e come si fa durare l’aiuto. Una soluzione: l’ospedale che un papa fa costruire a Roma, e come sappiamo che cosa faceva. Infine, che cosa ne resta oggi. Alla fine torneremo qui, al Lungotevere."
+          },
+          {
+            "fai": "Mentre lo dici, indica una per una le quattro righe del riquadro «La domanda di oggi». Nelle scene seguenti la prima frase della regia dice a che passo siete: leggila sempre."
           }
         ],
-        "poi": "«Cominciamo da un pranzo raccontato dal Vangelo di Luca.»"
+        "poi": "«Primo passo, l’idea: perché aiutare chi non può restituire? La ragione è più antica dell’ospedale: un pranzo raccontato dal Vangelo di Luca.»"
       },
       blocchi: [
         { tipo: 'nuvola', id: 'fuori', q: 'Se l’aiuto fosse solo per chi può ricambiare, chi resterebbe fuori?',
-          istruzione: 'Dite una parola alla volta: chi la ripete la fa crescere.' }
+          istruzione: 'Dite una parola alla volta: chi la ripete la fa crescere.' },
+        { tipo: 'html', titolo: 'La domanda di oggi: chi cura chi non può ricambiare?',
+          t: '<ol><li><b>Un’idea.</b> Perché aiutare chi non può restituire? Un pranzo nel Vangelo di Luca.</li><li><b>Un problema.</b> Gratuito non vuol dire senza costi: chi paga, e come si fa durare l’aiuto?</li><li><b>Una soluzione.</b> Un <i>hospitale</i> a Roma, fra il 1198 e il 1204: chi l’ha deciso, come, e come lo sappiamo.</li><li><b>Che cosa ne resta.</b> La dignità di chi non può restituire, e come servirla bene oggi.</li></ol>' }
       ] },
 
     /* 2 · LUCA 14,12–14 ----------------------------------------------- */
     { fase: 'Scoperta', momento: 'Fonte', minuti: 5, titolo: 'Un posto a tavola senza *debiti*',
-      lead: 'Un pranzo di sabato, in casa di uno dei capi dei farisei: Gesù si rivolge a chi lo ha invitato.',
+      lead: 'Primo passo, l’idea: perché aiutare chi non può restituire? La ragione è più antica dell’ospedale. Un pranzo di sabato, in casa di uno dei capi dei farisei: Gesù si rivolge a chi lo ha invitato.',
       regia: {
-        "obiettivo": "Gesù rovescia il criterio dell’invito: chi è accolto non deve nulla a chi lo accoglie; la ricompensa viene da Dio. Questo si chiama gratuità.",
+        "obiettivo": "Gesù rovescia il criterio dell’invito: chi è accolto non deve nulla a chi lo accoglie; la ricompensa viene da Dio. Questo si chiama gratuità, ed è l’idea da cui nasceranno luoghi come Santo Spirito.",
         "passi": [
           {
-            "di": "Siamo nel Vangelo di Luca, scritto verso l’80–90 dopo Cristo. Gesù è a pranzo, di sabato, in casa di uno dei capi dei farisei: i farisei erano un gruppo religioso ebraico molto attento alla Legge; qui uno dei loro capi è il padrone di casa. Gesù ha appena parlato agli invitati della scelta dei posti; ora si rivolge a chi lo ha invitato. Leggo il capitolo 14, versetti 12, 13 e 14."
+            "di": "Primo passo, l’idea. Prima di vedere come nasce Santo Spirito, chiediamoci perché qualcuno dovrebbe accogliere chi non può restituire nulla. La ragione è più antica di ogni ospedale. Siamo nel Vangelo di Luca, scritto verso l’80–90 dopo Cristo. Gesù è a pranzo, di sabato, in casa di uno dei capi dei farisei: i farisei erano un gruppo religioso ebraico molto attento alla Legge; qui uno dei loro capi è il padrone di casa. Gesù ha appena parlato agli invitati della scelta dei posti; ora si rivolge a chi lo ha invitato. Leggo il capitolo 14, versetti 12, 13 e 14."
           },
           {
             "fai": "Leggi ad alta voce il testo sullo schermo, lentamente, fino a «risurrezione dei giusti». Poi leggi la domanda scritta sopra il testo e fai scegliere alla classe, per alzata di mano frase per frase, una delle quattro frasi sottolineate. Tocca la frase scelta dalla maggioranza: compare se è quella giusta e la sua spiegazione; se non lo è, leggi la spiegazione, di’ la frase di correzione qui sotto e poi tocca «perché non hanno da ricambiarti»."
@@ -4038,7 +4062,7 @@ window.LEZIONE = {
           }
         ],
         "attenzione": "Non dire «Gesù vieta di invitare gli amici»: rovescia il criterio dell’invito. Se chiedono «chi sono i giusti?», di’: «Il passo non lo spiega; qui conta che la ricompensa viene da Dio e non dall’ospite». Annota la domanda.",
-        "poi": "«Ma un aiuto gratuito costa qualcosa? Chi paga?»"
+        "poi": "«Secondo passo, il problema: chi è accolto non paga. Ma un aiuto gratuito costa qualcosa? Chi paga?»"
       },
       blocchi: [
         { tipo: 'leggi', fonte: 'Vangelo secondo Luca 14,12–14 · Bibbia CEI 2008', q: 'Quale frase dice perché invitare proprio loro?',
@@ -4049,13 +4073,13 @@ window.LEZIONE = {
 
     /* 3 · CHI PAGA IL PASTO (concetto più difficile) ----------------- */
     { fase: 'Scoperta', momento: 'Spiegazione', minuti: 5, titolo: 'Chi paga il *pasto*?',
-      lead: 'Chi è accolto non paga. Ma il pasto, il letto e chi assiste costano.',
-      testo: 'Nel cristianesimo la gratuità appartiene alla {carità}, la virtù «per la quale amiamo Dio sopra ogni cosa per se stesso, e il nostro prossimo come noi stessi per amore di Dio» (Catechismo 1822). Mt 25,40: «Tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me».',
+      lead: 'Secondo passo, il problema. Chi è accolto non paga: ma il pasto, il letto e chi assiste costano. Chi paga? E come si fa durare l’aiuto, se non basta l’entusiasmo di uno?',
+      testo: 'Nel cristianesimo la gratuità appartiene alla {carità}: «Tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me» (Mt 25,40).',
       regia: {
-        "obiettivo": "Gratuito per chi riceve non vuol dire senza costi: i costi li sostiene qualcun altro, e perché il gesto si ripeta domani servono persone, risorse, una regola e un luogo, cioè un’istituzione.",
+        "obiettivo": "Gratuito per chi riceve non vuol dire senza costi: i costi li sostiene qualcun altro, e perché il gesto si ripeta domani servono persone, risorse, una regola e un luogo, cioè un’istituzione. È esattamente ciò che vedremo nascere a Santo Spirito.",
         "passi": [
           {
-            "di": "Nel cristianesimo la gratuità fa parte della carità: dal latino caritas, «affetto, amore», da carus, «caro». Leggo la definizione del Catechismo, numero 1822, che avete sullo schermo. Il Vangelo di Matteo, al capitolo 25, la rende concreta con sei opere di misericordia: dar da mangiare, dar da bere, accogliere lo straniero, vestire, visitare il malato e il carcerato; la tradizione ne aggiunge una settima, seppellire i morti. E Gesù dice: «Tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me»."
+            "di": "Secondo passo, il problema. Abbiamo l’idea: chi è accolto non deve nulla. Ma accogliere costa, e un’idea da sola non dura. Nel cristianesimo la gratuità fa parte della carità: dal latino caritas, «affetto, amore», da carus, «caro». Il Catechismo, al numero 1822, la definisce così: «la virtù teologale per la quale amiamo Dio sopra ogni cosa per se stesso, e il nostro prossimo come noi stessi per amore di Dio». Il Vangelo di Matteo, al capitolo 25, la rende concreta con sei opere di misericordia: dar da mangiare, dar da bere, accogliere lo straniero, vestire, visitare il malato e il carcerato; la tradizione ne aggiunge una settima, seppellire i morti. E Gesù dice: «Tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me»."
           },
           {
             "fai": "Nell’animazione usa la freccia → sotto il riquadro dell’animazione: un fotogramma alla volta, cinque in tutto. Non premere «Avvia l’animazione»: scorrerebbe da sola (se succede, premi «Pausa»). Leggi la didascalia di ogni fotogramma, poi aggiungi le frasi seguenti."
@@ -4075,7 +4099,7 @@ window.LEZIONE = {
           }
         ],
         "attenzione": "È il concetto che regge l’ora: non dire «gratuito vuol dire senza costi»; di’ «gratuito per chi riceve».",
-        "poi": "«Una parola conserva questa storia: ospedale.»"
+        "poi": "«Terzo passo, la soluzione. Un’istituzione che accoglie chi non può ricambiare, nel Medioevo, ha un nome: hospitale. È quello che un papa farà costruire in Sassia. Ma la parola non vuol dire ciò che pensate.»"
       },
       blocchi: [
         { tipo: 'animazione', id: 'pasto', rapporto: 1.9, ritmo: 3200, pulsante: 'Avvia l’animazione',
@@ -4116,11 +4140,14 @@ window.LEZIONE = {
 
     /* 4 · LA PAROLA OSPEDALE ------------------------------------------ */
     { fase: 'Scoperta', momento: 'Parola', minuti: 4, titolo: 'L’ospedale comincia dall’*ospitalità*',
-      lead: 'Una parola che conserva una storia.',
-      testo: 'Nel Medioevo un *hospitale*, detto anche {xenodochium}, era una casa di accoglienza per forestieri, poveri e malati: la malattia vi entrava come una forma del bisogno. La Regola di san Benedetto chiedeva di accogliere ogni ospite «come Cristo in persona» (53,1).',
+      lead: 'Terzo passo, la soluzione. Un’istituzione che accoglie chi non può ricambiare, nel Medioevo, ha un nome: *hospitale*. È ciò che un papa farà costruire in Sassia. Ma la parola non dice ciò che pensate.',
+      testo: 'Un *hospitale*, detto anche {xenodochium}, era una casa di accoglienza per forestieri, poveri e malati: la malattia vi entrava come una forma del bisogno. È l’ospitalità che la Regola di san Benedetto chiedeva ai monaci: accogliere ogni ospite «come Cristo in persona» (53,1).',
       regia: {
-        "obiettivo": "«Ospedale» viene dall’ospitalità: nel Medioevo era una casa di accoglienza, non un luogo di terapia; la cura ha una storia più ampia del cristianesimo.",
+        "obiettivo": "«Ospedale» viene dall’ospitalità: nel Medioevo era una casa di accoglienza, non un luogo di terapia, e Santo Spirito nasce così; la cura ha una storia più ampia del cristianesimo.",
         "passi": [
+          {
+            "di": "Terzo passo, la soluzione. Abbiamo visto che per far durare l’accoglienza serve un’istituzione. Nel Medioevo un’istituzione che accoglie chi non può ricambiare ha un nome: hospitale. È quello che un papa farà costruire in Sassia. Prima di entrarci, guardiamo la parola: non vuol dire quello che pensate."
+          },
           {
             "fai": "Tocca le tre parti della parola OSPEDALE, una alla volta, da sinistra: hospes, hospitalis, hospitale."
           },
@@ -4138,7 +4165,7 @@ window.LEZIONE = {
           }
         ],
         "attenzione": "Non dire «il primo ospedale d’Europa» né «la Chiesa ha inventato gli ospedali».",
-        "poi": "«Vediamo come nasce a Roma uno di questi ospedali.»"
+        "poi": "«Santo Spirito, all’inizio, è un hospitale di questo tipo. Torniamo al Lungotevere: chi decise di costruirlo, e come?»"
       },
       blocchi: [
         { tipo: 'etimo', parola: 'ospedale',
@@ -4154,7 +4181,7 @@ window.LEZIONE = {
             { t: 'Accoglie i poveri anche se sono sani', c: 0, why: 'Lo prescriveva, per esempio, la regola dell’ospedale di Santo Spirito, che incontriamo fra poco: il criterio era il bisogno, non la malattia.' },
             { t: 'Assiste i malati', c: 2, why: 'I malati c’erano anche nell’ospedale medievale, ma accolti come bisognosi; oggi sono la ragione stessa dell’ospedale.' }
           ],
-          chiusura: 'Stessa parola, due istituzioni diverse: nel Medioevo, prima di tutto, una casa che accoglie.' },
+          chiusura: 'Stessa parola, due istituzioni diverse. L’*hospitale* che il papa fa costruire a Roma è del primo tipo: prima di tutto una casa che accoglie.' },
         { tipo: 'aggancio', etichetta: 'Con onestà', titolo: 'La cura non nasce da una sola tradizione',
           t: 'L’antichità conobbe luoghi di terapia e infermerie militari; nel mondo islamico, fin dall’VIII secolo, sorsero istituzioni per la cura delle malattie, con medici e scuole. Il contributo cristiano è l’ospitalità verso il bisognoso in quanto tale, organizzata in istituzioni.',
           fonte: 'B. D’Agosta e I. Moretti, «Ospedale», *Enciclopedia dell’Arte Medievale*, Treccani 1997' }
@@ -4162,13 +4189,13 @@ window.LEZIONE = {
 
     /* 5 · SANTO SPIRITO: LE DATE --------------------------------------- */
     { fase: 'Scoperta', momento: 'Contesto', minuti: 5, titolo: 'Un papa, una comunità, un *luogo*',
-      lead: 'A Roma, fra il Vaticano e il Tevere, tre elementi si incontrano.',
-      testo: 'Una motivazione cristiana, una comunità capace di assistere, un luogo destinato a durare: a {Sassia} si incontrano tutti e tre. Una {bolla} è un documento solenne del papa, dal sigillo di piombo.',
+      lead: 'Torniamo al Lungotevere dell’inizio: chi decise di costruire quell’*hospitale*, e come? Nelle date arrivano, una alla volta, le cose che servono a un’istituzione: un luogo, le persone, una regola, i mezzi.',
+      testo: 'Nessuna basta da sola: a {Sassia}, fra il 1198 e il 1204, si incontrano tutte. Una {bolla} è un documento solenne del papa, dal sigillo di piombo.',
       regia: {
-        "obiettivo": "Fra il 1198 e il 1204 si incontrano un papa (Innocenzo III), una comunità esperta (Guido di Montpellier) e un luogo (la Sassia): nessuno basta da solo, e la data non è «1198» secco.",
+        "obiettivo": "Santo Spirito nasce quando si incontrano le quattro cose dell’animazione: un luogo (la Sassia), le persone (la comunità di Guido di Montpellier), una regola, i mezzi (il papa, Innocenzo III). Nessuna basta da sola, e la data non è «1198» secco.",
         "passi": [
           {
-            "di": "Siamo a Roma, nel quartiere fra il Vaticano e il Tevere che si chiama ancora Borgo, nella zona detta Sassia. L’ospedale di Santo Spirito è ancora lì, sul Lungotevere in Sassia: oggi è un ospedale pubblico. Vediamo come è nato, in sei date."
+            "di": "Torniamo al luogo dell’inizio. Siamo a Roma, nel quartiere fra il Vaticano e il Tevere che si chiama ancora Borgo, nella zona detta Sassia. L’ospedale di Santo Spirito è ancora lì, sul Lungotevere in Sassia: oggi è un ospedale pubblico. Vediamo come è nato, in sei date. Guardate le etichette sotto le date: sono le cose che servono a un’istituzione, quelle dell’animazione di prima. Il luogo, le persone, la regola, i mezzi."
           },
           {
             "fai": "Tocca le date della linea del tempo una alla volta, da sinistra, e leggi la scheda che si apre. Quando apri «prima del 1190» aggiungi la prima frase qui sotto; quando apri «1198–1201», la seconda."
@@ -4185,32 +4212,32 @@ window.LEZIONE = {
           }
         ],
         "attenzione": "Non confondere Innocenzo III (papa dal 1198 al 1216) con Sisto IV (papa dal 1471 al 1484), che compare nella scena successiva.",
-        "poi": "«La comunità di Guido aveva una regola. Che cosa ci dice?»"
+        "poi": "«Sappiamo chi lo ha deciso e come. Ma che cosa faceva davvero Santo Spirito? La comunità di Guido aveva una regola: che cosa ci dice, e che cosa non può dirci?»"
       },
       blocchi: [
         { tipo: 'tappe', titolo: 'Santo Spirito in sei date',
           voci: [
-            { data: '727–729', breve: 'Sassia', titolo: 'L’ospizio dei Sassoni', testo: 'Il re Ina fonda per i pellegrini anglosassoni la *schola Saxonum*: da qui i nomi «Sassia» e, dal germanico *burg*, «Borgo». Nel XII secolo l’ospizio è in rovina.' },
-            { data: 'prima del 1190', breve: 'Montpellier', titolo: 'La casa di Guido', testo: 'Guido, un laico di Montpellier, apre una casa-ospedale per i poveri, affidata allo Spirito Santo, con una comunità di fratelli e sorelle, laici e chierici.' },
-            { data: '1198', breve: 'Innocenzo III', titolo: 'Un papa e una regola', testo: 'Lotario dei Conti di Segni, che durante gli studi in Francia aveva conosciuto l’opera di Guido, è eletto papa l’8 gennaio: è Innocenzo III. Ad aprile approva la regola della comunità e scrive che i fratelli sono «non tanto accoglitori dei bisognosi, quanto piuttosto servi».' },
-            { data: '1198–1201', breve: 'L’ospedale', titolo: 'Accanto a Santa Maria in Sassia', testo: 'Il papa fa costruire un ospedale accanto alla chiesa di Santa Maria in Sassia; con una bolla del 10 dicembre 1201 affida la chiesa e l’ospedale a Guido e ai suoi compagni.' },
-            { data: '1204', breve: 'Inter opera pietatis', titolo: 'L’ordine confermato', testo: 'Il 19 giugno la bolla *Inter opera pietatis* conferma l’ordine ospedaliero del Santo Spirito e la sua regola, i suoi compiti (le opere di misericordia) e il suo governo sulla casa romana, che diventa casa madre.' },
+            { data: '727–729', breve: 'Il luogo', titolo: 'L’ospizio dei Sassoni', testo: 'Il re Ina fonda per i pellegrini anglosassoni la *schola Saxonum*: da qui i nomi «Sassia» e, dal germanico *burg*, «Borgo». Nel XII secolo l’ospizio è in rovina.' },
+            { data: 'prima del 1190', breve: 'Le persone', titolo: 'La casa di Guido', testo: 'Guido, un laico di Montpellier, apre una casa-ospedale per i poveri, affidata allo Spirito Santo, con una comunità di fratelli e sorelle, laici e chierici.' },
+            { data: '1198', breve: 'La regola', titolo: 'Un papa e una regola', testo: 'Lotario dei Conti di Segni, che durante gli studi in Francia aveva conosciuto l’opera di Guido, è eletto papa l’8 gennaio: è Innocenzo III. Ad aprile approva la regola della comunità e scrive che i fratelli sono «non tanto accoglitori dei bisognosi, quanto piuttosto servi».' },
+            { data: '1198–1201', breve: 'I mezzi', titolo: 'Accanto a Santa Maria in Sassia', testo: 'Con i suoi mezzi il papa fa costruire un ospedale accanto alla chiesa di Santa Maria in Sassia; con una bolla del 10 dicembre 1201 affida la chiesa e l’ospedale a Guido e ai suoi compagni.' },
+            { data: '1204', breve: 'La conferma', titolo: 'L’ordine confermato', testo: 'Il 19 giugno la bolla *Inter opera pietatis* conferma l’ordine ospedaliero del Santo Spirito e la sua regola, i suoi compiti (le opere di misericordia) e il suo governo sulla casa romana, che diventa casa madre.' },
             { data: '1208–1300', breve: 'Cento case', titolo: 'Un ordine che si diffonde', testo: 'Guido muore a Roma nel 1208. Alla fine del Duecento l’ordine conta un centinaio di case fra Italia, Francia e Germania, riconoscibili dal mantello con la croce a doppio braccio.' }
           ] },
         { tipo: 'verifica', q: 'Quale di questi elementi sarebbe bastato, da solo, a far nascere Santo Spirito?',
           opzioni: ['La volontà del papa', 'L’esperienza della comunità di Guido', 'Il vecchio ospizio della Sassia', 'Nessuno: servivano insieme'],
-          ok: 3, why: 'Il papa porta la motivazione (le opere di misericordia) e i mezzi; la comunità di Guido sa assistere ogni giorno; il luogo, un antico ospizio ormai in rovina sulla strada dei pellegrini, era già legato all’accoglienza. La motivazione religiosa agisce dentro condizioni concrete: non è una causa unica.' }
+          ok: 3, why: 'Il papa porta la motivazione (le opere di misericordia) e i mezzi; la comunità di Guido sa assistere ogni giorno; il luogo, un antico ospizio ormai in rovina sulla strada dei pellegrini, era già legato all’accoglienza. Sono le cose dell’animazione: persone, mezzi, una regola, un luogo. La motivazione religiosa agisce dentro condizioni concrete: non è una causa unica.' }
       ] },
 
     /* 6 · NORMA, PRATICA, MEMORIA ------------------------------------- */
     { fase: 'Scoperta', momento: 'Fonte', minuti: 6, titolo: 'Prescritto, accaduto, *ricordato*',
-      lead: 'Una regola dice che cosa si deve fare: non dimostra che cosa è accaduto.',
+      lead: 'Sappiamo chi ha deciso di costruire Santo Spirito. Ma che cosa faceva davvero? La sua regola lo prescrive: e una regola dice che cosa si deve fare, non dimostra che cosa è accaduto.',
       testo: 'La {regola} dell’ordine, confermata nel 1204, ci è arrivata nella forma del Duecento, copiata in un codice miniato della metà del Trecento: il *Liber Regulae*. Le Corsie Sistine, due grandi sale affrescate, furono costruite fra il 1471 e il 1478 per papa Sisto IV: quasi tre secoli dopo Innocenzo III.',
       regia: {
         "obiettivo": "Una regola prescrive e rende l’impegno verificabile, ma non dimostra che cosa è accaduto; un atto (la pergamena del 1245) attesta; un affresco del Quattrocento ricorda e celebra.",
         "passi": [
           {
-            "di": "Nel 1198 il papa aveva approvato la regola della comunità di Montpellier; nel 1204 conferma la regola dell’ordine. Il testo che possiamo leggere è nella forma del Duecento, copiato a metà del Trecento in un codice di lusso, decorato con miniature: il Liber Regulae, «libro della regola», all’Archivio di Stato di Roma. Quanto fosse cambiato dal 1198, le fonti che usiamo non lo dicono. Prescrive di accogliere i malati e, per prima cosa, farli confessare e comunicare, poi metterli a letto; di cercare i poveri infermi per le strade e le piazze, di accogliere i poveri anche se sani, di nutrire i bambini abbandonati e di accogliere le donne incinte povere. Così l’accoglienza non dipende più dalla sensibilità di qualcuno: diventa un impegno della comunità, al quale si può chiedere conto. Ma una regola dice che cosa si deve fare; non dimostra che cosa è accaduto."
+            "di": "Sappiamo chi ha deciso di costruire Santo Spirito e come. Ora: che cosa faceva davvero, e come facciamo a saperlo? Nel 1198 il papa aveva approvato la regola della comunità di Montpellier; nel 1204 conferma la regola dell’ordine. Il testo che possiamo leggere è nella forma del Duecento, copiato a metà del Trecento in un codice di lusso, decorato con miniature: il Liber Regulae, «libro della regola», all’Archivio di Stato di Roma. Quanto fosse cambiato dal 1198, le fonti che usiamo non lo dicono. Prescrive di accogliere i malati e, per prima cosa, farli confessare e comunicare, poi metterli a letto; di cercare i poveri infermi per le strade e le piazze, di accogliere i poveri anche se sani, di nutrire i bambini abbandonati e di accogliere le donne incinte povere. Così l’accoglienza non dipende più dalla sensibilità di qualcuno: diventa un impegno della comunità, al quale si può chiedere conto. Ma una regola dice che cosa si deve fare; non dimostra che cosa è accaduto."
           },
           {
             "di": "Le Corsie Sistine sono le due grandi sale che si vedono oggi: le fece costruire fra il 1471 e il 1478 papa Sisto IV, un francescano, quasi tre secoli dopo Innocenzo III, e furono affrescate alla fine del Quattrocento con la storia delle origini dell’ospedale e con la vita dello stesso Sisto IV."
@@ -4227,7 +4254,7 @@ window.LEZIONE = {
           }
         ],
         "attenzione": "Non dire «la ruota degli esposti del 1198» né che il sogno del papa è un fatto: la ruota che si vede oggi è del Seicento, il sogno è una leggenda dipinta nel Quattrocento. Se per la bolla del 1204 la classe sceglie «Che cosa è accaduto», lo schermo la segnerà sbagliata: accogli il ragionamento e di’: «Ragionamento giusto a metà: che la bolla sia stata emanata è un fatto; ciò che dice dei compiti è una norma».",
-        "poi": "«Pausa: sfida a squadre su tutto quello che abbiamo visto.»"
+        "poi": "«I primi tre passi sono fatti: l’idea, il problema, la soluzione. Pausa: sfida a squadre su tutto quello che abbiamo visto.»"
       },
       blocchi: [
         { tipo: 'smista', titolo: 'Che cosa ci dice questa fonte?', categorie: ['Che cosa si doveva fare', 'Che cosa è accaduto', 'Come lo si ricordava'],
@@ -4245,8 +4272,8 @@ window.LEZIONE = {
       ] },
 
     /* 7 · PAUSA GIOCO: SFIDA A SQUADRE --------------------------------- */
-    { fase: 'Attività', momento: 'Pausa gioco', minuti: 8, titolo: 'Sfida a *squadre*',
-      lead: 'Due squadre, una domanda alla volta: conta anche il perché.',
+    { fase: 'Attività', momento: 'Pausa gioco', minuti: 7, titolo: 'Sfida a *squadre*',
+      lead: 'L’idea, il problema, la soluzione: tre passi su quattro. Due squadre, sei domande: conta anche il perché.',
       regia: {
         "obiettivo": "I fatti e le distinzioni delle scene 2–6 (Luca 14, ospedale medievale, date di Santo Spirito, Guido, norma, pratica e memoria) si fissano giocando, con la ragione accanto alla risposta.",
         "passi": [
@@ -4264,7 +4291,7 @@ window.LEZIONE = {
             "r": "Di solito le date (Innocenzo III o Sisto IV) o la pergamena del 1245. Rileggi la ragione: Innocenzo III fa costruire l’ospedale fra il 1198 e il 1201, Sisto IV lo rifà fra il 1471 e il 1478; la pergamena attesta un dono, non la qualità della cura."
           }
         ],
-        "poi": "«Ora tocca a voi decidere, in un caso di oggi.»"
+        "poi": "«Ultimo passo: che cosa ne resta? Santo Spirito accoglieva secondo il bisogno, non secondo ciò che si può restituire. Ora tocca a voi decidere, in un caso di oggi.»"
       },
       blocchi: [
         { tipo: 'mascotte', t: 'Un papa, un laico, una regola: vediamo chi tiene la rotta fra le date.' },
@@ -4273,13 +4300,13 @@ window.LEZIONE = {
 
     /* 8 · IL CASO DELLA CASA DI ACCOGLIENZA ---------------------------- */
     { fase: 'Attività', momento: 'Laboratorio', minuti: 6, titolo: 'Bisogni diversi, uguale *dignità*',
-      lead: 'Un caso immaginario, non una ricostruzione di Santo Spirito.',
+      lead: 'Ultimo passo: che cosa ne resta? Santo Spirito nutriva i «proietti», neonati che non potevano dare nulla: decideva il bisogno, non ciò che si può restituire. Vale ancora oggi? Un caso immaginario.',
       testo: 'La {dignità} non dipende dalla produttività, cioè da quanto una persona riesce a produrre, né da ciò che può restituire.',
       regia: {
-        "obiettivo": "Uguale dignità, risposte differenti, motivate e verificabili: le ore si distribuiscono secondo il bisogno, non secondo ciò che un ospite può restituire.",
+        "obiettivo": "Il criterio di Santo Spirito, messo alla prova oggi. Uguale dignità, risposte differenti, motivate e verificabili: le ore si distribuiscono secondo il bisogno, non secondo ciò che un ospite può restituire.",
         "passi": [
           {
-            "di": "È un caso immaginario, non una ricostruzione di Santo Spirito: una piccola casa di accoglienza di oggi. Tutti hanno già pasti, letto e assistenza di base: non si decide chi escludere, si distribuiscono alcune ore di lavoro in più."
+            "di": "Ultimo passo: che cosa ne resta oggi. Santo Spirito nutriva i proietti, neonati che non potevano dare nulla: il criterio era il bisogno, non ciò che si può restituire. Proviamo quel criterio in un caso di oggi. È un caso immaginario, non una ricostruzione di Santo Spirito: una piccola casa di accoglienza di oggi. Tutti hanno già pasti, letto e assistenza di base: non si decide chi escludere, si distribuiscono alcune ore di lavoro in più."
           },
           {
             "fai": "Leggi il caso nel riquadro «La casa di accoglienza». A ogni bivio dai alla classe quindici secondi per parlarne con il vicino, poi fai votare per alzata di mano e tocca la scelta più votata. Se la scelta finisce male, leggi l’esito, premi «Torna indietro» e prendete l’altra strada. Arrivate fino all’esito «Uguale dignità, risposte differenti». Fai ciascuna delle tre domande qui sotto subito dopo il voto del bivio a cui si riferisce, qualunque cosa abbia scelto la classe."
@@ -4331,13 +4358,13 @@ window.LEZIONE = {
 
     /* 9 · DEUS CARITAS EST 31 ----------------------------------------- */
     { fase: 'Attività', momento: 'Fonte', minuti: 4, titolo: 'Servire *bene*',
-      lead: 'Voler bene a una persona chiede anche di servirla bene.',
-      testo: 'Nel 2005, nell’enciclica *Deus caritas est*, Benedetto XVI fissa i criteri dell’attività caritativa della Chiesa. Tre dubbi seri, con le sue parole.',
+      lead: 'Il bisogno decide chi aiutare. Ma basta la buona volontà per aiutare bene? Voler bene a una persona chiede anche di servirla bene.',
+      testo: 'Nel 2005, nell’enciclica *Deus caritas est*, Benedetto XVI fissa i criteri con cui la Chiesa di oggi giudica le sue opere di carità. Tre dubbi seri, con le sue parole.',
       regia: {
-        "obiettivo": "La carità della Chiesa chiede competenza e attenzione del cuore, organizzazione e gratuità senza proselitismo (Deus caritas est 31).",
+        "obiettivo": "Che cosa resta, oggi, nei criteri della Chiesa: la carità chiede competenza e attenzione del cuore, organizzazione e gratuità senza proselitismo (Deus caritas est 31).",
         "passi": [
           {
-            "di": "Nel 2005 papa Benedetto XVI, Joseph Ratzinger, ha scritto la sua prima enciclica, cioè una lettera solenne a tutta la Chiesa: Deus caritas est, «Dio è amore». Al numero 31 fissa i criteri dell’attività caritativa della Chiesa. Tre dubbi seri: apriamoli."
+            "di": "Il bisogno decide chi aiutare; ma la buona volontà basta per aiutare bene? Nel 2005 papa Benedetto XVI, Joseph Ratzinger, ha scritto la sua prima enciclica, cioè una lettera solenne a tutta la Chiesa: Deus caritas est, «Dio è amore». Al numero 31 fissa i criteri dell’attività caritativa della Chiesa. Tre dubbi seri: apriamoli."
           },
           {
             "fai": "Chiedi alla classe quale dubbio aprire per primo; prima di aprirlo lascia dieci secondi perché qualcuno provi a rispondere, poi tocca la domanda e leggi la risposta e la fonte. Si apre un dubbio alla volta: aprili tutti e tre."
@@ -4347,7 +4374,7 @@ window.LEZIONE = {
             "r": "Un mezzo per altri scopi, come imporre la fede: «Chi esercita la carità in nome della Chiesa non cercherà mai di imporre agli altri la fede della Chiesa» (Deus caritas est 31c). Se qualcuno obietta che nel Medioevo i malati dovevano confessarsi, rispondi: «La regola lo chiedeva, perché univa cura del corpo e dell’anima; che cosa accadesse a chi rifiutava, le fonti che abbiamo non lo dicono»."
           }
         ],
-        "poi": "«Torniamo alla domanda dell’inizio.»"
+        "poi": "«I quattro passi sono fatti. Torniamo al Lungotevere e alla domanda dell’inizio.»"
       },
       blocchi: [
         { tipo: 'dubbi', titolo: 'Tre dubbi seri',
@@ -4360,7 +4387,7 @@ window.LEZIONE = {
 
     /* 10 · PROVA E RITORNO ALLA DOMANDA -------------------------------- */
     { fase: 'Chiusura', momento: 'Prova', minuti: 4, titolo: 'Allora, chi *cura*?',
-      lead: 'Torniamo alla domanda dell’inizio.',
+      lead: 'Torniamo al Lungotevere e alla domanda dell’inizio: chi cura chi non può ricambiare? Tre casi nuovi, poi la vostra risposta.',
       regia: {
         "obiettivo": "Prova breve su gratuità, norma e pratica, dignità; poi la risposta della classe alla domanda dell’ora: una comunità che riconosce la dignità di chi non può restituire e organizza l’aiuto perché duri.",
         "passi": [
@@ -4369,7 +4396,7 @@ window.LEZIONE = {
           },
           {
             "chiedi": "Allora: chi cura chi non può ricambiare? Una frase con «gratuità» e «organizzazione».",
-            "r": "Una comunità che considera il valore di una persona indipendente da ciò che può restituire e organizza l’aiuto perché duri, con persone, risorse, una regola e un luogo. Frase modello: «Chi non può ricambiare è curato da una comunità che offre la cura con gratuità, senza chiedere nulla in cambio, e con un’organizzazione che la fa durare». Se la frase dice solo «la Chiesa» o «il papa», chiedi che cosa serviva oltre a lui (la comunità, la regola, i beni). Se manca la gratuità, chiedi: «E chi è curato, che cosa deve in cambio?»."
+            "r": "Una comunità che considera il valore di una persona indipendente da ciò che può restituire e organizza l’aiuto perché duri, con persone, risorse, una regola e un luogo. Frase modello: «Chi non può ricambiare è curato da una comunità che offre la cura con gratuità, senza chiedere nulla in cambio, e con un’organizzazione che la fa durare». A Santo Spirito, la risposta aveva nomi precisi: un papa che fonda, una comunità che serve, una regola che dice chi accogliere, dei beni che la fanno durare. Se la frase dice solo «la Chiesa» o «il papa», chiedi che cosa serviva oltre a lui (la comunità, la regola, i beni). Se manca la gratuità, chiedi: «E chi è curato, che cosa deve in cambio?»."
           },
           {
             "fai": "Raccogli due proposte e scrivi nel riquadro «Chi non può ricambiare è curato da…» una sola frase, mentre la dettano. Non viene salvata."
@@ -4396,20 +4423,24 @@ window.LEZIONE = {
   studio: {
     "sezioni": [
       {
+        "titolo": "La domanda e il luogo",
+        "testo": "Nell’unità «I luoghi che cambiano la vita», dopo il monastero e l’università, il terzo luogo è un ospedale: Santo Spirito in Sassia, a Roma, fra il Vaticano e il Tevere. Lo fece costruire papa Innocenzo III fra il 1198 e il 1201, ed è ancora oggi un ospedale pubblico. All’inizio accoglieva poveri, malati e neonati abbandonati: persone che non potevano restituire nulla.\n\nUn bambino appena nato dipende interamente dagli altri. Una persona malata può perdere, per un periodo o per sempre, la capacità di lavorare. Se l’aiuto fosse riservato a chi può restituire qualcosa, proprio alcune delle persone che ne hanno più bisogno resterebbero escluse. Da qui la domanda: chi cura chi non può ricambiare, e perché qualcuno costruisce un luogo per farlo?\n\nIl percorso ha quattro passi. Un’**idea**: perché aiutare chi non può restituire (un pranzo nel Vangelo di Luca). Un **problema**: gratuito non vuol dire senza costi, e un aiuto che deve durare ha bisogno di un’organizzazione. Una **soluzione**: un *hospitale* a Roma, con un luogo, delle persone, una regola e dei mezzi, e il modo di sapere che cosa vi accadeva. Infine **che cosa ne resta**: la dignità di chi non può restituire e il modo di servirla bene."
+      },
+      {
         "titolo": "Un posto a tavola senza debiti",
-        "testo": "Un bambino appena nato dipende interamente dagli altri. Una persona malata può perdere, per un periodo o per sempre, la capacità di lavorare. Se l’aiuto fosse riservato a chi può restituire qualcosa, proprio alcune delle persone che ne hanno più bisogno resterebbero escluse. Santo Spirito in Sassia, a Roma, permette di affrontare la domanda attraverso un luogo: come si passa dal riconoscere un bisogno all’organizzare una cura che duri?\n\nNel Vangelo di Luca, Gesù è a pranzo, di sabato, in casa di uno dei capi dei farisei; dopo aver parlato agli invitati della scelta dei posti, si rivolge a chi lo ha invitato.\n\n«Quando offri un pranzo o una cena, non invitare i tuoi amici né i tuoi fratelli né i tuoi parenti né i ricchi vicini, perché a loro volta non ti invitino anch’essi e tu abbia il contraccambio. Al contrario, quando offri un banchetto, invita poveri, storpi, zoppi, ciechi; e sarai beato perché non hanno da ricambiarti. Riceverai infatti la tua ricompensa alla risurrezione dei giusti.» (Vangelo secondo Luca 14,12–14, traduzione CEI 2008)\n\nUn banchetto era anche uno scambio, si invita chi potrà invitare a sua volta: Gesù rovescia il criterio. Le quattro categorie che nomina, poveri, storpi, zoppi, ciechi, tornano poco dopo nella parabola del grande banchetto, quando il padrone manda il servo a cercarle per le piazze al posto degli invitati che hanno rifiutato (Lc 14,21). Il passo si chiude con la promessa di una ricompensa «alla risurrezione dei giusti»: il bene compiuto è affidato a Dio e al suo giudizio. Chi viene accolto, però, non deve saldare alcun debito: Gesù sottrae il rapporto con il bisognoso alla logica del favore da restituire. Il testo parla di una tavola, non di un ospedale; offre un criterio che può orientare anche altre forme di aiuto.\n\nChiamiamo **gratuità** questa disponibilità ad aiutare senza pretendere un vantaggio dal destinatario: la parola viene dal latino *gratuitus*, dalla stessa radice di *gratia*, e indica ciò che è concesso senza che chi riceve lo debba meritare. Nella fede cristiana la gratuità appartiene alla **carità** (dal latino *caritas*, «affetto, amore», da *carus*, «caro»): l’amore per Dio che prende forma nell’amore del prossimo, con il tempo, l’ascolto e il servizio, non solo con il denaro. Il Vangelo di Matteo lo dice con l’elenco delle «opere di misericordia»: sfamare, dissetare, accogliere lo straniero, vestire, visitare il malato e il carcerato, perché «tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me» (Mt 25,35–40). La ragione religiosa della cura riguarda anzitutto chi la offre; non obbliga chi la riceve a ricambiare con denaro, obbedienza o adesione personale.\n\nLa gratuità non elimina i costi. Un pasto richiede alimenti, una stanza va mantenuta, chi assiste deve avere tempo e mezzi: se una comunità vuole accogliere anche chi non può pagare, deve trovare altre risorse. Qui nasce il problema dell’organizzazione: il gesto di oggi deve poter essere ripetuto domani, senza dipendere soltanto dall’entusiasmo di una persona."
+        "testo": "Il primo passo è l’idea. La ragione cristiana per accogliere chi non può restituire è più antica di ogni ospedale.\n\nNel Vangelo di Luca, Gesù è a pranzo, di sabato, in casa di uno dei capi dei farisei; dopo aver parlato agli invitati della scelta dei posti, si rivolge a chi lo ha invitato.\n\n«Quando offri un pranzo o una cena, non invitare i tuoi amici né i tuoi fratelli né i tuoi parenti né i ricchi vicini, perché a loro volta non ti invitino anch’essi e tu abbia il contraccambio. Al contrario, quando offri un banchetto, invita poveri, storpi, zoppi, ciechi; e sarai beato perché non hanno da ricambiarti. Riceverai infatti la tua ricompensa alla risurrezione dei giusti.» (Vangelo secondo Luca 14,12–14, traduzione CEI 2008)\n\nUn banchetto era anche uno scambio, si invita chi potrà invitare a sua volta: Gesù rovescia il criterio. Le quattro categorie che nomina, poveri, storpi, zoppi, ciechi, tornano poco dopo nella parabola del grande banchetto, quando il padrone manda il servo a cercarle per le piazze al posto degli invitati che hanno rifiutato (Lc 14,21). Il passo si chiude con la promessa di una ricompensa «alla risurrezione dei giusti»: il bene compiuto è affidato a Dio e al suo giudizio. Chi viene accolto, però, non deve saldare alcun debito: Gesù sottrae il rapporto con il bisognoso alla logica del favore da restituire. Il testo parla di una tavola, non di un ospedale; offre un criterio che può orientare anche altre forme di aiuto.\n\nChiamiamo **gratuità** questa disponibilità ad aiutare senza pretendere un vantaggio dal destinatario: la parola viene dal latino *gratuitus*, dalla stessa radice di *gratia*, e indica ciò che è concesso senza che chi riceve lo debba meritare. Nella fede cristiana la gratuità appartiene alla **carità** (dal latino *caritas*, «affetto, amore», da *carus*, «caro»): l’amore per Dio che prende forma nell’amore del prossimo, con il tempo, l’ascolto e il servizio, non solo con il denaro. Il Vangelo di Matteo lo dice con l’elenco delle «opere di misericordia»: sfamare, dissetare, accogliere lo straniero, vestire, visitare il malato e il carcerato, perché «tutto quello che avete fatto a uno solo di questi miei fratelli più piccoli, l’avete fatto a me» (Mt 25,35–40). La ragione religiosa della cura riguarda anzitutto chi la offre; non obbliga chi la riceve a ricambiare con denaro, obbedienza o adesione personale.\n\nIl secondo passo è il problema: la gratuità non elimina i costi. Un pasto richiede alimenti, una stanza va mantenuta, chi assiste deve avere tempo e mezzi: se una comunità vuole accogliere anche chi non può pagare, deve trovare altre risorse. Qui nasce il problema dell’organizzazione: il gesto di oggi deve poter essere ripetuto domani, senza dipendere soltanto dall’entusiasmo di una persona."
       },
       {
         "titolo": "L’ospedale comincia dall’ospitalità",
-        "testo": "La parola **ospedale** conserva una traccia di questa storia. Deriva dal latino *hospitale*, da *hospitalis*, «ospitale», e all’origine indicava un alloggio per i forestieri; *hospes*, da cui viene anche «ospite», era insieme chi accoglieva e chi era accolto. Nel Medioevo un *hospitale*, chiamato anche *xenodochium*, «casa dello straniero», era prima di tutto un luogo di ospitalità: vi si accoglievano anche i malati, ma perché la malattia era una delle forme del bisogno, non perché fosse un luogo di terapia.\n\nLa cura ha una storia più ampia di una sola tradizione religiosa: l’antichità conobbe luoghi di terapia e infermerie militari, e nel mondo islamico, fin dall’VIII secolo, sorsero istituzioni per la cura delle malattie, con medici e scuole. Nell’Occidente cristiano l’ospitalità verso il bisognoso era già un dovere scritto: la Regola di san Benedetto, nel VI secolo, chiede che tutti gli ospiti siano accolti «come Cristo in persona» e che ci si preoccupi «soprattutto» dei poveri e dei pellegrini (Regola 53,1.15). Dall’XI secolo, con la ripresa dei commerci e dei pellegrinaggi verso Roma, Gerusalemme e Santiago, le strade si riempirono di viandanti che avevano bisogno di un tetto, di cibo e, se si ammalavano, di assistenza: per questo gli ospedali medievali sorgono lungo le vie e alle porte delle città. Pellegrinaggi, motivazione religiosa e mezzi disponibili si incontrano senza coincidere: la carità ha contribuito alla storia degli ospedali con un’azione concreta, senza essere da sola tutta la storia della medicina.\n\nUn’**istituzione** è un’organizzazione che rende durevole un compito: stabilisce chi se ne occupa, con quali risorse e sotto quale responsabilità. L’edificio ne è una parte, ma non basta: una sala vuota ripara dalla pioggia, ma per accogliere stabilmente persone fragili servono lavoro, continuità e decisioni. L’ospitalità diventa così una responsabilità condivisa."
+        "testo": "Il terzo passo è la soluzione: un’istituzione che accoglie chi non può ricambiare. Nel Medioevo ha un nome, ed è quello del luogo da cui siamo partiti. La parola **ospedale** conserva una traccia di questa storia. Deriva dal latino *hospitale*, da *hospitalis*, «ospitale», e all’origine indicava un alloggio per i forestieri; *hospes*, da cui viene anche «ospite», era insieme chi accoglieva e chi era accolto. Nel Medioevo un *hospitale*, chiamato anche *xenodochium*, «casa dello straniero», era prima di tutto un luogo di ospitalità: vi si accoglievano anche i malati, ma perché la malattia era una delle forme del bisogno, non perché fosse un luogo di terapia.\n\nLa cura ha una storia più ampia di una sola tradizione religiosa: l’antichità conobbe luoghi di terapia e infermerie militari, e nel mondo islamico, fin dall’VIII secolo, sorsero istituzioni per la cura delle malattie, con medici e scuole. Nell’Occidente cristiano l’ospitalità verso il bisognoso era già un dovere scritto: la Regola di san Benedetto, nel VI secolo, chiede che tutti gli ospiti siano accolti «come Cristo in persona» e che ci si preoccupi «soprattutto» dei poveri e dei pellegrini (Regola 53,1.15). Dall’XI secolo, con la ripresa dei commerci e dei pellegrinaggi verso Roma, Gerusalemme e Santiago, le strade si riempirono di viandanti che avevano bisogno di un tetto, di cibo e, se si ammalavano, di assistenza: per questo gli ospedali medievali sorgono lungo le vie e alle porte delle città. Pellegrinaggi, motivazione religiosa e mezzi disponibili si incontrano senza coincidere: la carità ha contribuito alla storia degli ospedali con un’azione concreta, senza essere da sola tutta la storia della medicina.\n\nUn’**istituzione** è un’organizzazione che rende durevole un compito: stabilisce chi se ne occupa, con quali risorse e sotto quale responsabilità. L’edificio ne è una parte, ma non basta: una sala vuota ripara dalla pioggia, ma per accogliere stabilmente persone fragili servono lavoro, continuità e decisioni. L’ospitalità diventa così una responsabilità condivisa."
       },
       {
         "titolo": "Santo Spirito: un impegno prende forma",
-        "testo": "A Roma, fra il Vaticano e il Tevere, esisteva dall’VIII secolo l’ospizio dei pellegrini anglosassoni, la *schola Saxonum* fondata dal re Ina intorno al 727–729: da lì vengono il nome «Sassia» e, dal germanico *burg*, il nome «Borgo». Nel XII secolo quell’ospizio era in rovina.\n\nIl papa che ne cambiò la storia fu **Innocenzo III**, al secolo Lotario dei Conti di Segni, eletto nel gennaio 1198 a meno di quarant’anni, che durante gli studi in Francia aveva conosciuto l’opera di **Guido di Montpellier**: un laico che, prima del 1190, aveva aperto nella sua città una casa-ospedale per i poveri, affidata allo Spirito Santo, con una comunità di fratelli e sorelle, laici e chierici.\n\nNell’aprile 1198 Innocenzo III approvò la regola di quella comunità e scrisse che i suoi fratelli andavano chiamati «non tanto accoglitori dei bisognosi, quanto piuttosto servi». Nei primi anni di pontificato fece costruire un ospedale accanto alla chiesa di Santa Maria in Sassia; con una bolla del 10 dicembre 1201 lo affidò a Guido e ai suoi compagni e il 19 giugno 1204, con la bolla *Inter opera pietatis*, confermò l’ordine ospedaliero del Santo Spirito e la sua regola, i suoi compiti e il suo governo sulla casa romana, divenuta casa madre dell’ordine. Guido morì a Roma nel 1208. Alla fine del Duecento l’ordine contava un centinaio di case fra Italia, Francia e Germania, riconoscibili dal mantello con la croce a doppio braccio.\n\nLa motivazione di Innocenzo III era quella delle opere di misericordia, che la bolla del 1204 elenca come compiti della casa. Una tradizione posteriore, dipinta negli affreschi del Quattrocento come storia delle origini, aggiunge un sogno del papa sui neonati gettati nel Tevere: i documenti del tempo non la attestano.\n\nLa regola dell’ordine, confermata nel 1204, ci è arrivata nella forma del Duecento, in un codice miniato della metà del Trecento, il *Liber Regulae*, conservato all’Archivio di Stato di Roma. Vi si legge che i malati, giunti o portati alla casa, vanno accolti, per prima cosa confessati e comunicati, e poi messi a letto; che i fratelli devono cercare i poveri infermi per le strade e le piazze; che i poveri vanno vestiti e accolti anche se sani; che «gli orfani infanti proietti siano nutriti e le povere donne incinte siano accolte e accudite con carità». I «proietti» o **esposti**, i bambini abbandonati, diventavano «figli della casa» e imparavano un mestiere. La ruota di legno in cui lasciarli senza essere visti, ancora visibile sul fianco dell’edificio, è però del Seicento.\n\nUna regola introduce un passaggio decisivo: l’accoglienza non resta affidata alla sensibilità di qualcuno, ma diventa un impegno della comunità, al quale si può chiedere conto. Una regola però dice che cosa si deve fare, non dimostra che cosa è accaduto: per saperlo servono altre fonti. Le pergamene dei lasciti, dal 1245, mostrano che privati cittadini donavano terre e denaro all’ospedale e ai suoi poveri: segno che l’opera era stimata, non prova che ogni ospite fosse ben curato.\n\nL’edificio di oggi conserva trasformazioni successive. Le **Corsie Sistine**, due lunghe sale affrescate, furono costruite fra il 1471 e il 1478 per volontà di **Sisto IV**, il papa francescano Francesco della Rovere, che rifece l’ospedale; gli affreschi raccontano le origini dell’ospedale, la ricostruzione e la vita dello stesso Sisto IV, con iscrizioni latine dell’umanista Bartolomeo Platina. Non sono dunque la sala di Innocenzo III: un’immagine dipinta quasi tre secoli dopo un evento testimonia come quell’evento veniva ricordato e quale messaggio il committente voleva trasmettere.\n\nNella vicenda di Santo Spirito riconosciamo quindi tre elementi collegati, nessuno dei quali basta da solo: una motivazione cristiana, una comunità incaricata dell’assistenza, un luogo e una struttura destinati a durare. La fede spiega una ragione dell’impegno; l’organizzazione gli dà una forma concreta. Confonderli porta a due errori opposti: ridurre tutto ad amministrazione, o credere che una buona intenzione sia già una cura."
+        "testo": "Torniamo al luogo da cui siamo partiti: chi decise di costruirlo, e come? Nella sua storia arrivano, una dopo l’altra, le cose che servono a un’istituzione: un luogo, delle persone, una regola, dei mezzi.\n\nA Roma, fra il Vaticano e il Tevere, esisteva dall’VIII secolo l’ospizio dei pellegrini anglosassoni, la *schola Saxonum* fondata dal re Ina intorno al 727–729: da lì vengono il nome «Sassia» e, dal germanico *burg*, il nome «Borgo». Nel XII secolo quell’ospizio era in rovina.\n\nIl papa che ne cambiò la storia fu **Innocenzo III**, al secolo Lotario dei Conti di Segni, eletto nel gennaio 1198 a meno di quarant’anni, che durante gli studi in Francia aveva conosciuto l’opera di **Guido di Montpellier**: un laico che, prima del 1190, aveva aperto nella sua città una casa-ospedale per i poveri, affidata allo Spirito Santo, con una comunità di fratelli e sorelle, laici e chierici.\n\nNell’aprile 1198 Innocenzo III approvò la regola di quella comunità e scrisse che i suoi fratelli andavano chiamati «non tanto accoglitori dei bisognosi, quanto piuttosto servi». Nei primi anni di pontificato fece costruire un ospedale accanto alla chiesa di Santa Maria in Sassia; con una bolla del 10 dicembre 1201 lo affidò a Guido e ai suoi compagni e il 19 giugno 1204, con la bolla *Inter opera pietatis*, confermò l’ordine ospedaliero del Santo Spirito e la sua regola, i suoi compiti e il suo governo sulla casa romana, divenuta casa madre dell’ordine. Guido morì a Roma nel 1208. Alla fine del Duecento l’ordine contava un centinaio di case fra Italia, Francia e Germania, riconoscibili dal mantello con la croce a doppio braccio.\n\nLa motivazione di Innocenzo III era quella delle opere di misericordia, che la bolla del 1204 elenca come compiti della casa. Una tradizione posteriore, dipinta negli affreschi del Quattrocento come storia delle origini, aggiunge un sogno del papa sui neonati gettati nel Tevere: i documenti del tempo non la attestano.\n\nLa regola dell’ordine, confermata nel 1204, ci è arrivata nella forma del Duecento, in un codice miniato della metà del Trecento, il *Liber Regulae*, conservato all’Archivio di Stato di Roma. Vi si legge che i malati, giunti o portati alla casa, vanno accolti, per prima cosa confessati e comunicati, e poi messi a letto; che i fratelli devono cercare i poveri infermi per le strade e le piazze; che i poveri vanno vestiti e accolti anche se sani; che «gli orfani infanti proietti siano nutriti e le povere donne incinte siano accolte e accudite con carità». I «proietti» o **esposti**, i bambini abbandonati, diventavano «figli della casa» e imparavano un mestiere. La ruota di legno in cui lasciarli senza essere visti, ancora visibile sul fianco dell’edificio, è però del Seicento.\n\nUna regola introduce un passaggio decisivo: l’accoglienza non resta affidata alla sensibilità di qualcuno, ma diventa un impegno della comunità, al quale si può chiedere conto. Una regola però dice che cosa si deve fare, non dimostra che cosa è accaduto: per saperlo servono altre fonti. Le pergamene dei lasciti, dal 1245, mostrano che privati cittadini donavano terre e denaro all’ospedale e ai suoi poveri: segno che l’opera era stimata, non prova che ogni ospite fosse ben curato.\n\nL’edificio di oggi conserva trasformazioni successive. Le **Corsie Sistine**, due lunghe sale affrescate, furono costruite fra il 1471 e il 1478 per volontà di **Sisto IV**, il papa francescano Francesco della Rovere, che rifece l’ospedale; gli affreschi raccontano le origini dell’ospedale, la ricostruzione e la vita dello stesso Sisto IV, con iscrizioni latine dell’umanista Bartolomeo Platina. Non sono dunque la sala di Innocenzo III: un’immagine dipinta quasi tre secoli dopo un evento testimonia come quell’evento veniva ricordato e quale messaggio il committente voleva trasmettere.\n\nNella vicenda di Santo Spirito riconosciamo quindi tre elementi collegati, nessuno dei quali basta da solo: una motivazione cristiana, una comunità incaricata dell’assistenza, un luogo e una struttura destinati a durare. La fede spiega una ragione dell’impegno; l’organizzazione gli dà una forma concreta. Confonderli porta a due errori opposti: ridurre tutto ad amministrazione, o credere che una buona intenzione sia già una cura."
       },
       {
         "titolo": "Bisogni diversi, uguale dignità",
-        "testo": "Consideriamo un **caso immaginario**, non una ricostruzione di Santo Spirito. Una piccola casa di accoglienza dispone già di pasti, posti letto e assistenza di base per tutti. Deve ora distribuire alcune ore aggiuntive di lavoro. Un ospite riesce a muoversi autonomamente ma ha bisogno di orientarsi nei servizi; un altro necessita di accompagnamento; un bambino richiede la presenza continuativa di un adulto. È sufficiente assegnare a ciascuno lo stesso intervento?\n\nUn servizio identico potrebbe essere inutile per qualcuno e insufficiente per un altro. Il criterio da discutere è il bisogno concreto: quale aiuto manca, chi sa offrirlo e come garantire che continui? Non si scelgono vite da salvare né terapie: si riconosce che l’uguale valore delle persone può richiedere risposte differenti, motivate e verificabili.\n\nLa **dignità** (dal latino *dignitas*, da *dignus*, «degno») è il valore della persona, che non dipende dalla sua produttività né dalla capacità di restituire quanto riceve. La **produttività** indica invece quanto si riesce a produrre in una certa attività. Le due cose non coincidono: un adulto che perde il lavoro o si ammala non diventa, per questo, una persona di minor valore; un bambino non deve promettere che da grande sarà utile per meritare attenzione oggi. La regola di Santo Spirito lo diceva a modo suo: nutrire i proietti, neonati che non potevano dare nulla.\n\nRicevere assistenza non cancella la propria voce: chi organizza un servizio ascolta esigenze e preferenze e riconosce il bisogno senza ridurre una persona a quel bisogno. Le risorse restano limitate: riconoscere la dignità non significa promettere tutto a tutti, ma rendere ragione delle scelte senza misurare il valore umano con la ricchezza o il vantaggio che qualcuno potrebbe offrire. Nel caso immaginario, la proposta migliore sarà quella che spiega il rapporto fra ciascun bisogno e il servizio assegnato, anziché premiare chi potrebbe ricambiare."
+        "testo": "L’ultimo passo è chiedersi che cosa ne resta. Santo Spirito accoglieva secondo il bisogno, non secondo ciò che si può restituire: il criterio regge ancora? Consideriamo un **caso immaginario**, non una ricostruzione di Santo Spirito. Una piccola casa di accoglienza dispone già di pasti, posti letto e assistenza di base per tutti. Deve ora distribuire alcune ore aggiuntive di lavoro. Un ospite riesce a muoversi autonomamente ma ha bisogno di orientarsi nei servizi; un altro necessita di accompagnamento; un bambino richiede la presenza continuativa di un adulto. È sufficiente assegnare a ciascuno lo stesso intervento?\n\nUn servizio identico potrebbe essere inutile per qualcuno e insufficiente per un altro. Il criterio da discutere è il bisogno concreto: quale aiuto manca, chi sa offrirlo e come garantire che continui? Non si scelgono vite da salvare né terapie: si riconosce che l’uguale valore delle persone può richiedere risposte differenti, motivate e verificabili.\n\nLa **dignità** (dal latino *dignitas*, da *dignus*, «degno») è il valore della persona, che non dipende dalla sua produttività né dalla capacità di restituire quanto riceve. La **produttività** indica invece quanto si riesce a produrre in una certa attività. Le due cose non coincidono: un adulto che perde il lavoro o si ammala non diventa, per questo, una persona di minor valore; un bambino non deve promettere che da grande sarà utile per meritare attenzione oggi. La regola di Santo Spirito lo diceva a modo suo: nutrire i proietti, neonati che non potevano dare nulla.\n\nRicevere assistenza non cancella la propria voce: chi organizza un servizio ascolta esigenze e preferenze e riconosce il bisogno senza ridurre una persona a quel bisogno. Le risorse restano limitate: riconoscere la dignità non significa promettere tutto a tutti, ma rendere ragione delle scelte senza misurare il valore umano con la ricchezza o il vantaggio che qualcuno potrebbe offrire. Nel caso immaginario, la proposta migliore sarà quella che spiega il rapporto fra ciascun bisogno e il servizio assegnato, anziché premiare chi potrebbe ricambiare."
       },
       {
         "titolo": "La cura va anche verificata",
@@ -4417,7 +4448,7 @@ window.LEZIONE = {
       },
       {
         "titolo": "In sintesi",
-        "testo": "Chi cura chi non può ricambiare? Nel caso studiato, una comunità che traduce la carità cristiana in un compito stabile: un papa che fonda, un ordine che serve, una regola che dice chi accogliere, con risultati da verificare. La persona viene prima del vantaggio che può offrire; per questo la cura ha bisogno di mezzi, competenze e continuità, e non diventa mai un debito di chi la riceve."
+        "testo": "Chi cura chi non può ricambiare? A Santo Spirito, una comunità che traduce la carità cristiana in un compito stabile: un papa che fonda, un ordine che serve, una regola che dice chi accogliere, con risultati da verificare. La persona viene prima del vantaggio che può offrire; per questo la cura ha bisogno di mezzi, competenze e continuità, e non diventa mai un debito di chi la riceve."
       },
       {
         "titolo": "Per lo studio",
@@ -4474,7 +4505,6 @@ window.LEZIONE = {
     ]
   }
 };
-
 </script>
 <script>
 window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.titolo) || '' }, (window.LEZIONE && window.LEZIONE.giochi) || {});
