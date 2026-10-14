@@ -260,7 +260,9 @@ window.LEZIONE = {
           'Le università nascono da più fattori: lo studio legato alla fede, i bisogni delle città, il diritto, i testi tradotti.',
           '*Universitas* è una comunità di persone associate, non un edificio; il 1088 è una data convenzionale.',
           'Insegnare richiede preparazione verificata; imparare richiede fiducia ragionevole e domande con ragioni.'
-        ] }
+        ] },
+        { tipo: 'aggancio', etichetta: 'Tra sette giorni', titolo: 'Chi cura chi non può ricambiare?',
+          t: 'Dopo il monastero e l’università, il terzo luogo che cambia la vita è un ospedale: Santo Spirito in Sassia, a Roma, accanto al Vaticano. Lo fece costruire un papa più di ottocento anni fa, ed è ancora un ospedale pubblico. All’inizio accoglieva chi non poteva restituire nulla: perché, e chi pagava?' }
       ] }
   ],
 

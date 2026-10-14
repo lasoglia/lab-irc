@@ -35,6 +35,7 @@ fonti) e il testo di studio `.testo.txt`.
 | `iii-0-1-accoglienza-il-mazzo-dell-estate.js` | `accoglienza-terza-mazzo-estate-artefatto.html` | III |
 | `iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto.js` | `iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-artefatto.html` | III |
 | `iii-1-2-chi-puo-insegnare-a-chi.js` (con il CSS `iii-1-2-chi-puo-insegnare-a-chi.css`, da passare con `--css`) | `iii-1-2-chi-puo-insegnare-a-chi-artefatto.html` | III |
+| `iii-1-3-chi-cura-chi-non-puo-ricambiare.js` (**non** si ricostruisce con lo script: vedi sotto) | `iii-1-3-chi-cura-chi-non-puo-ricambiare-artefatto.html` | III |
 | `iv-0-1-accoglienza-vero-possibile-giusto.js` | `iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html` | IV |
 | `iv-1-1-riformare-una-chiesa-indulgenze.js` | `iv1-1r~1.htm` | IV |
 | `v-0-1-apertura-il-cuore-inquieto.js` | `apertura-cuore-inquieto-artefatto.html` | V |
@@ -50,6 +51,10 @@ di non toccarle: le prime tre non hanno un sorgente qui e vanno lasciate come
 sono. La lezione `iii-1-2-…` ha invece il suo sorgente dal 14 ottobre 2026
 (revisione del filo logico del terzo anno): si ricostruisce con `--anno 3` e
 con il suo CSS (`--css sorgenti-lezioni/iii-1-2-chi-puo-insegnare-a-chi.css`).
+
+La lezione `iii-1-3-…` è stata assemblata dal docente con una versione del kit che contiene la **Guida del docente**
+(pulsante «Guida», tasto G), assente nel kit qui sopra: ricostruirla con `build_artefatto.py` farebbe sparire la Guida.
+Si aggiorna sostituendo lo script della lezione dentro l'HTML (comando nelle sue note `.docente.md`).
 
 Il vecchio script `design-system/assets/artefatti/skill/scripts/build_artefatto_sito.py`
 resta per riferimento ma non si usa più per le lezioni nuove.
