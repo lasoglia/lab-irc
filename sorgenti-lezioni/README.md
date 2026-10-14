@@ -34,6 +34,7 @@ fonti) e il testo di studio `.testo.txt`.
 | `ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta.js` | `ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-artefatto.html` | II |
 | `iii-0-1-accoglienza-il-mazzo-dell-estate.js` | `accoglienza-terza-mazzo-estate-artefatto.html` | III |
 | `iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto.js` | `iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-artefatto.html` | III |
+| `iii-1-2-chi-puo-insegnare-a-chi.js` (con il CSS `iii-1-2-chi-puo-insegnare-a-chi.css`, da passare con `--css`) | `iii-1-2-chi-puo-insegnare-a-chi-artefatto.html` | III |
 | `iv-0-1-accoglienza-vero-possibile-giusto.js` | `iv-0-1-accoglienza-vero-possibile-giusto-artefatto.html` | IV |
 | `iv-1-1-riformare-una-chiesa-indulgenze.js` | `iv1-1r~1.htm` | IV |
 | `v-0-1-apertura-il-cuore-inquieto.js` | `apertura-cuore-inquieto-artefatto.html` | V |
@@ -43,10 +44,12 @@ I nomi dei file in `uploads/` restano quelli vecchi, così i collegamenti nel
 pannello continuano a funzionare. I fascicoli PDF accanto agli artefatti non
 sono stati rifatti.
 
-Le lezioni 2 delle UDA (`i-1-2-…`, `iii-1-2-…`, `iv-1-2-…`, `v-1-2-…`, oltre a
-`ii-1-2-…` qui sopra) sono già nello stile della lezione-modello e il docente
-ha chiesto di non toccarle: le prime quattro non hanno un sorgente qui e vanno
-lasciate come sono.
+Le lezioni 2 delle UDA (`i-1-2-…`, `iv-1-2-…`, `v-1-2-…`, oltre a `ii-1-2-…`
+qui sopra) sono già nello stile della lezione-modello e il docente ha chiesto
+di non toccarle: le prime tre non hanno un sorgente qui e vanno lasciate come
+sono. La lezione `iii-1-2-…` ha invece il suo sorgente dal 14 ottobre 2026
+(revisione del filo logico del terzo anno): si ricostruisce con `--anno 3` e
+con il suo CSS (`--css sorgenti-lezioni/iii-1-2-chi-puo-insegnare-a-chi.css`).
 
 Il vecchio script `design-system/assets/artefatti/skill/scripts/build_artefatto_sito.py`
 resta per riferimento ma non si usa più per le lezioni nuove.
