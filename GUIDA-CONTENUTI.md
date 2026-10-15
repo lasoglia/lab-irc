@@ -357,10 +357,19 @@ Le verifiche sono ordinate come le lezioni: **anno di corso → unità**.
   del primo anno», quando l'anno ha almeno un gioco.
 
 Il gioco si apre in una **nuova scheda** del browser, non nel visore delle
-lezioni: chiede lo schermo intero, "cattura" il mouse e carica le sue librerie
-da internet, cose che il visore non permette. Serve quindi la connessione e un
-**computer con tastiera e mouse**: sul telefono e sul tablet il gioco non si
-comanda (il sito lo dice sotto il pulsante). Il sito **non salva nulla**: alla
+lezioni: chiede lo schermo intero e "cattura" il mouse, cose che il visore non
+permette. Serve la connessione per aprire il sito e un **computer con tastiera e
+mouse**: sul telefono e sul tablet il gioco non si comanda (il sito lo dice
+sotto il pulsante).
+
+Il gioco è **autonomo**: la libreria del 3D e i caratteri sono dentro il file,
+quindi non chiede nulla ad altri siti (jsDelivr, Google). Funziona anche se la
+rete della scuola blocca quei siti e non manda a nessun altro l'indirizzo
+internet degli studenti. Per ogni nuovo gioco basta costruirlo con il pacchetto
+sorgenti aggiornato (cartella `vendor` e `costruisci.js`, vedi il suo
+`LEGGIMI.md`); nella schermata iniziale c'è la riga «© Matteo Sestili · Tutti i
+diritti riservati». Un gioco costruito senza `vendor` funziona lo stesso, ma
+solo se quei siti sono raggiungibili. Il sito **non salva nulla**: alla
 fine lo studente scarica (o copia) il rapporto con le risposte e lo consegna al
 docente, che dà il voto. Il rapporto contiene nome, cognome e classe: sui
 computer della scuola conviene che lo studente lo cancelli dopo la consegna
