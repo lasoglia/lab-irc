@@ -10,7 +10,8 @@ const ROMAN = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
  * the count row mix the year colour with ink (`--lab-tinta-icona`, default 100%) so the light
  * theme can lower them for contrast. `compatto` turns it into a single ~110–130px row for phones.
  */
-export function YearCard({ year = 1, name, description, count, href = '#', onClick, mascot = true, compatto = false }) {
+/* countLabel: testo al posto di «N contenuti» (es. «1 verifica», «In preparazione»), per gli archivi che non contano contenuti */
+export function YearCard({ year = 1, name, description, count, countLabel, href = '#', onClick, mascot = true, compatto = false }) {
   const ref = React.useRef(null);
   const [hov, setHov] = React.useState(false);
   const [p, setP] = React.useState({ x: 50, y: 50 });
@@ -68,9 +69,9 @@ export function YearCard({ year = 1, name, description, count, href = '#', onCli
         </>
       )}
       {!compatto && description && <p style={{ position: 'relative', color: 'var(--lab-muted)', fontSize: 14, lineHeight: 1.5, margin: '8px 0 0', flex: 1 }}>{description}</p>}
-      {count != null && (
+      {(count != null || countLabel) && (
         <span style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 8, fontSize: 11.5, fontWeight: 800, letterSpacing: '.13em', textTransform: 'uppercase', color: inkColor, marginTop: compatto ? 8 : 21 }}>
-          {count} {count === 1 ? 'contenuto' : 'contenuti'}
+          {countLabel || `${count} ${count === 1 ? 'contenuto' : 'contenuti'}`}
           <span style={{ transform: `translateX(${hov ? 5 : 0}px)`, opacity: hov ? 1 : 0, transition: '377ms cubic-bezier(.16,1,.3,1)' }}>→</span>
         </span>
       )}

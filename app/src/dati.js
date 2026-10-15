@@ -329,6 +329,26 @@ export function verificheAnno(D, n) {
   return D.VER.filter((v) => matchAnno(v, n)).sort((a, b) => posUda(a) - posUda(b) || ord(a) - ord(b) || a._i - b._i);
 }
 export const verificheUda = (D, n, uda) => verificheAnno(D, n).filter((v) => normT(v.uda) === normT(uda));
+export const hrefVerificheAnno = (n) => `#verifiche/anno/${n}`;
+export const giocabile = (v) => azioneVerifica(v).tipo !== "nessuna";
+
+/* L'archivio delle verifiche di un anno: le unità in ordine di corso, ognuna con le sue verifiche
+   (anche nessuna: «in preparazione»). L'Accoglienza non ha una verifica di fine unità e compare
+   solo se ne ha una. Le verifiche di un'unità che non c'è più (titolo cambiato) restano in fondo:
+   non spariscono mai. */
+const eAccoglienza = (u) => /^accoglienza\b/i.test(titoloPulito(u.titolo).titolo) || numeroDaFile(u, 1) === 0;
+export function archivioVerifiche(D, n) {
+  const tutte = verificheAnno(D, n);
+  const usate = new Set();
+  const gruppi = udaForYear(D, n)
+    .map((u) => {
+      const verifiche = tutte.filter((v) => normT(v.uda) === normT(u.titolo));
+      verifiche.forEach((v) => usate.add(v));
+      return { uda: u, verifiche };
+    })
+    .filter((g) => g.verifiche.length || !eAccoglienza(g.uda));
+  return { gruppi, altre: tutte.filter((v) => !usate.has(v)) };
+}
 export function azioneVerifica(v) {
   const raw = v.file || v.link || "";
   const href = raw && raw !== "#" ? resolvePath(raw) : "";
@@ -496,7 +516,7 @@ export function cerca(D, q) {
        non un pezzo qualsiasi: «ca» non deve elencare tutti i giochi) */
     const parola = k.length >= 3 && ["verifica", "verifiche", "gioco", "giochi"].some((w) => w.startsWith(k));
     verificheAnno(D, a.n).forEach((v) => {
-      if (parola || ha(v.titolo, v.descrizione, v.uda)) cartelle.push({ tipo: "verifica", titolo: v.titolo || "Verifica di fine unità", uda: v.uda, anno: a.n, href: "#verifiche" });
+      if (parola || ha(v.titolo, v.descrizione, v.uda)) cartelle.push({ tipo: "verifica", titolo: v.titolo || "Verifica di fine unità", uda: v.uda, anno: a.n, href: hrefVerificheAnno(a.n) });
     });
   });
   return { cartelle, items };
