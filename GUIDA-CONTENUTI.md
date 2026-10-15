@@ -12,7 +12,8 @@ in 1–2 minuti.
 - **Anno (1–5)** → tutti i materiali, strumenti e video di quell'anno
 - **Strumenti** → le app e gli artefatti interattivi
 - **Video** → i video di YouTube
-- **Verifiche** → la voce in alto porta all'area esami (`/esami`)
+- **Verifiche** → i giochi di verifica di fine unità, per anno (punto 7); in fondo
+  alla pagina il collegamento alla piattaforma delle verifiche con codice (`/esami`)
 - **Ricerca** → la barra in alto cerca in tutti i contenuti
 
 Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, Materiali,
@@ -322,6 +323,57 @@ Note utili:
 
 ---
 
+## 7. Le verifiche di fine unità (giochi)
+
+Al termine di ogni unità c'è un **gioco di verifica**: un file `.html` unico,
+per esempio `I 1-G l-uomo-che-cerca-oltre-gioco.html` (il gioco della prima
+unità del primo anno: anno romano, numero dell'unità, `G`, titolo breve,
+`-gioco`). Sul sito compare in due posti:
+
+- nella pagina **Verifiche** (voce in alto, anche sul telefono), raggruppato
+  per anno, con i quattro passi per gli studenti: apri il gioco, scrivi nome e
+  classe, gioca fino alla fine, scarica il rapporto e consegnalo;
+- in fondo alla **pagina dell'unità**, dopo le lezioni, sotto «Fine unità ·
+  Verifica». Quando lo studente ha aperto tutti i materiali dell'unità, il
+  pulsante del gioco diventa quello pieno con il tag «Ora la verifica»: è il
+  passo successivo.
+
+Il gioco si apre in una **nuova scheda** del browser, non nel visore delle
+lezioni: chiede lo schermo intero, "cattura" il mouse e carica le sue librerie
+da internet, cose che il visore non permette. Serve quindi la connessione; va
+bene qualsiasi computer con tastiera e mouse. Il sito **non salva nulla**: alla
+fine lo studente scarica (o copia) il rapporto con le risposte e lo consegna al
+docente, che dà il voto.
+
+### Come caricarlo
+
+**Dalla pagina di importazione** (`admin/importa.html`, punto 6): trascina il
+file del gioco, o la cartella `pubblica` che lo contiene. Un nome che finisce
+con `-gioco.html` viene riconosciuto da solo: in tabella la riga dice «Verifica
+di fine unità», con l'anno (dal numero romano iniziale), l'unità (dal titolo
+breve nel nome: `l-uomo-che-cerca-oltre` → «L'uomo che cerca oltre il senso
+religioso») e il titolo preso dal gioco stesso. Controlla l'unità, correggila
+se serve, e pubblica.
+
+**Dal pannello** (`admin`): sezione **🎲 Verifiche di fine unità** → *Aggiungi
+verifica*: titolo, anno, unità, il file del gioco, una descrizione facoltativa.
+Nella stessa sezione c'è la **Nota per gli studenti**, che compare in cima alla
+pagina Verifiche (per esempio «La verifica si fa in classe, con i computer
+della scuola»).
+
+Note:
+- Per **aggiornare** un gioco, ricarica il file con lo **stesso nome**: viene
+  sostituito, senza doppioni; il titolo scelto nel pannello resta.
+- Dalla pagina di importazione il nome del file viene pulito
+  (`i-1-g-l-uomo-che-cerca-oltre-gioco.html`); dal pannello resta com'è.
+- I giochi non entrano nel «percorso» dello studente (sigilli e conteggi):
+  la verifica non è un materiale da aprire ma una prova da consegnare.
+- La piattaforma delle verifiche con codice (`/esami`, vedi
+  `GUIDA-VERIFICHE.md`) non cambia: dalla pagina Verifiche c'è ancora il
+  collegamento, in fondo.
+
+---
+
 ## Aggiornare il sito (file da sostituire su GitHub)
 
 Se stai passando dalla versione precedente, su GitHub sostituisci/aggiungi:
@@ -329,6 +381,6 @@ Se stai passando dalla versione precedente, su GitHub sostituisci/aggiungi:
 - `admin/config.yml` (sostituisci)
 - `data/site.json` (sostituisci)
 - `data/materiali.json` (sostituisci)
-- `data/anni.json`, `data/strumenti.json`, `data/video.json` (nuovi: aggiungi)
+- `data/anni.json`, `data/strumenti.json`, `data/video.json`, `data/verifiche.json` (nuovi: aggiungi)
 
 Il vecchio `data/classi.json` non serve più: puoi eliminarlo.

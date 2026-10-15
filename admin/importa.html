@@ -143,7 +143,7 @@ td.stretta{width:1%;white-space:nowrap}
         <label class="btn ghost">Scegli una cartella <input type="file" id="cartella" webkitdirectory directory multiple></label>
         <label class="btn ghost">Scegli dei file <input type="file" id="files" multiple></label>
       </div>
-      <p class="hint">Formati: PDF, slide (ppt, pptx, odp, key), lezioni interattive .html, immagini. Massimo 95 MB a file.</p>
+      <p class="hint">Formati: PDF, slide (ppt, pptx, odp, key), lezioni interattive .html, giochi di verifica (<code>…-gioco.html</code>), immagini. Massimo 95 MB a file.</p>
     </div>
     <div class="orfani" id="orfani" hidden>
       <p class="eyebrow" style="margin-top:21px">File già su GitHub ma non collegati a nessuna lezione</p>
@@ -155,7 +155,7 @@ td.stretta{width:1%;white-space:nowrap}
   <section class="passo" id="p3" hidden>
     <span class="n" aria-hidden="true">3</span>
     <h2>Controlla la tabella</h2>
-    <p>Per ogni file: anno, unità (UDA), lezione, tipo, titolo. Le unità e le lezioni che non esistono ancora vengono create. Scrivi «—» nella lezione per lasciare il file direttamente nell'unità.</p>
+    <p>Per ogni file: anno, unità (UDA), lezione, tipo, titolo. Le unità e le lezioni che non esistono ancora vengono create. Scrivi «—» nella lezione per lasciare il file direttamente nell'unità. Un <b>gioco di verifica</b> (nome che finisce con <code>-gioco.html</code>, es. <code>I 1-G l-uomo-che-cerca-oltre-gioco.html</code>) viene riconosciuto dal nome: va nell'unità, senza lezione, e il titolo è quello del gioco.</p>
     <div class="tab-wrap"><table id="tab">
       <thead><tr><th>File</th><th>Anno</th><th>Unità (UDA)</th><th>Lezione</th><th>Tipo</th><th>Titolo</th><th title="In evidenza">★</th><th></th></tr></thead>
       <tbody></tbody>
@@ -185,6 +185,10 @@ td.stretta{width:1%;white-space:nowrap}
   var ANNI = { 1: 'Primo anno', 2: 'Secondo anno', 3: 'Terzo anno', 4: 'Quarto anno', 5: 'Quinto anno' };
   var ROM = { i: '1', ii: '2', iii: '3', iv: '4', v: '5' };
   var TIPI = ['Slide', 'Documento/PDF', 'Artefatto interattivo', 'Link'];
+  var TIPO_GIOCO = 'Gioco di verifica';
+  /* il gioco di verifica di fine unità: «I 1-G l-uomo-che-cerca-oltre-gioco.html» (anno romano, numero, G, titolo breve) */
+  var GIOCO_FINE = /[ _-]gioco\.html?$/i;
+  var GIOCO = /^(i|ii|iii|iv|v)[ _-](\d+)[ _-]?g[ _-](.+?)[ _-]gioco\.html?$/i;
   var MAX = 95 * 1024 * 1024;
   var $ = function (s) { return document.querySelector(s); };
   var el = function (tag, attrs, kids) { var e = document.createElement(tag); Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') e.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]); else e.setAttribute(k, attrs[k]); }); (kids || []).forEach(function (c) { e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); }); return e; };
@@ -199,7 +203,7 @@ td.stretta{width:1%;white-space:nowrap}
   });
 
   /* ---------- stato ---------- */
-  var dati = { uda: [], lezioni: [], materiali: [], uploads: [] };   /* com'è su GitHub (main) */
+  var dati = { uda: [], lezioni: [], materiali: [], verifiche: { verifiche: [] }, uploads: [] };   /* com'è su GitHub (main) */
   var righe = [];   /* i file da importare */
   var token = '';
   try { token = localStorage.getItem('gh_token_lab') || ''; } catch (e) {}
@@ -224,10 +228,13 @@ td.stretta{width:1%;white-space:nowrap}
   }
   function caricaDati() {
     return Promise.all([leggiJson('data/uda.json'), leggiJson('data/lezioni.json'), leggiJson('data/materiali.json'),
+      leggiJson('data/verifiche.json').catch(function () { return { verifiche: [] }; }),   /* può non esistere ancora */
       gh('/repos/' + OWNER + '/' + REPO + '/contents/uploads?ref=' + RAMO).catch(function () { return []; })])
       .then(function (r) {
         dati.uda = (r[0] && r[0].uda) || []; dati.lezioni = (r[1] && r[1].lezioni) || []; dati.materiali = (r[2] && r[2].materiali) || [];
-        dati.uploads = Array.isArray(r[3]) ? r[3].map(function (f) { return f.name; }) : [];
+        dati.verifiche = r[3] && typeof r[3] === 'object' && !Array.isArray(r[3]) ? r[3] : { verifiche: [] };   /* tutto il file: la «nota» resta com'è */
+        if (!Array.isArray(dati.verifiche.verifiche)) dati.verifiche.verifiche = [];
+        dati.uploads = Array.isArray(r[4]) ? r[4].map(function (f) { return f.name; }) : [];
         mostraOrfani();
       });
   }
@@ -301,6 +308,36 @@ td.stretta{width:1%;white-space:nowrap}
     if (/^pdf$/.test(e)) return 'Documento';
     return titoloDa(nome);
   }
+  /* il titolo di un gioco: dal nome breve nel nome del file («l-uomo-che-cerca-oltre» → «L uomo che cerca oltre»);
+     appena possibile lo sostituisce il <title> del gioco stesso, che ha apostrofi e accenti (titoloDalFile) */
+  function titoloGioco(m, nome) {
+    var b = m ? m[3].replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim() : titoloDa(nome.replace(/[ _-]gioco(\.html?)$/i, '$1'));
+    return b ? b.charAt(0).toUpperCase() + b.slice(1) : 'Verifica di fine unità';
+  }
+  function titoloDalFile(r) {
+    if (!r.file || !r.gioco) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var m = /<title>([^<]*)<\/title>/i.exec(String(fr.result || ''));
+      if (!m || !m[1].trim() || !r._titoloAuto) return;
+      r.titolo = m[1].replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, '\'').replace(/\s+/g, ' ').trim();
+      if (righe.indexOf(r) >= 0) disegna();
+    };
+    fr.readAsText(r.file.slice(0, 65536));
+  }
+  /* l'unità di un gioco: dal nome del file («…-G l-uomo-che-cerca-oltre-gioco.html» → l'unità dell'anno il cui titolo
+     comincia così), altrimenti dalla cartella che lo contiene se è un'unità conosciuta o si chiama «UDA n - …» */
+  function udaDelGioco(m, cartelle, anno) {
+    var breve = m ? norm(m[3].replace(/[-_]+/g, ' ')) : '', migliore = '';
+    if (breve) dati.uda.concat(righe.map(function (r) { return { titolo: r.uda, anno: r.anno }; })).forEach(function (u) {
+      if (!u.titolo || (anno && String(u.anno) !== String(anno))) return;
+      var t = norm(u.titolo);
+      if ((t.indexOf(breve) === 0 || breve.indexOf(t) === 0) && u.titolo.length > migliore.length) migliore = u.titolo;
+    });
+    if (migliore) return migliore;
+    var ultima = cartelle.length ? cartelle[cartelle.length - 1] : '';
+    return (trovaUda(ultima, anno) || /^uda\s*\d/i.test(ultima)) ? ultima : '';
+  }
   /* «Lezione 2 - Il caso Galileo» → ordine 2 (il titolo resta intero: il sito lo mostra pulito) */
   function numeroDa(titolo) { var m = /^(?:uda|unità|unita|lezione|lez\.?)\s*(\d+)\b/i.exec(String(titolo || '').trim()); return m ? +m[1] : 0; }
   var pulisci = function (s) { return String(s || '').replace(/\s+/g, ' ').trim(); };
@@ -322,7 +359,9 @@ td.stretta{width:1%;white-space:nowrap}
     var L = dati.lezioni.find(function (l) { return (l.materiali || []).some(stesso); });
     if (L) return { anno: String(L.anno), uda: L.uda || '', lezione: L.titolo || '' };
     var M = dati.materiali.find(stesso);
-    return M ? { anno: String(M.anno), uda: M.uda || '', lezione: M.lezione || '' } : null;
+    if (M) return { anno: String(M.anno), uda: M.uda || '', lezione: M.lezione || '' };
+    var V = dati.verifiche.verifiche.find(stesso);
+    return V ? { anno: String(V.anno), uda: V.uda || '', lezione: '', gioco: true, titolo: V.titolo || '' } : null;
   }
   function aggiungiFile(lista) {
     var annoGlobale = $('#anno').value, nuove = [];
@@ -344,15 +383,19 @@ td.stretta{width:1%;white-space:nowrap}
       var qui = gia && !righe.some(function (r) { return r.file && nomeSulSito(r.nome) === gia; }) ? posizioneSulSito(nome) : null;
       if (qui) { uda = qui.uda; lez = qui.lezione; }
       var anno = (qui && qui.anno) || annoDa(nome) || annoDa(cartelle.join('/')) || (trovaUda(uda) || {}).anno || (trovaLez(lez) || {}).anno || annoGlobale || '';
+      /* un gioco di verifica sta nell'unità, senza lezione: l'unità si legge dal nome del file */
+      var gioco = GIOCO_FINE.test(nome), mg = gioco ? GIOCO.exec(nome) : null;
+      if (gioco) { lez = ''; if (!qui) uda = udaDelGioco(mg, cartelle, anno); }
       if (f.size > MAX) { alert('«' + nome + '» supera i 95 MB: GitHub non lo accetta. Carica un file più leggero.'); return; }
-      var r = { file: f, nome: nome, anno: String(anno), uda: pulisci(uda), lezione: pulisci(lez), tipo: tipoDa(nome), titolo: lez ? titoloPerTipo(nome) : titoloDa(nome), evidenza: false, esistente: false, cartella: parti.join('/'), dalSito: !!qui };
+      var r = { file: f, nome: nome, anno: String(anno), uda: pulisci(uda), lezione: pulisci(lez), tipo: gioco ? TIPO_GIOCO : tipoDa(nome), titolo: gioco ? ((qui && qui.titolo) || titoloGioco(mg, nome)) : lez ? titoloPerTipo(nome) : titoloDa(nome), evidenza: false, esistente: false, cartella: parti.join('/'), dalSito: !!qui, gioco: gioco, _titoloAuto: gioco && !(qui && qui.titolo) };
       righe.push(r); nuove.push(r);
+      if (r._titoloAuto) titoloDalFile(r);
     });
     /* un file nuovo nella stessa cartella di uno già pubblicato va nella sua lezione (es. le slide aggiunte dopo);
-       non se la cartella è un'unità: lì i file possono essere di lezioni diverse */
+       non se la cartella è un'unità: lì i file possono essere di lezioni diverse; i giochi non c'entrano */
     nuove.forEach(function (r) {
-      if (r.dalSito || !r.cartella || trovaUda(r.cartella.split('/').pop())) return;
-      var v = righe.find(function (x) { return x.dalSito && x.cartella === r.cartella; });
+      if (r.gioco || r.dalSito || !r.cartella || trovaUda(r.cartella.split('/').pop())) return;
+      var v = righe.find(function (x) { return x.dalSito && !x.gioco && x.cartella === r.cartella; });
       if (!v) return;
       r.anno = v.anno; r.uda = v.uda; r.lezione = v.lezione; r.titolo = r.lezione ? titoloPerTipo(r.nome) : titoloDa(r.nome);
     });
@@ -364,14 +407,16 @@ td.stretta{width:1%;white-space:nowrap}
     var usati = {};
     dati.materiali.forEach(function (m) { if (m.file) usati[m.file.replace(/^\/?uploads\//, '')] = 1; });
     dati.lezioni.forEach(function (l) { (l.materiali || []).forEach(function (m) { if (m.file) usati[m.file.replace(/^\/?uploads\//, '')] = 1; }); });
+    dati.verifiche.verifiche.forEach(function (v) { if (v && v.file) usati[v.file.replace(/^\/?uploads\//, '')] = 1; });
     var orfani = dati.uploads.filter(function (n) { return !usati[n] && !/\.(jpe?g|png|gif|webp|svg)$/i.test(n) && !righe.some(function (r) { return r.esistente && r.nome === n; }); });
     $('#orfani').hidden = !orfani.length;
     var ul = $('#lista-orfani'); ul.innerHTML = '';
     orfani.forEach(function (n) {
+      var gioco = GIOCO_FINE.test(n), mg = gioco ? GIOCO.exec(n) : null, anno = annoDa(n) || $('#anno').value || '';
       ul.appendChild(el('li', {}, [el('span', { text: n }), el('button', { class: 'btn ghost sm', type: 'button', onclick: function () {
-        righe.push({ file: null, nome: n, anno: annoDa(n) || $('#anno').value || '', uda: '', lezione: '', tipo: tipoDa(n), titolo: titoloDa(n), evidenza: false, esistente: true });
+        righe.push({ file: null, nome: n, anno: anno, uda: gioco ? udaDelGioco(mg, [], anno) : '', lezione: '', tipo: gioco ? TIPO_GIOCO : tipoDa(n), titolo: gioco ? titoloGioco(mg, n) : titoloDa(n), evidenza: false, esistente: true, gioco: gioco });
         disegna(); mostraOrfani();
-      } }, ['Collega a una lezione'])]));
+      } }, [gioco ? 'Collega a un\'unità' : 'Collega a una lezione'])]));
     });
   }
 
@@ -401,10 +446,11 @@ td.stretta{width:1%;white-space:nowrap}
     $('#p4').hidden = !righe.length && $('#esito').hidden;   /* dopo la pubblicazione l'esito resta visibile */
     if (!righe.length) { $('#riassunto').textContent = ''; $('#pubblica').disabled = true; return; }
     /* raggruppate per anno → UDA → lezione, nell'ordine di arrivo */
-    var ordinate = righe.slice().sort(function (a, b) { return (a.anno + '|' + norm(a.uda) + '|' + norm(a.lezione)).localeCompare(b.anno + '|' + norm(b.uda) + '|' + norm(b.lezione)) || righe.indexOf(a) - righe.indexOf(b); });
+    var chiave = function (r) { return r.anno + '|' + norm(r.uda) + '|' + (r.gioco ? 'zzz verifica' : norm(r.lezione)); };   /* il gioco in fondo alla sua unità */
+    var ordinate = righe.slice().sort(function (a, b) { return chiave(a).localeCompare(chiave(b)) || righe.indexOf(a) - righe.indexOf(b); });
     var gruppo = null;
     ordinate.forEach(function (r) {
-      var g = (r.anno ? ANNI[r.anno] : 'Anno da scegliere') + ' › ' + (r.uda || 'Unità da scegliere') + (r.lezione && r.lezione !== '—' ? ' › ' + r.lezione : '');
+      var g = (r.anno ? ANNI[r.anno] : 'Anno da scegliere') + ' › ' + (r.uda || 'Unità da scegliere') + (r.gioco ? ' › Verifica di fine unità' : r.lezione && r.lezione !== '—' ? ' › ' + r.lezione : '');
       if (g !== gruppo) { gruppo = g; tb.appendChild(el('tr', { class: 'gruppo' }, [el('td', { colspan: 8, text: g })])); }
       var tr = el('tr');
       tr.appendChild(el('td', {}, [el('div', { class: 'file' }, [el('b', { text: r.nome, title: r.nome }), el('small', { text: r.esistente ? 'già su GitHub' : (r.file.size / 1024 / 1024 >= 1 ? (r.file.size / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(r.file.size / 1024)) + ' KB') + (giaSulSito(r) ? ' → sostituisce uploads/' : ' → uploads/') + nomeFinale(r) })])]));
@@ -412,16 +458,24 @@ td.stretta{width:1%;white-space:nowrap}
       var udas = dati.uda.filter(function (u) { return !r.anno || String(u.anno) === r.anno; }).map(function (u) { return u.titolo.trim(); });
       righe.forEach(function (x) { if (x.uda && x.anno === r.anno && udas.indexOf(x.uda) < 0) udas.push(x.uda); });
       tr.appendChild(el('td', {}, [campoTesto(r, 'uda', udas, 'Nome dell\'unità', 'Unità')]));
-      var lezs = dati.lezioni.filter(function (l) { return (!r.anno || String(l.anno) === r.anno) && (!r.uda || norm(l.uda) === norm(r.uda)); }).map(function (l) { return l.titolo.trim(); });
-      righe.forEach(function (x) { if (x.lezione && x.lezione !== '—' && norm(x.uda) === norm(r.uda) && lezs.indexOf(x.lezione) < 0) lezs.push(x.lezione); });
-      lezs.unshift('—');
-      tr.appendChild(el('td', {}, [campoTesto(r, 'lezione', lezs, '— oppure nome', 'Lezione')]));
-      var st = el('select', { 'aria-label': 'Tipo' }); TIPI.forEach(function (t) { var o = el('option', { value: t, text: t }); if (r.tipo === t) o.selected = true; st.appendChild(o); }); st.addEventListener('change', function () { r.tipo = st.value; });
-      tr.appendChild(el('td', { class: 'stretta' }, [st]));
-      var ti = el('input', { type: 'text', value: r.titolo, 'aria-label': 'Titolo', placeholder: 'dal nome del file' }); ti.addEventListener('change', function () { r.titolo = ti.value.trim(); });
+      if (r.gioco) {   /* il gioco: nell'unità, senza lezione, tipo fisso */
+        tr.appendChild(el('td', { style: 'color:var(--lab-ink-soft);white-space:nowrap', text: 'Verifica di fine unità' }));
+        tr.appendChild(el('td', { class: 'stretta', style: 'color:var(--lab-ink-soft);white-space:nowrap', text: TIPO_GIOCO }));
+      } else {
+        var lezs = dati.lezioni.filter(function (l) { return (!r.anno || String(l.anno) === r.anno) && (!r.uda || norm(l.uda) === norm(r.uda)); }).map(function (l) { return l.titolo.trim(); });
+        righe.forEach(function (x) { if (x.lezione && x.lezione !== '—' && norm(x.uda) === norm(r.uda) && lezs.indexOf(x.lezione) < 0) lezs.push(x.lezione); });
+        lezs.unshift('—');
+        tr.appendChild(el('td', {}, [campoTesto(r, 'lezione', lezs, '— oppure nome', 'Lezione')]));
+        var st = el('select', { 'aria-label': 'Tipo' }); TIPI.forEach(function (t) { var o = el('option', { value: t, text: t }); if (r.tipo === t) o.selected = true; st.appendChild(o); }); st.addEventListener('change', function () { r.tipo = st.value; });
+        tr.appendChild(el('td', { class: 'stretta' }, [st]));
+      }
+      var ti = el('input', { type: 'text', value: r.titolo, 'aria-label': 'Titolo', placeholder: r.gioco ? 'dal gioco' : 'dal nome del file' }); ti.addEventListener('change', function () { r.titolo = ti.value.trim(); r._titoloAuto = false; });
       tr.appendChild(el('td', {}, [ti]));
-      var ev = el('input', { type: 'checkbox', 'aria-label': 'In evidenza' }); ev.checked = r.evidenza; ev.addEventListener('change', function () { r.evidenza = ev.checked; });
-      tr.appendChild(el('td', { class: 'stretta' }, [ev]));
+      if (r.gioco) tr.appendChild(el('td', { class: 'stretta' }));
+      else {
+        var ev = el('input', { type: 'checkbox', 'aria-label': 'In evidenza' }); ev.checked = r.evidenza; ev.addEventListener('change', function () { r.evidenza = ev.checked; });
+        tr.appendChild(el('td', { class: 'stretta' }, [ev]));
+      }
       tr.appendChild(el('td', { class: 'stretta' }, [el('button', { class: 'x', type: 'button', 'aria-label': 'Togli ' + r.nome, text: '×', onclick: function () { righe.splice(righe.indexOf(r), 1); disegna(); mostraOrfani(); } })]));
       tb.appendChild(tr);
     });
@@ -449,12 +503,13 @@ td.stretta{width:1%;white-space:nowrap}
   }
   function piano() {
     /* che cosa cambia nei dati: UDA nuove, lezioni nuove, file per lezione, file fuori dalle lezioni */
-    var udaNuove = [], lezNuove = [], perLez = {}, sciolti = [], errori = [];
+    var udaNuove = [], lezNuove = [], perLez = {}, sciolti = [], verifiche = [], errori = [];
     righe.forEach(function (r) {
       if (!r.anno) errori.push('«' + r.nome + '»: manca l\'anno.');
-      if (!r.uda) errori.push('«' + r.nome + '»: manca l\'unità.');
+      if (!r.uda) errori.push('«' + r.nome + '»: manca l\'unità' + (r.gioco ? ' di cui è la verifica' : '') + '.');
       if (!r.anno || !r.uda) return;
       if (!trovaUda(r.uda, r.anno) && !udaNuove.some(function (u) { return norm(u.titolo) === norm(r.uda) && u.anno === r.anno; })) udaNuove.push({ titolo: r.uda, anno: r.anno });
+      if (r.gioco) { verifiche.push(r); return; }
       var lez = r.lezione && r.lezione !== '—' ? r.lezione : '';
       if (lez) {
         var k = r.anno + '|' + norm(r.uda) + '|' + norm(lez);
@@ -462,7 +517,7 @@ td.stretta{width:1%;white-space:nowrap}
         (perLez[k] = perLez[k] || { anno: r.anno, uda: r.uda, lez: lez, file: [] }).file.push(r);
       } else sciolti.push(r);
     });
-    return { udaNuove: udaNuove, lezNuove: lezNuove, perLez: perLez, sciolti: sciolti, errori: errori };
+    return { udaNuove: udaNuove, lezNuove: lezNuove, perLez: perLez, sciolti: sciolti, verifiche: verifiche, errori: errori };
   }
   function riassumi() {
     var p = piano(), box = $('#riassunto'), nF = righe.filter(function (r) { return !r.esistente; }).length;
@@ -477,6 +532,7 @@ td.stretta{width:1%;white-space:nowrap}
     if (p.lezNuove.length) voci.push('Lezioni nuove: ' + p.lezNuove.map(function (l) { return '«' + l.titolo + '»'; }).join(', '));
     var nLez = Object.keys(p.perLez).length; if (nLez) voci.push(nLez + (nLez === 1 ? ' lezione riceve file' : ' lezioni ricevono file'));
     if (p.sciolti.length) voci.push(p.sciolti.length + (p.sciolti.length === 1 ? ' file resta' : ' file restano') + ' fuori dalle lezioni, dentro l\'unità');
+    if (p.verifiche.length) voci.push(p.verifiche.length === 1 ? 'Gioco di verifica di fine unità: «' + (p.verifiche[0].titolo || p.verifiche[0].nome) + '» (' + p.verifiche[0].uda + ')' : p.verifiche.length + ' giochi di verifica di fine unità: ' + p.verifiche.map(function (r) { return '«' + (r.titolo || r.nome) + '»'; }).join(', '));
     box.appendChild(el('b', { text: p.errori.length ? 'Manca qualcosa' : 'Pronto da pubblicare' }));
     var ul = el('ul'); (p.errori.length ? p.errori : voci).forEach(function (v) { ul.appendChild(el('li', { text: v })); }); box.appendChild(ul);
     $('#pubblica').disabled = !!p.errori.length;
@@ -505,7 +561,16 @@ td.stretta{width:1%;white-space:nowrap}
       });
     });
     p.sciolti.forEach(function (r) { if (giaSulSito(r) && collegato('/uploads/' + nomeFinale(r), lez, mat)) return; mat.push({ titolo: r.titolo || titoloDa(r.nome), anno: r.anno, uda: r.uda, tipo: r.tipo, file: '/uploads/' + nomeFinale(r), in_evidenza: !!r.evidenza }); });
-    return { uda: { uda: uda }, lezioni: { lezioni: lez }, materiali: { materiali: mat } };
+    /* i giochi di verifica: in data/verifiche.json (la «nota» e il resto del file restano com'erano);
+       un gioco già collegato si aggiorna (anno, unità), senza doppioni: il titolo scelto nel pannello resta */
+    var ver = JSON.parse(JSON.stringify(dati.verifiche)); if (!Array.isArray(ver.verifiche)) ver.verifiche = [];
+    p.verifiche.forEach(function (r) {
+      var percorso = '/uploads/' + nomeFinale(r), p2 = percorso.replace(/^\/?uploads\//, '');
+      var V = ver.verifiche.find(function (v) { return v && v.file && v.file.replace(/^\/?uploads\//, '') === p2; });
+      if (V) { V.anno = r.anno; V.uda = r.uda; if (!V.titolo && r.titolo) V.titolo = r.titolo; return; }
+      ver.verifiche.push({ titolo: r.titolo || '', anno: r.anno, uda: r.uda, descrizione: '', file: percorso });
+    });
+    return { uda: { uda: uda }, lezioni: { lezioni: lez }, materiali: { materiali: mat }, verifiche: ver };
   }
   function avanz(f, testo) { var b = $('#barra'); b.hidden = false; b.querySelector('i').style.width = Math.round(f * 100) + '%'; var s = $('#stato-pub'); s.hidden = false; s.className = 'stato'; s.textContent = testo; }
   $('#pubblica').addEventListener('click', function () {
@@ -533,12 +598,12 @@ td.stretta{width:1%;white-space:nowrap}
       .then(function (testa) {
         avanz(0.85, 'Aggiorno le lezioni…');
         var d = datiNuovi();
-        ['uda', 'lezioni', 'materiali'].forEach(function (k) { albero.push({ path: 'data/' + k + '.json', mode: '100644', type: 'blob', content: JSON.stringify(d[k], null, 2) + '\n' }); });
+        ['uda', 'lezioni', 'materiali', 'verifiche'].forEach(function (k) { albero.push({ path: 'data/' + k + '.json', mode: '100644', type: 'blob', content: JSON.stringify(d[k], null, 2) + '\n' }); });
         return gh(base + 'trees', { method: 'POST', body: { base_tree: testa.tree, tree: albero } }).then(function (t) { return { testa: testa, tree: t.sha }; });
       })
       .then(function (x) {
         avanz(0.92, 'Salvo…');
-        var p = piano(), msg = 'Importati ' + nuovi.length + ' file' + (p.lezNuove.length ? ', ' + p.lezNuove.length + (p.lezNuove.length === 1 ? ' lezione nuova' : ' lezioni nuove') : '') + (p.udaNuove.length ? ', ' + p.udaNuove.length + (p.udaNuove.length === 1 ? ' unità nuova' : ' unità nuove') : '') + ' (importazione rapida)';
+        var p = piano(), msg = 'Importati ' + nuovi.length + ' file' + (p.lezNuove.length ? ', ' + p.lezNuove.length + (p.lezNuove.length === 1 ? ' lezione nuova' : ' lezioni nuove') : '') + (p.udaNuove.length ? ', ' + p.udaNuove.length + (p.udaNuove.length === 1 ? ' unità nuova' : ' unità nuove') : '') + (p.verifiche.length ? ', ' + p.verifiche.length + (p.verifiche.length === 1 ? ' verifica di fine unità' : ' verifiche di fine unità') : '') + ' (importazione rapida)';
         return gh(base + 'commits', { method: 'POST', body: { message: msg, tree: x.tree, parents: [x.testa.sha] } });
       })
       .then(function (c) { return gh(base + 'refs/heads/' + RAMO, { method: 'PATCH', body: { sha: c.sha, force: false } }).then(function () { return c; }); })

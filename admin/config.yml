@@ -170,6 +170,54 @@ collections:
                   - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
 
   # ===========================================================
+  #  Verifiche di fine unità — un gioco per ogni UDA
+  # ===========================================================
+  - name: verifiche
+    label: "🎲  Verifiche di fine unità (giochi)"
+    description: "Al termine di ogni UDA c'è un gioco di verifica (un file .html). Si apre in una nuova scheda; alla fine lo studente scarica il rapporto e lo consegna: il sito non salva nulla. Il file si può caricare anche dalla pagina admin/importa.html: i nomi che finiscono con «-gioco.html» vengono riconosciuti da soli."
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: elenco
+        label: "Elenco verifiche"
+        file: data/verifiche.json
+        fields:
+          - { label: "Nota per gli studenti", name: nota, widget: text, required: false, hint: "Facoltativa: compare in cima alla pagina Verifiche. Es. «La verifica si fa in classe, con i computer della scuola»" }
+          - label: "Verifiche"
+            name: verifiche
+            widget: list
+            label_singular: "verifica"
+            collapsed: true          # righe chiuse: il pannello resta leggero anche con tanti elementi
+            allow_reorder: false     # niente trascinamento (deformava la pagina); l'ordine segue le unità del corso
+            add_to_top: true         # il nuovo elemento compare in cima, senza scorrere tutta la lista
+            summary: "{{fields.titolo}} — {{fields.uda}} ({{fields.anno}}° anno)"
+            fields:
+              - { label: "Titolo", name: titolo, widget: string, hint: "Es. «L’uomo che cerca oltre»: il titolo del gioco, come compare sulla scheda" }
+              - label: "Anno di corso"
+                name: anno
+                widget: select
+                options:
+                  - { label: "1° — Primo anno", value: "1" }
+                  - { label: "2° — Secondo anno", value: "2" }
+                  - { label: "3° — Terzo anno", value: "3" }
+                  - { label: "4° — Quarto anno", value: "4" }
+                  - { label: "5° — Quinto anno", value: "5" }
+              - label: "Unità (UDA) di cui è la verifica"
+                name: uda
+                widget: relation
+                collection: uda
+                file: elenco
+                search_fields: ["uda.*.titolo"]
+                display_fields: ["uda.*.titolo"]
+                value_field: "uda.*.titolo"
+                hint: "L'unità che il gioco verifica: la scheda compare in fondo alla sua pagina, dopo le lezioni. Deve essere dello stesso anno."
+              - { label: "Descrizione", name: descrizione, widget: text, required: false, hint: "Una riga: che cosa si fa nel gioco" }
+              - { label: "File del gioco (.html)", name: file, widget: file, required: false, hint: "Il file unico del gioco, es. «I 1-G l-uomo-che-cerca-oltre-gioco.html»" }
+              - { label: "Oppure un link esterno", name: link, widget: string, required: false, hint: "https://… — usato solo se non carichi un file" }
+              - { label: "Immagine di copertina", name: immagine, widget: image, required: false }
+              - { label: "Ordine", name: ordine, widget: number, value_type: int, required: false, hint: "Facoltativo, solo se un'unità ha più di una verifica: 1, 2, 3…" }
+
+  # ===========================================================
   #  Materiali (slide, documenti, link) per anno
   # ===========================================================
   - name: materiali
