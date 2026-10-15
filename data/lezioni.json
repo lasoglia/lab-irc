@@ -340,6 +340,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Che anno è, Una fede che ha una data",
+      "anno": "2",
+      "uda": "Gesù quali tracce",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/ii-1-4-che-anno-e-calendario-e-natale-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-1-4-che-anno-e-calendario-e-natale-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
