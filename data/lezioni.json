@@ -440,6 +440,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Giobbe, dove comincia il mio limite",
+      "anno": "5",
+      "uda": "Le due vie di Lemaître",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
