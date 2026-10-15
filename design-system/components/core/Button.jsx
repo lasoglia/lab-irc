@@ -1,7 +1,8 @@
 import React from 'react';
 
 /** Pill button with magnetic cursor pull, light sweep and press compression. */
-export function Button({ children, variant = 'primary', size = 'md', href, onClick, disabled = false, type = 'button' }) {
+/* ...rest: attributi passati così come sono (target, rel, aria-*), per i link che aprono una nuova scheda */
+export function Button({ children, variant = 'primary', size = 'md', href, onClick, disabled = false, type = 'button', ...rest }) {
   const ref = React.useRef(null);
   const [hov, setHov] = React.useState(false);
   const [down, setDown] = React.useState(false);
@@ -47,6 +48,6 @@ export function Button({ children, variant = 'primary', size = 'md', href, onCli
   };
   const inner = <>{sweep}<span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 8 }}>{children}</span></>;
 
-  if (href) return <a href={href} onClick={onClick} {...evts}>{inner}</a>;
-  return <button type={type} onClick={onClick} disabled={disabled} {...evts}>{inner}</button>;
+  if (href) return <a href={href} onClick={onClick} {...rest} {...evts}>{inner}</a>;
+  return <button type={type} onClick={onClick} disabled={disabled} {...rest} {...evts}>{inner}</button>;
 }
