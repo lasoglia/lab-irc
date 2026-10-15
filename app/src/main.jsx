@@ -35,6 +35,7 @@ import {
   azione, varianteBadge, percorso, iscriviPercorso, chiaveItem, segnaAperto, segnaUltima,
   dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
   titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
+  verificheAnno, verificheUda, azioneVerifica,
 } from "./dati.js";
 
 import "./app.css";
@@ -217,7 +218,7 @@ function Header({ titolo, onHome, q, setQ, anno, rotta, conStrumenti, conVideo }
         <nav aria-label="Sezioni" style={{ display: "flex", gap: 5 }}>
           {conStrumenti && <NavLink href="#strumenti" className="lab-nav-opt" attivo={rotta === "strumenti"}>Strumenti</NavLink>}
           {conVideo && <NavLink href="#video" className="lab-nav-opt" attivo={rotta === "video"}>Video</NavLink>}
-          <NavLink href="esami/">Verifiche</NavLink>
+          <NavLink href="#verifiche" attivo={rotta === "verifiche"}>Verifiche</NavLink>
         </nav>
       </div>
       {/* continuità: il filo del colore dell'anno resta sotto la testata */}
@@ -600,6 +601,7 @@ function PaginaHero({ color, glifo, eyebrow, titolo, desc, mascotte, compatto, n
 /* icone (stile Lucide, come nel design system) */
 const IconaCartella = () => <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" /></svg>;
 const IconaLibro = () => <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>;
+const IconaGioco = () => <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01" /><path d="M17.32 5H6.68a4 4 0 0 0-3.98 3.59C2.6 9.42 2 14.46 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.41-1.41A2 2 0 0 1 9.83 16h4.34a2 2 0 0 1 1.42.59L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.54-.6-6.58-.68-7.26A4 4 0 0 0 17.32 5z" /></svg>;
 
 /* il tag d'oro del "prossimo passo" (al massimo uno per vista) */
 const Tag = ({ children }) => <span className="lab-tag">{children}</span>;
@@ -744,6 +746,44 @@ function MatCard({ item, color, apri, primario, tag, mascotte, contesto, aperto 
 
 /* contesto di un contenuto: "Anno V › Scienza e fede › Lemaitre e Einstein" */
 const contestoDi = (m) => [annoMeta(m.anno) ? "Anno " + annoMeta(m.anno).rom : "", pulito(m.uda), pulito(m.lezione)].map((x) => String(x || "").trim()).filter(Boolean).join(" › ");
+
+/* scheda di un gioco di verifica (vedi azioneVerifica in dati.js: nuova scheda, mai il visore).
+   Non lascia orme: la verifica non è un materiale da aprire ma una prova da consegnare. */
+function VerificaCard({ v, color, primario, tag, mascotte, contesto }) {
+  const act = azioneVerifica(v);
+  const anno = annoMeta(v.anno) ? +v.anno : 0;
+  const attivo = act.tipo !== "nessuna";
+  const immagine = v.immagine ? resolvePath(v.immagine) : "";
+  const titolo = String(v.titolo || "").replace(/\s+/g, " ").trim() || "Verifica di fine unità";
+  const gioca = () => { if (attivo) window.open(act.href, "_blank", "noopener"); };
+  return (
+    <Card style={{ "--c": color, padding: 0, height: "100%" }} tint={color} glow={`color-mix(in srgb, ${color} 22%, transparent)`}>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <div onClick={attivo ? gioca : undefined} aria-hidden="true" className={"lab-copertina" + (immagine ? " lab-copertina--img" : "")}
+          style={{ position: "relative", height: 144, background: immagine ? `center/cover no-repeat url("${immagine.replace(/"/g, "%22")}")` : `linear-gradient(135deg, color-mix(in srgb, ${color} 61.8%, var(--lab-surface)), color-mix(in srgb, ${color} 21%, var(--lab-surface)))`, boxShadow: immagine ? "none" : "inset 0 -1px 0 color-mix(in srgb, var(--lab-oro) 35%, transparent)", display: "grid", placeItems: "center", fontFamily: "var(--lab-font-inscription)", fontWeight: 600, fontSize: 55, color: immagine ? "rgba(255,255,255,.85)" : color, cursor: attivo ? "pointer" : "default" }}>
+          {!immagine && <span style={{ opacity: 0.9 }}>{anno ? ROMAN[anno] : "✦"}</span>}
+        </div>
+        {mascotte && anno ? <span className="lab-mini-mascotte" style={{ position: "absolute", right: 13, top: 127, zIndex: 2 }}><YearMascot year={anno} size={34} halo={false} still /></span> : null}
+        <div style={{ padding: 21, display: "flex", flexDirection: "column", gap: 13, flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+            <Badge variant="viola">{v.tipo || "Gioco di verifica"}</Badge>
+            {tag && <Tag>{tag}</Tag>}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
+            {contesto && <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--lab-muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contesto}</span>}
+            <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere" }}>{titolo}</h3>
+            {v.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{v.descrizione}</p>}
+          </div>
+          <div className="lab-azione" style={{ marginTop: "auto", paddingTop: 8 }}>
+            {attivo
+              ? <Button size="sm" variant={primario ? "primary" : "ghost"} onClick={gioca}>{act.testo}</Button>
+              : <Button size="sm" variant="ghost" disabled>{act.testo}</Button>}
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 /* contenuti con filtro per tipo.
    percorso: il primo materiale non ancora aperto è il "prossimo passo"
@@ -906,6 +946,7 @@ function UdaPage({ D, n, uda, apri }) {
   const u = trovaUda(D, n, uda);
   const lez = lezioniForUda(D, n, uda);
   const loose = itemsInUda(D, n, uda).filter((it) => !normT(it.lezione));
+  const ver = verificheUda(D, n, uda);   /* il gioco di fine unità, se c'è già */
   const tutti = itemsInUda(D, n, uda);
   const aperti = contaAperti(tutti, orme.set);
   const conteggi = lez.map((l) => { const it = itemsInLezione(D, n, uda, l.titolo); return { n: it.length, a: contaAperti(it, orme.set) }; });
@@ -919,7 +960,7 @@ function UdaPage({ D, n, uda, apri }) {
   let saluto;
   if (lez.length) {
     const t = bersaglio >= 0 ? lez[bersaglio] : null;
-    if (completa) saluto = "Hai aperto tutti i materiali di questa unità.";
+    if (completa) saluto = ver.length ? "Hai aperto tutto: ora tocca al gioco di verifica." : "Hai aperto tutti i materiali di questa unità.";
     else if (t && conteggi.some((c) => c.a > 0)) saluto = lez.length > 1 ? `Eccoti! Riprendi dalla lezione ${bersaglio + 1}.` : "Eccoti! Riprendi da dove eri.";
     else saluto = lez.length === 1 ? "Una lezione ti aspetta: entriamo?" : `${lez.length} lezioni ti aspettano: si parte dalla prima.`;
   } else if (tutti.length) saluto = completa ? "Hai aperto tutti i materiali di questa unità." : "Si comincia da qui.";
@@ -963,9 +1004,24 @@ function UdaPage({ D, n, uda, apri }) {
           <Contenuti items={loose} color={color} apri={apri} percorso={lez.length === 0} />
         </>
       )}
-      {!lez.length && !loose.length && <Vuoto anno={+n} titolo="Questa unità è in preparazione" testo="Le lezioni arriveranno presto. Intanto puoi tornare all'anno." indietro={{ testo: "← Torna al " + meta.nome.toLowerCase(), href: "#anno/" + n }} />}
-      {completa && <Fine>{v.succ ? "Qui hai aperto tutta l'unità. La strada continua qui sotto." : "Qui hai aperto tutta l'unità. Quando vuoi, torna all'anno per vedere il quadro."}</Fine>}
-      <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa} />
+      {!lez.length && !loose.length && !ver.length && <Vuoto anno={+n} titolo="Questa unità è in preparazione" testo="Le lezioni arriveranno presto. Intanto puoi tornare all'anno." indietro={{ testo: "← Torna al " + meta.nome.toLowerCase(), href: "#anno/" + n }} />}
+      {completa && <Fine>{ver.length ? "Qui hai aperto tutta l'unità: ora tocca alla verifica, qui sotto." : v.succ ? "Qui hai aperto tutta l'unità. La strada continua qui sotto." : "Qui hai aperto tutta l'unità. Quando vuoi, torna all'anno per vedere il quadro."}</Fine>}
+      {/* fine unità: il gioco di verifica. Quando tutto è stato aperto è lui il prossimo passo (l'unico pulsante pieno) */}
+      {ver.length > 0 && (
+        <>
+          <SectionHead small eyebrow="Fine unità" title={ver.length === 1 ? "Verifica" : "Verifiche"} sub="Si gioca fino alla fine e si consegna il rapporto al docente. Si apre in una nuova scheda: serve internet." />
+          <Griglia n={ver.length}>
+            {ver.map((x, i) => (
+              <Reveal key={chiaveItem(x)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
+                <div className="lab-fig" style={{ height: "100%" }}>
+                  <VerificaCard v={x} color={color} primario={completa && i === 0} tag={completa && i === 0 ? "Ora la verifica" : null} />
+                </div>
+              </Reveal>
+            ))}
+          </Griglia>
+        </>
+      )}
+      <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa && !ver.length} />
     </div>
   );
 }
@@ -1054,29 +1110,92 @@ function ListaPage({ D, tipo, apri }) {
   );
 }
 
-/* ricerca: mostra anche DOVE stanno le cose (unità e lezioni) */
+/* ---------- verifiche di fine unità ----------
+   Un gioco per ogni unità, per anno. Le istruzioni per lo studente sono qui,
+   una volta per tutte; la piattaforma delle verifiche con codice (esami/)
+   resta raggiungibile in fondo. */
+const PASSI_VERIFICA = [
+  ["Apri il gioco", "con «Gioca ↗»: si apre in una nuova scheda. Serve la connessione a internet; meglio un computer con tastiera e mouse."],
+  ["Scrivi nome, cognome e classe", "quando il gioco lo chiede: servono solo per il rapporto finale."],
+  ["Gioca fino alla fine", "senza chiudere o ricaricare la pagina: la partita ricomincerebbe da capo."],
+  ["Consegna il rapporto", "alla fine premi «Scarica il rapporto» (o «Copia») e consegnalo al docente. Il sito non salva nulla: il voto lo dà il docente."],
+];
+function ComeSiGioca({ nota }) {
+  return (
+    <Reveal className="lab-regione lab-passi" style={{ padding: "21px 21px 13px", borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 34 }}>
+      <Eyebrow>Come funziona</Eyebrow>
+      {nota && <p className="lab-nota-ver">{nota}</p>}
+      <ol>
+        {PASSI_VERIFICA.map(([t, d]) => <li key={t}><span><b>{t}</b>{d}</span></li>)}
+      </ol>
+    </Reveal>
+  );
+}
+function PiattaformaEsami() {
+  return (
+    <Reveal className="lab-regione" style={{ marginTop: 55, padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", display: "flex", alignItems: "center", gap: 21, flexWrap: "wrap" }}>
+      <div style={{ flex: "1 1 320px", minWidth: 0 }}>
+        <Eyebrow>Verifiche con codice</Eyebrow>
+        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "55ch" }}>Per le verifiche a domande, con il codice dato dal docente, c'è la piattaforma online: è separata dal sito.</p>
+      </div>
+      <Button variant="ghost" size="sm" onClick={() => window.open("esami/", "_blank", "noopener")}>Apri la piattaforma ↗</Button>
+    </Reveal>
+  );
+}
+function VerifichePage({ D }) {
+  const home = { testo: "← Torna alla home", onClick: (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); } };
+  const anni = ANNI.map((a) => ({ a, lista: verificheAnno(D, a.n) })).filter((x) => x.lista.length);
+  const tot = anni.reduce((n, x) => n + x.lista.length, 0);
+  return (
+    <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
+      <Briciole voci={[{ testo: "Verifiche" }]} su={{ testo: "Home" }} />
+      <PaginaHero neutro glifo="✓" eyebrow={tot ? `Fine unità · ${tot === 1 ? "1 gioco" : tot + " giochi"}` : "Fine unità"} titolo="Verifiche"
+        desc="Al termine di ogni unità c'è un gioco: si gioca fino in fondo, si risponde alle domande e alla fine si consegna il rapporto al docente." />
+      {tot > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
+      {anni.map(({ a, lista }) => (
+        <React.Fragment key={a.n}>
+          <SectionHead small eyebrow={`Anno ${a.rom}`} title={a.nome} />
+          <Griglia n={lista.length}>
+            {lista.map((v, i) => (
+              <Reveal key={chiaveItem(v)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
+                <div className="lab-fig" style={{ height: "100%" }}>
+                  <VerificaCard v={v} color={colore(a.n)} mascotte contesto={v.uda ? "Fine unità · " + pulito(v.uda) : ""} />
+                </div>
+              </Reveal>
+            ))}
+          </Griglia>
+        </React.Fragment>
+      ))}
+      {!tot && <Vuoto titolo="Le verifiche sono in preparazione" testo={D.NOTA_VER || "Al termine di ogni unità troverai qui il suo gioco di verifica."} indietro={home} />}
+      <PiattaformaEsami />
+    </div>
+  );
+}
+
+/* ricerca: mostra anche DOVE stanno le cose (unità, lezioni e verifiche) */
 function RicercaPage({ D, q, apri, setQ }) {
   const { cartelle, items } = useMemo(() => cerca(D, q), [D, q]);
   const [tutte, setTutte] = useState(false);
   useEffect(() => setTutte(false), [q]);
   const tot = cartelle.length + items.length;
   const righe = tutte ? cartelle : cartelle.slice(0, 4);
-  const sub = [cartelle.length && `${cartelle.length} tra unità e lezioni`, items.length && materiali(items.length)].filter(Boolean).join(" · ");
+  const conVer = cartelle.some((c) => c.tipo === "verifica");
+  const sub = [cartelle.length && `${cartelle.length} tra unità${conVer ? ", lezioni e verifiche" : " e lezioni"}`, items.length && materiali(items.length)].filter(Boolean).join(" · ");
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Ricerca" }]} su={{ testo: "Home" }} />
       <SectionHead small h1 eyebrow="Ricerca" title={tot ? `Risultati per «${q}»` : `Niente per «${q}»`} sub={sub} />
       {cartelle.length > 0 && (
         <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 21 }}>
-          <Eyebrow>Unità e lezioni</Eyebrow>
-          {righe.map((c) => {
+          <Eyebrow>{conVer ? "Unità, lezioni e verifiche" : "Unità e lezioni"}</Eyebrow>
+          {righe.map((c, i) => {
             const col = colore(c.anno);
             return (
-              <a key={c.href} href={c.href} className="lab-riga" onClick={() => setQ("")}>
-                <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}>{c.tipo === "lezione" ? <IconaLibro /> : <IconaCartella />}</span>
+              <a key={c.href + "|" + i} href={c.href} className="lab-riga" onClick={() => setQ("")}>
+                <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}>{c.tipo === "lezione" ? <IconaLibro /> : c.tipo === "verifica" ? <IconaGioco /> : <IconaCartella />}</span>
                 <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
                   <b style={{ fontSize: 16, color: "var(--lab-ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{pulito(c.titolo)}</b>
-                  <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Anno {annoMeta(c.anno).rom} · {c.tipo === "lezione" ? "Lezione · " + pulito(c.uda) : "Unità di apprendimento"}</span>
+                  <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Anno {annoMeta(c.anno).rom} · {c.tipo === "lezione" ? "Lezione · " + pulito(c.uda) : c.tipo === "verifica" ? "Verifica di fine unità · " + pulito(c.uda) : "Unità di apprendimento"}</span>
                 </span>
                 <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
               </a>
@@ -1438,6 +1557,7 @@ function App() {
       } else t = `${m.nome} · ${sito}`;
     } else if (hash === "strumenti") t = "Strumenti · " + sito;
     else if (hash === "video") t = "Video · " + sito;
+    else if (hash === "verifiche") t = "Verifiche · " + sito;
     document.title = t;
   }, [D, hash, cercaQ]);
 
@@ -1453,6 +1573,7 @@ function App() {
     } else pagina = <AnnoPage key={hash} D={D} n={parti[1]} apri={apri} />;
     rotta = "anno";
   } else if (hash === "strumenti" || hash === "video") { pagina = <ListaPage key={hash} D={D} tipo={hash} apri={apri} />; rotta = hash; }
+  else if (hash === "verifiche") { pagina = <VerifichePage key={hash} D={D} />; rotta = "verifiche"; }
   else { pagina = <HomePage D={D} onYear={vaiAnno} />; rotta = "home"; }
 
   const nS = D.ITEMS.some((it) => it.kind === "strumento");

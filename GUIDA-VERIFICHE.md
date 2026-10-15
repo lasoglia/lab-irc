@@ -1,5 +1,10 @@
 # Guida alle verifiche online (Fase 1 — MVP)
 
+> Le **verifiche di fine unità** sono giochi (un file `.html` per unità) che il
+> sito ospita nella pagina **Verifiche**: come si caricano è spiegato in
+> `GUIDA-CONTENUTI.md`, punto 7. Questa guida riguarda invece la piattaforma
+> con codice (`/esami`), che resta disponibile.
+
 Questa guida ti porta dal niente alla **prima verifica funzionante**. È pensata
 per chi non programma: segui i punti **in ordine**. La parte "tecnica" è solo
 una, si fa **una volta sola** e poi non si tocca più.

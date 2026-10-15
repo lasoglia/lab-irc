@@ -196,7 +196,7 @@ function migraChiave(k) {
 }
 
 export async function caricaDati() {
-  const [site, anni, mat, str, vid, uda, lez] = await Promise.all([
+  const [site, anni, mat, str, vid, uda, lez, ver] = await Promise.all([
     load("data/site.json", SAMPLE.site),
     load("data/anni.json", SAMPLE.anni),
     load("data/materiali.json", SAMPLE.materiali),
@@ -204,6 +204,7 @@ export async function caricaDati() {
     load("data/video.json", SAMPLE.video),
     load("data/uda.json", []),
     load("data/lezioni.json", []),
+    load("data/verifiche.json", []),
   ]);
   const MAT = pickArr(mat, "materiali");
   const STR = pickArr(str, "strumenti");
@@ -251,7 +252,14 @@ export async function caricaDati() {
   UDA.forEach((u, i) => { u._i = i; u._items = UNICI.filter((it) => String(it.anno) === String(u.anno) && normT(it.uda) === normT(u.titolo)); });
   LEZ.forEach((l, i) => { l._i = i; l._items = UNICI.filter((it) => String(it.anno) === String(l.anno) && normT(it.lezione) === normT(l.titolo)); });
 
-  return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS: UNICI };
+  /* le verifiche di fine unità (un gioco per UDA) stanno a parte: non sono
+     materiali di una lezione e non entrano nel percorso dello studente */
+  const VER = pickArr(ver, "verifiche")
+    .filter((v) => v && (v.titolo || v.file || v.link))
+    .map((v, i) => ({ kind: "verifica", ...v, anno: String(v.anno == null ? "" : v.anno).trim(), tipo: v.tipo || "Gioco di verifica", _i: i }));
+  const NOTA_VER = ver && !Array.isArray(ver) && ver.nota ? String(ver.nota).trim() : "";
+
+  return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS: UNICI, VER, NOTA_VER };
 }
 
 export const matchAnno = (item, n) => String(item.anno) === String(n);
@@ -305,6 +313,24 @@ export function trovaLezione(D, n, udaT, lezT) {
     D.LEZ.find((x) => String(x.anno) === String(n) && normT(x.uda) === normT(udaT) && normT(x.titolo) === normT(lezT)) ||
     { titolo: String(lezT || "").trim() }
   );
+}
+
+/* ---------- verifiche di fine unità ----------
+   Un gioco per ogni unità, nell'ordine del corso (poi «ordine», poi l'ordine
+   di inserimento). Si apre in una NUOVA SCHEDA, mai nel visore: chiede lo
+   schermo intero e il mouse "catturato" e carica le sue librerie da internet,
+   cose che la sandbox del visore non permette. */
+export function verificheAnno(D, n) {
+  const udas = udaForYear(D, n).map((u) => normT(u.titolo));
+  const posUda = (v) => { const i = udas.indexOf(normT(v.uda)); return i < 0 ? 999 : i; };
+  const ord = (v) => (v.ordine === "" || v.ordine == null || isNaN(+v.ordine) ? 999 : +v.ordine);
+  return D.VER.filter((v) => matchAnno(v, n)).sort((a, b) => posUda(a) - posUda(b) || ord(a) - ord(b) || a._i - b._i);
+}
+export const verificheUda = (D, n, uda) => verificheAnno(D, n).filter((v) => normT(v.uda) === normT(uda));
+export function azioneVerifica(v) {
+  const raw = v.file || v.link || "";
+  const href = raw && raw !== "#" ? resolvePath(raw) : "";
+  return href ? { tipo: "esterno", href, testo: "Gioca ↗" } : { tipo: "nessuna", testo: "Presto disponibile" };
 }
 
 /* Cosa fa il pulsante di un contenuto. Un artefatto .html si apre DENTRO il
@@ -463,6 +489,10 @@ export function cerca(D, q) {
       lezioniForUda(D, a.n, u.titolo).forEach((l) => {
         if (ha(l.titolo, l.descrizione)) cartelle.push({ tipo: "lezione", titolo: l.titolo, uda: u.titolo, anno: a.n, href: hrefLezione(a.n, u.titolo, l.titolo) });
       });
+    });
+    /* i giochi di verifica: anche cercando «verifica» o «gioco» */
+    verificheAnno(D, a.n).forEach((v) => {
+      if (ha(v.titolo, v.descrizione, v.uda, "verifica", "gioco")) cartelle.push({ tipo: "verifica", titolo: v.titolo || "Verifica di fine unità", uda: v.uda, anno: a.n, href: "#verifiche" });
     });
   });
   return { cartelle, items };
