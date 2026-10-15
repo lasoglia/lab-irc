@@ -768,7 +768,7 @@ function VerificaCard({ v, color, primario, tag, mascotte, contesto, contestoHre
         {mascotte && anno ? <span className="lab-mini-mascotte" style={{ position: "absolute", right: 13, top: 127, zIndex: 2 }}><YearMascot year={anno} size={34} halo={false} still /></span> : null}
         <div style={{ padding: 21, display: "flex", flexDirection: "column", gap: 13, flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-            <Badge variant="viola">{v.tipo || "Gioco di verifica"}</Badge>
+            {v.segnaposto ? <Badge variant="neutro">In preparazione</Badge> : <Badge variant="viola">{v.tipo || "Gioco di verifica"}</Badge>}
             {tag && <Tag>{tag}</Tag>}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
@@ -778,13 +778,14 @@ function VerificaCard({ v, color, primario, tag, mascotte, contesto, contestoHre
             <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere" }}>{titolo}</h3>
             {v.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{v.descrizione}</p>}
           </div>
-          <div className="lab-azione" style={{ marginTop: "auto", paddingTop: 8 }}>
+          {/* un'unità senza gioco (archivio): nessun pulsante che non fa nulla */}
+          {!v.segnaposto && <div className="lab-azione" style={{ marginTop: "auto", paddingTop: 8 }}>
             {/* un link vero (si può aprire col tasto centrale, copiare): la nuova scheda è detta anche a chi ascolta */}
             {attivo
               ? <Button size="sm" variant={primario ? "primary" : "ghost"} href={act.href} target="_blank" rel="noopener">{act.testo} <span aria-hidden="true">↗</span><span className="lab-sr">(si apre in una nuova scheda)</span></Button>
               : <Button size="sm" variant="ghost" disabled>{act.testo}</Button>}
             {attivo && tocco && <p className="lab-nota-tocco">Da giocare al computer, con tastiera e mouse: sul telefono non si comanda.</p>}
-          </div>
+          </div>}
         </div>
       </div>
     </Card>
@@ -1165,15 +1166,16 @@ function VerifichePage({ D }) {
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Verifiche" }]} su={{ testo: "Home" }} />
-      <PaginaHero neutro glifo="✓" eyebrow={tot ? `Fine unità · ${tot === 1 ? "1 gioco" : tot + " giochi"}` : "Fine unità"} titolo="Verifiche"
+      <PaginaHero neutro glifo="✓" eyebrow={tot ? `Fine unità · ${contaVerifiche(tot)}` : "Fine unità"} titolo="Verifiche"
         desc="Al termine di ogni unità c'è un gioco: si gioca fino in fondo, si risponde alle domande e alla fine si consegna il rapporto al docente." />
       {D.NOTA_VER && <Reveal><p className="lab-nota-ver">{D.NOTA_VER}</p></Reveal>}
       <SectionHead small eyebrow="Archivio" title="Gli anni di corso" sub="Scegli l'anno: dentro trovi, unità per unità, il suo gioco di verifica." />
       <div className="lab-anni" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(199px,1fr))", gap: stretto ? 13 : 21 }}>
         {anni.map(({ a, lista }, i) => (
           <Reveal key={a.n} delay={ritardo(i)} griglia className="ds-calmo">
-            <YearCard year={+a.n} name={a.nome} href={hrefVerificheAnno(a.n)} compatto={stretto} countLabel={contaVerifiche(lista.length)}
-              description={lista.length ? lista.map((v) => String(v.titolo || "").trim() || "Verifica di fine unità").join(" · ") : "Le verifiche arriveranno al termine di ogni unità."} />
+            {/* «0 verifiche» e non «In preparazione»: l'etichetta non va a capo e deve stare prima della mascotte */}
+            <YearCard year={+a.n} name={a.nome} href={hrefVerificheAnno(a.n)} compatto={stretto} countLabel={lista.length ? contaVerifiche(lista.length) : "0 verifiche"}
+              description={lista.length ? lista.map((v) => String(v.titolo || "").trim() || "Verifica di fine unità").join(" · ") : "In preparazione: le verifiche arriveranno al termine di ogni unità."} />
           </Reveal>
         ))}
       </div>
@@ -1190,11 +1192,14 @@ function VerificheAnnoPage({ D, n }) {
   const schede = [
     ...gruppi.flatMap((g) => (g.verifiche.length
       ? g.verifiche.map((v) => ({ v, contesto: "Fine unità · " + pulito(g.uda.titolo), href: hrefUda(n, g.uda.titolo) }))
-      /* un'unità senza gioco: una scheda «in preparazione», così l'archivio mostra tutto il percorso */
-      : [{ v: { kind: "verifica", anno: String(n), uda: g.uda.titolo, titolo: pulito(g.uda.titolo), tipo: "Gioco di verifica", descrizione: "In preparazione: arriverà al termine dell'unità." }, contesto: "Fine unità", href: hrefUda(n, g.uda.titolo) }])),
+      /* un'unità senza gioco: una scheda «in preparazione» (senza pulsante), così l'archivio mostra tutto il percorso */
+      : [{ v: { kind: "verifica", segnaposto: true, anno: String(n), uda: g.uda.titolo, titolo: "Verifica in preparazione", descrizione: "Arriverà al termine dell'unità." }, contesto: "Fine unità · " + pulito(g.uda.titolo), href: hrefUda(n, g.uda.titolo) }])),
     ...altre.map((v) => ({ v, contesto: v.uda ? "Fine unità · " + pulito(v.uda) : "Fine unità", href: "" })),
   ];
   const nGiochi = schede.filter((s) => giocabile(s.v)).length;
+  /* i passi si spiegano appena c'è una verifica vera, anche se il suo file non è ancora caricato
+     («Come funziona →» della pagina dell'unità porta qui) */
+  const nReali = schede.filter((s) => !s.v.segnaposto).length;
   const udas = udaForYear(D, n);
   const tiles = [
     { main: true, eyebrow: "Le lezioni dell'anno", titolo: meta.nome, meta: udas.length ? `${udas.length} unità` : "", href: "#anno/" + n },
@@ -1205,7 +1210,7 @@ function VerificheAnnoPage({ D, n }) {
       <Briciole voci={[{ testo: "Verifiche", href: "#verifiche" }, { testo: "Anno " + meta.rom }]} su={{ testo: "Verifiche", href: "#verifiche" }} />
       <PaginaHero color={color} luce={n === "5" ? "50%" : undefined} glifo={meta.rom} eyebrow={`Verifiche · Anno ${meta.rom}${nGiochi ? " · " + contaVerifiche(nGiochi) : ""}`} titolo={meta.nome}
         desc="Un gioco al termine di ogni unità, in ordine di corso: si gioca fino alla fine e si consegna il rapporto al docente." mascotte={+n} compatto />
-      {nGiochi > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
+      {nReali > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
       {schede.length > 0 && (
         <>
           <SectionHead small eyebrow="Archivio" title="Le verifiche delle unità" />
@@ -1642,7 +1647,7 @@ function App() {
     <PrimaVista.Provider value={primaVista}>
       {rotta === "home" && <CursorHalo />}
       <div className="lab-app" style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
-        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : annoVerifiche} rotta={rotta} conStrumenti={nS} conVideo={nV} />
+        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : rotta === "verifiche" ? annoVerifiche : null} rotta={rotta} conStrumenti={nS} conVideo={nV} />
         <main>{pagina}</main>
         <Footer autore={D.SITE.autore || ""} iscrizione={D.SITE.iscrizione || D.SITE.dedica} festa={!!String(D.SITE.patrono || "").trim() && festaOggi(D.SITE.patrono_festa)} />
       </div>

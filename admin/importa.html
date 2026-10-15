@@ -337,16 +337,29 @@ td.stretta{width:1%;white-space:nowrap}
   }
   /* l'unità di un gioco: dal nome del file («…-G l-uomo-che-cerca-oltre-gioco.html» → l'unità dell'anno il cui titolo
      comincia così), altrimenti dalla cartella che lo contiene se è un'unità conosciuta o si chiama «UDA n - …» */
+  /* fra le unità dell'anno (anche quelle nuove scritte in tabella): prima il titolo breve del file («israele»,
+     «due-vie-di-lemaitre»), poi il nome della cartella senza «UDA 2 - » davanti. Vale l'inizio del titolo
+     dell'unità oppure parole di seguito dentro il titolo («Le due vie di Lemaître»). Se non è chiaro (nessuna unità,
+     o più d'una) la casella resta vuota e la sceglie il docente: un nome di cartella non crea mai un'unità nuova. */
   function udaDelGioco(m, cartelle, anno) {
-    var breve = m ? norm(m[3].replace(/[-_]+/g, ' ')) : '', migliore = '';
-    if (breve) dati.uda.concat(righe.map(function (r) { return { titolo: r.uda, anno: r.anno }; })).forEach(function (u) {
+    var candidate = [];
+    dati.uda.concat(righe.map(function (r) { return { titolo: r.uda, anno: r.anno }; })).forEach(function (u) {
       if (!u.titolo || (anno && String(u.anno) !== String(anno))) return;
-      var t = norm(u.titolo);
-      if ((t.indexOf(breve) === 0 || breve.indexOf(t) === 0) && u.titolo.length > migliore.length) migliore = u.titolo;
+      if (!candidate.some(function (c) { return norm(c) === norm(u.titolo); })) candidate.push(u.titolo);
     });
-    if (migliore) return migliore;
+    function cerca(chiave) {
+      var k = norm(chiave); if (!k) return '';
+      var uguale = candidate.filter(function (t) { return norm(t) === k; });
+      if (uguale.length) return uguale[0];
+      var inizio = candidate.filter(function (t) { var n = norm(t); return n.indexOf(k) === 0 || k.indexOf(n) === 0; });
+      if (inizio.length) return inizio.length === 1 ? inizio[0] : '';
+      var dentro = candidate.filter(function (t) { return (' ' + norm(t) + ' ').indexOf(' ' + k + ' ') >= 0; });
+      return dentro.length === 1 ? dentro[0] : '';
+    }
+    var dalNome = m ? cerca(m[3].replace(/[-_]+/g, ' ')) : '';
+    if (dalNome) return dalNome;
     var ultima = cartelle.length ? cartelle[cartelle.length - 1] : '';
-    return (trovaUda(ultima, anno) || /^uda\s*\d/i.test(ultima)) ? ultima : '';
+    return cerca(ultima.replace(/^(?:uda|unità|unita)\s*\d+\s*[-–—:.·]?\s*/i, ''));
   }
   /* «Lezione 2 - Il caso Galileo» → ordine 2 (il titolo resta intero: il sito lo mostra pulito) */
   function numeroDa(titolo) { var m = /^(?:uda|unità|unita|lezione|lez\.?)\s*(\d+)\b/i.exec(String(titolo || '').trim()); return m ? +m[1] : 0; }
@@ -380,6 +393,9 @@ td.stretta{width:1%;white-space:nowrap}
       var nome = parti.pop();
       if (!nome || /^\./.test(nome)) return;                          /* file nascosti (.DS_Store…) */
       if (parti.some(function (c) { return /^(docente|sorgenti)$/i.test(c); }) || !PUBBLICABILI.test(nome)) { ignorati[x.rel || nome] = 1; return; }
+      /* dall'archivio delle verifiche (cartelle «Verifiche» o «giochi») vanno sul sito solo i giochi:
+         griglie, soluzioni, copertine e appunti restano sul computer */
+      if (parti.some(function (c) { return /^(verifiche|giochi)$/i.test(c); }) && !GIOCO_FINE.test(nome)) { ignorati[x.rel || nome] = 1; return; }
       parti = parti.filter(function (c) { return !/^(pubblica|da-caricare)$/i.test(c); });
       if (righe.some(function (r) { return r.file && r.file.name === f.name && r.file.size === f.size; })) return;
       var cartelle = parti.slice();
