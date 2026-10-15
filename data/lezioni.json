@@ -380,6 +380,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Un vizio si può dipingere",
+      "anno": "3",
+      "uda": "Quando un'abitudine prende il comando",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iii-2-1-vizio-puo-dipingere-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-2-1-vizio-puo-dipingere-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
