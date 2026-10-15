@@ -300,6 +300,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Molti dèi o un Dio che chiama",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-2-abramo-dio-che-chiama-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-2-abramo-dio-che-chiama-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
