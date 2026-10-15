@@ -460,6 +460,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Un papa può sbagliare, e un papa senza Stato. Il 1870",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
