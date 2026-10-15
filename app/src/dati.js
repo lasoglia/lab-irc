@@ -336,7 +336,7 @@ export const giocabile = (v) => azioneVerifica(v).tipo !== "nessuna";
    (anche nessuna: «in preparazione»). L'Accoglienza non ha una verifica di fine unità e compare
    solo se ne ha una. Le verifiche di un'unità che non c'è più (titolo cambiato) restano in fondo:
    non spariscono mai. */
-const eAccoglienza = (u) => /^accoglienza\b/i.test(titoloPulito(u.titolo).titolo) || numeroDaFile(u, 1) === 0;
+const eAccoglienza = (u) => /^accoglienza(\s+([ivx]+|\d+))?$/i.test(titoloPulito(u.titolo).titolo) || numeroDaFile(u, 1) === 0;
 export function archivioVerifiche(D, n) {
   const tutte = verificheAnno(D, n);
   const usate = new Set();

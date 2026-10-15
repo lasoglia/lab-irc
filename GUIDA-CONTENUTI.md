@@ -336,11 +336,12 @@ unità del primo anno: anno romano, numero dell'unità, `G`, titolo breve,
 Le verifiche sono ordinate come le lezioni: **anno di corso → unità**.
 
 - **Verifiche** (voce in alto, anche sul telefono): i cinque anni di corso. Ogni
-  anno dice quante verifiche ha («1 verifica») e i titoli dei giochi, oppure
-  «In preparazione».
+  anno dice quante verifiche giocabili ha («1 verifica») e i titoli dei giochi,
+  oppure «0 verifiche · In preparazione».
 - **Verifiche › Anno I** (e così gli altri anni): i quattro passi per gli
   studenti (apri il gioco, scrivi nome e classe, gioca fino alla fine o, se il
-  tempo finisce, Esc → «Consegna la prova», scarica il rapporto e consegnalo) e
+  tempo finisce, Esc → «Consegna la prova», scarica il rapporto e consegnalo),
+  che compaiono appena l'anno ha almeno una verifica, e
   poi **tutte le unità dell'anno in ordine di corso**, una scheda ciascuna: il
   gioco con il pulsante «Gioca ↗», oppure «In preparazione» se il gioco di
   quell'unità non c'è ancora. Il nome dell'unità sulla scheda porta alla sua
@@ -383,8 +384,14 @@ Verifiche/giochi/
 └── Anno II/ …
 ```
 
-La cartella `sorgenti` viene saltata e `pubblica` non conta come livello; un
-gioco già online con lo stesso nome viene sostituito, senza doppioni. Un nome che finisce
+Le cartelle `sorgenti` e `docente` vengono saltate e `pubblica` non conta come
+livello. Da una cartella che si chiama `Verifiche` o `giochi` vanno sul sito
+**solo i giochi** (i file che finiscono con `-gioco.html`): griglie di
+correzione, soluzioni, immagini e appunti restano sul computer e il riepilogo
+li conta tra gli «ignorati». Se invece trascini solo la cartella di un anno o di
+un'unità, tieni quei file in `docente` o `sorgenti`, e prima di pubblicare
+togli con × ogni riga della tabella che non è un gioco. Un gioco già online con
+lo stesso nome viene sostituito, senza doppioni. Un nome che finisce
 con `-gioco.html` viene riconosciuto da solo: in tabella la riga dice «Verifica
 di fine unità», con l'anno (dal numero romano iniziale), l'unità (dal titolo
 breve nel nome: `l-uomo-che-cerca-oltre` → «L'uomo che cerca oltre il senso
@@ -408,11 +415,18 @@ Note:
 - Finché il gioco di un'unità non ha ancora il file, la sua scheda dice «Presto
   disponibile» e non conta come passo successivo. Le unità senza nessun gioco
   compaiono nell'archivio come «In preparazione», da sole: non serve fare nulla.
-- L'unità si riconosce dal **titolo breve** nel nome del file, che deve essere
-  l'inizio del titolo dell'unità sul sito (`israele` → «Israele, una promessa,
-  una storia, fino a oggi»). Il numero dell'unità nel nome del file (`I 2-G`) è
-  quello dell'archivio, senza contare l'Accoglienza, come per le lezioni
-  (`i-2-1-…`).
+- L'unità si riconosce dal **titolo breve** nel nome del file: l'inizio del
+  titolo dell'unità sul sito (`israele` → «Israele, una promessa, una storia,
+  fino a oggi») oppure parole di seguito dentro il titolo (`due-vie-di-lemaitre`
+  → «Le due vie di Lemaître»). Se non basta, si guarda il nome della cartella
+  dell'unità, senza «UDA 2 - » davanti. Se la pagina non è sicura, la casella
+  dell'unità resta **vuota** e la scegli tu dall'elenco: un nome di cartella non
+  crea mai un'unità nuova. Prima di pubblicare, guarda che il riepilogo non
+  abbia una riga «Unità nuove» che non ti aspetti.
+- Il numero dell'unità nel nome del file (`I 2-G`) e nel nome della cartella
+  serve solo a tenere in ordine il tuo archivio: è quello dell'archivio, senza
+  contare l'Accoglienza, come per le lezioni (`i-2-1-…`); la pagina non lo usa
+  per riconoscere l'unità.
 - I giochi non entrano nel «percorso» dello studente (sigilli e conteggi):
   la verifica non è un materiale da aprire ma una prova da consegnare.
 - La piattaforma delle verifiche con codice (`/esami`, vedi
