@@ -400,6 +400,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Un'Europa divisa, perché la Riforma si moltiplica",
+      "anno": "4",
+      "uda": "Riformare una Chiesa, cambiare una cultura",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iv-1-4-europa-divisa-cuius-regio-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-1-4-europa-divisa-cuius-regio-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
