@@ -320,6 +320,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Il male subito ha l'ultima parola",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-3-giuseppe-e-i-fratelli-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-3-giuseppe-e-i-fratelli-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
