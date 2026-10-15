@@ -35,7 +35,7 @@ import {
   azione, varianteBadge, percorso, iscriviPercorso, chiaveItem, segnaAperto, segnaUltima,
   dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
   titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
-  verificheAnno, verificheUda, azioneVerifica,
+  verificheAnno, verificheUda, azioneVerifica, archivioVerifiche, hrefVerificheAnno, giocabile,
 } from "./dati.js";
 
 import "./app.css";
@@ -749,7 +749,7 @@ const contestoDi = (m) => [annoMeta(m.anno) ? "Anno " + annoMeta(m.anno).rom : "
 
 /* scheda di un gioco di verifica (vedi azioneVerifica in dati.js: nuova scheda, mai il visore).
    Non lascia orme: la verifica non è un materiale da aprire ma una prova da consegnare. */
-function VerificaCard({ v, color, primario, tag, mascotte, contesto }) {
+function VerificaCard({ v, color, primario, tag, mascotte, contesto, contestoHref }) {
   const act = azioneVerifica(v);
   const anno = annoMeta(v.anno) ? +v.anno : 0;
   const attivo = act.tipo !== "nessuna";
@@ -772,7 +772,9 @@ function VerificaCard({ v, color, primario, tag, mascotte, contesto }) {
             {tag && <Tag>{tag}</Tag>}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
-            {contesto && <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--lab-muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contesto}</span>}
+            {contesto && (contestoHref
+              ? <a href={contestoHref} className="lab-ver-contesto" style={{ fontSize: 12.5, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contesto}</a>
+              : <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--lab-muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{contesto}</span>)}
             <h3 style={{ fontSize: 24, margin: 0, textWrap: "balance", overflowWrap: "anywhere" }}>{titolo}</h3>
             {v.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{v.descrizione}</p>}
           </div>
@@ -910,6 +912,7 @@ function AnnoPage({ D, n, apri }) {
   const bersaglio = conteggi.findIndex((c) => c.n > 0 && c.a < c.n);
   const nome = (window.LabMascotte && LabMascotte.INFO && LabMascotte.INFO[n] && LabMascotte.INFO[n].nome) || "";
   const vuoto = !udas.length && !loose.length;
+  const nVer = verificheAnno(D, n).filter(giocabile).length;
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Anno " + meta.rom }]} su={{ testo: "Home" }} />
@@ -938,6 +941,8 @@ function AnnoPage({ D, n, apri }) {
         </>
       )}
       {vuoto && <Vuoto anno={+n} titolo="Quest'anno è in preparazione" testo="I materiali arriveranno presto." indietro={{ testo: "← Torna alla home", onClick: (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); } }} />}
+      {/* l'archivio delle verifiche dell'anno, quando ce n'è almeno una */}
+      {nVer > 0 && <Continua tiles={[{ eyebrow: "Archivio delle verifiche", titolo: "Le verifiche del " + meta.nome.toLowerCase(), meta: contaVerifiche(nVer), href: hrefVerificheAnno(n) }]} color={color} />}
     </div>
   );
 }
@@ -1015,7 +1020,7 @@ function UdaPage({ D, n, uda, apri }) {
           (l'unico pulsante pieno, e la strada avanti non "chiama"); un gioco senza file ancora non lo è */}
       {ver.length > 0 && (
         <>
-          <SectionHead small eyebrow="Fine unità" title={ver.length === 1 ? "Verifica" : "Verifiche"} sub={<>Si gioca al computer, in una nuova scheda, fino alla fine; poi si consegna il rapporto al docente. <a href="#verifiche">Come funziona →</a></>} />
+          <SectionHead small eyebrow="Fine unità" title={ver.length === 1 ? "Verifica" : "Verifiche"} sub={<>Si gioca al computer, in una nuova scheda, fino alla fine; poi si consegna il rapporto al docente. <a href={hrefVerificheAnno(n)}>Come funziona →</a></>} />
           <Griglia n={ver.length}>
             {ver.map((x, i) => (
               <Reveal key={chiaveItem(x)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
@@ -1151,32 +1156,72 @@ function PiattaformaEsami() {
     </Reveal>
   );
 }
+/* l'archivio delle verifiche, come quello delle lezioni: Verifiche → anno di corso → le verifiche delle sue unità */
+const contaVerifiche = (n) => (n ? `${n} ${n === 1 ? "verifica" : "verifiche"}` : "In preparazione");
 function VerifichePage({ D }) {
-  const home = { testo: "← Torna alla home", onClick: (e) => { e.preventDefault(); window.dispatchEvent(new Event("lab:home")); } };
-  const anni = ANNI.map((a) => ({ a, lista: verificheAnno(D, a.n) })).filter((x) => x.lista.length);
+  const stretto = useStretto();
+  const anni = ANNI.map((a) => { const lista = verificheAnno(D, a.n).filter(giocabile); return { a, lista }; });
   const tot = anni.reduce((n, x) => n + x.lista.length, 0);
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Verifiche" }]} su={{ testo: "Home" }} />
       <PaginaHero neutro glifo="✓" eyebrow={tot ? `Fine unità · ${tot === 1 ? "1 gioco" : tot + " giochi"}` : "Fine unità"} titolo="Verifiche"
         desc="Al termine di ogni unità c'è un gioco: si gioca fino in fondo, si risponde alle domande e alla fine si consegna il rapporto al docente." />
-      {tot > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
-      {anni.map(({ a, lista }) => (
-        <React.Fragment key={a.n}>
-          <SectionHead small eyebrow={`Anno ${a.rom}`} title={a.nome} />
-          <Griglia n={lista.length}>
-            {lista.map((v, i) => (
-              <Reveal key={chiaveItem(v)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
-                <div className="lab-fig" style={{ height: "100%" }}>
-                  <VerificaCard v={v} color={colore(a.n)} mascotte contesto={v.uda ? "Fine unità · " + pulito(v.uda) : ""} />
+      {D.NOTA_VER && <Reveal><p className="lab-nota-ver">{D.NOTA_VER}</p></Reveal>}
+      <SectionHead small eyebrow="Archivio" title="Gli anni di corso" sub="Scegli l'anno: dentro trovi, unità per unità, il suo gioco di verifica." />
+      <div className="lab-anni" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(199px,1fr))", gap: stretto ? 13 : 21 }}>
+        {anni.map(({ a, lista }, i) => (
+          <Reveal key={a.n} delay={ritardo(i)} griglia className="ds-calmo">
+            <YearCard year={+a.n} name={a.nome} href={hrefVerificheAnno(a.n)} compatto={stretto} countLabel={contaVerifiche(lista.length)}
+              description={lista.length ? lista.map((v) => String(v.titolo || "").trim() || "Verifica di fine unità").join(" · ") : "Le verifiche arriveranno al termine di ogni unità."} />
+          </Reveal>
+        ))}
+      </div>
+      <PiattaformaEsami />
+    </div>
+  );
+}
+
+/* un anno dell'archivio: le sue unità in ordine di corso, ognuna con il suo gioco (o «in preparazione») */
+function VerificheAnnoPage({ D, n }) {
+  const meta = annoMeta(n);
+  const color = colore(n);
+  const { gruppi, altre } = archivioVerifiche(D, n);
+  const schede = [
+    ...gruppi.flatMap((g) => (g.verifiche.length
+      ? g.verifiche.map((v) => ({ v, contesto: "Fine unità · " + pulito(g.uda.titolo), href: hrefUda(n, g.uda.titolo) }))
+      /* un'unità senza gioco: una scheda «in preparazione», così l'archivio mostra tutto il percorso */
+      : [{ v: { kind: "verifica", anno: String(n), uda: g.uda.titolo, titolo: pulito(g.uda.titolo), tipo: "Gioco di verifica", descrizione: "In preparazione: arriverà al termine dell'unità." }, contesto: "Fine unità", href: hrefUda(n, g.uda.titolo) }])),
+    ...altre.map((v) => ({ v, contesto: v.uda ? "Fine unità · " + pulito(v.uda) : "Fine unità", href: "" })),
+  ];
+  const nGiochi = schede.filter((s) => giocabile(s.v)).length;
+  const udas = udaForYear(D, n);
+  const tiles = [
+    { main: true, eyebrow: "Le lezioni dell'anno", titolo: meta.nome, meta: udas.length ? `${udas.length} unità` : "", href: "#anno/" + n },
+    { eyebrow: "Torna alle verifiche", titolo: "Tutti gli anni", href: "#verifiche", indietro: true },
+  ];
+  return (
+    <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
+      <Briciole voci={[{ testo: "Verifiche", href: "#verifiche" }, { testo: "Anno " + meta.rom }]} su={{ testo: "Verifiche", href: "#verifiche" }} />
+      <PaginaHero color={color} luce={n === "5" ? "50%" : undefined} glifo={meta.rom} eyebrow={`Verifiche · Anno ${meta.rom}${nGiochi ? " · " + contaVerifiche(nGiochi) : ""}`} titolo={meta.nome}
+        desc="Un gioco al termine di ogni unità, in ordine di corso: si gioca fino alla fine e si consegna il rapporto al docente." mascotte={+n} compatto />
+      {nGiochi > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
+      {schede.length > 0 && (
+        <>
+          <SectionHead small eyebrow="Archivio" title="Le verifiche delle unità" />
+          <Griglia n={schede.length}>
+            {schede.map((s, i) => (
+              <Reveal key={chiaveItem(s.v)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
+                <div className={"lab-fig" + (giocabile(s.v) ? "" : " lab-ver-attesa")} style={{ height: "100%" }}>
+                  <VerificaCard v={s.v} color={color} contesto={s.contesto} contestoHref={s.href} />
                 </div>
               </Reveal>
             ))}
           </Griglia>
-        </React.Fragment>
-      ))}
-      {!tot && <Vuoto titolo="Le verifiche sono in preparazione" testo={D.NOTA_VER || "Al termine di ogni unità troverai qui il suo gioco di verifica."} indietro={home} />}
-      <PiattaformaEsami />
+        </>
+      )}
+      {!schede.length && <Vuoto anno={+n} titolo="Le verifiche di quest'anno sono in preparazione" testo="Arriveranno al termine di ogni unità." indietro={{ testo: "← Torna alle verifiche", href: "#verifiche" }} />}
+      <Continua tiles={tiles} color={color} />
     </div>
   );
 }
@@ -1540,6 +1585,9 @@ function App() {
   const cercaQ = q.trim();
   const parti = hash.split("/");
   const annoRotta = parti[0] === "anno" && annoMeta(parti[1]) ? parti[1] : null;
+  /* l'archivio delle verifiche: #verifiche e #verifiche/anno/<n> */
+  const verificheRotta = parti[0] === "verifiche";
+  const annoVerifiche = verificheRotta && parti[1] === "anno" && annoMeta(parti[2]) ? parti[2] : null;
 
   /* link con i vecchi titoli (già condivisi): si passa in silenzio al titolo nuovo */
   useEffect(() => {
@@ -1566,7 +1614,8 @@ function App() {
       } else t = `${m.nome} · ${sito}`;
     } else if (hash === "strumenti") t = "Strumenti · " + sito;
     else if (hash === "video") t = "Video · " + sito;
-    else if (hash === "verifiche") t = "Verifiche · " + sito;
+    else if (annoVerifiche) t = `Verifiche · Anno ${annoMeta(annoVerifiche).rom} · ${sito}`;
+    else if (verificheRotta) t = "Verifiche · " + sito;
     document.title = t;
   }, [D, hash, cercaQ]);
 
@@ -1582,7 +1631,8 @@ function App() {
     } else pagina = <AnnoPage key={hash} D={D} n={parti[1]} apri={apri} />;
     rotta = "anno";
   } else if (hash === "strumenti" || hash === "video") { pagina = <ListaPage key={hash} D={D} tipo={hash} apri={apri} />; rotta = hash; }
-  else if (hash === "verifiche") { pagina = <VerifichePage key={hash} D={D} />; rotta = "verifiche"; }
+  else if (annoVerifiche) { pagina = <VerificheAnnoPage key={hash} D={D} n={annoVerifiche} />; rotta = "verifiche"; }
+  else if (verificheRotta) { pagina = <VerifichePage key={hash} D={D} />; rotta = "verifiche"; }   /* anche un indirizzo sbagliato (#verifiche/anno/9) porta all'archivio */
   else { pagina = <HomePage D={D} onYear={vaiAnno} />; rotta = "home"; }
 
   const nS = D.ITEMS.some((it) => it.kind === "strumento");
@@ -1592,7 +1642,7 @@ function App() {
     <PrimaVista.Provider value={primaVista}>
       {rotta === "home" && <CursorHalo />}
       <div className="lab-app" style={{ position: "relative", zIndex: 1, minHeight: "100vh" }}>
-        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : null} rotta={rotta} conStrumenti={nS} conVideo={nV} />
+        <Header titolo={D.SITE.titolo} onHome={home} q={q} setQ={setQ} anno={rotta === "anno" ? annoRotta : annoVerifiche} rotta={rotta} conStrumenti={nS} conVideo={nV} />
         <main>{pagina}</main>
         <Footer autore={D.SITE.autore || ""} iscrizione={D.SITE.iscrizione || D.SITE.dedica} festa={!!String(D.SITE.patrono || "").trim() && festaOggi(D.SITE.patrono_festa)} />
       </div>

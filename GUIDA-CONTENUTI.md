@@ -12,8 +12,9 @@ in 1–2 minuti.
 - **Anno (1–5)** → tutti i materiali, strumenti e video di quell'anno
 - **Strumenti** → le app e gli artefatti interattivi
 - **Video** → i video di YouTube
-- **Verifiche** → i giochi di verifica di fine unità, per anno (punto 7); in fondo
-  alla pagina il collegamento alla piattaforma delle verifiche con codice (`/esami`)
+- **Verifiche** → l'archivio dei giochi di verifica di fine unità: i cinque anni
+  di corso e, dentro ogni anno, le verifiche delle sue unità (punto 7); in fondo
+  il collegamento alla piattaforma delle verifiche con codice (`/esami`)
 - **Ricerca** → la barra in alto cerca in tutti i contenuti
 
 Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, UDA, Lezioni,
@@ -328,16 +329,31 @@ Note utili:
 Al termine di ogni unità c'è un **gioco di verifica**: un file `.html` unico,
 per esempio `I 1-G l-uomo-che-cerca-oltre-gioco.html` (il gioco della prima
 unità del primo anno: anno romano, numero dell'unità, `G`, titolo breve,
-`-gioco`). Sul sito compare in due posti:
+`-gioco`).
 
-- nella pagina **Verifiche** (voce in alto, anche sul telefono), raggruppato
-  per anno, con i quattro passi per gli studenti: apri il gioco, scrivi nome e
-  classe, gioca fino alla fine (o, se il tempo finisce, Esc → «Consegna la
-  prova»), scarica il rapporto e consegnalo;
-- in fondo alla **pagina dell'unità**, dopo le lezioni, sotto «Fine unità ·
-  Verifica». Quando lo studente ha aperto tutti i materiali dell'unità, il
-  pulsante del gioco diventa quello pieno con il tag «Ora la verifica»: è il
-  passo successivo.
+### L'archivio delle verifiche sul sito
+
+Le verifiche sono ordinate come le lezioni: **anno di corso → unità**.
+
+- **Verifiche** (voce in alto, anche sul telefono): i cinque anni di corso. Ogni
+  anno dice quante verifiche ha («1 verifica») e i titoli dei giochi, oppure
+  «In preparazione».
+- **Verifiche › Anno I** (e così gli altri anni): i quattro passi per gli
+  studenti (apri il gioco, scrivi nome e classe, gioca fino alla fine o, se il
+  tempo finisce, Esc → «Consegna la prova», scarica il rapporto e consegnalo) e
+  poi **tutte le unità dell'anno in ordine di corso**, una scheda ciascuna: il
+  gioco con il pulsante «Gioca ↗», oppure «In preparazione» se il gioco di
+  quell'unità non c'è ancora. Il nome dell'unità sulla scheda porta alla sua
+  pagina. L'Accoglienza non compare (non ha una verifica di fine unità), a meno
+  che tu non le dia un gioco. Se una verifica è legata a un'unità che non esiste
+  più (per esempio dopo un cambio di titolo), resta in fondo all'anno: non
+  sparisce mai.
+- In fondo alla **pagina dell'unità**, dopo le lezioni, c'è anche lì il suo
+  gioco, sotto «Fine unità · Verifica». Quando lo studente ha aperto tutti i
+  materiali dell'unità, il pulsante del gioco diventa quello pieno con il tag
+  «Ora la verifica»: è il passo successivo.
+- In fondo alla **pagina dell'anno** (le lezioni) c'è il rimando «Le verifiche
+  del primo anno», quando l'anno ha almeno un gioco.
 
 Il gioco si apre in una **nuova scheda** del browser, non nel visore delle
 lezioni: chiede lo schermo intero, "cattura" il mouse e carica le sue librerie
@@ -352,7 +368,23 @@ computer della scuola conviene che lo studente lo cancelli dopo la consegna
 ### Come caricarlo
 
 **Dalla pagina di importazione** (`admin/importa.html`, punto 6): trascina il
-file del gioco, o la cartella `pubblica` che lo contiene. Un nome che finisce
+file del gioco, la cartella `pubblica` che lo contiene, oppure tutta la
+cartella dell'archivio delle verifiche del tuo computer, ordinata come quella
+delle lezioni:
+
+```
+Verifiche/giochi/
+├── Anno I/
+│   ├── UDA 1 - L'uomo che cerca oltre, il senso religioso/
+│   │   ├── pubblica/   ← I 1-G l-uomo-che-cerca-oltre-gioco.html
+│   │   └── sorgenti/   ← il pacchetto del gioco (viene ignorato)
+│   └── UDA 2 - Israele, una promessa…/
+│       └── pubblica/   ← I 2-G israele-gioco.html
+└── Anno II/ …
+```
+
+La cartella `sorgenti` viene saltata e `pubblica` non conta come livello; un
+gioco già online con lo stesso nome viene sostituito, senza doppioni. Un nome che finisce
 con `-gioco.html` viene riconosciuto da solo: in tabella la riga dice «Verifica
 di fine unità», con l'anno (dal numero romano iniziale), l'unità (dal titolo
 breve nel nome: `l-uomo-che-cerca-oltre` → «L'uomo che cerca oltre il senso
@@ -374,7 +406,13 @@ Note:
   viene pulito (`i-1-g-l-uomo-che-cerca-oltre-gioco.html`) e l'unità è
   riconosciuta da sola.
 - Finché il gioco di un'unità non ha ancora il file, la sua scheda dice «Presto
-  disponibile» e non conta come passo successivo.
+  disponibile» e non conta come passo successivo. Le unità senza nessun gioco
+  compaiono nell'archivio come «In preparazione», da sole: non serve fare nulla.
+- L'unità si riconosce dal **titolo breve** nel nome del file, che deve essere
+  l'inizio del titolo dell'unità sul sito (`israele` → «Israele, una promessa,
+  una storia, fino a oggi»). Il numero dell'unità nel nome del file (`I 2-G`) è
+  quello dell'archivio, senza contare l'Accoglienza, come per le lezioni
+  (`i-2-1-…`).
 - I giochi non entrano nel «percorso» dello studente (sigilli e conteggi):
   la verifica non è un materiale da aprire ma una prova da consegnare.
 - La piattaforma delle verifiche con codice (`/esami`, vedi
