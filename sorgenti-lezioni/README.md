@@ -48,7 +48,13 @@ sono stati rifatti.
 Le lezioni 2 delle UDA (`i-1-2-…`, `iv-1-2-…`, `v-1-2-…`, oltre a `ii-1-2-…`
 qui sopra) sono già nello stile della lezione-modello e il docente ha chiesto
 di non toccarle: le prime tre non hanno un sorgente qui e vanno lasciate come
-sono. La lezione `iii-1-2-…` ha invece il suo sorgente dal 14 ottobre 2026
+sono. Unica eccezione, approvata dal docente il 15 ottobre 2026: in `i-1-2-…` e
+`iv-1-2-…` c'è, prima di `</head>`, un blocco `<style id="lab-lim-fix">` che vale
+solo in modalità LIM e abbassa il palco dell'animazione (scena 3) perché
+animazione, didascalia e comandi stiano in una schermata (la regola del kit
+attuale; in `i-1-2` con 30 px in più, perché l'ultima didascalia va su tre
+righe). Testi, scene e grafica fuori dalla LIM sono identici a prima.
+La lezione `iii-1-2-…` ha invece il suo sorgente dal 14 ottobre 2026
 (revisione del filo logico del terzo anno): si ricostruisce con `--anno 3` e
 con il suo CSS (`--css sorgenti-lezioni/iii-1-2-chi-puo-insegnare-a-chi.css`).
 

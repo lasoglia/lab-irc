@@ -1809,6 +1809,14 @@ button.lx-box:hover i{transform:translateX(5px)}
 :root[data-visore] body.ll .ll-tools{justify-content:flex-start}
 :root[data-visore] body.ll .ll-tools>.ll-icon{margin-left:auto}
 </style>
+<style id="lab-lim-fix">
+/* Correzione LIM (15 ottobre 2026): in modalità LIM l'animazione era più alta della schermata
+   (comandi tagliati o da raggiungere scorrendo). Solo in LIM il palco si abbassa quanto basta perché
+   animazione, didascalia e comandi stiano in una schermata: è la regola del kit attuale
+   (assets/kit/lab-skill.css, 8 ottobre 2026), con 30 px in più perché qui l'ultima didascalia
+   va su tre righe. Sullo schermo normale e sul telefono non cambia nulla. */
+:root[data-lim] body.ll .ll-scene .lp-anim>.lp-stage{max-height:calc((100vh - 500px) / var(--ll-z,1));min-height:calc(200px / var(--ll-z,1))}
+</style>
 </head>
 <body class="la g ll" data-anno="1" data-skin="arcade" data-skin-fixed="arcade" data-modo="lezione">
 <div id="app"></div>
