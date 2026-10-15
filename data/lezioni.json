@@ -360,6 +360,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Prima dei Vangeli, una notizia ricevuta e trasmessa",
+      "anno": "2",
+      "uda": "Quattro Vangeli, una Pasqua",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/ii-2-1-prima-dei-vangeli-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-2-1-prima-dei-vangeli-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
