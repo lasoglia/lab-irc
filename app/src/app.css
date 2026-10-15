@@ -168,6 +168,10 @@ html[data-lim] .lab-anteprima{ display:none; }
 .lab-passi li::before{ content:counter(passo); width:34px; height:34px; border-radius:50%; display:grid; place-items:center; font:600 14px/1 var(--lab-font-inscription); font-variant-numeric:lining-nums; color:var(--lab-oro-text); border:1px solid color-mix(in srgb, var(--lab-oro) 50%, transparent); background:var(--lab-oro-soft); }
 .lab-passi li b{ display:block; color:var(--lab-ink); font-weight:700; }
 .lab-nota-ver{ margin:0 0 21px; padding:13px 21px; border-left:3px solid var(--lab-oro); background:var(--lab-oro-soft); border-radius:0 8px 8px 0; font-size:16px; line-height:1.5; color:var(--lab-ink); }
+/* senza mouse (telefono, tablet) il gioco non si comanda: lo si dice sotto il pulsante */
+.lab-nota-tocco{ margin:8px 0 0; font-size:13px; line-height:1.4; color:var(--lab-muted); }
+/* testo solo per chi ascolta la pagina (es. «si apre in una nuova scheda») */
+.lab-sr{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
 /* figura–sfondo: con il mouse, la scheda indicata resta la sola figura */
 @media (hover:hover) and (pointer:fine){

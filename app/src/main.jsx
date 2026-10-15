@@ -756,6 +756,8 @@ function VerificaCard({ v, color, primario, tag, mascotte, contesto }) {
   const immagine = v.immagine ? resolvePath(v.immagine) : "";
   const titolo = String(v.titolo || "").replace(/\s+/g, " ").trim() || "Verifica di fine unità";
   const gioca = () => { if (attivo) window.open(act.href, "_blank", "noopener"); };
+  /* senza mouse (telefono, tablet) il gioco non si comanda: il pulsante resta, con l'avviso */
+  const tocco = useMemo(() => !conMouse(), []);
   return (
     <Card style={{ "--c": color, padding: 0, height: "100%" }} tint={color} glow={`color-mix(in srgb, ${color} 22%, transparent)`}>
       <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -775,9 +777,11 @@ function VerificaCard({ v, color, primario, tag, mascotte, contesto }) {
             {v.descrizione && <p style={{ fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: 0, textWrap: "pretty" }}>{v.descrizione}</p>}
           </div>
           <div className="lab-azione" style={{ marginTop: "auto", paddingTop: 8 }}>
+            {/* un link vero (si può aprire col tasto centrale, copiare): la nuova scheda è detta anche a chi ascolta */}
             {attivo
-              ? <Button size="sm" variant={primario ? "primary" : "ghost"} onClick={gioca}>{act.testo}</Button>
+              ? <Button size="sm" variant={primario ? "primary" : "ghost"} href={act.href} target="_blank" rel="noopener">{act.testo} <span aria-hidden="true">↗</span><span className="lab-sr">(si apre in una nuova scheda)</span></Button>
               : <Button size="sm" variant="ghost" disabled>{act.testo}</Button>}
+            {attivo && tocco && <p className="lab-nota-tocco">Da giocare al computer, con tastiera e mouse: sul telefono non si comanda.</p>}
           </div>
         </div>
       </div>
@@ -947,6 +951,7 @@ function UdaPage({ D, n, uda, apri }) {
   const lez = lezioniForUda(D, n, uda);
   const loose = itemsInUda(D, n, uda).filter((it) => !normT(it.lezione));
   const ver = verificheUda(D, n, uda);   /* il gioco di fine unità, se c'è già */
+  const verAttive = ver.filter((x) => azioneVerifica(x).tipo !== "nessuna");   /* …e con un file da aprire: solo allora è un passo */
   const tutti = itemsInUda(D, n, uda);
   const aperti = contaAperti(tutti, orme.set);
   const conteggi = lez.map((l) => { const it = itemsInLezione(D, n, uda, l.titolo); return { n: it.length, a: contaAperti(it, orme.set) }; });
@@ -960,10 +965,10 @@ function UdaPage({ D, n, uda, apri }) {
   let saluto;
   if (lez.length) {
     const t = bersaglio >= 0 ? lez[bersaglio] : null;
-    if (completa) saluto = ver.length ? "Hai aperto tutto: ora tocca al gioco di verifica." : "Hai aperto tutti i materiali di questa unità.";
+    if (completa) saluto = verAttive.length ? "Hai aperto tutto: ora tocca al gioco di verifica." : "Hai aperto tutti i materiali di questa unità.";
     else if (t && conteggi.some((c) => c.a > 0)) saluto = lez.length > 1 ? `Eccoti! Riprendi dalla lezione ${bersaglio + 1}.` : "Eccoti! Riprendi da dove eri.";
     else saluto = lez.length === 1 ? "Una lezione ti aspetta: entriamo?" : `${lez.length} lezioni ti aspettano: si parte dalla prima.`;
-  } else if (tutti.length) saluto = completa ? "Hai aperto tutti i materiali di questa unità." : "Si comincia da qui.";
+  } else if (tutti.length) saluto = completa ? (verAttive.length ? "Hai aperto tutto: ora tocca al gioco di verifica." : "Hai aperto tutti i materiali di questa unità.") : "Si comincia da qui.";
   useVoceProgresso(mRef, aperti, () => (aperti >= tutti.length ? "Fatto: hai aperto tutto. Se vuoi, si va avanti." : `Ne ${tutti.length - aperti === 1 ? "manca uno: ci siamo quasi." : "mancano " + (tutti.length - aperti) + "."}`));
 
   const udas = udaForYear(D, n);
@@ -1005,23 +1010,24 @@ function UdaPage({ D, n, uda, apri }) {
         </>
       )}
       {!lez.length && !loose.length && !ver.length && <Vuoto anno={+n} titolo="Questa unità è in preparazione" testo="Le lezioni arriveranno presto. Intanto puoi tornare all'anno." indietro={{ testo: "← Torna al " + meta.nome.toLowerCase(), href: "#anno/" + n }} />}
-      {completa && <Fine>{ver.length ? "Qui hai aperto tutta l'unità: ora tocca alla verifica, qui sotto." : v.succ ? "Qui hai aperto tutta l'unità. La strada continua qui sotto." : "Qui hai aperto tutta l'unità. Quando vuoi, torna all'anno per vedere il quadro."}</Fine>}
-      {/* fine unità: il gioco di verifica. Quando tutto è stato aperto è lui il prossimo passo (l'unico pulsante pieno) */}
+      {completa && <Fine>{verAttive.length ? "Qui hai aperto tutta l'unità: ora tocca alla verifica, qui sotto." : v.succ ? "Qui hai aperto tutta l'unità. La strada continua qui sotto." : "Qui hai aperto tutta l'unità. Quando vuoi, torna all'anno per vedere il quadro."}</Fine>}
+      {/* fine unità: il gioco di verifica. Quando tutto è stato aperto è lui il prossimo passo
+          (l'unico pulsante pieno, e la strada avanti non "chiama"); un gioco senza file ancora non lo è */}
       {ver.length > 0 && (
         <>
-          <SectionHead small eyebrow="Fine unità" title={ver.length === 1 ? "Verifica" : "Verifiche"} sub="Si gioca fino alla fine e si consegna il rapporto al docente. Si apre in una nuova scheda: serve internet." />
+          <SectionHead small eyebrow="Fine unità" title={ver.length === 1 ? "Verifica" : "Verifiche"} sub={<>Si gioca al computer, in una nuova scheda, fino alla fine; poi si consegna il rapporto al docente. <a href="#verifiche">Come funziona →</a></>} />
           <Griglia n={ver.length}>
             {ver.map((x, i) => (
               <Reveal key={chiaveItem(x)} delay={ritardo(i)} griglia className="ds-calmo" style={{ height: "100%" }}>
                 <div className="lab-fig" style={{ height: "100%" }}>
-                  <VerificaCard v={x} color={color} primario={completa && i === 0} tag={completa && i === 0 ? "Ora la verifica" : null} />
+                  <VerificaCard v={x} color={color} primario={completa && x === verAttive[0]} tag={completa && x === verAttive[0] ? "Ora la verifica" : null} />
                 </div>
               </Reveal>
             ))}
           </Griglia>
         </>
       )}
-      <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa && !ver.length} />
+      <Continua tiles={tiles} chiama={chiama && !verAttive.length} color={color} stretto={completa && !verAttive.length} />
     </div>
   );
 }
@@ -1115,19 +1121,22 @@ function ListaPage({ D, tipo, apri }) {
    una volta per tutte; la piattaforma delle verifiche con codice (esami/)
    resta raggiungibile in fondo. */
 const PASSI_VERIFICA = [
-  ["Apri il gioco", "con «Gioca ↗»: si apre in una nuova scheda. Serve la connessione a internet; meglio un computer con tastiera e mouse."],
-  ["Scrivi nome, cognome e classe", "quando il gioco lo chiede: servono solo per il rapporto finale."],
-  ["Gioca fino alla fine", "senza chiudere o ricaricare la pagina: la partita ricomincerebbe da capo."],
-  ["Consegna il rapporto", "alla fine premi «Scarica il rapporto» (o «Copia») e consegnalo al docente. Il sito non salva nulla: il voto lo dà il docente."],
+  ["Apri il gioco", "Premi «Gioca ↗»: si apre in una nuova scheda. Serve un computer con tastiera e mouse (sul telefono e sul tablet non si comanda) e la connessione a internet."],
+  ["Scrivi nome, cognome e classe", "Quando il gioco lo chiede: servono solo per il rapporto finale."],
+  ["Gioca fino alla fine", "Senza chiudere o ricaricare la pagina: la partita ricomincerebbe da capo. Se il tempo finisce prima, premi Esc e scegli «Consegna la prova»: il rapporto esce lo stesso."],
+  ["Consegna il rapporto", "Alla fine premi «Scarica il rapporto» (o «Copia») e consegnalo al docente; se il computer è della scuola, poi cancella il file. Il sito non salva nulla: il voto lo dà il docente."],
 ];
 function ComeSiGioca({ nota }) {
   return (
-    <Reveal className="lab-regione lab-passi" style={{ padding: "21px 21px 13px", borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 34 }}>
-      <Eyebrow>Come funziona</Eyebrow>
-      {nota && <p className="lab-nota-ver">{nota}</p>}
-      <ol>
-        {PASSI_VERIFICA.map(([t, d]) => <li key={t}><span><b>{t}</b>{d}</span></li>)}
-      </ol>
+    <Reveal>
+      <section className="lab-regione lab-passi" aria-label="Come funziona" style={{ padding: "21px 21px 13px", borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 34 }}>
+        <Eyebrow>Come funziona</Eyebrow>
+        {nota && <p className="lab-nota-ver">{nota}</p>}
+        {/* role="list": senza i pallini alcuni lettori di schermo non la leggono più come elenco */}
+        <ol role="list">
+          {PASSI_VERIFICA.map(([t, d]) => <li key={t}><span><b>{t}</b>{d}</span></li>)}
+        </ol>
+      </section>
     </Reveal>
   );
 }
@@ -1138,7 +1147,7 @@ function PiattaformaEsami() {
         <Eyebrow>Verifiche con codice</Eyebrow>
         <p style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "55ch" }}>Per le verifiche a domande, con il codice dato dal docente, c'è la piattaforma online: è separata dal sito.</p>
       </div>
-      <Button variant="ghost" size="sm" onClick={() => window.open("esami/", "_blank", "noopener")}>Apri la piattaforma ↗</Button>
+      <Button variant="ghost" size="sm" href="esami/" target="_blank" rel="noopener">Apri la piattaforma <span aria-hidden="true">↗</span><span className="lab-sr">(si apre in una nuova scheda)</span></Button>
     </Reveal>
   );
 }

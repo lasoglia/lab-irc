@@ -16,8 +16,8 @@ in 1–2 minuti.
   alla pagina il collegamento alla piattaforma delle verifiche con codice (`/esami`)
 - **Ricerca** → la barra in alto cerca in tutti i contenuti
 
-Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, Materiali,
-Strumenti, Video.
+Nel pannello trovi le sezioni: Impostazioni, Descrizioni degli anni, UDA, Lezioni,
+Verifiche di fine unità, Materiali, Strumenti, Video.
 
 ---
 
@@ -332,7 +332,8 @@ unità del primo anno: anno romano, numero dell'unità, `G`, titolo breve,
 
 - nella pagina **Verifiche** (voce in alto, anche sul telefono), raggruppato
   per anno, con i quattro passi per gli studenti: apri il gioco, scrivi nome e
-  classe, gioca fino alla fine, scarica il rapporto e consegnalo;
+  classe, gioca fino alla fine (o, se il tempo finisce, Esc → «Consegna la
+  prova»), scarica il rapporto e consegnalo;
 - in fondo alla **pagina dell'unità**, dopo le lezioni, sotto «Fine unità ·
   Verifica». Quando lo studente ha aperto tutti i materiali dell'unità, il
   pulsante del gioco diventa quello pieno con il tag «Ora la verifica»: è il
@@ -340,10 +341,13 @@ unità del primo anno: anno romano, numero dell'unità, `G`, titolo breve,
 
 Il gioco si apre in una **nuova scheda** del browser, non nel visore delle
 lezioni: chiede lo schermo intero, "cattura" il mouse e carica le sue librerie
-da internet, cose che il visore non permette. Serve quindi la connessione; va
-bene qualsiasi computer con tastiera e mouse. Il sito **non salva nulla**: alla
+da internet, cose che il visore non permette. Serve quindi la connessione e un
+**computer con tastiera e mouse**: sul telefono e sul tablet il gioco non si
+comanda (il sito lo dice sotto il pulsante). Il sito **non salva nulla**: alla
 fine lo studente scarica (o copia) il rapporto con le risposte e lo consegna al
-docente, che dà il voto.
+docente, che dà il voto. Il rapporto contiene nome, cognome e classe: sui
+computer della scuola conviene che lo studente lo cancelli dopo la consegna
+(il passo 4 della pagina lo ricorda).
 
 ### Come caricarlo
 
@@ -363,9 +367,14 @@ della scuola»).
 
 Note:
 - Per **aggiornare** un gioco, ricarica il file con lo **stesso nome**: viene
-  sostituito, senza doppioni; il titolo scelto nel pannello resta.
-- Dalla pagina di importazione il nome del file viene pulito
-  (`i-1-g-l-uomo-che-cerca-oltre-gioco.html`); dal pannello resta com'è.
+  sostituito, senza doppioni; il titolo scelto nel pannello resta. Un file già
+  online resta quello che è (verifica, oppure materiale di una lezione) anche
+  se il nome non segue lo schema.
+- Conviene caricare i giochi dalla pagina di importazione: il nome del file
+  viene pulito (`i-1-g-l-uomo-che-cerca-oltre-gioco.html`) e l'unità è
+  riconosciuta da sola.
+- Finché il gioco di un'unità non ha ancora il file, la sua scheda dice «Presto
+  disponibile» e non conta come passo successivo.
 - I giochi non entrano nel «percorso» dello studente (sigilli e conteggi):
   la verifica non è un materiale da aprire ma una prova da consegnare.
 - La piattaforma delle verifiche con codice (`/esami`, vedi

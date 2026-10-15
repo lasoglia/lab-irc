@@ -254,9 +254,11 @@ export async function caricaDati() {
 
   /* le verifiche di fine unità (un gioco per UDA) stanno a parte: non sono
      materiali di una lezione e non entrano nel percorso dello studente */
+  const vistiVer = new Set();
   const VER = pickArr(ver, "verifiche")
     .filter((v) => v && (v.titolo || v.file || v.link))
-    .map((v, i) => ({ kind: "verifica", ...v, anno: String(v.anno == null ? "" : v.anno).trim(), tipo: v.tipo || "Gioco di verifica", _i: i }));
+    .map((v, i) => ({ kind: "verifica", ...v, anno: String(v.anno == null ? "" : v.anno).trim(), tipo: v.tipo || "Gioco di verifica", _i: i }))
+    .filter((v) => { const k = chiaveItem(v); if (vistiVer.has(k)) return false; vistiVer.add(k); return true; });   /* la stessa voce due volte conta una */
   const NOTA_VER = ver && !Array.isArray(ver) && ver.nota ? String(ver.nota).trim() : "";
 
   return { SITE: { ...SAMPLE.site, ...(site || {}) }, ANNIDESC: anni || {}, UDA, LEZ, ITEMS: UNICI, VER, NOTA_VER };
@@ -330,7 +332,7 @@ export const verificheUda = (D, n, uda) => verificheAnno(D, n).filter((v) => nor
 export function azioneVerifica(v) {
   const raw = v.file || v.link || "";
   const href = raw && raw !== "#" ? resolvePath(raw) : "";
-  return href ? { tipo: "esterno", href, testo: "Gioca ↗" } : { tipo: "nessuna", testo: "Presto disponibile" };
+  return href ? { tipo: "esterno", href, testo: "Gioca" } : { tipo: "nessuna", testo: "Presto disponibile" };
 }
 
 /* Cosa fa il pulsante di un contenuto. Un artefatto .html si apre DENTRO il
@@ -490,9 +492,11 @@ export function cerca(D, q) {
         if (ha(l.titolo, l.descrizione)) cartelle.push({ tipo: "lezione", titolo: l.titolo, uda: u.titolo, anno: a.n, href: hrefLezione(a.n, u.titolo, l.titolo) });
       });
     });
-    /* i giochi di verifica: anche cercando «verifica» o «gioco» */
+    /* i giochi di verifica: anche cercando «verifica» o «gioco» (almeno le prime tre lettere,
+       non un pezzo qualsiasi: «ca» non deve elencare tutti i giochi) */
+    const parola = k.length >= 3 && ["verifica", "verifiche", "gioco", "giochi"].some((w) => w.startsWith(k));
     verificheAnno(D, a.n).forEach((v) => {
-      if (ha(v.titolo, v.descrizione, v.uda, "verifica", "gioco")) cartelle.push({ tipo: "verifica", titolo: v.titolo || "Verifica di fine unità", uda: v.uda, anno: a.n, href: "#verifiche" });
+      if (parola || ha(v.titolo, v.descrizione, v.uda)) cartelle.push({ tipo: "verifica", titolo: v.titolo || "Verifica di fine unità", uda: v.uda, anno: a.n, href: "#verifiche" });
     });
   });
   return { cartelle, items };
