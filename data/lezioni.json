@@ -580,6 +580,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-2-di-che-cosa-vive-la-chiesa-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-2-di-che-cosa-vive-la-chiesa-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
