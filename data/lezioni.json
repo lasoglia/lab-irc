@@ -560,6 +560,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Che cos'è un vizio",
+      "anno": "3",
+      "uda": "Quando un'abitudine prende il comando",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iii-2-2-cose-un-vizio-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-2-2-cose-un-vizio-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
