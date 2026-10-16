@@ -520,6 +520,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Chi sono io per andare dal faraone",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-4-mose-e-il-roveto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-4-mose-e-il-roveto-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
