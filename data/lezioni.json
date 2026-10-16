@@ -540,6 +540,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Il padre, due figli e una festa difficile",
+      "anno": "4",
+      "uda": "Devo meritarmi tutto",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iv-2-2-padre-due-figli-festa-difficile-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-2-2-padre-due-figli-festa-difficile-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
