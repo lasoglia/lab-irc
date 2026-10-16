@@ -500,6 +500,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Cambiare posto",
+      "anno": "2",
+      "uda": "Quattro Vangeli, una Pasqua",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/ii-2-2-cambiare-posto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-2-2-cambiare-posto-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
