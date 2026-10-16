@@ -480,6 +480,26 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "1300, perché tutti in cammino",
+      "anno": "3",
+      "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
