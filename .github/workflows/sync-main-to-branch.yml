@@ -81,3 +81,27 @@ jobs:
             git commit -m "SEO: aggiornate pagine statiche e sitemap"
             git push origin claude/lab-irc-exam-platform-v2-712y8s
           fi
+
+      # Kit social: post per Facebook, Instagram, WhatsApp e Telegram scritti da
+      # Claude (solo per le lezioni nuove o cambiate) e cartoline per Instagram.
+      # Finiscono nella pagina nascosta promozione/. Se qualcosa va storto la
+      # sincronizzazione resta valida comunque.
+      - name: Kit social (post e cartoline)
+        if: steps.check.outputs.esiste == 'true' && hashFiles('seo/promozione.py') != ''
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install --quiet anthropic pypdf
+          python seo/promozione.py
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/cartoline.mjs
+          git add promozione data/promozione.json
+          if git diff --cached --quiet; then
+            echo "Kit social già aggiornato: niente da salvare."
+          else
+            git commit -m "Kit social: aggiornati post e cartoline"
+            git push origin claude/lab-irc-exam-platform-v2-712y8s
+          fi
