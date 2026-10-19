@@ -208,32 +208,37 @@ def raccogli():
 # --------------------------------------------------------------------------
 # 2. Testi SEO con Claude (con cache in data/seo.json)
 # --------------------------------------------------------------------------
-STRUMENTO = {
-    "name": "salva_seo",
-    "description": "Salva i testi SEO della lezione.",
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "titolo_seo": {"type": "string",
-                           "description": "Max 60 caratteri. Argomento reale della lezione + 'Religione' o 'IRC' + classe."},
-            "meta_description": {"type": "string",
-                                 "description": "Tra 130 e 155 caratteri, frase completa."},
-            "sintesi": {"type": "string",
-                        "description": "60-90 parole: di che cosa tratta la lezione e che cosa fanno gli studenti."},
-            "argomenti": {"type": "array", "items": {"type": "string"},
-                          "description": "3-5 argomenti trattati, al massimo 5 parole ciascuno."},
-            "parole_chiave": {"type": "array", "items": {"type": "string"},
-                              "description": "5-8 espressioni che un docente scriverebbe su Google."},
-        },
-        "required": ["titolo_seo", "meta_description", "sintesi", "argomenti", "parole_chiave"],
+# Formato della risposta: l'API garantisce un JSON valido con questi campi
+SCHEMA_SEO = {
+    "type": "object",
+    "properties": {
+        "titolo_seo": {"type": "string",
+                       "description": "Max 60 caratteri. Argomento reale della lezione + 'Religione' o 'IRC' + classe."},
+        "meta_description": {"type": "string",
+                             "description": "Tra 130 e 155 caratteri, frase completa."},
+        "sintesi": {"type": "string",
+                    "description": "60-90 parole: di che cosa tratta la lezione e che cosa fanno gli studenti."},
+        "argomenti": {"type": "array", "items": {"type": "string"},
+                      "description": "3-5 argomenti trattati, al massimo 5 parole ciascuno."},
+        "parole_chiave": {"type": "array", "items": {"type": "string"},
+                          "description": "5-8 espressioni che un docente scriverebbe su Google."},
     },
+    "required": ["titolo_seo", "meta_description", "sintesi", "argomenti", "parole_chiave"],
+    "additionalProperties": False,
 }
 
 ISTRUZIONI = """Sei un redattore editoriale esperto di didattica dell'Insegnamento della \
 Religione Cattolica (IRC) nella scuola secondaria di secondo grado italiana e di SEO.
 Ricevi il testo di una lezione di un sito di materiali didattici. Scrivi i testi che \
 servono a farla trovare su Google da DOCENTI di religione che cercano materiali, e \
-salvali con lo strumento salva_seo.
+restituiscili nel formato JSON richiesto.
+
+Campi da compilare:
+- titolo_seo: massimo 60 caratteri; argomento reale + "Religione" o "IRC" + classe.
+- meta_description: tra 130 e 155 caratteri, una frase completa.
+- sintesi: 60-90 parole su che cosa tratta la lezione e che cosa fanno gli studenti.
+- argomenti: 3-5 voci, al massimo 5 parole ciascuna.
+- parole_chiave: 5-8 espressioni che un docente scriverebbe su Google.
 
 Regole vincolanti:
 - Usa solo ciò che il testo contiene davvero: niente contenuti, autori o attività inventati.
@@ -275,21 +280,22 @@ def chiedi_a_claude(client, l: dict, uda_desc: str, testo: str) -> dict:
     )
     risposta = client.messages.create(
         model=MODELLO,
-        max_tokens=1200,
+        max_tokens=4000,
         # Le istruzioni sono identiche per ogni lezione: le mettiamo in cache
         system=[{"type": "text", "text": ISTRUZIONI, "cache_control": {"type": "ephemeral"}}],
-        tools=[STRUMENTO],
-        tool_choice={"type": "tool", "name": "salva_seo"},
+        # Compito breve: ragionamento leggero e risposta in JSON garantito
+        output_config={"effort": "low",
+                       "format": {"type": "json_schema", "schema": SCHEMA_SEO}},
         messages=[{"role": "user", "content": messaggio}],
     )
-    for blocco in risposta.content:
-        if blocco.type == "tool_use":
-            dati = dict(blocco.input)
-            dati["origine"] = MODELLO
-            dati["token"] = {"input": risposta.usage.input_tokens,
-                             "output": risposta.usage.output_tokens}
-            return dati
-    raise RuntimeError("Risposta senza tool_use")
+    if risposta.stop_reason != "end_turn":
+        raise RuntimeError(f"Risposta incompleta ({risposta.stop_reason})")
+    testo_json = next((b.text for b in risposta.content if b.type == "text"), "")
+    dati = json.loads(testo_json)
+    dati["origine"] = MODELLO
+    dati["token"] = {"input": risposta.usage.input_tokens,
+                     "output": risposta.usage.output_tokens}
+    return dati
 
 
 def aggiorna_seo(lezioni, uda, usa_ia: bool, forza: bool) -> dict:
