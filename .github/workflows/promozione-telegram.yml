@@ -1,0 +1,56 @@
+name: Telegram · post automatico
+# Due volte a settimana pubblica sul canale Telegram il prossimo post del kit
+# social (seo/telegram.py), uno alla volta, nell'ordine consigliato.
+# Servono i segreti TELEGRAM_BOT_TOKEN e TELEGRAM_CANALE: finché mancano,
+# l'Action gira ma non pubblica nulla.
+# Il pulsante «Run workflow» pubblica subito il prossimo post.
+
+on:
+  schedule:
+    - cron: '47 15 * * 1,4'   # lunedì e giovedì alle 15:47 UTC (17:47 d'estate, 16:47 d'inverno)
+  workflow_dispatch: {}
+
+concurrency:
+  group: telegram-kit-social
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  pubblica:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: claude/lab-irc-exam-platform-v2-712y8s
+
+      - name: Prepara Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Pubblica il prossimo post
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
+        run: |
+          pip install --quiet pypdf
+          python seo/telegram.py
+          # aggiorna nella pagina del kit la scritta «pubblicato su Telegram»
+          python seo/promozione.py --senza-ia
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/telegram.json promozione
+          if git diff --cached --quiet; then
+            echo "Niente di nuovo da salvare."
+          else
+            git commit -m "Telegram: pubblicato un post del kit social"
+            # se nel frattempo la sincronizzazione ha salvato qualcosa, ci si mette in coda
+            for prova in 1 2 3; do
+              git pull --rebase --quiet origin claude/lab-irc-exam-platform-v2-712y8s && \
+                git push origin HEAD:claude/lab-irc-exam-platform-v2-712y8s && break
+              sleep 10
+            done
+          fi
