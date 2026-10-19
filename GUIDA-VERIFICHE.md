@@ -97,13 +97,13 @@ supabase functions deploy consegna-verifica
 La **service_role** non si incolla mai qui: vive solo su Supabase (Parte C).
 
 Dopo 1–2 minuti l'area verifiche sarà online a:
-`https://lasoglia.github.io/lab-irc/esami/`
+`https://www.labirc.it/esami/`
 
 ---
 
 ## Parte E — Crea il primo account docente
 
-1. Apri `https://lasoglia.github.io/lab-irc/esami/`
+1. Apri `https://www.labirc.it/esami/`
 2. Clicca **Crea un account**, inserisci email e una password.
 3. Se Supabase chiede la conferma via email, controlla la posta e conferma.
    (In alternativa, per evitare la conferma: Supabase → **Authentication** →

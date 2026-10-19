@@ -255,7 +255,7 @@ scegli un altro "tipo".
 Quando hai tante lezioni da mettere online, farle una alla volta dal pannello
 è lento. C'è una pagina apposta:
 
-**`https://lasoglia.github.io/lab-irc/admin/importa.html`**
+**`https://www.labirc.it/admin/importa.html`**
 
 Funziona così:
 

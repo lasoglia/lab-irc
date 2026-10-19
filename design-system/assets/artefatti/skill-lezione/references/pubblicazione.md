@@ -1,6 +1,6 @@
 # File pronti per il sito
 
-Il sito personale di riferimento è [LAB-IRC](https://lasoglia.github.io/lab-irc/). Queste indicazioni descrivono la struttura letta il 19 settembre 2026; prima di una modifica reale al catalogo controlla la struttura corrente. Preparare i file non comporta pubblicarli: intervieni sul sito solo quando il docente lo richiede.
+Il sito personale di riferimento è [LAB-IRC](https://www.labirc.it/). Queste indicazioni descrivono la struttura letta il 19 settembre 2026; prima di una modifica reale al catalogo controlla la struttura corrente. Preparare i file non comporta pubblicarli: intervieni sul sito solo quando il docente lo richiede.
 
 ## Pacchetto di una lezione
 
