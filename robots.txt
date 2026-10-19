@@ -1,6 +1,6 @@
 # Lab IRC · www.labirc.it
 # Google può leggere tutto il sito tranne le aree di servizio:
-# pannello del docente, piattaforma delle verifiche, sorgenti e file di lavoro.
+# pannello del docente, piattaforma delle verifiche, kit social, sorgenti e file di lavoro.
 User-agent: *
 Allow: /
 Disallow: /admin/
@@ -8,5 +8,6 @@ Disallow: /esami/
 Disallow: /sorgenti-lezioni/
 Disallow: /supabase/
 Disallow: /app/
+Disallow: /promozione/
 
 Sitemap: https://www.labirc.it/sitemap.xml
