@@ -1,7 +1,8 @@
 // seo/cartoline.mjs — Disegna le cartoline per Instagram (1080×1350) del kit social.
 //
 // Legge promozione/cartoline.json (scritto da seo/promozione.py) e crea in
-// promozione/cartoline/ un'immagine per ogni post, nello stile del sito:
+// promozione/cartoline/ un'immagine per ogni post, nello stile del sito
+// (in PNG, e in JPG per Instagram, che accetta solo quel formato):
 // font del sito, colore e mascotte della classe. Disegna solo le cartoline
 // che mancano e cancella quelle non più in elenco.
 //
@@ -22,10 +23,11 @@ const elenco = JSON.parse(readFileSync(join(RADICE, 'promozione', 'cartoline.jso
 mkdirSync(CARTELLA, { recursive: true });
 
 // Le cartoline non più in elenco (lezioni rinominate o testi riscritti) se ne vanno
-const attese = new Set(elenco.map((c) => c.file));
-for (const f of readdirSync(CARTELLA)) if (f.endsWith('.png') && !attese.has(f)) unlinkSync(join(CARTELLA, f));
+const jpg = (f) => f.replace(/\.png$/, '.jpg');
+const attese = new Set(elenco.flatMap((c) => [c.file, jpg(c.file)]));
+for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
 
-const daFare = elenco.filter((c) => !existsSync(join(CARTELLA, c.file)));
+const daFare = elenco.filter((c) => !existsSync(join(CARTELLA, c.file)) || !existsSync(join(CARTELLA, jpg(c.file))));
 if (!daFare.length) { console.log('Cartoline già pronte: niente da disegnare.'); process.exit(0); }
 if (!existsSync(PW) || !existsSync(CHROME)) {
   console.log(`! Manca Playwright o il browser: salto ${daFare.length} cartoline.`);
@@ -103,6 +105,7 @@ for (const c of daFare) {
     }
   });
   await pagina.screenshot({ path: join(CARTELLA, c.file) });
+  await pagina.screenshot({ path: join(CARTELLA, jpg(c.file)), type: 'jpeg', quality: 90 });
   console.log('  ✓ cartolina', c.file);
 }
 await browser.close();
