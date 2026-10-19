@@ -1442,6 +1442,8 @@ function Footer({ autore, iscrizione, festa }) {
       <span>© {new Date().getFullYear()} {autore}<span className="lab-diritti"> · Tutti i diritti riservati</span></span>
       <Amdg />
       <span style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: 13 }}>
+        {/* l'indice statico delle lezioni (pagine per Google, generate da seo/genera.py) */}
+        <a href="lezioni/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Indice delle lezioni</a>
         <a href="admin/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Accesso docente</a>
         {/* la via breve per caricare le lezioni: discreta, ma c'è */}
         <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap" }}>Importa</a>

@@ -163,7 +163,7 @@ Eyes follow the cursor (Bussolina's needle points at it), they blink, a click sh
 
 ## Site rules — October 2026 (read before designing new artefacts)
 
-These rules come from the live site (lasoglia.github.io/lab-irc) after a Gestalt/attention review. Every new page or lesson artefact should follow them.
+These rules come from the live site (www.labirc.it) after a Gestalt/attention review. Every new page or lesson artefact should follow them.
 
 - **Patron saint.** The lab is dedicated to **San Carlo Acutis**, like a parish to its titular saint — never a "dedica" in the thesis sense. Home: an inscription line under the hero title, Cinzel 13px, `.18em`, gold: `SAN CARLO ACUTIS · PATRONO`. Footer: a dedication plaque between two thin gold rules, centred, Cinzel uppercase: `D·O·M` / `ET SANCTO CAROLO ACUTIS DICATUM` / `A·D·MMXXVI`. On the feast (12 October) the line reads `… · OGGI È LA SUA FESTA` and the plaque glows gold. Never add Italian translations under Latin inscriptions.
 - **One figure, one accent.** One filled primary button per view (`--lab-grad-cta`), one gold `.lab-tag` ("Inizia da qui" / "Prossimo"). Everything else is ghost. Colour means "school year" only: breadcrumbs and secondary links are ink, not cyan.
