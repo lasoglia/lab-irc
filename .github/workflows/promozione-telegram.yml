@@ -1,14 +1,21 @@
-name: Telegram · post automatico
-# Due volte a settimana pubblica sul canale Telegram il prossimo post del kit
-# social (seo/telegram.py), uno alla volta, nell'ordine consigliato.
-# Servono i segreti TELEGRAM_BOT_TOKEN e TELEGRAM_CANALE: finché mancano,
-# l'Action gira ma non pubblica nulla.
-# Il pulsante «Run workflow» pubblica subito il prossimo post.
+name: Social · post automatico
+# Due volte a settimana pubblica il prossimo post del kit social, uno alla
+# volta e nell'ordine consigliato:
+#  - sul canale Telegram (seo/telegram.py), con i segreti TELEGRAM_BOT_TOKEN e TELEGRAM_CANALE;
+#  - sulla Pagina Facebook e su Instagram (seo/meta.py), con il segreto META_TOKEN.
+# Finché un segreto manca, quel canale viene saltato senza errori.
+# Il pulsante «Run workflow» pubblica subito il prossimo post (si può scegliere su quali canali).
 
 on:
   schedule:
     - cron: '47 15 * * 1,4'   # lunedì e giovedì alle 15:47 UTC (17:47 d'estate, 16:47 d'inverno)
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      canali:
+        description: 'Dove pubblicare'
+        type: choice
+        options: [tutti, telegram, facebook-instagram]
+        default: tutti
 
 concurrency:
   group: telegram-kit-social
@@ -31,22 +38,35 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Pubblica il prossimo post
+      - name: Pubblica su Telegram
+        if: github.event_name == 'schedule' || inputs.canali != 'facebook-instagram'
+        continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
+        run: python seo/telegram.py
+
+      - name: Pubblica su Facebook e Instagram
+        if: github.event_name == 'schedule' || inputs.canali != 'telegram'
+        continue-on-error: true
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
+        run: python seo/meta.py
+
+      - name: Salva il registro dei post usciti
+        if: always()
         run: |
           pip install --quiet pypdf
-          python seo/telegram.py
-          # aggiorna nella pagina del kit la scritta «pubblicato su Telegram»
+          # aggiorna nella pagina del kit la scritta «pubblicato in automatico»
           python seo/promozione.py --senza-ia
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/telegram.json promozione
+          git add data/telegram.json data/meta.json promozione/index.html
           if git diff --cached --quiet; then
             echo "Niente di nuovo da salvare."
           else
-            git commit -m "Telegram: pubblicato un post del kit social"
+            git commit -m "Social: pubblicato un post del kit"
             # se nel frattempo la sincronizzazione ha salvato qualcosa, ci si mette in coda
             for prova in 1 2 3; do
               git pull --rebase --quiet origin claude/lab-irc-exam-platform-v2-712y8s && \

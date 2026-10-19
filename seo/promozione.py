@@ -14,7 +14,8 @@ telefono, con il pulsante «Copia»:
   data/promozione.json             i testi, che fanno da cache
 
 Le cartoline (immagini per Instagram) le disegna seo/cartoline.mjs.
-La pubblicazione automatica su Telegram la fa seo/telegram.py.
+La pubblicazione automatica la fanno seo/telegram.py (Telegram) e
+seo/meta.py (Pagina Facebook e Instagram).
 
 Come per le pagine SEO, una lezione viene riscritta SOLO se il suo testo
 cambia. I link li aggiunge lo script, non Claude: così sono sempre giusti.
@@ -299,8 +300,10 @@ function sel(x){var a=document.createElement('textarea');a.value=x;document.body
 
 def scrivi_pagina(voci: list[dict]):
     e = g.e
-    telegram = json.loads((g.RADICE / "data" / "telegram.json").read_text(encoding="utf-8")) \
-        if (g.RADICE / "data" / "telegram.json").exists() else {}
+    def registro(nome):
+        p = g.RADICE / "data" / nome
+        return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+    telegram, meta = registro("telegram.json"), registro("meta.json")
     blocchi = []
     for n, v in enumerate(voci, start=1):
         colore = COLORI_ANNO.get(v["anno"], "var(--lab-oro)")
@@ -311,8 +314,14 @@ def scrivi_pagina(voci: list[dict]):
             sezioni.append(
                 f'<details><summary>{nome}</summary><pre id="{ident}">{e(testo_completo(v, canale))}</pre>'
                 f'<div class="azioni"><button type="button" data-copia="{ident}">Copia</button></div></details>')
-        stato_tg = (f'<p class="tg">Telegram: pubblicato in automatico il {e(telegram[v["chiave"]])}.</p>'
-                    if v["chiave"] in telegram else "")
+        usciti = []
+        if v["chiave"] in telegram:
+            usciti.append(f"Telegram il {telegram[v['chiave']]}")
+        for canale, nome in (("facebook", "Facebook"), ("instagram", "Instagram")):
+            if canale in meta.get(v["chiave"], {}):
+                usciti.append(f"{nome} il {meta[v['chiave']][canale]}")
+        stato_tg = (f'<p class="tg">Pubblicato in automatico: {e(", ".join(usciti))}.</p>'
+                    if usciti else "")
         blocchi.append(f"""<article class="post">
 <header><img src="cartoline/{e(v['cartolina'])}" alt="" loading="lazy" width="96" height="120">
 <div><div class="num" style="color:{colore}">Post {n} di {len(voci)}{e(classe)}</div>
@@ -328,9 +337,9 @@ def scrivi_pagina(voci: list[dict]):
 <div class="guida">
 <p><b>Come si usa.</b> I post sono già in ordine: si alternano le cinque classi. Un buon ritmo è
 <b>due post a settimana</b>, per esempio il lunedì e il giovedì.</p>
-<p><b>Facebook e Instagram:</b> in Meta Business Suite scegli «Crea post», incolla il testo, carica la
-cartolina e usa «Programma» per fissare giorno e ora. <b>WhatsApp:</b> copia e incolla nei gruppi di colleghi,
-senza mandare lo stesso messaggio a troppi gruppi lo stesso giorno. <b>Telegram:</b> esce da solo.</p>
+<p><b>Telegram, Pagina Facebook e Instagram</b> escono da soli, un post il lunedì e uno il giovedì
+(Facebook e Instagram solo quando la chiave di Meta è salvata su GitHub). <b>WhatsApp:</b> copia e incolla
+nei gruppi di colleghi, senza mandare lo stesso messaggio a troppi gruppi lo stesso giorno.</p>
 <p>Ogni lezione nuova che carichi riceve da sola i suoi post e la sua cartolina.</p>
 </div>
 {''.join(blocchi) or '<p>I post sono in preparazione: compariranno dopo il prossimo aggiornamento.</p>'}"""
@@ -360,12 +369,14 @@ senza mandare lo stesso messaggio a troppi gruppi lo stesso giorno. <b>Telegram:
     cartella.mkdir(exist_ok=True)
     (cartella / "index.html").write_text(pagina, encoding="utf-8")
 
-    # Elenco per seo/cartoline.mjs (che disegna le immagini) e per seo/telegram.py
+    # Elenco per seo/cartoline.mjs (che disegna le immagini), seo/telegram.py e seo/meta.py
     elenco = [{"file": v["cartolina"], "chiave": v["chiave"], "anno": v["anno"],
                "titolo": v["titolo"], "uda": v["uda"], "frase": v["testi"]["frase_cartolina"],
                "classe": g.NOMI_ANNO.get(v["anno"], ""), "colore": COLORI_ANNO.get(v["anno"], ""),
                "mascotte": MASCOTTE.get(v["anno"], ""), "url": v["url"],
-               "telegram": testo_completo(v, "telegram")} for v in voci]
+               "telegram": testo_completo(v, "telegram"),
+               "facebook": testo_completo(v, "facebook"),
+               "instagram": testo_completo(v, "instagram")} for v in voci]
     (cartella / "cartoline.json").write_text(
         json.dumps(elenco, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(voci)
