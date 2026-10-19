@@ -1,164 +1,506 @@
 {
   "1|Israele, una promessa, una storia, fino a oggi|Chi sono io per andare dal faraone": {
-    "titolo_seo": "Chi sono io per andare dal faraone – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «Israele, una promessa, una storia, fino a oggi».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Mosè, roveto ardente e nome di Dio: IRC classe prima",
+    "meta_description": "Lezione di Religione per la classe prima: Esodo 1–3, la nascita di Mosè, la chiamata al roveto, la domanda «Chi sono io?» e il nome di Dio.",
+    "sintesi": "La lezione ripercorre i primi tre capitoli dell'Esodo: l'oppressione sotto il nuovo faraone, la nascita e la fuga di Mosè, il grido del popolo e la chiamata presso il roveto. Gli studenti leggono i passi biblici citati e seguono la domanda di Mosè, «Chi sono io?», e la risposta di Dio, «Io sarò con te». Riflettono poi sul significato di vocazione e sul nome di Dio, «Io sono colui che sono», con rimandi al Catechismo della Chiesa Cattolica.",
+    "argomenti": [
+      "Oppressione in Egitto",
+      "Nascita e fuga di Mosè",
+      "Roveto ardente e chiamata",
+      "Significato di vocazione",
+      "Il nome di Dio"
+    ],
+    "parole_chiave": [
+      "lezione Mosè roveto ardente religione",
+      "Esodo 1-3 scuola superiore",
+      "vocazione di Mosè IRC",
+      "nome di Dio Io sono colui che sono",
+      "materiali IRC classe prima",
+      "Chi sono io per andare dal faraone",
+      "Mosè e il faraone lezione religione",
+      "UDA Israele promessa storia religione"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5585,
+      "output": 507
+    },
     "impronta": "0c0328358fe3f3b2"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie": {
-    "titolo_seo": "Gerusalemme, una città di memorie – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «Israele, una promessa, una storia, fino a oggi».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Gerusalemme, luoghi santi di tre fedi: IRC classe prima",
+    "meta_description": "Lezione IRC per la classe prima: Muro occidentale, Santo Sepolcro e Cupola della Roccia, per capire le tre fedi e verificare i fatti con metodo.",
+    "sintesi": "La lezione presenta Gerusalemme come città di memorie religiose per ebraismo, cristianesimo e islam. Gli studenti riconoscono il Muro occidentale, il Santo Sepolcro e la Cupola della Roccia, ne distinguono il significato e collocano i luoghi in uno schema della Città Vecchia. Imparano poi a controllare i fatti con fonti adeguate, usando come esempio una parodia televisiva, e rispondono a quattro domande di studio su nomi, archeologia e fede, generalizzazioni.",
+    "argomenti": [
+      "Muro occidentale e Tempio",
+      "Santo Sepolcro e Pasqua",
+      "Cupola della Roccia",
+      "Pellegrinaggio e memoria religiosa",
+      "Parodia e verifica dei fatti"
+    ],
+    "parole_chiave": [
+      "Gerusalemme tre religioni lezione",
+      "Muro del Pianto e Tempio religione",
+      "Santo Sepolcro lezione IRC",
+      "Cupola della Roccia e moschea al-Aqsa",
+      "luoghi santi Gerusalemme scuola superiore",
+      "religione classe prima Israele",
+      "pellegrinaggio significato religione",
+      "parodia e verifica delle fonti IRC"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5156,
+      "output": 523
+    },
     "impronta": "8cef8cc6429690f7"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Il male subito ha l'ultima parola": {
-    "titolo_seo": "Il male subito ha l'ultima parola – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «Israele, una promessa, una storia, fino a oggi».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Giuseppe e i fratelli: perdono e Genesi 37-50 | IRC prima",
+    "meta_description": "Lezione IRC per la classe prima sulla storia di Giuseppe e i suoi fratelli (Genesi 37–50): invidia, colpa, perdono e il male che non ha l'ultima parola.",
+    "sintesi": "La lezione propone la lettura guidata della storia di Giuseppe e dei suoi fratelli in Genesi 37–50. Gli studenti seguono i passaggi del racconto: la tunica e i sogni, la vendita, gli anni in Egitto, la carestia, la prova ai fratelli, il riconoscimento e il dialogo dopo la morte di Giacobbe. Analizzano invidia, colpa e perdono, osservano alcune parole ebraiche del testo e discutono il senso della frase «Tengo io forse il posto di Dio?».",
+    "argomenti": [
+      "Giuseppe e i suoi fratelli",
+      "Invidia e fraternità spezzata",
+      "Il perdono in Genesi 50",
+      "Provvidenza e lettura della storia",
+      "Colpa, pentimento e prova"
+    ],
+    "parole_chiave": [
+      "Giuseppe e i fratelli lezione religione",
+      "Genesi 37-50 scuola superiore",
+      "storia di Giuseppe IRC prima superiore",
+      "perdono nella Bibbia lezione",
+      "Tengo io forse il posto di Dio",
+      "materiali IRC secondo ciclo classe prima",
+      "invidia e perdono Genesi",
+      "Giuseppe venduto dai fratelli spiegazione"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5479,
+      "output": 538
+    },
     "impronta": "0c677f45e5254b2a"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Molti dèi o un Dio che chiama": {
-    "titolo_seo": "Molti dèi o un Dio che chiama – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «Israele, una promessa, una storia, fino a oggi».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Abramo, promessa e monoteismo: lezione IRC classe prima",
+    "meta_description": "Lezione di Religione per la classe prima: Abramo, le tre promesse di Genesi 12, la fede come fiducia, l'alleanza e il passaggio dal politeismo al monoteismo.",
+    "sintesi": "La lezione mette a confronto il politeismo antico, con gli dèi come forze del mondo, e il Dio che in Genesi 12 chiama Abramo per nome e gli fa tre promesse. Gli studenti leggono i testi biblici, distinguono fede e credulità, seguono il tema dell'alleanza e vedono come in Israele nasce il monoteismo. Il materiale si chiude con domande per lo studio che richiedono risposte con esempi tratti dal testo.",
+    "argomenti": [
+      "Politeismo e monoteismo",
+      "Vocazione di Abramo",
+      "Le tre promesse",
+      "Fede come fiducia",
+      "Alleanza tra Dio e Abramo"
+    ],
+    "parole_chiave": [
+      "lezione Abramo religione prima superiore",
+      "Genesi 12 vocazione di Abramo",
+      "politeismo e monoteismo schede IRC",
+      "promessa a Abramo terra discendenza benedizione",
+      "significato di fede nella Bibbia",
+      "alleanza Dio Abramo lezione",
+      "materiali IRC secondaria secondo grado",
+      "Israele e Dio unico"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5451,
+      "output": 478
+    },
     "impronta": "ee7ccab48f398e00"
   },
   "1|L'uomo che cerca oltre il senso religioso|Credo, non credo, non so": {
-    "titolo_seo": "Credo, non credo, non so – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «L'uomo che cerca oltre il senso religioso». Credere, non…",
-    "sintesi": "Credere, non credere, non sapere: da dove nasce la domanda su Dio?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Teismo, ateismo, agnosticismo: lezione IRC classe prima",
+    "meta_description": "Lezione di Religione per la prima superiore su teismo, ateismo, agnosticismo e indifferenza, con argomenti a confronto e rapporto tra fede e ragione.",
+    "sintesi": "La lezione presenta le possibili risposte alla domanda «Dio esiste?»: teismo, ateismo, agnosticismo, indifferenza e ateismo pratico. Gli studenti chiariscono i termini, correggono equivoci frequenti, distinguono fatto, interpretazione e giudizio ed esaminano un argomento per ciascuna posizione, con testi di Tommaso d'Aquino. Si affronta poi il rapporto tra fede e ragione nel magistero della Chiesa. Il lavoro si conclude con domande di verifica e un testo argomentativo breve.",
+    "argomenti": [
+      "Teismo, ateismo, agnosticismo",
+      "Indifferenza e ateismo pratico",
+      "Argomenti a confronto: male e causa prima",
+      "Rispetto delle persone, discussione delle tesi",
+      "Fede e ragione nella Chiesa"
+    ],
+    "parole_chiave": [
+      "lezione religione prima superiore",
+      "teismo ateismo agnosticismo differenze",
+      "domanda su Dio lezione IRC",
+      "senso religioso classe prima",
+      "Tommaso d'Aquino esistenza di Dio scuola superiore",
+      "fede e ragione Fides et ratio",
+      "materiali IRC secondaria secondo grado",
+      "agnostico e indifferente differenza"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4857,
+      "output": 538
+    },
     "impronta": "1221b22b6e15a58e"
   },
   "1|L'uomo che cerca oltre il senso religioso|Segni e simboli": {
-    "titolo_seo": "Segni e simboli – Religione Cattolica, classe prima",
-    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «L'uomo che cerca oltre il senso religioso». Credere, non…",
-    "sintesi": "Credere, non credere, non sapere: da dove nasce la domanda su Dio?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Segni e simboli, luoghi e tempi sacri: IRC classe prima",
+    "meta_description": "Lezione di IRC per la prima superiore su segni, simboli, sacro e profano, luoghi e tempi sacri, con Giacobbe a Betel, domenica e anno liturgico.",
+    "sintesi": "La lezione introduce il linguaggio religioso partendo dalla differenza tra segno e simbolo, con gli esempi della freccia e dell'anello. Presenta la tesi di Cassirer sull'animale simbolico e le nozioni di sacro e profano. Analizza il racconto di Giacobbe a Betel, alcuni luoghi di culto (altare, aron ha-qodesh, mihrab) e i tempi sacri: Shabbat, domenica, anno liturgico. Gli studenti rispondono a quattro domande di studio e imparano a interpretare un luogo o un giorno a partire dal contesto e dalle fonti.",
+    "argomenti": [
+      "Segno e simbolo",
+      "Sacro e profano",
+      "Giacobbe a Betel",
+      "Luoghi di culto a confronto",
+      "Tempi sacri e festività"
+    ],
+    "parole_chiave": [
+      "segni e simboli religione prima superiore",
+      "differenza tra segno e simbolo",
+      "sacro e profano lezione IRC",
+      "luoghi sacri altare aron ha-qodesh mihrab",
+      "Giacobbe Betel Genesi 28",
+      "sabato ebraico e domenica cristiana",
+      "Cassirer animale simbolico",
+      "anno liturgico scuola superiore"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4955,
+      "output": 527
+    },
     "impronta": "c6d006ee0b69898a"
   },
   "2|Gesù quali tracce|Anche i testi hanno una storia": {
-    "titolo_seo": "Anche i testi hanno una storia – Religione Cattolica, classe seconda",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Gesù quali tracce». Che cosa sappiamo davvero di Gesù?…",
-    "sintesi": "Che cosa sappiamo davvero di Gesù? Le tracce nella storia e nei Vangeli.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Testimonium Flavianum e Giuseppe Flavio: IRC seconda",
+    "meta_description": "Lezione di Religione per la classe seconda su Giuseppe Flavio e il Testimonium Flavianum: trasmissione dei testi, interpolazione e critica testuale.",
+    "sintesi": "La lezione presenta Giuseppe Flavio e il passo su Gesù nelle Antichità giudaiche (Testimonium Flavianum) per mostrare come un testo antico arrivi fino a noi attraverso copie e citazioni. Gli studenti distinguono la data dell'opera, della citazione e del manoscritto, comprendono i termini interpolazione e critica testuale, confrontano le tre ipotesi degli studiosi e lavorano su esercizi di verifica. Si chiarisce anche il rapporto tra studio storico dei testi e fede cattolica, con riferimento a Dei Verbum 12.",
+    "argomenti": [
+      "Giuseppe Flavio e Gesù",
+      "Testimonium Flavianum",
+      "Trasmissione dei manoscritti",
+      "Interpolazione e critica testuale",
+      "Storia e fede cattolica"
+    ],
+    "parole_chiave": [
+      "Testimonium Flavianum lezione",
+      "Giuseppe Flavio Gesù religione",
+      "fonti storiche su Gesù classe seconda",
+      "interpolazione testi antichi",
+      "critica testuale scuola superiore",
+      "IRC secondo anno fonti extrabibliche",
+      "trasmissione dei manoscritti antichi",
+      "Dei Verbum 12 lezione"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4860,
+      "output": 530
+    },
     "impronta": "29180ac117878a05"
   },
   "2|Gesù quali tracce|Che anno è, Una fede che ha una data": {
-    "titolo_seo": "Che anno è, Una fede che ha una data – Religione Cattolica, classe sec",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Gesù quali tracce». Che cosa sappiamo davvero di Gesù?…",
-    "sintesi": "Che cosa sappiamo davvero di Gesù? Le tracce nella storia e nei Vangeli.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Era cristiana e data di Gesù: lezione di Religione, classe 2ª",
+    "meta_description": "Lezione IRC per la seconda superiore: dal sincronismo di Luca a Dionigi il Piccolo, come si è iniziato a contare gli anni da Gesù e perché si celebra il Natale.",
+    "sintesi": "La lezione parte dalla domanda «che anno è?» e ricostruisce come l'Occidente abbia iniziato a contare gli anni da Gesù. Gli studenti leggono le datazioni di Luca e il Credo con il nome di Pilato, seguono il calcolo di Dionigi il Piccolo nel 525, l'errore sulla nascita di Gesù, la diffusione grazie a Beda e la riforma gregoriana. Infine esaminano l'origine del 25 dicembre, distinguendo fonti, ipotesi degli studiosi e tradizione.",
+    "argomenti": [
+      "Sincronismo nei Vangeli",
+      "Dionigi il Piccolo e l'era cristiana",
+      "Anno di nascita di Gesù",
+      "Calendario giuliano e gregoriano",
+      "Origine del Natale al 25 dicembre"
+    ],
+    "parole_chiave": [
+      "lezione IRC era cristiana",
+      "Dionigi il Piccolo religione",
+      "anno di nascita di Gesù",
+      "Ponzio Pilato nel Credo",
+      "origine del 25 dicembre Natale",
+      "Luca 3,1-2 datazione",
+      "materiali IRC seconda superiore",
+      "Gesù fonti storiche e Vangeli"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5481,
+      "output": 529
+    },
     "impronta": "77bcc752c967031e"
   },
   "2|Gesù quali tracce|Gesù sotto il segno dell'aquila": {
-    "titolo_seo": "Gesù sotto il segno dell'aquila – Religione Cattolica, classe seconda",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Gesù quali tracce». Che cosa sappiamo davvero di Gesù?…",
-    "sintesi": "Che cosa sappiamo davvero di Gesù? Le tracce nella storia e nei Vangeli.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Contesto storico di Gesù: Giudea e Roma, Religione II",
+    "meta_description": "Lezione di IRC per la seconda superiore: il contesto storico di Gesù tra Giudea, Galilea e Roma, i gruppi giudaici e la frase su Cesare.",
+    "sintesi": "La lezione ricostruisce il contesto storico in cui visse Gesù: il dominio romano, la divisione del regno di Erode, i governi di Galilea e Giudea e le correnti del giudaismo (farisei, sadducei, esseni, erodiani). Gli studenti analizzano Lc 3,1-2, la domanda sul tributo a Cesare in Mc 12, il legame con l'incarnazione e la lettura corretta del rapporto tra Gesù e gli ebrei. Rispondono a domande di comprensione e riflessione.",
+    "argomenti": [
+      "Giudea, Galilea e dominio romano",
+      "Gruppi del giudaismo al tempo di Gesù",
+      "Lc 3,1-2 e datazione",
+      "Il tributo a Cesare",
+      "Gesù ebreo e Nostra aetate"
+    ],
+    "parole_chiave": [
+      "contesto storico di Gesù",
+      "Gesù e l'impero romano",
+      "Giudea e Galilea al tempo di Gesù",
+      "farisei sadducei esseni zeloti",
+      "rendete a Cesare quello che è di Cesare",
+      "Ponzio Pilato e Erode Antipa",
+      "lezione IRC seconda superiore",
+      "Gesù ebreo Nostra aetate"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5604,
+      "output": 521
+    },
     "impronta": "5ec95ff0242eebee"
   },
   "2|Gesù quali tracce|Lo screenshot non basta": {
-    "titolo_seo": "Lo screenshot non basta – Religione Cattolica, classe seconda",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Gesù quali tracce». Che cosa sappiamo davvero di Gesù?…",
-    "sintesi": "Che cosa sappiamo davvero di Gesù? Le tracce nella storia e nei Vangeli.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Fonti romane su Gesù: Tacito e Plinio, IRC seconda",
+    "meta_description": "Lezione di Religione per la seconda superiore: Tacito, Plinio e Traiano come fonti su Gesù e sui cristiani, con metodo di lettura e domande di studio.",
+    "sintesi": "La lezione affronta che cosa le fonti romane attestano su Gesù e sui primi cristiani. Gli studenti imparano a distinguere data dell'evento e data del testo, genere e giudizio dell'autore, poi leggono brevi passi di Tacito (Annali XV,44) e di Plinio il Giovane con la risposta di Traiano (Lettere X,96-97). Rispondono a quattro domande di studio, correggono un post con affermazioni imprecise e formulano una conclusione proporzionata ai documenti, collegata al rapporto tra fede e storia nella Dei Verbum.",
+    "argomenti": [
+      "Tacito, Annali XV,44",
+      "Plinio e Traiano, lettere",
+      "Metodo di lettura delle fonti",
+      "Storicità e fede cristiana",
+      "Limiti delle testimonianze romane"
+    ],
+    "parole_chiave": [
+      "fonti romane su Gesù",
+      "Tacito e Gesù religione",
+      "Plinio il Giovane lettera a Traiano cristiani",
+      "fonti extrabibliche su Gesù",
+      "Gesù fonte storica lezione IRC",
+      "Annali XV 44 Cristo Pilato",
+      "Dei Verbum 19 storicità dei Vangeli",
+      "materiali IRC seconda superiore"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4562,
+      "output": 535
+    },
     "impronta": "ac1170f4bd02fa36"
   },
   "2|Quattro Vangeli, una Pasqua|Cambiare posto": {
-    "titolo_seo": "Cambiare posto – Religione Cattolica, classe seconda",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Quattro Vangeli, una Pasqua».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Parabola del buon Samaritano Lc 10: Religione classe 2",
+    "meta_description": "Lezione IRC per la seconda: la parabola del Samaritano in Luca 10,25-37, il significato di «prossimo», i tre passanti, i dieci verbi e la domanda capovolta.",
+    "sintesi": "La lezione studia la parabola del Samaritano in Luca 10,25-37 a partire dalla domanda del dottore della Legge: «E chi è mio prossimo?». Gli studenti ricostruiscono il confine del comandamento in Levitico 19, il contesto storico della strada da Gerusalemme a Gerico, il ruolo di sacerdote, levita e samaritano, e il significato di compassione (esplanchnísthē). Leggono con attenzione i dieci verbi del samaritano e ne confrontano la scelta con le letture di Benedetto XVI, Francesco e Giovanni Paolo II.",
+    "argomenti": [
+      "Chi è il prossimo",
+      "Luca 10,25-37",
+      "Giudei e Samaritani",
+      "Compassione e dieci verbi",
+      "Sacerdote, levita, samaritano"
+    ],
+    "parole_chiave": [
+      "parabola del buon samaritano lezione",
+      "Luca 10,25-37 commento scuola superiore",
+      "chi è il mio prossimo religione",
+      "IRC seconda superiore parabola samaritano",
+      "Giudei e Samaritani storia",
+      "compassione significato greco esplanchnísthē",
+      "comandamento dell'amore Levitico 19,18",
+      "materiali IRC secondo ciclo Vangeli Pasqua"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5474,
+      "output": 540
+    },
     "impronta": "996adf6207524b4c"
   },
   "2|Quattro Vangeli, una Pasqua|Prima dei Vangeli, una notizia ricevuta e trasmessa": {
-    "titolo_seo": "Prima dei Vangeli, una notizia ricevuta e trasmessa – Religione Cattol",
-    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Quattro Vangeli, una Pasqua».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Formula pasquale di Paolo e Vangeli: IRC classe seconda",
+    "meta_description": "Lezione di Religione sulla formula di 1Cor 15,3-5, la tradizione ricevuta e trasmessa e il passaggio dalla voce ai quattro Vangeli.",
+    "sintesi": "La lezione ripropone agli studenti la domanda sulle fonti: chi ha custodito la notizia della Pasqua prima che i Vangeli fossero scritti? Si legge 1Cor 15, scritta verso il 56, e si analizza la formula ricevuta e trasmessa, con i testimoni elencati da Paolo. Gli studenti distinguono ciò che il testo attesta da ciò che chiede di credere, riflettono sul termine tradizione e ricostruiscono perché si passò dalla voce ai quattro Vangeli, compresi i sinottici.",
+    "argomenti": [
+      "Formula pasquale di 1Cor 15",
+      "Tradizione: ricevere e trasmettere",
+      "Testimoni della risurrezione",
+      "Dalla voce ai Vangeli",
+      "Vangeli sinottici e Giovanni"
+    ],
+    "parole_chiave": [
+      "formula di Paolo 1 Corinzi 15 lezione",
+      "prima dei Vangeli tradizione orale",
+      "lezione IRC risurrezione fonti",
+      "Vangeli sinottici scuola superiore",
+      "significato di tradizione religione",
+      "testimoni della risurrezione Paolo",
+      "materiali IRC secondo biennio Vangeli",
+      "datazione dei Vangeli lezione"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5407,
+      "output": 532
+    },
     "impronta": "6993e66173b070f9"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino": {
-    "titolo_seo": "1300, perché tutti in cammino – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «I luoghi che cambiano la vita - regola di san…",
-    "sintesi": "Una Regola di 1500 anni fa che parla ancora di tempo, di misura e di telefoni.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Giubileo del 1300 e indulgenza: lezione IRC classe terza",
+    "meta_description": "Lezione di Religione per la classe terza sul giubileo del 1300: la bolla di Bonifacio VIII, l'indulgenza, il pellegrinaggio e la testimonianza di Villani.",
+    "sintesi": "La lezione ricostruisce il giubileo del 1300 seguendo i pellegrini che arrivarono a Roma. Gli studenti leggono la testimonianza di Giovanni Villani, ripercorrono la situazione storica dopo la caduta di Acri e la bolla Antiquorum habet di Bonifacio VIII, e chiariscono il significato di indulgenza, distinguendo colpa e pena. Esaminano poi come si otteneva il perdono: il cammino, la bisaccia e il bordone, la via Francigena e l'accoglienza negli ospizi. Il percorso si chiude collegando il giubileo alla parola biblica.",
+    "argomenti": [
+      "Giubileo del 1300",
+      "Bolla di Bonifacio VIII",
+      "Indulgenza: colpa e pena",
+      "Pellegrinaggio medievale",
+      "Via Francigena e ospizi"
+    ],
+    "parole_chiave": [
+      "giubileo 1300 lezione religione",
+      "bolla Antiquorum habet",
+      "Bonifacio VIII giubileo",
+      "indulgenza plenaria spiegata agli studenti",
+      "pellegrinaggio medievale IRC",
+      "Giovanni Villani Cronica giubileo",
+      "via Francigena pellegrini",
+      "materiali IRC classe terza superiori"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5339,
+      "output": 543
+    },
     "impronta": "6b968d4b11546b2e"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi cura chi non può ricambiare": {
-    "titolo_seo": "Chi cura chi non può ricambiare – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «I luoghi che cambiano la vita - regola di san…",
-    "sintesi": "Una Regola di 1500 anni fa che parla ancora di tempo, di misura e di telefoni.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Ospedale di Santo Spirito in Sassia: IRC classe terza",
+    "meta_description": "Lezione di IRC per la classe terza su Santo Spirito in Sassia: regola, opere di misericordia, Lc 14,12-14, gratuità e costi dell'accoglienza.",
+    "sintesi": "La lezione ricostruisce la nascita dell'ospedale di Santo Spirito, da Guido di Montpellier a Innocenzo III e alla casa romana di Sassia. Gli studenti leggono fonti e brani biblici (Mt 25, Lc 14), riassumono i capitoli della regola e chiariscono i termini ospedale, gratuità e carità. Si chiedono perché aiutare chi non può ricambiare, chi sosteneva i costi e quali limiti hanno le fonti: la regola prescrive, ma non prova la qualità della cura ricevuta.",
+    "argomenti": [
+      "Santo Spirito in Sassia",
+      "Opere di misericordia",
+      "Gratuità e carità",
+      "Regola dell'ordine ospedaliero",
+      "Costi dell'accoglienza e fonti"
+    ],
+    "parole_chiave": [
+      "Santo Spirito in Sassia lezione religione",
+      "ospedali medievali IRC",
+      "opere di misericordia Mt 25",
+      "Luca 14,12-14 banchetto e gratuità",
+      "Innocenzo III e Guido di Montpellier",
+      "gratuità e carità scuola superiore",
+      "luoghi che cambiano la vita IRC terza",
+      "lezione IRC storia dell'ospitalità cristiana"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5307,
+      "output": 530
+    },
     "impronta": "0297236b861bf2f9"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi": {
-    "titolo_seo": "Chi può insegnare a chi – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «I luoghi che cambiano la vita - regola di san…",
-    "sintesi": "Una Regola di 1500 anni fa che parla ancora di tempo, di misura e di telefoni.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Nascita delle università medievali: Religione classe terza",
+    "meta_description": "Lezione di IRC per la classe terza sulla nascita delle università medievali: Bologna, Parigi, scolastica, statuti e il rapporto tra autorità e autorevolezza.",
+    "sintesi": "La lezione ricostruisce la nascita delle università medievali e si chiede chi abbia il diritto di insegnare e chi possa mettere alla prova ciò che viene insegnato. Partendo dal legame tra ricerca di Dio e studio dei testi, tratta le scuole monastiche e cattedrali, la crescita delle città, Bologna e Parigi, il metodo scolastico e gli statuti del 1215. Gli studenti leggono il testo, distinguono autorità e autorevolezza e rispondono a domande di studio con fonti e argomenti.",
+    "argomenti": [
+      "Origini delle università medievali",
+      "Bologna e Parigi a confronto",
+      "Metodo scolastico: lectio e disputatio",
+      "Statuti parigini del 1215",
+      "Autorità e autorevolezza"
+    ],
+    "parole_chiave": [
+      "nascita delle università medievali",
+      "università di Bologna 1088 data convenzionale",
+      "scolastica lectio quaestio disputatio",
+      "Tommaso d'Aquino Summa theologiae lezione",
+      "cristianesimo e nascita delle università",
+      "autorità e autorevolezza a scuola",
+      "IRC classe terza università medievali",
+      "lezione religione scuola secondaria Medioevo"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4907,
+      "output": 508
+    },
     "impronta": "61472ec4f3b4458f"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini": {
-    "titolo_seo": "I benedettini – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «I luoghi che cambiano la vita - regola di san…",
-    "sintesi": "Una Regola di 1500 anni fa che parla ancora di tempo, di misura e di telefoni.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Regola di san Benedetto e benedettini: IRC classe terza",
+    "meta_description": "Lezione di IRC per la classe terza sulla Regola di san Benedetto: fine e norme, misura sui più deboli, ospitalità e limiti dell'autorità dell'abate.",
+    "sintesi": "La lezione presenta Benedetto da Norcia e la sua Regola, partendo dalla norma sugli smartphone a scuola per chiedersi perché una comunità si dà una regola. Gli studenti leggono brani della Regola e distinguono fine, regola ed efficienza. Esaminano poi come il testo tratta vino, lavoro, malati e ospiti, e quali limiti pone all'autorità dell'abate. Si confronta anche il rapporto con Basilio e con la Regola del Maestro.",
+    "argomenti": [
+      "Benedetto da Norcia e i cenobiti",
+      "Fine, regola ed efficienza",
+      "Misura calibrata sui più deboli",
+      "Accoglienza degli ospiti",
+      "Autorità e limiti dell'abate"
+    ],
+    "parole_chiave": [
+      "regola di san Benedetto lezione",
+      "benedettini IRC superiori",
+      "Benedetto da Norcia scuola secondaria",
+      "monachesimo benedettino classe terza",
+      "Regola del Maestro e Benedetto",
+      "ospitalità nella regola benedettina",
+      "materiali IRC secondo ciclo",
+      "unità didattica luoghi che cambiano la vita"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5290,
+      "output": 494
+    },
     "impronta": "03c3e49eb449478a"
   },
   "3|Quando un'abitudine prende il comando|Che cos'è un vizio": {
-    "titolo_seo": "Che cos'è un vizio – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Quando un'abitudine prende il comando».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Che cos'è un vizio: vizi capitali e abitudine, IRC terza",
+    "meta_description": "Lezione di IRC per la terza: dagli otto pensieri di Evagrio ai sette vizi di Gregorio Magno, fino ad Aristotele e Tommaso su abitudine e virtù.",
+    "sintesi": "La lezione ricostruisce l'origine dell'elenco dei vizi capitali: gli otto pensieri di Evagrio Pontico nel deserto egiziano, la rielaborazione di Cassiano e di Gregorio Magno, la lettura di Tommaso d'Aquino. Gli studenti seguono il passaggio dal pensiero all'abitudine, con il vizio inteso come desiderio buono che perde la misura, leggono un brano dell'Etica Nicomachea di Aristotele sulla formazione delle virtù e accennano alle virtù cardinali, con riferimenti a Dante e al Catechismo.",
+    "argomenti": [
+      "Evagrio e gli otto pensieri",
+      "Gregorio Magno e i sette vizi",
+      "Vizio come disordine dell'amore",
+      "Aristotele: abito e virtù",
+      "Dal pensiero all'abitudine"
+    ],
+    "parole_chiave": [
+      "vizi capitali lezione religione superiori",
+      "che cos'è un vizio IRC",
+      "Evagrio Pontico otto pensieri",
+      "Gregorio Magno sette vizi capitali",
+      "Aristotele Etica Nicomachea abitudine virtù",
+      "vizio e virtù come abitudine",
+      "Tommaso d'Aquino vizi capitali",
+      "materiali IRC classe terza vizi"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5268,
+      "output": 557
+    },
     "impronta": "8e2936b79a3970a9"
   },
   "3|Quando un'abitudine prende il comando|Un vizio si può dipingere": {
-    "titolo_seo": "Un vizio si può dipingere – Religione Cattolica, classe terza",
-    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Quando un'abitudine prende il comando».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Vizi capitali e abitudine: Otto Dix, Religione classe terza",
+    "meta_description": "Lezione IRC per la classe terza: i sette vizi capitali nel quadro di Otto Dix del 1933, il vizio come abitudine (habitus) e la lista nata nei monasteri.",
+    "sintesi": "La lezione parte dal quadro I sette vizi capitali, dipinto da Otto Dix a Dresda nel 1933 dopo il licenziamento dalla cattedra. Gli studenti osservano le sette figure allegoriche, le interpretano alla luce del legame tra abito e abitudine (habitus) e leggono i numeri 1865 e 1866 del Catechismo. Ricostruiscono poi l'origine monastica della lista, da Evagrio Pontico a Cassiano e Gregorio Magno, distinguendo vizi capitali e peccato mortale.",
+    "argomenti": [
+      "Vizi capitali nell'opera di Dix",
+      "Allegoria in pittura",
+      "Vizio come abitudine (habitus)",
+      "Catechismo, nn. 1865-1866",
+      "Origine monastica dei sette vizi"
+    ],
+    "parole_chiave": [
+      "vizi capitali lezione religione superiori",
+      "Otto Dix sette vizi capitali",
+      "vizio e virtù habitus IRC",
+      "allegoria vizi capitali arte e religione",
+      "Catechismo 1865 1866 vizio peccato",
+      "Evagrio Pontico Cassiano Gregorio Magno vizi",
+      "materiali IRC classe terza vizi capitali",
+      "differenza vizi capitali e peccato mortale"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5255,
+      "output": 546
+    },
     "impronta": "66e85d5794852d45"
   },
   "4|Accoglienza|Presentazione corso": {
@@ -171,111 +513,339 @@
     "impronta": "a259581fa12e19cf"
   },
   "4|Devo meritarmi tutto|Essere accolti prima di riuscire": {
-    "titolo_seo": "Essere accolti prima di riuscire – Religione Cattolica, classe quarta",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Devo meritarmi tutto».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Grazia e merito: Pelagio e Agostino, IRC classe quarta",
+    "meta_description": "Lezione di IRC per la classe quarta su grazia e merito: la disputa fra Pelagio e Agostino e il sinodo di Cartagine del 418, con testi e fonti.",
+    "sintesi": "La lezione affronta la domanda se l'essere accolti dipenda dai propri meriti, partendo dalla distinzione fra salario, premio, dono e ricatto. Gli studenti ricostruiscono la disputa del V secolo fra Pelagio e Agostino, leggono brani delle Confessioni, il canone 5 del sinodo di Cartagine del 418 e passi del Catechismo, e comprendono la differenza fra libero arbitrio e libertà. Il percorso si chiude con l'obiezione dei monaci di Adrumeto e con il sinodo di Orange.",
+    "argomenti": [
+      "Grazia e merito",
+      "Pelagio e Agostino",
+      "Sinodo di Cartagine 418",
+      "Libero arbitrio e libertà",
+      "Salario, premio, dono, ricatto"
+    ],
+    "parole_chiave": [
+      "grazia e merito religione",
+      "Pelagio e Agostino lezione",
+      "sinodo di Cartagine 418",
+      "libero arbitrio e libertà Agostino",
+      "pelagianesimo scuola superiore",
+      "IRC classe quarta grazia",
+      "Da quod iubes et iube quod vis",
+      "lezione religione grazia e libertà"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5275,
+      "output": 501
+    },
     "impronta": "d2498e274a45c618"
   },
   "4|Devo meritarmi tutto|Il padre, due figli e una festa difficile": {
-    "titolo_seo": "Il padre, due figli e una festa difficile – Religione Cattolica, class",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Devo meritarmi tutto».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Parabola del padre misericordioso Lc 15 – IRC classe quarta",
+    "meta_description": "Lettura guidata di Luca 15,11-32: il padre e i due figli, il merito e la misericordia, con contesto biblico e Catechismo. Materiale per l'IRC.",
+    "sintesi": "La lezione propone la lettura di Luca 15,11-32 a partire dal contesto del capitolo, la tavola di Gesù con i peccatori e le obiezioni di farisei e scribi. Gli studenti rileggono la parabola seguendo entrambi i figli, osservano le parole dei personaggi e i termini greci, e si confrontano con Catechismo e Giovanni Paolo II. Al centro sta la domanda se si possa far festa per chi non se l'è meritata, tra logica del merito e dono del padre.",
+    "argomenti": [
+      "Parabola del padre misericordioso",
+      "Il figlio minore e il maggiore",
+      "Merito e dono gratuito",
+      "Contesto di Luca 15",
+      "Compassione e misericordia"
+    ],
+    "parole_chiave": [
+      "parabola del figliol prodigo scuola superiore",
+      "Luca 15,11-32 lezione IRC",
+      "parabola del padre misericordioso commento",
+      "lezione religione quarta superiore",
+      "figlio maggiore e figlio minore parabola",
+      "Dives in misericordia parabola",
+      "merito e misericordia religione",
+      "materiali IRC secondo ciclo"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5322,
+      "output": 485
+    },
     "impronta": "f238499b272d70a9"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Lutero a Worms": {
-    "titolo_seo": "Lutero a Worms – Religione Cattolica, classe quarta",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Riformare una Chiesa, cambiare una cultura». Lutero, le…",
-    "sintesi": "Lutero, le indulgenze e una Chiesa che cambia cultura.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Lutero a Worms: coscienza e autorità, Religione classe 4",
+    "meta_description": "Lezione di Religione per la classe quarta su Lutero alla dieta di Worms del 1521: coscienza, autorità della Chiesa, Magistero ed editto imperiale.",
+    "sintesi": "La lezione ricostruisce l'incontro tra Lutero e Carlo V alla dieta di Worms del 1521, partendo dalle indulgenze, dalla bolla Exsurge Domine e dalla scomunica. Gli studenti confrontano il criterio di Lutero, fondato sulla Scrittura, con quello dell'imperatore e della Chiesa, distinguono i fatti dalla memoria successiva, come la frase «Qui sto», e chiariscono il concetto di coscienza secondo l'insegnamento cattolico, ragionando anche su un esempio immaginario.",
+    "argomenti": [
+      "Lutero alla dieta di Worms",
+      "Indulgenze e novantacinque tesi",
+      "Scrittura, Tradizione e Magistero",
+      "Coscienza e autorità",
+      "Editto di Worms e Riforma"
+    ],
+    "parole_chiave": [
+      "Lutero a Worms lezione religione",
+      "Lutero e Carlo V",
+      "dieta di Worms 1521",
+      "indulgenze e novantacinque tesi",
+      "coscienza morale IRC superiori",
+      "Riforma protestante IRC classe quarta",
+      "Scrittura Tradizione Magistero",
+      "materiali IRC secondaria secondo grado"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4998,
+      "output": 514
+    },
     "impronta": "89272b7ee7da9418"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze": {
-    "titolo_seo": "Riformare una Chiesa: le indulgenze – Religione Cattolica, classe quar",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Riformare una Chiesa, cambiare una cultura». Lutero, le…",
-    "sintesi": "Lutero, le indulgenze e una Chiesa che cambia cultura.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Indulgenze e Lutero 1517: lezione di Religione, classe IV",
+    "meta_description": "Lezione IRC sulle indulgenze del 1517: dottrina, procedura e abusi, le tesi di Lutero e la risposta di Roma, per distinguere una critica ben fondata.",
+    "sintesi": "La lezione affronta le indulgenze del 1517 distinguendo tre piani: la dottrina cattolica, il modo in cui veniva amministrata e le distorsioni nella pratica. Gli studenti ricostruiscono il contesto politico e finanziario della predicazione di Tetzel, leggono la definizione di Paolo VI, la voce Treccani e alcune tesi di Lutero. Esaminano poi la risposta di Roma, da Leone X al Concilio di Trento, e si chiedono quando una protesta ha buone ragioni.",
+    "argomenti": [
+      "Dottrina delle indulgenze",
+      "Tetzel, Alberto e Fugger",
+      "Le 95 tesi di Lutero",
+      "Dottrina, procedura, distorsione",
+      "Risposta di Roma e Trento"
+    ],
+    "parole_chiave": [
+      "lezione indulgenze Lutero",
+      "indulgenze 1517 religione",
+      "95 tesi di Lutero scuola superiore",
+      "Riforma protestante IRC classe quarta",
+      "Tetzel e Alberto di Brandeburgo",
+      "colpa e pena temporale",
+      "materiali IRC secondo ciclo",
+      "Indulgentiarum doctrina Paolo VI"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5242,
+      "output": 516
+    },
     "impronta": "da8a2cd860034d25"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Un concilio può cambiare ciò che vediamo": {
-    "titolo_seo": "Un concilio può cambiare ciò che vediamo – Religione Cattolica, classe",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Riformare una Chiesa, cambiare una cultura». Lutero, le…",
-    "sintesi": "Lutero, le indulgenze e una Chiesa che cambia cultura.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Concilio di Trento e immagini sacre: IRC classe quarta",
+    "meta_description": "Lezione di IRC per la quarta superiore: il Concilio di Trento, i seminari e il decreto sulle immagini, con il caso del Giudizio universale di Michelangelo.",
+    "sintesi": "La lezione segue come una decisione religiosa diventa un fatto culturale. Gli studenti ripercorrono il Concilio di Trento, la riforma del clero e l'istituzione dei seminari, poi esaminano la difesa cattolica delle immagini e il decreto della sessione XXV. Con il Giudizio universale di Michelangelo imparano a distinguere norma generale, decisione sul dipinto e intervento pittorico, leggono Matteo 25 e confrontano fonti e copie, valutando con cautela il rapporto fra testo conciliare e modifiche all'opera.",
+    "argomenti": [
+      "Concilio di Trento e riforma",
+      "Seminari e formazione del clero",
+      "Venerazione delle immagini sacre",
+      "Decreto della sessione XXV",
+      "Giudizio universale e coperture"
+    ],
+    "parole_chiave": [
+      "Concilio di Trento lezione religione",
+      "decreto sulle immagini sacre Trento",
+      "Giudizio universale Michelangelo censura",
+      "seminari Concilio di Trento",
+      "Riforma cattolica e Controriforma",
+      "IRC classe quarta Riforma protestante",
+      "Matteo 25 giudizio finale arte",
+      "Braghettone Daniele da Volterra"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5057,
+      "output": 515
+    },
     "impronta": "41a38f2887f1915c"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Un'Europa divisa, perché la Riforma si moltiplica": {
-    "titolo_seo": "Un'Europa divisa, perché la Riforma si moltiplica – Religione Cattolic",
-    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Riformare una Chiesa, cambiare una cultura». Lutero, le…",
-    "sintesi": "Lutero, le indulgenze e una Chiesa che cambia cultura.",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Riforma protestante e divisione dell'Europa: IRC classe quarta",
+    "meta_description": "Lezione di Religione per la classe quarta: perché la Riforma si moltiplica, le Chiese territoriali, luterani, calvinisti e anglicani, e l'Europa divisa per fedi.",
+    "sintesi": "La lezione ricostruisce come la Riforma nata con Lutero si moltiplichi tra il 1526 e il 1648 e porti alla divisione confessionale dell'Europa. Gli studenti analizzano la nascita delle Chiese territoriali, le tre forme di Riforma (Lutero, Zwingli, Calvino) e quella anglicana, i tentativi falliti di accordo e il principio «un re, una fede, una legge». Leggono fonti e testi storiografici, confrontano le ragioni delle parti e riflettono sulla violenza e sulla coscienza, con la figura di Tommaso Moro.",
+    "argomenti": [
+      "Chiese territoriali e principi",
+      "Lutero, Zwingli, Calvino",
+      "Scisma anglicano e Tommaso Moro",
+      "Dialoghi falliti: Augusta, Ratisbona",
+      "Un re, una fede"
+    ],
+    "parole_chiave": [
+      "Riforma protestante lezione religione",
+      "Lutero Zwingli Calvino differenze",
+      "dieta di Spira e protestanti",
+      "Confessione di Augusta",
+      "Tommaso Moro IRC",
+      "cuius regio eius religio",
+      "Riforma e divisione dell'Europa",
+      "materiali IRC classe quarta"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5290,
+      "output": 530
+    },
     "impronta": "bf5fe2088796df11"
   },
   "5|Le due vie di Lemaître|Creazione e primo istante": {
-    "titolo_seo": "Creazione e primo istante – Religione Cattolica, classe quinta",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Le due vie di Lemaître». Un prete e il Big Bang:…",
-    "sintesi": "Un prete e il Big Bang: scienza e fede possono parlarsi?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Creazione e Big Bang: Genesi e scienza, Religione classe 5",
+    "meta_description": "Lezione di IRC per la classe quinta su creazione e primo istante: Big Bang, Genesi, creazione ex nihilo e distinzione tra origine e fondamento.",
+    "sintesi": "La lezione chiede se creazione significhi soltanto primo istante. Gli studenti distinguono la domanda scientifica sull'origine dell'universo da quella filosofica e teologica sul fondamento dell'esistenza. Leggono Genesi 1 attenzione al genere letterario, chiariscono la differenza tra fabbricare e creare (ex nihilo), la conservazione nell'essere secondo il Catechismo e Tommaso d'Aquino. Esaminano inoltre obiezioni, il ruolo delle cause naturali e il rischio di un uso apologetico affrettato del Big Bang.",
+    "argomenti": [
+      "Creazione e primo istante",
+      "Genesi e genere letterario",
+      "Creare non è fabbricare",
+      "Big Bang e fondamento",
+      "Cause naturali e fede"
+    ],
+    "parole_chiave": [
+      "creazione e Big Bang religione",
+      "scienza e fede lezione IRC quinta",
+      "Genesi 1 genere letterario",
+      "creazione ex nihilo spiegazione",
+      "Tommaso d'Aquino creazione inizio del mondo",
+      "Giovanni Paolo II lettera Coyne",
+      "materiali IRC secondaria secondo grado",
+      "Lemaître scienza e fede"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5012,
+      "output": 517
+    },
     "impronta": "98c7d3fe17ac1a51"
   },
   "5|Le due vie di Lemaître|Giobbe, dove comincia il mio limite": {
-    "titolo_seo": "Giobbe, dove comincia il mio limite – Religione Cattolica, classe quin",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Le due vie di Lemaître». Un prete e il Big Bang:…",
-    "sintesi": "Un prete e il Big Bang: scienza e fede possono parlarsi?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Libro di Giobbe e Giobbe 38: lezione IRC classe quinta",
+    "meta_description": "Lezione di Religione sul libro di Giobbe e sulla risposta di Dio dall'uragano (Gb 38): dottrina della retribuzione, teodicea e limite della conoscenza.",
+    "sintesi": "La lezione legge il libro di Giobbe dal prologo alla risposta di Dio nel capitolo 38. Gli studenti esaminano la dottrina della retribuzione e l'errore degli amici, che accusano un innocente per difendere Dio, e il confronto con Kant e Ratzinger. Analizzano poi i quattro quadri delle domande divine e l'inno alla sapienza del capitolo 28, per distinguere la ricerca, che non ha limiti, dalla pretesa di possedere il disegno intero del mondo.",
+    "argomenti": [
+      "Libro di Giobbe",
+      "Dottrina della retribuzione",
+      "Teodicea e problema del male",
+      "Giobbe 38: risposta dall'uragano",
+      "Limite della conoscenza umana"
+    ],
+    "parole_chiave": [
+      "lezione libro di Giobbe religione",
+      "Giobbe 38 commento",
+      "dottrina della retribuzione Giobbe",
+      "teodicea Kant Leibniz Giobbe",
+      "problema del male IRC quinta",
+      "scienza e fede Giobbe",
+      "materiali IRC secondo ciclo",
+      "amici di Giobbe Elifaz Bildad Sofar"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5417,
+      "output": 504
+    },
     "impronta": "9e8490ddcd27b48a"
   },
   "5|Le due vie di Lemaître|La visione cosmologica di Lemaître": {
-    "titolo_seo": "La visione cosmologica di Lemaître – Religione Cattolica, classe quint",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Le due vie di Lemaître». Un prete e il Big Bang:…",
-    "sintesi": "Un prete e il Big Bang: scienza e fede possono parlarsi?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Lemaître, Big Bang e rapporto scienza-fede | IRC classe quinta",
+    "meta_description": "Lezione IRC per la quinta: Lemaître, il Big Bang e la distinzione tra risultato scientifico, dato biografico e interpretazione nel dialogo tra scienza e fede.",
+    "sintesi": "La lezione presenta Georges Lemaître, sacerdote e fisico, e la sua ipotesi dell'atomo primitivo. Gli studenti distinguono tre piani: il risultato scientifico, il dato biografico e l'interpretazione. Confrontano poi la dottrina cristiana della creazione con un modello fisico dell'inizio, leggono testi di Lemaître, Tommaso d'Aquino e del Catechismo, esaminano il discorso di Pio XII del 1951 e riflettono sugli errori opposti del concordismo e del fideismo.",
+    "argomenti": [
+      "Georges Lemaître sacerdote e fisico",
+      "Tre piani da distinguere",
+      "Inizio fisico e creazione",
+      "Pio XII e il Big Bang",
+      "Concordismo e fideismo"
+    ],
+    "parole_chiave": [
+      "Lemaître Big Bang religione",
+      "scienza e fede lezione quinta superiore",
+      "Lemaître atomo primitivo",
+      "differenza tra Big Bang e creazione",
+      "concordismo e fideismo",
+      "Pio XII Pontificia Accademia delle Scienze 1951",
+      "materiali IRC secondo ciclo scienza e fede",
+      "legge di Hubble-Lemaître"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5203,
+      "output": 527
+    },
     "impronta": "53cfc8e97c2056d4"
   },
   "5|Le due vie di Lemaître|L’evoluzione decide quanto valiamo": {
-    "titolo_seo": "L’evoluzione decide quanto valiamo – Religione Cattolica, classe quint",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Le due vie di Lemaître». Un prete e il Big Bang:…",
-    "sintesi": "Un prete e il Big Bang: scienza e fede possono parlarsi?",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Evoluzione e dignità umana: lezione IRC classe quinta",
+    "meta_description": "Lezione di Religione per la quinta superiore: che cosa spiega l'evoluzione, perché non misura il valore della persona e su cosa si fonda la dignità umana.",
+    "sintesi": "La lezione distingue ciò che la biologia evolutiva spiega da ciò che la fede cattolica afferma sulla persona. Gli studenti esaminano le prove dell'evoluzione, il significato di selezione naturale e fitness, e il passaggio indebito dalla descrizione biologica a una graduatoria di valore. Leggono poi passi di Humani generis, del messaggio di Giovanni Paolo II del 1996, del Catechismo e di Dignitas infinita, per comprendere creazione, imago Dei, rapporto tra anima e corpo e dignità indipendente dalle prestazioni.",
+    "argomenti": [
+      "Evoluzione e selezione naturale",
+      "Creazione e fissismo",
+      "Imago Dei e anima",
+      "Dignità della persona",
+      "Magistero sull'evoluzione"
+    ],
+    "parole_chiave": [
+      "evoluzione e fede cattolica",
+      "lezione religione quinta superiore",
+      "dignità della persona IRC",
+      "Humani generis e evoluzione",
+      "Giovanni Paolo II teorie dell'evoluzione",
+      "imago Dei anima e corpo",
+      "selezione naturale e valore della persona",
+      "scienza e fede materiali IRC"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 4846,
+      "output": 498
+    },
     "impronta": "30ec35b99aea3bf5"
   },
   "5|Una Chiesa dentro la storia|Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille": {
-    "titolo_seo": "Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille ",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Una Chiesa dentro la storia».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Finanziamento della Chiesa e questione romana: IRC classe 5",
+    "meta_description": "Lezione di IRC per la quinta: dalla questione romana e dalle Guarentigie ai Patti Lateranensi, per capire di che cosa vive la Chiesa e l'otto per mille.",
+    "sintesi": "La lezione risponde alla domanda «chi paga, comanda?» seguendo la storia del sostentamento della Chiesa in Italia. Gli studenti leggono fonti e brani su questioni centrali: il rifiuto della legge delle Guarentigie da parte di Pio IX, l'Obolo di San Pietro, la congrua ai parroci e i Patti Lateranensi del 1929. Confrontano le ragioni del papa con i giudizi degli storici, e collegano questa vicenda all'otto per mille di oggi.",
+    "argomenti": [
+      "Questione romana e Guarentigie",
+      "Rifiuto di Pio IX",
+      "Obolo di San Pietro",
+      "La congrua ai parroci",
+      "Patti Lateranensi del 1929"
+    ],
+    "parole_chiave": [
+      "questione romana religione quinta",
+      "legge delle Guarentigie Pio IX",
+      "Patti Lateranensi lezione IRC",
+      "otto per mille lezione religione",
+      "finanziamento della Chiesa storia",
+      "Obolo di San Pietro significato",
+      "congrua clero Stato italiano",
+      "Chiesa e Stato materiali IRC"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5377,
+      "output": 488
+    },
     "impronta": "7055b01641e80ee7"
   },
   "5|Una Chiesa dentro la storia|Un papa può sbagliare, e un papa senza Stato. Il 1870": {
-    "titolo_seo": "Un papa può sbagliare, e un papa senza Stato. Il 1870 – Religione Catt",
-    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Una Chiesa dentro la storia».",
-    "sintesi": "",
-    "argomenti": [],
-    "parole_chiave": [],
-    "origine": "automatica",
+    "titolo_seo": "Infallibilità del papa e 1870: IRC classe quinta",
+    "meta_description": "Lezione di IRC per la classe quinta sul Vaticano I: che cosa significa l'infallibilità del papa, che cosa non significa e la fine dello Stato pontificio.",
+    "sintesi": "La lezione ricostruisce il 1870 per chiarire che cosa la Chiesa ha definito con la Pastor aeternus del 18 luglio e che cosa ha perso con la fine dello Stato pontificio. Gli studenti leggono il testo della definizione, ne individuano le quattro condizioni dell'ex cathedra, confrontano le ragioni della maggioranza e della minoranza dei vescovi, distinguono infallibilità, impeccabilità e onniscienza e lavorano sulle parole chiave con riferimenti a Lc 22, Lumen gentium e Catechismo.",
+    "argomenti": [
+      "Concilio Vaticano I",
+      "Infallibilità del papa",
+      "Pastor aeternus ex cathedra",
+      "Maggioranza e minoranza conciliare",
+      "Fine dello Stato pontificio"
+    ],
+    "parole_chiave": [
+      "infallibilità del papa lezione",
+      "Concilio Vaticano I scuola superiore",
+      "Pastor aeternus spiegazione",
+      "ex cathedra significato",
+      "1870 Stato pontificio religione",
+      "materiali IRC classe quinta",
+      "Chiesa e storia Ottocento IRC",
+      "papa può sbagliare IRC"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5251,
+      "output": 504
+    },
     "impronta": "14ed764e65cd9ceb"
   }
 }
