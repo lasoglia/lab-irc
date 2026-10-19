@@ -8,12 +8,27 @@ name: Sincronizza contenuti su branch verifiche
 # UDA, lezioni...) resta invisibile su quel branch finché non viene
 # unita. Questa Action lo fa automaticamente, ad ogni salvataggio.
 #
+# Dopo l'unione aggiorna anche le pagine per Google (seo/genera.py):
+# una pagina statica per ogni lezione in lezioni/, sitemap.xml e
+# data/seo.json, solo sul branch verifiche (da cui si pubblica il sito).
+# Con il secret ANTHROPIC_API_KEY i titoli e le descrizioni li scrive
+# Claude; senza, lo script li ricava dai dati del sito. Non modifica mai
+# i file in uploads/ (--no-artefatti), così le unioni da main restano
+# senza conflitti. Se questo passo fallisse, le lezioni sono comunque
+# già sincronizzate dal passo precedente.
+#
 # Quando il branch delle verifiche verrà unito definitivamente in
 # "main", questo file non serve più e si può eliminare.
 
 on:
   push:
     branches: [main]
+  workflow_dispatch: {}   # pulsante «Run workflow» su GitHub → Actions
+
+# una sincronizzazione alla volta: due salvataggi ravvicinati non si pestano i piedi
+concurrency:
+  group: sincronizza-branch-verifiche
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -44,3 +59,25 @@ jobs:
           git checkout claude/lab-irc-exam-platform-v2-712y8s
           git merge origin/main --no-edit
           git push origin claude/lab-irc-exam-platform-v2-712y8s
+
+      - name: Prepara Python (pagine per Google)
+        if: steps.check.outputs.esiste == 'true' && hashFiles('seo/genera.py') != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Pagine per Google (SEO)
+        if: steps.check.outputs.esiste == 'true' && hashFiles('seo/genera.py') != ''
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install --quiet anthropic pypdf
+          python seo/genera.py --no-artefatti
+          git add lezioni sitemap.xml data/seo.json
+          if git diff --cached --quiet; then
+            echo "Pagine per Google già aggiornate: niente da salvare."
+          else
+            git commit -m "SEO: aggiornate pagine statiche e sitemap"
+            git push origin claude/lab-irc-exam-platform-v2-712y8s
+          fi
