@@ -83,6 +83,12 @@
           "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf",
           "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF"
+        },
+        {
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-slide.pdf",
+          "titolo": "Slide",
+          "tipo": "Slide",
+          "in_evidenza": false
         }
       ],
       "ordine": 1
@@ -729,6 +735,66 @@
         },
         {
           "file": "/uploads/ii-2-4-perche-fu-condannato-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Che cosa ci rende liberi",
+      "anno": "3",
+      "uda": "Quando un'abitudine prende il comando",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iii-2-4-cosa-ci-rende-liberi-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-2-4-cosa-ci-rende-liberi-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Quaranta giorni nel deserto, si può dire di no",
+      "anno": "3",
+      "uda": "Quando un'abitudine prende il comando",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "«Dove sei». Il peccato in Genesi 3",
+      "anno": "3",
+      "uda": "Quando un'abitudine prende il comando",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/iii-2-3-dove-sei-peccato-genesi-3-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-2-3-dove-sei-peccato-genesi-3-fascicolo.pdf",
           "titolo": "Fascicolo di approfondimento",
           "tipo": "Documento/PDF",
           "in_evidenza": false
