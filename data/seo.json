@@ -998,32 +998,32 @@
     "impronta": "bf5fe2088796df11"
   },
   "5|Le due vie di Lemaître|Creazione e primo istante": {
-    "titolo_seo": "Creazione e Big Bang: Genesi e scienza, Religione classe 5",
-    "meta_description": "Lezione di IRC per la classe quinta su creazione e primo istante: Big Bang, Genesi, creazione ex nihilo e distinzione tra origine e fondamento.",
-    "sintesi": "La lezione chiede se creazione significhi soltanto primo istante. Gli studenti distinguono la domanda scientifica sull'origine dell'universo da quella filosofica e teologica sul fondamento dell'esistenza. Leggono Genesi 1 attenzione al genere letterario, chiariscono la differenza tra fabbricare e creare (ex nihilo), la conservazione nell'essere secondo il Catechismo e Tommaso d'Aquino. Esaminano inoltre obiezioni, il ruolo delle cause naturali e il rischio di un uso apologetico affrettato del Big Bang.",
+    "titolo_seo": "Creazione e primo istante: Genesi e Tommaso, IRC classe V",
+    "meta_description": "Lezione IRC per la classe quinta: creazione non è solo primo istante. Genesi 1, 2Mac 7, Lateranense IV e Tommaso d'Aquino sul rapporto tra mondo e Dio.",
+    "sintesi": "La lezione distingue tra inizio del mondo e creazione, partendo da Lemaître e dalla distinzione tra Big Bang e creazione. Gli studenti leggono Genesi 1 come racconto sacerdotale, analizzano il verbo bārā' e il passo di 2Mac 7,28 sul «non da cose preesistenti», poi la professione di fede del Lateranense IV (1215) e la posizione di Tommaso d'Aquino a Parigi. La conclusione è che creare significa dipendere da Dio in ogni istante, non soltanto far cominciare.",
     "argomenti": [
-      "Creazione e primo istante",
-      "Genesi e genere letterario",
-      "Creare non è fabbricare",
-      "Big Bang e fondamento",
-      "Cause naturali e fede"
+      "Genesi 1 e generi letterari",
+      "Verbo bārā' e creazione",
+      "Creazione dal nulla, 2Maccabei",
+      "Lateranense IV e inizio del tempo",
+      "Tommaso d'Aquino e inizio del mondo"
     ],
     "parole_chiave": [
-      "creazione e Big Bang religione",
-      "scienza e fede lezione IRC quinta",
-      "Genesi 1 genere letterario",
-      "creazione ex nihilo spiegazione",
-      "Tommaso d'Aquino creazione inizio del mondo",
-      "Giovanni Paolo II lettera Coyne",
-      "materiali IRC secondaria secondo grado",
-      "Lemaître scienza e fede"
+      "creazione e big bang IRC",
+      "Genesi 1 lezione quinta superiore",
+      "creazione dal nulla 2 Maccabei",
+      "Lemaître scienza e fede religione",
+      "Tommaso d'Aquino eternità del mondo",
+      "Concilio Lateranense IV creazione",
+      "materiali IRC classe quinta creazione",
+      "verbo bārā' creazione Genesi"
     ],
     "origine": "claude-sonnet-5-5",
     "token": {
-      "input": 5012,
-      "output": 517
+      "input": 5308,
+      "output": 550
     },
-    "impronta": "98c7d3fe17ac1a51"
+    "impronta": "2734d654872da60d"
   },
   "5|Le due vie di Lemaître|Giobbe, dove comincia il mio limite": {
     "titolo_seo": "Libro di Giobbe e Giobbe 38: lezione IRC classe quinta",
@@ -1108,6 +1108,62 @@
       "output": 498
     },
     "impronta": "30ec35b99aea3bf5"
+  },
+  "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare": {
+    "titolo_seo": "Vaticano II, liturgia e lingua della messa: IRC classe quinta",
+    "meta_description": "Lezione di IRC per la quinta: il Vaticano II non ha vietato il latino. Si leggono Sacrosanctum Concilium 36 e 54 e l'attuazione voluta da Paolo VI.",
+    "sintesi": "La lezione parte dalla frase «il Concilio ha vietato il latino?» e la verifica sui testi. Gli studenti ripercorrono la messa tridentina e il decreto di Trento, il discorso di apertura di Giovanni XXIII con la distinzione tra deposito e modo, poi leggono Sacrosanctum Concilium 14, 36 e 54 sulla partecipazione attiva. Seguono l'attuazione con Paolo VI nel 1965 e nel 1969 e il ruolo della Bibbia proclamata nella lingua del popolo.",
+    "argomenti": [
+      "Concilio Vaticano II e liturgia",
+      "Latino e lingua nazionale",
+      "Deposito della fede e modo",
+      "Sacrosanctum Concilium 36 e 54",
+      "Partecipazione attiva dei fedeli"
+    ],
+    "parole_chiave": [
+      "Vaticano II latino messa",
+      "Sacrosanctum Concilium lezione",
+      "lingua della messa dopo il Concilio",
+      "Gaudet Mater Ecclesia Giovanni XXIII",
+      "deposito della fede e modo",
+      "riforma liturgica Paolo VI",
+      "IRC quinta superiore Chiesa e storia",
+      "Concilio di Trento messa in latino"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5275,
+      "output": 535
+    },
+    "impronta": "a748329bba607e5a"
+  },
+  "5|Una Chiesa dentro la storia|Davanti ai totalitarismi, che cosa fece la Chiesa": {
+    "titolo_seo": "Chiesa e totalitarismi: Mit brennender Sorge, IRC classe V",
+    "meta_description": "Lezione di IRC per la quinta: la Chiesa davanti al nazismo, dal concordato del 1933 all'enciclica Mit brennender Sorge, letta con i documenti.",
+    "sintesi": "La lezione affronta il rapporto tra la Chiesa cattolica e il nazismo, seguendo tre scelte: trattare, condannare, soccorrere in silenzio. Gli studenti ricostruiscono il concordato del 1933 tra Santa Sede e Germania, le violazioni del regime e l'enciclica Mit brennender Sorge del 1937. Leggono e commentano passi dell'enciclica su idolatria della razza, Antico Testamento e diritto naturale, confrontandoli con le fonti storiche per evitare sia assoluzioni generiche sia colpe distribuite a caso.",
+    "argomenti": [
+      "Concordato tra Santa Sede e Germania",
+      "Enciclica Mit brennender Sorge",
+      "Caratteri dei regimi totalitari",
+      "Diritto naturale e dignità della persona",
+      "Chiesa e nazismo nel Novecento"
+    ],
+    "parole_chiave": [
+      "Chiesa e nazismo lezione religione",
+      "Mit brennender Sorge schede didattiche",
+      "concordato 1933 Germania Santa Sede",
+      "Pio XI e Pio XII totalitarismi",
+      "Chiesa e totalitarismi IRC quinta",
+      "enciclica Con viva ansia commento",
+      "materiali IRC secondaria secondo grado",
+      "Chiesa nella storia del Novecento"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5283,
+      "output": 559
+    },
+    "impronta": "63495f439131c26a"
   },
   "5|Una Chiesa dentro la storia|Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille": {
     "titolo_seo": "Finanziamento della Chiesa e questione romana: IRC classe 5",
