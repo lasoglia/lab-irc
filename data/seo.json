@@ -279,6 +279,15 @@
     },
     "impronta": "ab657ba15f8ff286"
   },
+  "2|Accoglienza|Di chi mi posso fidare": {
+    "titolo_seo": "Di chi mi posso fidare – Religione Cattolica, classe seconda",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Accoglienza». Chi siamo, che cosa faremo e una domanda…",
+    "sintesi": "Chi siamo, che cosa faremo e una domanda che ci terrà compagnia fino a giugno.",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "a259581fa12e19cf"
+  },
   "2|Gesù quali tracce|Anche i testi hanno una storia": {
     "titolo_seo": "Testimonium Flavianum e Giuseppe Flavio: IRC seconda",
     "meta_description": "Lezione di Religione per la classe seconda su Giuseppe Flavio e il Testimonium Flavianum: trasmissione dei testi, interpolazione e critica testuale.",
@@ -418,6 +427,62 @@
       "output": 540
     },
     "impronta": "996adf6207524b4c"
+  },
+  "2|Quattro Vangeli, una Pasqua|Passaggi di libertà": {
+    "titolo_seo": "Pasqua ebraica e Ultima Cena: Es 12 e Lc 22 – IRC classe 2",
+    "meta_description": "Lezione IRC per la seconda superiore: dalla Pasqua d'Israele in Es 12 alla Cena di Gesù in Lc 22, per comprendere il memoriale e l'Eucaristia.",
+    "sintesi": "La lezione mette a confronto la Pasqua d'Israele del libro dell'Esodo (Es 12) con la cena di Gesù raccontata da Luca (Lc 22,14-20). Gli studenti leggono i testi biblici, chiariscono termini come Pasqua, azzimi e memoriale, osservano i gesti ebraici ripresi da Gesù e le parole nuove su pane e calice. Seguono il passaggio dalla schiavitù alla libertà fino al passaggio di Gesù dalla morte alla risurrezione, con riferimenti a Paolo, a Giovanni e al mosaico di Ravenna.",
+    "argomenti": [
+      "Pasqua ebraica in Esodo 12",
+      "Memoriale e anámnēsis",
+      "Ultima Cena in Luca",
+      "Nuova alleanza e Eucaristia",
+      "Passaggio dalla schiavitù alla libertà"
+    ],
+    "parole_chiave": [
+      "Pasqua ebraica e Ultima Cena",
+      "lezione IRC seconda superiore",
+      "Es 12 e Lc 22 lezione",
+      "significato di memoriale nella Bibbia",
+      "Eucaristia e Pasqua ebraica",
+      "unità didattica Quattro Vangeli una Pasqua",
+      "materiali religione scuola secondaria secondo grado",
+      "nuova alleanza Luca 22"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5573,
+      "output": 580
+    },
+    "impronta": "818240e113994ab4"
+  },
+  "2|Quattro Vangeli, una Pasqua|Perché fu condannato": {
+    "titolo_seo": "Condanna e morte di Gesù nel racconto di Luca | IRC seconda",
+    "meta_description": "Lezione di Religione per la seconda: la condanna di Gesù nel racconto di Luca, dalle fonti storiche alla crocifissione, con il confronto tra i Vangeli.",
+    "sintesi": "La lezione segue il racconto di Luca (22,47–23,56) dall'arresto di Gesù alla sepoltura e lo confronta con le fonti storiche, tra cui Tacito, Giuseppe Flavio e lo studioso John P. Meier. Gli studenti distinguono ciò che gli storici ritengono certo da ciò che dipende dal racconto di ciascun Vangelo. Esaminano il significato della croce nel mondo romano ed ebraico, il ruolo del sinedrio e di Pilato e il cambiamento dell'accusa, da religiosa a politica. Il testo introduce anche termini come croce e sinedrio.",
+    "argomenti": [
+      "Condanna di Gesù e fonti storiche",
+      "Croce nel mondo romano",
+      "Arresto e interrogatorio nel sinedrio",
+      "Ruolo di Ponzio Pilato",
+      "Accusa religiosa e accusa politica"
+    ],
+    "parole_chiave": [
+      "perché Gesù fu condannato lezione",
+      "passione di Gesù secondo Luca",
+      "Gesù Tacito Giuseppe Flavio fonti",
+      "sinedrio e Pilato Gesù",
+      "significato della croce nel mondo romano",
+      "materiali IRC seconda superiore",
+      "Quattro Vangeli una Pasqua",
+      "processo a Gesù religione scuola superiore"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5489,
+      "output": 561
+    },
+    "impronta": "0ea438f551ec1e62"
   },
   "2|Quattro Vangeli, una Pasqua|Prima dei Vangeli, una notizia ricevuta e trasmessa": {
     "titolo_seo": "Formula pasquale di Paolo e Vangeli: IRC classe seconda",
