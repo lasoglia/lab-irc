@@ -4737,7 +4737,7 @@ function apriDialogoNPC(p) {
   }
   if (!p.incontrato) {
     p.incontrato = true;
-    mostra(p, d.apertura, d.tema);
+    mostra(p, d.apertura);
     aggiungiOpzione('Ascolta la domanda', () => mostraDomanda(p));
     E.nota.textContent = 'Invio per continuare';
     return;
@@ -4749,7 +4749,7 @@ function mostraDomanda(p) {
   modo = 'domanda';
   const d = p.dati;
   const tentativo = (p.tentativi || 0) + 1;
-  mostra(p, d.domanda, (p.tipo === 'pietra' ? 'Genesi 28,10–19' : 'Domanda · ' + d.tema) + (tentativo > 1 ? ' · tentativo ' + tentativo : ''));
+  mostra(p, d.domanda, (p.tipo === 'pietra' ? 'Genesi 28,10–19' : 'Domanda') + (tentativo > 1 ? ' · tentativo ' + tentativo : ''));
   const opzioni = mescola(d.opzioni.map((o, i) => ({ spiega: o[1], giusta: i === 0, testo: o[0] })));
   for (const o of opzioni) { const voce = aggiungiOpzione(o.testo, () => rispondi(p, voce), { spiega: o.spiega, giusta: o.giusta }); }
   domandaAperta = performance.now();

@@ -827,6 +827,111 @@ html[data-tema="chiaro"] body[data-skin="arcade"]::before{opacity:.25}
 .g-debate[hidden]{display:none}
 @media (max-width:760px){.g-cols{grid-template-columns:1fr;gap:21px}.g-bins{grid-template-columns:1fr}.g-bin{min-height:110px}.g-mem-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.g-seq-item{grid-template-columns:28px minmax(0,1fr) auto}.g-seq-y{display:none}.g-vf-btns{gap:13px}}
 
+/* Lab IRC — Giochi della skill (15 ottobre 2026), non presenti nello zip: «indizi» (Indovina dagli indizi) e «prima» (Prima o dopo?).
+   Dopo giochi.css e giochi-2.css. Solo token del design system e variabili dei giochi (--g-*): valgono nelle due skin (arcade e
+   tavolo), nei temi chiaro e scuro e in modalità LIM; prefers-reduced-motion è già coperto da giochi.css (body.g *).
+   Stati :hover, :focus-visible e :active espliciti; le opzioni riusano .g-opt e .g-key del quiz (stessa funzione, stessa forma). */
+
+/* ---------- indovina dagli indizi ---------- */
+.g-ind-list{list-style:none;margin:13px 0 0;padding:0;display:grid;gap:10px}
+.g-ind-item{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:13px;min-height:58px;padding:11px 16px;border:2px solid color-mix(in srgb,var(--g-a) 45%,var(--g-line));border-radius:var(--g-r);background:var(--g-panel-2);color:var(--lab-ink);font:600 clamp(18px,2.1vw,21px)/1.4 var(--lab-font-body);text-wrap:pretty;transition:border-color 233ms,background 233ms,color 233ms}
+.g-ind-n{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;border:2px solid currentColor;color:var(--g-a);font:800 15px/1 var(--lab-font-body);font-variant-numeric:tabular-nums}
+.g-ind-item.is-hidden{border-style:dashed;border-color:var(--g-line);background:repeating-linear-gradient(135deg,var(--g-panel-2) 0 10px,var(--g-panel) 10px 20px);color:var(--lab-muted);font-style:italic;font-weight:500}
+.g-ind-item.is-hidden .g-ind-n{color:var(--lab-muted);font-style:normal}
+.g-ind-item.is-new{animation:gDeal 377ms var(--lab-ease-out) both}
+/* gli indizi scoperti dopo la risposta: non sono serviti per i punti, ma si leggono */
+.g-ind-item.is-after{border-color:var(--g-line);color:var(--lab-ink-soft)}
+.g-ind-item.is-after .g-ind-n{color:var(--lab-muted)}
+.g-ind-bar{display:flex;flex-wrap:wrap;align-items:center;gap:13px;margin:16px 0 0}
+.g-ind-bar[hidden]{display:none}
+.g-ind-val{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;border:2px solid var(--lab-ambra);background:color-mix(in srgb,var(--lab-ambra) 14%,transparent);color:var(--lab-ink);font:800 14px/1 var(--lab-font-body);letter-spacing:.08em;text-transform:uppercase;font-variant-numeric:tabular-nums;white-space:nowrap}
+.g-ind-val.is-pop{animation:gPop 377ms var(--lab-ease-spring)}
+.g-indizi .g-opts{margin-top:21px}
+.g-indizi.is-in .g-opt:not(.is-wrong){animation:gIn 610ms var(--lab-ease-out) both}
+.g-indizi.is-in .g-opt:nth-child(2){animation-delay:55ms}.g-indizi.is-in .g-opt:nth-child(3){animation-delay:110ms}.g-indizi.is-in .g-opt:nth-child(4){animation-delay:165ms}
+.g-ind-esito{margin:21px 0 0;font:800 clamp(20px,2.1vw,22px)/1.35 var(--lab-font-body);color:var(--lab-ink);text-wrap:pretty}
+.g-ind-esito:empty{display:none}
+.g-ind-esito.is-ok{color:var(--g-ok)}.g-ind-esito.is-ko{color:var(--g-ko)}
+.g-indizi .g-why{margin-top:10px}
+/* schermo largo (e LIM): indizi a sinistra, risposte a destra, in rapporto aureo; così indizi e risposte stanno insieme nello schermo */
+@media (min-width:1000px){
+  .g-indizi{display:grid;grid-template-columns:minmax(0,1.618fr) minmax(0,1fr);column-gap:34px;align-items:start}
+  .g-indizi>.g-label,.g-indizi>.g-ind-esito,.g-indizi>.g-why,.g-indizi>.g-actions{grid-column:1/-1}
+  .g-indizi>.g-ind-list{grid-column:1;grid-row:2}
+  .g-indizi>.g-ind-bar{grid-column:1;grid-row:3}
+  .g-indizi>.g-opts{grid-column:2;grid-row:2/span 2;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:13px}
+  .g-indizi .g-opt{min-height:58px}
+}
+
+/* testo solo per i lettori di schermo */
+.g-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- prima o dopo? ---------- */
+.g-pd-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 13px}
+.g-pd-top .g-streak{margin:0}
+.g-prima .g-h{margin:8px 0 24px}
+.g-pd-pair{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:16px}
+.g-pd-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;min-height:170px;padding:24px;text-align:left;font:700 clamp(19px,2.3vw,24px)/1.3 var(--lab-font-body);color:var(--lab-ink);background:var(--g-panel-2);border:2px solid var(--g-line);border-radius:var(--g-r-lg);cursor:pointer;transition:transform 144ms,border-color 233ms,background 233ms,box-shadow 233ms}
+.g-pd-card:hover:not(:disabled){border-color:var(--g-a);transform:translateY(-3px)}
+.g-pd-card:active:not(:disabled){transform:translateY(1px) scale(.98)}
+.g-pd-card:focus-visible{outline:3px solid var(--lab-oro);outline-offset:3px}
+.g-pd-card:disabled{cursor:default}
+.g-pd-t{text-wrap:balance}
+.g-pd-res{display:none;align-items:center;flex-wrap:wrap;gap:8px 13px}
+.g-pd-card.is-first .g-pd-res,.g-pd-card.is-second .g-pd-res{display:flex;animation:gIn 377ms var(--lab-ease-out) both}
+.g-pd-y{font:800 clamp(30px,4vw,44px)/1 var(--g-num-font);font-variant-numeric:tabular-nums;color:var(--g-a);white-space:nowrap}
+.g-pd-tag{padding:6px 10px;border-radius:999px;border:1.5px solid currentColor;font:var(--g-label-font);letter-spacing:var(--g-label-track);text-transform:uppercase;color:var(--lab-muted)}
+.g-pd-d{font:500 16px/1.45 var(--lab-font-body);color:var(--lab-ink-soft);text-wrap:pretty}
+.g-pd-d:empty{display:none}
+.g-pd-card.is-first{border-color:var(--g-ok);background:color-mix(in srgb,var(--g-ok) 14%,var(--g-panel-2))}
+.g-pd-card.is-first .g-pd-y,.g-pd-card.is-first .g-pd-tag{color:var(--g-ok)}
+.g-pd-card.is-wrong{border-color:var(--g-ko);background:color-mix(in srgb,var(--g-ko) 12%,var(--g-panel-2))}
+.g-prima.is-in .g-pd-card:not(.is-wrong){animation:gDeal 377ms var(--lab-ease-out) both}
+.g-prima.is-in .g-pd-card:last-child:not(.is-wrong){animation-delay:89ms}
+.g-prima .g-pd-card.is-wrong{animation:gShake 377ms}
+/* «o» fra le due carte; dopo la risposta diventa una freccia dal primo evento al secondo: il verso del tempo */
+.g-pd-or{align-self:center;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:2px solid var(--g-line);background:var(--g-panel);color:var(--lab-muted);font:800 20px/1 var(--lab-font-body)}
+.g-pd-or b{display:block;transition:transform 377ms var(--lab-ease-out)}
+.g-pd-or.is-shown{color:var(--g-ok);border-color:var(--g-ok)}
+.g-pd-or.is-indietro b{transform:rotate(180deg)}
+.g-pd-msg{margin:21px 0 0;font:800 clamp(20px,2.1vw,22px)/1.35 var(--lab-font-body);color:var(--lab-ink);text-wrap:pretty}
+.g-pd-msg:empty{display:none}
+.g-pd-msg.is-ok{color:var(--g-ok)}.g-pd-msg.is-ko{color:var(--g-ko)}
+
+/* ---------- skin arcade: lo stesso bagliore delle opzioni del quiz, niente di più ---------- */
+body[data-skin="arcade"] .g-pd-card:hover:not(:disabled){box-shadow:var(--g-glow-a)}
+body[data-skin="arcade"] .g-pd-card.is-first{box-shadow:0 0 18px -6px var(--g-ok)}
+
+/* ---------- telefono ---------- */
+@media (max-width:760px){
+  .g-ind-item{gap:10px;padding:10px 13px;font-size:17px}
+  .g-ind-n{width:30px;height:30px;font-size:14px}
+  .g-pd-pair{grid-template-columns:minmax(0,1fr);gap:10px}
+  .g-pd-or{justify-self:center;width:44px;height:44px}
+  .g-pd-or.is-avanti b{transform:rotate(90deg)}.g-pd-or.is-indietro b{transform:rotate(-90deg)}
+  .g-pd-card{min-height:96px;padding:16px 18px}
+}
+
+/* ---------- modalità LIM ---------- */
+:root[data-lim] .g-ind-list{gap:var(--lu);margin-top:calc(var(--lu)*1.3)}
+:root[data-lim] .g-ind-item{min-height:var(--lab-lim-target);padding:var(--lu) calc(var(--lu)*1.6);gap:calc(var(--lu)*1.6);font-size:var(--lab-lim-body);border-width:3px}
+:root[data-lim] .g-ind-n{width:calc(var(--lu)*3.4);height:calc(var(--lu)*3.4);font-size:var(--lab-lim-caption);border-width:3px}
+:root[data-lim] .g-ind-bar{gap:calc(var(--lu)*1.6);margin-top:calc(var(--lu)*1.6)}
+:root[data-lim] .g-indizi .g-opts{margin-top:calc(var(--lu)*2.1)}
+@media (min-width:1000px){:root[data-lim] .g-indizi{column-gap:calc(var(--lu)*3.4)}:root[data-lim] .g-indizi>.g-opts{margin-top:calc(var(--lu)*1.3);gap:var(--lu)}}
+:root[data-lim] .g-ind-val{min-height:calc(var(--lu)*4.4);padding:0 calc(var(--lu)*1.6);font-size:var(--lab-lim-caption);border-width:3px}
+:root[data-lim] .g-indizi .g-opt{min-height:var(--lab-lim-target);font-size:var(--lab-lim-body)}
+:root[data-lim] .g-ind-esito,:root[data-lim] .g-pd-msg{margin-top:calc(var(--lu)*2.1);font-size:var(--lab-lim-body)}
+:root[data-lim] .g-prima .g-h{margin:var(--lu) 0 calc(var(--lu)*2.1)}
+:root[data-lim] .g-pd-pair{gap:calc(var(--lu)*2.1)}
+:root[data-lim] .g-pd-card{min-height:calc(var(--lu)*17);padding:calc(var(--lu)*2.1) calc(var(--lu)*2.6);gap:var(--lu);font-size:var(--lab-lim-lead);border-width:3px}
+:root[data-lim] .g-pd-y{font-size:calc(var(--lu)*4.4)}
+:root[data-lim] .g-pd-tag{padding:calc(var(--lu)*.5) var(--lu);font-size:var(--lab-lim-caption);border-width:2px}
+:root[data-lim] .g-pd-d{font-size:var(--lab-lim-caption)}
+:root[data-lim] .g-pd-or{width:calc(var(--lu)*5.5);height:calc(var(--lu)*5.5);font-size:var(--lab-lim-body);border-width:3px}
+:root[data-lim] body[data-skin="arcade"] .g-pd-card.is-first{box-shadow:none}
+@media (max-width:900px){:root[data-lim] .g-pd-pair{grid-template-columns:minmax(0,1fr)}:root[data-lim] .g-pd-or{justify-self:center}:root[data-lim] .g-pd-or.is-avanti b{transform:rotate(90deg)}:root[data-lim] .g-pd-or.is-indietro b{transform:rotate(-90deg)}}
+
 /* Lab IRC — Lezione interattiva (React). Si appoggia a lab-tokens.css, lab-artefatto.css e giochi.css.
    Uso: <body class="la g" data-anno="1-5"> + lab-lezione.js. Stati hover/focus/active espliciti su ogni controllo. */
 
@@ -1898,6 +2003,11 @@ button.lx-box:hover i{transform:translateX(5px)}
 .g-opt:active:not(:disabled){transform:scale(.97)}
 .g-tool{transition:color 144ms,border-color 233ms,transform 144ms}
 .g-tool:active{transform:scale(.95)}
+/* Modalità Giochi con 6–7 giochi per lezione (15 ottobre 2026): sette schede stanno in una riga, invece di sei più una
+   sotto, che spingeva il gioco oltre il bordo della LIM; la scheda ha anche il suo stato :active. */
+.ll-games .g-tabs{grid-template-columns:repeat(auto-fill,minmax(122px,1fr))}
+.ll-games .g-tabs button{padding-left:13px;padding-right:13px}
+.g-tabs button:active{transform:translateY(0) scale(.98)}
 
 /* LAB-IRC · Guida del docente — aggiunta della skill (5 ottobre 2026), caricata dopo il kit.
    Pannello laterale nascosto, aperto dal pulsante «Guida» della testata o dal tasto G; stessi materiali del glossario. */
@@ -1984,6 +2094,56 @@ button.lx-box:hover i{transform:translateX(5px)}
   .gm-pt{padding:4px 8px;font-size:11px;min-height:40px}
   .gm-opz{flex-direction:column;align-items:stretch}
 }
+
+/* ---------- correzione alla LIM (24 ottobre 2026): ogni attività sta nello schermo della LIM, senza scorrere ---------- */
+/* scene 2, 3, 4, 5, 6 e 10: il testo della scena scende sotto il primo blocco (lo schema, l'animazione, la fonte, la linea
+   del tempo), perché titolo, domanda e attività stiano insieme nello schermo; gli altri blocchi seguono il testo.
+   Solo l'ordine sullo schermo: i dati, lo Studio e la guida non cambiano. */
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl)){display:flex;flex-direction:column}
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl))>.ll-blocks{display:contents}
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl))>.ll-head{margin-bottom:0}
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl))>.ll-blocks>.ll-block:first-child{order:1;margin-top:13px}
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl))>.ll-p{order:2;margin:55px 0 0}
+.ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.gm,.lp-anim,.lp-read,.ll-tl))>.ll-blocks>.ll-block:not(:first-child){order:3;margin-top:55px}
+
+/* alla LIM */
+/* scene 2 e 10, schema della Città Vecchia: lo schema a sinistra, la consegna, la scelta e il perché a destra */
+:root[data-lim] .gm{display:grid;grid-template-columns:calc(38vh * 1.6 / var(--ll-z,1)) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;gap:0 34px;align-items:start}
+:root[data-lim] .gm>.lp-lens-f{grid-column:1;grid-row:1 / span 4;margin:0}
+:root[data-lim] .gm>.ll-hint{grid-column:2;grid-row:1;margin:0 0 13px}
+:root[data-lim] .gm>[aria-live]{grid-column:2;grid-row:2}
+:root[data-lim] .gm>[aria-live]>.ll-hint{margin:0}
+:root[data-lim] .gm>.gm-fine{grid-column:2;grid-row:3;margin-top:13px}
+:root[data-lim] .gm:has(>.gm-fine)>.ll-hint{display:none}
+:root[data-lim] .gm>.ll-row{grid-column:2;grid-row:3;justify-self:end;align-self:end;margin:0 21px 8px 0}
+:root[data-lim] .gm-pt small{white-space:normal;max-width:11em;text-align:center;line-height:1.2}
+:root[data-lim] .gm .gm-stage{width:100%}
+:root[data-lim] .gm .gm-scelta{margin-top:0}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .gm)>.ll-head .ll-lead{max-width:none}
+/* scena 3, animazione: il palco a sinistra con i comandi sotto (come dice la guida: «i pulsanti sotto l'animazione»),
+   la didascalia a destra */
+:root[data-lim] .lp-anim{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto;gap:13px 34px;align-items:start}
+:root[data-lim] .lp-anim>.lp-stage{grid-column:1;grid-row:1}
+:root[data-lim] .lp-anim>.lp-ctrl{grid-column:1;grid-row:2;margin:0}
+:root[data-lim] .lp-anim>.lp-cap{grid-column:2;grid-row:1 / span 2;margin:0}
+/* scena 1, sondaggio d'ingresso: percorso su una riga, titolo e mascotte più compatti, risposte in due colonne */
+:root[data-lim] .ll-stage:has(>.ll-route){padding-top:13px}
+:root[data-lim] .ll-route{flex-wrap:nowrap;align-items:center;padding:8px 13px;margin-bottom:13px}
+:root[data-lim] .ll-route>p{flex:1 1 0;min-width:0;margin:0 0 0 13px}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-poll)>.ll-head.has-masc{grid-template-columns:minmax(0,1fr) auto;margin-bottom:0}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-poll)>.ll-head .ll-lead{max-width:none}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-poll)>.ll-head lab-mascotte{zoom:.75}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-poll)>.ll-blocks{margin-top:13px}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-poll)>.ll-blocks>.ll-block:first-child{padding-top:21px}
+/* sondaggi d'ingresso e d'uscita: la consegna sulla riga dell'etichetta, le quattro risposte in due colonne */
+:root[data-lim] .lx-poll{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:21px;align-items:baseline}
+:root[data-lim] .lx-poll>*{grid-column:1 / -1}
+:root[data-lim] .lx-poll>.la-meta{grid-column:1;grid-row:1}
+:root[data-lim] .lx-poll>.ll-hint{grid-column:2;grid-row:1;margin:0}
+:root[data-lim] .lx-poll .lx-opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+/* scene 3, 4, 5 e 6: animazione, fonte e linea del tempo con un margine superiore più stretto, perché la nota sotto il testo resti nello schermo */
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child :is(.lp-read,.ll-tl,.lp-anim))>.ll-blocks>.ll-block:first-child{margin-top:8px;padding-top:21px}
+:root[data-lim] .lp-read>.lp-lens-q{margin-bottom:8px}
 
 </style>
 </head>
@@ -2948,7 +3108,7 @@ function(a,b,c){if(!Vd(b))throw Error(m(200));return Wd(null,a,b,!1,c)};Q.unmoun
     </main>`;
   }
 
-  var GNAMES = { quiz: ['Ripasso', 'Quiz'], vf: ['Ripasso', 'Vero o falso'], flash: ['Ripasso', 'Flashcard'], memory: ['Ripasso', 'Memory'], abbina: ['Concetti', 'Abbinamenti'], cat: ['Concetti', 'Categorie'], seq: ['Storia', 'Linea del tempo'], completa: ['Parole', 'Completa'], cruci: ['Parole', 'Cruciverba'], sfida: ['Classe', 'Sfida a squadre'], sondaggio: ['Classe', 'Sondaggio'], rifl: ['Personale', 'Riflessione'] };
+  var GNAMES = { quiz: ['Ripasso', 'Quiz'], vf: ['Ripasso', 'Vero o falso'], flash: ['Ripasso', 'Flashcard'], memory: ['Ripasso', 'Memory'], abbina: ['Concetti', 'Abbinamenti'], cat: ['Concetti', 'Categorie'], seq: ['Storia', 'Linea del tempo'], prima: ['Storia', 'Prima o dopo'], completa: ['Parole', 'Completa'], cruci: ['Parole', 'Cruciverba'], indizi: ['Classe', 'Indizi'], sfida: ['Classe', 'Sfida a squadre'], sondaggio: ['Classe', 'Sondaggio'], rifl: ['Personale', 'Riflessione'] };
   function Giochi(props) {
     var D = w.GIOCHI_DATI || {}, ids = Object.keys(GNAMES).filter(function (k) { return D[k]; });
     useEffect(function () { if (w.Giochi) w.Giochi.init(props.start); return function () { w.Giochi && w.Giochi.clear(); }; }, []);
@@ -3956,7 +4116,7 @@ window.LEZIONE = {
   classe: 'Anno I',
   titolo: 'Gerusalemme, una città di *memorie*',
   sottotitolo: 'Tre luoghi, tre memorie e una parodia da controllare sui fatti.',
-  saluto: 'Tre memorie, una città. Le domande sull’oggi le teniamo per l’ora 11.',
+  saluto: 'Tre memorie, una città. Le domande sull’oggi le teniamo per l’ora 24.',
 
   percorsi: [
     { id: 'senza-video', nome: 'Senza video', descrizione: 'Tre luoghi, tre fonti, la sfida e la prova.' },
@@ -4013,7 +4173,7 @@ window.LEZIONE = {
   "contesto": [
     "Gerusalemme: città sulle colline della Giudea; la Città Vecchia contiene i tre luoghi a poche centinaia di metri l’uno dall’altro. Monte del Tempio (ebrei) e Haram al-Sharif (musulmani) sono la stessa spianata.",
     "La spianata oggi: è amministrata dal *Waqf*, una fondazione religiosa islamica, sotto la custodia del re di Giordania (riconfermata da un accordo giordano-palestinese del 2013); dal 1967 (guerra dei sei giorni) la Città Vecchia, con la spianata, è sotto controllo israeliano. Serve solo se i ragazzi chiedono del Tempio o del conflitto.",
-    "Ora 10 e ora 11: sono le lezioni successive della stessa unità sulla storia d’Israele. L’ora 10 arriva dalla diaspora alla nascita dello Stato d’Israele (1948) e a *Nostra aetate*, la dichiarazione del Concilio Vaticano II (1965) sul rapporto della Chiesa con le altre religioni, ebrei e musulmani compresi; l’ora 11 tratta il conflitto israelo-palestinese di oggi. «Rimanda all’ora 10/11» significa: annota la domanda per quelle lezioni.",
+    "Ora 23 e ora 24: sono due lezioni della fine dell’anno, dopo quelle sui re e sui profeti. L’ora 23 arriva dalla diaspora alla nascita dello Stato d’Israele (1948) e a *Nostra aetate*, la dichiarazione del Concilio Vaticano II (1965) sul rapporto della Chiesa con le altre religioni, ebrei e musulmani compresi; l’ora 24 tratta il conflitto israelo-palestinese di oggi. «Rimanda all’ora 23/24» significa: annota la domanda per quelle lezioni.",
     "Salomone: re d’Israele del X secolo a.C.; la Bibbia (1 Re 6–8) gli attribuisce il primo Tempio, distrutto dai Babilonesi nel VI secolo a.C.",
     "Erode il Grande: re della Giudea sotto Roma (37–4 a.C.); dal 20 a.C. ricostruisce e amplia il secondo Tempio sulla grande spianata sostenuta da muri: il Muro occidentale è uno di quei muri.",
     "Tito: comandante romano che nel 70 d.C. espugna Gerusalemme e distrugge il Tempio; figlio dell’imperatore Vespasiano, diventa imperatore nel 79. L’Arco di Tito a Roma mostra il corteo con la menorah del Tempio.",
@@ -4052,7 +4212,7 @@ window.LEZIONE = {
     "Non dire «la tomba vuota dimostra che Gesù è risorto». Di’ invece «per il Catechismo il sepolcro vuoto è un segno, “non è in sé una prova diretta” (CCC 640); la fede si fonda sulle testimonianze degli incontri con il Risorto».",
     "Non dire «Maometto è il dio dei musulmani». Di’ invece «Muhammad è il profeta; i musulmani adorano Dio, in arabo *Allah*».",
     "Non dire «Maometto andò a Gerusalemme» come fosse un dato storico. Di’ invece «secondo la tradizione islamica, nel viaggio notturno»: il Corano non nomina Gerusalemme, l’identificazione è della tradizione.",
-    "Non dire «tre religioni, tre eserciti» né «si fanno la guerra da sempre». Di’ invece «tre memorie vicine; le dispute hanno cause storiche e politiche, che studieremo nell’ora 11».",
+    "Non dire «tre religioni, tre eserciti» né «si fanno la guerra da sempre». Di’ invece «tre memorie vicine; le dispute hanno cause storiche e politiche, che studieremo nell’ora 24».",
     "Non dire «le tre religioni dicono la stessa cosa». Di’ invece «legano alla stessa città memorie diverse»: accostarle non significa confonderle.",
     "Non raccontare scene dell’episodio che non hai visto: commenta solo ciò che la classe ha visto davvero. Il caso dei «tre personaggi che litigano» (scena «Vicini, non per forza nemici» e Sfida) è dichiarato immaginario: se nell’episodio una scena simile esiste e la classe l’ha vista, commentala come scena vista, con i tre passi."
   ],
@@ -4064,8 +4224,8 @@ window.LEZIONE = {
     },
     {
       "q": "Perché non ricostruiscono il Tempio?",
-      "r": "Sulla spianata, da più di tredici secoli, ci sono la Cupola della Roccia e la moschea al-Aqsa, due luoghi santi dell’islam. Se e come si possa ricostruire il Tempio è una questione che questa lezione non tratta: la annotiamo per l’ora 11.",
-      "seInsistono": "Oggi la spianata è amministrata da una fondazione religiosa islamica (il *Waqf*) sotto la custodia del re di Giordania, in una città che Israele controlla dal 1967 (vedi «Chi, dove, quando»): ne parleremo nell’ora 11."
+      "r": "Sulla spianata, da più di tredici secoli, ci sono la Cupola della Roccia e la moschea al-Aqsa, due luoghi santi dell’islam. Se e come si possa ricostruire il Tempio è una questione che questa lezione non tratta: la annotiamo per l’ora 24.",
+      "seInsistono": "Oggi la spianata è amministrata da una fondazione religiosa islamica (il *Waqf*) sotto la custodia del re di Giordania, in una città che Israele controlla dal 1967 (vedi «Chi, dove, quando»): ne parleremo nell’ora 24."
     },
     {
       "q": "È vero che Gesù è sepolto proprio lì? Come fanno a saperlo?",
@@ -4084,8 +4244,8 @@ window.LEZIONE = {
     },
     {
       "q": "Di chi è Gerusalemme? Perché si fanno la guerra?",
-      "r": "Oggi rispondiamo a una parte sola: perché tre fedi la sentono propria. Il conflitto di oggi ha cause politiche e storiche (1948, 1967) che studieremo nell’ora 11; una risposta in una frase sarebbe sbagliata.",
-      "seInsistono": "Scrivi la domanda alla lavagna per l’ora 11. Non prendere posizione su «chi merita» la città e non chiedere agli studenti di farlo."
+      "r": "Oggi rispondiamo a una parte sola: perché tre fedi la sentono propria. Il conflitto di oggi ha cause politiche e storiche (1948, 1967) che studieremo nell’ora 24; una risposta in una frase sarebbe sbagliata.",
+      "seInsistono": "Scrivi la domanda alla lavagna per l’ora 24. Non prendere posizione su «chi merita» la città e non chiedere agli studenti di farlo."
     },
     {
       "q": "Perché guardiamo i Simpson a religione? Prendono in giro la fede.",
@@ -4098,7 +4258,7 @@ window.LEZIONE = {
       "seInsistono": "Perché al-Hakim lo fece è una domanda di storia che oggi non trattiamo: scrivila alla lavagna e dì che la riprenderemo."
     }
   ],
-  "seNonSai": "Scrivi la domanda alla lavagna, dì che la riprenderai (per il conflitto di oggi, nell’ora 11) e torna al punto: «Oggi guardiamo tre luoghi e tre memorie; il resto lo trovate nello Studio dell’artefatto e nel fascicolo per casa». Se la domanda riguarda una scena dell’episodio che non ricordi o non hai visto, dì: «Rivediamola con il metodo dei tre passi: che cosa mostra, che cosa modifica, su quale fonte lo controlliamo». Se ti chiedono che cosa pensa la Chiesa delle altre due religioni: «È il tema di *Nostra aetate*, un documento del Concilio del 1965; ne parliamo nell’ora 10».",
+  "seNonSai": "Scrivi la domanda alla lavagna, dì che la riprenderai (per il conflitto di oggi, nell’ora 24) e torna al punto: «Oggi guardiamo tre luoghi e tre memorie; il resto lo trovate nello Studio dell’artefatto e nel fascicolo per casa». Se la domanda riguarda una scena dell’episodio che non ricordi o non hai visto, dì: «Rivediamola con il metodo dei tre passi: che cosa mostra, che cosa modifica, su quale fonte lo controlliamo». Se ti chiedono che cosa pensa la Chiesa delle altre due religioni: «È il tema di *Nostra aetate*, un documento del Concilio del 1965; ne parliamo nell’ora 23».",
   "ritardo": [
     "«Il Tempio che non c’è più»: fai scorrere l’animazione dicendo solo le didascalie; tieni la verifica.",
     "«Andremo alla casa del Signore»: salta il passo su *shalom* e quello sull’ebraismo dopo il 70 (restano nello Studio).",
@@ -4177,7 +4337,7 @@ window.LEZIONE = {
           { fai: 'Tocca «Muro occidentale» sullo schema e chiedi alla classe a quale fede si riferisce; tocca la risposta che dice la maggioranza. Se è sbagliata compare «Non ancora»: chiedi un’altra proposta e tocca di nuovo. Fai lo stesso con «Santo Sepolcro» e «Cupola della Roccia».' },
           { chiedi: 'Quale dei tre luoghi sta sulla spianata e quale fuori?', r: 'Sulla spianata c’è la Cupola della Roccia, con la moschea al-Aqsa più a sud; il Muro occidentale è un muro della spianata, sul lato ovest; il Santo Sepolcro sta fuori, più a ovest. Se qualcuno dice che la Cupola è la moschea al-Aqsa, rispondi: «Sono due edifici diversi: lo vediamo tra poco».' },
           { di: 'Perché questi posti contano tanto? Un luogo è santo per una comunità quando lì riconosce un legame con Dio e con la propria storia: lo custodisce con racconti, feste, preghiere. Per questo conta anche per chi vive lontanissimo. E chi parte per raggiungerlo è un pellegrino: la parola viene dal latino peregrinus, «straniero», perché lascia il suo ambiente.' },
-          { fai: 'Tocca la parola «pellegrino» nel riquadro sotto lo schema: mostra l’origine latina e il significato.' }
+          { fai: 'Scorri in basso e tocca la parola «pellegrino» nel riquadro sotto il testo della scena: mostra l’origine latina e il significato.' }
         ],
         poi: '«Cominciamo dal Muro. Che cosa c’era sopra quella spianata?» (Nel percorso con il video: «Seconda parte: altri sette minuti, stesse colonne.»)'
       },
@@ -4222,10 +4382,11 @@ window.LEZIONE = {
         obiettivo: 'Il Muro è un muro di sostegno della spianata del Tempio distrutto nel 70 d.C.; davanti a esso si prega Dio ricordando il Tempio.',
         passi: [
           { di: 'Per gli ebrei Gerusalemme è legata al Tempio, il centro del culto del Dio d’Israele. La Bibbia attribuisce il primo Tempio al re Salomone. Al tempo di Gesù c’era il secondo Tempio, ampliato dal re Erode. Guardiamo che cosa è successo a quel luogo.' },
-          { fai: 'Premi «Avvia l’animazione» e subito «Pausa» (il pulsante accanto alle frecce sotto il palco); se l’animazione è già andata avanti, torna al primo fotogramma con ←. Poi fai avanzare un fotogramma alla volta con →. A ogni fotogramma leggi la didascalia e aggiungi la frase qui sotto.' },
+          { fai: 'Premi «Avvia l’animazione» e subito «Pausa» (il pulsante fra le frecce ← e →, sotto l’animazione); se l’animazione è già andata avanti, torna al primo fotogramma con ←. Poi fai avanzare un fotogramma alla volta con →. A ogni fotogramma leggi la didascalia e aggiungi la frase qui sotto.' },
           { di: 'Primo fotogramma: dal 20 a.C. Erode fa costruire una spianata enorme, sorretta da muri di pietre grandissime; il Tempio sta sopra. Secondo: nel 70 d.C., durante la guerra contro Roma, l’esercito romano guidato da Tito distrugge il Tempio. Tito allora era il comandante; diventerà imperatore solo nel 79. La spianata e i suoi muri restano.' },
           { di: 'Terzo fotogramma: il Muro occidentale è uno di quei muri di sostegno; per la tradizione ebraica è il più vicino al punto dove sorgeva il Tempio. Gli ebrei pregano lì: pregano Dio e ricordano il Tempio; non pregano le pietre. In ebraico si chiama ha-Kotel ha-Ma’aravi, «il Muro occidentale»; «Muro del Pianto» è un nome nato in Occidente, che richiama il lutto per il Tempio. Quarto: tra la fine del VII e l’inizio dell’VIII secolo, sotto i califfi omayyadi, sulla stessa spianata vengono costruite la Cupola della Roccia (691–692) e la moschea al-Aqsa. Stesso luogo, memorie di fedi diverse una sull’altra.' },
-          { chiedi: 'Rispondete alla verifica: il Muro occidentale era…?', r: '«Un muro di sostegno della spianata del Tempio». Il Tempio stava sopra ed è stato distrutto. Se scelgono «la parete del santuario», di’: «È l’errore più comune: guardate il secondo fotogramma, il Tempio sparisce e il muro resta, perché era sotto, non era il Tempio».' }
+          { fai: 'Scorri in basso: la verifica sta sotto il testo della scena.' },
+          { chiedi: 'Rispondete alla verifica: il Muro occidentale era…?', r: '«Un muro di sostegno della spianata del Tempio». Il Tempio stava sopra ed è stato distrutto. Se scelgono «la parete del santuario», torna su all’animazione, porta il secondo fotogramma con ← e → e di’: «È l’errore più comune: guardate il secondo fotogramma, il Tempio sparisce e il muro resta, perché era sotto, non era il Tempio».' }
         ],
         attenzione: 'Non dire «l’imperatore Tito»: nel 70 era il comandante dell’esercito. Non dire «gli ebrei adorano il Muro»: pregano Dio davanti al Muro.',
         poi: '«Il Tempio era la meta di un viaggio: ascoltiamo che cosa cantavano i pellegrini.»'
@@ -4244,11 +4405,11 @@ window.LEZIONE = {
           frecce: [ { id: 'f0', da: 'muro', a: 'spianata', t: 'sostiene' }, { id: 'f1', da: 'preghiera', a: 'macerie', t: 'memoria', curva: 0.15 } ],
           passi: [
             { didascalia: 'Dal 20 a.C. Erode amplia il secondo Tempio: una grande spianata sorretta da muri.',
-              attori: { spianata: { x: 64, y: 74 }, tempio: { x: 64, y: 30 }, muro: { x: 22, y: 74 } }, frecce: ['f0'] },
+              attori: { spianata: { x: 64, y: 74 }, tempio: { x: 64, y: 30 }, muro: { x: 18, y: 74 } }, frecce: ['f0'] },
             { didascalia: '70 d.C.: l’esercito romano guidato da Tito distrugge il Tempio. La spianata e i muri restano.',
               attori: { tempio: { o: 0 }, macerie: { x: 64, y: 30 } }, frecce: ['f0'] },
             { didascalia: 'Il Muro occidentale è uno di quei muri: davanti a esso si prega Dio e si ricorda il Tempio.',
-              attori: { muro: { on: true, t: 'Muro occidentale' }, preghiera: { x: 22, y: 30 } }, frecce: ['f0', 'f1'] },
+              attori: { muro: { on: true, t: 'Muro occidentale' }, preghiera: { x: 18, y: 30 } }, frecce: ['f0', 'f1'] },
             { didascalia: 'Età omayyade (fine VII – inizio VIII secolo): sulla stessa spianata sorgono la Cupola della Roccia (691–692) e la moschea al-Aqsa. Schema non in scala.',
               attori: { macerie: { o: 0 }, preghiera: { o: 0.45 }, muro: { on: false }, spianata: { on: true, t: 'Monte del Tempio / Haram al-Sharif' }, cupola: { x: 54, y: 30, on: true }, aqsa: { x: 82, y: 34 } }, frecce: ['f0'] }
           ] },
@@ -4265,7 +4426,7 @@ window.LEZIONE = {
         obiettivo: 'Il Tempio era la meta del pellegrinaggio; la memoria custodisce gioia e augurio di pace; l’ebraismo continua anche senza il Tempio.',
         passi: [
           { di: 'I Salmi sono preghiere della Bibbia. Il Salmo 122 è uno dei «canti delle salite», i Salmi dal 120 al 134: li cantavano i pellegrini che salivano a Gerusalemme per le grandi feste. Leggo i versetti 1, 2, 6 e 7.' },
-          { fai: 'Leggi tu il testo ad alta voce, lentamente. Poi leggi la domanda sopra il testo e chiedi alla classe quale frase tocca; tocca quella che indica la maggioranza. Ogni frase toccata mostra una spiegazione: leggila.' },
+          { fai: 'Leggi tu il testo ad alta voce, lentamente. Poi leggi la domanda sopra i versetti e chiedi alla classe quale frase tocca; tocca quella che indica la maggioranza. Ogni frase toccata mostra una spiegazione: leggila.' },
           { chiedi: 'Quale frase dice dove sta andando il pellegrino?', r: '«Andremo alla casa del Signore!»: la «casa del Signore» è il Tempio. Se toccano «Già sono fermi i nostri piedi alle tue porte», di’: «Qui è già arrivato alle porte della città; la meta, la casa del Signore, la dice la frase prima».' },
           { di: 'Ascoltate l’ultima frase in ebraico: sha’alu shelom Yerushalaim, «chiedete pace per Gerusalemme». Sentite? Shelom e Yerushalaim si richiamano: nel nome della città risuona shalom, la pace. È un gioco di suono voluto dal Salmo. E shalom non vuol dire solo «niente guerra»: vuol dire pienezza di bene.' },
           { di: 'Dopo il 70, senza Tempio, l’ebraismo non finisce: c’erano già comunità ebraiche lontano da Gerusalemme, e la preghiera, la lettura della Torah, cioè i primi cinque libri della Bibbia, e la vita delle comunità tengono vivo il legame con la città.' }
@@ -4288,7 +4449,7 @@ window.LEZIONE = {
           { di: 'Gesù era ebreo e visse dentro il mondo religioso d’Israele. Il Vangelo di Giovanni racconta che fu crocifisso al Golgota, «il luogo del Cranio», vicino alla città ma fuori dalle mura di allora, e fu sepolto in una tomba nuova lì accanto. Poi racconta la tomba vuota e Maria di Magdala, che incontra il Risorto e corre dai discepoli a dire: «Ho visto il Signore!» (Giovanni 20,18).' },
           { fai: 'Nella linea del tempo tocca le date una per una, da «I sec.» a «Oggi», e leggi ogni scheda.' },
           { di: 'Quindi la basilica che si visita oggi non è un edificio del tempo di Gesù: custodisce i luoghi che la tradizione identifica con il Calvario e la tomba, ma è stata costruita nel 335, distrutta, ricostruita. Ed è condivisa da più comunità cristiane.' },
-          { fai: 'Passa allo smistamento (cinque frasi): leggi una frase alla volta, chiedi «La può dire l’archeologia o la afferma la fede?», tocca la colonna indicata dalla maggioranza e leggi la spiegazione che compare.' },
+          { fai: 'Scorri in basso fino allo smistamento, sotto il testo della scena (cinque frasi): leggi una frase alla volta, chiedi «La può dire l’archeologia o la afferma la fede?», tocca la colonna indicata dalla maggioranza e leggi la spiegazione che compare.' },
           { chiedi: 'Allora: la tomba vuota dimostra che Gesù è risorto?', r: 'No, e lo dice la Chiesa stessa: il sepolcro vuoto «non è in sé una prova diretta», ma «un segno essenziale» (Catechismo, n. 640, che si legge anche alla fine dello smistamento). La fede si fonda sulle testimonianze di chi ha incontrato il Risorto. L’archeologia studia tombe, edifici e date; non può misurare un’azione di Dio. Se qualcuno conclude «allora non è vero», rispondi: «Non è questo che diciamo: diciamo che fede e archeologia rispondono a domande diverse».' },
           { di: 'Un’ultima cosa, nel riquadro «Per capire»: anche in Italia c’è una «Gerusalemme». A Bologna, nel complesso di Santo Stefano, chiamato Hierusalem già nell’887, una chiesa rotonda riproduce il Santo Sepolcro. Chi non poteva andare a Gerusalemme ne ricostruiva il luogo, per celebrare la Pasqua anche lontano.' },
           { fai: 'Apri il riquadro «Per capire · Una “Gerusalemme” a Bologna» sotto lo smistamento mentre lo dici.' }
@@ -4328,16 +4489,17 @@ window.LEZIONE = {
         obiettivo: 'Il viaggio notturno è legato a Gerusalemme dalla tradizione islamica; Cupola della Roccia e moschea al-Aqsa sono due edifici diversi.',
         passi: [
           { di: 'Per l’islam Gerusalemme è legata al viaggio notturno del profeta Muhammad, che in italiano chiamiamo anche Maometto. Attenzione: Muhammad è il profeta, non un dio; i musulmani adorano Dio, in arabo Allah. Leggiamo il primo versetto della sura 17 del Corano, che racconta il viaggio.' },
-          { fai: 'Leggi il versetto ad alta voce; poi leggi la domanda sopra il testo e tocca l’espressione che indica la maggioranza. Leggi la spiegazione che compare.' },
+          { fai: 'Leggi il versetto ad alta voce; poi leggi la domanda sopra il versetto e tocca l’espressione che indica la maggioranza. Leggi la spiegazione che compare.' },
           { chiedi: 'Quale espressione la tradizione islamica riferisce a Gerusalemme?', r: '«Alla Moschea più lontana», in arabo al-Masjid al-Aqsa. Il versetto non nomina Gerusalemme: è la tradizione a identificarvi la città. Per questo diciamo sempre «secondo la tradizione islamica». Se toccano «dalla Moschea sacra», di’: «Quella è la partenza, la Mecca; cerchiamo l’arrivo».' },
           { di: 'Secondo la tradizione islamica, da una roccia sulla spianata il profeta salì al cielo: è l’ascesa, in arabo Mi’raj. Attorno a quella roccia, nel 691–692, il califfo Abd al-Malik, cioè la guida della comunità musulmana di allora, fece costruire la Cupola della Roccia: un santuario a otto lati, con la cupola d’oro, quella che si vede in tutte le fotografie di Gerusalemme.' },
+          { fai: 'Scorri in basso: la verifica sta sotto il testo della scena.' },
           { chiedi: 'Rispondete alla verifica: la cupola d’oro è…?', r: '«La Cupola della Roccia». La moschea al-Aqsa è un altro edificio, più a sud, con la cupola grigia. Però attenzione: per i musulmani «al-Aqsa» può indicare anche tutta la spianata. Quindi quando leggete una didascalia chiedetevi: parla di un edificio o di tutta l’area?' }
         ],
         attenzione: 'Non dire «Maometto andò a Gerusalemme» come un fatto di cronaca: è «secondo la tradizione islamica», come la risurrezione è secondo la fede cristiana. Se chiedono come il Corano possa parlare di una moschea costruita dopo Muhammad (morto nel 632): «Il versetto dice “la Moschea più lontana”, non nomina un edificio di Gerusalemme; è la tradizione, dopo, a identificare quel luogo con la spianata, e la moschea costruita lì ne ha preso il nome».',
         poi: '«Muro, tomba, roccia: adesso vediamo chi se li ricorda meglio. Due squadre.»'
       },
       blocchi: [
-        { tipo: 'leggi', fonte: 'Corano 17,1 (sura *al-Isra’*, «il viaggio notturno»), resa italiana dal testo inglese citato dalla Corte reale hashemita di Giordania (2013)',
+        { tipo: 'leggi', fonte: 'Corano 17,1 (sura al-Isra’, «il viaggio notturno»), resa italiana dal testo inglese citato dalla Corte reale hashemita di Giordania (2013)',
           q: 'Quale espressione la tradizione islamica riferisce a Gerusalemme?',
           testo: '«[[Gloria a Colui::Cioè Dio: il versetto si apre con una lode.]] che di notte [[trasportò il suo servo::Il servo è Muhammad: è il viaggio notturno, in arabo *Isra’*.]] [[dalla Moschea sacra::Per la tradizione islamica, la Mecca: è la partenza del viaggio.]] [[!alla Moschea più lontana::In arabo *al-Masjid al-Aqsa*. Il versetto non nomina Gerusalemme: è la tradizione a identificarvi la città.]]…»' },
         { tipo: 'verifica', q: 'La cupola d’oro che si vede in ogni fotografia di Gerusalemme è…',
@@ -4429,7 +4591,7 @@ window.LEZIONE = {
         obiettivo: 'Memorie vicine spiegano l’intensità del legame, non rendono inevitabile lo scontro: le dispute hanno anche cause storiche e politiche.',
         passi: [
           { fai: 'Premi «Riproduci tutto» (o aggiungi un anello alla volta) e leggi gli anelli man mano che si agganciano.' },
-          { di: 'Ecco il filo della lezione. Un luogo diventa santo quando una comunità vi riconosce un legame con Dio. A Gerusalemme ce ne sono tre, vicinissimi: il Muro e il Tempio, il Sepolcro e la Pasqua, la Cupola e il viaggio notturno. Per questo un cambiamento in uno di quei luoghi può essere sentito come una minaccia alla propria appartenenza. Eppure la vicinanza non vuol dire guerra: le dispute concrete, chi governa, chi entra, quali diritti, hanno cause storiche e politiche, che studieremo nell’ora 11.' },
+          { di: 'Ecco il filo della lezione. Un luogo diventa santo quando una comunità vi riconosce un legame con Dio. A Gerusalemme ce ne sono tre, vicinissimi: il Muro e il Tempio, il Sepolcro e la Pasqua, la Cupola e il viaggio notturno. Per questo un cambiamento in uno di quei luoghi può essere sentito come una minaccia alla propria appartenenza. Eppure la vicinanza non vuol dire guerra: le dispute concrete, chi governa, chi entra, quali diritti, hanno cause storiche e politiche, che studieremo nell’ora 24.' },
           { chiedi: 'Quale anello togliamo per vedere che cosa crolla? Proponete voi.', r: 'Tocca «Togli un anello» e poi l’anello proposto; leggi che cosa crolla. Se nessuno propone, togli l’anello «Vicinanza non vuol dire guerra»: si vede che senza di esso si conclude «la religione causa la guerra», che la lezione non autorizza.' },
           { chiedi: 'Rispondete alla verifica sul compagno che guarda il cartone.', r: '«Il salto da tre personaggi comici a tutti i credenti». Da una scena comica non si giudicano persone reali. Ma attenzione anche al contrario, «le religioni non c’entrano mai»: le memorie rendono il legame intenso; semplicemente non spiegano da sole un conflitto.' }
         ],
@@ -4463,7 +4625,7 @@ window.LEZIONE = {
           { di: 'Chi aveva scelto «una chiesa ebraica»: chiesa è una parola cristiana, qui confonde due tradizioni. E adesso rifacciamo la domanda dell’inizio, per alzata di mano.' },
           { fai: 'Fai votare come all’inizio e premi «Mostra i risultati»: il tratteggio d’oro mostra il voto d’ingresso.' },
           { chiedi: 'Allora: perché tre fedi si contendono la stessa città? Due frasi.', r: 'Prima frase: perché ebrei, cristiani e musulmani legano a Gerusalemme tre memorie diverse in luoghi vicini (il Tempio, la Pasqua di Gesù, il viaggio notturno di Muhammad), e questo rende il legame intenso. Seconda frase: ma la vicinanza delle fedi non basta a spiegare le dispute e non rende inevitabile lo scontro; servono anche la storia e la politica. Se la classe dice solo la prima frase, aggiungi tu la seconda. Il voto non si commenta come giusto o sbagliato.' },
-          { di: 'Per casa: leggete il fascicolo «Gerusalemme, una città di memorie», che trovate sul registro elettronico, e rispondete alle quattro domande di «Per lo studio». Le domande sul conflitto di oggi segnatevele: le riprendiamo nell’ora 11.' }
+          { di: 'Per casa: leggete il fascicolo «Gerusalemme, una città di memorie», che trovate sul registro elettronico, e rispondete alle quattro domande di «Per lo studio». Le domande sul conflitto di oggi segnatevele: le riprendiamo nell’ora 24.' }
         ],
         poi: 'Fine dell’ora.'
       },
@@ -5209,6 +5371,197 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
 
 </script>
 <script>
+/* Lab IRC — Giochi della skill (15 ottobre 2026), non presenti nello zip: «indizi» (Indovina dagli indizi) e «prima» (Prima o dopo?).
+   Caricare dopo giochi.js e giochi-2.js: usano lo stesso motore (Giochi.register, hud, end, sfx, say, cheer, oops) e le classi g-*,
+   così funzionano nelle due skin (arcade e tavolo), nei temi chiaro e scuro e in modalità LIM (giochi-skill.css).
+   Niente trascinamento, solo pulsanti veri; l'esito si annuncia con aria-live; nessun dato degli studenti salvato nel browser.
+   Dati in LEZIONE.giochi (references/gioco.md):
+     indizi: [ { indizi: ['primo', 'secondo', 'terzo'], a: ['A', 'B', 'C', 'D'], ok: 1, why: 'Spiegazione' } ]   2–4 indizi, 4 opzioni
+     prima:  [ { t: 'Evento', y: 1300, d: 'Frase facoltativa' } ]                                              almeno 5 eventi, anni diversi (a.C. negativi) */
+(function () {
+  if (!window.Giochi || !window.GIOCHI_DATI) return;
+  var G = window.Giochi, D = window.GIOCHI_DATI, h = G.h, $ = G.$, $$ = G.$$, sfx = G.sfx;
+  var arr = function (x) { return x == null || x === '' ? [] : Array.isArray(x) ? x : [x]; };
+  var shuffle = function (a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  var pop = function (el) { el.classList.remove('is-pop'); void el.offsetWidth; el.classList.add('is-pop'); };
+  var fuoco = function (el) { if (el && !el.disabled && !el.hidden) try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } };
+  /* dopo la risposta, «Avanti →» entra nello schermo (alla LIM esito e perché possono finire sotto il bordo) */
+  var vedi = function (el) { try { el.scrollIntoView({ block: 'nearest', behavior: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); } catch (e) {} };
+  var punti = function (n) { return n + (n === 1 ? ' punto' : ' punti'); };
+  /* testi dei dati: *corsivo* e **grassetto** come nelle scene (gli altri giochi del kit li mostrano tali e quali); il resto è testo */
+  var md = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>'); };
+  var piano = function (s) { return String(s == null ? '' : s).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1'); };
+  /* l'anno com'è nei dati; i negativi sono avanti Cristo (spazio indivisibile: «a.C.» non va a capo da solo) */
+  var anno = function (y) { return y < 0 ? Math.abs(y) + '\u00a0a.C.' : String(y); };
+
+  /* ---------- INDOVINA DAGLI INDIZI ----------
+     Si vede il primo indizio; «Altro indizio» scopre il successivo. Con N indizi, chi risponde giusto dopo averne visti c
+     prende N − c + 1 punti; chi sbaglia non prende punti, e compaiono tutti gli indizi, la risposta giusta e il perché. */
+  G.register('indizi', function (root) {
+    var Q = shuffle(arr(D.indizi).filter(function (q) { return q && arr(q.indizi).length && arr(q.a).length > 1 && arr(q.a)[q.ok] != null; }));
+    var n = Q.length, qi = 0, visti = 1, giuste = 0, alPrimo = 0, fatto = false, H = G.hud({});
+    var max = Q.reduce(function (t, q) { return t + arr(q.indizi).length; }, 0);
+    root.appendChild(H.el);
+    if (!n) { root.appendChild(h('<div class="g-board"><p class="g-note">Questo gioco non ha ancora voci da indovinare.</p></div>')); return; }
+    var board = h('<div class="g-board g-indizi">' +
+      '<span class="g-label">Indovina dagli indizi</span>' +
+      '<ol class="g-ind-list" aria-label="Indizi" aria-live="polite"></ol>' +
+      '<div class="g-ind-bar"><button class="g-btn g-btn--ghost" type="button" data-more>Altro indizio</button><span class="g-ind-val"></span></div>' +
+      '<div class="g-opts" role="group" aria-label="Risposte"></div>' +
+      '<p class="g-ind-esito" role="status" aria-live="polite"></p>' +
+      '<p class="g-why" hidden></p>' +
+      '<div class="g-actions"><button class="g-btn" type="button" data-next hidden>Avanti →</button></div></div>');
+    root.appendChild(board);
+    var lista = $('.g-ind-list', board), bar = $('.g-ind-bar', board), piu = $('[data-more]', board), val = $('.g-ind-val', board),
+      esito = $('.g-ind-esito', board), why = $('.g-why', board), nx = $('[data-next]', board), opts = $('.g-opts', board);
+
+    function scopri(k, q) {   // un indizio passa da «nascosto» al suo testo
+      var li = lista.children[k];
+      li.className = 'g-ind-item is-new' + (fatto && k >= visti ? ' is-after' : '');
+      $('.g-ind-t', li).innerHTML = md(arr(q.indizi)[k]);
+    }
+    function valore() {
+      var tot = arr(Q[qi].indizi).length, v = tot - visti + 1;
+      val.textContent = 'Ora vale ' + punti(v); pop(val);
+      piu.disabled = visti >= tot;
+    }
+    function ask() {
+      var q = Q[qi], tot = arr(q.indizi).length;
+      visti = 1; fatto = false;
+      H.prog(qi, n, (qi + 1) + ' / ' + n);
+      lista.innerHTML = '';
+      for (var k = 0; k < tot; k++) lista.appendChild(h('<li class="g-ind-item is-hidden"><span class="g-ind-n" aria-hidden="true">' + (k + 1) + '</span><span class="g-ind-t">Indizio nascosto</span></li>'));
+      scopri(0, q);
+      opts.innerHTML = '';
+      arr(q.a).forEach(function (a, i) {
+        var b = h('<button class="g-opt" type="button"><span class="g-key">' + 'ABCD'.charAt(i) + '</span><span></span></button>');
+        $('span:last-child', b).innerHTML = md(a);
+        b.onclick = function () { pick(i, b); }; opts.appendChild(b);
+      });
+      bar.hidden = false; esito.textContent = ''; esito.className = 'g-ind-esito';
+      why.hidden = true; nx.hidden = true;
+      valore();
+      board.classList.remove('is-in'); void board.offsetWidth; board.classList.add('is-in');
+    }
+    piu.onclick = function () {
+      var q = Q[qi], tot = arr(q.indizi).length; if (fatto || visti >= tot) return;
+      scopri(visti, q); visti++; valore(); sfx.flip();
+      if (visti >= tot) { G.say('Ultimo indizio: ora vale ' + punti(1) + '.'); fuoco(opts.querySelector('.g-opt')); }
+    };
+    function pick(i, b) {
+      if (fatto) return;
+      var q = Q[qi], tot = arr(q.indizi).length, giusta = i === q.ok, guadagno = giusta ? tot - visti + 1 : 0;
+      fatto = true;
+      $$('.g-opt', opts).forEach(function (x, k) { x.disabled = true; if (k === q.ok) x.classList.add('is-right'); else if (x !== b) x.classList.add('is-dim'); });
+      for (var k = visti; k < tot; k++) scopri(k, q);   // tutti gli indizi, anche quelli non serviti: si impara anche da lì
+      bar.hidden = true;
+      if (giusta) {
+        giuste++; if (visti === 1) alPrimo++;
+        H.score(H.get() + guadagno, b); sfx.ok(); G.cheer();
+        esito.className = 'g-ind-esito is-ok';
+        esito.textContent = 'Giusto ' + (visti === 1 ? 'al primo indizio' : 'con ' + visti + ' indizi') + ': +' + punti(guadagno) + '.';
+      } else {
+        b.classList.add('is-wrong'); sfx.ko(); G.oops();
+        esito.className = 'g-ind-esito is-ko';
+        esito.textContent = 'No: è «' + piano(arr(q.a)[q.ok]) + '». Nessun punto.';
+      }
+      if (q.why) { why.innerHTML = md(q.why); why.hidden = false; }
+      nx.textContent = qi === n - 1 ? 'Vedi il risultato' : 'Avanti →'; nx.hidden = false; fuoco(nx); vedi(nx);
+    }
+    nx.onclick = function () {
+      qi++;
+      if (qi < n) { ask(); fuoco(piu.disabled ? opts.querySelector('.g-opt') : piu); return; }
+      H.prog(n, n, 'Fatto');
+      G.end(root, { kicker: 'Indizi finiti', title: giuste === n ? 'Tutte giuste!' : giuste + (giuste === 1 ? ' risposta giusta' : ' risposte giuste') + ' su ' + n,
+        score: H.get(), max: max, msg: 'Al primo indizio: ' + alPrimo + ' su ' + n + '. Prima si risponde, più punti si prendono.', again: function () { G.mount('indizi'); } });
+    };
+    H.score(0); ask();
+    G.say('Un indizio alla volta: prima rispondete, più punti prendete.');
+  });
+
+  /* ---------- PRIMA O DOPO? ----------
+     A ogni turno due eventi presi a caso, senza ripetere una coppia: si tocca quello che viene prima. Giusto: punti e serie
+     (10, 20 se è la seconda di fila, 30 dalla terza, come nel Vero o falso); sbagliato: si perde una delle 3 vite.
+     Dopo la risposta compaiono gli anni di tutti e due e la frase «d», se c'è. 8 turni, meno se le coppie sono poche. */
+  G.register('prima', function (root) {
+    var E = arr(D.prima).filter(function (e) { return e && e.t && typeof e.y === 'number' && isFinite(e.y); });
+    var coppie = [], i, j, k;
+    for (i = 0; i < E.length; i++) for (j = i + 1; j < E.length; j++) if (E[i].y !== E[j].y) coppie.push([i, j]);
+    coppie = shuffle(coppie);
+    // lo stesso evento non torna nel turno successivo, finché si può evitare
+    var tocca = function (a, b) { return a[0] === b[0] || a[0] === b[1] || a[1] === b[0] || a[1] === b[1]; };
+    for (k = 1; k < coppie.length; k++) {
+      if (!tocca(coppie[k], coppie[k - 1])) continue;
+      for (j = k + 1; j < coppie.length; j++) if (!tocca(coppie[j], coppie[k - 1])) { var t = coppie[k]; coppie[k] = coppie[j]; coppie[j] = t; break; }
+    }
+    var turni = Math.min(8, coppie.length), ti = 0, LIVES = 3, lives = LIVES, serie = 0, migliore = 0, giuste = 0, fatto = false, H = G.hud({ lives: true });
+    var max = 0; for (k = 1; k <= turni; k++) max += 10 * Math.min(k, 3);
+    root.appendChild(H.el); H.lives(lives, LIVES);
+    if (!turni) { root.appendChild(h('<div class="g-board"><p class="g-note">Servono almeno due eventi con anni diversi.</p></div>')); return; }
+    var board = h('<div class="g-board g-prima">' +
+      '<div class="g-pd-top"><span class="g-label">Prima o dopo?</span><span class="g-streak" hidden></span></div>' +
+      '<h2 class="g-h">Che cosa viene prima?</h2>' +
+      '<div class="g-pd-pair" role="group" aria-label="Due eventi: tocca quello che viene prima">' +
+      '<button class="g-pd-card" type="button"></button><span class="g-pd-or" aria-hidden="true"><b>o</b></span><button class="g-pd-card" type="button"></button></div>' +
+      '<p class="g-pd-msg" role="status" aria-live="polite"></p>' +
+      '<div class="g-actions"><button class="g-btn" type="button" data-next hidden>Avanti →</button></div></div>');
+    root.appendChild(board);
+    var carte = $$('.g-pd-card', board), msg = $('.g-pd-msg', board), nx = $('[data-next]', board), sr = $('.g-streak', board), or = $('.g-pd-or', board), coppia;
+    function carta(el, e) {
+      el.className = 'g-pd-card'; el.disabled = false;
+      el.innerHTML = '<span class="g-pd-t"></span><span class="g-pd-res"><span class="g-pd-tag"></span><b class="g-pd-y"></b></span><span class="g-pd-d"></span>';
+      $('.g-pd-t', el).innerHTML = md(e.t);
+    }
+    function ask() {
+      coppia = shuffle(coppie[ti]).map(function (x) { return E[x]; });   // anche il lato è a caso
+      fatto = false; H.prog(ti, turni, (ti + 1) + ' / ' + turni);
+      carte.forEach(function (el, x) { carta(el, coppia[x]); });
+      or.className = 'g-pd-or'; $('b', or).textContent = 'o';
+      msg.textContent = ''; msg.className = 'g-pd-msg'; nx.hidden = true;
+      board.classList.remove('is-in'); void board.offsetWidth; board.classList.add('is-in');
+    }
+    function pick(x) {
+      if (fatto) return; fatto = true;
+      var c = coppia, primo = c[0].y < c[1].y ? 0 : 1, giusta = x === primo, b = carte[x];
+      carte.forEach(function (el, z) {
+        el.disabled = true;
+        el.classList.add(z === primo ? 'is-first' : 'is-second');
+        $('.g-pd-tag', el).textContent = z === primo ? 'Prima' : 'Dopo';
+        $('.g-pd-y', el).textContent = anno(c[z].y);
+        if (c[z].d) $('.g-pd-d', el).innerHTML = md(c[z].d);
+      });
+      // la freccia va dal primo evento al secondo: indica il verso del tempo
+      or.className = 'g-pd-or is-shown ' + (primo === 0 ? 'is-avanti' : 'is-indietro'); $('b', or).textContent = '→';
+      // sullo schermo l'esito breve (gli anni sono già sulle carte); per chi usa un lettore di schermo, anche la frase intera
+      var detto = '«' + piano(c[primo].t) + '», ' + anno(c[primo].y) + ', viene prima di «' + piano(c[1 - primo].t) + '», ' + anno(c[1 - primo].y) + '.';
+      if (giusta) {
+        serie++; giuste++; migliore = Math.max(migliore, serie);
+        var guadagno = 10 * Math.min(serie, 3);
+        H.score(H.get() + guadagno, b); sfx.ok();
+        if (serie >= 2) G.say(serie + ' di fila!'); else G.cheer();
+        msg.className = 'g-pd-msg is-ok'; msg.innerHTML = 'Giusto! +' + guadagno + ' punti<span class="g-sr">: ' + md(detto) + '</span>';
+      } else {
+        serie = 0; lives--; H.lives(lives, LIVES); b.classList.add('is-wrong'); sfx.ko(); G.oops();   // .is-wrong fa tremare la carta
+        msg.className = 'g-pd-msg is-ko'; msg.innerHTML = 'No: ' + (lives > 0 ? 'una vita in meno' : 'le vite sono finite') + '<span class="g-sr">. ' + md(detto) + '</span>';
+      }
+      sr.hidden = serie < 2; sr.textContent = 'Serie ×' + Math.min(serie, 3) + ' · ' + serie + ' di fila';
+      nx.textContent = (ti === turni - 1 || lives <= 0) ? 'Vedi il risultato' : 'Avanti →'; nx.hidden = false; fuoco(nx); vedi(nx);
+    }
+    carte.forEach(function (el, x) { el.onclick = function () { pick(x); }; });
+    nx.onclick = function () {
+      ti++;
+      if (ti < turni && lives > 0) { ask(); fuoco(carte[0]); return; }
+      H.prog(turni, turni, 'Fatto');
+      G.end(root, { kicker: lives > 0 ? 'Prima o dopo?' : 'Tentativi finiti', title: lives > 0 ? (giuste === turni ? 'Tutte giuste!' : giuste + ' su ' + turni + ' giuste') : 'Game over',
+        score: H.get(), max: max, msg: 'Serie migliore: ' + migliore + ' di fila. Le risposte di fila valgono di più.', again: function () { G.mount('prima'); } });
+    };
+    H.score(0); ask();
+    G.say('Toccate l’evento che viene prima.');
+  });
+})();
+
+</script>
+<script>
 /* LAB-IRC · Guida del docente — aggiunta della skill irc-gioco-interattivo (5 ottobre 2026), non parte del design system.
    Rende la lezione «a prova di collega»: chiunque la conduce senza avere le conoscenze del caso, perché la competenza
    sta nei materiali. Chi apre l'HTML trova, nascoste alla classe:
@@ -5216,11 +5569,15 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
      (ricavato dal tipo di blocco), il copione in ordine (passi: fai, di', chiedi con risposta), le soluzioni (scritte
      dall'autore e ricavate dai dati di verifiche, quiz, smistamenti, ordinamenti, letture, bivi e giochi),
      l'attenzione e il passaggio successivo;
+   - il foglio di sala (14 ottobre 2026), la prima pagina, per chi apre la guida cinque minuti prima dell'ora:
+     il filo della lezione in 5–9 righe (LEZIONE.guida.filo: domanda, passaggi con il loro perché, risposta),
+     l'ora scena per scena in una riga (minuti, titolo, punto della scena) e le tre domande più probabili;
    - la preparazione di chi non conosce il tema (LEZIONE.guida: inBreve, materiali, prima, nozioni, contesto,
      pronuncia, attenzione, domande con seInsistono, seNonSai, ritardo, anticipo, senzaProiettore, fonti), con i
      minuti di lettura.
    LabGuida.controlla blocca la guida che presuppone conoscenze: domande senza risposta o con risposte generiche,
-   «spiega…» senza le parole da dire, chi-dove-quando o errori da evitare mancanti.
+   «spiega…» senza le parole da dire, chi-dove-quando o errori da evitare mancanti, filo assente o non leggibile
+   in un minuto.
    Pulsante «Guida» nella testata e tasto G: pannello laterale che segue la scena corrente, sopra la barra delle scene;
    risposte e soluzioni restano chiuse finché il docente non le apre (alla LIM la classe vede lo schermo).
    «Stampa la guida» e «Scarica la guida» producono la guida completa, uguale al file
@@ -5258,7 +5615,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     domanda: ['Sondaggio', VOTO], sondaggio: ['Sondaggio', VOTO],
     rivela: ['Passo per passo', 'il pulsante sotto il riquadro scopre un passaggio alla volta; «Riparti dal primo passo» ricomincia.'],
     tappe: ['Linea del tempo', 'tocca una data per aprire la sua scheda.'],
-    confronto: ['Confronto', '«Inizia il confronto» scopre le righe una alla volta; «Copri di nuovo» le nasconde.'],
+    confronto: ['Confronto', function (b) { return '«' + (b.pulsante || 'Inizia il confronto') + '» scopre la prima riga, poi «Confronta ancora» le altre, una alla volta; alla fine «Copri di nuovo» le nasconde.'; }],
     carte: ['Carte', 'tocca una carta per girarla; prima fai indovinare alla classe che cosa c’è sul retro.'],
     citazione: ['Citazione', function (b) { return b.commento ? 'il pulsante sotto la citazione, «' + (b.pulsante || 'Che cosa ci sta dicendo?') + '», mostra il commento.' : ''; }],
     verifica: ['Verifica lampo', 'fai scegliere la classe, poi tocca l’opzione scelta: compare subito se è giusta e perché; «Riprova la domanda» la ripropone.'],
@@ -5293,7 +5650,11 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     dubbi: ['Dubbi e risposte', function (b) { return 'tocca una domanda per aprire la sua risposta' + (b.esclusivo === false ? '' : ' (se ne apre una alla volta)') + '; prima lascia che la classe provi a rispondere. Sotto compare quanti dubbi sono stati aperti.'; }],
     scegli: ['Scegli la parola', 'in ogni menu «…» dentro la frase scegli la parola indicata dalla classe; quando sono tutti scelti, «Controlla» mostra quante sono giuste e il perché; «Ricomincia» li svuota.'],
     griglia: ['Griglia', 'tocca le caselle che la classe indica come vere (compare ✓), poi «Controlla la griglia»: le caselle giuste e quelle sbagliate si colorano; «Svuota» ricomincia.'],
-    dialogo: ['Dialogo', function (b) { return 'compare ' + ((+b.iniziali || 1) > 1 ? 'l’inizio del dialogo' : 'la prima battuta') + '; «' + (b.pulsante || 'Battuta successiva') + '» aggiunge le altre una alla volta. Falle leggere a voce a due studenti, una parte ciascuno. Alla fine «Rileggi dall’inizio» ricomincia.'; }],
+    dialogo: ['Dialogo', function (b) {
+      // i lettori sono le voci diverse del dialogo (voci[].chi), come le conta il blocco nel kit
+      var chi = []; arr(b.voci).forEach(function (x) { if (x && x.chi && chi.indexOf(x.chi) < 0) chi.push(x.chi); });
+      var n = chi.length || 2, N = ['', 'uno', 'due', 'tre', 'quattro', 'cinque', 'sei'][n] || String(n);
+      return 'compare ' + ((+b.iniziali || 1) > 1 ? 'l’inizio del dialogo' : 'la prima battuta') + '; «' + (b.pulsante || 'Battuta successiva') + '» aggiunge le altre una alla volta. ' + (n === 1 ? 'Falle leggere a voce a uno studente.' : 'Falle leggere a voce a ' + N + ' studenti, una parte ciascuno.') + ' Alla fine «Rileggi dall’inizio» ricomincia.'; }],
     storia: ['Storia a bivi', 'la classe sceglie fra le strade indicate con le lettere A, B…: tocca quella scelta e compare il passo successivo; «Torna indietro» annulla l’ultima scelta, «Da capo» ricomincia. All’ultimo passo compaiono l’esito e la chiusura.'],
     originale: ['Lingua originale', function (b) { return 'tocca una parola del testo: sopra c’è la pronuncia, sotto compare il significato.' + (b.traduzione ? ' «Mostra la traduzione» mostra il testo in italiano.' : ''); }],
     traguardi: ['Traguardi', 'leggi un traguardo alla volta e chiedi chi saprebbe spiegarlo a un compagno: se alza la mano almeno metà della classe, tocca la casella; la barra mostra quanti traguardi sono raggiunti.'],
@@ -5302,13 +5663,13 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     sintesi: ['Sintesi della classe', 'scrivi nel riquadro la frase che la classe costruisce insieme, mentre la detta; non viene salvata. «Pulisci» svuota il riquadro.'],
     galleria: ['Galleria', 'le frecce ← e → sotto le figure, o i pallini, passano da una figura all’altra.']
   };
-  var GNOMI = { quiz: 'Quiz', vf: 'Vero o falso', flash: 'Flashcard', memory: 'Memory', abbina: 'Abbinamenti', cat: 'Categorie', seq: 'Linea del tempo', completa: 'Completa', cruci: 'Cruciverba', sfida: 'Sfida a squadre', sondaggio: 'Sondaggio', rifl: 'Riflessione' };
+  var GNOMI = { quiz: 'Quiz', vf: 'Vero o falso', flash: 'Flashcard', memory: 'Memory', abbina: 'Abbinamenti', cat: 'Categorie', seq: 'Linea del tempo', prima: 'Prima o dopo', completa: 'Completa', cruci: 'Cruciverba', indizi: 'Indizi', sfida: 'Sfida a squadre', sondaggio: 'Sondaggio', rifl: 'Riflessione' };
   var VITE = ' Ci sono tre vite: se finiscono, la partita si chiude e «Gioca ancora» la ricomincia; se il tempo stringe, non ricominciare: completa a voce con le soluzioni di questa guida.';
   var GIOCHI_GESTI = {
     cat: 'tocca una frase e poi il contenitore scelto dalla classe: se è giusto la frase entra, se è sbagliato trema e si perde una vita.' + VITE,
     vf: 'per ogni affermazione tocca «Vero» o «Falso» (oppure i tasti V e F) secondo la classe; compare il perché.',
     quiz: 'tocca la risposta scelta dalla classe: compare il perché.' + VITE,
-    sfida: 'due squadre rispondono a turno; se una sbaglia, l’altra può rubare il punto.',
+    sfida: 'due squadre rispondono a turno (20 secondi, sul timer del gioco); se una sbaglia, l’altra ha 10 secondi per rubare la domanda e prende metà dei punti.',
     memory: 'la classe indica due carte (per esempio «terza carta della prima riga») e tu le giri: se formano una coppia restano scoperte. Fai indicare a turno, una fila alla volta, così non parlano tutti insieme.',
     abbina: 'tocca un elemento a sinistra e poi quello che gli corrisponde a destra.' + VITE,
     seq: 'metti gli eventi in ordine secondo la classe, poi controlla.',
@@ -5316,7 +5677,10 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     completa: 'per ogni spazio vuoto scegli la parola indicata dalla classe.' + VITE,
     cruci: 'tocca una definizione e scrivi la parola indicata dalla classe.' + VITE,
     sondaggio: 'per ogni domanda tocca la risposta una volta per ogni mano alzata (il «−» toglie un voto); «Mostra risultati» svela le percentuali e il rilancio per il dibattito, «Prossima →» passa alla domanda seguente, «Azzera» ricomincia. I voti restano solo nella pagina aperta: niente nomi.',
-    rifl: 'ogni studente, da solo o a coppie, sposta il cursore fra i poli e scrive il suo perché nel riquadro, poi «Consegna la carta»; la carta resta solo in memoria e sparisce alla chiusura, «Riscrivi» la riapre. Non c’è punteggio: non si corregge una posizione personale.'
+    rifl: 'ogni studente, da solo o a coppie, sposta il cursore fra i poli e scrive il suo perché nel riquadro, poi «Consegna la carta»; la carta resta solo in memoria e sparisce alla chiusura, «Riscrivi» la riapre. Non c’è punteggio: non si corregge una posizione personale.',
+    /* giochi della skill (15 ottobre 2026): kit/giochi-skill.js */
+    indizi: 'tutta la classe insieme, per alzata di mano. Leggi ad alta voce il primo indizio e chiedi chi o che cosa è: la classe può rispondere subito oppure chiedere un altro indizio. «Altro indizio» scopre il successivo (all’ultimo si spegne) e la voce vale un punto in meno: il riquadro accanto dice quanto vale ora (con tre indizi, 3 punti al primo, 2 al secondo, 1 al terzo). Tocca l’opzione indicata dalla maggioranza: se è giusta prende i punti, se è sbagliata non ne prende; in tutti e due i casi compaiono tutti gli indizi, la risposta giusta e il perché, da leggere ad alta voce. «Avanti →» passa alla voce successiva; all’ultima, «Vedi il risultato».',
+    prima: 'compaiono due eventi: la classe dice quale viene prima e tu tocchi quella carta. Compaiono gli anni di tutti e due, con «Prima» e «Dopo», e la frase di spiegazione se c’è: leggili ad alta voce, poi «Avanti →». La partita dura 8 turni (meno se gli eventi sono pochi), con coppie sempre diverse. Una risposta giusta vale 10 punti, 20 se è la seconda di fila, 30 dalla terza di fila in poi; ogni errore toglie una vita.' + VITE
   };
   function blocchiDi(lista, fuori) {
     var out = [];
@@ -5349,6 +5713,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
 
   /* ---------- soluzioni ricavate dai dati ---------- */
   function perche(t) { return t ? ' <span class="lg-why">— ' + inl(t) + '</span>' : ''; }
+  function annoGuida(y) { return y < 0 ? Math.abs(y) + ' a.C.' : String(y); }   // come nel gioco «Prima o dopo?»
   function solGioco(id, D, senzaTitolo) {
     if (!D) return '';
     var h = '';
@@ -5359,6 +5724,8 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     else if (id === 'seq') h = '<ol>' + arr(D).map(function (x) { return '<li>' + (x.y ? inl(x.y) + ' — ' : '') + inl(x.t) + '</li>'; }).join('') + '</ol>';
     else if (id === 'completa') h = '<p>' + esc(D.testo || '').replace(/\{([^{}]+)\}/g, '<strong>$1</strong>') + '</p>' + (arr(D.extra).length ? '<p>Parole in più (distrattori): ' + arr(D.extra).map(function (x) { return inl(x); }).join(', ') + '</p>' : '');
     else if (id === 'cruci') h = '<ul>' + arr(D.words).map(function (x) { return '<li>' + x.n + (x.dir === 'v' ? ' verticale' : ' orizzontale') + ': <strong>' + esc(x.w) + '</strong> — ' + inl(x.clue) + '</li>'; }).join('') + '</ul>';
+    else if (id === 'indizi') h = '<p>Le voci compaiono in ordine casuale; gli indizi di ogni voce, nell’ordine scritto qui.</p><ol>' + arr(D).map(function (x) { var a = arr(x && x.a); return '<li>' + arr(x && x.indizi).map(function (t, k) { return (k + 1) + ') ' + inl(t); }).join(' ') + ' → <strong>' + inl(a[x.ok]) + '</strong>' + perche(x.why) + '</li>'; }).join('') + '</ol>';
+    else if (id === 'prima') h = '<p>Gli eventi in ordine di tempo (il gioco li propone a coppie, a caso):</p><ol>' + arr(D).filter(function (x) { return x && typeof x.y === 'number'; }).slice().sort(function (a, b) { return a.y - b.y; }).map(function (x) { return '<li><strong>' + esc(annoGuida(x.y)) + '</strong> — ' + inl(x.t) + perche(x.d) + '</li>'; }).join('') + '</ol>';
     else h = '<p>Gioco d’opinione: non ci sono risposte giuste.</p>';
     return (senzaTitolo ? '' : '<p class="lg-sol-h">Gioco «' + (GNOMI[id] || esc(id)) + '»</p>') + h;
   }
@@ -5534,10 +5901,55 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
       passiDi(r).forEach(function (x) { c += parole(x.fai) + parole(x.di) + parole(x.chiedi) + parole(x.r); });
       c += parole(senzaTag(gesti(s, L))) + parole(senzaTag(soluzioni(s, L)));
     });
-    return { sapere: Math.max(1, Math.ceil(n / 150)), domande: Math.max(1, Math.ceil(q / 150)), copione: Math.max(1, Math.ceil(c / 150)) };
+    var f = parole(arr(G.filo).join(' ')) + parole(G.inBreve);
+    ((L || {}).scene || []).forEach(function (s) { f += parole(s.titolo) + parole((s.regia || {}).obiettivo); });
+    qa(G.domande).slice(0, 3).forEach(function (x) { f += parole(x.q) + parole(x.r); });
+    return { foglio: Math.max(1, Math.ceil(f / 150)), sapere: Math.max(1, Math.ceil(n / 150)), domande: Math.max(1, Math.ceil(q / 150)), copione: Math.max(1, Math.ceil(c / 150)) };
+  }
+  // gli strumenti di una scena in poche parole, per il foglio di sala (16 ottobre 2026: nelle prove di IV 2-1 il
+  // collega ha chiesto in tutti e tre i giri di sapere già dal foglio che cosa si tocca in ogni scena)
+  var NON_STRUMENTI = /^(html|mascotte|aggancio|agenda|continua|citazione|parola|idee)$/;
+  function strumentiBrevi(s) {
+    var visti = {}, o = [];
+    blocchiDi(s && s.blocchi).forEach(function (x) {
+      var b = x.b, t;
+      if (x.variante) return;
+      if (b.tipo === 'custom') t = plain(b.visiva || b.titolo || String(b.nome || 'strumento').replace(/([a-zà-ù])([A-Z])/g, '$1 $2').toLowerCase()) + ' (su misura)';
+      else if (b.tipo === 'gioco') t = 'gioco «' + (plain(b.titolo) || GNOMI[b.id] || b.id) + '»';
+      else if (GESTI[b.tipo] && !NON_STRUMENTI.test(b.tipo)) t = GESTI[b.tipo][0];
+      if (t && !visti[t]) { visti[t] = 1; o.push(t); }
+    });
+    return o;
+  }
+  // il foglio di sala: la pagina per chi ha cinque minuti. Il filo lo scrive l'autore (guida.filo); l'ora in una riga
+  // per scena e le tre domande si ricavano dai dati, così dicono le stesse cose della regia
+  function foglioDiSala(L, opt, nelPannello) {
+    var G = (L || {}).guida || {}, o = [], P = percorsi(L), base = seq(L, P.length > 1 ? P[0].id : null), m = minutiLettura(L);
+    var momenti = opt && opt.artefatto === false;
+    o.push('<p class="lg-intro">Se hai cinque minuti: leggi questa pagina (circa ' + m.foglio + (m.foglio === 1 ? ' minuto' : ' minuti') + ') e tieni la guida stampata davanti durante l’ora: il copione di ogni ' + (momenti ? 'momento' : 'scena') + ' dice che cosa fare e che cosa dire. Se ne hai quindici: leggi anche «Da sapere».</p>');
+    if (!momenti) o.push('<p class="lg-why">Comandi: «Avanti» o freccia → per la scena successiva, ← per tornare; tasto L per ingrandire alla LIM; tasto G per aprire e chiudere la guida. Accanto a ogni scena, qui sotto, lo strumento che si tocca; come si usa lo dice la voce «Sullo schermo» nella guida di ogni scena' + (nelPannello ? ' (qui, nella scheda «Questa scena»)' : '') + '.</p>');
+    var filo = arr(G.filo);
+    if (filo.length) o.push(nelPannello ? kv('Il filo', lista(filo, 'ol')) : '<h3>Il filo</h3>' + lista(filo, 'ol'));
+    var t0 = 0, righe = base.map(function (s, i) {
+      var da = t0, st = momenti ? [] : strumentiBrevi(s); t0 += +s.minuti || 0;
+      return '<li><strong>' + inl(plain(s.titolo)) + '</strong> · ' + num(da) + '–' + num(t0) + '′' + ((s.regia || {}).obiettivo ? ' — ' + inl((s.regia || {}).obiettivo) : '') + (st.length ? ' <span class="lg-why">· si tocca: ' + esc(st.join(', ')) + '</span>' : '') + '</li>';
+    });
+    if (righe.length) o.push((nelPannello ? kv('L’ora, ' + (momenti ? 'momento' : 'scena') + ' per ' + (momenti ? 'momento' : 'scena'), '<ol class="lg-ora">' + righe.join('') + '</ol>') : '<h3>L’ora, ' + (momenti ? 'momento' : 'scena') + ' per ' + (momenti ? 'momento' : 'scena') + '</h3><ol class="lg-ora">' + righe.join('') + '</ol>'));
+    // più percorsi: chi ha solo questa pagina deve sapere quale ora sta leggendo e che cosa cambia nell'altro percorso
+    if (righe.length && P.length > 1) {
+      var nomeP = function (p) { return '«' + inl(plain(p.nome || p.id)) + '»'; }, tit = function (v) { return v.map(function (s) { return '«' + inl(plain(s.titolo)) + '»'; }).join(' e '); };
+      var alt = P.slice(1).map(function (p) {
+        var altra = seq(L, p.id), solo = altra.filter(function (s) { return base.indexOf(s) < 0; }), via = base.filter(function (s) { return altra.indexOf(s) < 0; });
+        return 'Nel percorso ' + nomeP(p) + (solo.length ? ' ' + tit(solo) + (solo.length > 1 ? ' prendono' : ' prende') + ' il posto di ' + (via.length ? tit(via) : 'nessuna scena') : ' mancano ' + tit(via)) + ': le altre scene sono le stesse.';
+      });
+      o.push('<p class="lg-why">Questa è l’ora nel percorso ' + nomeP(P[0]) + ', quello già scelto quando si apre la lezione. ' + alt.join(' ') + '</p>');
+    }
+    var tre = qa(G.domande).slice(0, 3);
+    if (tre.length) o.push(nelPannello ? kv('Le tre domande più probabili', '<ol>' + tre.map(function (c) { return '<li>' + inl(c.q) + (c.r ? risposta(c.r, false, 'Risposta', '') : '') + '</li>'; }).join('') + '</ol>') : '<h3>Le tre domande più probabili</h3><dl>' + tre.map(function (c) { return '<dt>' + inl(c.q) + '</dt><dd>' + par(c.r) + '</dd>'; }).join('') + '</dl><p class="lg-why">Le altre, con le risposte se insistono, in «Domande che i ragazzi possono fare».</p>');
+    return o.join('');
   }
   function prima(L, opt) {
-    var m = minutiLettura(L), o = ['Leggi «Da sapere», con le parole della lezione e gli errori da evitare (circa ' + m.sapere + ' minuti), e scorri le domande dei ragazzi (circa ' + m.domande + '); poi scorri il copione ' + (opt && opt.artefatto === false ? 'dei momenti' : 'delle scene') + ' (circa ' + m.copione + ' minuti) e tienilo davanti durante l’ora, stampato. Non serve altro.'];
+    var m = minutiLettura(L), o = ['Con cinque minuti: leggi il «Foglio di sala» (circa ' + m.foglio + (m.foglio === 1 ? ' minuto' : ' minuti') + ') e tieni il copione ' + (opt && opt.artefatto === false ? 'dei momenti' : 'delle scene') + ' davanti durante l’ora, stampato: dice che cosa fare e che cosa dire. Con quindici: leggi anche «Da sapere», con le parole della lezione e gli errori da evitare (circa ' + m.sapere + ' minuti), e scorri le domande dei ragazzi (circa ' + m.domande + '). Con più tempo: scorri tutto il copione (circa ' + m.copione + ' minuti). Non serve altro.'];
     if (opt && opt.artefatto) o.push('Apri l’artefatto e prova per qualche minuto gli strumenti: «Sullo schermo», in ogni scena, dice che cosa toccare.');
     o.push(opt && opt.artefatto === false ? 'Stampa questa guida: in classe la leggi lì, mentre la classe ha davanti il fascicolo.' : 'Stampa questa guida: in classe la leggi lì, mentre la LIM mostra soltanto la lezione.');
     return o.concat(arr(((L || {}).guida || {}).prima));
@@ -5566,6 +5978,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     '.lg-doc .lg-box{margin:.6rem 0;padding:.6rem .9rem;border:1px solid #d9d2c3;border-radius:.5rem;background:#faf8f3}',
     '.lg-doc .lg-box ul{margin:0 0 .4rem}',
     '.lg-doc .lg-intro{margin:0 0 .6rem;color:#4a463e;font-style:italic}',
+    '.lg-doc .lg-ora{font:400 .92rem/1.45 ' + SANS + '}.lg-doc .lg-ora li{margin:0 0 .25rem}',
     '.lg-doc .lg-scena{margin:0 0 1.1rem;padding:.1rem 0 .1rem .9rem;border-left:3px solid #e3d6b5}',
     '.lg-doc .lg-scena h3{margin-top:.2rem}.lg-doc .lg-scena>.lg-t{break-after:avoid;page-break-after:avoid}',
     '.lg-doc .lg-kv{margin:.35rem 0 0}.lg-doc .lg-kv>b{display:block;font:700 .7rem/1.5 ' + SANS + ';letter-spacing:.14em;text-transform:uppercase;color:#6b5a33}',
@@ -5591,7 +6004,8 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
       'Se il computer è collegato alla LIM in modalità duplicata, la classe vede anche il pannello: per leggere il copione durante l’ora usa questa guida stampata.'
     ];
     if (L.glossario && Object.keys(L.glossario).length) c.push('Parole sottolineate: toccale per la spiegazione; «Glossario» le raccoglie tutte.');
-    if (L.giochi) c.push('«Giochi»: la pausa gioco' + (L.giochi.sfida ? ' e la Sfida a squadre' : '') + '; «Torna alla lezione» riporta alla scena da cui eri partito.');
+    if (L.giochi) { var nG = Object.keys(L.giochi).filter(function (k) { return GNOMI[k]; }).length;
+      c.push('«Giochi»: la pausa gioco' + (L.giochi.sfida ? ' e la Sfida a squadre' : '') + (nG > 2 ? ', più gli altri giochi per il ripasso e per l’anticipo (come si giocano e soluzioni: in fondo a questa guida)' : '') + '; «Torna alla lezione» riporta alla scena da cui eri partito.'); }
     if (L.studio) c.push('«Studio» (in alto, accanto a «Lezione»): il testo da rileggere a casa, da scaricare o stampare; gli studenti lo trovano nello stesso file, se è stato pubblicato per loro.');
     return c;
   }
@@ -5603,7 +6017,8 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     o.push('<p class="lg-k">Guida del docente' + (L.classe ? ' · ' + esc(L.classe) : '') + '</p>');
     o.push('<h1>' + inl(plain(L.titolo) || 'Lezione') + '</h1>');
     if (L.sottotitolo) o.push('<p class="lg-sub">' + inl(L.sottotitolo) + '</p>');
-    o.push('<p class="lg-t">' + num(somma(base)) + ' minuti' + (base.length ? ' · ' + base.length + (opt.artefatto ? ' scene' : ' momenti') : '') + (multi ? ' · ' + P.length + ' percorsi' : '') + ' · preparazione: circa ' + m.sapere + ' minuti per «Da sapere» e ' + m.domande + ' per le domande dei ragazzi; copione: circa ' + m.copione + ' minuti, da tenere davanti durante l’ora</p>');
+    o.push('<p class="lg-t">' + num(somma(base)) + ' minuti' + (base.length ? ' · ' + base.length + (opt.artefatto ? ' scene' : ' momenti') : '') + (multi ? ' · ' + P.length + ' percorsi' : '') + ' · preparazione: ' + m.foglio + (m.foglio === 1 ? ' minuto' : ' minuti') + ' per il «Foglio di sala»; ' + m.sapere + ' in più per «Da sapere» e ' + m.domande + ' per le domande dei ragazzi; copione: circa ' + m.copione + ' minuti, da tenere davanti durante l’ora</p>');
+    sez('Foglio di sala', foglioDiSala(L, opt, false));
     sez('In breve', par(G.inBreve));
     var mat = arr(G.materiali), box = [];
     if (mat.length) box.push('<p><strong>Materiali</strong></p>' + lista(mat));
@@ -5671,10 +6086,18 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     if (!G) e.push('manca LEZIONE.guida');
     else {
       if (!G.inBreve) e.push('guida.inBreve è vuoto: domanda, obiettivo e che cosa porta a casa la classe');
-      if (arr(G.nozioni).length < 4) e.push('guida.nozioni: servono 4–7 nozioni chiave, sufficienti a condurre l’ora senza il dossier e senza conoscere il tema');
-      else if (arr(G.nozioni).length > 7) a.push('guida.nozioni: ' + arr(G.nozioni).length + ' nozioni (di norma 4–7): ciò che serve in una sola scena va nella sua regia');
-      if (qa(G.domande).length < 5) e.push('guida.domande: servono 5–8 domande probabili degli studenti, comprese almeno due provocatorie o delicate, ciascuna con la risposta: chi non conosce il tema non saprebbe improvvisarla');
-      else if (qa(G.domande).length > 8) a.push('guida.domande: ' + qa(G.domande).length + ' domande (di norma 5–8): tieni le più probabili, le altre allungano la lettura');
+      // il foglio di sala (14 ottobre 2026): chi apre la guida cinque minuti prima deve poter raccontare la lezione
+      var filo = arr(G.filo);
+      if (filo.length < 5 || filo.length > 9) e.push('guida.filo: ' + (filo.length ? filo.length + ' righe' : 'vuoto') + ': il filo della lezione sono 5–9 righe (la domanda, i passaggi con il loro perché, uno per riga, la risposta), come lo racconteresti in novanta secondi a uno studente della classe');
+      filo.forEach(function (t, k) { if (parole(t) > 40) a.push('guida.filo, riga ' + (k + 1) + ': ' + parole(t) + ' parole: una riga del filo è una frase (al massimo circa 40 parole)'); });
+      if (filo.length >= 5) {
+        var pq = /\?\s*$/.test(plain(filo[0])), nessi = filo.slice(1, -1).filter(function (t) { return /(^|[^A-Za-zÀ-ÖØ-öø-ÿ])(perch[ée]|per questo|quindi|dunque|ne segue|eppure|ma|però|poiché|così|allora|a condizione)(?![A-Za-zÀ-ÖØ-öø-ÿ])/i.test(plain(t)); }).length;
+        if (!pq) a.push('guida.filo: la prima riga non è la domanda della lezione (finisce senza punto interrogativo)');
+        if (nessi < filo.length - 2) a.push('guida.filo: ' + (filo.length - 2 - nessi) + (filo.length - 2 - nessi === 1 ? ' passaggio' : ' passaggi') + ' senza il perché (nessun «perché», «per questo», «quindi», «eppure»…): chi conduce deve poter dire perché si passa da un punto al successivo');
+      }
+      // nessun tetto (12 ottobre 2026): la misura è quella che serve; resta solo il minimo, perché una guida troppo magra lascia il collega senza parole
+      if (arr(G.nozioni).length < 4) e.push('guida.nozioni: servono almeno 4 nozioni chiave, tutte quelle che servono a condurre l’ora senza il dossier e senza conoscere il tema');
+      if (qa(G.domande).length < 5) e.push('guida.domande: servono almeno 5 domande probabili degli studenti, tutte quelle prevedibili, comprese almeno due provocatorie o delicate, ciascuna con la risposta: chi non conosce il tema non saprebbe improvvisarla');
       qa(G.domande).forEach(function (c, k) {
         if (!c.r) e.push('guida.domande: la domanda ' + (k + 1) + ' non ha la risposta');
         else if (GENERICA.test(plain(c.r))) e.push('guida.domande: la risposta alla domanda ' + (k + 1) + ' è generica: scrivi la risposta');
@@ -5713,7 +6136,30 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
       });
       var mc = minutiCopione(r);
       if (s.minuti && mc > +s.minuti) a.push(n + ': il copione da solo richiede circa ' + num(Math.ceil(mc * 2) / 2) + ' minuti, ma la scena ne ha ' + s.minuti + ': accorcia o sposta qualcosa in «Se sei in anticipo»');
+      // il tempo in cui lavora la classe (22 ottobre 2026: i tempi sforati erano l'8,6% dei bloccanti trovati dalle prove,
+      // e la stima del solo parlato non li vedeva): un'attività visiva dura almeno 2 minuti, una consegna i suoi minuti
+      else if (s.minuti && !blocchiDi(s.blocchi).some(function (x) { return x.b.tipo === 'gioco'; })) {
+        var lav = 0;
+        blocchiDi(s.blocchi).forEach(function (x) {
+          if (x.variante) return;
+          if (x.b.tipo === 'custom' && x.b.visiva) lav += 2;
+          else if ((x.b.tipo === 'consegna' || x.b.tipo === 'timer') && +x.b.minuti) lav += +x.b.minuti;
+          else if (x.b.tipo === 'nuvola' || x.b.tipo === 'sintesi') lav += 1.5;
+        });
+        if (lav && mc + lav > +s.minuti + 0.5) a.push(n + ': copione (circa ' + num(Math.ceil(mc * 2) / 2) + ' minuti) e lavoro della classe (almeno ' + num(lav) + ') sembrano non stare nei ' + s.minuti + ' minuti della scena: se il copione si dice mentre la classe lavora va bene, altrimenti accorcia il copione o allunga la scena togliendo tempo altrove');
+      }
     });
+    // la frase-ponte (16 ottobre 2026, Matteo: «spesso sono sconnesse, spezzettate, e non riesco nella spiegazione»):
+    // ogni scena, tranne l'ultima, finisce con regia.poi, detta parola per parola, che lega alla successiva con un perché
+    var senzaPonte = [], ponteVuoto = [];
+    S.forEach(function (s, i) {
+      if (i === S.length - 1 || !s || !s.regia) return;
+      var p = plain(s.regia.poi || '');
+      if (!p) senzaPonte.push(i + 1);
+      else if (!/\?/.test(p) && !/(^|[^A-Za-zÀ-ÖØ-öø-ÿ])(perch[ée]|per questo|quindi|dunque|eppure|ma|però|allora|così|invece|ne segue)(?![A-Za-zÀ-ÖØ-öø-ÿ])/i.test(p) && /\b(passiamo|vediamo|vediamolo|andiamo a vedere|ora parliamo|adesso parliamo)\b/i.test(p)) ponteVuoto.push(i + 1);
+    });
+    if (senzaPonte.length) e.push('regia.poi manca ' + (senzaPonte.length === 1 ? 'nella scena ' : 'nelle scene ') + senzaPonte.join(', ') + ': è la frase-ponte verso la scena successiva, da dire parola per parola (la domanda che la apre, o chi fa che cosa e perché); senza, chi conduce cambia argomento senza un perché e la lezione suona spezzettata');
+    if (ponteVuoto.length) a.push('regia.poi ' + (ponteVuoto.length === 1 ? 'della scena ' : 'delle scene ') + ponteVuoto.join(', ') + ' annuncia soltanto («passiamo a…», «vediamo…»): il ponte dice perché si va avanti, con una domanda o un nesso');
     // parole nuove senza voce: chi non conosce il tema non saprebbe spiegarle
     var def = {}, usate = {};
     paroleDellaLezione(L).forEach(function (p) { def[p.w.toLowerCase()] = 1; });
@@ -5732,7 +6178,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
   if (typeof document === 'undefined' || !w.document) return;
 
   /* ---------- pannello nell'artefatto ---------- */
-  var d = w.document, L, btn, pan, tab = 'scena', chiave = '', raf = 0;
+  var d = w.document, L, btn, pan, tab = 'foglio', chiave = '', raf = 0;
   function pl(s) { return w.LabLezione && w.LabLezione.plain ? String(w.LabLezione.plain(s)).trim() : plain(s); }
 
   function info() {
@@ -5762,10 +6208,12 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
     pan.style.bottom = modo === 'lezione' && nav ? (nav.getBoundingClientRect().height / z) + 'px' : '0px';
     h.push('<button class="ll-pop-x" type="button" data-g="chiudi" aria-label="Chiudi la guida (G)">×</button>');
     h.push('<p class="ll-moment">Guida del docente</p>');
-    h.push('<div class="ll-guida-tabs" role="group" aria-label="Sezioni della guida">' + [['scena', 'Questa scena'], ['nozioni', 'Da sapere'], ['tempi', 'Tempi']].map(function (t) {
+    h.push('<div class="ll-guida-tabs" role="group" aria-label="Sezioni della guida">' + [['foglio', 'Foglio di sala'], ['scena', 'Questa scena'], ['nozioni', 'Da sapere'], ['tempi', 'Tempi']].map(function (t) {
       return '<button type="button" class="ll-chip" data-g="tab:' + t[0] + '" aria-pressed="' + (tab === t[0]) + '">' + t[1] + '</button>';
     }).join('') + '</div>');
-    if (tab === 'scena') {
+    if (tab === 'foglio') {
+      h.push(foglioDiSala(L, { artefatto: true }, true));
+    } else if (tab === 'scena') {
       if (modo !== 'lezione') h.push('<p class="ll-guida-meta">La regia segue le scene: torna alla modalità «Lezione». Intanto trovi le nozioni in «Da sapere».</p>');
       else if (!x.s) h.push('<p class="ll-guida-meta">Scena non riconosciuta: usa «Stampa la guida» per la regia completa.</p>');
       else {
@@ -5776,7 +6224,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
         h.push(regia(x.s, false, L) || '<p class="ll-guida-meta">Per questa scena non c’è una regia: segui lo schermo.</p>');
       }
     } else if (tab === 'nozioni') {
-      h.push('<p class="ll-guida-meta">Per chi non conosce il tema: circa ' + m.sapere + ' minuti di lettura, più ' + m.domande + ' per le domande dei ragazzi, prima di entrare in classe.</p>');
+      h.push('<p class="ll-guida-meta">Per chi ha più di cinque minuti: circa ' + m.sapere + ' minuti di lettura, più ' + m.domande + ' per le domande dei ragazzi. Con cinque minuti basta il «Foglio di sala».</p>');
       h.push(kv('In breve', par(G.inBreve)));
       h.push(daSapere(L, false));
       h.push(kv('Errori da evitare', lista(G.attenzione)));
@@ -5804,6 +6252,7 @@ window.GIOCHI_DATI = Object.assign({ tema: (window.LEZIONE && window.LEZIONE.tit
 
   function apri(on) {
     on = on == null ? pan.hidden : on;
+    if (on && tab === 'foglio' && info().i > 0) tab = 'scena';   // il foglio di sala serve prima dell'ora; durante, la scena
     pan.hidden = !on; btn.setAttribute('aria-pressed', String(on)); chiave = '';
     if (on) { aggiorna(); var x = pan.querySelector('[data-g="chiudi"]'); if (x) x.focus({ preventScroll: true }); }
     else if (pan.contains(d.activeElement)) btn.focus({ preventScroll: true });
