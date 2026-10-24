@@ -177,6 +177,18 @@
           "file": "/uploads/v1-1il~1.pdf",
           "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF"
+        },
+        {
+          "file": "/uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
         }
       ],
       "ordine": 1
@@ -829,6 +841,46 @@
         },
         {
           "file": "/uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Cambiare il modo di leggere e di partecipare",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-3-cambiare-modo-leggere-partecipare-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Davanti ai totalitarismi, che cosa fece la Chiesa",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-4-chiesa-e-totalitarismi-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-4-chiesa-e-totalitarismi-fascicolo.pdf",
           "titolo": "Fascicolo di approfondimento",
           "tipo": "Documento/PDF",
           "in_evidenza": false
