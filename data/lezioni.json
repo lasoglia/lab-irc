@@ -680,6 +680,60 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Di chi mi posso fidare",
+      "anno": "2",
+      "uda": "Accoglienza",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/ii-0-1-accoglienza-di-chi-mi-posso-fidare-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Passaggi di libertà",
+      "anno": "2",
+      "uda": "Quattro Vangeli, una Pasqua",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/ii-2-3-passaggi-liberta-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-2-3-passaggi-liberta-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Perché fu condannato",
+      "anno": "2",
+      "uda": "Quattro Vangeli, una Pasqua",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/ii-2-4-perche-fu-condannato-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-2-4-perche-fu-condannato-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
