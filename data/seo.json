@@ -83,6 +83,34 @@
     },
     "impronta": "0c677f45e5254b2a"
   },
+  "1|Israele, una promessa, una storia, fino a oggi|Liberi da che cosa, liberi per che cosa": {
+    "titolo_seo": "Esodo, libertà e legge: dalla Pasqua al Sinai – IRC prima",
+    "meta_description": "Lezione IRC per la prima superiore sull'Esodo: dalla notte di Pasqua al Sinai, l'alleanza e il Decalogo come risposta alla libertà ricevuta.",
+    "sintesi": "La lezione segue il popolo d'Israele dalla notte di Pasqua in Egitto fino al Sinai, a partire da due domande: liberi da che cosa e liberi per che cosa. Gli studenti leggono brani dell'Esodo e del Deuteronomio, riflettono sul significato di Pasqua e azzimi, sul passaggio del mare e sull'alleanza. Osservano poi come il Decalogo cominci con un ricordo e come le leggi di Israele si fondino sulla memoria della schiavitù, con il sostegno del Catechismo.",
+    "argomenti": [
+      "Pasqua ebraica e Pesach",
+      "Passaggio del Mar Rosso",
+      "Alleanza del Sinai",
+      "Decalogo e libertà",
+      "Memoria della schiavitù nelle leggi"
+    ],
+    "parole_chiave": [
+      "lezione IRC Esodo prima superiore",
+      "Pasqua ebraica Pesach lezione religione",
+      "passaggio del Mar Rosso religione superiori",
+      "alleanza del Sinai e Decalogo",
+      "Decalogo e libertà Catechismo",
+      "UDA Israele religione classe prima",
+      "liberi da che cosa liberi per che cosa",
+      "materiali IRC secondo ciclo Esodo"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5538,
+      "output": 535
+    },
+    "impronta": "c2dfaf09aaff5eb5"
+  },
   "1|Israele, una promessa, una storia, fino a oggi|Molti dèi o un Dio che chiama": {
     "titolo_seo": "Abramo, promessa e monoteismo: lezione IRC classe prima",
     "meta_description": "Lezione di Religione per la classe prima: Abramo, le tre promesse di Genesi 12, la fede come fiducia, l'alleanza e il passaggio dal politeismo al monoteismo.",
@@ -110,6 +138,34 @@
       "output": 478
     },
     "impronta": "ee7ccab48f398e00"
+  },
+  "1|Israele, una promessa, una storia, fino a oggi|Tanta storia e poca geografia, come si legge una linea del tempo lunga tremila anni": {
+    "titolo_seo": "Esilio di Babilonia e storia di Israele: IRC classe prima",
+    "meta_description": "Lezione di IRC per la classe prima: la linea del tempo di Israele, l'esilio di Babilonia, il Salmo 137, il sabato e la sinagoga come identità del popolo.",
+    "sintesi": "La lezione offre agli studenti una linea del tempo della storia d'Israele in otto tappe, da Abramo alla distruzione del secondo Tempio nel 70 d.C., e distingue il racconto biblico dalle fonti esterne. Il centro è l'esilio di Babilonia: gli studenti leggono i passi biblici sulla caduta di Gerusalemme e il Salmo 137, poi vedono come sabato, libri e sinagoga permettono a un popolo senza Tempio di restare popolo.",
+    "argomenti": [
+      "Linea del tempo di Israele",
+      "Fonti bibliche e fonti esterne",
+      "Esilio di Babilonia",
+      "Salmo 137",
+      "Sabato e sinagoga"
+    ],
+    "parole_chiave": [
+      "esilio di Babilonia religione",
+      "linea del tempo storia di Israele",
+      "Salmo 137 commento scuola superiore",
+      "distruzione del Tempio 586 a.C.",
+      "fonti bibliche ed extrabibliche",
+      "significato del sabato nell'esilio",
+      "lezione IRC classe prima Antico Testamento",
+      "origine della sinagoga"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5465,
+      "output": 482
+    },
+    "impronta": "8dd6e9108560e6c6"
   },
   "1|L'uomo che cerca oltre il senso religioso|Credo, non credo, non so": {
     "titolo_seo": "Teismo, ateismo, agnosticismo: lezione IRC classe prima",
@@ -166,6 +222,62 @@
       "output": 527
     },
     "impronta": "c6d006ee0b69898a"
+  },
+  "1|La Bibbia si impara a leggere|Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1": {
+    "titolo_seo": "Genesi 1: lettura, arte, fede e scienza – IRC classe prima",
+    "meta_description": "Lezione IRC su Genesi 1 come inno delle origini: contesto babilonese, Galileo, Dei Verbum e tre modi di leggere il testo tra fede e scienza.",
+    "sintesi": "La lezione chiede se Genesi 1 voglia spiegare un meccanismo o dire altro. Gli studenti analizzano la struttura di inno del testo, il contesto dell'esilio a Babilonia e il confronto con l'Enuma Elish, poi seguono la lettera di Galileo a Cristina di Lorena. Ripercorrono i testi del magistero (Dei Verbum, Gaudium et spes) e distinguono lettura fondamentalista, concordista e teologico-letteraria, concludendo con un esercizio di separazione tra domande sul funzionamento e sul significato.",
+    "argomenti": [
+      "Genesi 1 come inno",
+      "Genesi ed Enuma Elish",
+      "Galileo e la Scrittura",
+      "Genere letterario e Dei Verbum",
+      "Fondamentalismo, concordismo, lettura teologica"
+    ],
+    "parole_chiave": [
+      "Genesi 1 lezione religione prima superiore",
+      "rapporto tra fede e scienza IRC",
+      "Galileo lettera a Cristina di Lorena",
+      "Genesi ed Enuma Elish",
+      "genere letterario Bibbia",
+      "fondamentalismo e concordismo biblico",
+      "come leggere la Bibbia secondo la Chiesa",
+      "Dei Verbum interpretazione della Scrittura"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5285,
+      "output": 545
+    },
+    "impronta": "ed202d0d1b029f90"
+  },
+  "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": {
+    "titolo_seo": "Canone biblico: perché le Bibbie sono diverse, Religione 1ª",
+    "meta_description": "Lezione IRC per la classe prima sul canone biblico: dal prologo del Siracide ai Settanta, ai rabbini, alla Chiesa e a Lutero, con testi e fonti.",
+    "sintesi": "La lezione chiede perché Bibbie cattoliche, protestanti ed ebraiche contino 73, 66 e 24 libri. Gli studenti imparano a citare un passo con libro, capitolo e versetto, poi leggono il prologo del Siracide come fonte. Seguono la Bibbia greca dei Settanta, la scelta dei rabbini dopo il 70 d.C., le liste dei concili cristiani e la posizione di Lutero sui libri deuterocanonici.",
+    "argomenti": [
+      "Canone biblico e numero dei libri",
+      "Citare capitoli e versetti",
+      "Prologo del Siracide",
+      "Bibbia ebraica e Settanta",
+      "Lutero e libri deuterocanonici"
+    ],
+    "parole_chiave": [
+      "canone biblico lezione religione",
+      "perché Bibbia cattolica 73 libri",
+      "Bibbia cattolica protestante ebraica differenze",
+      "libri deuterocanonici scuola superiore",
+      "prologo del Siracide",
+      "Settanta traduzione greca Bibbia",
+      "come citare un passo biblico",
+      "IRC prima superiore Bibbia"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5460,
+      "output": 485
+    },
+    "impronta": "ab657ba15f8ff286"
   },
   "2|Gesù quali tracce|Anche i testi hanno una storia": {
     "titolo_seo": "Testimonium Flavianum e Giuseppe Flavio: IRC seconda",
