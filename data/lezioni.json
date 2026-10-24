@@ -800,6 +800,46 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Se è un dono, perché impegnarsi. La grazia a caro prezzo",
+      "anno": "4",
+      "uda": "Devo meritarmi tutto",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iv-2-4-grazia-a-caro-prezzo-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-2-4-grazia-a-caro-prezzo-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Sola fide. La giustificazione nel suo orizzonte",
+      "anno": "4",
+      "uda": "Devo meritarmi tutto",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iv-2-3-sola-fide-giustificazione-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
