@@ -600,6 +600,86 @@
           "in_evidenza": false
         }
       ]
+    },
+    {
+      "titolo": "Liberi da che cosa, liberi per che cosa",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-5-liberi-da-liberi-per-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-5-liberi-da-liberi-per-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Tanta storia e poca geografia, come si legge una linea del tempo lunga tremila anni",
+      "anno": "1",
+      "uda": "Israele, una promessa, una storia, fino a oggi",
+      "ordine": 6,
+      "materiali": [
+        {
+          "file": "/uploads/i-2-6-tanta-storia-poca-geografia-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-2-6-tanta-storia-poca-geografia-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+      "anno": "1",
+      "uda": "La Bibbia si impara a leggere",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/i-3-2-genesi-arte-fede-scienza-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-3-2-genesi-arte-fede-scienza-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Un libro o una biblioteca Una Bibbia, molti canoni",
+      "anno": "1",
+      "uda": "La Bibbia si impara a leggere",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/i-3-1-bibbia-molti-canoni-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
     }
   ]
 }
