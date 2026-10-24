@@ -700,10 +700,8 @@
       "ordine": 1,
       "materiali": [
         {
-          "file": "/uploads/ii-0-1-accoglienza-di-chi-mi-posso-fidare-artefatto.html",
-          "titolo": "Lezione interattiva",
-          "tipo": "Artefatto interattivo",
-          "in_evidenza": false
+          "in_evidenza": false,
+          "file": "/uploads/accoglienza-mi-fido-perche-artefatto-classe-2.html"
         }
       ]
     },
