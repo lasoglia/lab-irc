@@ -37,6 +37,7 @@ import {
   titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
   verificheAnno, verificheUda, azioneVerifica, archivioVerifiche, hrefVerificheAnno, giocabile,
 } from "./dati.js";
+import { statoLucchetto, provaPassword } from "./lucchetto.js";
 
 import "./app.css";
 
@@ -1157,6 +1158,56 @@ function PiattaformaEsami() {
     </Reveal>
   );
 }
+/* la porta delle verifiche: la password di oggi (la scrive il docente alla lavagna) apre l'archivio
+   e, fino a mezzanotte, anche i giochi, che hanno ognuno il suo lucchetto (vedi lucchetto.js) */
+function PortaVerifiche({ children }) {
+  const [l, setL] = useState({ stato: "controllo" });
+  const [pw, setPw] = useState("");
+  const [msg, setMsg] = useState("");
+  const [occupata, setOccupata] = useState(false);
+  const errori = useRef(0);
+  useEffect(() => { let vivo = true; statoLucchetto().then((x) => vivo && setL(x)).catch(() => vivo && setL({ stato: "senza-rete" })); return () => { vivo = false; }; }, []);
+  if (l.stato === "aperta") return children;
+  if (l.stato === "controllo") return <p role="status" style={{ color: "var(--lab-muted)", margin: "0 0 55px" }}>Un momento…</p>;
+  const invia = (e) => {
+    e.preventDefault();
+    const p = pw.replace(/\s+/g, "");
+    if (!p || occupata) return;
+    setOccupata(true); setMsg("Controllo…");
+    provaPassword(l.P, l.oggi, p).then((ok) => {
+      if (ok) { setL({ ...l, stato: "aperta" }); return; }
+      errori.current++;
+      setPw("");
+      if (errori.current % 3) { setMsg("Password non corretta."); setOccupata(false); return; }
+      let sec = 30;
+      const giro = () => { if (sec <= 0) { setMsg("Puoi riprovare."); setOccupata(false); return; } setMsg(`Troppi tentativi: riprova tra ${sec} secondi.`); sec--; setTimeout(giro, 1000); };
+      giro();
+    });
+  };
+  return (
+    <Reveal>
+      <section className="lab-regione lab-porta" aria-label="Verifiche chiuse" style={{ maxWidth: 520, margin: "0 0 55px", padding: "21px 21px 13px", borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)" }}>
+        <Eyebrow>Verifiche chiuse</Eyebrow>
+        {l.stato === "chiusa" ? (
+          <form onSubmit={invia}>
+            <p style={{ margin: "8px 0 13px", lineHeight: 1.5, color: "var(--lab-ink-soft)" }}>Le verifiche si aprono con la <b>password di oggi</b>, che il docente scrive alla lavagna. Vale fino a mezzanotte, per tutti i giochi.</p>
+            <label htmlFor="lab-pw-oggi" style={{ display: "block", fontWeight: 700, fontSize: 14, marginBottom: 8 }}>Password di oggi</label>
+            <div style={{ display: "flex", gap: 8 }}>
+              <input id="lab-pw-oggi" className="lab-pw" inputMode="numeric" autoComplete="off" value={pw} onChange={(e) => setPw(e.target.value)} disabled={occupata} aria-describedby="lab-pw-esito" />
+              <Button type="submit" disabled={occupata}>Apri</Button>
+            </div>
+            <p id="lab-pw-esito" role="status" aria-live="polite" style={{ minHeight: "1.5em", margin: "8px 0 0", fontWeight: 600, color: msg && msg !== "Controllo…" ? "var(--lab-anno-1)" : "var(--lab-muted)" }}>{msg}</p>
+          </form>
+        ) : (
+          <p style={{ margin: "8px 0", lineHeight: 1.5, color: "var(--lab-ink-soft)" }}>
+            {l.stato === "scaduta" ? "Il lucchetto delle verifiche è scaduto: avvisa il docente." : "Per aprire le verifiche serve la connessione a internet."}
+          </p>
+        )}
+      </section>
+    </Reveal>
+  );
+}
+
 /* l'archivio delle verifiche, come quello delle lezioni: Verifiche → anno di corso → le verifiche delle sue unità */
 const contaVerifiche = (n) => (n ? `${n} ${n === 1 ? "verifica" : "verifiche"}` : "In preparazione");
 function VerifichePage({ D }) {
@@ -1168,6 +1219,7 @@ function VerifichePage({ D }) {
       <Briciole voci={[{ testo: "Verifiche" }]} su={{ testo: "Home" }} />
       <PaginaHero neutro glifo="✓" eyebrow={tot ? `Fine unità · ${contaVerifiche(tot)}` : "Fine unità"} titolo="Verifiche"
         desc="Al termine di ogni unità c'è un gioco: si gioca fino in fondo, si risponde alle domande e alla fine si consegna il rapporto al docente." />
+      <PortaVerifiche>
       {D.NOTA_VER && <Reveal><p className="lab-nota-ver">{D.NOTA_VER}</p></Reveal>}
       <SectionHead small eyebrow="Archivio" title="Gli anni di corso" sub="Scegli l'anno: dentro trovi, unità per unità, il suo gioco di verifica." />
       <div className="lab-anni" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(199px,1fr))", gap: stretto ? 13 : 21 }}>
@@ -1179,6 +1231,7 @@ function VerifichePage({ D }) {
           </Reveal>
         ))}
       </div>
+      </PortaVerifiche>
       <PiattaformaEsami />
     </div>
   );
@@ -1210,6 +1263,7 @@ function VerificheAnnoPage({ D, n }) {
       <Briciole voci={[{ testo: "Verifiche", href: "#verifiche" }, { testo: "Anno " + meta.rom }]} su={{ testo: "Verifiche", href: "#verifiche" }} />
       <PaginaHero color={color} luce={n === "5" ? "50%" : undefined} glifo={meta.rom} eyebrow={`Verifiche · Anno ${meta.rom}${nGiochi ? " · " + contaVerifiche(nGiochi) : ""}`} titolo={meta.nome}
         desc="Un gioco al termine di ogni unità, in ordine di corso: si gioca fino alla fine e si consegna il rapporto al docente." mascotte={+n} compatto />
+      <PortaVerifiche>
       {nReali > 0 && <ComeSiGioca nota={D.NOTA_VER} />}
       {schede.length > 0 && (
         <>
@@ -1226,6 +1280,7 @@ function VerificheAnnoPage({ D, n }) {
         </>
       )}
       {!schede.length && <Vuoto anno={+n} titolo="Le verifiche di quest'anno sono in preparazione" testo="Arriveranno al termine di ogni unità." indietro={{ testo: "← Torna alle verifiche", href: "#verifiche" }} />}
+      </PortaVerifiche>
       <Continua tiles={tiles} color={color} />
     </div>
   );

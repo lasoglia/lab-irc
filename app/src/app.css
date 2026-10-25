@@ -319,3 +319,7 @@ html[data-lim]:not([data-tema="chiaro"]) .lab-pagina-hero--anno{ background:line
   .lab-lim, .lab-tema, .lab-tema-footer{ transition:none !important; }
   .lab-visore, .lab-visore *, .lab-carico *{ animation:none !important; }
 }
+
+/* ---------- la porta delle verifiche: il campo della password di oggi ---------- */
+.lab-pw{ flex:1; min-width:0; font:600 22px var(--lab-font-body); letter-spacing:.12em; text-align:center; padding:9px 13px; border-radius:12px; border:1.5px solid var(--lab-line); background:var(--lab-bg); color:var(--lab-ink); }
+.lab-pw:focus-visible{ outline:2px solid var(--lab-ciano); outline-offset:2px; }

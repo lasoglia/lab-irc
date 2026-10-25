@@ -151,6 +151,26 @@ td.stretta{width:1%;white-space:nowrap}
     </div>
   </section>
 
+  <!-- lucchetto dei giochi di verifica -->
+  <section class="passo" id="p-lucchetto">
+    <span class="n" aria-hidden="true">🔒</span>
+    <h2>Lucchetto delle verifiche</h2>
+    <p>I giochi di verifica si aprono solo con la <b>password del giorno</b>: <b>giorno × mese + il tuo numero segreto</b>. Il 25/10, con il numero segreto 100, la password è 25 × 10 + 100 = 350. La scrivi alla lavagna; il giorno dopo non vale più.</p>
+    <div class="riga" style="margin-top:13px">
+      <label for="segreto" style="font-weight:600">Numero segreto</label>
+      <input type="password" id="segreto" inputmode="numeric" autocomplete="off" placeholder="solo cifre" style="width:150px">
+      <span class="stato" id="pw-oggi">Scrivi il numero segreto</span>
+    </div>
+    <label class="hint" style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="ricorda-segreto" checked> Ricorda il numero segreto su questo computer</label>
+    <p class="hint">Il numero segreto non va mai su GitHub: i giochi vengono chiusi a chiave qui, sul tuo computer, prima di partire. Ogni gioco che importi da qui viene chiuso da solo, fino al 31 agosto.</p>
+    <div class="riga" style="margin-top:21px">
+      <button class="btn ghost" id="chiudi-giochi" type="button">Chiudi a chiave (o rinnova) i giochi già sul sito</button>
+      <span class="stato" id="stato-giochi" hidden></span>
+    </div>
+    <div class="barra" id="barra-giochi" hidden><i></i></div>
+    <p class="hint">Serve per i giochi caricati prima del lucchetto o dal pannello, e ogni settembre per rinnovare il lucchetto per il nuovo anno scolastico.</p>
+  </section>
+
   <!-- 3 · tabella -->
   <section class="passo" id="p3" hidden>
     <span class="n" aria-hidden="true">3</span>
@@ -178,6 +198,7 @@ td.stretta{width:1%;white-space:nowrap}
 </div>
 <button class="tema" id="tema" aria-label="Cambia tema chiaro/scuro">◐</button>
 
+<script src="lucchetto.js"></script>
 <script>
 (function () {
   'use strict';
@@ -566,6 +587,76 @@ td.stretta{width:1%;white-space:nowrap}
     $('#pubblica').disabled = !!p.errori.length;
   }
 
+  /* ---------- lucchetto dei giochi di verifica (admin/lucchetto.js) ---------- */
+  var segreto = '';
+  try { segreto = localStorage.getItem('lab_segreto_verifiche') || ''; } catch (e) {}
+  $('#segreto').value = segreto;
+  function segretoValido() {
+    segreto = $('#segreto').value.trim();
+    var ok = /^\d{1,6}$/.test(segreto), s = $('#pw-oggi');
+    s.textContent = ok ? 'Password di oggi: ' + LabLucchetto.passwordDiOggi(segreto) : segreto ? 'Solo cifre, senza spazi' : 'Scrivi il numero segreto';
+    s.className = 'stato ' + (ok ? 'ok' : segreto ? 'ko' : '');
+    try { if (ok && $('#ricorda-segreto').checked) localStorage.setItem('lab_segreto_verifiche', segreto); else localStorage.removeItem('lab_segreto_verifiche'); } catch (e) {}
+    return ok;
+  }
+  $('#segreto').addEventListener('input', segretoValido);
+  $('#ricorda-segreto').addEventListener('change', segretoValido);
+  segretoValido();
+  function leggiTesto(file) {
+    return new Promise(function (ok, ko) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result)); }; fr.onerror = ko; fr.readAsText(file, 'utf-8'); });
+  }
+  /* un gioco già chiuso si rinnova (stesso contenuto, serrature da oggi al 31 agosto) */
+  function chiudiGioco(testo, avanzamento) {
+    return LabLucchetto.apri(testo, segreto).then(function (chiaro) { return LabLucchetto.chiudi(chiaro, segreto, avanzamento); });
+  }
+  function salvaSuGithub(albero, msg) {
+    var base = '/repos/' + OWNER + '/' + REPO + '/git/';
+    return gh(base + 'ref/heads/' + RAMO).then(function (ref) {
+      var sha = ref.object.sha;
+      return gh(base + 'commits/' + sha)
+        .then(function (c) { return gh(base + 'trees', { method: 'POST', body: { base_tree: c.tree.sha, tree: albero } }); })
+        .then(function (t) { return gh(base + 'commits', { method: 'POST', body: { message: msg, tree: t.sha, parents: [sha] } }); });
+    }).then(function (c) { return gh(base + 'refs/heads/' + RAMO, { method: 'PATCH', body: { sha: c.sha, force: false } }).then(function () { return c; }); });
+  }
+  function avanzGiochi(f, testo, cls) {
+    var b = $('#barra-giochi'), s = $('#stato-giochi');
+    b.hidden = f == null; if (f != null) b.querySelector('i').style.width = Math.round(f * 100) + '%';
+    s.hidden = false; s.className = 'stato ' + (cls || ''); s.textContent = testo;
+  }
+  $('#chiudi-giochi').addEventListener('click', function () {
+    token = $('#token').value.trim();
+    if (!token) { $('#p1').scrollIntoView({ behavior: 'smooth' }); statoToken('Serve la chiave (passo 1)', 'ko'); return; }
+    if (!segretoValido()) { $('#segreto').focus(); avanzGiochi(null, 'Scrivi prima il numero segreto', 'ko'); return; }
+    var btn = this, base = '/repos/' + OWNER + '/' + REPO + '/git/', albero = [];
+    btn.disabled = true;
+    avanzGiochi(0.02, 'Cerco i giochi sul sito…');
+    gh('/repos/' + OWNER + '/' + REPO + '/contents/uploads?ref=' + RAMO)
+      .then(function (lista) {
+        var giochi = (lista || []).filter(function (f) { return f.type === 'file' && GIOCO_FINE.test(f.name); });
+        if (!giochi.length) throw new Error('Non ci sono giochi di verifica sul sito.');
+        var catena = Promise.resolve();
+        giochi.forEach(function (g, i) {
+          var parte = function (f) { return (i + f) / giochi.length * 0.9; };
+          catena = catena
+            .then(function () { avanzGiochi(parte(0), 'Leggo «' + g.name + '»…'); return gh(base + 'blobs/' + g.sha); })
+            .then(function (b) { return chiudiGioco(LabLucchetto.daB64utf8(b.content.replace(/\n/g, '')), function (f) { avanzGiochi(parte(f * 0.9), 'Chiudo a chiave «' + g.name + '»… ' + Math.round(f * 100) + '%'); }); })
+            .then(function (pagina) { return gh(base + 'blobs', { method: 'POST', body: { content: LabLucchetto.utf8b64(pagina), encoding: 'base64' } }); })
+            .then(function (b) { albero.push({ path: 'uploads/' + g.name, mode: '100644', type: 'blob', sha: b.sha }); });
+        });
+        return catena.then(function () { return giochi.length; });
+      })
+      .then(function (n) {
+        avanzGiochi(0.93, 'Preparo la porta della pagina Verifiche…');
+        return LabLucchetto.verificatore(segreto).then(function (j) {
+          albero.push({ path: 'data/lucchetto.json', mode: '100644', type: 'blob', content: j });
+          avanzGiochi(0.97, 'Salvo…');
+          return salvaSuGithub(albero, 'Lucchetto: ' + n + (n === 1 ? ' gioco di verifica chiuso' : ' giochi di verifica chiusi') + ' con la password del giorno');
+        }).then(function () { return n; });
+      })
+      .then(function (n) { avanzGiochi(null, 'Fatto: ' + n + (n === 1 ? ' gioco chiuso' : ' giochi chiusi') + ' fino al 31 agosto. Il sito si aggiorna in 1–2 minuti.', 'ok'); btn.disabled = false; })
+      .catch(function (err) { avanzGiochi(null, 'Non ci sono riuscito: ' + (err && err.message ? err.message : err), 'ko'); btn.disabled = false; });
+  });
+
   /* ---------- 4 · pubblica (un solo commit con tutti i file e i dati) ---------- */
   function leggiBase64(file) {
     return new Promise(function (ok, ko) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result).split(',')[1]); }; fr.onerror = ko; fr.readAsDataURL(file); });
@@ -604,6 +695,8 @@ td.stretta{width:1%;white-space:nowrap}
   $('#pubblica').addEventListener('click', function () {
     token = $('#token').value.trim();
     if (!token) { $('#p1').scrollIntoView({ behavior: 'smooth' }); statoToken('Serve la chiave (passo 1)', 'ko'); return; }
+    var giochi = righe.some(function (r) { return !r.esistente && r.gioco; });
+    if (giochi && !segretoValido()) { $('#p-lucchetto').scrollIntoView({ behavior: 'smooth' }); $('#segreto').focus(); var e0 = $('#esito'); e0.hidden = false; e0.className = 'esito ko'; e0.textContent = 'Per pubblicare un gioco di verifica serve il numero segreto del lucchetto (riquadro 🔒 qui sopra).'; return; }
     var btn = $('#pubblica'); btn.disabled = true; $('#esito').hidden = true;
     var base = '/repos/' + OWNER + '/' + REPO + '/git/';
     var nuovi = righe.filter(function (r) { return !r.esistente; }), fatti = 0, albero = [];
@@ -617,7 +710,15 @@ td.stretta{width:1%;white-space:nowrap}
       .then(function (testa) {
         var catena = Promise.resolve();
         nuovi.forEach(function (r) {
-          catena = catena.then(function () { avanz(0.05 + 0.75 * (fatti / Math.max(1, nuovi.length)), 'Carico «' + r.nome + '»…'); return leggiBase64(r.file); })
+          catena = catena.then(function () {
+              var quota = 0.05 + 0.75 * (fatti / Math.max(1, nuovi.length));
+              avanz(quota, 'Carico «' + r.nome + '»…');
+              if (!r.gioco) return leggiBase64(r.file);
+              /* il gioco parte già chiuso a chiave: in chiaro non arriva mai su GitHub */
+              return leggiTesto(r.file)
+                .then(function (t) { return chiudiGioco(t, function (f) { avanz(quota, 'Chiudo a chiave «' + r.nome + '»… ' + Math.round(f * 100) + '%'); }); })
+                .then(LabLucchetto.utf8b64);
+            })
             .then(function (b64) { return gh(base + 'blobs', { method: 'POST', body: { content: b64, encoding: 'base64' } }); })
             .then(function (b) { albero.push({ path: 'uploads/' + nomeFinale(r), mode: '100644', type: 'blob', sha: b.sha }); fatti++; });
         });
@@ -627,7 +728,9 @@ td.stretta{width:1%;white-space:nowrap}
         avanz(0.85, 'Aggiorno le lezioni…');
         var d = datiNuovi();
         ['uda', 'lezioni', 'materiali', 'verifiche'].forEach(function (k) { albero.push({ path: 'data/' + k + '.json', mode: '100644', type: 'blob', content: JSON.stringify(d[k], null, 2) + '\n' }); });
-        return gh(base + 'trees', { method: 'POST', body: { base_tree: testa.tree, tree: albero } }).then(function (t) { return { testa: testa, tree: t.sha }; });
+        /* con un gioco nuovo si rinnova anche la porta della pagina Verifiche */
+        var porta = giochi ? LabLucchetto.verificatore(segreto).then(function (j) { albero.push({ path: 'data/lucchetto.json', mode: '100644', type: 'blob', content: j }); }) : Promise.resolve();
+        return porta.then(function () { return gh(base + 'trees', { method: 'POST', body: { base_tree: testa.tree, tree: albero } }); }).then(function (t) { return { testa: testa, tree: t.sha }; });
       })
       .then(function (x) {
         avanz(0.92, 'Salvo…');

@@ -442,6 +442,38 @@ Note:
   `GUIDA-VERIFICHE.md`) non cambia: dalla pagina Verifiche c'è ancora il
   collegamento, in fondo.
 
+### Il lucchetto: la password del giorno
+
+Le verifiche si aprono solo con la **password del giorno**, che scrivi alla
+lavagna quando decidi tu:
+
+    password = giorno × mese + numero segreto
+
+Esempio con numero segreto 100: il 25 ottobre la password è 25 × 10 + 100 =
+**350**; il 26 ottobre è 260 + 100 = **360**. Vale fino a mezzanotte, poi non
+apre più nulla: a casa, prima del giorno della verifica, i giochi restano chiusi.
+
+- **Chi decide il numero segreto:** tu. Lo scrivi nella pagina di importazione,
+  riquadro 🔒 «Lucchetto delle verifiche», che lo ricorda **solo sul tuo
+  computer** e ti mostra la password di oggi. Il numero segreto non va mai su
+  GitHub: i giochi vengono chiusi a chiave sul tuo computer prima di partire.
+- **Gli studenti** scrivono la password una volta, nella pagina **Verifiche**
+  del sito: si apre l'archivio e, fino a mezzanotte, anche i giochi, senza
+  chiederla di nuovo. Chi apre un gioco dal suo indirizzo diretto trova lo
+  stesso lucchetto. La data è quella del server del sito: cambiare l'orologio
+  del telefono non serve. Dopo tre password sbagliate si aspettano 30 secondi.
+- **I giochi nuovi** caricati dalla pagina di importazione si chiudono da soli.
+  Quelli caricati dal pannello Decap arrivano **aperti**: chiudili con il
+  pulsante «Chiudi a chiave (o rinnova) i giochi già sul sito».
+- **Ogni settembre** premi lo stesso pulsante: il lucchetto dura fino al 31
+  agosto e va rinnovato per il nuovo anno scolastico (se la pagina Verifiche
+  dice «Il lucchetto è scaduto», è questo).
+- **Il numero segreto resta lo stesso** per tutti i giochi. Se un giorno vuoi
+  cambiarlo, serve un passaggio apposta per riaprire i giochi con il vecchio
+  numero e richiuderli con il nuovo: chiedilo a Claude.
+- **Limite onesto:** chi conosce la password di un giorno la può passare ad
+  altri quel giorno. Il giorno dopo non vale più.
+
 ---
 
 ## Aggiornare il sito (file da sostituire su GitHub)
