@@ -1,0 +1,40 @@
+name: Supabase · tienilo sveglio
+# Il progetto gratuito di Supabase (la piattaforma delle verifiche con codice,
+# esami/) va in pausa dopo una settimana senza attività. Ogni due giorni questa
+# Action fa una piccola lettura dal database con la chiave PUBBLICA (anon),
+# quella già scritta in esami/config.js: non serve nessun segreto e non legge
+# nessun dato (le regole di sicurezza la lasciano a mani vuote).
+# Se Supabase è già in pausa, l'Action fallisce e GitHub ti manda un'email:
+# allora va riattivato una volta dal pannello di Supabase («Restore project»).
+
+on:
+  schedule:
+    - cron: '23 6 */2 * *'   # ogni due giorni, alle 6:23 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  sveglia:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prendi l'indirizzo di Supabase
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: esami/config.js
+          sparse-checkout-cone-mode: false
+
+      - name: Una piccola lettura dal database
+        run: |
+          URL=$(sed -nE 's/.*SUPABASE_URL *= *"([^"]+)".*/\1/p' esami/config.js)
+          CHIAVE=$(sed -nE 's/.*SUPABASE_ANON_KEY *= *"([^"]+)".*/\1/p' esami/config.js)
+          if [ -z "$URL" ] || [ -z "$CHIAVE" ]; then echo "Configurazione di Supabase non trovata in esami/config.js"; exit 1; fi
+          codice=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 \
+            -H "apikey: $CHIAVE" -H "Authorization: Bearer $CHIAVE" \
+            "$URL/rest/v1/esami?select=id&limit=1")
+          echo "Risposta di Supabase: $codice"
+          case "$codice" in
+            2??) echo "Supabase è sveglio.";;
+            *) echo "Supabase non risponde come dovrebbe: forse è in pausa. Riattivalo dal pannello di Supabase."; exit 1;;
+          esac
