@@ -439,8 +439,8 @@ Note:
 - I giochi non entrano nel «percorso» dello studente (sigilli e conteggi):
   la verifica non è un materiale da aprire ma una prova da consegnare.
 - La piattaforma delle verifiche con codice (`/esami`, vedi
-  `GUIDA-VERIFICHE.md`) non cambia: dalla pagina Verifiche c'è ancora il
-  collegamento, in fondo.
+  `GUIDA-VERIFICHE.md`) esiste ancora per i casi eccezionali, ma il sito non
+  la collega più: si apre solo dal suo indirizzo, `www.labirc.it/esami/`.
 
 ### Il lucchetto: la password del giorno
 

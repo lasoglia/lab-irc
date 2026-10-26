@@ -3,7 +3,10 @@
 > Le **verifiche di fine unità** sono giochi (un file `.html` per unità) che il
 > sito ospita nella pagina **Verifiche**: come si caricano è spiegato in
 > `GUIDA-CONTENUTI.md`, punto 7. Questa guida riguarda invece la piattaforma
-> con codice (`/esami`), che resta disponibile.
+> con codice (`/esami`), che resta disponibile per i casi eccezionali: il sito
+> non la collega più, si apre dal suo indirizzo `www.labirc.it/esami/`.
+> Un'Action di GitHub («Supabase · tienilo sveglio») la interroga ogni due
+> giorni, così il progetto gratuito di Supabase non va in pausa.
 
 Questa guida ti porta dal niente alla **prima verifica funzionante**. È pensata
 per chi non programma: segui i punti **in ordine**. La parte "tecnica" è solo
