@@ -1125,8 +1125,8 @@ function ListaPage({ D, tipo, apri }) {
 
 /* ---------- verifiche di fine unità ----------
    Un gioco per ogni unità, per anno. Le istruzioni per lo studente sono qui,
-   una volta per tutte; la piattaforma delle verifiche con codice (esami/)
-   resta raggiungibile in fondo. */
+   una volta per tutte. La piattaforma delle verifiche con codice (esami/) esiste
+   ancora per i casi eccezionali, ma il sito non la collega più. */
 const PASSI_VERIFICA = [
   ["Apri il gioco", "Premi «Gioca ↗»: si apre in una nuova scheda. Serve un computer con tastiera e mouse (sul telefono e sul tablet non si comanda) e la connessione a internet."],
   ["Scrivi nome, cognome e classe", "Quando il gioco lo chiede: servono solo per il rapporto finale."],
@@ -1144,17 +1144,6 @@ function ComeSiGioca({ nota }) {
           {PASSI_VERIFICA.map(([t, d]) => <li key={t}><span><b>{t}</b>{d}</span></li>)}
         </ol>
       </section>
-    </Reveal>
-  );
-}
-function PiattaformaEsami() {
-  return (
-    <Reveal className="lab-regione" style={{ marginTop: 55, padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", display: "flex", alignItems: "center", gap: 21, flexWrap: "wrap" }}>
-      <div style={{ flex: "1 1 320px", minWidth: 0 }}>
-        <Eyebrow>Verifiche con codice</Eyebrow>
-        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: "var(--lab-ink-soft)", maxWidth: "55ch" }}>Per le verifiche a domande, con il codice dato dal docente, c'è la piattaforma online: è separata dal sito.</p>
-      </div>
-      <Button variant="ghost" size="sm" href="esami/" target="_blank" rel="noopener">Apri la piattaforma <span aria-hidden="true">↗</span><span className="lab-sr">(si apre in una nuova scheda)</span></Button>
     </Reveal>
   );
 }
@@ -1232,7 +1221,6 @@ function VerifichePage({ D }) {
         ))}
       </div>
       </PortaVerifiche>
-      <PiattaformaEsami />
     </div>
   );
 }
@@ -1494,7 +1482,11 @@ function Lapide({ testo, festa }) {
 function Footer({ autore, iscrizione, festa }) {
   return (
     <footer className="lab-footer" style={{ maxWidth: 1140, margin: "0 auto", padding: "34px 21px 144px", borderTop: "1px solid var(--lab-line-soft)", color: "var(--lab-muted)", fontSize: 13.5, display: "grid", gridTemplateColumns: "minmax(0,1.618fr) auto minmax(0,1fr)", alignItems: "center", gap: 21 }}>
-      <span>© {new Date().getFullYear()} {autore}<span className="lab-diritti"> · Tutti i diritti riservati</span></span>
+      {/* sotto i diritti, ben visibile anche sul telefono: l'informativa sulla privacy */}
+      <span style={{ display: "flex", flexDirection: "column", gap: 5, minWidth: 0 }}>
+        <span>© {new Date().getFullYear()} {autore}<span className="lab-diritti"> · Tutti i diritti riservati</span></span>
+        <a href="privacy.html" style={{ color: "var(--lab-ink-soft)", textDecoration: "underline", textUnderlineOffset: 3 }}>Privacy e cookie</a>
+      </span>
       <Amdg />
       <span style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: 13 }}>
         {/* l'indice statico delle lezioni (pagine per Google, generate da seo/genera.py) */}
