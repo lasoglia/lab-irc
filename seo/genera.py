@@ -411,7 +411,7 @@ def pagina(titolo, descrizione, canonical, profondita, corpo, jsonld=None) -> st
 <body>
 <div class="wrap">
 {corpo}
-<footer>© {dt.date.today().year} Matteo Sestili · Tutti i diritti riservati · <a href="{su}">Lab IRC</a> · <a href="{su}lezioni/">Indice delle lezioni</a></footer>
+<footer>© {dt.date.today().year} Matteo Sestili · Tutti i diritti riservati · <a href="{su}">Lab IRC</a> · <a href="{su}lezioni/">Indice delle lezioni</a><br><a href="{su}privacy.html">Privacy e cookie</a></footer>
 </div>
 </body>
 </html>
