@@ -2260,6 +2260,58 @@ button.lx-box:hover i{transform:translateX(5px)}
   .gp-posto,.gp-tappa,.df-pill,.df-r,.df-o{transition:none}
 }
 
+/* ---------- correzione alla LIM (24 ottobre 2026): ogni attività sta nello schermo della LIM, senza scorrere ---------- */
+/* scene 1, 3, 4, 5, 7, 8 e 9 (le sole con il testo della scena): il testo scende sotto il primo blocco (la foto, la pianta,
+   il dialogo, l'animazione, il diagramma, la fonte, il caso), perché titolo, domanda e attività stiano insieme nello schermo;
+   gli altri blocchi seguono il testo. Solo l'ordine sullo schermo: i dati, lo Studio e la guida non cambiano. */
+.ll-scene:has(>.ll-p){display:flex;flex-direction:column}
+.ll-scene:has(>.ll-p)>.ll-blocks{display:contents}
+.ll-scene:has(>.ll-p)>.ll-head{margin-bottom:0}
+.ll-scene:has(>.ll-p)>.ll-blocks>.ll-block:first-child{order:1;margin-top:13px}
+.ll-scene:has(>.ll-p)>.ll-p{order:2;margin:55px 0 0}
+.ll-scene:has(>.ll-p)>.ll-blocks>.ll-block:not(:first-child){order:3;margin-top:55px}
+
+/* alla LIM */
+/* primi blocchi con un margine superiore più stretto */
+:root[data-lim] .ll-scene:has(>.ll-p)>.ll-blocks>.ll-block:first-child{margin-top:8px}
+/* scena 1: la foto della pietra a sinistra, la didascalia accanto */
+:root[data-lim] .ll-block[data-tipo="immagine"] .ll-fig{width:100%;display:grid;grid-template-columns:minmax(0,calc(38vh * 2.198 / var(--ll-z,1))) minmax(0,1fr);gap:0 34px;align-items:end}
+:root[data-lim] .ll-block[data-tipo="immagine"] .ll-fig figcaption{margin:0;text-align:left}
+/* scena 3: la pianta un poco più piccola, le tappe più larghe e compatte; conteggio e perché sotto le tappe */
+:root[data-lim] .gp{grid-template-columns:minmax(0,calc(40vh * 1.6 / var(--ll-z,1))) minmax(0,1fr);grid-template-areas:"sx dx" "sx esito" "fine fine";gap:8px 34px}
+:root[data-lim] .gp-campo{width:100%;overflow:visible}
+/* la pianta più piccola: il nome «Sepolcro», a sinistra del suo punto, può uscire dal riquadro senza essere tagliato */
+:root[data-lim] .gp-svg{clip-path:inset(0 round 21px)}
+:root[data-lim] .gp-dx{gap:8px}
+:root[data-lim] .gp-tappe{gap:5px}
+:root[data-lim] .gp-tappa{padding:4px 13px}
+:root[data-lim] .gp-cit{font-size:16px}
+/* scena 5, animazione: il palco a sinistra con i comandi sotto (come dice la guida: «i pulsanti sotto l'animazione»),
+   la didascalia a destra */
+:root[data-lim] .lp-anim{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-rows:auto auto;gap:13px 34px;align-items:start}
+:root[data-lim] .lp-anim{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);grid-template-rows:auto auto 1fr}
+:root[data-lim] .lp-anim>.ll-block-h{grid-column:2;grid-row:1;margin:0}
+:root[data-lim] .lp-anim>.lp-stage{grid-column:1;grid-row:1 / span 3}
+:root[data-lim] .lp-anim>.lp-ctrl{grid-column:1;grid-row:4;margin:0}
+:root[data-lim] .lp-anim>.lp-cap{grid-column:2;grid-row:2 / span 3;margin:0}
+:root[data-lim] .ll-block[data-tipo="animazione"]:first-child{padding-top:21px;padding-bottom:21px}
+/* scena 7: diagramma un poco più piccolo, elementi più larghi e compatti; il perché sotto gli elementi */
+:root[data-lim] .df{grid-template-columns:minmax(0,calc(32vh * 1.5 / var(--ll-z,1))) minmax(0,1fr);grid-template-areas:"sx dx" "sx esito" "fine fine";gap:8px 34px}
+:root[data-lim] .df-fig{width:100%}
+:root[data-lim] .df-dx{gap:5px}
+:root[data-lim] .df-el{gap:4px}
+:root[data-lim] .df-pill{min-height:0;padding:2px 13px;font-size:14px;line-height:1.1}
+/* scene 5 e 8, fonte da leggere: testo più compatto */
+:root[data-lim] .lp-read-t{padding-top:5px;padding-bottom:0;padding-left:21px}
+:root[data-lim] .lp-read-t p{font-size:17px;line-height:1.4;margin-bottom:6px}
+:root[data-lim] .lp-read>.lp-lens-q,:root[data-lim] .lp-lens-q{margin-bottom:8px}
+/* scena 9: le tre risposte del caso affiancate */
+:root[data-lim] .lp-fork-s{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+/* scena 10: titolo su una riga con la mascotte più piccola; le tre risposte del quiz affiancate */
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-quiz)>.ll-head.has-masc{grid-template-columns:minmax(0,1fr) auto}
+:root[data-lim] .ll-scene:has(>.ll-blocks>.ll-block:first-child .lx-quiz)>.ll-head lab-mascotte{zoom:.75}
+:root[data-lim] .lx-quiz .la-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+
 </style>
 </head>
 <body class="la g ll" data-anno="2" data-skin="arcade" data-skin-fixed="arcade" data-modo="lezione">
@@ -4444,7 +4496,7 @@ window.LEZIONE = {
           { di: 'Oggi una domanda sola: perché Gesù fu condannato a morte? Partiamo da ciò che è certo: il giorno dopo l’ultima cena con i discepoli, quella della volta scorsa, un venerdì, alla vigilia del sabato di Pasqua, la Pasqua ebraica, Gesù muore in croce.' },
           { fai: 'Indica la foto della pietra.' },
           { di: 'Questa pietra l’abbiamo già vista nella prima unità; per chi non c’era: viene da Cesarea, dove abitava il governatore romano, e porta scritto «Ponzio Pilato, prefetto della Giudea». È il giudice di questa storia.' },
-          { fai: 'Leggi la prima delle due citazioni sotto la foto; la classe sceglie per alzata di mano chi l’ha scritta e tu tocchi l’opzione più votata. Poi la seconda; alla fine leggi la frase che compare sotto.' },
+          { fai: 'Scorri in basso: le due citazioni stanno sotto la foto e il testo della scena. Leggi la prima; la classe sceglie per alzata di mano chi l’ha scritta e tu tocchi l’opzione più votata. Poi la seconda; alla fine leggi la frase che compare sotto.' },
           { chiedi: 'Chi ha scritto le due frasi, e quale parola vi aiuta?', r: 'La prima Tacito, storico romano: data il fatto con l’imperatore e il governatore, ed è il passo degli *Annali* letto nella prima unità. La seconda Giuseppe Flavio, storico ebreo: lo dice «i capi tra noi». Se dicono «un Vangelo»: no, un Vangelo non scriverebbe «per opera del procuratore».' },
           { di: 'Tacito, storico romano, dice chi lo mise a morte e quando: sotto Tiberio, per opera di Pilato. Giuseppe Flavio, storico ebreo, aggiunge chi lo accusò e come morì: su accusa dei capi, in croce. E i Vangeli raccontano lo stesso. Messe insieme, per lo storico è sicuro: una condanna romana, su accusa dei capi di Gerusalemme, eseguita con la croce. Perché il Credo nomina proprio quel giudice, lo scopriremo alla fine.' }
         ],
@@ -4562,7 +4614,7 @@ window.LEZIONE = {
           { fai: 'Assegna le tre parti a tre studenti: chi racconta, il sinedrio, Gesù. Leggono dal posto; tu premi «La battuta successiva» a ogni battuta.' },
           { chiedi: 'Qual è la domanda, nelle sue due forme?', r: '«Se tu sei il Cristo, dillo a noi» e «Tu dunque sei il Figlio di Dio?». Perché è la stessa domanda: «Cristo», l’abbiamo visto in II 2-1, vuol dire «unto», il Messia, il re consacrato con l’olio; e «Figlio di Dio» è il titolo che le Scritture danno a quel re: «Tu sei mio figlio, io oggi ti ho generato» (Sal 2,7). «Cristo», «Messia», «Figlio di Dio» e «re» dicono la stessa persona, il re promesso. Luca fa la domanda due volte per i suoi lettori greci, per i quali «Messia» era una parola estranea.' },
           { chiedi: 'Che cosa aggiunge Gesù, che nessuno gli ha chiesto?', r: 'Che «il Figlio dell’uomo siederà alla destra della potenza di Dio». Perché conta: sedere alla destra di qualcuno vuol dire stargli accanto, con la sua stessa autorità; «il Figlio dell’uomo» è il nome con cui Gesù parla di sé: è la figura di Daniele 7,13-14, «uno simile a un figlio d’uomo» che riceve da Dio «potere, gloria e regno». È questa frase a far dire «Tu dunque sei il Figlio di Dio?».' },
-          { fai: 'Fai votare la domanda «Quale frase di Gesù, per i giudici, è la bestemmia?» per alzata di mano e tocca la risposta più votata.' },
+          { fai: 'Scorri in basso, sotto il testo della scena: fai votare la domanda «Quale frase di Gesù, per i giudici, è la bestemmia?» per alzata di mano e tocca la risposta più votata.' },
           { di: 'Molti pensano che lo abbiano condannato perché si diceva Messia. No: dirsi Messia, cioè re mandato da Dio, non era una bestemmia e non meritava la morte; un secolo dopo il rabbino Aqiba riconobbe come Messia il capo di una rivolta, Bar Kokhba. La bestemmia, per loro, è sedere alla destra di Dio: mettersi accanto a Dio, alla sua stessa altezza, quando Dio è uno solo. Dirsi re non è bestemmia; mettersi accanto a Dio, per i giudici, sì. Luca non usa la parola «bestemmia»; Marco sì: «Avete udito la bestemmia». Per i cristiani quella risposta è la verità; per i giudici, una bestemmia. La Pontificia Commissione Biblica, nel 2001, lo chiama «il punto di rottura più drammatico tra le autorità ebraiche e la persona di Cristo»: le autorità di allora, non un popolo.' }
         ],
         attenzione: 'Luca non usa la parola «bestemmia»: la usa Marco (14,64). Non dire «Luca dice che fu accusato di bestemmia». Luca, nel processo, non nomina Caifa («il sommo sacerdote», 22,54): il nome lo danno Matteo (26,57) e Giovanni (18,13-14.24), e Luca in 3,2. In Luca il sinedrio si riunisce all’alba: non dire «un processo illegale, di notte». Non dire, del processo, «è il punto in cui ebrei e cristiani si dividono». Di’ invece: «è il punto di rottura fra le autorità ebraiche di allora e Gesù» (Pontificia Commissione Biblica, 2001): la colpa non è di un popolo, come dirà la scena 9. Altra cosa è la fede di oggi: che cosa dicano davvero quelle parole è il punto in cui ebrei e cristiani ancora oggi si dividono (domanda probabile su «Figlio di Dio»). Non dire «“Figlio di Dio” era la bestemmia». Di’ invece: «“Figlio di Dio” è il titolo che i Salmi danno al re (Sal 2,7), cioè un altro nome del Messia; la bestemmia, per i giudici, è il sedere alla destra di Dio». Aqiba e Bar Kokhba non sono sullo schermo: bastano nel copione.',
@@ -4595,7 +4647,7 @@ window.LEZIONE = {
           { di: 'Il sinedrio ha la sua accusa, ma non può eseguire una condanna a morte: la Giudea è governata direttamente da Roma. Nel Vangelo di Giovanni lo dicono gli accusatori stessi: «A noi non è consentito mettere a morte nessuno». Per questo all’alba lo portano da Pilato. Ma c’è un problema: a un governatore romano una bestemmia non interessa.' },
           { fai: 'Premi → sotto l’animazione, un fotogramma alla volta, e leggi la didascalia di ciascuno.' },
           { chiedi: 'Al terzo fotogramma: che cosa è cambiato nella pillola d’oro, quella che al primo fotogramma diceva «il Cristo, il Figlio di Dio»?', r: '«Il Cristo, il Figlio di Dio» è diventato «Cristo re». Perché: davanti a Pilato gli accusatori traducono la pretesa religiosa in una parola che Roma capisce, «re». Se dicono «hanno inventato un’accusa»: in parte, ma partendo da una cosa vera: la gente lo chiamava Messia, e Messia vuol dire re.' },
-          { fai: 'Leggi ad alta voce Luca 23,1-5 nel riquadro della lettura. La classe indica quale delle tre accuse sottolineate è falsa: tocca quella scelta.' },
+          { fai: 'Scorri in basso, sotto il testo della scena, e leggi ad alta voce Luca 23,1-5 nel riquadro della lettura. La classe indica quale delle tre accuse sottolineate è falsa: tocca quella scelta.' },
           { chiedi: 'Quale accusa sapete già che è falsa, e perché?', r: '«Impediva di pagare tributi a Cesare». Perché: sul tributo Gesù aveva risposto «Rendete dunque quello che è di Cesare a Cesare e quello che è di Dio a Dio» (Lc 20,25): è la risposta che diede quando gli chiesero se era lecito pagare il tributo a Cesare, vista nella prima unità; chi non c’era la trova qui. Se scelgono «affermava di essere Cristo re»: lì c’è un appiglio vero, ed è proprio l’accusa che Pilato trattiene. Se scelgono «metteva in agitazione il nostro popolo»: non è inventata, esagera fatti veri; Gesù attirava le folle, aveva cacciato i venditori dal tempio, era entrato in città acclamato «re».' },
           { di: 'Tirate le somme: la prima accusa gonfia fatti veri, la seconda è falsa, la terza è l’unica che a Pilato interessa.' },
           { di: 'Pilato trattiene una sola accusa, l’unica che lo riguarda: «Sei tu il re dei Giudei?». Gesù risponde «Tu lo dici»: né un sì né un no, perché non è un re come lo intende Pilato, ma è il Messia. Ricordatevi questa frase: l’accusa era politica; la pretesa era religiosa.' }
@@ -4717,7 +4769,7 @@ window.LEZIONE = {
           { chiedi: 'In quale frase la vita non gli viene tolta, ma è lui a consegnarla?', r: '«Padre, nelle tue mani consegno il mio spirito». Perché: il soggetto è lui, che consegna. Sono le parole di un salmo di fiducia, «Alle tue mani affido il mio spirito» (Sal 31,6): un condannato muore pregando. Se scelgono «Padre, perdona loro»: è la prima preghiera, ma parla di chi lo uccide, non della sua vita.' },
           { fai: 'Tocca la frase del buio, «Era già verso mezzogiorno…», e leggi la spiegazione che compare.' },
           { di: 'Pilato aveva «consegnato» Gesù al volere degli accusatori; ora è Gesù che consegna il suo spirito al Padre. Il senso l’aveva detto lui stesso la sera prima, alla Cena: «Questo è il mio corpo, che è dato per voi». E nel Vangelo di Giovanni: «Nessuno me la toglie: io la do da me stesso».' },
-          { fai: 'Premi «Perché non è una sconfitta?» sotto la citazione e leggi il commento.' },
+          { fai: 'Scorri in basso, sotto il testo della scena: premi «Perché non è una sconfitta?» sotto la citazione e leggi il commento.' },
           { di: 'Per questo i cristiani non chiamano la croce una sconfitta: è una vita data, non tolta. Che sia innocente, nel racconto, lo hanno già detto Pilato tre volte e il malfattore; l’ultimo a dirlo è il soldato romano che ha eseguito la condanna, il centurione, e sceglie la parola «giusto», che per Luca include «innocente»: «Veramente quest’uomo era giusto».' }
         ],
         attenzione: 'Lo schermo salta il versetto 45 («perché il sole si era eclissato. Il velo del tempio si squarciò a metà»): non è il punto dell’ora. Non dire «ci fu un’eclissi di sole», anche se la CEI traduce «il sole si era eclissato» (23,45). Di’ invece: «Luca usa il verbo delle eclissi per dire che il sole venne meno; un’eclissi vera non può avvenire con la luna piena di Pasqua: è un segno, come nei profeti, “farò tramontare il sole a mezzogiorno” (Am 8,9)» (Bovon). Non dire «fu crocifisso a mezzogiorno». Di’ invece: «a mezzogiorno era già in croce e si fece buio fino alle tre, quando morì (23,44-46); l’ora della crocifissione la dà Marco: le nove del mattino». Non dire «in croce Gesù parla solo al Padre». Di’ invece: «in Luca dice tre cose: due preghiere al Padre (23,34.46) e una parola al malfattore che lo ha difeso (23,43)». Non dire «il centurione è il primo a dirlo innocente». Di’ invece: «lo hanno già detto Pilato tre volte e il malfattore; il centurione è l’ultimo, ed è il soldato che ha eseguito la condanna: sceglie la parola “giusto”». «Padre, perdona loro» manca in alcuni manoscritti antichi: la CEI lo stampa nel testo, e il commento di Bovon lo ritiene autentico. Non dire «Gesù è morto perché Dio lo voleva morto»: di’ «la sua morte entra nel disegno di Dio, ma chi lo ha condannato ha agito con la propria libertà».',
@@ -4742,7 +4794,7 @@ window.LEZIONE = {
           { chiedi: 'Perché la prima risposta, «Sì: lo racconta il Vangelo», non regge?', r: 'Perché il Vangelo fa nomi, non accusa un popolo: alcuni capi, Pilato, una folla di quel mattino; Gesù e i suoi discepoli erano ebrei, Giuseppe di Arimatea non era d’accordo, il popolo se ne tornava battendosi il petto. Se qualcuno insiste che «la folla erano ebrei»: era una parte della città, quel mattino, non un popolo di allora e di oggi.' },
           { fai: 'Premi «Che cosa dice la Chiesa?» e leggi la frase del Concilio.' },
           { di: 'L’accusa a tutto un popolo l’abbiamo vista la volta scorsa, con l’omelia di Melitone, un autore cristiano del II secolo. Nel 1965 il Concilio Vaticano II, l’assemblea dei vescovi di tutto il mondo, l’ha corretta per iscritto, con la frase che avete letto: la colpa della passione non si può dare a tutti gli Ebrei di allora, senza distinzione, né agli Ebrei di oggi. E la Chiesa «deplora» l’antisemitismo «in ogni tempo e da chiunque»: anche dai cristiani. La colpa ha nomi, non popoli.' },
-          { fai: 'Tocca le tre voci della linea «E oggi?» e leggi le schede.' },
+          { fai: 'Scorri in basso, sotto il testo della scena, e tocca le tre voci della linea «E oggi?»; leggi le schede.' },
           { di: 'E oggi? Ecco la risposta alla domanda dell’inizio, la stessa dell’ultima scheda: ogni domenica il Credo dice il nome del giudice, «patì sotto Ponzio Pilato, fu crocifisso, morì e fu sepolto». Perché proprio lui? Perché lega la fede a una condanna vera, con un nome e una data: non un racconto senza tempo, ma una condanna accaduta sotto un governatore preciso. Nomina un giudice, non accusa un popolo. E la croce, che Roma riservava a schiavi e ribelli, da strumento di infamia è diventata il segno dei cristiani.' }
         ],
         soluzione: 'La risposta che regge è la terza: «Alcuni capi lo accusarono, Pilato lo condannò, una folla gridò: la colpa ha nomi, non popoli». La seconda («è stata Roma, e basta») toglie un nome che le fonti danno: lo scrive anche Giuseppe Flavio.',
