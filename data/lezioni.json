@@ -83,6 +83,12 @@
           "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf",
           "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF"
+        },
+        {
+          "file": "/uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-slide.pdf",
+          "titolo": "Slide",
+          "tipo": "Slide",
+          "in_evidenza": false
         }
       ],
       "ordine": 1
@@ -883,6 +889,186 @@
           "file": "/uploads/ii-0-1-accoglienza-di-chi-mi-posso-fidare-artefatto.html",
           "titolo": "Lezione interattiva",
           "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "La libertà vale anche per chi crede diversamente",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-5-liberta-vale-anche-crede-diversamente-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-5-liberta-vale-anche-crede-diversamente-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Un'osservazione cambia tutto",
+      "anno": "4",
+      "uda": "Galileo, le prove e l'autorità",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iv-3-1-osservazione-cambia-tutto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-3-1-osservazione-cambia-tutto-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Come si vadia al cielo, la Bibbia insegna astronomia",
+      "anno": "4",
+      "uda": "Galileo, le prove e l'autorità",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Che cosa accadde nel 1616 e nel 1633, e nel 1992",
+      "anno": "4",
+      "uda": "Galileo, le prove e l'autorità",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Chi può limitare il potere. Canossa, 1077",
+      "anno": "3",
+      "uda": "Credere, ragionare, obbedire",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iii-3-1-puo-limitare-potere-canossa-1077-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-3-1-puo-limitare-potere-canossa-1077-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Mettere in comune",
+      "anno": "2",
+      "uda": "Una comunità che sa riparare",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/ii-3-2-mettere-comune-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-3-2-mettere-comune-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Beati chi, Le regole di una comunità nuova",
+      "anno": "2",
+      "uda": "Una comunità che sa riparare",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/ii-3-1-beati-regole-comunita-nuova-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-3-1-beati-regole-comunita-nuova-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Perché credere ai testimoni della Pasqua",
+      "anno": "2",
+      "uda": "Quattro Vangeli, una Pasqua",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Un diluvio più antico della Bibbia",
+      "anno": "1",
+      "uda": "La Bibbia si impara a leggere",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/i-3-3-diluvio-piu-antico-della-bibbia-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
           "in_evidenza": false
         }
       ]
