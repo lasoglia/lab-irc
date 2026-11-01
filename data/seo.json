@@ -251,6 +251,34 @@
     },
     "impronta": "ed202d0d1b029f90"
   },
+  "1|La Bibbia si impara a leggere|Un diluvio più antico della Bibbia": {
+    "titolo_seo": "Diluvio biblico e Gilgamesh: Genesi 6-9, IRC prima",
+    "meta_description": "Lezione IRC per la prima: Genesi 6-9 a confronto con Gilgamesh e Atrahasis, per capire che cosa distingue il racconto biblico del diluvio dal mito.",
+    "sintesi": "La lezione mette a confronto il racconto biblico del diluvio (Genesi 6-9) con quello mesopotamico dell'Epopea di Gilgamesh e dell'Atrahasis, partendo dalla scoperta della tavoletta di Ninive nel 1872. Gli studenti leggono i testi in parallelo, individuano somiglianze e differenze, si chiedono se la Bibbia abbia copiato e analizzano il motivo del diluvio: il rumore degli uomini a Babilonia, la violenza in Genesi. Viene introdotta anche la nozione di mito.",
+    "argomenti": [
+      "Diluvio in Genesi 6-9",
+      "Epopea di Gilgamesh",
+      "Poema di Atrahasis",
+      "Il mito come racconto",
+      "Differenze tra i due racconti"
+    ],
+    "parole_chiave": [
+      "diluvio Genesi e Gilgamesh",
+      "Genesi 6-9 lezione religione",
+      "confronto diluvio biblico e mesopotamico",
+      "Atrahasis e diluvio biblico",
+      "come leggere la Bibbia prima superiore",
+      "IRC lezione diluvio universale",
+      "cos'è un mito religione",
+      "George Smith tavoletta diluvio"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5443,
+      "output": 523
+    },
+    "impronta": "85a2156f24972357"
+  },
   "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": {
     "titolo_seo": "Canone biblico: perché le Bibbie sono diverse, Religione 1ª",
     "meta_description": "Lezione IRC per la classe prima sul canone biblico: dal prologo del Siracide ai Settanta, ai rabbini, alla Chiesa e a Lutero, con testi e fonti.",
@@ -456,6 +484,34 @@
     },
     "impronta": "818240e113994ab4"
   },
+  "2|Quattro Vangeli, una Pasqua|Perché credere ai testimoni della Pasqua": {
+    "titolo_seo": "Testimoni della Pasqua e risurrezione: IRC classe seconda",
+    "meta_description": "Lezione di Religione per la classe seconda: i testimoni della Pasqua interrogati come fonti storiche, tra Luca, Paolo e la tomba vuota.",
+    "sintesi": "La lezione affronta la domanda se sia ragionevole credere ai testimoni della Pasqua. Gli studenti leggono Lc 24,1-12 e 1Cor 15,3-8 e interrogano le fonti con tre domande già note (chi scrive, a quale distanza, con quale limite) e due nuove: la pluralità di fonti indipendenti e i particolari scomodi. Osservano i limiti dello storico di fronte alla risurrezione e il cambiamento dei discepoli, per distinguere ciò che la storia può dire da ciò che spetta alla fede.",
+    "argomenti": [
+      "Testimoni della risurrezione",
+      "Luca 24 e tomba vuota",
+      "Formula di Paolo 1Cor 15",
+      "Criterio dell'imbarazzo",
+      "Storia e fede"
+    ],
+    "parole_chiave": [
+      "lezione religione risurrezione di Gesù",
+      "testimoni della Pasqua scuola superiore",
+      "tomba vuota Vangeli classe seconda",
+      "Luca 24 commento per studenti",
+      "1Cor 15 formula di Paolo lezione",
+      "attendibilità dei Vangeli IRC",
+      "storicità della risurrezione secondaria",
+      "materiali IRC quattro Vangeli una Pasqua"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5371,
+      "output": 521
+    },
+    "impronta": "5f46975e1b93ef8d"
+  },
   "2|Quattro Vangeli, una Pasqua|Perché fu condannato": {
     "titolo_seo": "Condanna e morte di Gesù nel racconto di Luca | IRC seconda",
     "meta_description": "Lezione di Religione per la seconda: la condanna di Gesù nel racconto di Luca, dalle fonti storiche alla crocifissione, con il confronto tra i Vangeli.",
@@ -511,6 +567,90 @@
       "output": 532
     },
     "impronta": "6993e66173b070f9"
+  },
+  "2|Una comunità che sa riparare|Beati chi, Le regole di una comunità nuova": {
+    "titolo_seo": "Beatitudini di Luca e Matteo: lezione IRC classe seconda",
+    "meta_description": "Lezione di Religione sulle beatitudini di Luca e Matteo: il regno di Dio, i poveri, le differenze tra le due versioni e la comunità che le riscrive.",
+    "sintesi": "La lezione mette a confronto le beatitudini di Luca (6,20-23) e di Matteo (5,3-12). Gli studenti partono dal significato della parola «beato» e dalla domanda di Aristotele sulla felicità, poi leggono i testi evangelici e il Salmo 72 per capire che cosa significa «regno di Dio». Analizzano le differenze tra le due versioni, tra situazioni e atteggiamenti, e riflettono sulle beatitudini come ritratto di una comunità che vive come se Dio fosse re.",
+    "argomenti": [
+      "Significato di «beato»",
+      "Aristotele e la felicità",
+      "Regno di Dio e poveri",
+      "Beatitudini di Luca e Matteo",
+      "Poveri in spirito"
+    ],
+    "parole_chiave": [
+      "beatitudini Luca e Matteo",
+      "lezione IRC beatitudini",
+      "regno di Dio spiegazione scuola superiore",
+      "poveri in spirito significato",
+      "differenze beatitudini Matteo e Luca",
+      "Aristotele felicità religione",
+      "materiali IRC classe seconda",
+      "Salmo 72 e beatitudini"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5365,
+      "output": 484
+    },
+    "impronta": "1d60d7990ea968b6"
+  },
+  "2|Una comunità che sa riparare|Mettere in comune": {
+    "titolo_seo": "Prima comunità cristiana e condivisione dei beni, IRC classe 2",
+    "meta_description": "Lezione di Religione per la seconda: koinonía, pane spezzato e condivisione dei beni negli Atti degli Apostoli, con Barnaba, Anania e la Didaché.",
+    "sintesi": "La lezione parte dal gesto di Barnaba, che vende un campo e ne porta il ricavato agli apostoli, per studiare la vita della prima comunità cristiana negli Atti degli Apostoli. Gli studenti leggono i testi di Luca, ricostruiscono le quattro pratiche quotidiane, analizzano il termine koinonía e il legame con il pane spezzato, confrontano la ragione data dalla Didaché, riflettono sul caso di Anania e Saffira e sulla libertà del dono, fino alla dottrina sociale.",
+    "argomenti": [
+      "Atti degli Apostoli 2 e 4",
+      "Koinonía e pane spezzato",
+      "Barnaba, Anania e Saffira",
+      "Didaché e condivisione dei beni",
+      "Proprietà privata e dottrina sociale"
+    ],
+    "parole_chiave": [
+      "prima comunità cristiana lezione religione",
+      "Atti degli Apostoli condivisione dei beni",
+      "koinonia significato comunione",
+      "spezzare il pane Atti 2,42",
+      "Barnaba Anania e Saffira lezione",
+      "Didaché IRC superiori",
+      "dottrina sociale della Chiesa proprietà privata",
+      "materiali IRC seconda superiore"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5337,
+      "output": 521
+    },
+    "impronta": "894366a6d8af6a62"
+  },
+  "3|Credere, ragionare, obbedire|Chi può limitare il potere. Canossa, 1077": {
+    "titolo_seo": "Lotta per le investiture e Canossa: IRC classe terza",
+    "meta_description": "Lezione di IRC per la classe terza su Canossa 1077, lotta per le investiture, simonia e scontro tra Enrico IV e Gregorio VII, con fonti commentate.",
+    "sintesi": "La lezione ricostruisce l'episodio di Canossa (1077) risalendo alle sue cause: l'investitura dei vescovi da parte del re, la simonia, la riforma della Chiesa e lo scontro tra Gregorio VII ed Enrico IV. Gli studenti leggono fonti commentate, tra cui la lettera di Gregorio, il Dictatus papae e le due pagine bibliche (Rm 13, Mt 16), e riflettono su chi possa limitare il potere e su obbedienza e libertà della Chiesa.",
+    "argomenti": [
+      "Canossa 1077",
+      "Investitura e simonia",
+      "Gregorio VII ed Enrico IV",
+      "Dictatus papae",
+      "Rm 13 e Mt 16"
+    ],
+    "parole_chiave": [
+      "lezione Canossa 1077 religione",
+      "lotta per le investiture scuola superiore",
+      "Gregorio VII ed Enrico IV",
+      "simonia spiegata agli studenti",
+      "Dictatus papae lezione",
+      "IRC terza superiore materiali",
+      "rapporto tra Chiesa e potere politico Medioevo",
+      "Romani 13 e Matteo 16 potere"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5382,
+      "output": 492
+    },
+    "impronta": "fccd949d07d5c3f5"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino": {
     "titolo_seo": "Giubileo del 1300 e indulgenza: lezione IRC classe terza",
@@ -885,6 +1025,90 @@
     },
     "impronta": "54b4cb53b929d3e8"
   },
+  "4|Galileo, le prove e l'autorità|Che cosa accadde nel 1616 e nel 1633, e nel 1992": {
+    "titolo_seo": "Galileo: processo 1616 e 1633 sui documenti, IRC classe 4",
+    "meta_description": "Lezione di IRC per la classe quarta: sentenza del 1633, precetto e decreto del 1616, letti nei documenti per capire il rapporto tra prove e autorità.",
+    "sintesi": "La lezione ricostruisce i processi a Galileo partendo dalla sentenza e dall'abiura del 22 giugno 1633, per capire di che cosa fu davvero accusato. Gli studenti leggono i documenti del 1616: la qualifica dei teologi, il precetto, il decreto dell'Indice e il certificato di Bellarmino. Analizzano i tre strumenti con cui i teologi ragionavano (Concilio di Trento, fisica aristotelica, logica di Tommaso) e seguono la vicenda del Dialogo del 1632, fino alla convocazione a Roma.",
+    "argomenti": [
+      "Sentenza e abiura del 1633",
+      "Qualifica, precetto e decreto 1616",
+      "Bellarmino e Concilio di Trento",
+      "Il Dialogo e Urbano VIII",
+      "Lettura di fonti documentarie"
+    ],
+    "parole_chiave": [
+      "Galileo religione quarta superiore",
+      "lezione IRC Galileo processo",
+      "sentenza Galileo 1633 documenti",
+      "Galileo 1616 precetto Bellarmino",
+      "Galileo e Chiesa fede e scienza",
+      "materiali IRC secondo ciclo Galileo",
+      "decreto dell'Indice 1616 Copernico",
+      "Galileo abiura spiegazione didattica"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5371,
+      "output": 545
+    },
+    "impronta": "d50b80dc7db2fba4"
+  },
+  "4|Galileo, le prove e l'autorità|Come si vadia al cielo, la Bibbia insegna astronomia": {
+    "titolo_seo": "Galileo, Bibbia e astronomia: lettere 1615 IRC classe quarta",
+    "meta_description": "Lezione di IRC per la classe quarta su Galileo, Bibbia e astronomia: la lettera a Castelli, la risposta di Bellarmino e il verso di Giosuè.",
+    "sintesi": "La lezione ricostruisce la discussione tra Galileo e le autorità religiose a partire da una cena a Pisa nel 1613 e dal verso di Giosuè «Férmati, sole». Gli studenti leggono brani della lettera di Galileo a Castelli e della lettera di Bellarmino a Foscarini, seguono la vicenda fino al 1615 e confrontano i due modi di interpretare la Scrittura, distinguendo ipotesi e dimostrazione e riflettendo sul rapporto tra fede e scienza.",
+    "argomenti": [
+      "Galileo e il verso di Giosuè",
+      "Lettera a Benedetto Castelli",
+      "Lettera di Bellarmino a Foscarini",
+      "Interpretazione della Scrittura",
+      "Ipotesi e vera dimostrazione"
+    ],
+    "parole_chiave": [
+      "Galileo e la Bibbia lezione IRC",
+      "lettera di Galileo a Castelli",
+      "lettera di Bellarmino a Foscarini",
+      "Giosuè ferma il sole Galileo",
+      "rapporto fede e scienza religione superiori",
+      "Galileo Bellarmino salvare le apparenze",
+      "interpretazione della Bibbia Galileo",
+      "materiali IRC classe quarta Galileo"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5367,
+      "output": 533
+    },
+    "impronta": "4fdb9684ba268a8a"
+  },
+  "4|Galileo, le prove e l'autorità|Un'osservazione cambia tutto": {
+    "titolo_seo": "Galileo, prove e parallasse: Religione classe quarta",
+    "meta_description": "Lezione IRC per la classe quarta su Galileo: lune di Giove, fasi di Venere e parallasse per distinguere un dato favorevole da una prova.",
+    "sintesi": "La lezione apre l'unità su Galileo, le prove e l'autorità. Gli studenti seguono le osservazioni del 1610 (lune di Giove, fasi di Venere) e la lettera di Ramponi del 1611, che nota come il dato non dimostri compiutamente. Confrontano i sistemi di Tolomeo, Copernico e Tycho Brahe e capiscono la parallasse stellare. Imparano a distinguere un dato favorevole da un controllo che discrimina, fino alla misura di Bessel nel 1838 e alle osservazioni del satellite Gaia.",
+    "argomenti": [
+      "Osservazioni di Galileo nel 1610",
+      "Fasi di Venere",
+      "Tolomeo, Copernico e Tycho",
+      "Parallasse stellare",
+      "Dato favorevole e prova"
+    ],
+    "parole_chiave": [
+      "Galileo IRC classe quarta",
+      "lezione Galileo prove e autorità",
+      "Galileo lune di Giove fasi di Venere",
+      "parallasse stellare lezione religione",
+      "sistema di Tycho Brahe",
+      "differenza tra dato e prova",
+      "Galileo e Chiesa materiali didattici",
+      "UDA Galileo secondaria secondo grado"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5372,
+      "output": 503
+    },
+    "impronta": "8b56587e776f3f01"
+  },
   "4|Riformare una Chiesa, cambiare una cultura|Lutero a Worms": {
     "titolo_seo": "Lutero a Worms: coscienza e autorità, Religione classe 4",
     "meta_description": "Lezione di Religione per la classe quarta su Lutero alla dieta di Worms del 1521: coscienza, autorità della Chiesa, Magistero ed editto imperiale.",
@@ -1192,6 +1416,34 @@
       "output": 488
     },
     "impronta": "7055b01641e80ee7"
+  },
+  "5|Una Chiesa dentro la storia|La libertà vale anche per chi crede diversamente": {
+    "titolo_seo": "Libertà religiosa e Nostra aetate: IRC classe quinta",
+    "meta_description": "Lezione di Religione per la quinta superiore su Nostra aetate e Dignitatis humanae: dal Sillabo al Concilio Vaticano II, tra libertà e dialogo con gli ebrei.",
+    "sintesi": "La lezione ricostruisce come il Concilio Vaticano II sia giunto, nel 1965, alle dichiarazioni Nostra aetate e Dignitatis humanae. Gli studenti partono da due storie, quella del cardinale Josef Beran e quella dello storico Jules Isaac, leggono fonti e citazioni, ripercorrono la posizione ottocentesca del Sillabo e la distinzione tra tesi e ipotesi, e si interrogano sulla domanda guida: la libertà vale anche per chi crede diversamente?",
+    "argomenti": [
+      "Nostra aetate e Dignitatis humanae",
+      "Josef Beran e Jules Isaac",
+      "Sillabo, tesi e ipotesi",
+      "Libertà religiosa e Concilio",
+      "Insegnamento del disprezzo verso gli ebrei"
+    ],
+    "parole_chiave": [
+      "libertà religiosa Concilio Vaticano II lezione",
+      "Dignitatis humanae scuola superiore",
+      "Nostra aetate lezione IRC",
+      "Jules Isaac Giovanni XXIII",
+      "Sillabo Pio IX libertà di coscienza",
+      "religione quinta superiore Chiesa e storia",
+      "dialogo ebraico-cristiano materiali didattici",
+      "tesi e ipotesi Stato cattolico"
+    ],
+    "origine": "claude-sonnet-5-5",
+    "token": {
+      "input": 5361,
+      "output": 554
+    },
+    "impronta": "0b97b8ee58e9a5c9"
   },
   "5|Una Chiesa dentro la storia|Un papa può sbagliare, e un papa senza Stato. Il 1870": {
     "titolo_seo": "Infallibilità del papa e 1870: IRC classe quinta",
