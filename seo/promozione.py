@@ -39,6 +39,7 @@ import hashlib
 import json
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -46,6 +47,7 @@ import genera as g  # noqa: E402  (stesse letture dei dati delle pagine SEO)
 
 MODELLO = os.environ.get("PROMO_MODELLO", "claude-opus-5-5")
 VERSIONE = "2"                      # cambiala per far riscrivere tutti i testi (2: caroselli e redattore)
+PARALLELI = int(os.environ.get("PROMO_PARALLELI", "6"))   # lezioni scritte contemporaneamente
 CHIAVE_SITO = "_sito"               # la voce con il post di presentazione del sito
 COLORI_ANNO = {"1": "#FF7A59", "2": "#4FB0FF", "3": "#A78BFA", "4": "#FB7BB5", "5": "#FBBF24"}
 MASCOTTE = {"1": "1-semino", "2": "2-ichthy", "3": "3-navicella", "4": "4-bussolina", "5": "5-terra"}
@@ -125,11 +127,13 @@ o una domanda vera presa dal materiale, non con una formula generica;
 Se una parte è già ottima, lasciala com'è."""
 
 
-def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str) -> tuple:
-    """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta)."""
-    risposta = client.beta.messages.create(
+def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str,
+                  max_token: int = 16000) -> tuple:
+    """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta).
+    In streaming, così anche le risposte lunghe (i disegni) non vanno in timeout."""
+    with client.beta.messages.stream(
         model=MODELLO,
-        max_tokens=12000,
+        max_tokens=max_token,
         # Le istruzioni sono identiche per ogni post: le mettiamo in cache
         system=[{"type": "text", "text": sistema, "cache_control": {"type": "ephemeral"}}],
         output_config={"effort": sforzo, "format": {"type": "json_schema", "schema": schema}},
@@ -137,7 +141,8 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",
         messages=[{"role": "user", "content": messaggio}],
-    )
+    ) as flusso:
+        risposta = flusso.get_final_message()
     if risposta.stop_reason != "end_turn":
         raise RuntimeError(f"Risposta incompleta ({risposta.stop_reason})")
     testo_json = next((b.text for b in risposta.content if b.type == "text"), "")
@@ -212,28 +217,37 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
         lavori.append((k, testo + uda_desc,
                        messaggio_lezione(l, uda_desc, seo.get(k, {}).get("sintesi", ""), testo)))
 
-    nuove, tok_in, tok_out = 0, 0, 0
+    da_scrivere = []
     for k, base, messaggio in lavori:
-        messaggio = messaggio or base
         impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI).encode()).hexdigest()[:16]
         voce = cache.get(k)
         if voce and voce.get("bloccato"):
             continue
         if voce and voce.get("impronta") == impronta and not forza:
             continue
-        if not client:
-            continue       # i testi già scritti restano; quelli nuovi aspettano la chiave
+        if client:      # senza chiave i testi già scritti restano; quelli nuovi aspettano
+            da_scrivere.append((k, impronta, messaggio or base))
+
+    def scrivi(lavoro):
+        k, impronta, messaggio = lavoro
         try:
-            dati = scrivi_e_rivedi(client, ISTRUZIONI, messaggio, SCHEMA_POST)
+            return k, impronta, scrivi_e_rivedi(client, ISTRUZIONI, messaggio, SCHEMA_POST), None
         except Exception as err:   # un errore su una lezione non blocca le altre
-            print(f"  ✗ {k}: {err}")
-            continue
-        dati["impronta"] = impronta
-        cache[k] = dati
-        nuove += 1
-        tok_in += dati["token"]["input"]
-        tok_out += dati["token"]["output"]
-        print(f"  ✓ {k}")
+            return k, impronta, None, err
+
+    nuove, tok_in, tok_out = 0, 0, 0
+    # più lezioni insieme: con decine di lezioni da riscrivere si finisce in minuti, non in ore
+    with ThreadPoolExecutor(max_workers=PARALLELI) as gruppo:
+        for k, impronta, dati, err in gruppo.map(scrivi, da_scrivere):
+            if err:
+                print(f"  ✗ {k}: {err}")
+                continue
+            dati["impronta"] = impronta
+            cache[k] = dati
+            nuove += 1
+            tok_in += dati["token"]["input"]
+            tok_out += dati["token"]["output"]
+            print(f"  ✓ {k}", flush=True)
 
     # Le lezioni eliminate dal pannello spariscono anche dal kit
     valide = {CHIAVE_SITO} | {g.chiave_lezione(l) for l in lezioni}
@@ -269,8 +283,15 @@ def url_lezione(l: dict) -> str:
     return f"{g.URL_SITO}/lezioni/{l.get('anno')}/{g.slug(l.get('uda', ''))}/{g.slug(l['titolo'])}/"
 
 
+def illustrazioni(chiave: str) -> dict:
+    """I disegni delle schede del carosello (seo/illustrazioni.py), se ci sono."""
+    p = g.RADICE / "data" / "illustrazioni.json"
+    return (json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}).get(chiave, {})
+
+
 def nome_cartolina(chiave: str, titolo: str, testi: dict) -> str:
-    contenuto = testi.get("frase_cartolina", "") + json.dumps(testi.get("carosello", []), ensure_ascii=False)
+    contenuto = (testi.get("frase_cartolina", "") + json.dumps(testi.get("carosello", []), ensure_ascii=False)
+                 + illustrazioni(chiave).get("impronta", "") + "-".join(illustrazioni(chiave).get("file", [])))
     impronta = hashlib.sha256((chiave + titolo + contenuto).encode()).hexdigest()[:8]
     return f"{g.slug(chiave.split('|')[0] + '-' + titolo)[:60]}-{impronta}.png"
 
@@ -431,6 +452,8 @@ nei gruppi di colleghi, senza mandare lo stesso messaggio a troppi gruppi lo ste
                "facebook": testo_completo(v, "facebook"),
                "instagram": testo_completo(v, "instagram"),
                "carosello": v["testi"].get("carosello", []),
+               "illustrazioni": [f"promozione/illustrazioni/{f}" if f else ""
+                                 for f in illustrazioni(v["chiave"]).get("file", [])],
                "immagini": immagini_post(v["cartolina"], v["testi"])} for v in voci]
     (cartella / "cartoline.json").write_text(
         json.dumps(elenco, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

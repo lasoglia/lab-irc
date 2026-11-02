@@ -61,6 +61,17 @@ def chiama(metodo: str, percorso: str, **parametri) -> dict:
         raise ErroreMeta(msg) from None
 
 
+def carica_video(indirizzo: str, chiave: str, video: str) -> dict:
+    """Facebook Reels: il video lo scarica Meta dal sito (rupload, con l'indirizzo nell'intestazione)."""
+    richiesta = urllib.request.Request(indirizzo, data=b"", method="POST",
+                                       headers={"Authorization": f"OAuth {chiave}", "file_url": video})
+    try:
+        with urllib.request.urlopen(richiesta, timeout=300) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as err:
+        raise ErroreMeta(f"caricamento del video: {err.read()[:300]!r}") from None
+
+
 def online(url: str) -> bool:
     try:
         with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=20) as r:
