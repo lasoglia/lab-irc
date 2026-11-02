@@ -1,0 +1,144 @@
+name: Social · piano della settimana
+# Ogni domenica gli agenti scelgono le lezioni di lunedì, mercoledì e venerdì e controllano
+# anche le strisce del prof (martedì e sabato) e lo speciale della domenica.
+# Claude prepara solo file: gli script li validano e li salvano. Il risultato arriva
+# come Issue con etichetta «piano», con l'email di notifica di GitHub. Per intervenire
+# basta commentare l'Issue scrivendo @claude e la richiesta.
+#
+# Credenziale: se esiste il segreto CLAUDE_CODE_OAUTH_TOKEN si usa il piano Claude;
+# altrimenti ANTHROPIC_API_KEY, con i crediti API dell'organizzazione collegata.
+
+on:
+  schedule:
+    - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate)
+  workflow_dispatch: {}
+
+concurrency:
+  group: social-agenti
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+  CLAUDE_CODE_VERSIONE: 2.1.316
+
+jobs:
+  piano:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - name: Prepara Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Raccogli le metriche
+        continue-on-error: true
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_PAGINA_ID: '1450849821438605'
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
+        run: python seo/social_metriche.py
+
+      - name: Prepara il quadro per gli agenti
+        run: |
+          pip install --quiet pypdf
+          python seo/social_stato.py
+
+      - name: Installa Claude Code
+        run: npm install --global --silent "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSIONE"
+
+      - name: Lavoro degli agenti
+        id: agenti
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: bash seo/social_claude.sh "/social-settimana" 3 40
+
+      - name: Valida il lavoro
+        id: valida
+        if: steps.agenti.outcome == 'success'
+        continue-on-error: true
+        run: python seo/social_valida.py --applica
+
+      - name: Aggiorna kit e cartoline
+        if: steps.valida.outcome == 'success'
+        run: |
+          python seo/promozione.py --senza-ia
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/cartoline.mjs
+
+      - name: Salva
+        if: always()
+        env:
+          VALIDAZIONE: ${{ steps.valida.outcome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/social-metriche.json 2>/dev/null || true
+          if [ "$VALIDAZIONE" = "success" ]; then
+            git add data/social-coda.json data/promozione.json promozione
+          fi
+          if git diff --cached --quiet; then
+            echo "Niente di nuovo da salvare."
+          else
+            git commit -m "Social: piano della settimana"
+            salvato=no
+            for prova in 1 2 3; do
+              git pull --rebase --quiet --autostash origin "$RAMO" && git push origin "HEAD:$RAMO" && { salvato=si; break; }
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+            [ "$salvato" = si ] || { echo "Non sono riuscito a salvare su $RAMO."; exit 1; }
+          fi
+
+      - name: Avvisa con un Issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AGENTI: ${{ steps.agenti.outcome }}
+          VALIDAZIONE: ${{ steps.valida.outcome }}
+        run: |
+          gh label create piano --color 8B5CF6 --force >/dev/null
+          gh label create social --color 22D3EE --force >/dev/null
+          for numero in $(gh issue list --label piano --state open --json number --jq '.[].number'); do
+            gh issue close "$numero" --comment "Sostituito dal piano più recente." >/dev/null
+          done
+          {
+            if [ "$AGENTI" = "success" ] && [ "$VALIDAZIONE" = "success" ]; then
+              cat .social/rapporto.md 2>/dev/null || echo "Gli agenti non hanno scritto il rapporto."
+            else
+              echo "## Il piano non è stato salvato"
+              echo
+              echo "Senza un piano valido i post nuovi restano fermi: è voluto, meglio un post in meno che uno non controllato."
+              echo "Agenti: $AGENTI. Validazione: $VALIDAZIONE."
+              echo
+              cat .social/validazione.md 2>/dev/null || true
+              echo
+              echo "Dettagli: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            fi
+            echo
+            echo "---"
+            echo "Costo stimato: $(cat .social/costo.txt 2>/dev/null || echo '?') \$. Per intervenire commenta con @claude e la richiesta."
+          } > corpo-issue.md
+          cat corpo-issue.md >> "$GITHUB_STEP_SUMMARY"
+          gh issue create --title "Social: piano del $(date +%d/%m/%Y)" --label piano --label social --body-file corpo-issue.md
+          rm -f corpo-issue.md
+
+      - name: Segnala l'errore
+        if: steps.agenti.outcome != 'success' || steps.valida.outcome != 'success'
+        run: |
+          echo "Il piano della settimana non è stato salvato."
+          exit 1

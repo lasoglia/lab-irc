@@ -1,21 +1,35 @@
 name: Social · post automatico
-# Due volte a settimana pubblica il prossimo post del kit social, uno alla
-# volta e nell'ordine consigliato:
-#  - sul canale Telegram (seo/telegram.py), con i segreti TELEGRAM_BOT_TOKEN e TELEGRAM_CANALE;
-#  - sulla Pagina Facebook e su Instagram (seo/meta.py), con il segreto META_TOKEN.
-# Finché un segreto manca, quel canale viene saltato senza errori.
-# Il pulsante «Run workflow» pubblica subito il prossimo post (si può scegliere su quali canali).
+# Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py):
+#   lunedì, mercoledì, venerdì   una lezione, con il carosello
+#   martedì, sabato              «Il prof del Lab», una striscia a fumetti
+#   domenica                     «La domenica del Lab»
+#   giovedì                      riposo
+# Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
+# Prima di pubblicare prepara in anticipo le rubriche dei giorni seguenti
+# (seo/rubriche.py, con Claude) e le loro immagini (seo/cartoline.mjs).
+# Segreti: ANTHROPIC_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CANALE, META_TOKEN.
+# Il pulsante «Run workflow» permette di scegliere coda e canali, o di
+# aggiornare la foto del canale Telegram con l'avatar del prof.
 
 on:
   schedule:
-    - cron: '47 15 * * 1,4'   # lunedì e giovedì alle 15:47 UTC (17:47 d'estate, 16:47 d'inverno)
+    - cron: '47 15 * * *'   # ogni giorno alle 15:47 UTC (17:47 d'estate, 16:47 d'inverno)
   workflow_dispatch:
     inputs:
+      coda:
+        description: 'Che cosa pubblicare (oggi = il calendario)'
+        type: choice
+        options: [oggi, lezioni, prof, domenica, nulla]
+        default: oggi
       canali:
         description: 'Dove pubblicare'
         type: choice
         options: [tutti, telegram, facebook-instagram]
         default: tutti
+      foto_profilo:
+        description: 'Metti l''avatar del prof come foto del canale Telegram'
+        type: boolean
+        default: false
 
 concurrency:
   group: telegram-kit-social
@@ -24,6 +38,9 @@ concurrency:
 permissions:
   contents: write
 
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
 jobs:
   pubblica:
     runs-on: ubuntu-latest
@@ -31,46 +48,67 @@ jobs:
       - name: Scarica il sito
         uses: actions/checkout@v4
         with:
-          ref: claude/lab-irc-exam-platform-v2-712y8s
+          ref: ${{ env.RAMO }}
 
       - name: Prepara Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Pubblica su Telegram
-        if: github.event_name == 'schedule' || inputs.canali != 'facebook-instagram'
+      - name: Prepara le rubriche dei prossimi giorni
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install --quiet anthropic pypdf
+          python seo/rubriche.py
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/cartoline.mjs
+
+      - name: Foto del canale Telegram
+        if: inputs.foto_profilo
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
-        run: python seo/telegram.py
+        run: python seo/pubblica.py --foto-profilo assets/avatar/sorriso.png
 
-      - name: Pubblica su Facebook e Instagram
-        if: github.event_name == 'schedule' || inputs.canali != 'telegram'
+      - name: Pubblica il post del giorno
+        if: inputs.coda != 'nulla'
         continue-on-error: true
         env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
           META_TOKEN: ${{ secrets.META_TOKEN }}
           META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
-        run: python seo/meta.py
+          CODA: ${{ inputs.coda }}
+          CANALI: ${{ inputs.canali }}
+        run: |
+          argomenti=""
+          case "$CODA" in lezioni|prof|domenica) argomenti="--coda $CODA";; esac
+          case "$CANALI" in
+            telegram) argomenti="$argomenti --canali telegram";;
+            facebook-instagram) argomenti="$argomenti --canali facebook,instagram";;
+          esac
+          python seo/pubblica.py $argomenti
 
-      - name: Salva il registro dei post usciti
+      - name: Salva rubriche, immagini e registro dei post usciti
         if: always()
         run: |
-          pip install --quiet pypdf
           # aggiorna nella pagina del kit la scritta «pubblicato in automatico»
           python seo/promozione.py --senza-ia
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/telegram.json data/meta.json promozione/index.html
+          git add data/telegram.json data/meta.json data/rubriche.json promozione
           if git diff --cached --quiet; then
             echo "Niente di nuovo da salvare."
           else
-            git commit -m "Social: pubblicato un post del kit"
-            # se nel frattempo la sincronizzazione ha salvato qualcosa, ci si mette in coda
+            git commit -m "Social: post del giorno e rubriche dei prossimi giorni"
+            # se nel frattempo un'altra Action ha salvato qualcosa, ci si mette in coda
             for prova in 1 2 3; do
-              git pull --rebase --quiet origin claude/lab-irc-exam-platform-v2-712y8s && \
-                git push origin HEAD:claude/lab-irc-exam-platform-v2-712y8s && break
+              git pull --rebase --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
               sleep 10
             done
           fi
