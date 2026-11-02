@@ -2,6 +2,9 @@
   "aggiornata": "2026-11-02",
   "pausa": false,
   "solo_coda": true,
-  "coda": [],
+  "coda": [
+    {"chiave": "prof-001", "quando": "2026-11-03", "esito": "approvato", "motivo": "Striscia sull'agnostico: verificatore e guardiano approvano."},
+    {"chiave": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie", "quando": "2026-11-06", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (Cupola e ascesa, tolta un'attività non presente nella lezione)."}
+  ],
   "escluse": []
 }
