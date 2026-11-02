@@ -45,7 +45,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402  (stesse letture dei dati delle pagine SEO)
 
 MODELLO = os.environ.get("PROMO_MODELLO", "claude-opus-5-5")
-VERSIONE = "1"                      # cambiala per far riscrivere tutti i testi
+VERSIONE = "2"                      # cambiala per far riscrivere tutti i testi (2: caroselli e redattore)
 CHIAVE_SITO = "_sito"               # la voce con il post di presentazione del sito
 COLORI_ANNO = {"1": "#FF7A59", "2": "#4FB0FF", "3": "#A78BFA", "4": "#FB7BB5", "5": "#FBBF24"}
 MASCOTTE = {"1": "1-semino", "2": "2-ichthy", "3": "3-navicella", "4": "4-bussolina", "5": "5-terra"}
@@ -63,8 +63,12 @@ SCHEMA_POST = {
         "hashtag": {"type": "array", "items": {"type": "string"}},
         "whatsapp": {"type": "string"},
         "telegram": {"type": "string"},
+        "carosello": {"type": "array", "items": {
+            "type": "object",
+            "properties": {"titolo": {"type": "string"}, "testo": {"type": "string"}},
+            "required": ["titolo", "testo"], "additionalProperties": False}},
     },
-    "required": ["frase_cartolina", "facebook", "instagram", "hashtag", "whatsapp", "telegram"],
+    "required": ["frase_cartolina", "facebook", "instagram", "hashtag", "whatsapp", "telegram", "carosello"],
     "additionalProperties": False,
 }
 
@@ -84,12 +88,18 @@ lezione e come la si può usare in classe. Al massimo due emoji.
 - instagram: 500-1000 caratteri, didascalia per Instagram. Più breve e visiva, con \
 paragrafi corti. Chiude invitando a trovare il link nella bio. Al massimo tre emoji. \
 Senza hashtag (vanno nel campo apposito).
-- hashtag: da 8 a 14 hashtag in italiano, senza il simbolo #, senza spazi; sempre \
+- hashtag: da 3 a 5 hashtag in italiano, senza il simbolo #, senza spazi; sempre \
 religionecattolica e irc, poi l'argomento e la classe (es. classeprima).
 - whatsapp: 200-400 caratteri, messaggio da collega a collega per un gruppo di docenti. \
 Tono diretto e cordiale, in prima persona («ho preparato…»). Al massimo un'emoji.
 - telegram: 300-600 caratteri, per il canale Telegram del Lab IRC. Una riga iniziale \
 che fa da titolo, poi due o tre frasi sul contenuto. Al massimo due emoji.
+- carosello: esattamente 5 schede per un carosello di Instagram, da sfogliare sul \
+telefono. Ogni scheda ha un titolo (massimo 40 caratteri) e un testo (massimo 190 \
+caratteri) che si regge da solo. 1) La domanda da cui parte la lezione. 2, 3, 4) Le \
+tre idee chiave, una per scheda, concrete. 5) Come la si usa in classe (che cosa fanno \
+gli studenti). Per la presentazione del sito: che cos'è il Lab, che cosa c'è, per chi è, \
+come è fatto, come si usa. Niente emoji nelle schede.
 
 Regole vincolanti:
 - Usa solo ciò che il testo contiene davvero: niente contenuti, autori, citazioni o \
@@ -102,14 +112,27 @@ punti esclamativi a raffica: registro sobrio, caldo e preciso, da insegnante.
 - Italiano corretto, con accenti e apostrofi normali."""
 
 
-def chiedi_a_claude(client, messaggio: str) -> dict:
+REDATTORE = """Sei il caporedattore dei social del Lab IRC. Ricevi le istruzioni date \
+all'autore, il materiale di partenza e la BOZZA dei post in JSON. Rileggila con occhio \
+severo e restituisci la versione definitiva, nello stesso formato JSON:
+- attacco: la prima riga di ogni post deve fermare chi scorre, con un'immagine concreta \
+o una domanda vera presa dal materiale, non con una formula generica;
+- fedeltà: togli tutto ciò che il materiale non contiene (autori, citazioni, attività);
+- chiarezza: frasi brevi, parole semplici, niente gergo da addetti ai lavori;
+- ritmo: niente ripetizioni tra un canale e l'altro, ognuno con il suo tono;
+- carosello e testi brevi: ogni scheda si legge in tre secondi sul telefono;
+- rispetta tutte le lunghezze e le regole delle istruzioni.
+Se una parte è già ottima, lasciala com'è."""
+
+
+def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str) -> tuple:
+    """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta)."""
     risposta = client.beta.messages.create(
         model=MODELLO,
-        max_tokens=8000,
-        # Le istruzioni sono identiche per ogni lezione: le mettiamo in cache
-        system=[{"type": "text", "text": ISTRUZIONI, "cache_control": {"type": "ephemeral"}}],
-        output_config={"effort": "medium",
-                       "format": {"type": "json_schema", "schema": SCHEMA_POST}},
+        max_tokens=12000,
+        # Le istruzioni sono identiche per ogni post: le mettiamo in cache
+        system=[{"type": "text", "text": sistema, "cache_control": {"type": "ephemeral"}}],
+        output_config={"effort": sforzo, "format": {"type": "json_schema", "schema": schema}},
         # Se il modello rifiuta per un falso allarme, il server riprova su un altro modello
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",
@@ -118,11 +141,24 @@ def chiedi_a_claude(client, messaggio: str) -> dict:
     if risposta.stop_reason != "end_turn":
         raise RuntimeError(f"Risposta incompleta ({risposta.stop_reason})")
     testo_json = next((b.text for b in risposta.content if b.type == "text"), "")
-    dati = json.loads(testo_json)
-    dati["hashtag"] = [h.lstrip("#").replace(" ", "") for h in dati.get("hashtag", []) if h.strip("# ")]
-    dati["origine"] = risposta.model
-    dati["token"] = {"input": risposta.usage.input_tokens, "output": risposta.usage.output_tokens}
-    return dati
+    return json.loads(testo_json), risposta
+
+
+def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict) -> dict:
+    """L'autore scrive la bozza, il caporedattore la rilegge e la migliora."""
+    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "medium")
+    finale, r2 = chiama_claude(
+        client, REDATTORE,
+        f"<istruzioni_autore>\n{istruzioni}\n</istruzioni_autore>\n\n"
+        f"<materiale>\n{messaggio}\n</materiale>\n\n"
+        f"<bozza>\n{json.dumps(bozza, ensure_ascii=False, indent=1)}\n</bozza>",
+        schema, "high")
+    if "hashtag" in finale:
+        finale["hashtag"] = [h.lstrip("#").replace(" ", "") for h in finale["hashtag"] if h.strip("# ")]
+    finale["origine"] = r2.model
+    finale["token"] = {"input": r1.usage.input_tokens + r2.usage.input_tokens,
+                       "output": r1.usage.output_tokens + r2.usage.output_tokens}
+    return finale
 
 
 def messaggio_lezione(l: dict, uda_desc: str, sintesi: str, testo: str) -> str:
@@ -188,7 +224,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
         if not client:
             continue       # i testi già scritti restano; quelli nuovi aspettano la chiave
         try:
-            dati = chiedi_a_claude(client, messaggio)
+            dati = scrivi_e_rivedi(client, ISTRUZIONI, messaggio, SCHEMA_POST)
         except Exception as err:   # un errore su una lezione non blocca le altre
             print(f"  ✗ {k}: {err}")
             continue
@@ -233,9 +269,17 @@ def url_lezione(l: dict) -> str:
     return f"{g.URL_SITO}/lezioni/{l.get('anno')}/{g.slug(l.get('uda', ''))}/{g.slug(l['titolo'])}/"
 
 
-def nome_cartolina(chiave: str, titolo: str, frase: str) -> str:
-    impronta = hashlib.sha256((chiave + titolo + frase).encode()).hexdigest()[:8]
+def nome_cartolina(chiave: str, titolo: str, testi: dict) -> str:
+    contenuto = testi.get("frase_cartolina", "") + json.dumps(testi.get("carosello", []), ensure_ascii=False)
+    impronta = hashlib.sha256((chiave + titolo + contenuto).encode()).hexdigest()[:8]
     return f"{g.slug(chiave.split('|')[0] + '-' + titolo)[:60]}-{impronta}.png"
+
+
+def immagini_post(copertina: str, testi: dict) -> list[str]:
+    """La copertina e, se c'è il carosello, le sue schede più quella finale con l'invito al sito."""
+    base = copertina.removesuffix(".png")
+    n = len(testi.get("carosello", []))
+    return [copertina] + ([f"{base}-{i}.png" for i in range(2, n + 3)] if n else [])
 
 
 def voci_kit(sito, uda, lezioni, testi) -> list[dict]:
@@ -245,7 +289,7 @@ def voci_kit(sito, uda, lezioni, testi) -> list[dict]:
     if t:
         voci.append({"chiave": CHIAVE_SITO, "anno": "", "titolo": "Presentazione del Lab IRC",
                      "uda": "", "url": g.URL_SITO + "/", "testi": t,
-                     "cartolina": nome_cartolina(CHIAVE_SITO, "Lab IRC", t["frase_cartolina"])})
+                     "cartolina": nome_cartolina(CHIAVE_SITO, "Lab IRC", t)})
     for l in ordine_pubblicazione(uda, lezioni):
         k = g.chiave_lezione(l)
         t = testi.get(k)
@@ -253,7 +297,7 @@ def voci_kit(sito, uda, lezioni, testi) -> list[dict]:
             continue
         voci.append({"chiave": k, "anno": str(l.get("anno")), "titolo": l["titolo"],
                      "uda": l.get("uda", ""), "url": url_lezione(l), "testi": t,
-                     "cartolina": nome_cartolina(k, l["titolo"], t["frase_cartolina"])})
+                     "cartolina": nome_cartolina(k, l["titolo"], t)})
     return voci
 
 
@@ -261,7 +305,7 @@ def testo_completo(voce: dict, canale: str) -> str:
     """Il testo da copiare, con il link aggiunto dal sistema."""
     t = voce["testi"]
     if canale == "instagram":
-        return t["instagram"].strip() + "\n\n" + " ".join("#" + h for h in t.get("hashtag", []))
+        return t["instagram"].strip() + "\n\n" + " ".join("#" + h for h in t.get("hashtag", [])[:5])
     return t[canale].strip() + "\n\n" + voce["url"]
 
 
@@ -284,6 +328,8 @@ pre{white-space:pre-wrap;font:15px/1.55 var(--lab-font-body);background:var(--la
 .azioni button,.azioni a{font:600 14px var(--lab-font-body);border:1px solid var(--lab-line);background:var(--lab-bg);color:var(--lab-ink);border-radius:10px;padding:7px 14px;cursor:pointer;text-decoration:none}
 .azioni button.fatto{border-color:var(--lab-ciano);color:var(--lab-ciano)}
 .tg{font-size:13.5px;color:var(--lab-muted)}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:10px 0 6px}
+.strip img{width:120px;height:auto;border-radius:8px;border:1px solid var(--lab-line-soft);display:block}
 """
 
 CANALI = [("facebook", "Pagina Facebook"), ("instagram", "Instagram"),
@@ -322,13 +368,20 @@ def scrivi_pagina(voci: list[dict]):
                 usciti.append(f"{nome} il {meta[v['chiave']][canale]}")
         stato_tg = (f'<p class="tg">Pubblicato in automatico: {e(", ".join(usciti))}.</p>'
                     if usciti else "")
+        schede = immagini_post(v["cartolina"], v["testi"])
+        carosello = ("" if len(schede) < 2 else
+                     '<details><summary>Carosello per Instagram (' + str(len(schede)) + ' immagini)</summary>'
+                     '<div class="strip">' + "".join(
+                         f'<a href="cartoline/{e(f)}" download><img src="cartoline/{e(f)}" alt="Scheda {i}" '
+                         f'loading="lazy" width="120" height="150"></a>' for i, f in enumerate(schede, start=1))
+                     + '</div></details>')
         blocchi.append(f"""<article class="post">
 <header><img src="cartoline/{e(v['cartolina'])}" alt="" loading="lazy" width="96" height="120">
 <div><div class="num" style="color:{colore}">Post {n} di {len(voci)}{e(classe)}</div>
 <h2>{e(v['titolo'])}</h2><div class="uda">{e(v['uda'])}</div>
 <div class="azioni" style="margin-top:10px"><a href="cartoline/{e(v['cartolina'])}" download>Scarica la cartolina</a>
 <a href="{e(v['url'])}">Apri la pagina</a></div></div></header>
-{''.join(sezioni)}{stato_tg}
+{carosello}{''.join(sezioni)}{stato_tg}
 </article>""")
 
     corpo = f"""<nav class="bc"><a href="../">Lab IRC</a> › Kit social</nav>
@@ -376,7 +429,9 @@ nei gruppi di colleghi, senza mandare lo stesso messaggio a troppi gruppi lo ste
                "mascotte": MASCOTTE.get(v["anno"], ""), "url": v["url"],
                "telegram": testo_completo(v, "telegram"),
                "facebook": testo_completo(v, "facebook"),
-               "instagram": testo_completo(v, "instagram")} for v in voci]
+               "instagram": testo_completo(v, "instagram"),
+               "carosello": v["testi"].get("carosello", []),
+               "immagini": immagini_post(v["cartolina"], v["testi"])} for v in voci]
     (cartella / "cartoline.json").write_text(
         json.dumps(elenco, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return len(voci)
