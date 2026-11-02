@@ -43,7 +43,7 @@
   },
   "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie": {
     "frase_cartolina": "Muro occidentale, Santo Sepolcro, Cupola della Roccia: tre fedi, una città",
-    "facebook": "Se una didascalia chiamasse il Muro occidentale «una chiesa ebraica», i vostri studenti saprebbero dire che cosa correggere e perché?\n\nLa lezione «Gerusalemme, una città di memorie», per la classe prima, aiuta gli studenti a riconoscere il Muro occidentale, il Santo Sepolcro e la Cupola della Roccia. Ne distinguono il significato e li collocano in uno schema della Città Vecchia. Trovano spazio il Salmo 122, la differenza tra ciò che studia l'archeologia e ciò che afferma la fede sulla risurrezione, la precisione dei nomi: Cupola della Roccia e moschea al-Aqsa non sono lo stesso edificio.\n\nNell'ultima parte, a partire da un episodio dei Simpson ambientato in Terra Santa, si impara a controllare i fatti su fonti adatte. Chiudono quattro domande di studio, utili anche per avviare una discussione in classe.",
+    "facebook": "Se una didascalia chiamasse il Muro occidentale «una chiesa ebraica», i vostri studenti saprebbero dire che cosa correggere e perché?\n\nLa lezione «Gerusalemme, una città di memorie», per la classe prima, aiuta gli studenti a riconoscere il Muro occidentale, il Santo Sepolcro e la Cupola della Roccia. Ne distinguono il significato e li collocano in uno schema della Città Vecchia. Trovano spazio il Salmo 122, la differenza tra ciò che studia l'archeologia e ciò che afferma la fede sulla risurrezione, la precisione dei nomi: Cupola della Roccia e moschea al-Aqsa non sono lo stesso edificio.\n\nNell'ultima parte, a partire da un episodio dei Simpson ambientato in Terra Santa, si impara a controllare i fatti su fonti adatte. Chiudono quattro domande di studio.",
     "instagram": "Una pietra, una tomba, una roccia. 🕊️\n\nA Gerusalemme, nella Città Vecchia, il Muro occidentale, il Santo Sepolcro e la Cupola della Roccia sono a pochi passi. Ma ogni comunità li guarda in modo diverso.\n\nPer l'ebraismo, il Muro richiama il Tempio distrutto nel 70 d.C.\nPer i cristiani, il Sepolcro custodisce la memoria della morte e risurrezione di Gesù.\nPer l'islam, la Cupola racchiude la roccia legata all'ascesa di Muhammad al cielo.\n\nUna lezione per la classe prima: riconoscere i luoghi, chiamarli con il nome giusto, capire le fedi senza confonderle.\n\nE una domanda in più: che cosa resta vero quando un luogo santo finisce in una parodia? 📖\n\nIl link alla lezione è nella bio.",
     "hashtag": [
       "religionecattolica",
@@ -53,7 +53,7 @@
       "luoghisanti"
     ],
     "whatsapp": "Ciao a tutti, ho preparato una lezione per le prime su Gerusalemme come città di memorie: Muro occidentale, Santo Sepolcro e Cupola della Roccia, con uno schema della Città Vecchia da completare. C'è anche una parte sul controllo dei fatti a partire da un episodio dei Simpson, e quattro domande di studio. Se vi serve, è online e gratuita 🙂",
-    "telegram": "Gerusalemme, una città di memorie – classe prima 🕊️\n\nLa lezione presenta tre luoghi della Città Vecchia: il Muro occidentale, legato al Tempio; il Santo Sepolcro, memoria della Pasqua; la Cupola della Roccia, legata al viaggio notturno di Muhammad. Gli studenti li collocano in uno schema e ne distinguono il significato. Nella parte finale imparano a verificare i fatti con fonti adatte, partendo da una parodia televisiva, e rispondono a quattro domande di studio.",
+    "telegram": "Gerusalemme, una città di memorie – classe prima 🕊️\n\nLa lezione presenta tre luoghi della Città Vecchia: il Muro occidentale, legato al Tempio; il Santo Sepolcro, memoria della Pasqua; la Cupola della Roccia, legata dalla tradizione islamica all'ascesa di Muhammad al cielo. Gli studenti li collocano in uno schema e ne distinguono il significato. Nella parte finale imparano a verificare i fatti con fonti adatte, partendo da una parodia televisiva, e rispondono a quattro domande di studio.",
     "carosello": [
       {
         "titolo": "Perché tre fedi e una sola città?",
@@ -81,7 +81,8 @@
       "input": 13614,
       "output": 7646
     },
-    "impronta": "a7013e48d268af04"
+    "impronta": "a7013e48d268af04",
+    "bloccato": true
   },
   "1|Israele, una promessa, una storia, fino a oggi|Il male subito ha l'ultima parola": {
     "frase_cartolina": "Giuseppe e i suoi fratelli: invidia, colpa e perdono in Genesi 37–50",
