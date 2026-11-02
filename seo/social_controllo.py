@@ -37,7 +37,7 @@ def carica(nome: str) -> dict:
 def valuta(giorno: str, telegram: dict, meta: dict, stato_coda: dict | None) -> tuple[str, list[str]]:
     """(esito, canali mancanti). Esiti: ok, non-previsto, in-pausa, mancante."""
     settimana = dt.date.fromisoformat(giorno).weekday()
-    if settimana == 3:   # il giovedì è giorno di riposo (seo/pubblica.py)
+    if settimana == 3:   # il giovedì c'è solo il reel automatico, fuori dalla coda (seo/reel.py)
         return "non-previsto", []
     if stato_coda is not None and stato_coda.get("pausa"):
         return "in-pausa", []

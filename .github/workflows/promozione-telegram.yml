@@ -3,7 +3,8 @@ name: Social · post automatico
 #   lunedì, mercoledì, venerdì   una lezione, con il carosello
 #   martedì, sabato              «Il prof del Lab», una striscia a fumetti
 #   domenica                     «La domenica del Lab»
-#   giovedì                      riposo
+#   giovedì                      il reel: una lezione già uscita, in 30 secondi
+# Dopo ogni post su Facebook e Instagram esce anche la sua storia.
 # Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
 # Prima di pubblicare prepara in anticipo le rubriche dei giorni seguenti
 # (seo/rubriche.py, con Claude) e le loro immagini (seo/cartoline.mjs).
@@ -19,7 +20,7 @@ on:
       coda:
         description: 'Che cosa pubblicare (oggi = il calendario)'
         type: choice
-        options: [oggi, lezioni, prof, domenica, nulla]
+        options: [oggi, lezioni, prof, domenica, reel, nulla]
         default: oggi
       canali:
         description: 'Dove pubblicare'
@@ -67,6 +68,30 @@ jobs:
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
             node seo/cartoline.mjs
 
+      - name: Prepara il reel del giovedì
+        # il copione lo scrive Claude, il video lo monta seo/reel.mjs; va salvato sul
+        # sito prima di pubblicarlo, perché Instagram e Facebook lo scaricano da lì
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CODA: ${{ inputs.coda }}
+        run: |
+          if [ "$CODA" = "reel" ]; then python seo/reel.py --sempre; else python seo/reel.py; fi
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/reel.mjs
+          for f in promozione/reel.json promozione/reel data/reel.json; do if [ -e "$f" ]; then git add -A "$f"; fi; done
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "Social: il reel della settimana"
+            for prova in 1 2 3; do
+              git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
+              sleep 10
+            done
+          fi
+
       - name: Foto del canale Telegram
         if: inputs.foto_profilo
         continue-on-error: true
@@ -87,7 +112,7 @@ jobs:
           CANALI: ${{ inputs.canali }}
         run: |
           argomenti=""
-          case "$CODA" in lezioni|prof|domenica) argomenti="--coda $CODA";; esac
+          case "$CODA" in lezioni|prof|domenica|reel) argomenti="--coda $CODA";; esac
           case "$CANALI" in
             telegram) argomenti="$argomenti --canali telegram";;
             facebook-instagram) argomenti="$argomenti --canali facebook,instagram";;
@@ -102,6 +127,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/telegram.json data/meta.json data/rubriche.json promozione
+          if [ -e data/reel.json ]; then git add data/reel.json; fi
           if git diff --cached --quiet; then
             echo "Niente di nuovo da salvare."
           else
