@@ -125,11 +125,13 @@ o una domanda vera presa dal materiale, non con una formula generica;
 Se una parte è già ottima, lasciala com'è."""
 
 
-def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str) -> tuple:
-    """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta)."""
-    risposta = client.beta.messages.create(
+def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str,
+                  max_token: int = 16000) -> tuple:
+    """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta).
+    In streaming, così anche le risposte lunghe (i disegni) non vanno in timeout."""
+    with client.beta.messages.stream(
         model=MODELLO,
-        max_tokens=12000,
+        max_tokens=max_token,
         # Le istruzioni sono identiche per ogni post: le mettiamo in cache
         system=[{"type": "text", "text": sistema, "cache_control": {"type": "ephemeral"}}],
         output_config={"effort": sforzo, "format": {"type": "json_schema", "schema": schema}},
@@ -137,7 +139,8 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
         betas=["server-side-fallback-2026-07-01"],
         fallbacks="default",
         messages=[{"role": "user", "content": messaggio}],
-    )
+    ) as flusso:
+        risposta = flusso.get_final_message()
     if risposta.stop_reason != "end_turn":
         raise RuntimeError(f"Risposta incompleta ({risposta.stop_reason})")
     testo_json = next((b.text for b in risposta.content if b.type == "text"), "")
@@ -269,8 +272,15 @@ def url_lezione(l: dict) -> str:
     return f"{g.URL_SITO}/lezioni/{l.get('anno')}/{g.slug(l.get('uda', ''))}/{g.slug(l['titolo'])}/"
 
 
+def illustrazioni(chiave: str) -> dict:
+    """I disegni delle schede del carosello (seo/illustrazioni.py), se ci sono."""
+    p = g.RADICE / "data" / "illustrazioni.json"
+    return (json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}).get(chiave, {})
+
+
 def nome_cartolina(chiave: str, titolo: str, testi: dict) -> str:
-    contenuto = testi.get("frase_cartolina", "") + json.dumps(testi.get("carosello", []), ensure_ascii=False)
+    contenuto = (testi.get("frase_cartolina", "") + json.dumps(testi.get("carosello", []), ensure_ascii=False)
+                 + illustrazioni(chiave).get("impronta", "") + "-".join(illustrazioni(chiave).get("file", [])))
     impronta = hashlib.sha256((chiave + titolo + contenuto).encode()).hexdigest()[:8]
     return f"{g.slug(chiave.split('|')[0] + '-' + titolo)[:60]}-{impronta}.png"
 
@@ -431,6 +441,8 @@ nei gruppi di colleghi, senza mandare lo stesso messaggio a troppi gruppi lo ste
                "facebook": testo_completo(v, "facebook"),
                "instagram": testo_completo(v, "instagram"),
                "carosello": v["testi"].get("carosello", []),
+               "illustrazioni": [f"promozione/illustrazioni/{f}" if f else ""
+                                 for f in illustrazioni(v["chiave"]).get("file", [])],
                "immagini": immagini_post(v["cartolina"], v["testi"])} for v in voci]
     (cartella / "cartoline.json").write_text(
         json.dumps(elenco, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

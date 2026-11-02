@@ -89,17 +89,21 @@ function copertina(c) {
 .cinque img{width:170px;height:170px}`);
 }
 
-/* ---------- lezioni: una scheda del carosello ---------- */
-function scheda(c, i, totale, s) {
+/* ---------- lezioni: una scheda del carosello (con il disegno di Claude, se c'è) ---------- */
+function scheda(c, i, totale, s, disegno) {
   const colore = c.colore || ORO;
   const mascotte = c.anno ? `<img class="mini" src="${url(`assets/mascotte/svg/${c.mascotte}.svg`)}">` : '';
+  const figura = disegno && existsSync(join(RADICE, disegno)) ? `<div class="disegno"><img src="${url(disegno)}"></div>` : '';
   return pagina(colore, `
 <div class="alto">${logo}<div class="conta" style="color:${colore}">${i}/${totale}</div></div>
-<div class="centro"><div class="eb">${esc(s.titolo)}</div><h2>${esc(s.testo)}</h2></div>
+<div class="centro ${figura ? 'con-disegno' : ''}">${figura}<div class="eb">${esc(s.titolo)}</div><h2>${esc(s.testo)}</h2></div>
 <div class="piede"><div class="uda">${esc(c.titolo)}</div>${mascotte}</div>`,
   `.conta{font:600 26px Cinzel;letter-spacing:.12em}
-.centro{flex:1;display:flex;flex-direction:column;justify-content:center}
+.centro{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.disegno{background:rgba(255,255,255,.035);border:1.5px solid rgba(227,194,122,.28);border-radius:30px;padding:18px;margin:34px 0 40px}
+.disegno img{display:block;width:100%;height:auto;max-height:540px;object-fit:contain}
 h2{margin:0;font:600 64px/1.16 Cormorant;text-wrap:pretty}
+.con-disegno h2{font-size:50px}
 .mini{width:120px;height:120px}`);
 }
 
@@ -180,7 +184,7 @@ for (const c of leggi('cartoline.json')) {
   lavori.push({ file: immagini[0], html: () => copertina(c), adatta: 'h1' });
   const schede = c.carosello || [];
   const totale = immagini.length;
-  schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s), adatta: 'h2' }));
+  schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s, (c.illustrazioni || [])[k]), adatta: 'h2' }));
   if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale) });
 }
 for (const p of leggi('prof.json')) {
