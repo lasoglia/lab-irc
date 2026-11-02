@@ -1,15 +1,15 @@
 name: Supabase · tienilo sveglio
 # Il progetto gratuito di Supabase (la piattaforma delle verifiche con codice,
-# esami/) va in pausa dopo una settimana senza attività. Ogni due giorni questa
-# Action fa una piccola lettura dal database con la chiave PUBBLICA (anon),
-# quella già scritta in esami/config.js: non serve nessun segreto e non legge
-# nessun dato (le regole di sicurezza la lasciano a mani vuote).
-# Se Supabase è già in pausa, l'Action fallisce e GitHub ti manda un'email:
-# allora va riattivato una volta dal pannello di Supabase («Restore project»).
+# esami/) va in pausa dopo 7 giorni senza attività, e una semplice lettura non
+# conta. Ogni giorno questa Action chiama la funzione battito(), che SCRIVE data
+# e ora in una tabella di una sola riga (supabase/migrations/0002_battito.sql,
+# da eseguire una volta nel SQL Editor di Supabase). Usa la chiave PUBBLICA
+# già scritta in esami/config.js: non serve nessun segreto.
+# Se fallisce, GitHub ti manda un'email: il messaggio dice che cosa fare.
 
 on:
   schedule:
-    - cron: '23 6 */2 * *'   # ogni due giorni, alle 6:23 UTC
+    - cron: '41 5 * * *'   # ogni giorno alle 5:41 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -25,16 +25,18 @@ jobs:
           sparse-checkout: esami/config.js
           sparse-checkout-cone-mode: false
 
-      - name: Una piccola lettura dal database
+      - name: Battito (una piccola scrittura nel database)
         run: |
           URL=$(sed -nE 's/.*SUPABASE_URL *= *"([^"]+)".*/\1/p' esami/config.js)
           CHIAVE=$(sed -nE 's/.*SUPABASE_ANON_KEY *= *"([^"]+)".*/\1/p' esami/config.js)
           if [ -z "$URL" ] || [ -z "$CHIAVE" ]; then echo "Configurazione di Supabase non trovata in esami/config.js"; exit 1; fi
-          codice=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 \
-            -H "apikey: $CHIAVE" -H "Authorization: Bearer $CHIAVE" \
-            "$URL/rest/v1/esami?select=id&limit=1")
-          echo "Risposta di Supabase: $codice"
+          codice=$(curl -s -o risposta.txt -w '%{http_code}' --max-time 60 -X POST \
+            -H "apikey: $CHIAVE" -H "Authorization: Bearer $CHIAVE" -H "Content-Type: application/json" \
+            -d '{}' "$URL/rest/v1/rpc/battito" || true)
+          echo "Risposta di Supabase: ${codice:-nessuna}"
           case "$codice" in
-            2??) echo "Supabase è sveglio.";;
-            *) echo "Supabase non risponde come dovrebbe: forse è in pausa. Riattivalo dal pannello di Supabase."; exit 1;;
+            2??) echo "Battito scritto alle $(cat risposta.txt). Supabase è sveglio.";;
+            404) echo "Manca la funzione battito(): esegui una volta supabase/migrations/0002_battito.sql nel SQL Editor di Supabase."; exit 1;;
+            000|"") echo "Supabase non si raggiunge: è in pausa. Riattivalo dal pannello di Supabase («Restore project»)."; exit 1;;
+            *) echo "Supabase non risponde come dovrebbe ($(head -c 300 risposta.txt)). Forse sta ripartendo: riprova tra qualche minuto."; exit 1;;
           esac
