@@ -1,0 +1,113 @@
+name: Social · parla con Claude
+# Commentando un Issue con etichetta «social» e scrivendo @claude si chiede
+# agli agenti di spostare, togliere o riscrivere un post. Funziona solo per il
+# proprietario e i collaboratori del repository: il testo del commento non entra
+# mai nei comandi della shell, ma passa da una variabile a un file.
+
+on:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: social-agenti
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+  CLAUDE_CODE_VERSIONE: 2.1.316
+
+jobs:
+  chat:
+    if: >-
+      github.event.issue.pull_request == null &&
+      contains(github.event.comment.body, '@claude') &&
+      contains(github.event.issue.labels.*.name, 'social') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - name: Prepara Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepara la richiesta
+        env:
+          RICHIESTA: ${{ github.event.comment.body }}
+        run: |
+          pip install --quiet pypdf
+          python seo/social_stato.py
+          printf '%s\n' "$RICHIESTA" > .social/richiesta.txt
+
+      - name: Installa Claude Code
+        run: npm install --global --silent "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSIONE"
+
+      - name: Lavoro degli agenti
+        id: agenti
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: bash seo/social_claude.sh "/social-chat" 2 25
+
+      - name: Valida il lavoro
+        id: valida
+        if: steps.agenti.outcome == 'success' && hashFiles('data/social-coda.json') != ''
+        continue-on-error: true
+        run: python seo/social_valida.py --applica
+
+      - name: Aggiorna kit e cartoline
+        if: steps.valida.outcome == 'success'
+        run: |
+          python seo/promozione.py --senza-ia
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/cartoline.mjs
+
+      - name: Salva
+        if: steps.valida.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/social-coda.json data/promozione.json promozione
+          if git diff --cached --quiet; then
+            echo "Niente di nuovo da salvare."
+          else
+            git commit -m "Social: modifica richiesta dal docente"
+            salvato=no
+            for prova in 1 2 3; do
+              git pull --rebase --quiet --autostash origin "$RAMO" && git push origin "HEAD:$RAMO" && { salvato=si; break; }
+              git rebase --abort 2>/dev/null || true
+              sleep 10
+            done
+            [ "$salvato" = si ] || { echo "Non sono riuscito a salvare su $RAMO."; exit 1; }
+          fi
+
+      - name: Rispondi nell'Issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          VALIDAZIONE: ${{ steps.valida.outcome }}
+          AGENTI: ${{ steps.agenti.outcome }}
+        run: |
+          {
+            cat .social/risposta.md 2>/dev/null || echo "Non sono riuscito a completare la richiesta."
+            if [ "$AGENTI" != "success" ] || [ "$VALIDAZIONE" = "failure" ]; then
+              echo
+              echo "Le modifiche non sono state salvate."
+              cat .social/validazione.md 2>/dev/null || true
+            fi
+          } > risposta-issue.md
+          gh issue comment "$ISSUE" --body-file risposta-issue.md
+          rm -f risposta-issue.md

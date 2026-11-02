@@ -1,2 +1,7 @@
 node_modules/
-.claude/
+.claude/*
+!.claude/agents/
+!.claude/skills/
+!.claude/social-regole.md
+.social/
+__pycache__/
