@@ -1,10 +1,13 @@
-// seo/cartoline.mjs — Disegna le cartoline per Instagram (1080×1350) del kit social.
+// seo/cartoline.mjs — Disegna le immagini del kit social (1080×1350, in PNG e in JPG).
 //
-// Legge promozione/cartoline.json (scritto da seo/promozione.py) e crea in
-// promozione/cartoline/ un'immagine per ogni post, nello stile del sito
-// (in PNG, e in JPG per Instagram, che accetta solo quel formato):
-// font del sito, colore e mascotte della classe. Disegna solo le cartoline
-// che mancano e cancella quelle non più in elenco.
+// Legge gli elenchi scritti da seo/promozione.py e seo/rubriche.py e crea in
+// promozione/cartoline/ le immagini che mancano, nello stile del sito (font,
+// colori, mascotte, avatar del prof):
+//   promozione/cartoline.json   le lezioni: copertina + schede del carosello + scheda finale
+//   promozione/prof.json        i post del prof (avatar con il fumetto)
+//   promozione/domenica.json    gli speciali della domenica
+// Instagram accetta solo il JPG, il resto usa il PNG. Le immagini non più in
+// elenco (testi riscritti, lezioni rinominate) vengono cancellate.
 //
 // Uso:  PW_MODULE=<percorso di playwright-core/index.js> CHROME_PATH=<chrome> node seo/cartoline.mjs
 // (senza variabili usa il Playwright e il Chromium di questo computer, se ci sono)
@@ -19,35 +22,20 @@ const CARTELLA = join(RADICE, 'promozione', 'cartoline');
 const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.js';
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium';
 
-const elenco = JSON.parse(readFileSync(join(RADICE, 'promozione', 'cartoline.json'), 'utf8'));
-mkdirSync(CARTELLA, { recursive: true });
-
-// Le cartoline non più in elenco (lezioni rinominate o testi riscritti) se ne vanno
-const jpg = (f) => f.replace(/\.png$/, '.jpg');
-const attese = new Set(elenco.flatMap((c) => [c.file, jpg(c.file)]));
-for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
-
-const daFare = elenco.filter((c) => !existsSync(join(CARTELLA, c.file)) || !existsSync(join(CARTELLA, jpg(c.file))));
-if (!daFare.length) { console.log('Cartoline già pronte: niente da disegnare.'); process.exit(0); }
-if (!existsSync(PW) || !existsSync(CHROME)) {
-  console.log(`! Manca Playwright o il browser: salto ${daFare.length} cartoline.`);
-  process.exit(0);
-}
-
+const leggi = (nome) => {
+  const p = join(RADICE, 'promozione', nome);
+  return existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) : [];
+};
 const url = (rel) => pathToFileURL(join(RADICE, rel)).href;
 const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const jpg = (f) => f.replace(/\.png$/, '.jpg');
 const ROMANI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
 const COLORI = { 1: '#FF7A59', 2: '#4FB0FF', 3: '#A78BFA', 4: '#FB7BB5', 5: '#FBBF24' };
+const MASCOTTE = ['', '1-semino', '2-ichthy', '3-navicella', '4-bussolina', '5-terra'];
+const ORO = '#E3C27A';
 
-function html(c) {
-  const sito = !c.anno;
-  const colore = c.colore || '#E3C27A';
-  const mascotte = sito
-    ? `<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${['', '1-semino', '2-ichthy', '3-navicella', '4-bussolina', '5-terra'][n]}.svg`)}">`).join('')}</div>`
-    : `<img class="una" src="${url(`assets/mascotte/svg/${c.mascotte}.svg`)}">`;
-  const anni = sito
-    ? `<div class="anni">${[1, 2, 3, 4, 5].map((n) => `<span style="color:${COLORI[n]}">${ROMANI[n]}</span>`).join('')}</div>`
-    : `<div class="anni"><span style="color:${colore}">${ROMANI[c.anno]}</span></div>`;
+/* ---------- la base comune: font, cornice, logo ---------- */
+function pagina(colore, corpo, stile = '') {
   return `<!doctype html><html lang="it"><head><meta charset="utf-8"><style>
 @font-face{font-family:Cormorant;font-weight:600;src:url(${url('design-system/fonts/cormorant-garamond-latin-600-normal.woff2')})}
 @font-face{font-family:Cormorant;font-weight:500;font-style:italic;src:url(${url('design-system/fonts/cormorant-garamond-latin-500-italic.woff2')})}
@@ -58,56 +46,183 @@ html,body{margin:0;width:1080px;height:1350px;overflow:hidden}
 body{box-sizing:border-box;padding:92px 96px 86px;display:flex;flex-direction:column;position:relative;
   background:radial-gradient(80% 55% at 10% 0%,rgba(139,92,246,.30),transparent 62%),radial-gradient(70% 50% at 100% 100%,${colore}2E,transparent 62%),#14131F;
   color:#ECEAF5;font-family:Figtree}
-.bordo{position:absolute;inset:28px;border:1.5px solid rgba(227,194,122,.45);border-radius:40px}
+.bordo{position:absolute;inset:28px;border:1.5px solid rgba(227,194,122,.45);border-radius:40px;pointer-events:none}
 .alto{display:flex;justify-content:space-between;align-items:center}
 .logo{display:flex;align-items:center;gap:18px}
 .logo i{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,#8B5CF6,#22D3EE);display:grid;place-items:center;font:600 40px Cormorant;font-style:normal;color:#fff}
 .logo b{font:600 42px Cormorant}.logo b span{background:linear-gradient(135deg,#A78BFA,#22D3EE);-webkit-background-clip:text;color:transparent}
 .anni{display:flex;gap:10px}
 .anni span{font:600 24px Cinzel;min-width:58px;height:58px;padding:0 6px;box-sizing:border-box;border-radius:29px;display:grid;place-items:center;border:2px solid currentColor}
-.figura{flex:1;display:grid;place-items:center;min-height:0}
-.una{width:330px;height:330px;filter:drop-shadow(0 18px 40px rgba(0,0,0,.35))}
-.cinque{display:flex;flex-wrap:wrap;justify-content:center;width:620px;gap:14px 34px}
-.cinque img{width:170px;height:170px}
 .eb{font:600 22px Cinzel;letter-spacing:.2em;text-transform:uppercase;color:${colore};display:flex;align-items:center;gap:16px;margin-bottom:22px}
-.eb:before{content:"";width:48px;height:2px;background:currentColor}
+.eb:before{content:"";width:48px;height:2px;background:currentColor;flex:none}
 h1{margin:0;font:600 92px/1.04 Cormorant;letter-spacing:-.01em;text-wrap:balance}
 h1 em{font-style:italic;font-weight:500;background:linear-gradient(135deg,#A78BFA,#22D3EE);-webkit-background-clip:text;color:transparent}
 p{margin:26px 0 0;font:500 31px/1.42 Figtree;color:#C7C3DA;text-wrap:pretty}
 .piede{margin-top:44px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;font-size:22px}
 .piede .uda{color:#9A96B3;font-weight:500;max-width:600px;line-height:1.35}
-.piede .web{font-weight:700;font-size:28px;color:#E3C27A;letter-spacing:.02em;white-space:nowrap}
-</style></head><body><div class="bordo"></div>
-<div class="alto"><div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div>${anni}</div>
-<div class="figura">${mascotte}</div>
+.piede .web{font-weight:700;font-size:28px;color:${ORO};letter-spacing:.02em;white-space:nowrap}
+${stile}
+</style></head><body><div class="bordo"></div>${corpo}</body></html>`;
+}
+const logo = '<div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div>';
+
+/* ---------- lezioni: la copertina ---------- */
+function copertina(c) {
+  const sito = !c.anno;
+  const colore = c.colore || ORO;
+  const figura = sito
+    ? `<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>`
+    : `<img class="una" src="${url(`assets/mascotte/svg/${c.mascotte}.svg`)}">`;
+  const anni = sito
+    ? `<div class="anni">${[1, 2, 3, 4, 5].map((n) => `<span style="color:${COLORI[n]}">${ROMANI[n]}</span>`).join('')}</div>`
+    : `<div class="anni"><span style="color:${colore}">${ROMANI[c.anno]}</span></div>`;
+  return pagina(colore, `
+<div class="alto">${logo}${anni}</div>
+<div class="figura">${figura}</div>
 <div class="testo"><div class="eb">${sito ? 'Religione Cattolica' : `Religione · classe ${esc(c.classe)}`}</div>
 <h1>${sito ? 'Il laboratorio di <em>Religione</em>' : esc(c.titolo)}</h1>
 <p>${esc(c.frase)}</p></div>
-<div class="piede"><div class="uda">${sito ? 'Lezioni, fascicoli e giochi di verifica, dalla prima alla quinta' : esc(c.uda)}</div><div class="web">www.labirc.it</div></div>
-</body></html>`;
+<div class="piede"><div class="uda">${sito ? 'Lezioni, fascicoli e giochi di verifica, dalla prima alla quinta' : esc(c.uda)}</div><div class="web">www.labirc.it</div></div>`,
+  `.figura{flex:1;display:grid;place-items:center;min-height:0}
+.una{width:330px;height:330px;filter:drop-shadow(0 18px 40px rgba(0,0,0,.35))}
+.cinque{display:flex;flex-wrap:wrap;justify-content:center;width:620px;gap:14px 34px}
+.cinque img{width:170px;height:170px}`);
+}
+
+/* ---------- lezioni: una scheda del carosello ---------- */
+function scheda(c, i, totale, s) {
+  const colore = c.colore || ORO;
+  const mascotte = c.anno ? `<img class="mini" src="${url(`assets/mascotte/svg/${c.mascotte}.svg`)}">` : '';
+  return pagina(colore, `
+<div class="alto">${logo}<div class="conta" style="color:${colore}">${i}/${totale}</div></div>
+<div class="centro"><div class="eb">${esc(s.titolo)}</div><h2>${esc(s.testo)}</h2></div>
+<div class="piede"><div class="uda">${esc(c.titolo)}</div>${mascotte}</div>`,
+  `.conta{font:600 26px Cinzel;letter-spacing:.12em}
+.centro{flex:1;display:flex;flex-direction:column;justify-content:center}
+h2{margin:0;font:600 64px/1.16 Cormorant;text-wrap:pretty}
+.mini{width:120px;height:120px}`);
+}
+
+/* ---------- lezioni: l'ultima scheda, l'invito al sito ---------- */
+function finale(c, totale) {
+  const colore = c.colore || ORO;
+  return pagina(colore, `
+<div class="alto">${logo}<div class="conta" style="color:${colore}">${totale}/${totale}</div></div>
+<div class="centro">
+<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>
+<div class="eb" style="justify-content:center">La lezione completa</div>
+<h2>Slide, fascicolo e attività<br>sono su <em>www.labirc.it</em></h2>
+<div class="bio">Link nella bio · gratis per tutti i colleghi</div></div>
+<div class="piede"><div class="uda">${esc(c.titolo)}</div><div class="web">www.labirc.it</div></div>`,
+  `.conta{font:600 26px Cinzel;letter-spacing:.12em}
+.centro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
+.cinque{display:flex;gap:18px;margin-bottom:34px}.cinque img{width:120px;height:120px}
+h2{margin:0;font:600 68px/1.12 Cormorant}
+h2 em{font-style:italic;font-weight:500;color:${ORO}}
+.bio{margin-top:26px;font:700 30px Figtree;color:#ECEAF5;background:rgba(255,255,255,.07);border:1.5px solid rgba(227,194,122,.5);border-radius:999px;padding:14px 30px}`);
+}
+
+/* ---------- il prof: una vignetta della striscia a fumetti ----------
+   in scena il prof (avatar, con l'espressione della vignetta) e lo studente (la mascotte
+   della classe); il fumetto parte da chi parla, l'altro resta un po' in ombra */
+function vignetta(p, i, totale, v) {
+  const anno = String(p.anno || '1');
+  const colore = COLORI[anno] || '#22D3EE';
+  const parlaProf = v.parla !== 'studente';
+  const posa = ['sorriso', 'buffo', 'pensieroso', 'sorpreso', 'spiega', 'ride'].includes(v.posa) ? v.posa : 'sorriso';
+  return pagina(colore, `
+<div class="alto">${logo}<div class="rubrica">${esc(p.formato)} · ${i}/${totale}</div></div>
+${v.didascalia ? `<div class="didascalia">${esc(v.didascalia)}</div>` : '<div class="spazio"></div>'}
+<div class="fumetto ${parlaProf ? 'da-prof' : 'da-studente'}"><h2>${esc(v.fumetto)}</h2></div>
+<div class="scena">
+  <img class="prof ${parlaProf ? 'parla' : ''}" src="${url(`assets/avatar/${posa}.png`)}">
+  <img class="studente ${parlaProf ? '' : 'parla'}" src="${url(`assets/mascotte/svg/${MASCOTTE[+anno] || MASCOTTE[1]}.svg`)}">
+</div>
+<div class="piede"><div class="uda">${esc(p.titolo)}${i === totale ? ' · la lezione è su labirc.it' : ''}</div><div class="web">www.labirc.it</div></div>`,
+  `.rubrica{font:600 21px Cinzel;letter-spacing:.16em;text-transform:uppercase;color:${colore};border:2px solid currentColor;border-radius:999px;padding:10px 22px}
+.didascalia{align-self:flex-start;margin-top:40px;background:${ORO};color:#14131F;font:700 26px Figtree;padding:12px 22px;border-radius:10px;transform:rotate(-1.2deg)}
+.spazio{height:40px}
+.fumetto{position:relative;margin-top:30px;background:#FBFAFF;color:#14131F;border-radius:46px;padding:46px 54px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.fumetto:after{content:"";position:absolute;bottom:-50px;border:26px solid transparent;border-top:34px solid #FBFAFF}
+.da-prof:after{left:150px;border-left:30px solid #FBFAFF}
+.da-studente:after{right:150px;border-right:30px solid #FBFAFF}
+h2{margin:0;font:600 58px/1.18 Cormorant;text-wrap:pretty}
+.scena{flex:1;min-height:0;display:flex;align-items:flex-end;justify-content:space-between;margin-top:56px;
+  background:radial-gradient(60% 40% at 50% 100%,${colore}33,transparent 70%)}
+.scena img{transition:none;filter:saturate(.75) brightness(.8)}
+.scena img.parla{filter:none}
+.prof{width:470px;height:470px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 6px rgba(227,194,122,.5),0 30px 70px rgba(0,0,0,.45)}
+.prof.parla{box-shadow:0 0 0 8px ${ORO},0 30px 70px rgba(0,0,0,.45)}
+.studente{width:300px;height:300px;margin-bottom:20px}
+.studente.parla{transform:scale(1.08) translateY(-10px)}`);
+}
+
+/* ---------- lo speciale della domenica ---------- */
+function domenica(d) {
+  const colore = d.colore || ORO;
+  return pagina(colore, `
+<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
+<div class="centro"><div class="stella" style="color:${colore}">✦</div>
+<div class="eb" style="justify-content:center">La domenica del Lab · ${esc(d.tempo)}</div>
+<h1>${esc(d.titolo)}</h1><p>${esc(d.frase)}</p></div>
+<div class="piede"><div class="uda">${esc(d.lezione || '')}</div><div class="web">www.labirc.it</div></div>`,
+  `.giorno{font:600 24px Cinzel;letter-spacing:.14em;text-transform:uppercase}
+.centro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.stella{font-size:120px;line-height:1;margin-bottom:30px;text-shadow:0 0 60px currentColor}
+h1{font-size:86px}
+p{max-width:820px}`);
+}
+
+/* ---------- l'elenco di tutto quello che va disegnato ---------- */
+const lavori = [];
+for (const c of leggi('cartoline.json')) {
+  const immagini = c.immagini && c.immagini.length ? c.immagini : [c.file];
+  lavori.push({ file: immagini[0], html: () => copertina(c), adatta: 'h1' });
+  const schede = c.carosello || [];
+  const totale = immagini.length;
+  schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s), adatta: 'h2' }));
+  if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale) });
+}
+for (const p of leggi('prof.json')) {
+  const vignette = p.vignette || [];
+  // senza le illustrazioni del prof (assets/avatar/) le strisce aspettano: meglio nessuna che sgranata
+  const manca = vignette.find((v) => !existsSync(join(RADICE, 'assets', 'avatar', `${v.posa}.png`)));
+  if (manca) { console.log(`! Manca assets/avatar/${manca.posa}.png: salto la striscia ${p.chiave}.`); continue; }
+  vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
+}
+for (const d of leggi('domenica.json')) lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
+
+mkdirSync(CARTELLA, { recursive: true });
+const attese = new Set(lavori.flatMap((l) => [l.file, jpg(l.file)]));
+for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
+
+const daFare = lavori.filter((l) => !existsSync(join(CARTELLA, l.file)) || !existsSync(join(CARTELLA, jpg(l.file))));
+if (!daFare.length) { console.log('Immagini già pronte: niente da disegnare.'); process.exit(0); }
+if (!existsSync(PW) || !existsSync(CHROME)) {
+  console.log(`! Manca Playwright o il browser: salto ${daFare.length} immagini.`);
+  process.exit(0);
 }
 
 const pw = (await import(pathToFileURL(PW).href)).default;
 const browser = await pw.chromium.launch({ executablePath: CHROME });
-const pagina = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
-// La cartolina si apre da un file: così il browser può leggere font e mascotte del sito
+const scheda_ = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
+// Ogni immagine si apre da un file: così il browser può leggere font, mascotte e avatar del sito
 const lavoro = mkdtempSync(join(tmpdir(), 'cartoline-'));
-for (const c of daFare) {
-  writeFileSync(join(lavoro, 'cartolina.html'), html(c));
-  await pagina.goto(pathToFileURL(join(lavoro, 'cartolina.html')).href, { waitUntil: 'load' });
-  await pagina.evaluate(async () => {
+for (const l of daFare) {
+  writeFileSync(join(lavoro, 'cartolina.html'), l.html());
+  await scheda_.goto(pathToFileURL(join(lavoro, 'cartolina.html')).href, { waitUntil: 'load' });
+  await scheda_.evaluate(async (sel) => {
     await document.fonts.ready;
-    // Titoli lunghi: rimpicciolisce finché tutto sta nella cartolina
-    const h1 = document.querySelector('h1');
-    let px = 92;
-    while (px > 54 && (document.body.scrollHeight > 1350 || h1.getBoundingClientRect().height > px * 1.04 * 3 + 2)) {
-      px -= 4; h1.style.fontSize = px + 'px';
-    }
-  });
-  await pagina.screenshot({ path: join(CARTELLA, c.file) });
-  await pagina.screenshot({ path: join(CARTELLA, jpg(c.file)), type: 'jpeg', quality: 90 });
-  console.log('  ✓ cartolina', c.file);
+    // Testi lunghi: rimpicciolisce finché tutto sta nell'immagine
+    const t = sel && document.querySelector(sel);
+    if (!t) return;
+    let px = parseFloat(getComputedStyle(t).fontSize);
+    while (px > 40 && document.body.scrollHeight > 1350) { px -= 3; t.style.fontSize = px + 'px'; }
+  }, l.adatta || '');
+  await scheda_.screenshot({ path: join(CARTELLA, l.file) });
+  await scheda_.screenshot({ path: join(CARTELLA, jpg(l.file)), type: 'jpeg', quality: 90 });
+  console.log('  ✓', l.file);
 }
 await browser.close();
 rmSync(lavoro, { recursive: true, force: true });
-console.log(`Cartoline disegnate: ${daFare.length}`);
+console.log(`Immagini disegnate: ${daFare.length}`);
