@@ -79,14 +79,14 @@ def testo_integrale(lezione: dict | None) -> str:
 
 
 def scheda(c: dict, voce: dict, lezione: dict | None) -> str:
-    jpg = "promozione/cartoline/" + c["file"].removesuffix(".png") + ".jpg"
+    jpg = ", ".join("promozione/cartoline/" + f.removesuffix(".png") + ".jpg" for f in c.get("immagini") or [c["file"]])
     return f"""# Candidato: {c['titolo']}
 
 - chiave: `{c['chiave']}`
 - classe: {c.get('classe') or 'tutto il sito'}
 - unità: {c.get('uda') or '-'}
 - pagina: {c.get('url')}
-- cartolina: {jpg}
+- immagini (copertina e carosello, con i disegni): {jpg}
 - testi corretti a mano o già riscritti: {'sì' if voce.get('bloccato') else 'no'}
 
 ## Frase sulla cartolina
