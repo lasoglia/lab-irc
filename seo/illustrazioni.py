@@ -29,6 +29,7 @@ import json
 import os
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -129,7 +130,7 @@ def main():
     elif not a.senza_ia:
         print("! ANTHROPIC_API_KEY non impostata: procedo senza IA")
 
-    fatte = tok_in = tok_out = 0
+    lavori = []
     for chiave, t in sorted(testi.items()):
         schede = t.get("carosello") or []
         if not schede:
@@ -145,28 +146,39 @@ def main():
                     if l else "Presentazione del sito Lab IRC")
         messaggio = contesto + "\n\n" + "\n\n".join(
             f"Scheda {i}: {s['titolo']}\n{s['testo']}" for i, s in enumerate(schede, start=1))
+        lavori.append((chiave, imp, len(schede), messaggio))
+
+    def disegna(lavoro):
+        chiave, imp, n, messaggio = lavoro
         try:
-            dati, risposta = pr.chiama_claude(client, ISTRUZIONI, messaggio, SCHEMA, "medium", 48000)
+            return lavoro, *pr.chiama_claude(client, ISTRUZIONI, messaggio, SCHEMA, "medium", 48000), None
         except Exception as err:
-            print(f"  ✗ {chiave}: {err}")
-            continue
-        tok_in += risposta.usage.input_tokens
-        tok_out += risposta.usage.output_tokens
-        file = []
-        for i, ill in enumerate(dati.get("illustrazioni", [])[:len(schede)], start=1):
-            try:
-                svg = pulisci_svg(ill["svg"])
-            except Exception as err:   # un disegno non valido: quella scheda resta senza
-                print(f"  ! {chiave} scheda {i}: disegno scartato ({err})")
-                file.append("")
+            return lavoro, None, None, err
+
+    fatte = tok_in = tok_out = 0
+    # più lezioni insieme: ogni disegno chiede qualche minuto
+    with ThreadPoolExecutor(max_workers=pr.PARALLELI) as gruppo:
+        for (chiave, imp, n, _), dati, risposta, err in gruppo.map(disegna, lavori):
+            if err:
+                print(f"  ✗ {chiave}: {err}")
                 continue
-            nome = f"{imp}-{i}.svg"
-            (CARTELLA / nome).write_text(svg, encoding="utf-8")
-            file.append(nome)
-        file += [""] * (len(schede) - len(file))
-        indice[chiave] = {"impronta": imp, "file": file}
-        fatte += 1
-        print(f"  ✓ {chiave}: {sum(1 for f in file if f)} disegni")
+            tok_in += risposta.usage.input_tokens
+            tok_out += risposta.usage.output_tokens
+            file = []
+            for i, ill in enumerate(dati.get("illustrazioni", [])[:n], start=1):
+                try:
+                    svg = pulisci_svg(ill["svg"])
+                except Exception as err:   # un disegno non valido: quella scheda resta senza
+                    print(f"  ! {chiave} scheda {i}: disegno scartato ({err})")
+                    file.append("")
+                    continue
+                nome = f"{imp}-{i}.svg"
+                (CARTELLA / nome).write_text(svg, encoding="utf-8")
+                file.append(nome)
+            file += [""] * (n - len(file))
+            indice[chiave] = {"impronta": imp, "file": file}
+            fatte += 1
+            print(f"  ✓ {chiave}: {sum(1 for f in file if f)} disegni", flush=True)
 
     # via le lezioni e i disegni che non servono più
     indice = {k: v for k, v in sorted(indice.items()) if k in testi}
