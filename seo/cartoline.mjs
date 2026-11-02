@@ -6,6 +6,7 @@
 //   promozione/cartoline.json   le lezioni: copertina + schede del carosello + scheda finale
 //   promozione/prof.json        i post del prof (avatar con il fumetto)
 //   promozione/domenica.json    gli speciali della domenica
+// e per ogni post la sua storia verticale (1080×1920, <nome>-storia.png/jpg).
 // Instagram accetta solo il JPG, il resto usa il PNG. Le immagini non più in
 // elenco (testi riscritti, lezioni rinominate) vengono cancellate.
 //
@@ -177,6 +178,25 @@ h1{font-size:86px}
 p{max-width:820px}`);
 }
 
+/* ---------- la storia (1080×1920): il post del giorno, con l'invito a guardarlo ----------
+   Instagram e Facebook coprono in alto il nome e in basso la barra delle risposte:
+   tutto quello che conta sta nella fascia centrale */
+const storiaDi = (f) => f.replace(/\.png$/, '-storia.png');
+function storia(colore, immagine, etichetta, invito) {
+  return pagina(colore, `
+<div class="alto">${logo}<div class="tag" style="color:${colore}">${esc(etichetta)}</div></div>
+<div class="centro"><img class="post" src="${pathToFileURL(join(CARTELLA, immagine)).href}"></div>
+<div class="invito">${esc(invito)}</div>
+<div class="piede"><div class="uda"></div><div class="web">www.labirc.it</div></div>`,
+  `html,body{height:1920px}
+body{padding:190px 80px 270px}
+.tag{font:600 22px Cinzel;letter-spacing:.16em;text-transform:uppercase;border:2px solid currentColor;border-radius:999px;padding:12px 22px}
+.centro{flex:1;display:grid;place-items:center;min-height:0}
+.post{width:860px;height:auto;border-radius:34px;box-shadow:0 0 0 2px rgba(227,194,122,.45),0 40px 90px rgba(0,0,0,.55);transform:rotate(-1.5deg)}
+.invito{text-align:center;font:600 54px/1.15 Cormorant;margin-top:10px}
+.piede{justify-content:center;margin-top:26px}`);
+}
+
 /* ---------- l'elenco di tutto quello che va disegnato ---------- */
 const lavori = [];
 for (const c of leggi('cartoline.json')) {
@@ -195,12 +215,28 @@ for (const p of leggi('prof.json')) {
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
 for (const d of leggi('domenica.json')) lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
+// le storie vengono per ultime (mostrano la copertina appena disegnata), solo in JPG
+// e solo per i post non ancora usciti su Facebook e Instagram
+const registroMeta = existsSync(join(RADICE, 'data', 'meta.json')) ? JSON.parse(readFileSync(join(RADICE, 'data', 'meta.json'), 'utf8')) : {};
+const daRaccontare = (chiave) => !(registroMeta[chiave] && registroMeta[chiave].facebook && registroMeta[chiave].instagram);
+const prima_ = lavori.length;
+for (const c of leggi('cartoline.json').filter((x) => daRaccontare(x.chiave))) {
+  const prima = (c.immagini && c.immagini[0]) || c.file;
+  lavori.push({ file: storiaDi(prima), alto: 1920, html: () => storia(c.colore || ORO, prima,
+    c.anno ? `Nuova lezione · classe ${c.classe}` : 'Religione Cattolica', c.carosello && c.carosello.length ? 'Scorri il carosello sul profilo' : 'Il post completo è sul profilo') });
+}
+for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
+  if (!lavori.some((l) => l.file === p.immagini[0])) continue;
+  lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'La striscia completa è sul profilo') });
+}
+for (const d of leggi('domenica.json').filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, 'La domenica del Lab', 'Buona domenica dal Lab') });
+for (const l of lavori.slice(prima_)) l.soloJpg = true;
 
 mkdirSync(CARTELLA, { recursive: true });
-const attese = new Set(lavori.flatMap((l) => [l.file, jpg(l.file)]));
+const attese = new Set(lavori.flatMap((l) => (l.soloJpg ? [jpg(l.file)] : [l.file, jpg(l.file)])));
 for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
 
-const daFare = lavori.filter((l) => !existsSync(join(CARTELLA, l.file)) || !existsSync(join(CARTELLA, jpg(l.file))));
+const daFare = lavori.filter((l) => (!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))));
 if (!daFare.length) { console.log('Immagini già pronte: niente da disegnare.'); process.exit(0); }
 if (!existsSync(PW) || !existsSync(CHROME)) {
   console.log(`! Manca Playwright o il browser: salto ${daFare.length} immagini.`);
@@ -214,18 +250,20 @@ const scheda_ = await browser.newPage({ viewport: { width: 1080, height: 1350 } 
 const lavoro = mkdtempSync(join(tmpdir(), 'cartoline-'));
 for (const l of daFare) {
   writeFileSync(join(lavoro, 'cartolina.html'), l.html());
+  const alto = l.alto || 1350;
+  if (scheda_.viewportSize().height !== alto) await scheda_.setViewportSize({ width: 1080, height: alto });
   await scheda_.goto(pathToFileURL(join(lavoro, 'cartolina.html')).href, { waitUntil: 'load' });
-  await scheda_.evaluate(async (sel) => {
+  await scheda_.evaluate(async ([sel, alto]) => {
     await document.fonts.ready;
     // Testi lunghi: rimpicciolisce finché tutto sta nell'immagine
     const t = sel && document.querySelector(sel);
     if (!t) return;
     let px = parseFloat(getComputedStyle(t).fontSize);
-    while (px > 40 && document.body.scrollHeight > 1350) { px -= 3; t.style.fontSize = px + 'px'; }
-  }, l.adatta || '');
-  await scheda_.screenshot({ path: join(CARTELLA, l.file) });
+    while (px > 40 && document.body.scrollHeight > alto) { px -= 3; t.style.fontSize = px + 'px'; }
+  }, [l.adatta || '', alto]);
+  if (!l.soloJpg) await scheda_.screenshot({ path: join(CARTELLA, l.file) });
   await scheda_.screenshot({ path: join(CARTELLA, jpg(l.file)), type: 'jpeg', quality: 90 });
-  console.log('  ✓', l.file);
+  console.log('  ✓', l.soloJpg ? jpg(l.file) : l.file);
 }
 await browser.close();
 rmSync(lavoro, { recursive: true, force: true });
