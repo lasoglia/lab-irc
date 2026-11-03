@@ -21,7 +21,7 @@ Chiedi a **social-calendarista** il piano delle uscite delle lezioni (i giorni e
 Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando a ciascuno il file `.social/candidati/NN.md`.
 
 ## 3b. Rubriche
-Le strisce del prof (P1, P2…, solo nelle vacanze) e la domenica (D1, la grande domanda) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
+Le strisce del prof (P1, P2…, solo nelle vacanze), lo Shabbat del sabato (S1, cultura ebraica da fonti ebraiche) e la domenica (D1, la grande domanda) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
 - Se entrambi approvano, mettila in coda con la data indicata nella scheda.
 - Se uno dei due chiede correzioni o respinge, scartala senza riscriverla: non va in coda e la segnali in «Da guardare tu». Il post del prof successivo è già pronto per la settimana dopo.
 

@@ -25,6 +25,8 @@ Il registro è sobrio, caldo e preciso, da insegnante.
   in giro persone, fedi o chi non crede e i fatti restino esatti.
 - Nessun tono pubblicitario, superlativo o urgenza. Niente punti esclamativi a raffica.
 - Nessun link nel testo: lo aggiunge lo script.
+- Lo Shabbat del Lab (sabato): l'ebraismo raccontato come lo vivono e lo spiegano gli ebrei, solo dalle
+  fonti ebraiche del dossier; niente letture cristiane o confronti; mai il nome di Dio in ebraico.
 - Nessuna vendita: il sito è gratuito e il docente è un dipendente pubblico.
 - Non promettere accesso libero ai giochi di verifica: alcuni sono chiusi da una password.
 

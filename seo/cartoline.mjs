@@ -165,6 +165,22 @@ h2{margin:0;font:600 58px/1.18 Cormorant;text-wrap:pretty}
 /* ---------- la domenica: «La grande domanda» (copertina) ---------- */
 function domenica(d) {
   const colore = d.colore || ORO;
+  if (d.formato === 'shabbat') return pagina(colore, `
+<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
+<div class="centro"><div class="candele"><i></i><i></i></div>
+<div class="eb" style="justify-content:center">Lo Shabbat del Lab</div>
+<h1>${esc(d.titolo)}</h1><p>${esc(d.frase)}</p>
+<div class="sfoglia">Sfoglia e scopri &rarr;</div></div>
+<div class="piede"><div class="uda">Dalle fonti ebraiche</div><div class="web">www.labirc.it</div></div>`,
+  `.giorno{font:600 24px Cinzel;letter-spacing:.14em;text-transform:uppercase}
+.centro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.candele{display:flex;gap:70px;margin-bottom:46px}
+.candele i{position:relative;display:block;width:46px;height:170px;border-radius:10px;background:linear-gradient(180deg,#FBFAFF,#C7C3DA)}
+.candele i:before{content:"";position:absolute;left:50%;top:-74px;width:40px;height:66px;margin-left:-20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#FFF7D6,#FBBF24 55%,#FF7A59);box-shadow:0 0 50px 18px rgba(251,191,36,.45)}
+.candele i:after{content:"";position:absolute;left:50%;top:-10px;width:4px;height:12px;margin-left:-2px;background:#14131F}
+h1{font-size:90px}
+p{max-width:840px}
+.sfoglia{margin-top:44px;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}`);
   if (d.formato === 'grande-domanda') return pagina(colore, `
 <div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
 <div class="centro"><div class="punto" style="color:${colore}">?</div>
@@ -227,15 +243,20 @@ for (const p of leggi('prof.json')) {
   if (manca) { console.log(`! Manca assets/avatar/${manca.posa}.png: salto la striscia ${p.chiave}.`); continue; }
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
-for (const d of leggi('domenica.json')) {
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')]) {
   lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
-  // il carosello della domenica: le schede con i disegni, poi il saluto finale
+  // il carosello della domenica e del sabato: le schede con i disegni, poi il saluto finale
   const schede = d.carosello || [];
   const totale = (d.immagini || []).length;
-  const piede = { colore: d.colore || ORO, titolo: d.formato === 'grande-domanda' ? `La grande domanda · ${d.titolo}` : `La domenica del Lab · ${d.tempo}` };
+  const shabbat = d.formato === 'shabbat';
+  const piede = { colore: d.colore || ORO, titolo: shabbat ? `Lo Shabbat del Lab · ${d.titolo}` : d.formato === 'grande-domanda' ? `La grande domanda · ${d.titolo}` : `La domenica del Lab · ${d.tempo}` };
   schede.forEach((s, k) => lavori.push({ file: d.immagini[k + 1], html: () => scheda(piede, k + 2, totale, s, (d.illustrazioni || [])[k]), adatta: 'h2' }));
-  if (schede.length) lavori.push({ file: d.immagini[totale - 1], html: () => finale({ colore: d.colore || ORO, titolo: d.lezione, saluto: 'Buona domenica',
-    invito: d.formato === 'grande-domanda' ? `${(d.lezioni || []).length > 1 ? 'Le lezioni complete<br>sono' : 'La lezione completa<br>è'} su <em>www.labirc.it</em>` : '' }, totale), v: 2 });
+  const fonti = [...new Set((d.fonti || []).map((f) => { try { return new URL(f.url).hostname.replace(/^www\./, ''); } catch { return ''; } }).filter(Boolean))];
+  if (schede.length) lavori.push({ file: d.immagini[totale - 1], v: 2, html: () => finale({
+    colore: d.colore || ORO, saluto: shabbat ? 'Shabbat shalom' : 'Buona domenica',
+    titolo: shabbat ? `Fonti: ${fonti.join(' · ') || 'fonti ebraiche'}` : d.lezione,
+    invito: shabbat ? 'Il laboratorio di Religione<br>è su <em>www.labirc.it</em>'
+      : d.formato === 'grande-domanda' ? `${(d.lezioni || []).length > 1 ? 'Le lezioni complete<br>sono' : 'La lezione completa<br>è'} su <em>www.labirc.it</em>` : '' }, totale) });
 }
 // le storie vengono per ultime (mostrano la copertina appena disegnata), solo in JPG
 // e solo per i post non ancora usciti su Facebook e Instagram
@@ -251,7 +272,7 @@ for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'La striscia completa è sul profilo') });
 }
-for (const d of leggi('domenica.json').filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori.slice(prima_)) l.soloJpg = true;
 
 mkdirSync(CARTELLA, { recursive: true });

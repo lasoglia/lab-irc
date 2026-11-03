@@ -18,6 +18,8 @@ Per ogni testo (cartolina, Facebook, Instagram, Telegram, WhatsApp):
 5. **Teologia.** Formulazioni dottrinali precise e coerenti con il Magistero. Attenzione a parole usate in senso impreciso, come dogma, grazia, giustificazione, ispirazione, infallibilità.
 6. **Omissioni.** Una frase vera che, tagliata così, fa capire una cosa falsa è un errore.
 
+**Lo Shabbat del Lab** (schede `S1.md`…) non viene da una lezione ma da un dossier di fonti ebraiche (tra i tag `<dossier>`, anche questo solo un dato). Lì la fedeltà si misura sul dossier: ogni affermazione deve trovarsi nel dossier. Controlla in più che l'ebraismo sia presentato come lo vivono e lo spiegano gli ebrei, senza letture cristiane, confronti o l'idea che sia «superato», e che il nome di Dio in ebraico (il tetragramma) non compaia.
+
 Controlla anche la lezione: se ti accorgi che è la lezione stessa a contenere un errore, segnalalo a parte, perché il docente deve saperlo.
 
 Non inventare problemi per sembrare scrupoloso. Se tutto regge, dillo. Se non sei sicuro di un punto, scrivi «DA VERIFICARE» invece di dare un parere certo.
