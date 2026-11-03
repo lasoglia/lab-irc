@@ -27,6 +27,7 @@ import json
 import os
 import subprocess
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -102,12 +103,25 @@ def prova(chiave_id: str, segreto: str, account: str) -> int:
     return esito
 
 
-def online(url: str) -> bool:
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=30) as r:
-            return r.status == 200
-    except Exception:
-        return False
+def online(url: str, tentativi: int = 4) -> bool:
+    """Il file si legge dall'indirizzo pubblico? (GET di un byte, con qualche tentativo:
+    appena caricato può servire qualche secondo)."""
+    import time
+    ultimo = ""
+    for n in range(tentativi):
+        richiesta = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (LabIRC social)", "Range": "bytes=0-0"})
+        try:
+            with urllib.request.urlopen(richiesta, timeout=30) as r:
+                if r.status in (200, 206):
+                    return True
+                ultimo = f"HTTP {r.status}"
+        except urllib.error.HTTPError as err:
+            ultimo = f"HTTP {err.code}: {err.read()[:120]!r}"
+        except Exception as err:
+            ultimo = str(err)
+        time.sleep(3 * (n + 1))
+    print(f"  (risposta di {url}: {ultimo})")
+    return False
 
 
 def main() -> int:
