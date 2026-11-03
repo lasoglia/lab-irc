@@ -9,7 +9,8 @@ name: Supabase · tienilo sveglio
 
 on:
   schedule:
-    - cron: '41 5 * * *'   # ogni giorno alle 5:41 UTC
+    - cron: '41 5 * * *'    # ogni giorno alle 5:41 UTC
+    - cron: '17 16 * * *'   # e alle 16:17 UTC: GitHub a volte salta o ritarda un'esecuzione
   workflow_dispatch: {}
 
 permissions:
