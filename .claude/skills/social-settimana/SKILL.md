@@ -2,7 +2,7 @@
 name: social-settimana
 description: Prepara il piano social della settimana del Lab IRC facendo lavorare gli agenti social in sequenza.
 disable-model-invocation: true
-allowed-tools: Read Glob Grep Agent Edit(.social/**) Write(.social/**) Edit(data/social-coda.json) Write(data/social-coda.json)
+allowed-tools: Read Glob Grep Agent WebSearch WebFetch Edit(.social/**) Write(.social/**) Edit(data/social-coda.json) Write(data/social-coda.json)
 ---
 
 Sei la regia dei social del Lab IRC. Coordini gli agenti, non scrivi i testi e non li giudichi.
@@ -23,12 +23,17 @@ Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nell
 ## 3b. Rubriche
 Le strisce del prof (P1, P2…, solo nelle vacanze), lo Shabbat del sabato (S1, cultura ebraica da fonti ebraiche) e la domenica (D1, la grande domanda) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
 - Se entrambi approvano, mettila in coda con la data indicata nella scheda.
-- Se uno dei due chiede correzioni o respinge, scartala senza riscriverla: non va in coda e la segnali in «Da guardare tu». Il post del prof successivo è già pronto per la settimana dopo.
+- Se uno dei due chiede correzioni o respinge, non va in coda (le rubriche non si riscrivono qui, perché anche le immagini vanno rifatte). Se le obiezioni riguardano fatti, chiama **social-ricercatore** e scrivi in `.social/rubriche-da-rifare.md`, per ogni rubrica, le obiezioni e le versioni corrette con le fonti: servono a rigenerarla. Segnalala in «Da guardare tu».
 
 ## 4. Correzioni
 - Se entrambi approvano, il post è approvato.
-- Se almeno uno chiede correzioni, passa tutte le correzioni a **social-redattore**, poi fai ricontrollare a entrambi la riscrittura indicando il file `.social/riscritture/NN.json`. Una sola volta.
-- Se dopo la riscrittura qualcuno non approva, oppure qualcuno ha risposto RESPINTO, scarta il post e controlla la prima riserva.
+- Se almeno uno chiede correzioni o respinge, non scartare subito: un errore si corregge.
+  1. Se le obiezioni riguardano fatti (date, nomi, numeri, citazioni, attribuzioni), chiama prima **social-ricercatore** con le obiezioni: le verifica su fonti autorevoli e indica la versione corretta.
+  2. Passa a **social-redattore** tutte le correzioni e, se c'è, la risposta del ricercatore.
+  3. Fai ricontrollare a entrambi la riscrittura, indicando il file `.social/riscritture/NN.json`.
+  4. Se qualcuno chiede ancora correzioni, ripeti una seconda volta (al massimo due giri).
+- Scarta il post solo se dopo due giri qualcuno non approva, o se il problema non si può risolvere restando fedeli alla lezione. Allora controlla la prima riserva.
+- Se il ricercatore trova un errore nella lezione stessa, segnalalo in «Da guardare tu» con la fonte.
 - Non approvare mai un post che abbia punti «DA VERIFICARE» non risolti.
 
 Se finiscono le riserve e un'uscita resta scoperta, lasciala scoperta: meglio un post in meno che un post sbagliato.

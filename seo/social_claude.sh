@@ -4,7 +4,8 @@
 # Uso: bash seo/social_claude.sh "/social-settimana" <budget in dollari> <turni massimi>
 #
 # Claude qui può solo leggere il repository, usare i sottoagenti e scrivere nei due
-# posti indicati: .social/ e data/social-coda.json. Non ha Bash né internet e non vede
+# posti indicati: .social/ e data/social-coda.json. Non ha Bash; in rete può solo cercare e
+# leggere pagine (il ricercatore verifica i fatti dubbi). Non vede
 # le chiavi di Meta e Telegram, che restano nel passo di pubblicazione.
 # Il filtro successivo è seo/social_valida.py.
 set -uo pipefail
@@ -16,8 +17,8 @@ mkdir -p .social/riscritture
 
 claude -p "$richiesta" \
   --model "${SOCIAL_MODELLO:-claude-sonnet-5-5}" \
-  --tools "Read,Write,Edit,Glob,Grep,Agent" \
-  --allowedTools "Read,Glob,Grep,Agent,Edit(.social/**),Write(.social/**),Edit(data/social-coda.json),Write(data/social-coda.json)" \
+  --tools "Read,Write,Edit,Glob,Grep,Agent,WebSearch,WebFetch" \
+  --allowedTools "Read,Glob,Grep,Agent,WebSearch,WebFetch,Edit(.social/**),Write(.social/**),Edit(data/social-coda.json),Write(data/social-coda.json)" \
   --permission-mode dontAsk \
   --max-turns "$turni" \
   --max-budget-usd "$budget" \
