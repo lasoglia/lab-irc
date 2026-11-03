@@ -40,6 +40,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402
+import coda as coda_agenti  # noqa: E402
 import illustrazioni as ill  # noqa: E402
 import promozione as pr  # noqa: E402
 
@@ -47,6 +48,7 @@ RISERVA_PROF = 6           # post del prof pronti in anticipo (tre settimane)
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
 FORMATO_DOMENICA = "grande-domanda"
+VERSIONE_DOMENICA = "2"   # cambiala per far riscrivere le domeniche non ancora uscite né approvate (2: tono)
 CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 POSE = ["sorriso", "buffo", "pensieroso", "sorpreso", "spiega", "ride"]
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
@@ -249,7 +251,8 @@ ISTRUZIONI_DOMENICA = """Scrivi «La grande domanda», il super post della domen
 social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, docente \
 nella scuola secondaria di secondo grado. È il pezzo forte della settimana: un carosello \
 da sfogliare e un breve video che rispondono a una domanda vera degli studenti, in modo \
-serio, chiaro e appassionante. Lo leggono studenti, colleghi e famiglie.
+chiaro, preciso e simpatico: si sfoglia con il sorriso e si impara qualcosa. Lo leggono \
+studenti, colleghi e famiglie.
 
 Ricevi la domanda della settimana e il testo delle lezioni del sito che contengono la \
 risposta. Restituisci nel formato JSON:
@@ -280,7 +283,9 @@ niente formule vaghe che indeboliscono o deformano ciò che la Chiesa insegna.
 che dice la scienza, la storia e la fede.
 - Al massimo due emoji per testo, nessuna nel carosello e nel video. Non scrivere link: \
 li aggiunge il sistema.
-- Italiano corretto e naturale."""
+- Italiano corretto e naturale.
+
+""" + pr.TONO
 
 
 def nome_file(prefisso: str, chiave: str, contenuto: dict) -> str:
@@ -364,10 +369,16 @@ def main():
                            f"{seo.get(g.chiave_lezione(l), {}).get('sintesi', '')}"
                            for i, l in enumerate(ordinate, start=1))
     usate_dom = cache.setdefault("domande_usate", [])
+    try:   # le domeniche già approvate dagli agenti non si riscrivono
+        approvate = {v.get("chiave") for v in (coda_agenti.leggi() or {}).get("coda", []) if v.get("esito") == "approvato"}
+    except (ValueError, OSError):
+        approvate = set()
     for d in domeniche:
         k = d.isoformat()
-        vecchia = k in cache["domenica"] and cache["domenica"][k].get("formato") != FORMATO_DOMENICA \
-            and not pubblicato(cache["domenica"][k]["chiave"], registri)
+        vecchia = k in cache["domenica"] \
+            and (cache["domenica"][k].get("formato"), cache["domenica"][k].get("versione")) != (FORMATO_DOMENICA, VERSIONE_DOMENICA) \
+            and not pubblicato(cache["domenica"][k]["chiave"], registri) \
+            and cache["domenica"][k]["chiave"] not in approvate
         if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
             continue
         try:
@@ -386,7 +397,7 @@ def main():
             continue
         tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
         anno = str(scelte[0].get("anno", ""))
-        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "tempo": "",
+        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "versione": VERSIONE_DOMENICA, "tempo": "",
                 "colore": pr.COLORI_ANNO.get(anno, ORO), "anno": anno,
                 "lezione": " · ".join(l["titolo"] for l in scelte), "url": pr.url_lezione(scelte[0]),
                 "lezioni": [{"titolo": l["titolo"], "url": pr.url_lezione(l)} for l in scelte],

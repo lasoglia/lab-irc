@@ -46,7 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402  (stesse letture dei dati delle pagine SEO)
 
 MODELLO = os.environ.get("PROMO_MODELLO", "claude-opus-5-5")
-VERSIONE = "2"                      # cambiala per far riscrivere tutti i testi (2: caroselli e redattore)
+VERSIONE = "3"                      # cambiala per far riscrivere tutti i testi (3: tono più leggero)
 PARALLELI = int(os.environ.get("PROMO_PARALLELI", "6"))   # lezioni scritte contemporaneamente
 CHIAVE_SITO = "_sito"               # la voce con il post di presentazione del sito
 COLORI_ANNO = {"1": "#FF7A59", "2": "#4FB0FF", "3": "#A78BFA", "4": "#FB7BB5", "5": "#FBBF24"}
@@ -114,6 +114,13 @@ punti esclamativi a raffica: registro sobrio, caldo e preciso, da insegnante.
 - Italiano corretto, con accenti e apostrofi normali."""
 
 
+TONO = """Tono (vale più di ogni altra indicazione sul registro): leggero, simpatico e \
+vivace, come un prof che piace ai ragazzi. Immagini concrete e quotidiane, qualche \
+battuta bonaria, una sorpresa, domande che incuriosiscono: mai serioso, pesante o da \
+predica. L'umorismo non prende mai in giro persone, fedi o chi non crede, e i fatti \
+restano esatti. Restano vietati i toni pubblicitari e le urgenze."""
+
+
 REDATTORE = """Sei il caporedattore dei social del Lab IRC. Ricevi le istruzioni date \
 all'autore, il materiale di partenza e la BOZZA dei post in JSON. Rileggila con occhio \
 severo e restituisci la versione definitiva, nello stesso formato JSON:
@@ -122,6 +129,7 @@ o una domanda vera presa dal materiale, non con una formula generica;
 - fedeltà: togli tutto ciò che il materiale non contiene (autori, citazioni, attività);
 - chiarezza: frasi brevi, parole semplici, niente gergo da addetti ai lavori;
 - ritmo: niente ripetizioni tra un canale e l'altro, ognuno con il suo tono;
+- leggerezza: se un testo è serioso o pesante, rendilo più simpatico e vivo, senza perdere precisione;
 - carosello e testi brevi: ogni scheda si legge in tre secondi sul telefono;
 - rispetta tutte le lunghezze e le regole delle istruzioni.
 Se una parte è già ottima, lasciala com'è."""
@@ -219,7 +227,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
 
     da_scrivere = []
     for k, base, messaggio in lavori:
-        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI).encode()).hexdigest()[:16]
+        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI + TONO).encode()).hexdigest()[:16]
         voce = cache.get(k)
         if voce and voce.get("bloccato"):
             continue
@@ -231,7 +239,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
     def scrivi(lavoro):
         k, impronta, messaggio = lavoro
         try:
-            return k, impronta, scrivi_e_rivedi(client, ISTRUZIONI, messaggio, SCHEMA_POST), None
+            return k, impronta, scrivi_e_rivedi(client, ISTRUZIONI + "\n\n" + TONO, messaggio, SCHEMA_POST), None
         except Exception as err:   # un errore su una lezione non blocca le altre
             return k, impronta, None, err
 

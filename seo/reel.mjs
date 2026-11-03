@@ -41,22 +41,23 @@ const MASCOTTE = ['', '1-semino', '2-ichthy', '3-navicella', '4-bussolina', '5-t
 const ORO = '#E3C27A';
 
 // I tempi delle scene, in secondi: gancio, una scena per scheda, invito finale
-const T_GANCIO = 3.6, T_SCENA = 4.6, T_FINE = 3.8, T_PASSAGGIO = 0.45;
+const T_GANCIO = 3.8, T_SCENA = 4.6, T_FINE = 3.8, T_PASSAGGIO = 0.4;
+// Le espressioni del prof, scena dopo scena (assets/avatar/<posa>.png)
+const POSE = ['spiega', 'sorpreso', 'sorriso', 'buffo', 'spiega', 'pensieroso', 'sorriso', 'sorpreso'];
 
+/* Il video è una striscia a fumetti animata: in basso il prof (il suo avatar, che cambia
+   espressione) e la mascotte della classe; sopra, il fumetto di chi parla e, se c'è,
+   il disegno della scheda. La mascotte fa la domanda, il prof risponde. */
 function pagina(r) {
   const colore = r.colore || ORO;
   const n = r.scene.length;
   const durata = T_GANCIO + n * T_SCENA + T_FINE;
-  const scene = r.scene.map((s, i) => {
-    const disegno = s.disegno && existsSync(join(RADICE, s.disegno))
-      ? `<div class="disegno"><img src="${url(s.disegno)}"></div>`
-      : `<div class="disegno vuoto"><img src="${url(`assets/mascotte/svg/${r.mascotte || MASCOTTE[+r.anno] || MASCOTTE[1]}.svg`)}"></div>`;
-    return `<section class="scena" data-i="${i + 1}">
-  <div class="conta" style="color:${colore}">${i + 1}<span>/${n}</span></div>
-  ${disegno}
-  <div class="eb">${esc(s.titolo)}</div>
-  <h2>${esc(s.testo)}</h2></section>`;
-  }).join('\n');
+  const mascotte = url(`assets/mascotte/svg/${r.mascotte || MASCOTTE[+r.anno] || MASCOTTE[1]}.svg`);
+  const pose = ['pensieroso', ...r.scene.map((_, i) => POSE[i % POSE.length]), 'ride'];
+  const disegno = (s) => (s.disegno && existsSync(join(RADICE, s.disegno)) ? `<div class="disegno"><img src="${url(s.disegno)}"></div>` : '');
+  const scene = r.scene.map((s, i) => `<section class="scena da-prof">
+  ${disegno(s)}
+  <div class="fumetto"><div class="eb">${i + 1}/${n} · ${esc(s.titolo)}</div><h2>${esc(s.testo)}</h2></div></section>`).join('\n');
   return `<!doctype html><html lang="it"><head><meta charset="utf-8"><style>
 @font-face{font-family:Cormorant;font-weight:600;src:url(${url('design-system/fonts/cormorant-garamond-latin-600-normal.woff2')})}
 @font-face{font-family:Cormorant;font-weight:500;font-style:italic;src:url(${url('design-system/fonts/cormorant-garamond-latin-500-italic.woff2')})}
@@ -65,7 +66,8 @@ function pagina(r) {
 @font-face{font-family:Figtree;font-weight:700;src:url(${url('design-system/fonts/figtree-latin-700-normal.woff2')})}
 html,body{margin:0;width:${L}px;height:${A}px;overflow:hidden;background:#14131F}
 body{position:relative;color:#ECEAF5;font-family:Figtree}
-.fondo{position:absolute;inset:-10%;background:radial-gradient(60% 40% at 15% 10%,rgba(139,92,246,.38),transparent 65%),radial-gradient(60% 40% at 90% 90%,${colore}38,transparent 65%)}
+.fondo{position:absolute;inset:-10%;background:radial-gradient(60% 40% at 15% 10%,rgba(139,92,246,.38),transparent 65%),radial-gradient(70% 35% at 50% 85%,${colore}40,transparent 70%)}
+.punti{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 2px,transparent 2.5px);background-size:34px 34px}
 .bordo{position:absolute;inset:28px;border:1.5px solid rgba(227,194,122,.45);border-radius:44px}
 .barra{position:absolute;left:80px;right:80px;top:150px;height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
 .barra i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#8B5CF6,#22D3EE);transform-origin:left;transform:scaleX(0)}
@@ -74,68 +76,77 @@ body{position:relative;color:#ECEAF5;font-family:Figtree}
 .logo i{width:72px;height:72px;border-radius:21px;background:linear-gradient(135deg,#8B5CF6,#22D3EE);display:grid;place-items:center;font:600 42px Cormorant;font-style:normal;color:#fff}
 .logo b{font:600 46px Cormorant}.logo b span{background:linear-gradient(135deg,#A78BFA,#22D3EE);-webkit-background-clip:text;color:transparent}
 .classe{font:600 24px Cinzel;letter-spacing:.16em;text-transform:uppercase;color:${colore};border:2px solid currentColor;border-radius:999px;padding:12px 24px}
-section{position:absolute;left:80px;right:80px;top:320px;bottom:330px;display:flex;flex-direction:column;justify-content:center;opacity:0}
-.gancio{align-items:flex-start}
-.gancio .eb,.scena .eb{font:600 26px Cinzel;letter-spacing:.2em;text-transform:uppercase;color:${colore};display:flex;align-items:center;gap:16px;margin-bottom:30px}
-.gancio .eb:before,.scena .eb:before{content:"";width:56px;height:2px;background:currentColor;flex:none}
-.gancio h1{margin:0;font:600 112px/1.04 Cormorant;letter-spacing:-.01em;text-wrap:balance}
-.gancio .tit{margin-top:44px;font:500 38px/1.35 Figtree;color:#C7C3DA}
-.gancio .mascotte{width:300px;height:300px;margin-bottom:50px;filter:drop-shadow(0 20px 44px rgba(0,0,0,.4))}
-.gancio .trenta{margin-top:56px;font:700 30px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}
-.conta{font:600 40px Cinzel;letter-spacing:.08em;margin-bottom:26px}.conta span{opacity:.55;font-size:28px}
-.disegno{background:rgba(255,255,255,.04);border:1.5px solid rgba(227,194,122,.3);border-radius:36px;padding:22px;margin-bottom:46px;overflow:hidden}
-.disegno img{display:block;width:100%;height:auto;max-height:600px;object-fit:contain}
-.disegno.vuoto{display:grid;place-items:center;height:420px}.disegno.vuoto img{width:340px;height:340px}
-.scena h2{margin:0;font:600 70px/1.14 Cormorant;text-wrap:pretty}
-.fine{align-items:center;text-align:center}
-.fine .cinque{display:flex;gap:20px;margin-bottom:54px}.fine .cinque img{width:140px;height:140px}
-.fine h2{margin:0;font:600 86px/1.08 Cormorant}.fine h2 em{font-style:italic;font-weight:500;color:${ORO}}
-.fine p{margin:34px 0 0;font:500 36px/1.4 Figtree;color:#C7C3DA}
-.fine .bio{margin-top:50px;font:700 38px Figtree;background:rgba(255,255,255,.08);border:2px solid rgba(227,194,122,.6);border-radius:999px;padding:20px 40px}
+section{position:absolute;left:80px;right:80px;top:310px;height:720px;display:flex;flex-direction:column;justify-content:flex-end;opacity:0}
+.disegno{background:rgba(255,255,255,.05);border:1.5px solid rgba(227,194,122,.3);border-radius:30px;padding:14px;margin-bottom:34px;transform:rotate(-1.2deg);min-height:0;flex:0 1 auto}
+.disegno img{display:block;width:100%;height:auto;max-height:300px;object-fit:contain}
+.fumetto{position:relative;background:#FBFAFF;color:#14131F;border-radius:48px;padding:40px 46px;box-shadow:0 22px 50px rgba(0,0,0,.4)}
+.fumetto:after{content:"";position:absolute;bottom:-58px;border:28px solid transparent;border-top:40px solid #FBFAFF}
+.da-prof .fumetto:after{left:170px;border-left:34px solid #FBFAFF}
+.da-mascotte .fumetto:after{right:150px;border-right:34px solid #FBFAFF}
+.fumetto .eb{font:700 24px Figtree;letter-spacing:.06em;text-transform:uppercase;color:${colore === ORO ? '#9A6B12' : colore};filter:brightness(.8);margin-bottom:12px}
+.fumetto h1,.fumetto h2{margin:0;font:700 54px/1.18 Figtree;letter-spacing:-.01em;text-wrap:pretty}
+.fumetto h1{font-size:68px}
+.sopra{font:600 26px Cinzel;letter-spacing:.18em;text-transform:uppercase;color:${colore};margin-bottom:26px;text-align:right}
+.fine .fumetto{text-align:center}
+.fine .fumetto h2{font:600 76px/1.08 Cormorant}.fine .fumetto em{font-style:italic;font-weight:500;color:#7C4DDB}
+.fine .bio{display:inline-block;margin-top:22px;font:700 34px Figtree;color:#fff;background:#14131F;border-radius:999px;padding:16px 36px}
+.fine .cinque{display:flex;justify-content:center;gap:16px;margin-bottom:34px}.fine .cinque img{width:110px;height:110px}
+.palco{position:absolute;left:70px;right:70px;top:1090px;height:520px}
+.prof{position:absolute;left:0;bottom:0;width:500px;height:500px}
+.prof img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;opacity:0;box-shadow:0 0 0 8px ${ORO},0 34px 80px rgba(0,0,0,.5)}
+.mascotte{position:absolute;right:20px;bottom:20px;width:300px;height:300px;filter:drop-shadow(0 22px 40px rgba(0,0,0,.45))}
+.ombra{position:absolute;bottom:-14px;height:30px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(8px)}
 </style></head><body>
-<div class="fondo"></div><div class="bordo"></div>
+<div class="fondo"></div><div class="punti"></div><div class="bordo"></div>
 <div class="barra"><i></i></div>
 <div class="alto"><div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div><div class="classe">${esc(r.etichetta || 'Classe ' + r.classe)}</div></div>
-<section class="gancio">
-  <img class="mascotte" src="${url(`assets/mascotte/svg/${r.mascotte || MASCOTTE[+r.anno] || MASCOTTE[1]}.svg`)}">
-  <div class="eb">${esc(r.sottotitolo || 'Religione · la lezione in 30 secondi')}</div>
-  <h1>${esc(r.gancio)}</h1>
-  ${r.titolo && r.titolo !== r.gancio ? `<div class="tit">${esc(r.titolo)}</div>` : '<div class="tit"></div>'}
+<section class="gancio da-mascotte">
+  <div class="sopra">${esc(r.sottotitolo || 'La lezione in 30 secondi')}</div>
+  <div class="fumetto"><h1>${esc(r.gancio)}</h1></div>
 </section>
 ${scene}
-<section class="fine">
+<section class="fine da-prof">
   <div class="cinque">${[1, 2, 3, 4, 5].map((k) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[k]}.svg`)}">`).join('')}</div>
-  <h2>${r.etichetta ? 'La risposta completa' : 'La lezione completa'}<br>è su <em>www.labirc.it</em></h2>
-  <p>Per la classe e per i colleghi</p>
-  <div class="bio">Link nella bio</div>
+  <div class="fumetto"><h2>${r.etichetta ? 'La risposta completa' : 'La lezione completa'}<br>è su <em>www.labirc.it</em></h2><div class="bio">Link nella bio</div></div>
 </section>
+<div class="palco">
+  <div class="ombra" style="left:90px;width:320px"></div><div class="ombra" style="right:60px;width:220px"></div>
+  <div class="prof">${pose.map((p) => `<img src="${url(`assets/avatar/${p}.png`)}">`).join('')}</div>
+  <img class="mascotte" src="${mascotte}">
+</div>
 <script>
-// Tutte le animazioni su un'unica linea del tempo, ferma: il montatore la sposta fotogramma per fotogramma
 window.DURATA = ${durata * 1000};
 const P = ${T_PASSAGGIO * 1000};
-const opz = (inizio, durata) => ({ delay: inizio, duration: durata, fill: 'both', easing: 'ease-out' });
-function scena(el, inizio, durata, ultima) {
-  // entra salendo, resta, esce sfumando (l'ultima non esce)
-  el.animate([{ opacity: 0, transform: 'translateY(60px)' }, { opacity: 1, transform: 'none' }], opz(inizio, P * 1.4));
-  if (!ultima) el.animate([{ opacity: 1 }, { opacity: 0 }], { delay: inizio + durata - P, duration: P, fill: 'forwards' });
-  return inizio + durata;
-}
+const molla = 'cubic-bezier(.34,1.56,.64,1)';
+const tempi = [${T_GANCIO * 1000}, ...Array(${n}).fill(${T_SCENA * 1000}), ${T_FINE * 1000}];
+const sezioni = [...document.querySelectorAll('section')];
+const volti = [...document.querySelectorAll('.prof img')];
+const prof = document.querySelector('.prof'), mascotte = document.querySelector('.mascotte');
 let t = 0;
-const g = document.querySelector('.gancio');
-t = scena(g, 0, ${T_GANCIO * 1000});
-g.querySelector('.mascotte').animate([{ transform: 'scale(.4) rotate(-12deg)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], opz(150, 700));
-g.querySelector('.tit').animate([{ opacity: 0 }, { opacity: 1 }], opz(900, 600));
-document.querySelectorAll('.scena').forEach((s) => {
-  const inizio = t;
-  t = scena(s, inizio, ${T_SCENA * 1000});
-  const img = s.querySelector('.disegno img');
-  if (img) img.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.07)' }], { delay: inizio, duration: ${T_SCENA * 1000}, fill: 'both', easing: 'linear' });
-  s.querySelector('h2').animate([{ opacity: 0, transform: 'translateY(30px)' }, { opacity: 1, transform: 'none' }], opz(inizio + 350, 600));
+sezioni.forEach((s, i) => {
+  const d = tempi[i], ultima = i === sezioni.length - 1;
+  s.animate([{ opacity: 0 }, { opacity: 1 }], { delay: t, duration: P, fill: 'both' });
+  if (!ultima) s.animate([{ opacity: 1 }, { opacity: 0 }], { delay: t + d - P, duration: P, fill: 'forwards' });
+  // il fumetto «scoppia» fuori da chi parla
+  s.querySelector('.fumetto').animate([{ transform: 'scale(.55) rotate(-3deg)' }, { transform: 'none' }],
+    { delay: t + 80, duration: 520, fill: 'both', easing: molla });
+  const dis = s.querySelector('.disegno');
+  if (dis) dis.animate([{ transform: 'translateY(-40px) rotate(-6deg)', opacity: 0 }, { transform: 'rotate(-1.2deg)', opacity: 1 }],
+    { delay: t + 300, duration: 600, fill: 'both', easing: molla });
+  // il volto del prof di questa scena
+  volti[i].animate([{ opacity: 1 }, { opacity: 1 }], { delay: t, duration: d, fill: ultima ? 'forwards' : 'none' });
+  // chi parla fa un saltello
+  const chi = s.classList.contains('da-mascotte') ? mascotte : prof;
+  chi.animate([{ transform: 'translateY(0) scale(1)' }, { transform: 'translateY(-46px) scale(1.04)' }, { transform: 'translateY(0) scale(1)' }],
+    { delay: t + 40, duration: 420, easing: 'ease-out' });
+  t += d;
 });
-const f = document.querySelector('.fine');
-scena(f, t, ${T_FINE * 1000}, true);
-f.querySelectorAll('.cinque img').forEach((m, k) => m.animate([{ transform: 'translateY(80px) scale(.5)', opacity: 0 }, { transform: 'none', opacity: 1 }], opz(t + 150 + k * 110, 500)));
-f.querySelector('.bio').animate([{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }, { transform: 'scale(1)' }], { delay: t + 1400, duration: 1200, iterations: 2, fill: 'both' });
+// entrata in scena all'inizio, e la mascotte che dondola
+prof.animate([{ transform: 'translateX(-620px) rotate(-14deg)' }, { transform: 'none' }], { duration: 700, fill: 'backwards', easing: molla });
+mascotte.animate([{ transform: 'translateY(0) rotate(-3deg)' }, { transform: 'translateY(-16px) rotate(3deg)' }, { transform: 'translateY(0) rotate(-3deg)' }],
+  { delay: 700, duration: 1400, iterations: Infinity, easing: 'ease-in-out' });
+document.querySelectorAll('.fine .cinque img').forEach((m, k) => m.animate([{ transform: 'translateY(60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }],
+  { delay: t - ${T_FINE * 1000} + 200 + k * 110, duration: 500, fill: 'both', easing: molla }));
 document.querySelector('.barra i').animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: window.DURATA, fill: 'both', easing: 'linear' });
 document.getAnimations().forEach((a) => a.pause());
 window.vai = (ms) => document.getAnimations().forEach((a) => { a.currentTime = ms; });
@@ -164,10 +175,15 @@ try {
       await document.fonts.ready;
       // testi lunghi: rimpiccioliti finché ogni scena sta nel suo spazio
       for (const s of document.querySelectorAll('section')) {
-        const t = s.querySelector('h1, h2');
+        const t = s.querySelector('.fumetto h1, .fumetto h2');
         let px = parseFloat(getComputedStyle(t).fontSize);
         s.style.opacity = 1;
-        while (px > 40 && s.scrollHeight > s.clientHeight + 2) { px -= 3; t.style.fontSize = px + 'px'; }
+        // il contenuto è allineato in basso: se sborda, sborda in alto (offsetTop ignora le animazioni)
+        const sborda = () => s.firstElementChild.offsetTop < 0;
+        const img = s.querySelector('.disegno img');
+        let h = 300;
+        while (img && h > 180 && sborda()) { h -= 20; img.style.maxHeight = h + 'px'; }
+        while (px > 40 && sborda()) { px -= 3; t.style.fontSize = px + 'px'; }
         s.style.opacity = '';
       }
       return window.DURATA;
