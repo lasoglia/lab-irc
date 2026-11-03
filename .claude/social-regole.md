@@ -31,6 +31,13 @@ Il registro è sobrio, caldo e preciso, da insegnante.
 - Nessuna vendita: il sito è gratuito e il docente è un dipendente pubblico.
 - Non promettere accesso libero ai giochi di verifica: alcuni sono chiusi da una password.
 
+## Ganci e didascalie
+Il metodo completo è in `.claude/social-metodo.md`. In breve:
+- Il gancio (prima scritta o prima riga) ha al massimo 12 parole, è concreto e il contenuto lo mantiene.
+  Niente clickbait, niente leve di paura, vergogna o «resti indietro».
+- La didascalia attira, dice a chi serve, porta un dato o una fonte della lezione e chiude con una sola richiesta.
+- Mai «scrivi X nei commenti per ricevere…»: ai commenti non si risponde in automatico.
+
 ## Formati
 | Campo | Caratteri | Emoji | Note |
 |---|---|---|---|

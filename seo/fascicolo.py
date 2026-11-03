@@ -10,13 +10,21 @@ Usa pdftotext e pdftoppm (poppler-utils), niente IA.
   trova(pdf, frase)            -> {"pagina": n, "righe": [{x, y, w, h}, ...]} oppure None
   immagine(pdf, pagina, file)  -> scrive la pagina in JPG a 150 dpi
   parola(pdf, pagina, parola)  -> {x, y, w, h} della prima parola uguale (per il cerchio)
+
+USO
+---
+  python seo/fascicolo.py copione.json   controlla che ogni citazione delle inquadrature «pagina»
+                                         sia davvero nel fascicolo (esce con 1 se ne manca una)
+  python seo/fascicolo.py file.pdf       stampa il testo del fascicolo, pagina per pagina
 """
 
 from __future__ import annotations
 
 import html
+import json
 import re
 import subprocess
+import sys
 import unicodedata
 from pathlib import Path
 
@@ -113,3 +121,39 @@ def immagine(pdf: Path, pagina: int, destinazione: Path) -> Path:
     subprocess.run(["pdftoppm", "-r", str(DPI), "-f", str(pagina), "-l", str(pagina), "-singlefile", "-jpeg",
                     "-jpegopt", "quality=90", str(pdf), str(radice)], check=True)
     return radice.with_suffix(".jpg")
+
+
+def controlla(copione: Path, radice: Path) -> list[str]:
+    """Gli errori del copione: citazioni che non sono nel fascicolo o dettagli da cerchiare assenti."""
+    c = json.loads(copione.read_text(encoding="utf-8"))
+    pdf = radice / c.get("fascicolo", "")
+    if not pdf.is_file():
+        return [f"fascicolo non trovato: {c.get('fascicolo')}"]
+    errori = []
+    for n, q in enumerate(c.get("inquadrature", []), 1):
+        if q.get("tipo") != "pagina":
+            continue
+        esito = trova(pdf, q.get("citazione", ""), q.get("cerchia"))
+        if not esito:
+            errori.append(f"inquadratura {n}: citazione non trovata (servono almeno 4 parole esatte)")
+        elif q.get("cerchia") and not esito.get("cerchio"):
+            errori.append(f"inquadratura {n}: «{q['cerchia']}» non è dentro la citazione")
+    return errori
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        sys.exit(__doc__)
+    f = Path(sys.argv[1])
+    if f.suffix == ".pdf":
+        for n in range(1, pagine(f) + 1):
+            testo = subprocess.run(["pdftotext", "-layout", "-f", str(n), "-l", str(n), str(f), "-"],
+                                   capture_output=True, text=True, check=True).stdout
+            try:
+                print(f"===== pagina {n} =====\n{testo}")
+            except BrokenPipeError:
+                break
+        sys.exit(0)
+    sbagli = controlla(f, Path.cwd())
+    print("\n".join(sbagli) if sbagli else "Tutte le citazioni sono nel fascicolo.")
+    sys.exit(1 if sbagli else 0)
