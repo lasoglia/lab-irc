@@ -41,10 +41,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402
 import coda as coda_agenti  # noqa: E402
+import social_calendario as cal  # noqa: E402
 import illustrazioni as ill  # noqa: E402
 import promozione as pr  # noqa: E402
 
-RISERVA_PROF = 6           # post del prof pronti in anticipo (tre settimane)
+RISERVA_PROF = 6           # strisce del prof pronte in anticipo, solo se arrivano le vacanze
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
 FORMATO_DOMENICA = "grande-domanda"
@@ -342,7 +343,9 @@ def main():
     # --- il prof: si tiene una riserva di post pronti ---
     in_attesa = [p for p in cache["prof"] if not pubblicato(p["chiave"], registri)]
     usate = [p.get("lezione_chiave") for p in cache["prof"]]
-    while client and ordinate and len(in_attesa) < RISERVA_PROF:
+    # le strisce escono solo nelle vacanze (seo/social_calendario.py): se ne scrivono solo quando servono
+    riserva = min(RISERVA_PROF, len(cal.giorni_di("prof", oggi, 21)))
+    while client and ordinate and len(in_attesa) < riserva:
         n = len(cache["prof"]) + 1
         # la lezione usata meno volte, nell'ordine del kit; il formato a rotazione
         l = min(ordinate, key=lambda x: (usate.count(g.chiave_lezione(x)), ordinate.index(x)))
@@ -363,8 +366,8 @@ def main():
         print(f"  ✓ prof {n:03d} · {formato} · {l['titolo']}")
 
     # --- la domenica: «La grande domanda», le prossime due se mancano ---
-    prossima = oggi + dt.timedelta(days=(6 - oggi.weekday()) % 7)
-    domeniche = [prossima + dt.timedelta(days=7 * i) for i in range(DOMENICHE_AVANTI)]
+    # le domeniche di scuola (nelle vacanze la grande domanda non esce)
+    domeniche = cal.giorni_di("domenica", oggi - dt.timedelta(days=1), 7 * DOMENICHE_AVANTI)[:DOMENICHE_AVANTI]
     elenco_lez = "\n".join(f"{i}. {l['titolo']} (classe {g.NOMI_ANNO.get(str(l.get('anno')), '')}): "
                            f"{seo.get(g.chiave_lezione(l), {}).get('sintesi', '')}"
                            for i, l in enumerate(ordinate, start=1))
@@ -382,12 +385,19 @@ def main():
         if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
             continue
         try:
-            # prima la domanda e le lezioni che rispondono, poi i testi letti per intero
-            scelta, r = pr.chiama_claude(client, ISTRUZIONI_SCELTA,
-                                         f"Domande già usate:\n" + ("\n".join(f"- {x}" for x in usate_dom[-60:]) or "nessuna")
-                                         + f"\n\nLezioni del sito:\n{elenco_lez}", SCHEMA_SCELTA, "medium")
-            tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
-            scelte = [ordinate[i - 1] for i in scelta["lezioni"] if 1 <= i <= len(ordinate)][:3] or [ordinate[0]]
+            prima = cache["domenica"].get(k, {})
+            per_titolo = {l["titolo"]: l for l in ordinate}
+            if prima.get("formato") == FORMATO_DOMENICA and all(x["titolo"] in per_titolo for x in prima.get("lezioni", [])):
+                # si riscrive una domenica già pensata: stessa domanda, stesse lezioni
+                scelta = {"domanda": prima["testi"]["titolo"]}
+                scelte = [per_titolo[x["titolo"]] for x in prima["lezioni"]]
+            else:
+                # prima la domanda e le lezioni che rispondono, poi i testi letti per intero
+                scelta, r = pr.chiama_claude(client, ISTRUZIONI_SCELTA,
+                                             f"Domande già usate:\n" + ("\n".join(f"- {x}" for x in usate_dom[-60:]) or "nessuna")
+                                             + f"\n\nLezioni del sito:\n{elenco_lez}", SCHEMA_SCELTA, "medium")
+                tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+                scelte = [ordinate[i - 1] for i in scelta["lezioni"] if 1 <= i <= len(ordinate)][:3] or [ordinate[0]]
             messaggio = (f"Domanda della settimana: {scelta['domanda']}\n\n" + "\n\n".join(
                 f"<lezione titolo=\"{l['titolo']}\" classe=\"{g.NOMI_ANNO.get(str(l.get('anno')), '')}\">\n"
                 f"{g.testo_lezione(l)}\n</lezione>" for l in scelte))
@@ -413,7 +423,8 @@ def main():
         except Exception as err:   # senza disegni il carosello esce lo stesso
             print(f"  ! domenica {k}: disegni non fatti ({err})")
         cache["domenica"][k] = voce
-        usate_dom.append(t["titolo"])
+        if t["titolo"] not in usate_dom:
+            usate_dom.append(t["titolo"])
         print(f"  ✓ domenica {k} · {t['titolo']} · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
 
     # --- gli elenchi per il disegnatore e per la pubblicazione ---

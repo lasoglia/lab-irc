@@ -25,6 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coda  # noqa: E402
+import social_calendario as cal  # noqa: E402
 
 RADICE = coda.RADICE
 
@@ -37,7 +38,7 @@ def carica(nome: str) -> dict:
 def valuta(giorno: str, telegram: dict, meta: dict, stato_coda: dict | None) -> tuple[str, list[str]]:
     """(esito, canali mancanti). Esiti: ok, non-previsto, in-pausa, mancante."""
     settimana = dt.date.fromisoformat(giorno).weekday()
-    if settimana == 3:   # il giovedì c'è solo il reel automatico, fuori dalla coda (seo/reel.py)
+    if cal.tipo_del_giorno(dt.date.fromisoformat(giorno)) is None:   # sabato, o vacanza senza striscia
         return "non-previsto", []
     if stato_coda is not None and stato_coda.get("pausa"):
         return "in-pausa", []

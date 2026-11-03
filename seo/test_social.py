@@ -75,6 +75,38 @@ class Calendario(unittest.TestCase):
         self.assertEqual(cal.tempo_liturgico(dt.date(2026, 11, 3)), "Tempo ordinario")
 
 
+class CalendarioSocial(unittest.TestCase):
+    """Scuola: lezioni lun-ven, sabato niente, domenica la grande domanda. Vacanze: strisce lun-mer-ven."""
+
+    def setUp(self):
+        self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
+
+    def tearDown(self):
+        cal.FILE_VACANZE = self._file
+
+    def test_settimana_di_scuola(self):
+        attesi = ["lezione"] * 5 + [None, "domenica"]
+        self.assertEqual([cal.tipo_del_giorno(dt.date(2026, 11, 9) + dt.timedelta(days=i)) for i in range(7)], attesi)
+
+    def test_vacanze_di_natale(self):
+        self.assertEqual(cal.in_vacanza(dt.date(2026, 12, 28)), "vacanze di Natale")
+        attesi = ["prof", None, "prof", None, "prof", None, None]   # dal lunedì 28 dicembre
+        self.assertEqual([cal.tipo_del_giorno(dt.date(2026, 12, 28) + dt.timedelta(days=i)) for i in range(7)], attesi)
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2027, 1, 7)), "lezione")
+
+    def test_vacanze_di_pasqua(self):   # Pasqua 2027: 28 marzo
+        self.assertTrue(cal.in_vacanza(dt.date(2027, 3, 25)))
+        self.assertTrue(cal.in_vacanza(dt.date(2027, 3, 30)))
+        self.assertFalse(cal.in_vacanza(dt.date(2027, 3, 31)))
+
+    def test_file_delle_vacanze(self):
+        with tempfile.TemporaryDirectory() as d:
+            cal.FILE_VACANZE = Path(d) / "vacanze.json"
+            cal.FILE_VACANZE.write_text(json.dumps({"vacanze": [{"dal": "2026-11-09", "al": "2026-11-10", "nome": "ponte"}]}))
+            self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 9)), "prof")
+            self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "lezione")
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
@@ -87,7 +119,7 @@ class Controllo(unittest.TestCase):
         self.assertEqual(ctrl.valuta("2026-11-09", self.TG, meta, None), ("mancante", ["instagram"]))
 
     def test_giorno_senza_uscita(self):
-        self.assertEqual(ctrl.valuta("2026-11-12", {}, {}, None)[0], "non-previsto")   # giovedì
+        self.assertEqual(ctrl.valuta("2026-11-14", {}, {}, None)[0], "non-previsto")   # sabato
 
     def test_pausa(self):
         self.assertEqual(ctrl.valuta("2026-11-09", {}, {}, {"pausa": True})[0], "in-pausa")

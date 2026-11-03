@@ -7,6 +7,14 @@ la data di Pasqua e tutte quelle che ne dipendono non devono poter essere sbagli
 
 Le date mobili seguono il calendario liturgico italiano, dove Ascensione e
 Corpus Domini si celebrano di domenica.
+
+Qui sta anche il calendario dei social (tipo_del_giorno), usato da chi pubblica,
+dagli agenti e dai controlli:
+  scuola     lunedì-venerdì una lezione (carosello, storia e video), sabato niente,
+             domenica «La grande domanda»
+  vacanze    lunedì, mercoledì e venerdì una striscia simpatica del prof, nient'altro
+Le vacanze sono quelle di data/vacanze.json (da correggere ogni anno con il calendario
+della regione); se il file manca valgono le date nazionali più comuni.
 """
 
 from __future__ import annotations
@@ -112,3 +120,43 @@ def tempo_liturgico(giorno: dt.date) -> str:
     if giorno >= dt.date(giorno.year, 12, 25) or giorno <= dt.date(giorno.year, 1, 6):
         return "Tempo di Natale"
     return "Tempo ordinario"
+
+
+# --------------------------------------------------------------------------
+# Il calendario dei social: scuola e vacanze
+# --------------------------------------------------------------------------
+FILE_VACANZE = RADICE / "data" / "vacanze.json"
+
+
+def vacanze_predefinite(anno: int) -> list[tuple[dt.date, dt.date, str]]:
+    """Le vacanze più comuni in Italia (le regioni cambiano qualche giorno)."""
+    p = pasqua(anno)
+    return [(dt.date(anno - 1, 12, 23), dt.date(anno, 1, 6), "vacanze di Natale"),
+            (p - dt.timedelta(days=3), p + dt.timedelta(days=2), "vacanze di Pasqua"),
+            (dt.date(anno, 6, 10), dt.date(anno, 9, 13), "vacanze estive"),
+            (dt.date(anno, 12, 23), dt.date(anno + 1, 1, 6), "vacanze di Natale")]
+
+
+def vacanze(anno: int) -> list[tuple[dt.date, dt.date, str]]:
+    if FILE_VACANZE.exists():
+        dati = json.loads(FILE_VACANZE.read_text(encoding="utf-8"))
+        return [(dt.date.fromisoformat(v["dal"]), dt.date.fromisoformat(v["al"]), v.get("nome", "vacanze"))
+                for v in dati.get("vacanze", [])]
+    return vacanze_predefinite(anno)
+
+
+def in_vacanza(giorno: dt.date) -> str:
+    """Il nome del periodo di vacanza in cui cade il giorno, oppure ''."""
+    return next((nome for dal, al, nome in vacanze(giorno.year) if dal <= giorno <= al), "")
+
+
+def tipo_del_giorno(giorno: dt.date) -> str | None:
+    """Che cosa esce quel giorno: 'lezione', 'prof', 'domenica' oppure None."""
+    if in_vacanza(giorno):
+        return "prof" if giorno.weekday() in (0, 2, 4) else None
+    return {5: None, 6: "domenica"}.get(giorno.weekday(), "lezione")
+
+
+def giorni_di(tipo: str, inizio: dt.date, giorni: int) -> list[dt.date]:
+    """I giorni in cui esce quel tipo di post, da domani per «giorni» giorni."""
+    return [d for d in (inizio + dt.timedelta(days=i) for i in range(1, giorni + 1)) if tipo_del_giorno(d) == tipo]

@@ -11,13 +11,13 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 ## Social
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
   del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
-- `seo/pubblica.py` pubblica ogni giorno: lezioni lunedì, mercoledì, venerdì; striscia del prof
-  martedì e sabato; «La grande domanda» la domenica (prima il carosello, poi il suo video, che
-  esce solo se il carosello è approvato). Dopo ogni post su Facebook e Instagram
-  esce anche la sua storia verticale.
-- Il giovedì esce il reel: `seo/reel.py` sceglie l'ultima lezione uscita e fa scrivere il copione
-  a Claude, `seo/reel.mjs` monta il video (MP4 in `promozione/reel/`). Non va pianificato nella
-  coda degli agenti: rilancia una lezione già approvata.
+- Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`). A scuola: lezioni dal lunedì al
+  venerdì, sabato niente, domenica «La grande domanda». In vacanza (`data/vacanze.json`, o le date
+  nazionali più comuni): una striscia del prof lunedì, mercoledì e venerdì, nient'altro.
+- `seo/pubblica.py` pubblica il post del giorno con la sua storia, poi (`--coda video`) il suo video a
+  fumetti col prof: `seo/reel.py` scrive i copioni delle lezioni dei prossimi 7 giorni, `seo/rubriche.py`
+  quelli della domenica, `seo/reel.mjs` monta i video (MP4 in `promozione/reel/`). Il video non va
+  pianificato: esce solo se il suo post è uscito.
 - `seo/coda.py` limita la pubblicazione ai post approvati in `data/social-coda.json`.
 - Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`.
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
