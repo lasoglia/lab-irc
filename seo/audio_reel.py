@@ -244,9 +244,11 @@ def componi(tempi: dict) -> np.ndarray:
         except Exception:
             pass
     if np.any(voce):
-        presenza = np.convolve(np.abs(voce) > 0.01, np.ones(int(0.25 * SR)) / (0.25 * SR), mode="same")
-        base *= 1 - 0.6 * np.clip(presenza * 3, 0, 1)
-        voce *= 0.9 / (np.max(np.abs(voce)) or 1)
+        # con la voce la musica fa da tappeto: più bassa sempre, quasi muta mentre il prof parla
+        presenza = np.convolve(np.abs(voce) > 0.01, np.ones(int(0.3 * SR)) / (0.3 * SR), mode="same")
+        base *= 0.45 * (1 - 0.8 * np.clip(presenza * 3, 0, 1))
+        effetti *= 0.6
+        voce *= 0.95 / (np.max(np.abs(voce)) or 1)
 
     traccia = (base + effetti + voce)[: int(durata * SR)]
     k = int(1.2 * SR)
