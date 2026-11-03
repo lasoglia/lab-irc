@@ -296,8 +296,29 @@ const giaUscito = (chiave) => {
   const m = registroMeta[chiave] || {}, date = [registroTg[chiave], m.facebook, m.instagram];
   return date.every(Boolean) && date.every((d) => d <= limitePulizia);
 };
+// Si disegnano solo i post che servono: quelli in coda (data/social-coda.json) da oggi in
+// poi, più i candidati del piano settimanale (CANDIDATI=.social/candidati.json), che gli
+// agenti devono vedere. Le immagini vanno poi su Cloudflare R2 (seo/media_r2.py): nel repo
+// non entrano, così niente doppioni; quelle già là non si ridisegnano.
+const SERVONO = (() => {
+  const chiavi = new Set();
+  const coda = registro('social-coda.json');
+  const ieri = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+  for (const v of coda.coda || []) if (String(v.quando) >= ieri) chiavi.add(v.chiave);
+  if (process.env.CANDIDATI && existsSync(process.env.CANDIDATI)) {
+    for (const k of Object.values(JSON.parse(readFileSync(process.env.CANDIDATI, 'utf8')))) chiavi.add(k);
+  }
+  return chiavi;
+})();
+const serve = (chiave) => SERVONO.has(chiave) && !giaUscito(chiave);
+const R2 = (() => {
+  const f = join(RADICE, 'data', 'media-r2.json');
+  const limite = new Date(Date.now() - 28 * 864e5).toISOString().slice(0, 10);
+  const r = existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : {};
+  return (file) => Boolean(r[`cartoline/${file}`] && r[`cartoline/${file}`] >= limite);
+})();
 const lavori = [];
-for (const c of leggi('cartoline.json').filter((x) => !giaUscito(x.chiave))) {
+for (const c of leggi('cartoline.json').filter((x) => serve(x.chiave))) {
   const immagini = c.immagini && c.immagini.length ? c.immagini : [c.file];
   lavori.push({ file: immagini[0], html: () => copertina(c), adatta: 'h1' });
   const schede = c.carosello || [];
@@ -305,14 +326,14 @@ for (const c of leggi('cartoline.json').filter((x) => !giaUscito(x.chiave))) {
   schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s, (c.illustrazioni || [])[k]), adatta: 'h2' }));
   if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale), v: 2 });
 }
-for (const p of leggi('prof.json').filter((x) => !giaUscito(x.chiave))) {
+for (const p of leggi('prof.json').filter((x) => serve(x.chiave))) {
   const vignette = p.vignette || [];
   // senza le illustrazioni del prof (assets/avatar/) le strisce aspettano: meglio nessuna che sgranata
   const manca = vignette.find((v) => !avatarDi(v.posa));
   if (manca) { console.log(`! Manca l'avatar «${manca.posa}» in assets/avatar/: salto la striscia ${p.chiave}.`); continue; }
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
-for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => !giaUscito(x.chiave))) {
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => serve(x.chiave))) {
   lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1', v: d.sfondo ? 2 : 1 });
   // il carosello della domenica e del sabato: le schede con i disegni, poi il saluto finale
   const schede = d.carosello || [];
@@ -331,16 +352,16 @@ for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) 
 // e solo per i post non ancora usciti su Facebook e Instagram
 const daRaccontare = (chiave) => !(registroMeta[chiave] && registroMeta[chiave].facebook && registroMeta[chiave].instagram);
 const prima_ = lavori.length;
-for (const c of leggi('cartoline.json').filter((x) => daRaccontare(x.chiave))) {
+for (const c of leggi('cartoline.json').filter((x) => serve(x.chiave) && daRaccontare(x.chiave))) {
   const prima = (c.immagini && c.immagini[0]) || c.file;
   lavori.push({ file: storiaDi(prima), alto: 1920, html: () => storia(c.colore || ORO, prima,
     c.anno ? `Nuova lezione · classe ${c.classe}` : 'Religione Cattolica', 'Il post completo è sul profilo') });
 }
-for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
+for (const p of leggi('prof.json').filter((x) => serve(x.chiave) && daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'Il post completo è sul profilo') });
 }
-for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => serve(x.chiave) && daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori) l.soloJpg = true;   // solo JPG: i PNG pesavano il doppio e non li usa nessuno
 
 {
@@ -362,7 +383,7 @@ for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has
 const VERSIONI = join(CARTELLA, 'versioni.json');
 const versioni = existsSync(VERSIONI) ? JSON.parse(readFileSync(VERSIONI, 'utf8')) : {};
 const vecchia = (l) => (versioni[l.file] || 1) !== (l.v || 1);
-const daFare = lavori.filter((l) => vecchia(l) || (!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))));
+const daFare = lavori.filter((l) => vecchia(l) || (!R2(jpg(l.file)) && ((!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))))));
 const salvaVersioni = () => {
   const tieni = Object.fromEntries(lavori.filter((l) => (l.v || 1) > 1 && !vecchia(l)).map((l) => [l.file, l.v]));
   writeFileSync(VERSIONI, JSON.stringify(tieni, null, 1) + '\n');

@@ -80,7 +80,7 @@ jobs:
         run: |
           case "$AZIONE" in
             storia) python seo/vetrina.py --storia ;;
-            controlla) e=0; python seo/vetrina.py --controlla || e=1; python seo/video_r2.py --prova || e=1; exit $e ;;
+            controlla) e=0; python seo/vetrina.py --controlla || e=1; python seo/media_r2.py --prova || e=1; exit $e ;;
             *) python seo/vetrina.py --pubblica ;;
           esac
 
