@@ -190,7 +190,7 @@ function monta(uscita, audio) {
   const sonoro = audio ? ['-i', audio] : ['-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo'];
   const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
     ...sonoro, '-shortest', '-ar', '48000',
-    '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-r', String(FPS),
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-r', String(FPS),
     '-c:a', 'aac', '-b:a', '96k', '-movflags', '+faststart', uscita], { stdio: ['pipe', 'inherit', 'inherit'] });
   const fine = new Promise((ok, ko) => ff.on('close', (c) => (c === 0 ? ok() : ko(new Error(`ffmpeg è uscito con ${c}`)))));
   return { ff, fine };

@@ -285,8 +285,19 @@ ${CANDELE}
 }
 
 /* ---------- l'elenco di tutto quello che va disegnato ---------- */
+// Pulizia: Instagram, Facebook e Telegram tengono una copia loro di ogni post, quindi le
+// immagini di un post uscito ovunque da almeno GIORNI_PULIZIA giorni non servono più:
+// non si ridisegnano e si cancellano (il sito resta leggero). Si salvano solo in JPG.
+const GIORNI_PULIZIA = 2;
+const registro = (nome) => (existsSync(join(RADICE, 'data', nome)) ? JSON.parse(readFileSync(join(RADICE, 'data', nome), 'utf8')) : {});
+const registroMeta = registro('meta.json'), registroTg = registro('telegram.json');
+const limitePulizia = new Date(Date.now() - GIORNI_PULIZIA * 864e5).toISOString().slice(0, 10);
+const giaUscito = (chiave) => {
+  const m = registroMeta[chiave] || {}, date = [registroTg[chiave], m.facebook, m.instagram];
+  return date.every(Boolean) && date.every((d) => d <= limitePulizia);
+};
 const lavori = [];
-for (const c of leggi('cartoline.json')) {
+for (const c of leggi('cartoline.json').filter((x) => !giaUscito(x.chiave))) {
   const immagini = c.immagini && c.immagini.length ? c.immagini : [c.file];
   lavori.push({ file: immagini[0], html: () => copertina(c), adatta: 'h1' });
   const schede = c.carosello || [];
@@ -294,14 +305,14 @@ for (const c of leggi('cartoline.json')) {
   schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s, (c.illustrazioni || [])[k]), adatta: 'h2' }));
   if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale), v: 2 });
 }
-for (const p of leggi('prof.json')) {
+for (const p of leggi('prof.json').filter((x) => !giaUscito(x.chiave))) {
   const vignette = p.vignette || [];
   // senza le illustrazioni del prof (assets/avatar/) le strisce aspettano: meglio nessuna che sgranata
   const manca = vignette.find((v) => !avatarDi(v.posa));
   if (manca) { console.log(`! Manca l'avatar «${manca.posa}» in assets/avatar/: salto la striscia ${p.chiave}.`); continue; }
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
-for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')]) {
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => !giaUscito(x.chiave))) {
   lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1', v: d.sfondo ? 2 : 1 });
   // il carosello della domenica e del sabato: le schede con i disegni, poi il saluto finale
   const schede = d.carosello || [];
@@ -318,7 +329,6 @@ for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')]) {
 }
 // le storie vengono per ultime (mostrano la copertina appena disegnata), solo in JPG
 // e solo per i post non ancora usciti su Facebook e Instagram
-const registroMeta = existsSync(join(RADICE, 'data', 'meta.json')) ? JSON.parse(readFileSync(join(RADICE, 'data', 'meta.json'), 'utf8')) : {};
 const daRaccontare = (chiave) => !(registroMeta[chiave] && registroMeta[chiave].facebook && registroMeta[chiave].instagram);
 const prima_ = lavori.length;
 for (const c of leggi('cartoline.json').filter((x) => daRaccontare(x.chiave))) {
@@ -331,7 +341,7 @@ for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'Il post completo è sul profilo') });
 }
 for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
-for (const l of lavori.slice(prima_)) l.soloJpg = true;
+for (const l of lavori) l.soloJpg = true;   // solo JPG: i PNG pesavano il doppio e non li usa nessuno
 
 {
   const vetrina = existsSync(join(RADICE, 'promozione', 'vetrina.json')) ? JSON.parse(readFileSync(join(RADICE, 'promozione', 'vetrina.json'), 'utf8')) : null;
