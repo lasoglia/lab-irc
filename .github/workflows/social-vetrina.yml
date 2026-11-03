@@ -1,0 +1,80 @@
+name: Social · vetrina dei profili
+# Una volta sola (pulsante «Run workflow»): prepara e pubblica la vetrina dei profili
+# (seo/vetrina.py): il carosello «Benvenuto nel Lab» e il video «Il prof si presenta» su
+# Instagram, Facebook e Telegram, la descrizione e il messaggio fissato del canale Telegram,
+# la copertina e la descrizione della Pagina Facebook (se la chiave di Meta lo permette).
+# Disegna anche le icone delle storie in evidenza di Instagram, che si caricano a mano.
+# I post già usciti sono segnati nei registri: rilanciarla non li ripubblica.
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: telegram-kit-social
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
+jobs:
+  vetrina:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - name: Prepara Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepara la vetrina (immagini, video, sfondo)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          pip install --quiet anthropic pypdf
+          python seo/vetrina.py --prepara
+          python seo/immagini_ia.py || true
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          export PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)"
+          node seo/cartoline.mjs
+          node seo/reel.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add promozione data
+          if ! git diff --cached --quiet; then
+            git commit -m "Social: la vetrina dei profili"
+            for prova in 1 2 3; do
+              git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
+              sleep 10
+            done
+          fi
+
+      - name: Pubblica la vetrina
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
+        run: python seo/vetrina.py --pubblica
+
+      - name: Salva il registro dei post usciti
+        if: always()
+        run: |
+          git add data/telegram.json data/meta.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Social: vetrina pubblicata"
+            for prova in 1 2 3; do
+              git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
+              sleep 10
+            done
+          fi

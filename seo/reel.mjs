@@ -26,7 +26,7 @@ const L = 1080, A = 1920;
 
 // il reel del giovedì (seo/reel.py) e i video della domenica (seo/rubriche.py)
 const leggi = (nome) => { const f = join(RADICE, 'promozione', nome); return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : []; };
-const elenco = [...leggi('reel.json'), ...leggi('reel-domenica.json')];
+const elenco = [...leggi('reel.json'), ...leggi('reel-domenica.json'), ...leggi('reel-vetrina.json')];
 mkdirSync(CARTELLA, { recursive: true });
 const attesi = new Set(elenco.map((r) => r.video));
 for (const f of readdirSync(CARTELLA)) if (/\.mp4$/.test(f) && !attesi.has(f)) { unlinkSync(join(CARTELLA, f)); console.log('  - tolto', f); }

@@ -113,7 +113,7 @@ def main() -> int:
         return 0
 
     elenchi = {nome: leggi(g.RADICE / "promozione" / nome, [])
-               for nome in ("reel.json", "reel-domenica.json", "domenica.json", "sabato.json")}
+               for nome in ("reel.json", "reel-domenica.json", "reel-vetrina.json", "domenica.json", "sabato.json")}
     # un'immagine per post: il video usa quella del suo post (chiave «origine»)
     voci = {}
     for nome, elenco in elenchi.items():
