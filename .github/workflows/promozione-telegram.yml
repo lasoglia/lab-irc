@@ -2,7 +2,7 @@ name: Social · post automatico
 # Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py),
 # secondo il calendario di seo/social_calendario.py:
 #   scuola    lunedì-venerdì una lezione (carosello, storia e video a fumetti col prof),
-#             sabato niente, domenica «La grande domanda» (carosello, storia e video)
+#             sabato «Lo Shabbat del Lab», domenica «La grande domanda» (carosello, storia e video)
 #   vacanze   lunedì, mercoledì e venerdì una striscia simpatica del prof
 # Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
 # Prima di pubblicare prepara in anticipo le rubriche dei giorni seguenti
@@ -60,7 +60,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          pip install --quiet anthropic pypdf
+          pip install --quiet anthropic pypdf pyluach
           python seo/rubriche.py
           npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \

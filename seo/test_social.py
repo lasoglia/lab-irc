@@ -76,7 +76,7 @@ class Calendario(unittest.TestCase):
 
 
 class CalendarioSocial(unittest.TestCase):
-    """Scuola: lezioni lun-ven, sabato niente, domenica la grande domanda. Vacanze: strisce lun-mer-ven."""
+    """Scuola: lezioni lun-ven, sabato lo Shabbat, domenica la grande domanda. Vacanze: strisce lun-mer-ven."""
 
     def setUp(self):
         self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
@@ -85,7 +85,7 @@ class CalendarioSocial(unittest.TestCase):
         cal.FILE_VACANZE = self._file
 
     def test_settimana_di_scuola(self):
-        attesi = ["lezione"] * 5 + [None, "domenica"]
+        attesi = ["lezione"] * 5 + ["shabbat", "domenica"]
         self.assertEqual([cal.tipo_del_giorno(dt.date(2026, 11, 9) + dt.timedelta(days=i)) for i in range(7)], attesi)
 
     def test_vacanze_di_natale(self):
@@ -119,7 +119,7 @@ class Controllo(unittest.TestCase):
         self.assertEqual(ctrl.valuta("2026-11-09", self.TG, meta, None), ("mancante", ["instagram"]))
 
     def test_giorno_senza_uscita(self):
-        self.assertEqual(ctrl.valuta("2026-11-14", {}, {}, None)[0], "non-previsto")   # sabato
+        self.assertEqual(ctrl.valuta("2026-12-29", {}, {}, None)[0], "non-previsto")   # martedì di vacanza
 
     def test_pausa(self):
         self.assertEqual(ctrl.valuta("2026-11-09", {}, {}, {"pausa": True})[0], "in-pausa")
