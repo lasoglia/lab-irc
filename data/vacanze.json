@@ -1,0 +1,12 @@
+{
+  "nota": "Calendario scolastico della Regione Lazio 2026/27 (inizio 15 settembre 2026, fine 8 giugno 2027) più le feste nazionali in giorno di scuola. Nelle vacanze escono solo le strisce del prof (lunedì, mercoledì, venerdì). Da aggiornare ogni estate con il calendario nuovo. I ponti decisi dalle singole scuole non sono compresi.",
+  "fonte": "https://regione.lazio.it/notizie/scuola-e-universita/comunicato-calendario-scolastico-2026-2027",
+  "vacanze": [
+    {"dal": "2026-06-09", "al": "2026-09-14", "nome": "vacanze estive"},
+    {"dal": "2026-12-08", "al": "2026-12-08", "nome": "Immacolata Concezione"},
+    {"dal": "2026-12-23", "al": "2027-01-06", "nome": "vacanze di Natale"},
+    {"dal": "2027-03-25", "al": "2027-03-30", "nome": "vacanze di Pasqua"},
+    {"dal": "2027-06-02", "al": "2027-06-02", "nome": "Festa della Repubblica"},
+    {"dal": "2027-06-09", "al": "2027-09-14", "nome": "vacanze estive"}
+  ]
+}
