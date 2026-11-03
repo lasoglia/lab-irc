@@ -15,13 +15,13 @@ Leggi `.claude/social-regole.md` e `.social/stato.md`. Se lo stato manca, fermat
 Se lo stato dice che i social sono in pausa, passa direttamente al punto 6 e scrivi che non è stato preparato nulla.
 
 ## 2. Scelta
-Chiedi a **social-calendarista** il piano delle uscite delle lezioni (lunedì, mercoledì, venerdì). Prepara un elenco di lavoro con i post scelti e le riserve.
+Chiedi a **social-calendarista** il piano delle uscite delle lezioni (i giorni elencati in «Uscite da coprire»: a scuola dal lunedì al venerdì, in vacanza nessuna). Prepara un elenco di lavoro con i post scelti e le riserve.
 
 ## 3. Controllo
 Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando a ciascuno il file `.social/candidati/NN.md`.
 
 ## 3b. Rubriche
-Le strisce del prof (P1, P2) e la domenica (D1) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
+Le strisce del prof (P1, P2…, solo nelle vacanze) e la domenica (D1, la grande domanda) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
 - Se entrambi approvano, mettila in coda con la data indicata nella scheda.
 - Se uno dei due chiede correzioni o respinge, scartala senza riscriverla: non va in coda e la segnali in «Da guardare tu». Il post del prof successivo è già pronto per la settimana dopo.
 
