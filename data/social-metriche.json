@@ -1,6 +1,15 @@
 {
   "aggiornato": "2026-11-03",
-  "facebook": [],
+  "facebook": [
+    {
+      "chiave": "_sito",
+      "data": "2026-11-03",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122111639859512623"
+    }
+  ],
   "instagram": [
     {
       "chiave": "_sito",
@@ -19,13 +28,12 @@
     },
     {
       "data": "2026-11-03",
-      "facebook": null,
+      "facebook": 0,
       "instagram": 1,
       "telegram": 2
     }
   ],
   "avvisi": [
-    "Facebook: (#10) This endpoint requires the 'pages_read_user_content' permission or the 'Page Public Content Access' feature. Refer to https://developers.facebook.com/docs/apps/review/login-permissions#manage-pages and https://developers.facebook.com/docs/apps/review/feature#reference-PAGES_ACCESS for details.",
     "Instagram: copertura e visualizzazioni non disponibili ((#10) Application does not have permission for this action). Serve il permesso instagram_manage_insights."
   ]
 }
