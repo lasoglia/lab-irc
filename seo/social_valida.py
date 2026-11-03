@@ -130,7 +130,11 @@ def controlla_testo(chiave: str, campo: str, testo: object, errori: list[str]) -
             errori.append(f"{chiave} · {campo}: {motivo}")
 
 
-def leggi_riscritture(errori: list[str]) -> list[dict]:
+def leggi_riscritture(errori: list[str], scartati: dict[str, list[str]] | None = None) -> list[dict]:
+    """Le riscritture degli agenti. Gli errori di testo di un post (un link, una lunghezza
+    sbagliata…) vanno in «scartati»: quel post si toglie dalla coda e il resto del piano
+    si salva. Gli altri errori (file illeggibili, chiavi inesistenti) vanno in «errori»."""
+    scartati = {} if scartati is None else scartati
     voci = []
     cartella = RADICE / ".social" / "riscritture"
     testi = json.loads((RADICE / "data" / "promozione.json").read_text(encoding="utf-8"))
@@ -144,18 +148,35 @@ def leggi_riscritture(errori: list[str]) -> list[dict]:
         if chiave not in testi:
             errori.append(f"{file.name}: chiave inesistente: {chiave}")
             continue
+        difetti: list[str] = []
         for campo, valore in campi.items():
             if campo == "hashtag":
                 if not (isinstance(valore, list) and 1 <= len(valore) <= HASHTAG_MAX):
-                    errori.append(f"{chiave} · hashtag: ne servono da 1 a {HASHTAG_MAX}")
+                    difetti.append(f"{chiave} · hashtag: ne servono da 1 a {HASHTAG_MAX}")
                 elif any(not re.fullmatch(r"[^\s#]+", str(h)) for h in valore):
-                    errori.append(f"{chiave} · hashtag: senza # e senza spazi")
+                    difetti.append(f"{chiave} · hashtag: senza # e senza spazi")
             elif campo in CAMPI:
-                controlla_testo(chiave, campo, valore, errori)
+                controlla_testo(chiave, campo, valore, difetti)
             else:
-                errori.append(f"{chiave}: campo non permesso: {campo}")
-        voci.append(voce)
+                difetti.append(f"{chiave}: campo non permesso: {campo}")
+        if difetti:
+            scartati.setdefault(chiave, []).extend(difetti)
+        else:
+            voci.append(voce)
     return voci
+
+
+def togli_dalla_coda(scartati: dict[str, list[str]]) -> None:
+    """I post con testi riscritti non validi non escono: via dalla coda, tra le escluse col motivo."""
+    dati = coda.leggi() or {}
+    dati["coda"] = [v for v in dati.get("coda", []) if v.get("chiave") not in scartati]
+    escluse = [v for v in dati.get("escluse", []) if isinstance(v, dict) and v.get("chiave") not in scartati]
+    for chiave, difetti in scartati.items():
+        motivo = "; ".join(d.split(" · ", 1)[-1] for d in difetti)
+        escluse.append({"chiave": chiave, "motivo": f"testi riscritti non validi ({motivo})"})
+    dati["escluse"] = escluse
+    (RADICE / "data" / "social-coda.json").write_text(json.dumps(dati, ensure_ascii=False, indent=2) + "\n",
+                                                      encoding="utf-8")
 
 
 def applica(voci: list[dict]) -> int:
@@ -179,7 +200,8 @@ def main() -> int:
     if not a.senza_git:
         controlla_file(errori)
     controlla_coda(errori)
-    voci = leggi_riscritture(errori)
+    scartati: dict[str, list[str]] = {}
+    voci = leggi_riscritture(errori, scartati)
     rapporto = RADICE / ".social" / "validazione.md"
     rapporto.parent.mkdir(exist_ok=True)
     if errori:
@@ -187,7 +209,14 @@ def main() -> int:
         rapporto.write_text(f"La validazione ha fermato il salvataggio:\n\n{testo}\n", encoding="utf-8")
         print(f"✗ Validazione non superata:\n{testo}")
         return 1
-    rapporto.write_text("Validazione superata.\n", encoding="utf-8")
+    avviso = ""
+    if scartati:
+        avviso = ("\n\nPost tolti dalla coda perché i testi riscritti non erano validi:\n"
+                  + "\n".join(f"- {d}" for difetti in scartati.values() for d in difetti) + "\n")
+        if a.applica:
+            togli_dalla_coda(scartati)
+        print(f"! Tolti dalla coda {len(scartati)} post con testi non validi:{avviso}")
+    rapporto.write_text("Validazione superata." + avviso + "\n", encoding="utf-8")
     applicate = applica(voci) if a.applica else 0
     print(f"✓ Validazione superata. Riscritture applicate: {applicate}.")
     return 0
