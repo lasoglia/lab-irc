@@ -120,7 +120,7 @@ def da_preparare(lezioni: list[dict], registri: tuple, oggi: dt.date) -> list[di
                        and oggi.isoformat() <= str(v.get("quando", "")) <= fine
                        and cal.tipo_del_giorno(dt.date.fromisoformat(str(v["quando"]))) == "reel"),
                       key=lambda v: str(v["quando"]))
-        scelte = [per_chiave[v["chiave"]] for v in voci if v.get("chiave") in per_chiave]
+        scelte = [{**per_chiave[v["chiave"]], "_quando": str(v["quando"])} for v in voci if v.get("chiave") in per_chiave]
     return [c for c in scelte if c.get("carosello") and not pubblicato("reel|" + c["chiave"], registri)]
 
 
@@ -142,7 +142,48 @@ def main():
     return 0
 
 
+VERSIONE_REGIA = "1"   # cambiala per far riscrivere i copioni del regista
+
+
+def prepara_regia(c: dict, cache: dict) -> dict | None:
+    """Il reel nuovo (Progetto Reel): copione del regista (seo/regista.py) con le pagine vere del
+    fascicolo e la voce; lo monta seo/reel_lezioni.py con seo/reel2.mjs. None se non si può."""
+    import regista
+    if os.environ.get("REEL_MOTORE") == "vecchio" or not regista.fascicolo_di(c):
+        return None
+    quando = c.get("_quando")
+    serie = regista.SERIE.get(dt.date.fromisoformat(quando).weekday(), "") if quando else ""
+    firma = impronta(VERSIONE_REGIA, c["chiave"], c["titolo"], c.get("frase", ""), serie)
+    voce = cache.get("regia|" + c["chiave"])
+    if not voce or voce.get("firma") != firma:
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            return None
+        try:
+            testi = regista.scrivi(c, quando)
+        except Exception as err:
+            print(f"  ! il regista non ha scritto il copione ({err}): uso il reel di prima")
+            return None
+        if not testi:
+            return None
+        print(f"  ✓ copione del regista: {testi.get('serie')}, citazioni sbagliate {testi.get('citazioni_sbagliate')}")
+        voce = {"firma": firma, "testi": testi}
+        cache["regia|" + c["chiave"]] = voce
+    t = voce["testi"]
+    regia = regista.copione_regia(t, c)
+    video = f"reel2-{g.slug(c['anno'] + '-' + c['titolo'])[:50]}-{impronta(regia)}.mp4"
+    post = {"testi": t, "url": c["url"]}
+    return {"chiave": "reel|" + c["chiave"], "origine": c["chiave"], "titolo": c["titolo"], "anno": c["anno"],
+            "classe": c.get("classe", ""), "uda": c.get("uda", ""), "colore": c.get("colore", ""),
+            "mascotte": c.get("mascotte", ""), "url": c["url"], "motore": "reel2", "regia": regia,
+            "gancio": next((q.get("testo", "") for q in regia["inquadrature"] if q["tipo"] == "gancio"), ""),
+            "ganci": t.get("ganci", []), "video": video,
+            "facebook": pr.testo_completo(post, "facebook"), "instagram": pr.testo_completo(post, "instagram"),
+            "telegram": pr.testo_completo(post, "telegram")}
+
+
 def prepara(c: dict, cache: dict, senza_ia: bool) -> dict | None:
+    if not senza_ia and (nuovo := prepara_regia(c, cache)):
+        return nuovo
     materiale = {"titolo": c["titolo"], "frase": c.get("frase", ""), "carosello": c["carosello"]}
     firma = impronta(VERSIONE, materiale)
     voce = cache.get(c["chiave"])
