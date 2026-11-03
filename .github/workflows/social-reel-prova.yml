@@ -31,24 +31,15 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Modello della voce in cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/share/tts
-          key: xtts-v2
-
       - name: Installa voce, musica, PDF e browser
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils ffmpeg
-          pip install --quiet "torch==2.8.0" "torchaudio==2.8.0" --index-url https://download.pytorch.org/whl/cpu
-          pip install --quiet coqui-tts six numpy "torch==2.8.0" "torchaudio==2.8.0" --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet numpy
           npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
 
       - name: Regia, voce e montaggio
         env:
-          VOCE_CAMPIONE: ${{ secrets.VOCE_CAMPIONE }}
-          VOCE_CAMPIONE_2: ${{ secrets.VOCE_CAMPIONE_2 }}
-          VOCE_CAMPIONE_3: ${{ secrets.VOCE_CAMPIONE_3 }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           COPIONE: ${{ inputs.copione }}
         run: |
           mkdir -p uscita

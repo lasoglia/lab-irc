@@ -11,7 +11,8 @@ Questo script, senza IA:
   - per ogni inquadratura «pagina» trova la citazione nel fascicolo (seo/fascicolo.py), disegna
     la pagina, prepara evidenziatore, cerchio e movimento di macchina; se la citazione non c'è,
     l'inquadratura diventa una frase del prof (meglio che mostrare una pagina sbagliata);
-  - se c'è il segreto VOCE_CAMPIONE, fa dire le frasi alla voce del prof (seo/voce.py).
+  - se c'è la chiave GEMINI_API_KEY (o il campione VOCE_CAMPIONE per le voci clonate), fa dire
+    le frasi alla voce dei reel (seo/voce.py; voce scelta: Rasalgethi).
 
 USO
 ---
@@ -75,9 +76,9 @@ def prepara(copione: dict, cartella: Path) -> dict:
                 q["fonte"] = f"Dal fascicolo della lezione, pagina {n}"
         r["inquadrature"].append(q)
 
-    # la voce del prof, se c'è il campione (altrimenti il reel resta con musica e sottotitoli)
+    # la voce, se c'è la chiave di Gemini o un campione (altrimenti il reel resta con musica e sottotitoli)
     frasi = [q.get("voce", "") for q in r["inquadrature"]]
-    if os.environ.get("VOCE_CAMPIONE") and any(frasi):
+    if (os.environ.get("GEMINI_API_KEY") or os.environ.get("VOCE_CAMPIONE")) and any(frasi):
         (cartella / "frasi.json").write_text(json.dumps(frasi, ensure_ascii=False), encoding="utf-8")
         subprocess.run([sys.executable, str(RADICE / "seo" / "voce.py"), str(cartella / "frasi.json"),
                         str(cartella / "voce")], check=True)
