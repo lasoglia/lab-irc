@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 import os
 import subprocess
 import sys
@@ -170,41 +171,86 @@ def _chiedi_gemini(modello: str, chiave: str, testo: str, voce: str) -> bytes:
     return base64.b64decode(dati["candidates"][0]["content"]["parts"][0]["inlineData"]["data"])
 
 
+def _errore_gemini(err: urllib.error.HTTPError) -> tuple[str, float]:
+    """(quale limite, quanti secondi aspettare) da una risposta di errore di Gemini."""
+    try:
+        dettagli = json.loads(err.read()).get("error", {}).get("details", [])
+    except (ValueError, OSError):
+        return "", 0
+    limite = " ".join(v.get("quotaId", "") for d in dettagli for v in d.get("violations", []))
+    attesa = next((d.get("retryDelay", "") for d in dettagli if d.get("retryDelay")), "")
+    return limite, float(attesa.rstrip("s") or 0)
+
+
+def _gemini_con_riprova(modelli: list, chiave: str, testo: str, voce: str) -> bytes:
+    """Chiede l'audio; se il limite al minuto è pieno aspetta, se quello del giorno è finito
+    (o il modello non c'è più) passa al modello successivo, che ha un limite suo."""
+    tentativi = 0
+    while True:
+        try:
+            return _chiedi_gemini(modelli[0], chiave, testo, voce)
+        except urllib.error.HTTPError as err:
+            limite, attesa = _errore_gemini(err) if err.code == 429 else ("", 0)
+            if (err.code == 404 or "PerDay" in limite) and len(modelli) > 1:
+                print(f"  · {modelli[0]}: {'limite del giorno finito' if limite else 'non disponibile'}, provo {modelli[1]}")
+                modelli.pop(0)
+                continue
+            tentativi += 1
+            if err.code in (429, 500, 503) and "PerDay" not in limite and tentativi <= 6:
+                attesa = max(attesa, 10 * tentativi) + 2
+                print(f"  · Gemini occupato ({err.code}), riprovo fra {attesa:.0f} s")
+                time.sleep(attesa)
+                continue
+            raise SystemExit(f"Gemini ha risposto {err.code} {limite}".strip())
+
+
+def _silenzi(wav: Path) -> list[tuple[float, float]]:
+    esito = subprocess.run(["ffmpeg", "-v", "info", "-i", str(wav), "-af", "silencedetect=noise=-38dB:d=0.35",
+                            "-f", "null", "-"], capture_output=True, text=True).stderr
+    inizi = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", esito)]
+    fini = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", esito)]
+    return list(zip(inizi, fini))
+
+
+def _in_wav(pcm: bytes, wav: Path) -> None:
+    grezzo = wav.with_suffix(".pcm")
+    grezzo.write_bytes(pcm)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "s16le", "-ar", "24000", "-ac", "1", "-i", str(grezzo),
+                    str(wav)], check=True)
+
+
 def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
-    """Voce di Google Gemini (piano gratuito): PCM 16 bit, 24 kHz, mono. Riprova se il limite
-    al minuto è pieno; se un modello non esiste più passa al successivo."""
+    """Voce di Google Gemini (piano gratuito, PCM 16 bit, 24 kHz, mono). Il piano gratuito ha
+    poche richieste al giorno: tutto il reel si chiede in UNA richiesta, una frase per riga con
+    una pausa fra l'una e l'altra, poi si taglia nelle pause più lunghe. Se il taglio non torna,
+    si ripiega su una richiesta per frase."""
     chiave = os.environ.get("GEMINI_API_KEY", "").strip()
     if not chiave:
         print("Voce: segreto GEMINI_API_KEY non impostato, i video restano senza voce.")
         return
     stile = os.environ.get("VOCE_GEMINI_STILE") or GEMINI_STILE
     modelli = [os.environ["VOCE_GEMINI_MODELLO"]] if os.environ.get("VOCE_GEMINI_MODELLO") else list(GEMINI_MODELLI)
-    for i, frase in enumerate(frasi):
-        if not str(frase).strip():
-            continue
-        testo = f"{stile}\n{pronuncia(frase, SIGLE)}"   # la punteggiatura resta: Gemini la usa per l'intonazione
-        pcm, tentativi = None, 0
-        while pcm is None:
-            try:
-                pcm = _chiedi_gemini(modelli[0], chiave, testo, voce)
-            except urllib.error.HTTPError as err:
-                if err.code == 404 and len(modelli) > 1:
-                    print(f"  · modello {modelli[0]} non disponibile, provo {modelli[1]}")
-                    modelli.pop(0)
-                    continue
-                tentativi += 1
-                if err.code in (429, 500, 503) and tentativi <= 8:
-                    attesa = 15 * tentativi
-                    print(f"  · Gemini occupato ({err.code}), riprovo fra {attesa} s")
-                    time.sleep(attesa)
-                    continue
-                raise SystemExit(f"Gemini ha risposto {err.code}: {err.read()[:300]!r}")
-        grezzo = tmp / f"m{i}.pcm"
-        grezzo.write_bytes(pcm)
-        wav = tmp / f"m{i}.wav"
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "s16le", "-ar", "24000", "-ac", "1", "-i", str(grezzo),
-                        str(wav)], check=True)
-        rifinisci(wav, uscita / f"voce-{i:02d}.wav", frase)
+    righe = [(i, pronuncia(f, SIGLE)) for i, f in enumerate(frasi) if str(f).strip()]
+    tutto = tmp / "gemini-tutto.wav"
+    istruzione = stile.replace(" Text:", " Each line is a separate sentence: leave a clear pause of about one "
+                               "second between lines. Text:")
+    _in_wav(_gemini_con_riprova(modelli, chiave, istruzione + "\n" + "\n".join(t for _, t in righe), voce), tutto)
+    pause = sorted(_silenzi(tutto), key=lambda x: x[1] - x[0], reverse=True)[:len(righe) - 1]
+    if len(pause) == len(righe) - 1:
+        tagli = [0.0] + [(a + b) / 2 for a, b in sorted(pause)] + [None]
+        for (i, _), da, a in zip(righe, tagli, tagli[1:]):
+            pezzo = tmp / f"m{i}.wav"
+            taglio = f"atrim={da:.3f}" + (f":{a:.3f}" if a else "")   # atrim: -ss/-to qui non accorcerebbero
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(tutto), "-af", f"{taglio},asetpts=N/SR/TB,"
+                            "silenceremove=start_periods=1:start_threshold=-45dB,areverse,"
+                            "silenceremove=start_periods=1:start_threshold=-45dB,areverse", str(pezzo)], check=True)
+            rifinisci(pezzo, uscita / f"voce-{i:02d}.wav", frasi[i])
+    else:
+        print(f"  · pause trovate {len(pause)} su {len(righe) - 1}: chiedo una frase per volta")
+        for i, testo in righe:
+            pezzo = tmp / f"m{i}.wav"
+            _in_wav(_gemini_con_riprova(modelli, chiave, f"{stile}\n{testo}", voce), pezzo)
+            rifinisci(pezzo, uscita / f"voce-{i:02d}.wav", frasi[i])
     print(f"Voce Gemini «{voce}» con il modello {modelli[0]}")
 
 
