@@ -77,7 +77,10 @@ def campioni(cartella: Path) -> list[str]:
 
 
 def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", FILTRO, "-ac", "1", "-ar", "24000",
+    # VOCE_VELOCITA (per esempio 1.06) accelera senza cambiare il tono della voce
+    velocita = float(os.environ.get("VOCE_VELOCITA") or 1)
+    filtro = (f"atempo={velocita}," if abs(velocita - 1) > 0.001 else "") + FILTRO
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", filtro, "-ac", "1", "-ar", "24000",
                     str(finale)], check=True)
     print(f"  ✓ {finale.name}: {frase[:60]}")
 
@@ -147,9 +150,11 @@ def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
 
 
 GEMINI_MODELLI = ("gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts")
-GEMINI_STILE = ("Read aloud in Italian, warmly and with a smile in the voice, like a friendly teacher "
-                "telling his students something surprising: natural intonation, lively but clear pace, "
-                "short natural pauses at commas. Text:")
+# Dopo il primo ascolto: «più veloce, più calda e narrativa, a tratti troppo infantile».
+GEMINI_STILE = ("Read aloud in Italian as a mature, warm storyteller: a teacher in his forties telling a "
+                "fascinating story to adults. Deep, warm and calm voice, quietly confident, engaging "
+                "narrative tone that makes you want to hear the rest. No exaggerated enthusiasm, nothing "
+                "childish or cartoonish. Brisk, flowing pace with short natural pauses at commas. Text:")
 
 
 def _chiedi_gemini(modello: str, chiave: str, testo: str, voce: str) -> bytes:
@@ -172,7 +177,7 @@ def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
     if not chiave:
         print("Voce: segreto GEMINI_API_KEY non impostato, i video restano senza voce.")
         return
-    stile = os.environ.get("VOCE_GEMINI_STILE", GEMINI_STILE)
+    stile = os.environ.get("VOCE_GEMINI_STILE") or GEMINI_STILE
     modelli = [os.environ["VOCE_GEMINI_MODELLO"]] if os.environ.get("VOCE_GEMINI_MODELLO") else list(GEMINI_MODELLI)
     for i, frase in enumerate(frasi):
         if not str(frase).strip():
