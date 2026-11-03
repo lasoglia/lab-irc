@@ -1,0 +1,57 @@
+name: Social · prova della voce
+# Genera con la voce clonata del prof (seo/voce.py, modello libero XTTS-v2) le frasi
+# scritte qui sotto e le lascia da scaricare tra gli «Artifacts» dell'esecuzione,
+# insieme a un unico file da ascoltare. Non pubblica nulla.
+# Segreto necessario: VOCE_CAMPIONE (il campione della voce, mai nel repo pubblico).
+
+on:
+  workflow_dispatch:
+    inputs:
+      frasi:
+        description: 'Frasi da far dire al prof, separate da |'
+        default: 'Lo sapevi? Gesù è nato… avanti Cristo. | Nel 525 un monaco, Dionigi il Piccolo, cominciò a contare gli anni dalla nascita di Gesù. | Però sbagliò di qualche anno: Erode muore nel 4 avanti Cristo, e Gesù era già nato. | La lezione completa è su labirc.it.'
+
+permissions:
+  contents: read
+
+jobs:
+  voce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Modello in cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/tts
+          key: xtts-v2
+
+      - name: Installa il motore della voce (solo CPU)
+        run: |
+          pip install --quiet torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet coqui-tts
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+
+      - name: Genera le frasi
+        env:
+          VOCE_CAMPIONE: ${{ secrets.VOCE_CAMPIONE }}
+          FRASI: ${{ inputs.frasi }}
+        run: |
+          python -c "import json,os; print(json.dumps([f.strip() for f in os.environ['FRASI'].split('|') if f.strip()], ensure_ascii=False))" > frasi.json
+          python seo/voce.py frasi.json voce
+          ls voce/*.wav >/dev/null 2>&1 || { echo "Nessuna frase generata (manca il segreto VOCE_CAMPIONE?)"; exit 1; }
+          # tutte le frasi in un unico file da ascoltare, con una breve pausa tra l'una e l'altra
+          for f in voce/voce-*.wav; do echo "file '$PWD/$f'"; echo "file '$PWD/pausa.wav'"; done > elenco.txt
+          ffmpeg -v error -y -f lavfi -i anullsrc=r=24000:cl=mono -t 0.6 pausa.wav
+          ffmpeg -v error -y -f concat -safe 0 -i elenco.txt -c:a libmp3lame -b:a 160k voce/ascolta.mp3
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: voce-di-prova
+          path: voce/
+          retention-days: 3
