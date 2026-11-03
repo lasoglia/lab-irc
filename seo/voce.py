@@ -79,7 +79,7 @@ def campioni(cartella: Path) -> list[str]:
 
 def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
     # VOCE_VELOCITA (per esempio 1.06) accelera senza cambiare il tono della voce
-    velocita = float(os.environ.get("VOCE_VELOCITA") or 1)
+    velocita = float(os.environ.get("VOCE_VELOCITA") or VELOCITA_SCELTA)
     filtro = (f"atempo={velocita}," if abs(velocita - 1) > 0.001 else "") + FILTRO
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", filtro, "-ac", "1", "-ar", "24000",
                     str(finale)], check=True)
@@ -150,7 +150,10 @@ def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
         rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
 
 
-GEMINI_MODELLI = ("gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts")
+# Scelta del docente (3 novembre 2026): Rasalgethi, con il modello 2.5 e velocità 1.06.
+GEMINI_MODELLI = ("gemini-2.5-flash-preview-tts", "gemini-3.1-flash-tts-preview")
+VOCE_SCELTA = "gemini-Rasalgethi"
+VELOCITA_SCELTA = "1.06"
 # Dopo il primo ascolto: «più veloce, più calda e narrativa, a tratti troppo infantile».
 GEMINI_STILE = ("Read aloud in Italian as a mature, warm storyteller: a teacher in his forties telling a "
                 "fascinating story to adults. Deep, warm and calm voice, quietly confident, engaging "
@@ -268,9 +271,9 @@ def main() -> int:
     uscita = Path(sys.argv[2])
     uscita.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
-        motore = os.environ.get("VOCE_MOTORE", "xtts")
+        motore = os.environ.get("VOCE_MOTORE") or VOCE_SCELTA
         if motore.startswith("gemini"):    # «gemini» o «gemini-<Voce>», per esempio gemini-Achird
-            genera_gemini(frasi, motore.partition("-")[2] or os.environ.get("VOCE_GEMINI", "Achird"), Path(tmp), uscita)
+            genera_gemini(frasi, motore.partition("-")[2] or os.environ.get("VOCE_GEMINI", "Rasalgethi"), Path(tmp), uscita)
             return 0
         if motore in ("edge", "kokoro"):   # voci pronte: non serve il campione
             (genera_edge if motore == "edge" else genera_kokoro)(frasi, Path(tmp), uscita)
