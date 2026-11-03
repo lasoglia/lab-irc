@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
 """
-seo/reel.py — Il reel del giovedì: una lezione in 30 secondi.
+seo/reel.py — I video a fumetti delle lezioni (uno per ogni lezione che esce).
 
-Il giovedì sceglie l'ultima lezione già uscita sui social che non ha ancora il
-suo reel, chiede a Claude il copione (un gancio iniziale, una frase breve per
-ogni scheda del carosello, le didascalie) e lo scrive in promozione/reel.json.
-Il video lo monta seo/reel.mjs, con le schede e le illustrazioni del carosello;
-lo pubblica seo/pubblica.py (Instagram Reels, Facebook Reels, Telegram).
+Per ogni lezione che uscirà nei prossimi 7 giorni (quelle approvate in
+data/social-coda.json; senza coda, le prossime 5 del kit) chiede a Claude il
+copione (un gancio, una frase breve per ogni scheda del carosello, le didascalie)
+e lo scrive in promozione/reel.json. Il video lo monta seo/reel.mjs: il prof
+(l'avatar) risponde nei fumetti, sopra i disegni del carosello. Lo pubblica
+seo/pubblica.py --coda video, subito dopo il carosello della lezione.
 
-La lezione è già stata approvata e pubblicata: il reel non passa di nuovo dalla
-coda degli agenti, ma se i social sono in pausa (data/social-coda.json) non esce.
-
-  promozione/reel.json     il reel della settimana (per il montaggio e la pubblicazione)
+  promozione/reel.json     i video da montare e pubblicare
   data/reel.json           i copioni già scritti, che fanno da cache
 
 USO
 ---
-  python seo/reel.py            solo il giovedì (gli altri giorni non fa nulla)
-  python seo/reel.py --sempre   anche negli altri giorni, per provarlo
+  python seo/reel.py            prepara i copioni che mancano
   python seo/reel.py --senza-ia senza Claude: il copione è preso dal carosello
 """
 
@@ -34,10 +31,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402
 import promozione as pr  # noqa: E402
+import coda as coda_agenti  # noqa: E402
 from rubriche import oggi_in_italia, pubblicato  # noqa: E402
 
-GIOVEDI = 3
-GIORNI_VALIDI = 21          # si sceglie fra le lezioni uscite nelle ultime tre settimane
+GIORNI_AVANTI = 7           # i video si preparano per le lezioni dei prossimi 7 giorni
 VERSIONE = "1"              # cambiala per far riscrivere i copioni
 
 SCHEMA_REEL = {
@@ -104,51 +101,48 @@ def copione_di_riserva(c: dict) -> dict:
             "telegram": c.get("telegram", ""), "hashtag": ["religionecattolica", "irc"]}
 
 
-def scegli(lezioni: list[dict], registri: tuple, oggi: dt.date) -> dict | None:
-    """L'ultima lezione uscita (con il carosello) che non ha ancora il reel.
-    Se il reel della settimana è già uscito (negli ultimi 5 giorni), resta quello."""
-    limite = (oggi - dt.timedelta(days=GIORNI_VALIDI)).isoformat()
-    candidate = []
-    for c in lezioni:
-        uscita = pubblicato(c["chiave"], registri)
-        if uscita and uscita >= limite and c.get("carosello"):
-            candidate.append((uscita, c))
-    candidate.sort(key=lambda x: x[0], reverse=True)
-    recente = (oggi - dt.timedelta(days=5)).isoformat()
-    for _, c in candidate:
-        if (pubblicato("reel|" + c["chiave"], registri) or "") >= recente:
-            return c
-    return next((c for _, c in candidate if not pubblicato("reel|" + c["chiave"], registri)), None)
+def da_preparare(lezioni: list[dict], registri: tuple, oggi: dt.date) -> list[dict]:
+    """Le lezioni che usciranno nei prossimi 7 giorni e non hanno ancora il video uscito."""
+    per_chiave = {c["chiave"]: c for c in lezioni}
+    try:
+        stato = coda_agenti.leggi()
+    except (ValueError, OSError):
+        stato = {"coda": []}
+    if stato is None:
+        scelte = [c for c in lezioni if not pubblicato(c["chiave"], registri)][:5]
+    else:
+        fine = (oggi + dt.timedelta(days=GIORNI_AVANTI)).isoformat()
+        voci = sorted((v for v in stato.get("coda", []) if v.get("esito") == "approvato"
+                       and oggi.isoformat() <= str(v.get("quando", "")) <= fine), key=lambda v: str(v["quando"]))
+        scelte = [per_chiave[v["chiave"]] for v in voci if v.get("chiave") in per_chiave]
+    return [c for c in scelte if c.get("carosello") and not pubblicato("reel|" + c["chiave"], registri)]
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--sempre", action="store_true", help="anche se oggi non è giovedì")
+    ap.add_argument("--sempre", action="store_true", help="(non serve più: tenuto per compatibilità)")
     ap.add_argument("--senza-ia", action="store_true", help="non chiama l'API di Claude")
     a = ap.parse_args()
 
     oggi = oggi_in_italia()
-    if oggi.weekday() != GIOVEDI and not a.sempre:
-        print("Il reel si prepara il giovedì: oggi niente.")
-        return 0
-
     lezioni = [c for c in leggi(g.RADICE / "promozione" / "cartoline.json", []) if c.get("anno")]
     registri = (leggi(g.RADICE / "data" / "telegram.json", {}), leggi(g.RADICE / "data" / "meta.json", {}))
     elenco_file, cache_file = g.RADICE / "promozione" / "reel.json", g.RADICE / "data" / "reel.json"
     cache = leggi(cache_file, {})
+    reel = [r for c in da_preparare(lezioni, registri, oggi) if (r := prepara(c, cache, a.senza_ia))]
+    scrivi(cache_file, cache)
+    scrivi(elenco_file, reel)
+    print(f"Video da montare: {len(reel)}" + "".join(f"\n  · {r['titolo']}" for r in reel))
+    return 0
 
-    c = scegli(lezioni, registri, oggi)
-    if not c:
-        print("Nessuna lezione recente senza reel: questa settimana niente reel.")
-        scrivi(elenco_file, [])
-        return 0
 
+def prepara(c: dict, cache: dict, senza_ia: bool) -> dict | None:
     materiale = {"titolo": c["titolo"], "frase": c.get("frase", ""), "carosello": c["carosello"]}
     firma = impronta(VERSIONE, materiale)
     voce = cache.get(c["chiave"])
     if not voce or voce.get("firma") != firma or len(voce["testi"]["scene"]) != len(c["carosello"]):
         testi = None
-        if not a.senza_ia and os.environ.get("ANTHROPIC_API_KEY"):
+        if not senza_ia and os.environ.get("ANTHROPIC_API_KEY"):
             try:
                 import anthropic
                 messaggio = (f"Lezione: {c['titolo']} (classe {c.get('classe', '')}, unità «{c.get('uda', '')}»)\n"
@@ -162,7 +156,6 @@ def main():
         testi = testi if testi and len(testi["scene"]) == len(c["carosello"]) else copione_di_riserva(c)
         voce = {"firma": firma, "testi": testi}
         cache[c["chiave"]] = voce
-        scrivi(cache_file, cache)
 
     t = voce["testi"]
     disegni = c.get("illustrazioni") or []
@@ -170,16 +163,13 @@ def main():
              for i, s in enumerate(t["scene"])]
     video = f"reel-{g.slug(c['anno'] + '-' + c['titolo'])[:50]}-{impronta(t['gancio'], scene)}.mp4"
     canali = pr.testo_completo({"testi": t, "url": c["url"]}, "instagram")
-    reel = {"chiave": "reel|" + c["chiave"], "lezione_chiave": c["chiave"], "titolo": c["titolo"],
+    return {"chiave": "reel|" + c["chiave"], "origine": c["chiave"], "titolo": c["titolo"],
             "anno": c["anno"], "classe": c.get("classe", ""), "uda": c.get("uda", ""),
             "colore": c.get("colore", ""), "mascotte": c.get("mascotte", ""), "url": c["url"],
             "gancio": t["gancio"], "scene": scene, "video": video,
             "facebook": pr.testo_completo({"testi": t, "url": c["url"]}, "facebook"),
             "instagram": canali,
             "telegram": pr.testo_completo({"testi": t, "url": c["url"]}, "telegram")}
-    scrivi(elenco_file, [reel])
-    print(f"Reel della settimana: {c['titolo']} → promozione/reel/{video}")
-    return 0
 
 
 if __name__ == "__main__":

@@ -31,6 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coda  # noqa: E402
+import social_calendario as cal  # noqa: E402
 
 RADICE = coda.RADICE
 FILE_PERMESSI = {"data/social-coda.json", "data/social-metriche.json"}
@@ -42,9 +43,9 @@ CAMPI = {  # campo: lunghezza minima e massima
     "whatsapp": (100, 450),
 }
 HASHTAG_MAX = 5
-# il calendario di seo/pubblica.py: lezioni lun-mer-ven, prof mar e sab, domenica la domenica
-GIORNI_PER_TIPO = {"lezione": (0, 2, 4), "prof": (1, 5), "domenica": (6,)}
-MASSIMO_PER_TIPO = {"lezione": 3, "prof": 2, "domenica": 1}
+# il calendario è quello di seo/social_calendario.py: a scuola lezioni lun-ven e la domenica,
+# in vacanza solo le strisce del prof lunedì, mercoledì e venerdì
+MASSIMO_PER_TIPO = {"lezione": 5, "prof": 3, "domenica": 1}
 VIETATI = [
     (r"https?://|www\.", "contiene un link: i link li aggiunge lo script"),
     (r"clicca qui", "contiene «clicca qui»"),
@@ -100,7 +101,7 @@ def controlla_coda(errori: list[str]) -> None:
             errori.append(f"coda: data non valida per {chiave}: {quando}")
             continue
         tipo = tipi.get(chiave, "lezione")
-        if giorno.weekday() not in GIORNI_PER_TIPO[tipo]:
+        if giorno > oggi and cal.tipo_del_giorno(giorno) != tipo:   # le voci di oggi e passate restano come sono
             errori.append(f"coda: {quando} non è un giorno di uscita per «{tipo}» ({chiave})")
         if tipo == "domenica" and not str(chiave).endswith(str(quando)):
             errori.append(f"coda: la domenica {chiave} va pubblicata nella sua data, non il {quando}")

@@ -1,10 +1,9 @@
 name: Social · post automatico
-# Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py):
-#   lunedì, mercoledì, venerdì   una lezione, con il carosello
-#   martedì, sabato              «Il prof del Lab», una striscia a fumetti
-#   domenica                     «La grande domanda»: carosello di 10 immagini e video
-#   giovedì                      il reel: una lezione già uscita, in 30 secondi
-# Dopo ogni post su Facebook e Instagram esce anche la sua storia.
+# Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py),
+# secondo il calendario di seo/social_calendario.py:
+#   scuola    lunedì-venerdì una lezione (carosello, storia e video a fumetti col prof),
+#             sabato niente, domenica «La grande domanda» (carosello, storia e video)
+#   vacanze   lunedì, mercoledì e venerdì una striscia simpatica del prof
 # Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
 # Prima di pubblicare prepara in anticipo le rubriche dei giorni seguenti
 # (seo/rubriche.py, con Claude) e le loro immagini (seo/cartoline.mjs).
@@ -20,7 +19,7 @@ on:
       coda:
         description: 'Che cosa pubblicare (oggi = il calendario)'
         type: choice
-        options: [oggi, lezioni, prof, domenica, reel, nulla]
+        options: [oggi, lezioni, prof, domenica, video, nulla]
         default: oggi
       canali:
         description: 'Dove pubblicare'
@@ -68,15 +67,15 @@ jobs:
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
             node seo/cartoline.mjs
 
-      - name: Prepara il reel del giovedì
-        # il copione lo scrive Claude, il video lo monta seo/reel.mjs; va salvato sul
-        # sito prima di pubblicarlo, perché Instagram e Facebook lo scaricano da lì
+      - name: Prepara i video delle lezioni
+        # i copioni li scrive Claude (seo/reel.py), i video li monta seo/reel.mjs; vanno
+        # salvati sul sito prima di pubblicarli, perché Instagram e Facebook li scaricano da lì
         continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CODA: ${{ inputs.coda }}
         run: |
-          if [ "$CODA" = "reel" ]; then python seo/reel.py --sempre; else python seo/reel.py; fi
+          python seo/reel.py
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
@@ -85,7 +84,7 @@ jobs:
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -m "Social: il reel della settimana"
+            git commit -m "Social: i video delle lezioni"
             for prova in 1 2 3; do
               git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
               sleep 10
@@ -113,16 +112,16 @@ jobs:
         run: |
           argomenti=""
           canali=""
-          case "$CODA" in lezioni|prof|domenica|reel) argomenti="--coda $CODA";; esac
+          case "$CODA" in lezioni|prof|domenica|video) argomenti="--coda $CODA";; esac
           case "$CANALI" in
             telegram) canali="--canali telegram";;
             facebook-instagram) canali="--canali facebook,instagram";;
           esac
           esito=0
           python seo/pubblica.py $argomenti $canali || esito=1
-          # la domenica, dopo il carosello, esce anche il video della grande domanda
-          if [ "$(TZ=Europe/Rome date +%u)" = 7 ] && { [ -z "$CODA" ] || [ "$CODA" = oggi ] || [ "$CODA" = domenica ]; }; then
-            python seo/pubblica.py --coda reel-domenica $canali || esito=1
+          # dopo il post, il suo video a fumetti (esce solo se il post è uscito oggi)
+          if [ "$CODA" != video ]; then
+            python seo/pubblica.py --coda video $canali || esito=1
           fi
           exit $esito
 
