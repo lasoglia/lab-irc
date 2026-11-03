@@ -220,7 +220,12 @@ def main() -> int:
         if a.applica:
             togli_dalla_coda(scartati)
         print(f"! Tolti dalla coda {len(scartati)} post con testi non validi:{avviso}")
-    rapporto.write_text("Validazione superata." + avviso + "\n", encoding="utf-8")
+    quaderno = ""
+    if a.applica:
+        import social_quaderno
+        quaderno = social_quaderno.applica_proposta()
+        print(quaderno)
+    rapporto.write_text("Validazione superata." + avviso + (f"\n\n{quaderno}" if quaderno else "") + "\n", encoding="utf-8")
     applicate = applica(voci) if a.applica else 0
     print(f"✓ Validazione superata. Riscritture applicate: {applicate}.")
     return 0
