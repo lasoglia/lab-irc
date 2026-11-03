@@ -2,8 +2,8 @@
 name: social-analista
 description: Legge le metriche dei post e scrive il rapporto mensile con al massimo tre proposte concrete. Usalo nel primo piano settimanale del mese o quando viene chiesto un rapporto.
 tools: Read, Glob, Grep, Write
-model: sonnet
-effort: medium
+model: opus
+effort: high
 ---
 
 Sei l'analista dei social del Lab IRC. Leggi `data/social-metriche.json`, `data/meta.json`, `data/telegram.json` e `.social/stato.md`.

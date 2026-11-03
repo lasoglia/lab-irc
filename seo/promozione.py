@@ -172,7 +172,7 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
 
 def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict) -> dict:
     """L'autore scrive la bozza, il caporedattore la rilegge e la migliora."""
-    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "medium")
+    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high")
     finale, r2 = chiama_claude(
         client, REDATTORE,
         f"<istruzioni_autore>\n{istruzioni}\n</istruzioni_autore>\n\n"

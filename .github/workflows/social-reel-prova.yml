@@ -1,0 +1,95 @@
+name: Social · reel di prova
+# Monta un reel di prova dal copione indicato (seo/regia.py + seo/reel2.mjs), con la voce
+# clonata del prof se c'è il segreto VOCE_CAMPIONE. Il video e la voce vanno su Cloudflare R2
+# (cartella prove/, cancellati dopo 30 giorni) e l'indirizzo compare nel riepilogo
+# dell'esecuzione: si aprono dal telefono. Non pubblica nulla sui social.
+
+on:
+  workflow_dispatch:
+    inputs:
+      copione:
+        description: 'Copione del reel (file in seo/prove/)'
+        default: 'seo/prove/dionigi.json'
+
+permissions:
+  contents: read
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Scarica il sito (lezioni e fascicoli)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Modello della voce in cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/tts
+          key: xtts-v2
+
+      - name: Installa voce, musica, PDF e browser
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils ffmpeg
+          pip install --quiet "torch==2.8.0" "torchaudio==2.8.0" --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet coqui-tts six numpy "torch==2.8.0" "torchaudio==2.8.0" --extra-index-url https://download.pytorch.org/whl/cpu
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+
+      - name: Regia, voce e montaggio
+        env:
+          VOCE_CAMPIONE: ${{ secrets.VOCE_CAMPIONE }}
+          COPIONE: ${{ inputs.copione }}
+        run: |
+          mkdir -p uscita
+          python seo/regia.py "$COPIONE" uscita/regia.json lavoro
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)" \
+          PROVINO="$PWD/uscita" node seo/reel2.mjs uscita/regia.json uscita/reel.mp4
+          if ls lavoro/voce/*.wav >/dev/null 2>&1; then
+            for f in lavoro/voce/voce-*.wav; do echo "file '$PWD/$f'"; done > elenco.txt
+            ffmpeg -v error -y -f concat -safe 0 -i elenco.txt -c:a libmp3lame -b:a 160k uscita/voce.mp3
+          fi
+
+      - name: Su Cloudflare, da aprire dal telefono
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          nome="$(basename "${{ inputs.copione }}" .json)-${GITHUB_RUN_ID}"
+          python - "$nome" <<'PY'
+          import os, sys
+          from pathlib import Path
+          sys.path.insert(0, "seo")
+          import media_r2 as r2
+          nome = sys.argv[1]
+          righe = ["## Reel di prova", ""]
+          for f in ("reel.mp4", "voce.mp3"):
+              p = Path("uscita") / f
+              if not p.exists():
+                  continue
+              finale = p.with_name(f"{nome}-{f}")
+              p.rename(finale)
+              r2.carica(finale, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"],
+                        os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
+              url = f"{r2.URL_PUBBLICO}/prove/{finale.name}"
+              print(url)
+              righe.append(f"- {f}: {url}")
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(righe) + "\n", encoding="utf-8")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reel-di-prova
+          path: uscita/
+          retention-days: 3

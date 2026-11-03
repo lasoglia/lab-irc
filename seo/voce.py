@@ -60,6 +60,8 @@ def main() -> int:
         from TTS.api import TTS   # import qui: è pesante e serve solo con il campione
         tts = TTS(MODELLO)
         for i, frase in enumerate(frasi):
+            if not str(frase).strip():
+                continue
             grezzo = Path(tmp) / f"g{i}.wav"
             tts.tts_to_file(text=frase, speaker_wav=str(riferimento), language="it", file_path=str(grezzo),
                             temperature=0.7, speed=1.0, split_sentences=False)

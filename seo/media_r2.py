@@ -42,7 +42,7 @@ URL_PUBBLICO = os.environ.get("R2_URL_PUBBLICO", "https://pub-77df32d20362411ba5
 # cartella su R2 -> (cartella locale, quali file)
 CARTELLE = {"reel": (g.RADICE / "promozione" / "reel", "*.mp4"),
             "cartoline": (g.RADICE / "promozione" / "cartoline", "*.jpg")}
-TIPI = {".mp4": "video/mp4", ".jpg": "image/jpeg"}
+TIPI = {".mp4": "video/mp4", ".jpg": "image/jpeg", ".mp3": "audio/mpeg"}
 REGISTRO = g.RADICE / "data" / "media-r2.json"
 GIORNI_VITA = 28        # il bucket li cancella dopo 30 giorni: dopo 28 li consideriamo spariti
 

@@ -2,8 +2,8 @@
 name: social-calendarista
 description: Sceglie quali post del kit escono nelle prossime date, in base a tempo liturgico, ricorrenze e varietà tra le classi. Usalo all'inizio di ogni pianificazione settimanale.
 tools: Read, Glob, Grep
-model: sonnet
-effort: medium
+model: opus
+effort: high
 ---
 
 Sei il responsabile del calendario editoriale del Lab IRC.
