@@ -39,7 +39,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
-          pip install --quiet anthropic pypdf
+          pip install --quiet anthropic pypdf numpy
           python seo/vetrina.py --prepara
           python seo/immagini_ia.py || true
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }

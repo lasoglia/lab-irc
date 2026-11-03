@@ -10,7 +10,7 @@
 // Uso:  PW_MODULE=<playwright-core/index.js> CHROME_PATH=<chrome> node seo/reel.mjs
 // (ffmpeg deve esserci; FFMPEG=<percorso> per usarne un altro)
 
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, unlinkSync, writeFileSync, copyFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
@@ -31,8 +31,15 @@ mkdirSync(CARTELLA, { recursive: true });
 const attesi = new Set(elenco.map((r) => r.video));
 for (const f of readdirSync(CARTELLA)) if (/\.mp4$/.test(f) && !attesi.has(f)) { unlinkSync(join(CARTELLA, f)); console.log('  - tolto', f); }
 
-const daFare = elenco.filter((r) => !existsSync(join(CARTELLA, r.video)));
-if (!daFare.length) { console.log('Reel: niente da montare.'); process.exit(0); }
+// Quando cambia il montaggio (VERSIONE), i video già fatti si rimontano: promozione/reel/versioni.json
+// ricorda con che versione è stato montato ciascuno (2: con la colonna sonora)
+const VERSIONE = 2;
+const FILE_VERSIONI = join(CARTELLA, 'versioni.json');
+const versioni = existsSync(FILE_VERSIONI) ? JSON.parse(readFileSync(FILE_VERSIONI, 'utf8')) : {};
+const salvaVersioni = () => writeFileSync(FILE_VERSIONI, JSON.stringify(
+  Object.fromEntries(elenco.filter((r) => versioni[r.video]).map((r) => [r.video, versioni[r.video]])), null, 1) + '\n');
+const daFare = elenco.filter((r) => !existsSync(join(CARTELLA, r.video)) || versioni[r.video] !== VERSIONE);
+if (!daFare.length) { salvaVersioni(); console.log('Reel: niente da montare.'); process.exit(0); }
 if (!existsSync(PW) || !existsSync(CHROME)) { console.log('! Manca Playwright o il browser: salto il reel.'); process.exit(0); }
 
 const url = (rel) => pathToFileURL(join(RADICE, rel)).href;
@@ -158,10 +165,29 @@ window.vai = (ms) => document.getAnimations().forEach((a) => { a.currentTime = m
 </script></body></html>`;
 }
 
-function monta(uscita) {
-  // ffmpeg riceve i fotogrammi in JPG dallo standard input e aggiunge l'audio muto
+// La colonna sonora: musica ed effetti a tempo con le scene (seo/audio_reel.py); senza Python o
+// numpy il video resta muto, come prima
+function colonnaSonora(r, cartella) {
+  const n = r.scene.length;
+  const inizi = [0];
+  for (let i = 0; i < n + 1; i++) inizi.push(inizi[i] + (i === 0 ? T_GANCIO : T_SCENA));
+  const tempi = {
+    durata: T_GANCIO + n * T_SCENA + T_FINE, seme: r.titolo || r.video,
+    pop: inizi.map((t) => t + 0.08), whoosh: inizi.slice(1).map((t) => t - 0.18), campanello: [inizi[n + 1] + 0.35],
+  };
+  const fileTempi = join(cartella, 'tempi.json'), fileAudio = join(cartella, 'audio.wav');
+  writeFileSync(fileTempi, JSON.stringify(tempi));
+  const esito = spawnSync(process.env.PYTHON || 'python3', [join(RADICE, 'seo', 'audio_reel.py'), fileTempi, fileAudio], { stdio: 'inherit' });
+  if (esito.status === 0 && existsSync(fileAudio)) return fileAudio;
+  console.log('  ! colonna sonora non creata: il video resta muto');
+  return null;
+}
+
+function monta(uscita, audio) {
+  // ffmpeg riceve i fotogrammi in JPG dallo standard input e aggiunge la colonna sonora (o un audio muto)
+  const sonoro = audio ? ['-i', audio] : ['-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo'];
   const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
-    '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo', '-shortest',
+    ...sonoro, '-shortest', '-ar', '48000',
     '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-r', String(FPS),
     '-c:a', 'aac', '-b:a', '96k', '-movflags', '+faststart', uscita], { stdio: ['pipe', 'inherit', 'inherit'] });
   const fine = new Promise((ok, ko) => ff.on('close', (c) => (c === 0 ? ok() : ko(new Error(`ffmpeg è uscito con ${c}`)))));
@@ -195,7 +221,7 @@ try {
     });
     const fotogrammi = Math.ceil((durata / 1000) * FPS);
     const provvisorio = join(lavoro, 'reel.mp4');
-    const { ff, fine } = monta(provvisorio);
+    const { ff, fine } = monta(provvisorio, colonnaSonora(r, lavoro));
     for (let k = 0; k < fotogrammi; k++) {
       await scheda.evaluate((ms) => window.vai(ms), (k * 1000) / FPS);
       const jpg = await scheda.screenshot({ type: 'jpeg', quality: 92 });
@@ -204,6 +230,8 @@ try {
     ff.stdin.end();
     await fine;
     copyFileSync(provvisorio, join(CARTELLA, r.video));
+    versioni[r.video] = VERSIONE;
+    salvaVersioni();
     console.log(`  ✓ reel ${r.video} (${fotogrammi} fotogrammi, ${(durata / 1000).toFixed(1)} s)`);
   }
 } finally {
