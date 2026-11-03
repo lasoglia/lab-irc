@@ -9,7 +9,7 @@ on:
     inputs:
       frasi:
         description: 'Frasi da far dire al prof, separate da |'
-        default: 'Lo sapevi? Gesù è nato… avanti Cristo. | Nel 525 un monaco, Dionigi il Piccolo, cominciò a contare gli anni dalla nascita di Gesù. | Però sbagliò di qualche anno: Erode muore nel 4 avanti Cristo, e Gesù era già nato. | La lezione completa è su labirc.it.'
+        default: 'Lo sapevi? Gesù è nato… avanti Cristo. | Nel 525 un monaco, Dionigi il Piccolo, cominciò a contare gli anni dalla nascita di Gesù. | E l''Occidente conta ancora così. | Però sbagliò di qualche anno: Erode muore nel 4 avanti Cristo, e Gesù era già nato. | Quindi Gesù è nato qualche anno prima dell''anno uno. | La lezione completa è su labirc.it.'
 
 permissions:
   contents: read
@@ -33,8 +33,8 @@ jobs:
 
       - name: Installa il motore della voce (solo CPU)
         run: |
-          pip install --quiet torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-          pip install --quiet coqui-tts
+          pip install --quiet "torch==2.8.0" "torchaudio==2.8.0" --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet coqui-tts "torch==2.8.0" "torchaudio==2.8.0" --extra-index-url https://download.pytorch.org/whl/cpu
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
 
       - name: Genera le frasi
