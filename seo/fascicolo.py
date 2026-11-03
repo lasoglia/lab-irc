@@ -41,8 +41,9 @@ def pagine(pdf: Path) -> int:
     return int(re.search(r"Pages:\s+(\d+)", info).group(1))
 
 
-def trova(pdf: Path, frase: str) -> dict | None:
-    """La frase (almeno 4 parole) cercata parola per parola, ignorando accenti e punteggiatura."""
+def trova(pdf: Path, frase: str, cerchia: str | None = None) -> dict | None:
+    """La frase (almeno 4 parole) cercata parola per parola, ignorando accenti e punteggiatura.
+    Con «cerchia» (una parola o poche parole dentro la frase) dà anche il rettangolo da cerchiare."""
     cercate = [w for w in (_norma(p) for p in frase.split()) if w]
     if len(cercate) < 4:
         return None
@@ -59,7 +60,24 @@ def trova(pdf: Path, frase: str) -> dict | None:
                     break
                 k, j = k + 1, j + 1
             if j == len(cercate):
-                return {"pagina": n, "righe": _righe(parole[i:k])}
+                esito = {"pagina": n, "righe": _righe(parole[i:k])}
+                if cerchia:
+                    esito["cerchio"] = _dentro(parole[i:k], cerchia)
+                return esito
+    return None
+
+
+def _dentro(parole: list, cerchia: str) -> dict | None:
+    """Il rettangolo delle parole «cerchia» dentro un gruppo di parole già trovato."""
+    cercate = [w for w in (_norma(p) for p in cerchia.split()) if w]
+    norme = [_norma(p[4]) for p in parole]
+    for i in range(len(parole) - len(cercate) + 1):
+        if norme[i:i + len(cercate)] == cercate:
+            gruppo = parole[i:i + len(cercate)]
+            x0, y0 = min(p[0] for p in gruppo), min(p[1] for p in gruppo)
+            x1, y1 = max(p[2] for p in gruppo), max(p[3] for p in gruppo)
+            return {"x": round(x0 * SCALA), "y": round(y0 * SCALA), "w": round((x1 - x0) * SCALA),
+                    "h": round((y1 - y0) * SCALA)}
     return None
 
 
