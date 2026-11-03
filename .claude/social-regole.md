@@ -21,6 +21,8 @@ Il registro è sobrio, caldo e preciso, da insegnante.
 - Nessuna foto di persone. Solo le immagini del sito: cartoline, caroselli, le illustrazioni del prof
   (l'avatar del docente) e le mascotte delle classi.
 - Nessuna recensione, testimonianza o cifra inventata.
+- Tono leggero e simpatico, mai serioso o da predica: le battute bonarie vanno bene, purché non prendano
+  in giro persone, fedi o chi non crede e i fatti restino esatti.
 - Nessun tono pubblicitario, superlativo o urgenza. Niente punti esclamativi a raffica.
 - Nessun link nel testo: lo aggiunge lo script.
 - Nessuna vendita: il sito è gratuito e il docente è un dipendente pubblico.

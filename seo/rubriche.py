@@ -249,7 +249,8 @@ ISTRUZIONI_DOMENICA = """Scrivi «La grande domanda», il super post della domen
 social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, docente \
 nella scuola secondaria di secondo grado. È il pezzo forte della settimana: un carosello \
 da sfogliare e un breve video che rispondono a una domanda vera degli studenti, in modo \
-serio, chiaro e appassionante. Lo leggono studenti, colleghi e famiglie.
+chiaro, preciso e simpatico: si sfoglia con il sorriso e si impara qualcosa. Lo leggono \
+studenti, colleghi e famiglie.
 
 Ricevi la domanda della settimana e il testo delle lezioni del sito che contengono la \
 risposta. Restituisci nel formato JSON:
@@ -280,7 +281,9 @@ niente formule vaghe che indeboliscono o deformano ciò che la Chiesa insegna.
 che dice la scienza, la storia e la fede.
 - Al massimo due emoji per testo, nessuna nel carosello e nel video. Non scrivere link: \
 li aggiunge il sistema.
-- Italiano corretto e naturale."""
+- Italiano corretto e naturale.
+
+""" + pr.TONO
 
 
 def nome_file(prefisso: str, chiave: str, contenuto: dict) -> str:

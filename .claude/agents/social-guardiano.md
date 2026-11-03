@@ -12,7 +12,7 @@ Leggi `.claude/social-regole.md` e `.social/candidati/NN.md`. Se ti viene indica
 
 Controlla:
 1. **Persone.** Nessun dato di studenti, classi reali, scuole o colleghi, nessun episodio di classe riconoscibile.
-2. **Tono.** Sobrio, senza pressioni, rispettoso di chi crede e di chi non crede.
+2. **Tono.** Leggero e simpatico va bene, anzi è voluto: non si scarta un post perché scherza. Si scarta se è pesante e serioso, se fa pressione, se l'umorismo prende in giro persone, fedi o chi non crede.
 3. **Sensibilità.** Su guerra, Shoah, abusi, suicidio, aborto, fine vita, migrazioni e politica: il post è adatto a una pagina pubblica letta anche da minorenni? La data scelta è inopportuna per via di un evento di quei giorni riportato in `.social/stato.md`?
 4. **Promesse.** Non promette ciò che la pagina non offre, compreso l'accesso libero ai giochi chiusi da password.
 5. **Formato.** Lunghezze, numero di emoji e di hashtag secondo la tabella.
