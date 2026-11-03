@@ -124,6 +124,17 @@ non prende mai in giro persone, fedi o chi non crede, e i fatti restano esatti. 
 vietati i toni pubblicitari e le urgenze."""
 
 
+# Il metodo delle didascalie (.claude/social-metodo.md, punto 4). Come TONO, non entra nella
+# firma dei testi in cache: vale per i testi nuovi, senza riscrivere quelli già approvati.
+METODO = """Didascalie (Instagram e Facebook), con quattro ingredienti in paragrafi brevi \
+separati da una riga vuota: 1) la prima riga attira, perché è l'unica che si vede prima di \
+«altro»: una domanda vera o un fatto sorprendente preso dalla lezione, al massimo 12 parole; \
+2) una frase dice a chi serve (a chi insegna in quella classe, a chi studia, a chi si è sempre \
+chiesto…), senza escludere o ferire nessuno; 3) un dato o una fonte presa dalla lezione (un \
+documento, un testo biblico, un numero): l'autorevolezza viene dalla fonte; 4) una sola \
+richiesta finale chiara (salvare il post, aprire la lezione, mandarla a un collega). Mai \
+«scrivi X nei commenti per ricevere…», niente frasi motivazionali generiche."""
+
 # Il tono della versione 3, usato solo nella firma dei testi in cache: così il tono nuovo vale
 # per i testi nuovi, ma quelli già scritti (e magari già approvati dagli agenti) non si
 # riscrivono di nascosto. Con il rifacimento dei post (VERSIONE 4) questa riga se ne va.
@@ -258,7 +269,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
     def scrivi(lavoro):
         k, impronta, messaggio = lavoro
         try:
-            return k, impronta, scrivi_e_rivedi(client, ISTRUZIONI + "\n\n" + TONO, messaggio, SCHEMA_POST), None
+            return k, impronta, scrivi_e_rivedi(client, ISTRUZIONI + "\n\n" + TONO + "\n\n" + METODO, messaggio, SCHEMA_POST), None
         except Exception as err:   # un errore su una lezione non blocca le altre
             return k, impronta, None, err
 

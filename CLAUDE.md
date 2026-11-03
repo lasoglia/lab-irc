@@ -32,7 +32,8 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   l'esploratore cerca idee nuove e l'analista aggiorna `data/social-quaderno.json` (regole imparate,
   esperimento della settimana, idee; controllato da `seo/social_quaderno.py`). Chi scrive i post riceve
   da solo le regole confermate e l'istruzione dell'esperimento.
-- Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`.
+- Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`,
+  metodo per angoli, ganci, copioni e didascalie in `.claude/social-metodo.md` (`/social-reel <argomento>` lo applica tutto).
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
 
 ## Regole di lavoro
