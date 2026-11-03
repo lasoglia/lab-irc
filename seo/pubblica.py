@@ -13,7 +13,8 @@ verticale <nome>-storia.jpg). Poi, con --coda video, esce il video a fumetti del
 post uscito oggi (promozione/reel.json per le lezioni, promozione/reel-domenica.json
 per la domenica; li prepara seo/reel.py o seo/rubriche.py, li monta seo/reel.mjs).
 Il video esce solo se il suo post è già uscito: la coda degli agenti l'ha già approvato.
-Il mercoledì esce da solo il video della lezione del lunedì; sabato e domenica dopo il carosello.
+Lunedì, mercoledì e venerdì esce il reel della lezione in coda per quel giorno; la domenica il video
+della grande domanda dopo il suo carosello.
 
 Per ogni canale esce il primo post della coda del giorno che su quel canale non
 è ancora uscito (la domenica solo quello di quella data), e solo se le sue
@@ -55,9 +56,9 @@ import telegram as tg  # noqa: E402
 import media_r2 as r2  # noqa: E402
 from rubriche import oggi_in_italia  # noqa: E402
 
-CODE = {"lezione": "lezioni", "video": "video", "prof": "prof", "shabbat": "sabato", "domenica": "domenica", None: None}
+CODE = {"lezione": "lezioni", "reel": "reel", "prof": "prof", "shabbat": "sabato", "domenica": "domenica", None: None}
 FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "sabato": "sabato.json", "domenica": "domenica.json",
-             "video": "reel.json"}
+             "reel": "reel.json", "video": "reel-domenica.json"}
 CANALI = ("telegram", "facebook", "instagram")
 
 
@@ -241,29 +242,31 @@ def main():
     if coda == "lezioni":
         # le strisce del prof già approvate per un giorno di scuola escono ancora (prima del nuovo calendario)
         elenco = elenco + leggi_json(g.RADICE / "promozione" / "prof.json", [])
-    if coda == "video":
-        # Il video esce solo se il suo post è uscito (la coda degli agenti l'ha già approvato):
-        # - il mercoledì (giorno «video») il video a fumetti dell'ultima lezione uscita negli
-        #   ultimi 7 giorni, di solito quella del lunedì;
-        # - il sabato e la domenica il video della rubrica, subito dopo il suo carosello.
+    if coda in ("reel", "video"):
+        # Un video esce solo se la sua lezione (o la sua domenica) è approvata dagli agenti:
+        # - «reel» (lunedì, mercoledì, venerdì): il reel della lezione in coda per oggi;
+        # - «video» (dopo il carosello della domenica): il video della grande domanda uscita oggi.
         try:
             stato = coda_agenti.leggi()
         except (ValueError, OSError):
             stato = {"pausa": True}
         tg_reg = leggi_json(g.RADICE / "data" / "telegram.json", {})
         meta_reg = leggi_json(g.RADICE / "data" / "meta.json", {})
-        oggi_s, settimana_fa = oggi.isoformat(), (oggi - dt.timedelta(days=7)).isoformat()
+        oggi_s = oggi.isoformat()
 
         def uscite(r):
             return {d for d in [tg_reg.get(r.get("origine")), *meta_reg.get(r.get("origine"), {}).values()] if d}
 
         if stato and stato.get("pausa"):
             elenco = []
-        elif cal.tipo_del_giorno(oggi) == "video":
-            recenti = [(max(u), r) for r in elenco if (u := uscite(r)) and settimana_fa <= max(u) < oggi_s]
-            elenco = [r for _, r in sorted(recenti, key=lambda x: x[0], reverse=True)]
+        elif coda == "reel":
+            if stato is not None:
+                escluse = coda_agenti.chiavi_escluse(stato)
+                di_oggi = {v.get("chiave") for v in stato.get("coda", []) if v.get("esito") == "approvato"
+                           and str(v.get("quando")) == oggi_s and v.get("chiave") not in escluse}
+                elenco = [r for r in elenco if r.get("origine") in di_oggi]
         else:
-            elenco = [r for r in leggi_json(g.RADICE / "promozione" / "reel-domenica.json", []) if oggi_s in uscite(r)]
+            elenco = [r for r in elenco if str(r.get("origine", "")).startswith("dom") and oggi_s in uscite(r)]
     else:
         # solo i post approvati dagli agenti con la data arrivata (se c'è data/social-coda.json)
         elenco = coda_agenti.applica(elenco, oggi.isoformat())
