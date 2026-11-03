@@ -48,7 +48,8 @@ const suR2 = (() => {
   const r2 = existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : {};
   return (video) => Boolean(r2[`reel/${video}`] && r2[`reel/${video}`] >= limite);
 })();
-const daFare = elenco.filter((r) => (!existsSync(join(CARTELLA, r.video)) && !suR2(r.video)) || versioni[r.video] !== VERSIONE);
+// i reel del motore nuovo (motore «reel2») li monta seo/reel_lezioni.py
+const daFare = elenco.filter((r) => r.motore !== 'reel2' && ((!existsSync(join(CARTELLA, r.video)) && !suR2(r.video)) || versioni[r.video] !== VERSIONE));
 if (!daFare.length) { salvaVersioni(); console.log('Reel: niente da montare.'); process.exit(0); }
 if (!existsSync(PW) || !existsSync(CHROME)) { console.log('! Manca Playwright o il browser: salto il reel.'); process.exit(0); }
 

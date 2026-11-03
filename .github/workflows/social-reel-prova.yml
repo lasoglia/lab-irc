@@ -10,6 +10,12 @@ on:
       copione:
         description: 'Copione del reel (file in seo/prove/)'
         default: 'seo/prove/dionigi.json'
+      lezione:
+        description: 'Oppure la chiave di una lezione (anno|unità|titolo): il copione lo scrive il regista'
+        default: ''
+      giorno:
+        description: 'Giorno di uscita, per la serie (AAAA-MM-GG; vuoto = lunedì «Lo sapevi?»)'
+        default: ''
 
 permissions:
   contents: read
@@ -34,15 +40,24 @@ jobs:
       - name: Installa voce, musica, PDF e browser
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils ffmpeg
-          pip install --quiet numpy
+          pip install --quiet numpy anthropic
           npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
 
       - name: Regia, voce e montaggio
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           COPIONE: ${{ inputs.copione }}
+          LEZIONE: ${{ inputs.lezione }}
+          GIORNO: ${{ inputs.giorno }}
         run: |
           mkdir -p uscita
+          if [ -n "$LEZIONE" ]; then
+            git fetch -q --depth=1 origin main && git checkout origin/main -- seo/regista.py seo/promozione.py .claude/social-metodo.md
+            python seo/regista.py "$LEZIONE" "${GIORNO:-2026-11-09}" uscita/copione.json
+            cat uscita/copione.json
+            COPIONE=uscita/copione.json
+          fi
           python seo/regia.py "$COPIONE" uscita/regia.json lavoro
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)" \
@@ -57,8 +72,10 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          LEZIONE: ${{ inputs.lezione }}
+          COPIONE: ${{ inputs.copione }}
         run: |
-          nome="$(basename "${{ inputs.copione }}" .json)-${GITHUB_RUN_ID}"
+          if [ -n "$LEZIONE" ]; then nome="regista-${GITHUB_RUN_ID}"; else nome="$(basename "$COPIONE" .json)-${GITHUB_RUN_ID}"; fi
           python - "$nome" <<'PY'
           import os, sys
           from pathlib import Path
