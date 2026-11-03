@@ -1,0 +1,59 @@
+{
+ "serie": "Il gioco del Lab",
+ "anno": 2,
+ "titolo": "Gesù, quali tracce? · verifica di fine unità",
+ "inquadrature": [
+  {
+   "tipo": "clip",
+   "video": "https://pub-77df32d20362411ba59cb8a80c90b295.r2.dev/prove/gioco-ii-1-g-gesu-quali-tracce-gioco-41736604105.mp4",
+   "da": 7.4,
+   "durata": 3.0,
+   "testo": "E se la verifica fosse *un videogioco*?",
+   "voce": "E se la verifica di religione fosse un videogioco?",
+   "posa": "occhiolino"
+  },
+  {
+   "tipo": "clip",
+   "video": "https://pub-77df32d20362411ba59cb8a80c90b295.r2.dev/prove/gioco-ii-1-g-gesu-quali-tracce-gioco-41736604105.mp4",
+   "da": 10.1,
+   "durata": 4.0,
+   "testo": "Rispondi ai *testimoni*",
+   "voce": "Nella Galilea del primo secolo incontri i testimoni, e ognuno ti fa una domanda.",
+   "posa": "spiega"
+  },
+  {
+   "tipo": "clip",
+   "video": "https://pub-77df32d20362411ba59cb8a80c90b295.r2.dev/prove/gioco-ii-1-g-gesu-quali-tracce-gioco-41736604105.mp4",
+   "da": 13.6,
+   "durata": 4.0,
+   "testo": "Sbagli? Arriva *un'Ombra*.",
+   "voce": "Se sbagli, l'errore prende forma: un'Ombra da dissolvere.",
+   "posa": "sorpreso"
+  },
+  {
+   "tipo": "clip",
+   "video": "https://pub-77df32d20362411ba59cb8a80c90b295.r2.dev/prove/gioco-ii-1-g-gesu-quali-tracce-gioco-41736604105.mp4",
+   "da": 18.2,
+   "durata": 3.6,
+   "voce": "La dissolvi con la spada di legno, poi torni dal testimone e riprovi.",
+   "posa": "appunti"
+  },
+  {
+   "tipo": "clip",
+   "video": "https://pub-77df32d20362411ba59cb8a80c90b295.r2.dev/prove/gioco-ii-1-g-gesu-quali-tracce-gioco-41736604105.mp4",
+   "da": 28.6,
+   "durata": 4.2,
+   "testo": "Ogni risposta giusta: *un frammento*",
+   "voce": "Ogni risposta giusta vale un frammento del documento.",
+   "posa": "sorriso"
+  },
+  {
+   "tipo": "chiusa",
+   "sopra": "Verifica di fine unità",
+   "testo": "Si gioca in classe, con la *password del prof*",
+   "voce": "Si gioca in classe, con la password del prof. Tutto il resto è su labirc.it.",
+   "posa": "saluta"
+  }
+ ],
+ "nota": "Prova: i tempi (da) vengono dai momenti della registrazione; il video è su R2 per 30 giorni."
+}
