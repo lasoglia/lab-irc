@@ -43,9 +43,10 @@ CAMPI = {  # campo: lunghezza minima e massima
     "whatsapp": (100, 450),
 }
 HASHTAG_MAX = 5
-# il calendario è quello di seo/social_calendario.py: a scuola lezioni lun-ven e la domenica,
-# in vacanza solo le strisce del prof lunedì, mercoledì e venerdì
-MASSIMO_PER_TIPO = {"lezione": 5, "prof": 3, "shabbat": 1, "domenica": 1}
+# il calendario è quello di seo/social_calendario.py: a scuola lezioni lunedì e venerdì
+# (il mercoledì il loro video), sabato lo Shabbat, domenica la grande domanda;
+# in vacanza le strisce del prof lunedì e giovedì
+MASSIMO_PER_TIPO = {"lezione": 2, "prof": 2, "shabbat": 1, "domenica": 1}
 VIETATI = [
     (r"https?://|www\.", "contiene un link: i link li aggiunge lo script"),
     (r"clicca qui", "contiene «clicca qui»"),
