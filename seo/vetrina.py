@@ -84,6 +84,7 @@ def prepara() -> int:
     scrivi(CARTELLA / "vetrina.json", {
         "benvenuto": benvenuto,
         "copertina_facebook": "vetrina-copertina-facebook.png",
+        "storia": "vetrina-benvenuto-storia.png",
         "icone": [{"chiave": k, "titolo": t, "file": f"vetrina-icona-{k}.png"} for k, t in ICONE],
         "presentazione": PRESENTAZIONE, "descrizione_telegram": DESCRIZIONE_TELEGRAM,
     })
@@ -96,6 +97,34 @@ def prepara() -> int:
         "video": "vetrina-prof-1.mp4", **TESTI_PROF}])
     print("Vetrina pronta: benvenuto, video del prof, copertina di Facebook, 5 icone.")
     return 0
+
+
+def pubblica_storia() -> int:
+    """Una storia di benvenuto su Instagram e Facebook (Telegram non ha storie per i bot)."""
+    vetrina = leggi(CARTELLA / "vetrina.json", {})
+    if not vetrina.get("storia"):
+        print("! Prima: python seo/vetrina.py --prepara")
+        return 1
+    u = pb.url_immagine(vetrina["storia"])
+    if not pb.attendi_online([u], 10):
+        print(f"✗ La storia non è ancora online: {u}")
+        return 1
+    pagina_id, chiave, ig_id = meta.trova_account(os.environ["META_TOKEN"])
+    errori = 0
+    try:
+        foto = meta.chiama("POST", f"{pagina_id}/photos", url=u, published="false", access_token=chiave)["id"]
+        meta.chiama("POST", f"{pagina_id}/photo_stories", photo_id=foto, access_token=chiave)
+        print("✓ storia su Facebook")
+    except Exception as err:
+        print(f"✗ storia su Facebook: {err}"); errori += 1
+    try:
+        c = meta.chiama("POST", f"{ig_id}/media", media_type="STORIES", image_url=u, access_token=chiave)["id"]
+        pb.attendi_contenitore(c, chiave)
+        meta.chiama("POST", f"{ig_id}/media_publish", creation_id=c, access_token=chiave)
+        print("✓ storia su Instagram")
+    except Exception as err:
+        print(f"✗ storia su Instagram: {err}"); errori += 1
+    return 1 if errori else 0
 
 
 def pubblica_vetrina() -> int:
@@ -186,5 +215,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--prepara", action="store_true")
     ap.add_argument("--pubblica", action="store_true")
+    ap.add_argument("--storia", action="store_true", help="pubblica solo la storia di benvenuto")
     a = ap.parse_args()
-    sys.exit(prepara() if a.prepara else pubblica_vetrina() if a.pubblica else ap.print_help() or 0)
+    sys.exit(prepara() if a.prepara else pubblica_vetrina() if a.pubblica else pubblica_storia() if a.storia
+             else ap.print_help() or 0)
