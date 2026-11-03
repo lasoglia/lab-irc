@@ -236,6 +236,52 @@ body{padding:190px 80px 270px}
 .piede{justify-content:center;margin-top:26px}`);
 }
 
+/* ---------- la vetrina: copertina di Facebook (1640×624) e icone delle storie in evidenza ---------- */
+const CANDELE = `.candele{display:flex;gap:70px}
+.candele i{position:relative;display:block;width:46px;height:170px;border-radius:10px;background:linear-gradient(180deg,#FBFAFF,#C7C3DA)}
+.candele i:before{content:"";position:absolute;left:50%;top:-74px;width:40px;height:66px;margin-left:-20px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:radial-gradient(circle at 50% 70%,#FFF7D6,#FBBF24 55%,#FF7A59);box-shadow:0 0 50px 18px rgba(251,191,36,.45)}`;
+function copertinaFacebook() {
+  return pagina(ORO, `
+<div class="riga"><div class="testo">${logo}
+<h1>Il laboratorio di <em>Religione</em></h1>
+<p>Lezioni, fascicoli e giochi gratis · dalla prima alla quinta</p>
+<div class="web">www.labirc.it</div></div>
+<div class="figure"><img class="prof" src="${url('assets/avatar/sorriso.png')}">
+<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div></div></div>`,
+  `html,body{width:1640px;height:624px}
+body{padding:0 150px}
+.bordo{inset:22px;border-radius:30px}
+.riga{flex:1;display:flex;align-items:center;justify-content:space-between;gap:60px}
+.testo{display:flex;flex-direction:column;gap:22px;max-width:760px}
+h1{font-size:84px}
+p{margin:0;font-size:30px}
+.web{font:700 30px Figtree;color:${ORO}}
+.figure{display:flex;flex-direction:column;align-items:center;gap:26px}
+.prof{width:300px;height:300px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 7px ${ORO},0 24px 60px rgba(0,0,0,.45)}
+.cinque{display:flex;gap:12px}.cinque img{width:78px;height:78px}`);
+}
+function iconaVetrina(k, titolo) {
+  const segni = {
+    lezioni: `<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>`,
+    domanda: '<div class="punto">?</div>',
+    shabbat: '<div class="candele"><i></i><i></i></div>',
+    prof: `<img class="prof" src="${url('assets/avatar/sorriso.png')}">`,
+    come: '<div class="passi"><b>1</b><b>2</b><b>3</b></div>',
+  };
+  // niente scritta: Instagram mostra il nome della raccolta sotto il cerchio
+  return pagina(ORO, `<div class="centro" title="${esc(titolo)}">${segni[k]}</div>`,
+  `html,body{width:1080px;height:1080px}
+body{padding:0;align-items:center;justify-content:center;background:radial-gradient(60% 60% at 50% 45%,rgba(139,92,246,.45),transparent 70%),#14131F}
+.bordo{inset:110px;border-radius:50%;border:6px solid ${ORO}}
+.centro{display:flex;flex-direction:column;align-items:center}
+.cinque{display:flex;flex-wrap:wrap;justify-content:center;width:600px;gap:20px 34px}.cinque img{width:170px;height:170px}
+.punto{font:600 520px/0.9 Cormorant;color:#FB7BB5;text-shadow:0 0 90px rgba(251,123,181,.6)}
+.prof{width:600px;height:600px;border-radius:50%;object-fit:cover}
+.passi{display:flex;gap:34px}.passi b{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;font:600 100px Cormorant;color:#14131F;background:${ORO}}
+${CANDELE}
+.candele{margin-top:80px;transform:scale(1.5)}`);
+}
+
 /* ---------- l'elenco di tutto quello che va disegnato ---------- */
 const lavori = [];
 for (const c of leggi('cartoline.json')) {
@@ -285,6 +331,14 @@ for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
 for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori.slice(prima_)) l.soloJpg = true;
 
+{
+  const vetrina = existsSync(join(RADICE, 'promozione', 'vetrina.json')) ? JSON.parse(readFileSync(join(RADICE, 'promozione', 'vetrina.json'), 'utf8')) : null;
+  if (vetrina) {
+    lavori.push({ file: vetrina.copertina_facebook, largo: 1640, alto: 624, html: copertinaFacebook });
+    for (const i of vetrina.icone || []) lavori.push({ file: i.file, largo: 1080, alto: 1080, html: () => iconaVetrina(i.chiave, i.titolo) });
+  }
+}
+
 mkdirSync(CARTELLA, { recursive: true });
 const attese = new Set(lavori.flatMap((l) => (l.soloJpg ? [jpg(l.file)] : [l.file, jpg(l.file)])));
 for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
@@ -312,8 +366,8 @@ const scheda_ = await browser.newPage({ viewport: { width: 1080, height: 1350 } 
 const lavoro = mkdtempSync(join(tmpdir(), 'cartoline-'));
 for (const l of daFare) {
   writeFileSync(join(lavoro, 'cartolina.html'), l.html());
-  const alto = l.alto || 1350;
-  if (scheda_.viewportSize().height !== alto) await scheda_.setViewportSize({ width: 1080, height: alto });
+  const alto = l.alto || 1350, largo = l.largo || 1080;
+  if (scheda_.viewportSize().height !== alto || scheda_.viewportSize().width !== largo) await scheda_.setViewportSize({ width: largo, height: alto });
   await scheda_.goto(pathToFileURL(join(lavoro, 'cartolina.html')).href, { waitUntil: 'load' });
   await scheda_.evaluate(async ([sel, alto]) => {
     await document.fonts.ready;
