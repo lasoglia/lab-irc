@@ -91,7 +91,8 @@ Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pag
 secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
 «cerchia», «numero» vuoti quando non servono.
 
-La «voce» si legge ad alta voce: frasi brevi, parlato naturale, numeri e sigle scritti come si \
+La «voce» si legge ad alta voce: al massimo 18 parole per inquadratura e 80 parole in tutto \
+(il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
 dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 
 Restituisci anche: «serie» (quella indicata nel messaggio; «Falsi miti» solo se il fascicolo \
@@ -143,6 +144,13 @@ def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
     return errori
 
 
+PAROLE_MAX = 85   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
+
+
+def parole_voce(copione: dict) -> int:
+    return sum(len(str(q.get("voce", "")).split()) for q in copione.get("inquadrature", []))
+
+
 def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     """Il copione completo (formato di seo/regia.py) e le didascalie, oppure None."""
     import datetime as dt
@@ -169,7 +177,18 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
         if len(citazioni_sbagliate(corretto, pdf)) < len(errori):
             corretto["token"] = c.get("token")
             c = corretto
+    if parole_voce(c) > PAROLE_MAX:   # troppo lungo: si accorcia la voce, senza toccare le citazioni
+        corto, _ = pr.chiama_claude(
+            client, istruzioni,
+            messaggio + "\n\n<copione>\n" + json.dumps(c, ensure_ascii=False) + "\n</copione>\n\n"
+            f"La voce ha {parole_voce(c)} parole: accorciala a non più di {PAROLE_MAX - 10} in tutto, frasi più "
+            "brevi e meno inquadrature se serve. Non cambiare le citazioni rimaste e il resto del copione.",
+            schema(), "high")
+        if parole_voce(corto) < parole_voce(c) and len(citazioni_sbagliate(corto, pdf)) <= len(citazioni_sbagliate(c, pdf)):
+            corto["token"] = c.get("token")
+            c = corto
     c["fascicolo"] = str(pdf.relative_to(RADICE))
+    c["parole_voce"] = parole_voce(c)
     c["citazioni_sbagliate"] = len(citazioni_sbagliate(c, pdf))
     return c
 
@@ -200,7 +219,7 @@ def main() -> int:
     uscita = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("copione.json")
     uscita.write_text(json.dumps(copione_regia(c, lezione), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({k: c[k] for k in ("serie", "ganci", "facebook")}, ensure_ascii=False, indent=1))
-    print(f"Copione in {uscita} (citazioni sbagliate rimaste: {c['citazioni_sbagliate']})")
+    print(f"Copione in {uscita} (citazioni sbagliate rimaste: {c['citazioni_sbagliate']}, parole della voce: {c['parole_voce']})")
     return 0
 
 
