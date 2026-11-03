@@ -6,8 +6,11 @@ seo/rubriche.py — Le rubriche social del Lab IRC, oltre ai post delle lezioni.
     illustrato del prof e un fumetto. Ognuno nasce da una lezione vera: una
     curiosità («Lo sapevi?»), una domanda degli studenti («Il prof risponde»),
     un piccolo indovinello, oppure un momento di vita da insegnante.
-  · «La domenica del Lab»: un breve pensiero per la settimana, legato al tempo
-    liturgico (calcolato qui, non indovinato) e a una lezione del sito.
+  · «La domenica del Lab»: il post speciale della settimana, un carosello legato
+    al tempo liturgico (calcolato qui, non indovinato) e a una lezione del sito:
+    copertina, il tempo che viviamo, «Lo sapevi?», dal Lab, la domanda per la
+    settimana e il saluto finale. Ogni scheda ha un disegno fatto da Claude
+    (seo/illustrazioni.py), in promozione/illustrazioni/domenica/.
 
 Come per il kit delle lezioni, scrive Claude e un secondo passaggio da
 caporedattore rilegge. Lo script prepara i post IN ANTICIPO (una riserva di
@@ -36,11 +39,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402
+import illustrazioni as ill  # noqa: E402
 import promozione as pr  # noqa: E402
 
 RISERVA_PROF = 6           # post del prof pronti in anticipo (tre settimane)
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
+CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 POSE = ["sorriso", "buffo", "pensieroso", "sorpreso", "spiega", "ride"]
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
 
@@ -197,15 +202,20 @@ SCHEMA_DOMENICA = {
         "instagram": {"type": "string"},
         "hashtag": {"type": "array", "items": {"type": "string"}},
         "telegram": {"type": "string"},
+        "carosello": {"type": "array", "items": {
+            "type": "object",
+            "properties": {"titolo": {"type": "string"}, "testo": {"type": "string"}},
+            "required": ["titolo", "testo"], "additionalProperties": False}},
     },
-    "required": ["indice_lezione", "titolo", "frase", "facebook", "instagram", "hashtag", "telegram"],
+    "required": ["indice_lezione", "titolo", "frase", "facebook", "instagram", "hashtag", "telegram", "carosello"],
     "additionalProperties": False,
 }
 
 ISTRUZIONI_DOMENICA = """Scrivi «La domenica del Lab», il post speciale della domenica \
 sui social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, \
-docente nella scuola secondaria di secondo grado. È un breve pensiero per iniziare la \
-settimana, per colleghi, studenti e famiglie: caldo, sobrio, mai una predica.
+docente nella scuola secondaria di secondo grado. È il post più curato della settimana: \
+un carosello da sfogliare per iniziare la settimana, per colleghi, studenti e famiglie. \
+Caldo, sobrio, preciso, mai una predica.
 
 Ricevi la data, il tempo liturgico ed eventualmente la festa del giorno (sono sicuri: \
 li ha calcolati il sistema) e l'elenco numerato delle lezioni del sito con la loro sintesi. \
@@ -216,10 +226,22 @@ Scegli la lezione più adatta al tempo o alla festa e restituisci nel formato JS
 - facebook: 400-700 caratteri; instagram: 400-800 caratteri, senza hashtag; telegram: \
 250-500 caratteri. Ogni testo collega il tempo liturgico alla lezione e chiude con una \
 domanda aperta per la settimana;
-- hashtag: da 3 a 5, senza #, sempre religionecattolica e irc.
+- hashtag: da 3 a 5, senza #, sempre religionecattolica e irc;
+- carosello: esattamente 4 schede, in quest'ordine, ognuna con titolo (massimo 28 \
+caratteri) e testo (massimo 170 caratteri, si legge in pochi secondi sul telefono):
+  1. «Il tempo che viviamo»: che cosa celebra la Chiesa in questo tempo o in questa \
+festa, detto in modo semplice e teologicamente esatto;
+  2. «Lo sapevi?»: una curiosità sicura sul tempo liturgico o sulla festa (un segno, \
+un colore, un'usanza della liturgia): solo cose certe e note, che trovi nel Catechismo \
+o nelle norme liturgiche; se non sei sicuro, scegli una cosa più generale;
+  3. «Dal Lab»: che cosa fa scoprire la lezione scelta, preso dalla sua sintesi;
+  4. «Per la settimana»: una domanda aperta su cui pensare, per chi crede e per chi no.
+Puoi variare un po' i titoli delle schede, ma non il loro contenuto.
 
 Regole vincolanti:
 - Non citare le letture della messa di quella domenica: non ti vengono date.
+- Sulla fede e sulla liturgia sii preciso come un buon libro di testo: niente formule \
+vaghe che indeboliscono ciò che la Chiesa insegna.
 - Usa solo ciò che dicono la sintesi della lezione e il tempo liturgico: niente fatti inventati.
 - Rispetto per chi crede e per chi non crede: si propone, non si impone.
 - Al massimo due emoji per testo. Non scrivere link: li aggiunge il sistema.
@@ -308,7 +330,9 @@ def main():
                            for i, l in enumerate(ordinate, start=1))
     for d in domeniche:
         k = d.isoformat()
-        if not client or k in cache["domenica"] or not ordinate:
+        vecchia = k in cache["domenica"] and "carosello" not in cache["domenica"][k]["testi"] \
+            and not pubblicato(cache["domenica"][k]["chiave"], registri)
+        if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
             continue
         tempo, festa, colore = tempo_liturgico(d)
         messaggio = (f"Data: domenica {d.day} {MESI[d.month - 1]} {d.year}\n"
@@ -321,9 +345,22 @@ def main():
             continue
         tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
         l = ordinate[max(1, min(len(ordinate), int(t.get("indice_lezione") or 1))) - 1]
-        cache["domenica"][k] = {"chiave": f"dom-{k}", "data": k, "tempo": festa or tempo, "colore": colore,
-                                "lezione": l["titolo"], "url": pr.url_lezione(l), "testi": t}
-        print(f"  ✓ domenica {k} · {festa or tempo} · {l['titolo']}")
+        voce = {"chiave": f"dom-{k}", "data": k, "tempo": festa or tempo, "colore": colore,
+                "lezione": l["titolo"], "url": pr.url_lezione(l), "testi": t, "illustrazioni": []}
+        schede = t.get("carosello", [])[:4]
+        if schede:
+            try:
+                messaggio = (f"La domenica del Lab, {d.day} {MESI[d.month - 1]} {d.year} · {festa or tempo}. "
+                             f"Le schede del carosello sono {len(schede)}.\n\n" + "\n\n".join(
+                                 f"Scheda {i}: {x['titolo']}\n{x['testo']}" for i, x in enumerate(schede, start=1)))
+                file, r = ill.disegna(client, messaggio, len(schede), CARTELLA_DOMENICA,
+                                      f"{k}-{hashlib.sha256(json.dumps(schede).encode()).hexdigest()[:6]}")
+                voce["illustrazioni"] = file
+                tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+            except Exception as err:   # senza disegni il carosello esce lo stesso
+                print(f"  ! domenica {k}: disegni non fatti ({err})")
+        cache["domenica"][k] = voce
+        print(f"  ✓ domenica {k} · {festa or tempo} · {l['titolo']} · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
 
     # --- gli elenchi per il disegnatore e per la pubblicazione ---
     limite = (oggi - dt.timedelta(days=GIORNI_ARCHIVIO)).isoformat()
@@ -331,6 +368,11 @@ def main():
     cache["prof"] = [p for p in cache["prof"] if tieni(p) or pubblicato(p["chiave"], registri) == ""]
     cache["domenica"] = {k: v for k, v in sorted(cache["domenica"].items()) if k >= limite}
     cache_file.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    # via i disegni delle domeniche uscite dall'archivio
+    usati = {f for v in cache["domenica"].values() for f in v.get("illustrazioni", []) if f}
+    for f in CARTELLA_DOMENICA.glob("*.svg"):
+        if f.name not in usati:
+            f.unlink()
 
     prof = []
     for p in cache["prof"]:
@@ -344,12 +386,17 @@ def main():
     domenica = []
     for k, v in cache["domenica"].items():
         t, d = v["testi"], dt.date.fromisoformat(k)
+        schede = t.get("carosello", [])[:4]
+        disegni = ["promozione/illustrazioni/domenica/" + f if f else "" for f in v.get("illustrazioni", [])]
+        f = nome_file("domenica", k, {"t": t["titolo"], "f": t["frase"], "c": v["colore"], "s": schede, "d": disegni})
+        base = f.removesuffix(".png")
+        # copertina, le schede, il saluto finale
+        immagini = [f] + ([f"{base}-{i}.png" for i in range(2, len(schede) + 3)] if schede else [])
         domenica.append({"chiave": v["chiave"], "tipo": "domenica", "data": k,
                          "data_breve": f"Domenica {d.day} {MESI[d.month - 1]}", "tempo": v["tempo"],
                          "colore": v["colore"], "titolo": t["titolo"], "frase": t["frase"],
-                         "lezione": v["lezione"], "url": v["url"],
-                         "file": (f := nome_file("domenica", k, {"t": t["titolo"], "f": t["frase"], "c": v["colore"]})),
-                         "immagini": [f], **testi_canali(t, v["url"])})
+                         "lezione": v["lezione"], "url": v["url"], "carosello": schede,
+                         "illustrazioni": disegni, "file": f, "immagini": immagini, **testi_canali(t, v["url"])})
     cartella = g.RADICE / "promozione"
     cartella.mkdir(exist_ok=True)
     for nome, dati in (("prof.json", prof), ("domenica.json", domenica)):

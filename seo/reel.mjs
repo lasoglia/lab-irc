@@ -105,7 +105,7 @@ ${scene}
 <section class="fine">
   <div class="cinque">${[1, 2, 3, 4, 5].map((k) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[k]}.svg`)}">`).join('')}</div>
   <h2>La lezione completa<br>è su <em>www.labirc.it</em></h2>
-  <p>Slide, fascicolo e attività,<br>gratis per tutti i colleghi</p>
+  <p>Per la classe e per i colleghi</p>
   <div class="bio">Link nella bio</div>
 </section>
 <script>
