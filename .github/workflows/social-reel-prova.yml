@@ -47,6 +47,8 @@ jobs:
       - name: Regia, voce e montaggio
         env:
           VOCE_CAMPIONE: ${{ secrets.VOCE_CAMPIONE }}
+          VOCE_CAMPIONE_2: ${{ secrets.VOCE_CAMPIONE_2 }}
+          VOCE_CAMPIONE_3: ${{ secrets.VOCE_CAMPIONE_3 }}
           COPIONE: ${{ inputs.copione }}
         run: |
           mkdir -p uscita
