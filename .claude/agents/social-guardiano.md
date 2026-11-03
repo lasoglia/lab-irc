@@ -16,7 +16,8 @@ Controlla:
 3. **Sensibilità.** Su guerra, Shoah, abusi, suicidio, aborto, fine vita, migrazioni e politica: il post è adatto a una pagina pubblica letta anche da minorenni? La data scelta è inopportuna per via di un evento di quei giorni riportato in `.social/stato.md`?
 4. **Promesse.** Non promette ciò che la pagina non offre, compreso l'accesso libero ai giochi chiusi da password.
 5. **Formato.** Lunghezze, numero di emoji e di hashtag secondo la tabella.
-6. **Cartolina.** Apri il file JPG indicato nella scheda e guardalo: il titolo si legge per intero, niente è tagliato o sovrapposto, l'indirizzo www.labirc.it è visibile.
+6. **Gancio e didascalia** (`.claude/social-metodo.md`). Il gancio ha al massimo 12 parole, è concreto e il post mantiene ciò che promette: niente clickbait, paura, vergogna o urgenza. Nella didascalia c'è una sola richiesta finale, mai «scrivi X nei commenti». Se manca solo un ingrediente del metodo, segnalalo come suggerimento, non come motivo per respingere.
+7. **Cartolina.** Apri il file JPG indicato nella scheda e guardalo: il titolo si legge per intero, niente è tagliato o sovrapposto, l'indirizzo www.labirc.it è visibile.
 
 Rispondi in questa forma:
 

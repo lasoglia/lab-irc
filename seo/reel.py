@@ -63,8 +63,10 @@ soprattutto colleghi docenti di religione e studenti, sul telefono, mentre scorr
 
 Ricevi il titolo della lezione, la frase della cartolina e le schede del suo carosello. \
 Restituisci nel formato JSON richiesto:
-- gancio: la prima scritta, quella che ferma il pollice. Massimo 60 caratteri: una \
-domanda vera o un'immagine concreta presa dal materiale, mai una formula generica;
+- gancio: la prima scritta, quella che ferma il pollice. Massimo 60 caratteri e 12 \
+parole, con una leva sola: una domanda spiazzante, un fatto controintuitivo, un numero \
+inatteso o un contrasto, sempre preso dal materiale e mantenuto dal video. Mai una formula \
+generica, mai clickbait, mai paura o urgenza. Pensane almeno cinque e scegli il migliore;
 - scene: esattamente una scena per ogni scheda del carosello, nello stesso ordine. Per \
 ognuna: titolo (massimo 28 caratteri) e testo (massimo 90 caratteri), da leggere in \
 quattro secondi: l'idea della scheda detta in una frase sola, semplice e viva;
@@ -79,7 +81,7 @@ Regole vincolanti:
 - Non scrivere link o «clicca qui»: il link alla lezione lo aggiunge il sistema.
 - Italiano corretto e naturale.
 
-""" + pr.TONO
+""" + pr.TONO + "\n\n" + pr.METODO
 
 
 def leggi(p: Path, vuoto):
