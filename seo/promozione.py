@@ -392,12 +392,10 @@ def scrivi_pagina(voci: list[dict]):
         p = g.RADICE / "data" / nome
         return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     telegram, meta = registro("telegram.json"), registro("meta.json")
-    # come in seo/cartoline.mjs: le immagini di un post uscito ovunque da 2 giorni sono cancellate
-    limite = (dt.date.today() - dt.timedelta(days=2)).isoformat()
-    def ripulito(chiave):
-        date = [telegram.get(chiave), meta.get(chiave, {}).get("facebook"), meta.get(chiave, {}).get("instagram")]
-        return all(date) and all(d <= limite for d in date)
-    jpg = lambda f: f.removesuffix(".png") + ".jpg"
+    # le immagini dei post stanno su Cloudflare R2 (seo/media_r2.py) solo finché servono:
+    # nella pagina si mostrano quelle che ci sono, gli altri post hanno solo i testi
+    import media_r2
+    jpg = lambda f: media_r2.url_immagine(f.removesuffix(".png") + ".jpg")
     blocchi = []
     for n, v in enumerate(voci, start=1):
         colore = COLORI_ANNO.get(v["anno"], "var(--lab-oro)")
@@ -416,18 +414,18 @@ def scrivi_pagina(voci: list[dict]):
                 usciti.append(f"{nome} il {meta[v['chiave']][canale]}")
         stato_tg = (f'<p class="tg">Pubblicato in automatico: {e(", ".join(usciti))}.</p>'
                     if usciti else "")
-        schede = [] if ripulito(v["chiave"]) else [jpg(f) for f in immagini_post(v["cartolina"], v["testi"])]
+        schede = [u for u in (jpg(f) for f in immagini_post(v["cartolina"], v["testi"])) if u]
         carosello = ("" if len(schede) < 2 else
                      '<details><summary>Carosello per Instagram (' + str(len(schede)) + ' immagini)</summary>'
                      '<div class="strip">' + "".join(
-                         f'<a href="cartoline/{e(f)}" download><img src="cartoline/{e(f)}" alt="Scheda {i}" '
+                         f'<a href="{e(f)}" download><img src="{e(f)}" alt="Scheda {i}" '
                          f'loading="lazy" width="120" height="150"></a>' for i, f in enumerate(schede, start=1))
                      + '</div></details>')
         blocchi.append(f"""<article class="post">
-<header>{"" if ripulito(v["chiave"]) else f'<img src="cartoline/{e(jpg(v["cartolina"]))}" alt="" loading="lazy" width="96" height="120">'}
+<header>{f'<img src="{e(jpg(v["cartolina"]))}" alt="" loading="lazy" width="96" height="120">' if jpg(v["cartolina"]) else ""}
 <div><div class="num" style="color:{colore}">Post {n} di {len(voci)}{e(classe)}</div>
 <h2>{e(v['titolo'])}</h2><div class="uda">{e(v['uda'])}</div>
-<div class="azioni" style="margin-top:10px">{"" if ripulito(v["chiave"]) else f'<a href="cartoline/{e(jpg(v["cartolina"]))}" download>Scarica la cartolina</a>'}
+<div class="azioni" style="margin-top:10px">{f'<a href="{e(jpg(v["cartolina"]))}" download>Scarica la cartolina</a>' if jpg(v["cartolina"]) else ""}
 <a href="{e(v['url'])}">Apri la pagina</a></div></div></header>
 {carosello}{''.join(sezioni)}{stato_tg}
 </article>""")

@@ -54,6 +54,16 @@ jobs:
           pip install --quiet pypdf
           python seo/social_stato.py
 
+      - name: Disegna le immagini dei candidati
+        # gli agenti le guardano; restano qui (non entrano nel repo)
+        continue-on-error: true
+        run: |
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+          CANDIDATI=.social/candidati.json \
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            node seo/cartoline.mjs
+
       - name: Installa Claude Code
         run: npm install --global --silent "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSIONE"
 
@@ -71,14 +81,10 @@ jobs:
         continue-on-error: true
         run: python seo/social_valida.py --applica
 
-      - name: Aggiorna kit e cartoline
+      - name: Aggiorna il kit
+        # le immagini dei post approvati le disegna e le carica su R2 l'Action di pubblicazione
         if: steps.valida.outcome == 'success'
-        run: |
-          python seo/promozione.py --senza-ia
-          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
-          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
-          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
-            node seo/cartoline.mjs
+        run: python seo/promozione.py --senza-ia
 
       - name: Salva
         if: always()
