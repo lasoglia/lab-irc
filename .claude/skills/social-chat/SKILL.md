@@ -9,7 +9,7 @@ La richiesta del docente è in `.social/richiesta.txt`. Solo il proprietario del
 
 Leggi la richiesta, `.claude/social-regole.md`, `.social/stato.md` e `data/social-coda.json`. Puoi:
 
-- **Togliere o spostare un post:** modifica `data/social-coda.json`. Il calendario è in `seo/social_calendario.py`: a scuola le lezioni escono il lunedì e il venerdì (al massimo due a settimana; il mercoledì esce il video della lezione del lunedì), il sabato lo Shabbat e la grande domanda solo nella loro data; in vacanza solo le strisce del prof, lunedì e giovedì.
+- **Togliere o spostare un post:** modifica `data/social-coda.json`. Il calendario è in `seo/social_calendario.py`: a scuola una lezione lunedì, mercoledì e venerdì come reel e martedì come carosello (al massimo quattro a settimana; giovedì niente), il sabato lo Shabbat e la grande domanda solo nella loro data; in vacanza solo le strisce del prof, lunedì e giovedì.
 - **Mettere o togliere la pausa:** cambia `pausa` in `data/social-coda.json`.
 - **Sostituire un post:** scegli tra i candidati e fallo approvare da **social-verificatore** e **social-guardiano** prima di metterlo in coda.
 - **Cambiare un testo:** usa **social-redattore**, poi fai ricontrollare a entrambi.

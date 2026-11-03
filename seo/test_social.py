@@ -86,14 +86,14 @@ class CalendarioSocial(unittest.TestCase):
         cal.FILE_VACANZE = self._file
 
     def test_settimana_di_scuola(self):
-        attesi = ["lezione", None, "video", None, "lezione", "shabbat", "domenica"]
+        attesi = ["reel", "lezione", "reel", None, "reel", "shabbat", "domenica"]
         self.assertEqual([cal.tipo_del_giorno(dt.date(2026, 11, 9) + dt.timedelta(days=i)) for i in range(7)], attesi)
 
     def test_vacanze_di_natale(self):
         self.assertEqual(cal.in_vacanza(dt.date(2026, 12, 28)), "vacanze di Natale")
         attesi = ["prof", None, None, "prof", None, None, None]   # dal lunedì 28 dicembre
         self.assertEqual([cal.tipo_del_giorno(dt.date(2026, 12, 28) + dt.timedelta(days=i)) for i in range(7)], attesi)
-        self.assertEqual(cal.tipo_del_giorno(dt.date(2027, 1, 8)), "lezione")   # venerdì, di nuovo a scuola
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2027, 1, 8)), "reel")   # venerdì, di nuovo a scuola
 
     def test_settimana_di_prima(self):   # fino all'8 novembre 2026 lezioni dal lunedì al venerdì
         self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 5)), "lezione")
@@ -108,7 +108,7 @@ class CalendarioSocial(unittest.TestCase):
             cal.FILE_VACANZE = Path(d) / "vacanze.json"
             cal.FILE_VACANZE.write_text(json.dumps({"vacanze": [{"dal": "2026-11-09", "al": "2026-11-10", "nome": "ponte"}]}))
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 9)), "prof")
-            self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "lezione")
+            self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "reel")   # lunedì: il reel di una lezione
 
 
 class Controllo(unittest.TestCase):
@@ -136,13 +136,11 @@ class Controllo(unittest.TestCase):
         self.assertEqual(esito, "mancante")
         self.assertIn("nessun post in coda", mancanti[0])
 
-    def test_mercoledi_senza_video(self):
-        esito, mancanti = ctrl.valuta("2026-11-11", self.TG, self.META, {"coda": []})   # mercoledì: il video
-        self.assertEqual(esito, "mancante")
-        self.assertIn("video", mancanti[0])
+    def test_martedi_carosello(self):
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 10)), "lezione")
 
-    def test_martedi_riposo(self):
-        self.assertEqual(ctrl.valuta("2026-11-10", self.TG, self.META, {"coda": []})[0], "non-previsto")
+    def test_giovedi_solo_storie(self):
+        self.assertEqual(ctrl.valuta("2026-11-12", self.TG, self.META, {"coda": []})[0], "non-previsto")
 
 
 class Schede(unittest.TestCase):

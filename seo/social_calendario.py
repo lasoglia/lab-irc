@@ -150,19 +150,20 @@ def in_vacanza(giorno: dt.date) -> str:
     return next((nome for dal, al, nome in vacanze(giorno.year) if dal <= giorno <= al), "")
 
 
-# La settimana del Lab, sul modello dei canali che funzionano meglio: meno uscite, ognuna
-# curata. Lunedì e venerdì il carosello di una lezione (con la sua rubrica), mercoledì il
-# video a fumetti della lezione del lunedì, sabato lo Shabbat, domenica la grande domanda
-# (carosello e video). Martedì e giovedì riposo. In vacanza una striscia del prof lunedì e giovedì.
-SETTIMANA_SCUOLA = {0: "lezione", 2: "video", 4: "lezione", 5: "shabbat", 6: "domenica"}
+# La settimana del Lab (Progetto Reel), sul modello dei canali che funzionano meglio: più reel
+# che caroselli, meno uscite e più curate. Lunedì, mercoledì e venerdì il reel di una lezione
+# (alle 19), martedì il carosello di una lezione (alle 13:30), giovedì solo storie, sabato lo
+# Shabbat (carosello), domenica la grande domanda (carosello e video). In vacanza una striscia
+# del prof lunedì e giovedì. Gli orari li dà l'orologio su Cloudflare (seo/orologio-cloudflare.js).
+SETTIMANA_SCUOLA = {0: "reel", 1: "lezione", 2: "reel", 4: "reel", 5: "shabbat", 6: "domenica"}
 SETTIMANA_VACANZA = {0: "prof", 3: "prof"}
-
+DI_LEZIONE = ("lezione", "reel")   # i giorni che usano una lezione del kit (approvata dagli agenti)
 
 INIZIO_SETTIMANA_NUOVA = dt.date(2026, 11, 9)   # prima: lezioni dal lunedì al venerdì
 
 
 def tipo_del_giorno(giorno: dt.date) -> str | None:
-    """Che cosa esce quel giorno: 'lezione', 'video', 'prof', 'shabbat', 'domenica' oppure None."""
+    """Che cosa esce quel giorno: 'reel', 'lezione', 'prof', 'shabbat', 'domenica' oppure None."""
     if giorno < INIZIO_SETTIMANA_NUOVA:   # il calendario di prima, per i post già approvati
         if in_vacanza(giorno):
             return "prof" if giorno.weekday() in (0, 2, 4) else None
