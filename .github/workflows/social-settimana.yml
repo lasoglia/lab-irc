@@ -63,7 +63,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-        run: bash seo/social_claude.sh "/social-settimana" 5 60
+        run: bash seo/social_claude.sh "/social-settimana" 30 150
 
       - name: Valida il lavoro
         id: valida
