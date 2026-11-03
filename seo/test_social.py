@@ -15,6 +15,7 @@ import coda  # noqa: E402
 import social_calendario as cal  # noqa: E402
 import social_controllo as ctrl  # noqa: E402
 import social_stato as stato  # noqa: E402
+import social_quaderno as quaderno  # noqa: E402
 
 ELENCO = [{"chiave": "a"}, {"chiave": "b"}, {"chiave": "c"}]
 
@@ -161,6 +162,26 @@ class Schede(unittest.TestCase):
         testo = stato.scheda_rubrica(d, quando, [{"titolo": "L1"}, {"titolo": "L2"}])
         self.assertIn("«L1»", testo)
         self.assertIn("«L2»", testo)
+
+
+class Quaderno(unittest.TestCase):
+    """Il quaderno del Lab accetta solo proposte ben fatte."""
+
+    BUONO = {"regole_apprese": [{"regola": "Gancio con un numero", "prova": "8 reel, 9 s contro 6 s", "dal": "2026-11-09", "forza": "confermata"}],
+             "esperimento": {"ipotesi": "Il gancio con un numero tiene di più", "istruzione": "Inizia il gancio con un numero vero.",
+                             "misura": "tempo medio di visione", "dal": "2026-11-09", "al": "2026-11-15"},
+             "esperimenti": [], "idee": [{"idea": "Serie in tre puntate", "fonte": "esploratore", "stato": "nuova", "perché": "continuità"}]}
+
+    def test_proposta_buona(self):
+        self.assertEqual(quaderno.controlla(self.BUONO), [])
+
+    def test_proposta_sbagliata(self):
+        cattivo = {**self.BUONO, "idee": [{"idea": "x", "stato": "boh"}], "regole_apprese": [{"regola": "y"}]}
+        self.assertTrue(len(quaderno.controlla(cattivo)) >= 2)
+
+    def test_niente_email(self):
+        con_email = {**self.BUONO, "idee": [{"idea": "scrivere a prova@esempio.it", "stato": "nuova"}]}
+        self.assertTrue(any("email" in e for e in quaderno.controlla(con_email)))
 
 
 if __name__ == "__main__":
