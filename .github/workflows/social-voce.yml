@@ -34,7 +34,8 @@ jobs:
       - name: Installa il motore della voce (solo CPU)
         run: |
           pip install --quiet "torch==2.8.0" "torchaudio==2.8.0" --index-url https://download.pytorch.org/whl/cpu
-          pip install --quiet coqui-tts "torch==2.8.0" "torchaudio==2.8.0" --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet coqui-tts six "torch==2.8.0" "torchaudio==2.8.0" --extra-index-url https://download.pytorch.org/whl/cpu
+          python -c "from TTS.api import TTS" && echo "motore della voce pronto"
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
 
       - name: Genera le frasi
