@@ -28,6 +28,10 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   scena (mai persone, volti, Dio o santi, mai scritte), Cloudflare Workers AI la dipinge gratis
   (segreti CLOUDFLARE_ACCOUNT_ID e CLOUDFLARE_API_TOKEN; senza, non fa nulla).
 - `seo/coda.py` limita la pubblicazione ai post approvati in `data/social-coda.json`.
+- Il Lab impara: `seo/social_metriche.py` misura ogni post (reel con tempo di visione), e ogni settimana
+  l'esploratore cerca idee nuove e l'analista aggiorna `data/social-quaderno.json` (regole imparate,
+  esperimento della settimana, idee; controllato da `seo/social_quaderno.py`). Chi scrive i post riceve
+  da solo le regole confermate e l'istruzione dell'esperimento.
 - Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`.
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
 

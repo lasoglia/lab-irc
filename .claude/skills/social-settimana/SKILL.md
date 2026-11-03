@@ -57,7 +57,11 @@ Aggiorna `data/social-coda.json`, conservando le voci già presenti in `coda` e 
 
 Metti in `escluse` solo i post RESPINTI dal verificatore. Quelli scartati per un motivo di data restano disponibili.
 
-Se lo stato dice «Primo rapporto del mese da fare: sì», chiama anche **social-analista**.
+## 5b. Imparare (ogni settimana)
+Il Lab sale un gradino alla volta. Ogni settimana, dopo la coda:
+1. Chiama **social-esploratore**: cerca fuori al massimo 3 idee nuove, con le fonti.
+2. Chiama **social-analista** passandogli la risposta dell'esploratore: chiude l'esperimento passato, aggiorna le regole imparate, sceglie l'esperimento della settimana e scrive `.social/quaderno-proposta.json` e `.social/analisi.md`.
+Il quaderno lo salva il controllo finale (seo/social_quaderno.py); chi scrive i post riceve da solo le regole confermate e l'istruzione dell'esperimento.
 
 ## 6. Rapporto
 Scrivi `.social/rapporto.md`. Il repository è pubblico: niente dati personali. Usa questa forma:
@@ -79,6 +83,9 @@ Segnalazioni sulle lezioni, punti da verificare, uscite rimaste scoperte. Se non
 
 ## WhatsApp
 Per ogni post, il messaggio da mandare a mano ai colleghi.
+
+## Cosa abbiamo imparato
+Da `.social/analisi.md`: le regole nuove o cambiate, l'esito dell'esperimento passato, l'esperimento di questa settimana (che cosa cambia e come lo misuriamo), le idee nuove dell'esploratore. In italiano semplice: il docente può dire di no commentando.
 
 ## Numeri
 Una riga con follower e iscritti. Se esiste `.social/analisi.md`, aggiungine qui il contenuto.
