@@ -5,6 +5,7 @@ name: Social · vetrina dei profili
 # la copertina e la descrizione della Pagina Facebook (se la chiave di Meta lo permette).
 # Disegna anche le icone delle storie in evidenza di Instagram, che si caricano a mano.
 # I post già usciti sono segnati nei registri: rilanciarla non li ripubblica.
+# «controlla» non pubblica nulla: dice quali permessi ha la chiave di Meta.
 
 on:
   workflow_dispatch:
@@ -12,7 +13,7 @@ on:
       azione:
         description: 'Che cosa fare'
         type: choice
-        options: [tutto, storia]
+        options: [tutto, storia, controlla]
         default: tutto
 
 concurrency:
@@ -40,6 +41,7 @@ jobs:
           python-version: '3.12'
 
       - name: Prepara la vetrina (immagini, video, sfondo)
+        if: inputs.azione != 'controlla'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -73,10 +75,14 @@ jobs:
           META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
           AZIONE: ${{ inputs.azione }}
         run: |
-          if [ "$AZIONE" = "storia" ]; then python seo/vetrina.py --storia; else python seo/vetrina.py --pubblica; fi
+          case "$AZIONE" in
+            storia) python seo/vetrina.py --storia ;;
+            controlla) python seo/vetrina.py --controlla ;;
+            *) python seo/vetrina.py --pubblica ;;
+          esac
 
       - name: Salva il registro dei post usciti
-        if: always()
+        if: always() && inputs.azione != 'controlla'
         run: |
           git add data/telegram.json data/meta.json
           if ! git diff --cached --quiet; then

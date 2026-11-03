@@ -12,6 +12,7 @@ seo/vetrina.py — La vetrina dei profili social del Lab IRC.
         Telegram                       la descrizione del canale e il benvenuto fissato in alto
         Facebook                       la copertina e la descrizione della Pagina (se la chiave
                                        di Meta ha il permesso pages_manage_metadata)
+  python seo/vetrina.py --controlla controlla la chiave di Meta (permessi, Pagina, Instagram)
 Bio, foto profilo, post fissati e storie in evidenza di Instagram non si possono
 cambiare da un programma: si fanno a mano dall'app (testi e immagini sono pronti qui).
 """
@@ -211,11 +212,56 @@ def pubblica_vetrina() -> int:
     return 1 if errori else 0
 
 
+PERMESSI_UTILI = {
+    "pages_show_list": "trovare la Pagina", "pages_read_engagement": "leggere la Pagina",
+    "pages_manage_posts": "pubblicare su Facebook", "publish_video": "video su Facebook",
+    "pages_manage_metadata": "copertina e descrizione della Pagina",
+    "pages_read_user_content": "leggere i commenti su Facebook", "read_insights": "statistiche di Facebook",
+    "instagram_basic": "trovare l'account Instagram", "instagram_content_publish": "pubblicare su Instagram",
+    "instagram_manage_insights": "statistiche di Instagram",
+    "instagram_manage_comments": "commenti su Instagram (facoltativo)",
+    "pages_manage_engagement": "commenti su Facebook (facoltativo)",
+}
+
+
+def controlla_chiave() -> int:
+    """Solo lettura: dice quali permessi ha la chiave di Meta e se trova Pagina e Instagram."""
+    token = os.environ.get("META_TOKEN")
+    if not token:
+        print("✗ META_TOKEN non impostato.")
+        return 1
+    try:
+        dati = meta.chiama("GET", "me/permissions", access_token=token).get("data", [])
+        concessi = {d["permission"] for d in dati if d.get("status") == "granted"}
+    except Exception as err:
+        print(f"! Elenco dei permessi non leggibile ({err}): provo comunque Pagina e Instagram.")
+        concessi = None
+    if concessi is not None:
+        for nome, uso in PERMESSI_UTILI.items():
+            print(f"{'✓' if nome in concessi else '✗'} {nome:28} {uso}")
+    errori = 0
+    try:
+        pagina_id, chiave, ig_id = meta.trova_account(token)
+        print(f"✓ Pagina raggiungibile ({pagina_id})")
+        if ig_id:
+            ig = meta.chiama("GET", ig_id, fields="username,followers_count,media_count", access_token=chiave)
+            print(f"✓ Instagram @{ig.get('username')}: {ig.get('followers_count')} follower, {ig.get('media_count')} post")
+        else:
+            print("✗ Instagram non collegato alla Pagina"); errori += 1
+    except Exception as err:
+        print(f"✗ Pagina non raggiungibile: {err}"); errori += 1
+    obbligatori = [n for n in PERMESSI_UTILI if "facoltativo" not in PERMESSI_UTILI[n]]
+    if concessi is not None and any(n not in concessi for n in obbligatori):
+        errori += 1
+    return 1 if errori else 0
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--prepara", action="store_true")
     ap.add_argument("--pubblica", action="store_true")
     ap.add_argument("--storia", action="store_true", help="pubblica solo la storia di benvenuto")
+    ap.add_argument("--controlla", action="store_true", help="controlla la chiave di Meta, senza pubblicare")
     a = ap.parse_args()
     sys.exit(prepara() if a.prepara else pubblica_vetrina() if a.pubblica else pubblica_storia() if a.storia
-             else ap.print_help() or 0)
+             else controlla_chiave() if a.controlla else ap.print_help() or 0)
