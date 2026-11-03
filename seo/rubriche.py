@@ -35,6 +35,7 @@ import datetime as dt
 import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -565,7 +566,10 @@ def main():
                          f"Temi già trattati: {'; '.join(temi_usati[-40:]) or 'nessuno'}.")
             dossier, ti, to = ricerca_shabbat(client, messaggio)
             tok_in += ti; tok_out += to
-            tema = next((r.split(":", 1)[1].strip() for r in dossier.splitlines() if r.startswith("TEMA:")), "")
+            # il dossier parte da «TEMA:» (Claude a volte scrive una frase prima)
+            if "TEMA:" in dossier:
+                dossier = dossier[dossier.index("TEMA:"):]
+            tema = re.search(r"TEMA:\s*\**\s*(.+)", dossier).group(1).strip(" *") if "TEMA:" in dossier else ""
             t = pr.scrivi_e_rivedi(client, ISTRUZIONI_SHABBAT,
                                    f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", SCHEMA_SHABBAT)
         except Exception as err:
