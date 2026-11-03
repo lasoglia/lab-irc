@@ -2,17 +2,17 @@
 """
 seo/pubblica.py — Ogni giorno decide che cosa esce sui social e lo pubblica.
 
-Il calendario della settimana (ora italiana):
-  lunedì, mercoledì, venerdì   una lezione (copertina + carosello)       promozione/cartoline.json
-  martedì, sabato              «Il prof del Lab», l'avatar con il fumetto promozione/prof.json
-  domenica                     «La grande domanda»: carosello e video     promozione/domenica.json,
-                                                                         promozione/reel-domenica.json
-  giovedì                      il reel: una lezione già uscita in 30 sec promozione/reel.json
+Il calendario (ora italiana) sta in seo/social_calendario.py (tipo_del_giorno):
+  scuola, lunedì-venerdì   una lezione (copertina + carosello)       promozione/cartoline.json
+  scuola, domenica         «La grande domanda» (carosello)           promozione/domenica.json
+  scuola, sabato           niente
+  vacanze, lun-mer-ven     «Il prof del Lab», la striscia a fumetti  promozione/prof.json
 
 Dopo ogni post su Facebook e Instagram esce anche la sua storia (l'immagine
-verticale <nome>-storia.jpg). Il reel lo prepara seo/reel.py e lo monta
-seo/reel.mjs; non passa dalla coda degli agenti perché la lezione è già stata
-approvata e pubblicata, ma se i social sono in pausa non esce.
+verticale <nome>-storia.jpg). Poi, con --coda video, esce il video a fumetti del
+post uscito oggi (promozione/reel.json per le lezioni, promozione/reel-domenica.json
+per la domenica; li prepara seo/reel.py o seo/rubriche.py, li monta seo/reel.mjs).
+Il video esce solo se il suo post è già uscito: la coda degli agenti l'ha già approvato.
 
 Per ogni canale esce il primo post della coda del giorno che su quel canale non
 è ancora uscito (la domenica solo quello di quella data), e solo se le sue
@@ -27,7 +27,7 @@ data/meta.json.
 USO
 ---
   python seo/pubblica.py                         la coda di oggi, su tutti i canali
-  python seo/pubblica.py --coda prof             un'altra coda (lezioni, prof, domenica, reel, reel-domenica)
+  python seo/pubblica.py --coda prof             un'altra coda (lezioni, prof, domenica, video)
   python seo/pubblica.py --canali telegram       solo alcuni canali (telegram, facebook, instagram)
   python seo/pubblica.py --anteprima             mostra soltanto
   python seo/pubblica.py --foto-profilo FILE     mette FILE come foto del canale Telegram
@@ -47,14 +47,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coda as coda_agenti  # noqa: E402
+import social_calendario as cal  # noqa: E402
 import genera as g  # noqa: E402
 import meta  # noqa: E402
 import telegram as tg  # noqa: E402
 from rubriche import oggi_in_italia  # noqa: E402
 
-CODE = {0: "lezioni", 1: "prof", 2: "lezioni", 3: "reel", 4: "lezioni", 5: "prof", 6: "domenica"}
-FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "domenica": "domenica.json", "reel": "reel.json",
-             "reel-domenica": "reel-domenica.json"}
+CODE = {"lezione": "lezioni", "prof": "prof", "domenica": "domenica", None: None}
+FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "domenica": "domenica.json", "video": "reel.json"}
 CANALI = ("telegram", "facebook", "instagram")
 
 
@@ -226,27 +226,29 @@ def main():
         return 0
 
     oggi = oggi_in_italia()
-    coda = a.coda or CODE[oggi.weekday()]
+    coda = a.coda or CODE[cal.tipo_del_giorno(oggi)]
     if not coda:
         print("Oggi non è previsto nulla.")
         return 0
     elenco = leggi_json(g.RADICE / "promozione" / FILE_CODA[coda], [])
-    if (coda == "domenica" and not a.coda) or coda == "reel-domenica":
+    if coda == "domenica" and not a.coda:
         elenco = [d for d in elenco if d.get("data") == oggi.isoformat()]
-    if coda == "reel":
-        # il reel rilancia una lezione già approvata e uscita: basta che i social non siano in pausa
+    if coda == "lezioni":
+        # le strisce del prof già approvate per un giorno di scuola escono ancora (prima del nuovo calendario)
+        elenco = elenco + leggi_json(g.RADICE / "promozione" / "prof.json", [])
+    if coda == "video":
+        # i video dei post usciti oggi (su almeno un canale): il loro post è già stato approvato
         try:
             stato = coda_agenti.leggi()
         except (ValueError, OSError):
             stato = {"pausa": True}
-        if stato and stato.get("pausa"):
-            print("Social in pausa (data/social-coda.json): niente reel.")
-            elenco = []
-    elif coda == "reel-domenica":
-        # il video della domenica esce solo se il suo carosello è stato approvato
-        domeniche = leggi_json(g.RADICE / "promozione" / "domenica.json", [])
-        approvate = {d["chiave"] for d in coda_agenti.applica(domeniche, oggi.isoformat())}
-        elenco = [r for r in elenco if r.get("origine") in approvate]
+        elenco += leggi_json(g.RADICE / "promozione" / "reel-domenica.json", [])
+        tg_reg = leggi_json(g.RADICE / "data" / "telegram.json", {})
+        meta_reg = leggi_json(g.RADICE / "data" / "meta.json", {})
+        oggi_s = oggi.isoformat()
+        elenco = [] if stato and stato.get("pausa") else [
+            r for r in elenco if tg_reg.get(r.get("origine")) == oggi_s
+            or oggi_s in meta_reg.get(r.get("origine"), {}).values()]
     else:
         # solo i post approvati dagli agenti con la data arrivata (se c'è data/social-coda.json)
         elenco = coda_agenti.applica(elenco, oggi.isoformat())

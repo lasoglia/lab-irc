@@ -29,8 +29,6 @@ import genera as g  # noqa: E402
 import social_calendario as cal  # noqa: E402
 
 CARTELLA = g.RADICE / ".social"
-GIORNI_USCITA = {0: "lunedì", 2: "mercoledì", 4: "venerdì"}   # le lezioni, come seo/pubblica.py
-GIORNI_RUBRICHE = {1: "prof", 5: "prof", 6: "domenica"}       # martedì, sabato, domenica
 GIORNI = ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"]
 CARATTERI_MAX_LEZIONE = 30000                 # per non far pagare a Claude testi enormi
 
@@ -39,12 +37,14 @@ def carica(percorso: Path, predefinito):
     return json.loads(percorso.read_text(encoding="utf-8")) if percorso.exists() else predefinito
 
 
-def prossime_uscite(oggi: dt.date, quante: int = 3) -> list[dt.date]:
+def prossime_uscite(oggi: dt.date, quante: int = 5) -> list[dt.date]:
     giorno, date = oggi, []
     while len(date) < quante:
         giorno += dt.timedelta(days=1)
-        if giorno.weekday() in GIORNI_USCITA:
+        if cal.tipo_del_giorno(giorno) == "lezione":   # il calendario di seo/social_calendario.py
             date.append(giorno)
+        if giorno > oggi + dt.timedelta(days=21):
+            break
     return date
 
 
@@ -52,8 +52,10 @@ def uscite_passate(oggi: dt.date, quante: int = 3) -> list[dt.date]:
     giorno, date = oggi, []
     while len(date) < quante:
         giorno -= dt.timedelta(days=1)
-        if giorno.weekday() in GIORNI_USCITA:
+        if cal.tipo_del_giorno(giorno):   # i giorni in cui doveva uscire qualcosa
             date.append(giorno)
+        if giorno < oggi - dt.timedelta(days=21):
+            break
     return date
 
 
@@ -159,13 +161,8 @@ def scheda_rubrica(r: dict, quando: dt.date, lezione) -> str:
 
 
 def date_rubriche(oggi: dt.date) -> dict[str, list[dt.date]]:
-    """Le date della prossima settimana per il prof (martedì, sabato) e la domenica."""
-    date: dict[str, list[dt.date]] = {"prof": [], "domenica": []}
-    for i in range(1, 8):
-        giorno = oggi + dt.timedelta(days=i)
-        if giorno.weekday() in GIORNI_RUBRICHE:
-            date[GIORNI_RUBRICHE[giorno.weekday()]].append(giorno)
-    return date
+    """Le date della prossima settimana per le strisce del prof (solo in vacanza) e la domenica."""
+    return {"prof": cal.giorni_di("prof", oggi, 7), "domenica": cal.giorni_di("domenica", oggi, 7)}
 
 
 def riassunto_metriche(metriche: dict) -> list[str]:
@@ -249,7 +246,7 @@ def main() -> int:
         canali = {"telegram": any(v == data for v in telegram.values()),
                   "facebook": any(v.get("facebook") == data for v in meta.values()),
                   "instagram": any(v.get("instagram") == data for v in meta.values())}
-        controllo.append(f"- {GIORNI_USCITA[giorno.weekday()]} {data}: "
+        controllo.append(f"- {GIORNI[giorno.weekday()]} {data}: "
                          + ", ".join(f"{k} {'sì' if v else 'no'}" for k, v in canali.items()))
 
     uscite = prossime_uscite(oggi)
@@ -257,7 +254,10 @@ def main() -> int:
         f"# Stato social Lab IRC, {oggi.isoformat()}",
         "",
         "## Uscite da coprire",
-        *[f"- {GIORNI_USCITA[d.weekday()]} {d.isoformat()}" for d in uscite],
+        *[f"- {GIORNI[d.weekday()]} {d.isoformat()}" for d in uscite],
+        *([f"- Vacanze in arrivo: {', '.join(sorted({cal.in_vacanza(oggi + dt.timedelta(days=i)) for i in range(1, 8)} - {''}))}: "
+           "niente lezioni né domenica, una striscia del prof lunedì, mercoledì e venerdì."]
+          if any(cal.in_vacanza(oggi + dt.timedelta(days=i)) for i in range(1, 8)) else []),
         "",
         "## Tempo liturgico e ricorrenze dei prossimi 21 giorni",
         f"Oggi: {cal.tempo_liturgico(oggi)}.",
