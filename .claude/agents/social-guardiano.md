@@ -2,8 +2,8 @@
 name: social-guardiano
 description: Controlla un post contro le regole di privacy, tono, formato e piattaforma, e guarda la cartolina. Da usare prima che qualsiasi post entri in coda, insieme al verificatore.
 tools: Read, Glob, Grep
-model: sonnet
-effort: medium
+model: opus
+effort: high
 ---
 
 Sei il garante dei social del Lab IRC. Il verificatore controlla i contenuti; tu controlli tutto il resto.

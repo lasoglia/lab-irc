@@ -1,0 +1,16 @@
+{
+  "serie": "Lo sapevi?",
+  "anno": 2,
+  "titolo": "Gesù sotto il segno dell'aquila",
+  "fascicolo": "uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf",
+  "inquadrature": [
+    {"tipo": "gancio", "durata": 2.8, "testo": "Gesù è nato… *avanti Cristo*.", "voce": "Lo sapevi? Gesù è nato… avanti Cristo.", "posa": "sorpreso"},
+    {"tipo": "pagina", "durata": 5.6, "citazione": "Nel 525 il monaco Dionigi il Piccolo cominciò a contare gli anni dalla nascita di Gesù", "cerchia": "525",
+     "voce": "Nel 525 un monaco, Dionigi il Piccolo, cominciò a contare gli anni dalla nascita di Gesù.", "posa": "spiega"},
+    {"tipo": "numero", "durata": 3.4, "numero": "525", "testo": "E l'Occidente *conta ancora così*.", "voce": "E l'Occidente conta ancora così.", "posa": "appunti"},
+    {"tipo": "pagina", "durata": 5.8, "citazione": "sbagliò di qualche anno, perché Erode muore nel 4 a.C. e Gesù era già nato", "cerchia": "4 a.C.",
+     "voce": "Però sbagliò di qualche anno: Erode muore nel 4 avanti Cristo, e Gesù era già nato.", "posa": "facepalm"},
+    {"tipo": "prof", "durata": 4.4, "testo": "Gesù nasce *qualche anno prima* dell'anno 1.", "voce": "Quindi Gesù è nato qualche anno prima dell'anno uno.", "posa": "occhiolino"},
+    {"tipo": "chiusa", "durata": 4.0, "voce": "La lezione completa è su labirc.it.", "posa": "saluta"}
+  ]
+}

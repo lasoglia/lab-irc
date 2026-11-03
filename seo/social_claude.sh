@@ -16,7 +16,7 @@ turni="${3:-40}"
 mkdir -p .social/riscritture
 
 claude -p "$richiesta" \
-  --model "${SOCIAL_MODELLO:-claude-sonnet-5-5}" \
+  --model "${SOCIAL_MODELLO:-claude-opus-5-5}" \
   --tools "Read,Write,Edit,Glob,Grep,Agent,WebSearch,WebFetch" \
   --allowedTools "Read,Glob,Grep,Agent,WebSearch,WebFetch,Edit(.social/**),Write(.social/**),Edit(data/social-coda.json),Write(data/social-coda.json)" \
   --permission-mode dontAsk \

@@ -376,7 +376,7 @@ def ricerca_shabbat(client, messaggio: str) -> tuple[str, int, int]:
     for _ in range(6):
         with client.beta.messages.stream(
             model=pr.MODELLO, max_tokens=32000, system=ISTRUZIONI_RICERCA_SHABBAT,
-            output_config={"effort": "medium"}, betas=["server-side-fallback-2026-07-01"], fallbacks="default",
+            output_config={"effort": "high"}, betas=["server-side-fallback-2026-07-01"], fallbacks="default",
             tools=strumenti, messages=messaggi,
         ) as flusso:
             r = flusso.get_final_message()
@@ -523,7 +523,7 @@ def main():
                 # prima la domanda e le lezioni che rispondono, poi i testi letti per intero
                 scelta, r = pr.chiama_claude(client, ISTRUZIONI_SCELTA,
                                              f"Domande già usate:\n" + ("\n".join(f"- {x}" for x in usate_dom[-60:]) or "nessuna")
-                                             + f"\n\nLezioni del sito:\n{elenco_lez}", SCHEMA_SCELTA, "medium")
+                                             + f"\n\nLezioni del sito:\n{elenco_lez}", SCHEMA_SCELTA, "high")
                 tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
                 scelte = [ordinate[i - 1] for i in scelta["lezioni"] if 1 <= i <= len(ordinate)][:3] or [ordinate[0]]
             messaggio = (f"Domanda della settimana: {scelta['domanda']}\n\n" + "\n\n".join(
