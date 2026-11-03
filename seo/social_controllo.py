@@ -51,6 +51,10 @@ def valuta(giorno: str, telegram: dict, meta: dict, stato_coda: dict | None) -> 
             attivi[canale] = any(v.get(canale) == giorno for v in meta.values())
     mancanti = sorted(c for c, fatto in attivi.items() if not fatto)
 
+    if cal.tipo_del_giorno(dt.date.fromisoformat(giorno)) == "video":
+        if not any(attivi.values()):
+            return "mancante", ["video del mercoledì non uscito (serve la lezione del lunedì uscita)"]
+        return ("mancante" if mancanti else "ok"), mancanti
     if stato_coda is not None and stato_coda.get("solo_coda", True) and not any(attivi.values()):
         escluse = coda.chiavi_escluse(stato_coda)
         previsti = [v for v in stato_coda.get("coda", [])
