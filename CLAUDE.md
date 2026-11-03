@@ -10,9 +10,10 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 
 ## Social
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
-  del prof e lo speciale della domenica, `seo/cartoline.mjs` tutte le immagini.
+  del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
 - `seo/pubblica.py` pubblica ogni giorno: lezioni lunedì, mercoledì, venerdì; striscia del prof
-  martedì e sabato; «La domenica del Lab» la domenica. Dopo ogni post su Facebook e Instagram
+  martedì e sabato; «La grande domanda» la domenica (prima il carosello, poi il suo video, che
+  esce solo se il carosello è approvato). Dopo ogni post su Facebook e Instagram
   esce anche la sua storia verticale.
 - Il giovedì esce il reel: `seo/reel.py` sceglie l'ultima lezione uscita e fa scrivere il copione
   a Claude, `seo/reel.mjs` monta il video (MP4 in `promozione/reel/`). Non va pianificato nella
