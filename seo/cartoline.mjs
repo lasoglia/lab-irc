@@ -335,6 +335,8 @@ for (const l of lavori.slice(prima_)) l.soloJpg = true;
   const vetrina = existsSync(join(RADICE, 'promozione', 'vetrina.json')) ? JSON.parse(readFileSync(join(RADICE, 'promozione', 'vetrina.json'), 'utf8')) : null;
   if (vetrina) {
     lavori.push({ file: vetrina.copertina_facebook, largo: 1640, alto: 624, html: copertinaFacebook });
+    if (vetrina.storia && vetrina.benvenuto) lavori.push({ file: vetrina.storia, alto: 1920, soloJpg: true,
+      html: () => storia(ORO, vetrina.benvenuto.file, 'Benvenuto nel Lab', 'Ogni giorno di scuola una lezione: seguici!') });
     for (const i of vetrina.icone || []) lavori.push({ file: i.file, largo: 1080, alto: 1080, html: () => iconaVetrina(i.chiave, i.titolo) });
   }
 }
