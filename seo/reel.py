@@ -142,7 +142,7 @@ def main():
     return 0
 
 
-VERSIONE_REGIA = "1"   # cambiala per far riscrivere i copioni del regista
+VERSIONE_REGIA = "2"   # cambiala per far riscrivere i copioni del regista
 
 
 def prepara_regia(c: dict, cache: dict) -> dict | None:
