@@ -6,7 +6,7 @@
 // barra di avanzamento, voce davanti e musica sotto (seo/audio_reel.py).
 //
 // USO: node seo/reel2.mjs regia.json uscita.mp4   (PROVINO=cartella salva 12 fotogrammi)
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { spawn, spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
@@ -53,7 +53,8 @@ function pagina(r) {
         </div></div><div class="didascalia">${esc(s.fonte || '')}</div></div>`;
       case 'numero': return `<div class="numero"><div class="cifra">${esc(s.numero)}</div><h2>${ricco(s.testo)}</h2></div>`;
       case 'prof': return `<div class="frase"><h2>${ricco(s.testo)}</h2></div>`;
-      case 'chiusa': return `<div class="chiusa"><img class="masc" src="${url(`assets/mascotte/svg/${r.mascotte}.svg`)}"><div class="sopra">Per continuare</div><h2>La lezione completa è su <i>labirc.it</i></h2><div class="tit">${esc(r.titolo)}</div></div>`;
+      case 'clip': return `<div class="schermo"><img class="fot" src="${url(s.fotogrammi[0])}"></div>${s.testo ? `<div class="etichetta">${ricco(s.testo)}</div>` : ''}`;
+      case 'chiusa': return `<div class="chiusa"><img class="masc" src="${url(`assets/mascotte/svg/${r.mascotte}.svg`)}"><div class="sopra">${esc(s.sopra || 'Per continuare')}</div><h2>${s.testo ? ricco(s.testo) : 'La lezione completa è su <i>labirc.it</i>'}</h2><div class="tit">${esc(r.titolo)}</div></div>`;
       default: return '';
     }
   };
@@ -94,8 +95,18 @@ h1 i,h2 i{font-style:italic;font-weight:500;color:#E3C27A}
 .sott{position:absolute;left:360px;right:140px;top:1130px;height:300px;display:flex;align-items:center}
 .blocco{position:absolute;left:0;right:0;font:800 60px/1.16 Figtree;letter-spacing:-.01em;opacity:0;text-shadow:0 4px 18px rgba(0,0,0,.6)}
 .blocco span{color:#fff}
+.scena.t-clip{left:0;right:0;top:340px;height:1100px;display:flex;justify-content:center;align-items:flex-start}
+.schermo{position:relative;width:618px;height:1100px;border-radius:40px;overflow:hidden;background:#000;box-shadow:0 0 0 4px rgba(227,194,122,.85),0 40px 90px rgba(0,0,0,.6)}
+.schermo .fot{width:100%;height:100%;object-fit:cover;display:block}
+.etichetta{position:absolute;left:50%;top:44px;transform:translateX(-50%);width:820px;box-sizing:border-box;padding:22px 34px 26px;border-radius:26px;background:rgba(20,19,31,.94);box-shadow:0 0 0 3px #E3C27A,0 24px 60px rgba(0,0,0,.55);font:600 72px/1.02 Cormorant;color:#fff;text-align:center;text-wrap:balance}
+.etichetta i{font-style:italic;font-weight:500;color:#E3C27A}
+.con-clip .prof{top:1490px;width:200px;height:200px}
+.con-clip .sott{top:1470px;left:310px;height:250px}
+.con-clip .blocco{font-size:54px}
+.con-clip .logo{top:1790px}
+.avanza,.serie,.prof,.sott,.logo,.barra-anno{z-index:2}.scena{z-index:1}
 .logo{position:absolute;left:80px;top:1460px;font:700 26px Figtree;color:#8E89A6;letter-spacing:.04em}
-</style></head><body>
+</style></head><body class="${r.inquadrature.some((q) => q.tipo === 'clip') ? 'con-clip' : ''}">
 <div class="vetrata"></div><div class="grana"></div><div class="barra-anno"></div>
 <div class="avanza"><i></i></div>
 <div class="serie"><b>${esc(r.serie)}</b><span>Anno ${esc(r.anno_romano || '')}</span></div>
@@ -105,13 +116,13 @@ ${scene.map((s) => `<section class="scena t-${s.tipo}">${vista(s)}</section>`).j
 <div class="logo">labirc.it${r.inquadrature.some((q) => q.voce_file) ? ' · voce generata con IA' : ''}</div>
 <script>
 window.DURATA = ${Math.round(durata * 1000)};
-const scene = ${JSON.stringify(scene.map((s) => ({ tipo: s.tipo, inizio: s.inizio * 1000, durata: s.durata * 1000, zoom: s.zoom, zoom2: s.zoom2 })))};
+const scene = ${JSON.stringify(scene.map((s) => ({ tipo: s.tipo, inizio: s.inizio * 1000, durata: s.durata * 1000, zoom: s.zoom, zoom2: s.zoom2, fot: (s.fotogrammi || []).map(url) })))};
 const blocchi = ${JSON.stringify(blocchi.map((b) => b.map((w) => [w.s * 1000, w.e * 1000])))};
 const molla = 'cubic-bezier(.34,1.56,.64,1)', morbido = 'cubic-bezier(.16,1,.3,1)';
 const sez = [...document.querySelectorAll('.scena')], volti = [...document.querySelectorAll('.prof img')];
 scene.forEach((s, i) => {
   const el = sez[i], ultima = i === scene.length - 1;
-  el.animate([{ opacity: 0 }, { opacity: 1 }], { delay: s.inizio, duration: 160, fill: 'both' });
+  el.animate([{ opacity: i === 0 ? 1 : 0 }, { opacity: 1 }], { delay: s.inizio, duration: 160, fill: 'both' });   // la prima c'è subito: è la copertina
   if (!ultima) el.animate([{ opacity: 1 }, { opacity: 0 }], { delay: s.inizio + s.durata - 140, duration: 140, fill: 'forwards' });
   // stacco con «pugno»: entra un po' più grande e si assesta
   el.animate([{ transform: 'scale(1.07)' }, { transform: 'scale(1)' }], { delay: s.inizio, duration: 420, fill: 'both', easing: morbido });
@@ -138,13 +149,25 @@ scene.forEach((s, i) => {
 });
 document.querySelector('.avanza i').animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: window.DURATA, fill: 'both', easing: 'linear' });
 document.getAnimations().forEach((a) => a.pause());
-window.vai = (ms) => document.getAnimations().forEach((a) => { a.currentTime = ms; });
+window.vai = async (ms) => {
+  document.getAnimations().forEach((a) => { a.currentTime = ms; });
+  // le clip (partite registrate): il fotogramma giusto per questo istante
+  const attese = [];
+  scene.forEach((s, i) => {
+    if (s.tipo !== 'clip' || !s.fot.length || ms < s.inizio - 200 || ms > s.inizio + s.durata) return;
+    const k = Math.max(0, Math.min(s.fot.length - 1, Math.round((ms - s.inizio) * ${FPS} / 1000)));
+    const img = sez[i].querySelector('.fot');
+    if (img.getAttribute('src') !== s.fot[k]) { img.src = s.fot[k]; attese.push(img.decode().catch(() => {})); }
+  });
+  await Promise.all(attese);
+};
 </script></body></html>`;
 }
 
 // ogni inquadratura dura almeno quanto la sua voce, più un respiro
 function adatta(r) {
   for (const q of r.inquadrature) {
+    q.durata = +q.durata || (q.tipo === 'chiusa' ? 4 : 3.5);   // senza durata: un valore ragionevole
     if (q.voce_file && existsSync(q.voce_file)) {
       const d = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', q.voce_file], { encoding: 'utf8' });
       q.voce_durata = parseFloat(d.stdout) || 0;
@@ -170,7 +193,17 @@ adatta(r);
 const pw = (await import(pathToFileURL(PW).href)).default;
 const browser = await pw.chromium.launch({ executablePath: CHROME });
 const pg = await browser.newPage({ viewport: { width: L, height: A } });
+pg.on('pageerror', (e) => console.error('errore nella pagina:', e.message));
 const lavoro = mkdtempSync(join(tmpdir(), 'reel2-'));
+// le clip di gioco: i fotogrammi del pezzo che serve, già in verticale 1080 × 1920
+r.inquadrature.forEach((q, i) => {
+  if (q.tipo !== 'clip' || !q.video) return;
+  const cartella = join(lavoro, `clip${i}`);
+  mkdirSync(cartella);
+  spawnSync('ffmpeg', ['-v', 'error', '-y', '-ss', String(q.da || 0), '-i', /^(https?:|\/)/.test(q.video) ? q.video : join(RADICE, q.video),
+    '-t', String(q.durata), '-vf', `fps=${FPS},scale=${L}:${A}:force_original_aspect_ratio=increase,crop=${L}:${A}`, '-q:v', '3', join(cartella, 'f%04d.jpg')], { stdio: 'inherit' });
+  q.fotogrammi = readdirSync(cartella).sort().map((f) => join(cartella, f));
+});
 writeFileSync(join(lavoro, 'r.html'), pagina(r));
 await pg.goto(pathToFileURL(join(lavoro, 'r.html')).href, { waitUntil: 'load' });
 const durata = await pg.evaluate(async () => { await document.fonts.ready; return window.DURATA; });
