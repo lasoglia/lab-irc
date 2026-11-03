@@ -52,7 +52,9 @@ GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli e
 FORMATO_DOMENICA = "grande-domanda"
 VERSIONE_DOMENICA = "2"   # cambiala per far riscrivere le domeniche non ancora uscite né approvate (2: tono)
 CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
-POSE = ["sorriso", "buffo", "pensieroso", "sorpreso", "spiega", "ride"]
+# le espressioni del prof (assets/avatar/<posa>.png o .jpg), con una breve descrizione per Claude
+POSE_PROF = json.loads((Path(__file__).resolve().parent / "pose_prof.json").read_text(encoding="utf-8"))
+POSE = list(POSE_PROF)
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
 
 
@@ -181,8 +183,9 @@ Restituisci nel formato JSON richiesto:
 - titolo: massimo 50 caratteri, l'argomento della striscia;
 - vignette: da 3 a 4 vignette, con un ritmo da striscia: situazione, sviluppo, battuta \
 finale (l'ultima vignetta deve far sorridere o sorprendere). Per ognuna: parla (chi \
-parla: «prof» o «studente»), posa (l'espressione del prof in quella vignetta: sorriso, \
-buffo, pensieroso, sorpreso, spiega, ride; il prof compare sempre), fumetto (massimo \
+parla: «prof» o «studente»), posa (l'espressione del prof in quella vignetta, una di \
+quelle dell'elenco «pose del prof» qui sotto: scegli quella che rende meglio la battuta e \
+cambiala da una vignetta all'altra; il prof compare sempre), fumetto (massimo \
 110 caratteri, parlato naturale, la battuta di chi parla), didascalia (massimo 50 \
 caratteri, il riquadro del narratore, per esempio «Il giorno dopo…»; stringa vuota se \
 non serve);
@@ -197,6 +200,7 @@ crede. Niente doppi sensi.
 - Al massimo tre emoji per testo, nessuna nei fumetti.
 - Non scrivere link o «clicca qui»: il link alla lezione lo aggiunge il sistema.
 - Italiano corretto e naturale."""
+ISTRUZIONI_PROF += "\n\nPose del prof (nome: com'è):\n" + "\n".join(f"- {k}: {v}" for k, v in POSE_PROF.items())
 
 SCHEMA_SCELTA = {
     "type": "object",
