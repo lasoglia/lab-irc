@@ -1,13 +1,13 @@
 {
-  "aggiornato": "2026-11-02",
+  "aggiornato": "2026-11-03",
   "facebook": [],
   "instagram": [
     {
-      "chiave": "5|Le due vie di Lemaître|La visione cosmologica di Lemaître",
-      "data": "2026-10-29",
-      "mi_piace": 0,
+      "chiave": "_sito",
+      "data": "2026-11-03",
+      "mi_piace": 1,
       "commenti": 0,
-      "link": "https://www.instagram.com/p/DfF4Xk-AUlQ/"
+      "link": "https://www.instagram.com/p/DfR8tsklu1T/"
     }
   ],
   "storico": [
@@ -15,6 +15,12 @@
       "data": "2026-11-02",
       "facebook": null,
       "instagram": 0,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-03",
+      "facebook": null,
+      "instagram": 1,
       "telegram": 2
     }
   ],
