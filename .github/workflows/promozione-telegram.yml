@@ -82,9 +82,10 @@ jobs:
           git add -f promozione/cartoline/*.jpg 2>/dev/null || true
 
       - name: Prepara i video delle lezioni
-        # i copioni li scrive Claude (seo/reel.py), i video li monta seo/reel.mjs e
-        # seo/media_r2.py li carica su Cloudflare R2 (fuori dal repo): Instagram, Facebook
-        # e Telegram li scaricano da lì. Senza le chiavi di R2 restano sul sito, come prima.
+        # i copioni li scrive Claude (seo/reel.py): il regista (seo/regista.py) con le pagine vere
+        # del fascicolo e la voce, montati da seo/reel_lezioni.py con seo/reel2.mjs; se il regista
+        # non ce la fa, il reel di prima (seo/reel.mjs). seo/media_r2.py li carica su Cloudflare R2
+        # (fuori dal repo): Instagram, Facebook e Telegram li scaricano da lì.
         continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -92,14 +93,19 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CODA: ${{ inputs.coda }}
         run: |
+          command -v pdftotext >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils; }
           python seo/reel.py
           python seo/immagini_ia.py
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
             node seo/reel.mjs
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
+            python seo/reel_lezioni.py || true
           python seo/media_r2.py
           git add -f promozione/reel/*.mp4 2>/dev/null || true
           for f in promozione/reel.json promozione/reel-domenica.json promozione/reel promozione/immagini-ia data/reel.json data/immagini-ia.json data/media-r2.json; do if [ -e "$f" ]; then git add -A "$f"; fi; done
