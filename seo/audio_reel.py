@@ -2,10 +2,10 @@
 """
 seo/audio_reel.py — La colonna sonora dei video a fumetti, generata dal codice.
 
-Niente brani di altri (e quindi niente problemi di diritti): una musichetta allegra e
-leggera — accordi morbidi, una marimba che arpeggia, un basso e percussioni leggere —
-con la tonalità e il ritmo scelti a partire dal titolo, così ogni video suona un po'
-diverso. Sopra, gli effetti a tempo con le scene: un «pop» quando compare un fumetto,
+Niente brani di altri (e quindi niente problemi di diritti): una base ritmata da reel —
+una salita iniziale, cassa dritta e battimani, basso pulsante, accordi a scatti e un
+piccolo motivo — con tonalità, ritmo e motivo scelti a partire dal titolo, così ogni
+video suona diverso. Se c'è la voce che legge i fumetti, la musica scende sotto le parole. Sopra, gli effetti a tempo con le scene: un «pop» quando compare un fumetto,
 un «whoosh» quando cambia scena, un campanello sull'invito finale.
 
 Uso (lo chiama seo/reel.mjs):
@@ -106,12 +106,74 @@ def campanello() -> np.ndarray:
     return s / 2
 
 
+def sega(freq: float, durata: float, armoniche: int = 10, brillantezza: float = 1.0) -> np.ndarray:
+    """Onda a dente di sega costruita con le armoniche (niente fruscii digitali)."""
+    n = int(durata * SR)
+    t = np.arange(n) / SR
+    onda = np.zeros(n)
+    for k in range(1, armoniche + 1):
+        if freq * k > 12000:
+            break
+        onda += np.sin(2 * np.pi * freq * k * t) / k * (brillantezza ** (k - 1))
+    return onda
+
+
+def cassa_forte() -> np.ndarray:
+    n = int(0.35 * SR)
+    t = np.arange(n) / SR
+    freq = 160 * np.exp(-t / 0.035) + 48
+    corpo = np.sin(2 * np.pi * np.cumsum(freq) / SR) * inviluppo(n, 0.0005, 0.16)
+    clic = np.exp(-t / 0.002) * 0.5
+    return np.tanh(1.8 * (corpo + clic))
+
+
+def battimani(rng) -> np.ndarray:
+    n = int(0.25 * SR)
+    rumore = np.diff(rng.standard_normal(n), prepend=0)
+    env = np.zeros(n)
+    for ritardo in (0, 0.008, 0.017):                 # tre mani quasi insieme
+        i = int(ritardo * SR)
+        env[i:] += inviluppo(n - i, 0.0005, 0.03)
+    env += 0.4 * inviluppo(n, 0.001, 0.09)
+    return rumore * env * 0.5
+
+
+def piatto(rng, durata: float) -> np.ndarray:
+    n = int(durata * SR)
+    rumore = np.diff(np.diff(rng.standard_normal(n), prepend=0), prepend=0)
+    return rumore * inviluppo(n, 0.001, durata / 3) * 0.12
+
+
+def salita(rng, durata: float) -> np.ndarray:
+    """Il «riser» dell'inizio: rumore e tono che salgono fino alla prima scena."""
+    n = int(durata * SR)
+    t = np.arange(n) / SR
+    crescita = (t / durata) ** 2
+    freq = 200 + 1800 * crescita
+    tono = np.sin(2 * np.pi * np.cumsum(freq) / SR) * 0.3
+    rumore = np.diff(rng.standard_normal(n), prepend=0) * 0.25
+    return (tono + rumore) * crescita
+
+
 def metti(traccia: np.ndarray, suono: np.ndarray, quando: float, volume: float) -> None:
     i = int(quando * SR)
+    if i < 0:
+        suono, i = suono[-i:], 0
     if i >= len(traccia):
         return
     fine = min(len(traccia), i + len(suono))
     traccia[i:fine] += volume * suono[: fine - i]
+
+
+def leggi_wav(percorso: str) -> np.ndarray:
+    with wave.open(percorso, "rb") as w:
+        dati = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(float) / 32768
+        canali, sr = w.getnchannels(), w.getframerate()
+    if canali == 2:
+        dati = dati.reshape(-1, 2).mean(axis=1)
+    if sr != SR:                                       # ricampionamento semplice
+        dati = np.interp(np.arange(0, len(dati), sr / SR), np.arange(len(dati)), dati)
+    return dati
 
 
 def componi(tempi: dict) -> np.ndarray:
@@ -120,48 +182,77 @@ def componi(tempi: dict) -> np.ndarray:
     rng = np.random.default_rng(seme)
     chiave = list(SCALE.values())[seme % len(SCALE)]
     giro = GIRI[(seme // 7) % len(GIRI)]
-    bpm = 92 + (seme // 11) % 16                       # tra 92 e 107
+    bpm = 118 + (seme // 11) % 9                        # tra 118 e 126: ritmo da reel
     battito = 60 / bpm
     battuta = 4 * battito
     n = int((durata + 0.5) * SR)
-    musica, effetti = np.zeros(n), np.zeros(n)
-    radice_do4 = -9 + chiave                            # do4 rispetto al la4, più la tonalità
+    musica, ritmo, effetti = np.zeros(n), np.zeros(n), np.zeros(n)
+    radice = -9 + chiave                                # do4 rispetto al la4, più la tonalità
+    pentatonica = [0, 2, 4, 7, 9, 12, 14]
+    motivo = [pentatonica[(seme >> (3 * i)) % len(pentatonica)] for i in range(6)]   # il ritornello del video
 
-    b = 0
-    t = 0.0
+    attacco = min(1.4, durata / 4)                       # la salita, poi tutto parte insieme
+    metti(effetti, salita(rng, attacco), 0, 0.35)
+    t, b = attacco, 0
+    metti(ritmo, piatto(rng, 1.8), t, 1.0)
     while t < durata:
         grado = giro[b % len(giro)]
-        r = radice_do4 + grado
-        minore = grado == 9                             # il vi grado è minore
+        r = radice + grado
+        minore = grado == 9
         accordo = [r, r + (3 if minore else 4), r + 7]
-        metti(musica, pad([nota(x - 12) for x in accordo], battuta + 0.3), t, 0.16)
-        metti(musica, basso(nota(r - 24), battuta / 2), t, 0.35)
-        metti(musica, basso(nota(r - 24), battuta / 2), t + battuta / 2, 0.28)
-        arpeggio = [accordo[0], accordo[1], accordo[2], accordo[1] + 12, accordo[2], accordo[1], accordo[0] + 12, accordo[2]]
-        for k, x in enumerate(arpeggio):                # crome
-            metti(musica, marimba(nota(x), 0.5), t + k * battito / 2, 0.16 if k % 2 == 0 else 0.11)
+        for k in range(8):                              # basso pulsante in crome
+            metti(musica, sega(nota(r - 24), battito / 2 * 0.9, 6, 0.8) * inviluppo(int(battito / 2 * 0.9 * SR), 0.003, 0.12), t + k * battito / 2, 0.28)
+        for k in (0.5, 1.5, 2.5, 3.5):                  # accordi a scatti in levare
+            stab = sum(sega(nota(x), 0.18, 9, 0.85) for x in accordo) / 3
+            metti(musica, stab * inviluppo(len(stab), 0.002, 0.07), t + k * battito, 0.32)
+        if b % 2 == 1:                                  # il motivo, una battuta sì e una no
+            for i, intervallo in enumerate(motivo):
+                nt = sega(nota(radice + 12 + intervallo), battito / 2 * 0.95, 5, 0.6)
+                metti(musica, nt * inviluppo(len(nt), 0.005, 0.18), t + i * battito / 2 + battito, 0.18)
         for k in range(4):
-            if k in (0, 2):
-                metti(musica, cassa(), t + k * battito, 0.22)
-            metti(musica, charleston(rng), t + k * battito + battito / 2, 0.3)
+            metti(ritmo, cassa_forte(), t + k * battito, 0.55)
+            if k in (1, 3):
+                metti(ritmo, battimani(rng), t + k * battito, 0.45)
+            for s in range(4):                          # charleston in semicrome, accentato in levare
+                metti(ritmo, charleston(rng), t + k * battito + s * battito / 4, 0.28 if s == 2 else 0.12)
+        if b % 4 == 3:
+            metti(ritmo, piatto(rng, 1.4), t + battuta, 0.8)
         t += battuta
         b += 1
 
-    for s in tempi.get("pop", []):
-        metti(effetti, pop(rng), s, 0.32)
-    for s in tempi.get("whoosh", []):
-        metti(effetti, whoosh(rng), s, 0.14)
-    for s in tempi.get("campanello", []):
-        metti(effetti, campanello(), s, 0.25)
+    # «pompa»: la musica si abbassa un attimo a ogni colpo di cassa, come nei pezzi da ballare
+    pompa = np.ones(n)
+    passo = int(battito * SR)
+    curva = 1 - 0.45 * np.exp(-np.arange(passo) / (0.09 * SR))
+    for i in range(int(attacco * SR), n, passo):
+        pompa[i:i + passo] = curva[: len(pompa[i:i + passo])]
+    musica *= pompa
 
-    traccia = (musica + effetti)[: int(durata * SR)]
-    # dissolvenze e volume: la musica resta sotto, mai invadente
-    k = int(0.4 * SR)
-    traccia[:k] *= np.linspace(0, 1, k)
-    k = int(1.5 * SR)
+    for s in tempi.get("pop", []):
+        metti(effetti, pop(rng), s, 0.4)
+    for s in tempi.get("whoosh", []):
+        metti(effetti, whoosh(rng), s, 0.16)
+    for s in tempi.get("campanello", []):
+        metti(effetti, campanello(), s, 0.3)
+
+    base = musica + ritmo
+    # la voce, se c'è: la musica scende sotto le parole
+    voce = np.zeros(n)
+    for v in tempi.get("voce", []):
+        try:
+            metti(voce, leggi_wav(v["file"]), float(v["inizio"]), 1.0)
+        except Exception:
+            pass
+    if np.any(voce):
+        presenza = np.convolve(np.abs(voce) > 0.01, np.ones(int(0.25 * SR)) / (0.25 * SR), mode="same")
+        base *= 1 - 0.6 * np.clip(presenza * 3, 0, 1)
+        voce *= 0.9 / (np.max(np.abs(voce)) or 1)
+
+    traccia = (base + effetti + voce)[: int(durata * SR)]
+    k = int(1.2 * SR)
     traccia[-k:] *= np.linspace(1, 0, k)
-    picco = np.max(np.abs(traccia)) or 1
-    return traccia / picco * 0.6
+    traccia = np.tanh(1.4 * traccia / (np.max(np.abs(traccia)) or 1))   # più «pieno», senza distorcere
+    return traccia / (np.max(np.abs(traccia)) or 1) * 0.89
 
 
 def scrivi_wav(percorso: str, dati: np.ndarray) -> None:
