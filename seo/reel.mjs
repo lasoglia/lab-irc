@@ -67,6 +67,8 @@ function pagina(r) {
 html,body{margin:0;width:${L}px;height:${A}px;overflow:hidden;background:#14131F}
 body{position:relative;color:#ECEAF5;font-family:Figtree}
 .fondo{position:absolute;inset:-10%;background:radial-gradient(60% 40% at 15% 10%,rgba(139,92,246,.38),transparent 65%),radial-gradient(70% 35% at 50% 85%,${colore}40,transparent 70%)}
+.sfondo-ia{position:absolute;inset:-4%;background-size:cover;background-position:center;opacity:.55;filter:saturate(1.05)}
+.velo{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,19,31,.55),rgba(20,19,31,.25) 40%,rgba(20,19,31,.8) 75%,#14131F)}
 .punti{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 2px,transparent 2.5px);background-size:34px 34px}
 .bordo{position:absolute;inset:28px;border:1.5px solid rgba(227,194,122,.45);border-radius:44px}
 .barra{position:absolute;left:80px;right:80px;top:150px;height:8px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}
@@ -97,6 +99,7 @@ section{position:absolute;left:80px;right:80px;top:310px;height:720px;display:fl
 .mascotte{position:absolute;right:20px;bottom:20px;width:300px;height:300px;filter:drop-shadow(0 22px 40px rgba(0,0,0,.45))}
 .ombra{position:absolute;bottom:-14px;height:30px;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(8px)}
 </style></head><body>
+${r.sfondo && existsSync(join(RADICE, r.sfondo)) ? `<div class="sfondo-ia" style="background-image:url(${url(r.sfondo)})"></div><div class="velo"></div>` : ''}
 <div class="fondo"></div><div class="punti"></div><div class="bordo"></div>
 <div class="barra"><i></i></div>
 <div class="alto"><div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div><div class="classe">${esc(r.etichetta || 'Classe ' + r.classe)}</div></div>
@@ -147,6 +150,8 @@ mascotte.animate([{ transform: 'translateY(0) rotate(-3deg)' }, { transform: 'tr
   { delay: 700, duration: 1400, iterations: Infinity, easing: 'ease-in-out' });
 document.querySelectorAll('.fine .cinque img').forEach((m, k) => m.animate([{ transform: 'translateY(60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }],
   { delay: t - ${T_FINE * 1000} + 200 + k * 110, duration: 500, fill: 'both', easing: molla }));
+const sf = document.querySelector('.sfondo-ia');
+if (sf) sf.animate([{ transform: 'scale(1) translateY(0)' }, { transform: 'scale(1.12) translateY(-2%)' }], { duration: window.DURATA, fill: 'both', easing: 'linear' });
 document.querySelector('.barra i').animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: window.DURATA, fill: 'both', easing: 'linear' });
 document.getAnimations().forEach((a) => a.pause());
 window.vai = (ms) => document.getAnimations().forEach((a) => { a.currentTime = ms; });

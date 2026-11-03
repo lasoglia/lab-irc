@@ -163,10 +163,18 @@ h2{margin:0;font:600 58px/1.18 Cormorant;text-wrap:pretty}
 }
 
 /* ---------- la domenica: «La grande domanda» (copertina) ---------- */
+function sfondoIA(d) {
+  return d.sfondo && existsSync(join(RADICE, d.sfondo))
+    ? `<div class="sfondo-ia" style="background-image:url(${url(d.sfondo)})"></div><div class="velo-ia"></div>` : '';
+}
+const STILE_SFONDO = `.sfondo-ia{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.6}
+.velo-ia{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,19,31,.7),rgba(20,19,31,.35) 35%,rgba(20,19,31,.75) 70%,#14131F)}
+.alto,.centro,.piede{position:relative;z-index:1}`;
+
 function domenica(d) {
   const colore = d.colore || ORO;
   if (d.formato === 'shabbat') return pagina(colore, `
-<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
+${sfondoIA(d)}<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
 <div class="centro"><div class="candele"><i></i><i></i></div>
 <div class="eb" style="justify-content:center">Lo Shabbat del Lab</div>
 <h1>${esc(d.titolo)}</h1><p>${esc(d.frase)}</p>
@@ -180,9 +188,10 @@ function domenica(d) {
 .candele i:after{content:"";position:absolute;left:50%;top:-10px;width:4px;height:12px;margin-left:-2px;background:#14131F}
 h1{font-size:90px}
 p{max-width:840px}
-.sfoglia{margin-top:44px;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}`);
+.sfoglia{margin-top:44px;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}
+${STILE_SFONDO}`);
   if (d.formato === 'grande-domanda') return pagina(colore, `
-<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
+${sfondoIA(d)}<div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
 <div class="centro"><div class="punto" style="color:${colore}">?</div>
 <div class="eb" style="justify-content:center">La grande domanda</div>
 <h1>${esc(d.titolo)}</h1><p>${esc(d.frase)}</p>
@@ -193,7 +202,8 @@ p{max-width:840px}
 .punto{font:600 260px/1 Cormorant;margin-bottom:6px;text-shadow:0 0 80px currentColor;opacity:.95}
 h1{font-size:94px}
 p{max-width:840px}
-.sfoglia{margin-top:44px;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}`);
+.sfoglia{margin-top:44px;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}
+${STILE_SFONDO}`);
   return pagina(colore, `
 <div class="alto">${logo}<div class="giorno" style="color:${colore}">${esc(d.data_breve)}</div></div>
 <div class="centro"><div class="stella" style="color:${colore}">✦</div>
@@ -244,7 +254,7 @@ for (const p of leggi('prof.json')) {
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
 for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')]) {
-  lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
+  lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1', v: d.sfondo ? 2 : 1 });
   // il carosello della domenica e del sabato: le schede con i disegni, poi il saluto finale
   const schede = d.carosello || [];
   const totale = (d.immagini || []).length;
@@ -272,7 +282,7 @@ for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'La striscia completa è sul profilo') });
 }
-for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
+for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori.slice(prima_)) l.soloJpg = true;
 
 mkdirSync(CARTELLA, { recursive: true });
