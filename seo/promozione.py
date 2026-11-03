@@ -115,7 +115,19 @@ punti esclamativi a raffica: registro sobrio, caldo e preciso, da insegnante.
 - Italiano corretto, con accenti e apostrofi normali."""
 
 
-TONO = """Tono (vale più di ogni altra indicazione sul registro): leggero, simpatico e \
+TONO = """Tono (vale più di ogni altra indicazione sul registro): leggero e simpatico, \
+come un prof che piace ai ragazzi, ma con misura. Immagini concrete e quotidiane, una \
+curiosità che sorprende, al massimo una battuta garbata per post: deve strappare un \
+sorriso, non una risata forzata. Niente esagerazioni, iperboli, giochi di parole tirati \
+o entusiasmo sopra le righe; poche emoji. Mai serioso, pesante o da predica. L'umorismo \
+non prende mai in giro persone, fedi o chi non crede, e i fatti restano esatti. Restano \
+vietati i toni pubblicitari e le urgenze."""
+
+
+# Il tono della versione 3, usato solo nella firma dei testi in cache: così il tono nuovo vale
+# per i testi nuovi, ma quelli già scritti (e magari già approvati dagli agenti) non si
+# riscrivono di nascosto. Con il rifacimento dei post (VERSIONE 4) questa riga se ne va.
+TONO_FIRMA = """Tono (vale più di ogni altra indicazione sul registro): leggero, simpatico e \
 vivace, come un prof che piace ai ragazzi. Immagini concrete e quotidiane, qualche \
 battuta bonaria, una sorpresa, domande che incuriosiscono: mai serioso, pesante o da \
 predica. L'umorismo non prende mai in giro persone, fedi o chi non crede, e i fatti \
@@ -228,7 +240,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
 
     da_scrivere = []
     for k, base, messaggio in lavori:
-        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI + TONO).encode()).hexdigest()[:16]
+        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI + TONO_FIRMA).encode()).hexdigest()[:16]
         voce = cache.get(k)
         if voce and voce.get("bloccato"):
             continue
