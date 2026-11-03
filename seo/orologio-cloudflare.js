@@ -18,6 +18,7 @@ const WORKFLOW = 'promozione-telegram.yml';
 const PIANO = [
   { giorni: [1, 3, 5], ora: '18:50', coda: 'oggi', che: 'reel delle 19' },
   { giorni: [2], ora: '13:20', coda: 'oggi', che: 'carosello delle 13:30' },
+  { giorni: [4], ora: '18:50', coda: 'oggi', che: 'reel del gioco delle 19 (solo nei periodi dei giochi)' },
   { giorni: [6], ora: '10:50', coda: 'oggi', che: 'Shabbat delle 11' },
   { giorni: [0], ora: '17:50', coda: 'oggi', che: 'grande domanda delle 18' },
   { giorni: [0], ora: '19:20', coda: 'video', che: 'video della grande domanda alle 19:30' },

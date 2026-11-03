@@ -13,6 +13,7 @@ dagli agenti e dai controlli:
   scuola     lunedì-venerdì una lezione (carosello, storia e video), sabato «Lo Shabbat
              del Lab» (la cultura ebraica), domenica «La grande domanda»
   vacanze    lunedì, mercoledì e venerdì una striscia simpatica del prof, nient'altro
+  giochi     nei 14 giorni dopo l'uscita di un gioco di verifica, il giovedì il reel di una partita
 Le vacanze sono quelle di data/vacanze.json (da correggere ogni anno con il calendario
 della regione); se il file manca valgono le date nazionali più comuni.
 """
@@ -162,17 +163,77 @@ DI_LEZIONE = ("lezione", "reel")   # i giorni che usano una lezione del kit (app
 INIZIO_SETTIMANA_NUOVA = dt.date(2026, 11, 9)   # prima: lezioni dal lunedì al venerdì
 
 
+# I giochi di verifica: per GIORNI_GIOCO giorni da quando un gioco nuovo compare nella pagina
+# Verifiche, il giovedì di scuola (libero) esce il reel di una partita registrata (seo/gioco_*.py/mjs).
+# data/social-giochi.json ricorda quando ogni gioco è comparso; si può anche fissare un periodo a mano
+# con «dal» e «al».
+FILE_GIOCHI = RADICE / "data" / "social-giochi.json"
+FILE_VERIFICHE = RADICE / "data" / "verifiche.json"
+GIORNI_GIOCO = 14
+GIORNO_GIOCO = 3   # giovedì
+
+
+def giochi() -> list[dict]:
+    try:
+        return json.loads(FILE_GIOCHI.read_text(encoding="utf-8")).get("giochi", [])
+    except (OSError, ValueError):
+        return []
+
+
+def gioco_del_giorno(giorno: dt.date) -> dict | None:
+    """Il gioco da promuovere quel giorno (il più recente nel suo periodo), oppure None."""
+    dentro = []
+    for v in giochi():
+        try:
+            dal = dt.date.fromisoformat(v.get("dal") or v["uscito"])
+            al = dt.date.fromisoformat(v["al"]) if v.get("al") else dal + dt.timedelta(days=GIORNI_GIOCO - 1)
+        except (KeyError, ValueError):
+            continue
+        if dal <= giorno <= al:
+            dentro.append((dal, v))
+    return max(dentro, key=lambda x: x[0])[1] if dentro else None
+
+
+def registra_giochi_nuovi(oggi: dt.date) -> list[dict]:
+    """Segna in data/social-giochi.json i giochi della pagina Verifiche mai visti, con la data di oggi."""
+    try:
+        catalogo = json.loads(FILE_VERIFICHE.read_text(encoding="utf-8")).get("verifiche", [])
+    except (OSError, ValueError):
+        return []
+    elenco = giochi()
+    visti = {v["file"] for v in elenco}
+    nuovi = [{"file": v["file"].lstrip("/"), "titolo": v.get("titolo", ""), "anno": str(v.get("anno", "")),
+              "uscito": oggi.isoformat()} for v in catalogo
+             if v.get("file", "").endswith("-gioco.html") and v["file"].lstrip("/") not in visti]
+    if nuovi:
+        FILE_GIOCHI.write_text(json.dumps({"nota": "Quando ogni gioco di verifica è comparso sul sito: nei "
+                                           f"{GIORNI_GIOCO} giorni dopo, il giovedì esce il suo reel. "
+                                           "Per un periodo diverso aggiungi «dal» e «al».",
+                                           "giochi": elenco + nuovi}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return nuovi
+
+
 def tipo_del_giorno(giorno: dt.date) -> str | None:
-    """Che cosa esce quel giorno: 'reel', 'lezione', 'prof', 'shabbat', 'domenica' oppure None."""
+    """Che cosa esce quel giorno: 'reel', 'lezione', 'gioco', 'prof', 'shabbat', 'domenica' oppure None."""
     if giorno < INIZIO_SETTIMANA_NUOVA:   # il calendario di prima, per i post già approvati
         if in_vacanza(giorno):
             return "prof" if giorno.weekday() in (0, 2, 4) else None
         return {5: "shabbat", 6: "domenica"}.get(giorno.weekday(), "lezione")
     if in_vacanza(giorno):
         return SETTIMANA_VACANZA.get(giorno.weekday())
+    if giorno.weekday() == GIORNO_GIOCO and gioco_del_giorno(giorno):
+        return "gioco"
     return SETTIMANA_SCUOLA.get(giorno.weekday())
 
 
 def giorni_di(tipo: str, inizio: dt.date, giorni: int) -> list[dt.date]:
     """I giorni in cui esce quel tipo di post, da domani per «giorni» giorni."""
     return [d for d in (inizio + dt.timedelta(days=i) for i in range(1, giorni + 1)) if tipo_del_giorno(d) == tipo]
+
+
+if __name__ == "__main__":
+    import sys
+    if sys.argv[1:] == ["--giochi"]:   # segna i giochi nuovi (lo fa l'Action dei video dei giochi)
+        from zoneinfo import ZoneInfo
+        nuovi = registra_giochi_nuovi(dt.datetime.now(ZoneInfo("Europe/Rome")).date())
+        print("Giochi nuovi: " + (", ".join(v["titolo"] for v in nuovi) if nuovi else "nessuno"))
