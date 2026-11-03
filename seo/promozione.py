@@ -35,6 +35,7 @@ Per correggere a mano un testo: modificalo in data/promozione.json e metti
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import os
@@ -379,6 +380,12 @@ def scrivi_pagina(voci: list[dict]):
         p = g.RADICE / "data" / nome
         return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
     telegram, meta = registro("telegram.json"), registro("meta.json")
+    # come in seo/cartoline.mjs: le immagini di un post uscito ovunque da 2 giorni sono cancellate
+    limite = (dt.date.today() - dt.timedelta(days=2)).isoformat()
+    def ripulito(chiave):
+        date = [telegram.get(chiave), meta.get(chiave, {}).get("facebook"), meta.get(chiave, {}).get("instagram")]
+        return all(date) and all(d <= limite for d in date)
+    jpg = lambda f: f.removesuffix(".png") + ".jpg"
     blocchi = []
     for n, v in enumerate(voci, start=1):
         colore = COLORI_ANNO.get(v["anno"], "var(--lab-oro)")
@@ -397,7 +404,7 @@ def scrivi_pagina(voci: list[dict]):
                 usciti.append(f"{nome} il {meta[v['chiave']][canale]}")
         stato_tg = (f'<p class="tg">Pubblicato in automatico: {e(", ".join(usciti))}.</p>'
                     if usciti else "")
-        schede = immagini_post(v["cartolina"], v["testi"])
+        schede = [] if ripulito(v["chiave"]) else [jpg(f) for f in immagini_post(v["cartolina"], v["testi"])]
         carosello = ("" if len(schede) < 2 else
                      '<details><summary>Carosello per Instagram (' + str(len(schede)) + ' immagini)</summary>'
                      '<div class="strip">' + "".join(
@@ -405,10 +412,10 @@ def scrivi_pagina(voci: list[dict]):
                          f'loading="lazy" width="120" height="150"></a>' for i, f in enumerate(schede, start=1))
                      + '</div></details>')
         blocchi.append(f"""<article class="post">
-<header><img src="cartoline/{e(v['cartolina'])}" alt="" loading="lazy" width="96" height="120">
+<header>{"" if ripulito(v["chiave"]) else f'<img src="cartoline/{e(jpg(v["cartolina"]))}" alt="" loading="lazy" width="96" height="120">'}
 <div><div class="num" style="color:{colore}">Post {n} di {len(voci)}{e(classe)}</div>
 <h2>{e(v['titolo'])}</h2><div class="uda">{e(v['uda'])}</div>
-<div class="azioni" style="margin-top:10px"><a href="cartoline/{e(v['cartolina'])}" download>Scarica la cartolina</a>
+<div class="azioni" style="margin-top:10px">{"" if ripulito(v["chiave"]) else f'<a href="cartoline/{e(jpg(v["cartolina"]))}" download>Scarica la cartolina</a>'}
 <a href="{e(v['url'])}">Apri la pagina</a></div></div></header>
 {carosello}{''.join(sezioni)}{stato_tg}
 </article>""")
