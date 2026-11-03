@@ -8,6 +8,7 @@
     "classe": "",
     "etichetta": "La grande domanda",
     "sottotitolo": "La grande domanda della domenica",
+    "finale": "",
     "colore": "#FB7BB5",
     "mascotte": "4-bussolina",
     "url": "https://www.labirc.it/lezioni/4/galileo-le-prove-e-l-autorita/come-si-vadia-al-cielo-la-bibbia-insegna-astronomia/",
@@ -58,6 +59,7 @@
     "classe": "",
     "etichetta": "La grande domanda",
     "sottotitolo": "La grande domanda della domenica",
+    "finale": "",
     "colore": "#FF7A59",
     "mascotte": "1-semino",
     "url": "https://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/",
@@ -98,5 +100,107 @@
     "facebook": "Il primo a dire che l'universo ha avuto un inizio? Un prete belga con la passione per i conti. 🔭\n\nSi chiamava Georges Lemaître e nel 1931 propose l'«atomo primitivo», l'antenato del Big Bang. Il colpo di scena è che si rifiutò di usarlo come prova di Dio: «Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica».\n\nÈ la chiave della grande domanda di questa domenica: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore? La fisica studia come l'universo si è sviluppato. Per la fede cristiana, invece, creare non è solo far cominciare: tutto dipende da Dio in ogni istante, come l'aria che resta illuminata finché c'è il sole (l'immagine è di Tommaso d'Aquino). Domande diverse, nessuna partita da vincere.\n\nNel carosello trovate il percorso in otto schede; nelle lezioni del Lab IRC, Lemaître, Tommaso e la Genesi raccontati per bene.\n\nhttps://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/",
     "instagram": "Un universo che nasce da un «atomo primitivo». A proporlo, nel 1931, un prete e fisico belga: Georges Lemaître. 🤯\n\nAvrebbe potuto dire: «Ecco la prova di Dio!». Non lo fece.\n\nPer lui una cosa è lo stato iniziale che studia la fisica. Un'altra è la creazione: Dio che fa esistere il mondo, adesso e in ogni istante.\n\nQuindi Big Bang e Dio non giocano la stessa partita.\n\nSfoglia il carosello fino all'ultima scheda: lì c'è una domanda per te.\n\nE se vuoi scavare, le lezioni sul sito ti aspettano.\n\n#religionecattolica #irc #bigbang #scienzaefede #lemaitre",
     "telegram": "Un prete ha proposto l'antenato del Big Bang. E allora: se c'è stato il Big Bang, serve ancora un Dio creatore? Nella grande domanda di oggi rispondiamo in otto schede, seguendo Georges Lemaître, sacerdote e fisico, che teneva ben distinte la fisica e la fede. Con un aiuto da Tommaso d'Aquino e da papa Francesco. Sfogliate il carosello e aprite le lezioni su Lemaître e sulla creazione.\n\nhttps://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/"
+  },
+  {
+    "chiave": "reel|sab-2026-11-07",
+    "origine": "sab-2026-11-07",
+    "data": "2026-11-07",
+    "titolo": "Si chiama «La vita di Sara». E comincia con un addio",
+    "anno": "",
+    "classe": "",
+    "etichetta": "Lo Shabbat del Lab",
+    "sottotitolo": "Lo Shabbat del Lab",
+    "finale": "Shabbat shalom!",
+    "colore": "#4FB0FF",
+    "mascotte": "",
+    "url": "https://www.labirc.it/",
+    "gancio": "Perché pagare 400 sicli per un regalo?",
+    "scene": [
+      {
+        "titolo": "La vita di Sara",
+        "testo": "Chayei Sarah significa «La vita di Sara». Ma la storia comincia con un addio.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-1.svg"
+      },
+      {
+        "titolo": "Niente regali, grazie",
+        "testo": "Efron vuole regalare la grotta. Abramo insiste: 400 sicli d'argento, prezzo pieno.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-3.svg"
+      },
+      {
+        "titolo": "La grotta «doppia»",
+        "testo": "Machpelà vuol dire «doppia»: due piani? O quattro coppie sepolte lì?",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-4.svg"
+      },
+      {
+        "titolo": "Il test dei cammelli",
+        "testo": "Eliezer chiede un segno: la sposa giusta darà acqua anche ai dieci cammelli.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-5.svg"
+      },
+      {
+        "titolo": "Una parola sola",
+        "testo": "Rebecca supera la prova e alla domanda della famiglia risponde: «Andrò».",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-7.svg"
+      },
+      {
+        "titolo": "Shabbat shalom",
+        "testo": "Con lei, dice un midrash, tornano candela, pasta e nube della tenda di Sara.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-07-3ed4c8-8.svg"
+      }
+    ],
+    "video": "sabato-2026-11-07-26c1721c.mp4",
+    "facebook": "Chi rifiuterebbe una grotta in regalo? Abramo. Nella parashà Chayei Sarah («La vita di Sara») Sara muore a 127 anni a Hebron e Abramo cerca un terreno per seppellirla. Efron l'Ittita vuole regalargli una grotta nel campo di Machpelà, ma lui insiste: prezzo pieno, 400 sicli d'argento. Per Chabad è il primo pezzo di Terra Santa diventato proprietà legale del popolo ebraico. E oggi sopra la grotta c'è un edificio di pietra costruito da Erode, con muri spessi quasi due metri: altro che cartongesso. Poi si cambia scena: un pozzo, dieci cammelli e Rebecca che dà da bere a tutti. Un midrash racconta che nella tenda di Sara la candela restava accesa da un venerdì all'altro e la pasta bastava sempre: con Rebecca, quei segni tornano. Una lettura ne ricava una bella morale: il sacro abita anche in cucina, in casa, in famiglia. 🕯️ Shabbat shalom!\n\nhttps://www.labirc.it/",
+    "instagram": "Dieci cammelli in ginocchio accanto a un pozzo, di sera. Il servo Eliezer aspetta e intanto chiede a Dio un segno: la sposa giusta per Isacco sarà quella che offrirà acqua anche ai suoi animali. Arriva Rebecca e fa proprio così. Solo quando i cammelli hanno finito di bere, Eliezer le regala un anello e due braccialetti d'oro. Poi la domanda decisiva della famiglia: vuoi partire con quest'uomo? Lei risponde con una parola: «Andrò». 🐪 È la parashà Chayei Sarah, «La vita di Sara». Nel carosello trovi anche una grotta pagata a prezzo pieno e una candela accesa da un venerdì all'altro. Shabbat shalom!\n\n#irc #culturaebraica #parasha #torah",
+    "telegram": "Quattro coppie in una grotta sola, dieci cammelli al pozzo e una risposta di due sillabe. Lo Shabbat del Lab di oggi è dedicato alla parashà Chayei Sarah, «La vita di Sara». Scopri perché Abramo paga 400 sicli per una grotta che gli volevano regalare, cosa significa Machpelà e come Rebecca supera la prova dei cammelli. Con un midrash su una tenda dove la pasta bastava sempre. Shabbat shalom!\n\nhttps://www.labirc.it/"
+  },
+  {
+    "chiave": "reel|sab-2026-11-14",
+    "origine": "sab-2026-11-14",
+    "data": "2026-11-14",
+    "titolo": "Come può un'ampolla d'olio durare otto giorni?",
+    "anno": "",
+    "classe": "",
+    "etichetta": "Lo Shabbat del Lab",
+    "sottotitolo": "Lo Shabbat del Lab",
+    "finale": "Shabbat shalom!",
+    "colore": "#4FB0FF",
+    "mascotte": "",
+    "url": "https://www.labirc.it/",
+    "gancio": "Un'ampolla per un giorno. Durò otto.",
+    "scene": [
+      {
+        "titolo": "La festa dei lumi",
+        "testo": "Chanukkà: ogni sera si accende un candelabro. E a tavola si frigge!",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-14-384fb3-1.svg"
+      },
+      {
+        "titolo": "Il Tempio liberato",
+        "testo": "I Maccabei liberano il Tempio di Gerusalemme e lo consacrano di nuovo.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-14-384fb3-2.svg"
+      },
+      {
+        "titolo": "L'olio dei record",
+        "testo": "Una sola ampolla, buona per un giorno: l'olio dura otto giorni.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-14-384fb3-3.svg"
+      },
+      {
+        "titolo": "Perché proprio otto?",
+        "testo": "Il 7 è la natura, i giorni della creazione. L'8 va oltre: il soprannaturale.",
+        "disegno": "promozione/illustrazioni/domenica/sab-2026-11-14-384fb3-4.svg"
+      },
+      {
+        "titolo": "La trottola furba",
+        "testo": "Arrivano i soldati? I bambini smettono di studiare e fingono di giocare.",
+        "disegno": ""
+      },
+      {
+        "titolo": "Una piccola luce",
+        "testo": "Basta una piccola fiamma per scacciare un grande buio. Shabbat shalom!",
+        "disegno": ""
+      }
+    ],
+    "video": "sabato-2026-11-14-32dad8c5.mp4",
+    "facebook": "Un candelabro acceso alla finestra, e guai a usarlo per leggere il giornale: quella luce ha un altro compito. 🕯️ Siamo a Chanukkà, la festa ebraica dei lumi. Ricorda la nuova consacrazione del Tempio di Gerusalemme, dopo la vittoria dei Maccabei sull'esercito di Antioco IV. Nel Tempio c'era olio puro per un giorno solo, e durò otto giorni. Così, per otto sere, si accendono i lumi della chanukiyà, il candelabro a otto braccia: per ricordare il miracolo e farlo conoscere a tutti. Con quei lumi è proibito farsi luce: è usanza sedersi lì vicino e raccontare storie. Intanto i bambini ricevono i dmei Chanukkà, i «soldi di Chanukkà», e qualche monetina da donare in tzedakà, cioè in beneficenza. Voi quale usanza raccontereste per prima in classe? Lo Shabbat del Lab vi aspetta nel carosello.\n\nhttps://www.labirc.it/",
+    "instagram": "Un'ampolla d'olio buona per un giorno che ne dura otto: da qui nasce Chanukkà, la festa ebraica dei lumi 🕯️ Ogni sera sulla chanukiyà, il candelabro a otto braccia, si aggiunge un lume. Ad accenderli ci pensa lo shamash, la candela che sta un po' più in alto: chi illumina gli altri, spiega la tradizione, innalza anche se stesso. I bambini giocano con il sevivòn, la trottola che ricorda i piccoli furbissimi dell'epoca dei Maccabei. E in cucina si frigge: sufganiot, cioè bomboloni, e levivot, frittelle di patate. Sfoglia e scopri perché proprio otto. Shabbat shalom!\n\n#irc #culturaebraica #chanukka #ebraismo",
+    "telegram": "Il venerdì di Chanukkà ci sono due luci da accendere: quale va prima? La chanukiyà, il candelabro della festa, perché di Shabbat è proibito accendere una fiamma. E il sabato sera si aspetta la fine dello Shabbat e la havdalà, la preghiera che lo separa dai giorni feriali. Il resto è una festa di otto sere, per l'olio che nel Tempio durò otto giorni invece di uno. Il succo? Basta una piccola luce per disperdere un grande buio. Shabbat shalom!\n\nhttps://www.labirc.it/"
   }
 ]
