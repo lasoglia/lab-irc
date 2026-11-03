@@ -147,6 +147,11 @@ class Schede(unittest.TestCase):
                   {"chiave": "s", "titolo": "S", "file": "s.png", "formato": "shabbat", "fonti": [{"titolo": "x", "url": "y"}]},
                   {"chiave": "d", "titolo": "D", "file": "d.png", "formato": "grande-domanda", "carosello": [{"titolo": "a", "testo": "b"}]}):
             self.assertIn(r["titolo"], stato.scheda_rubrica(r, quando, None))
+        # la grande domanda passa un elenco di lezioni
+        d = {"chiave": "d", "titolo": "D", "file": "d.png", "formato": "grande-domanda"}
+        testo = stato.scheda_rubrica(d, quando, [{"titolo": "L1"}, {"titolo": "L2"}])
+        self.assertIn("«L1»", testo)
+        self.assertIn("«L2»", testo)
 
 
 if __name__ == "__main__":
