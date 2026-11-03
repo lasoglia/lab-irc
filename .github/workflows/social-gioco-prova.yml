@@ -1,0 +1,79 @@
+name: Social · video di un gioco
+# Registra una partita a un gioco di verifica (seo/gioco_registra.mjs) e la mette su Cloudflare R2
+# (cartella prove/, cancellata dopo 30 giorni): l'indirizzo è nel riepilogo. Il gioco si apre con
+# la password del giorno calcolata dal segreto LUCCHETTO_NUMERO, che non sta mai nel repo.
+# Non pubblica nulla sui social.
+
+on:
+  workflow_dispatch:
+    inputs:
+      gioco:
+        description: 'Gioco da registrare (file in uploads/)'
+        default: 'uploads/ii-1-g-gesu-quali-tracce-gioco.html'
+
+permissions:
+  contents: read
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
+jobs:
+  gioco:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Scarica il sito (giochi)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - name: Prendi il registratore da main
+        run: |
+          git fetch -q --depth=1 origin main
+          git checkout origin/main -- seo/gioco_registra.mjs seo/media_r2.py
+
+      - name: Browser e video
+        run: |
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+
+      - name: Registra la partita
+        env:
+          LUCCHETTO_NUMERO: ${{ secrets.LUCCHETTO_NUMERO }}
+          GIOCO: ${{ inputs.gioco }}
+        run: |
+          mkdir -p uscita
+          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
+          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)" \
+          node seo/gioco_registra.mjs "$GIOCO" uscita/gioco.mp4 uscita/momenti.json
+
+      - name: Su Cloudflare, da aprire dal telefono
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          GIOCO: ${{ inputs.gioco }}
+        run: |
+          python - <<'PY'
+          import os, sys
+          from pathlib import Path
+          sys.path.insert(0, "seo")
+          import media_r2 as r2
+          p = Path("uscita/gioco.mp4")
+          if not p.exists():
+              sys.exit("Nessun video registrato")
+          finale = p.with_name(f"gioco-{Path(os.environ['GIOCO']).stem}-{os.environ['GITHUB_RUN_ID']}.mp4")
+          p.rename(finale)
+          r2.carica(finale, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"],
+                    os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
+          url = f"{r2.URL_PUBBLICO}/prove/{finale.name}"
+          print(url)
+          Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text(f"## Video del gioco\n\n- {url}\n", encoding="utf-8")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: momenti-del-gioco
+          path: uscita/momenti.json
+          retention-days: 7
