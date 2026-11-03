@@ -97,10 +97,8 @@ jobs:
           # i disegni delle schede del carosello, poi l'elenco aggiornato con i disegni
           python seo/illustrazioni.py
           python seo/promozione.py --senza-ia
-          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
-          PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
-          CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
-            node seo/cartoline.mjs
+          # le immagini dei post non si disegnano qui: le disegna l'Action di pubblicazione,
+          # solo per i post in coda, e le carica su Cloudflare R2 (seo/media_r2.py)
           git add promozione data/promozione.json data/illustrazioni.json
           if git diff --cached --quiet; then
             echo "Kit social già aggiornato: niente da salvare."

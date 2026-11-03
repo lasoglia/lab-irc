@@ -40,13 +40,13 @@ const FILE_VERSIONI = join(CARTELLA, 'versioni.json');
 const versioni = existsSync(FILE_VERSIONI) ? JSON.parse(readFileSync(FILE_VERSIONI, 'utf8')) : {};
 const salvaVersioni = () => writeFileSync(FILE_VERSIONI, JSON.stringify(
   Object.fromEntries(elenco.filter((r) => versioni[r.video]).map((r) => [r.video, versioni[r.video]])), null, 1) + '\n');
-// i video già caricati su Cloudflare R2 (seo/video_r2.py) non sono più qui ma non vanno rifatti:
-// data/video-r2.json li elenca con la data; dopo 28 giorni il bucket li ha cancellati
+// i video già caricati su Cloudflare R2 (seo/media_r2.py) non sono più qui ma non vanno rifatti:
+// data/media-r2.json li elenca con la data; dopo 28 giorni il bucket li ha cancellati
 const suR2 = (() => {
-  const f = join(RADICE, 'data', 'video-r2.json');
+  const f = join(RADICE, 'data', 'media-r2.json');
   const limite = new Date(Date.now() - 28 * 864e5).toISOString().slice(0, 10);
   const r2 = existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : {};
-  return (video) => Boolean(r2[video] && r2[video] >= limite);
+  return (video) => Boolean(r2[`reel/${video}`] && r2[`reel/${video}`] >= limite);
 })();
 const daFare = elenco.filter((r) => (!existsSync(join(CARTELLA, r.video)) && !suR2(r.video)) || versioni[r.video] !== VERSIONE);
 if (!daFare.length) { salvaVersioni(); console.log('Reel: niente da montare.'); process.exit(0); }
