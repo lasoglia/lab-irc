@@ -590,8 +590,8 @@
   },
   "2|Gesù quali tracce|Lo screenshot non basta": {
     "frase_cartolina": "Tacito e Plinio parlano di Cristo: che cosa dicono davvero, e che cosa no",
-    "facebook": "Vi è mai capitato di vedere uno screenshot con una frase antica su Cristo, senza autore né data? Basta leggerla per sapere che cosa è successo? Spoiler: no. 🙂\n\n«Lo screenshot non basta» è la seconda lezione dell'unità «Gesù: quali tracce?» per la classe seconda. Si leggono brevi passi di Tacito (Annali XV,44) e di Plinio il Giovane, con la risposta di Traiano (Lettere X,96-97). Prima, però, serve un po' di lavoro da detective: distinguere data dell'evento e data del testo, riconoscere il genere, separare la notizia dal giudizio dell'autore.\n\nIn classe gli studenti rispondono a quattro domande di studio e correggono un post pieno di strafalcioni («Tacito vide Gesù e Plinio confermò tutti i Vangeli»). Poi arrivano a una conclusione proporzionata ai documenti, con uno sguardo alla Dei Verbum sul rapporto tra fede e storia.",
-    "instagram": "Una frase antica su Cristo, ritagliata e condivisa. Chi l'ha scritta? Quando? Perché? 📜\n\nIl titolo dice già tutto: lo screenshot non basta. Prima di fidarsi, la frase va rimessa al suo posto.\n\nNella lezione per la classe seconda si leggono Tacito, che racconta l'incendio di Roma del 64, e Plinio il Giovane, governatore in Bitinia, con la risposta dell'imperatore Traiano.\n\nUna sorpresa: Tacito chiama Pilato procurator, ma il suo titolo era praefectus. Anche gli storici antichi vanno letti con la lente. 🔍\n\nE una distinzione da non saltare: Plinio riferisce che i cristiani cantavano un inno a Cristo come a un dio. Attesta un culto, non dimostra che Cristo sia Dio.\n\nQuattro domande di studio, un post sbagliato da correggere e una conclusione da costruire con misura.\n\nTrovi la lezione completa al link in bio.",
+    "facebook": "Vi è mai capitato di vedere uno screenshot con una frase antica su Cristo, senza autore né data? Basta leggerla per sapere che cosa è successo? Spoiler: no. 🙂\n\n«Lo screenshot non basta» è la seconda lezione dell'unità «Gesù: quali tracce?» per la classe seconda. Si leggono brevi passi di Tacito (Annali XV,44) e di Plinio il Giovane, con la risposta di Traiano (Lettere X,96-97). Prima, però, serve un po' di lavoro da detective: distinguere data dell'evento e data del testo, riconoscere il genere, separare la notizia dal giudizio dell'autore.\n\nNel fascicolo ci sono quattro domande di studio: l'ultima chiede di correggere un post con due affermazioni sbagliate («Tacito vide Gesù e Plinio confermò tutti i Vangeli») e di arrivare a una conclusione proporzionata ai documenti. C'è anche uno sguardo alla Dei Verbum sul rapporto tra fede e storia.",
+    "instagram": "Una frase antica su Cristo, ritagliata e condivisa. Chi l'ha scritta? Quando? Perché? 📜\n\nIl titolo dice già tutto: lo screenshot non basta. Prima di fidarsi, la frase va rimessa al suo posto.\n\nNella lezione per la classe seconda si leggono Tacito, che racconta la repressione seguita all'incendio di Roma del 64, e Plinio il Giovane, governatore in Bitinia, con la risposta dell'imperatore Traiano.\n\nUna sorpresa: Tacito chiama Pilato procurator, ma il suo titolo era praefectus. Anche gli storici antichi vanno letti con la lente. 🔍\n\nE una distinzione da non saltare: Plinio riferisce che i cristiani cantavano un inno a Cristo come a un dio. Attesta un culto, non dimostra che Cristo sia Dio.\n\nQuattro domande di studio: nell'ultima si corregge un post sbagliato e si costruisce una conclusione con misura.\n\nTrovi la lezione completa al link in bio.",
     "hashtag": [
       "religionecattolica",
       "irc",
@@ -599,7 +599,7 @@
       "fontiromane",
       "classeseconda"
     ],
-    "whatsapp": "Ciao a tutti, ho preparato una lezione per le seconde su Tacito e Plinio: che cosa dicono davvero le fonti romane su Gesù e sui primi cristiani. Si lavora su data dell'evento e data del testo, notizia e giudizio dell'autore, e c'è un post pieno di errori da far correggere ai ragazzi. Se vi serve, è online e gratuita 🙂",
+    "whatsapp": "Ciao a tutti, ho preparato una lezione per le seconde su Tacito e Plinio: che cosa dicono davvero le fonti romane su Gesù e sui primi cristiani. Si lavora su data dell'evento e data del testo, notizia e giudizio dell'autore, e c'è un post con due affermazioni sbagliate da far correggere ai ragazzi. Se vi serve, è online e gratuita 🙂",
     "telegram": "📜 Lo screenshot non basta – classe seconda\n\nUna frase antica su Cristo non si legge da sola: serve sapere chi scrive, quando e perché. La lezione mette a confronto Tacito (Annali XV,44) e la corrispondenza fra Plinio il Giovane e Traiano (Lettere X,96-97). Gli studenti distinguono notizia e giudizio, correggono un post impreciso e formulano una conclusione proporzionata alle fonti, con un collegamento alla Dei Verbum.",
     "carosello": [
       {
@@ -628,7 +628,8 @@
       "input": 12639,
       "output": 6999
     },
-    "impronta": "90c687f1080922d4"
+    "impronta": "90c687f1080922d4",
+    "bloccato": true
   },
   "2|Quattro Vangeli, una Pasqua|Cambiare posto": {
     "frase_cartolina": "Chi è il mio prossimo? Gesù risponde con una storia e ribalta la domanda",
@@ -1052,8 +1053,8 @@
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi": {
     "frase_cartolina": "Come sono nate le università e chi aveva il diritto di salire in cattedra",
-    "facebook": "Un maestro sostiene che ogni testimonianza scritta merita fiducia. Uno studente obietta: anche una bugia si può mettere per iscritto. E adesso? 🤔\n\nIl maestro non diventa inutile: deve spiegare meglio. E lo studente deve portare una ragione, non solo contraddire. Da questa scena parte «Chi può insegnare a chi», lezione per la terza sulla nascita delle università medievali. Ci sono le scuole monastiche e cattedrali e le città affamate di competenze. Poi Bologna, dove gli studenti si organizzano da sé, e Parigi, con le sue regole per chi vuole insegnare. E c'è Tommaso d'Aquino che si fa le obiezioni da solo.\n\nIn classe gli studenti leggono il testo, distinguono autorità e autorevolezza e rispondono a domande di studio con fonti e argomenti.",
-    "instagram": "Parigi, 1215. Per insegnare servono almeno vent'anni, sei anni di studio e un esame. Pagare per avere la licenza? Vietato. 🎓\n\nNel Medioevo la domanda «chi può insegnare a chi?» diventa un'istituzione: l'università.\n\nLa parola universitas non indicava un edificio, ma un insieme di persone associate. A Bologna a riunirsi furono gli studenti.\n\nIl metodo? Leggere un testo, trovarci una difficoltà, discuterla con argomenti e obiezioni. 📚\n\nLa lezione per la terza aiuta a distinguere autorità e autorevolezza: un ruolo non rende vera ogni frase di chi lo ricopre.\n\nTrovi la lezione completa con il link in bio.",
+    "facebook": "Un esempio immaginario dalla lezione: un maestro sostiene che ogni testimonianza scritta merita fiducia. Uno studente obietta: anche una bugia si può mettere per iscritto. E adesso? 🤔\n\nIl maestro non diventa inutile: deve spiegare meglio. E lo studente deve portare una ragione, non solo contraddire. È uno dei passaggi di «Chi può insegnare a chi», lezione per la terza sulla nascita delle università medievali. Ci sono le scuole monastiche e cattedrali e le città che hanno bisogno di competenze. Poi Bologna, dove gli studenti si organizzano da sé, e Parigi, con le sue regole per chi vuole insegnare. E c'è Tommaso d'Aquino che si fa le obiezioni da solo.\n\nLa lezione chiude con quattro domande di studio, tra fonti, argomenti e la differenza tra autorità e autorevolezza.",
+    "instagram": "Parigi, 1215. Per insegnare le arti servono almeno vent'anni di età, sei anni di studio e un esame. Pagare per avere la licenza? Vietato. 🎓\n\nNel Medioevo la domanda «chi può insegnare a chi?» diventa un'istituzione: l'università.\n\nLa parola universitas non indicava un edificio, ma un insieme di persone associate. A Bologna a riunirsi furono gli studenti.\n\nIl metodo? Leggere un testo, trovarci una difficoltà, discuterla con argomenti e obiezioni. 📚\n\nLa lezione per la terza aiuta a distinguere autorità e autorevolezza: un ruolo non rende vera ogni frase di chi lo ricopre.\n\nTrovi la lezione completa con il link in bio.",
     "hashtag": [
       "religionecattolica",
       "irc",
@@ -1061,8 +1062,8 @@
       "universita",
       "classeterza"
     ],
-    "whatsapp": "Ciao a tutti, ho preparato per la terza una lezione sulla nascita delle università medievali: da Bologna, dove si organizzano gli studenti, agli statuti di Parigi del 1215, passando per lectio, quaestio e disputatio. Il filo è «chi può insegnare a chi?», con la differenza tra autorità e autorevolezza. In fondo ci sono domande di studio già pronte. Se vi torna utile, è vostra 🙂",
-    "telegram": "Chi può insegnare a chi? Nuova lezione per la terza 🎓\nIl 1088 dell'Università di Bologna? Una data convenzionale: le origini furono graduali e gli studenti ebbero un ruolo decisivo. La lezione ricostruisce la nascita delle università tra scuole monastiche, città in crescita, Bologna e Parigi, con il metodo scolastico e gli statuti del 1215. Chiude con quattro domande di studio, tra fonti, argomenti e la differenza tra autorità e autorevolezza.",
+    "whatsapp": "Ciao a tutti, ho preparato per la terza una lezione sulla nascita delle università medievali: da Bologna, dove si organizzano gli studenti, agli statuti di Parigi del 1215, passando per lectio, quaestio e disputatio. Il filo è «chi può insegnare a chi?», con la differenza tra autorità e autorevolezza. In fondo ci sono domande di studio già pronte. Se vi torna utile, la trovate sul sito 🙂",
+    "telegram": "Chi può insegnare a chi? Lezione per la terza 🎓\nIl 1088 dell'Università di Bologna è una data convenzionale: le origini furono graduali e gli studenti ebbero un ruolo decisivo. La lezione ricostruisce la nascita delle università tra scuole monastiche, città in crescita, Bologna e Parigi, con il metodo scolastico e gli statuti del 1215. Chiude con quattro domande di studio, tra fonti, argomenti e la differenza tra autorità e autorevolezza.",
     "carosello": [
       {
         "titolo": "Chi ha il diritto di insegnare?",
@@ -1090,7 +1091,8 @@
       "input": 13255,
       "output": 9501
     },
-    "impronta": "651a5b7ffb640931"
+    "impronta": "651a5b7ffb640931",
+    "bloccato": true
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini": {
     "frase_cartolina": "Una Regola di 1500 anni fa che prende la misura su chi fa più fatica",
@@ -1680,7 +1682,7 @@
   },
   "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze": {
     "frase_cartolina": "Indulgenze 1517: che cosa insegnava la Chiesa e che cosa accadeva alla cassa",
-    "facebook": "«La Chiesa vendeva il perdono.» L'abbiamo sentita tutti, e quasi nessuno si ferma a controllarla. Ma che cosa c'era davvero dentro quella cassa del 1517? La lezione per la quarta parte da un frate che predica, Tetzel, da un cantiere a Roma e da un debito con i banchieri Fugger. Si scopre così che la storia è molto più intricata di uno slogan. Gli studenti leggono la definizione di Paolo VI, la voce Treccani sugli abusi e alcune tesi di Lutero. Imparano a distinguere colpa e pena e, soprattutto, tre piani che di solito finiscono nello stesso calderone: dottrina, procedura e distorsione. Poi seguono la risposta di Roma, da Leone X al Concilio di Trento. La domanda finale serve anche fuori dall'aula: quando una protesta ha buone ragioni? 🙂",
+    "facebook": "«La Chiesa vendeva il perdono.» L'abbiamo sentita tutti, e quasi nessuno si ferma a controllarla. Ma che cosa c'era davvero dentro quella cassa del 1517? La lezione per la quarta parte da un frate che predica, Tetzel, e dal debito di un arcivescovo, Alberto di Brandeburgo, con i banchieri Fugger. Si scopre così che la storia è molto più intricata di uno slogan. Gli studenti leggono la definizione di Paolo VI, un passo della Treccani sugli abusi e alcune tesi di Lutero. Imparano a distinguere colpa e pena e, soprattutto, tre piani che di solito finiscono nello stesso calderone: dottrina, procedura e distorsione. Poi seguono la risposta di Roma, da Leone X al Concilio di Trento. La domanda che guida la lezione serve anche fuori dall'aula: quando una protesta ha buone ragioni? 🙂",
     "instagram": "Una moneta tintinna nella cassa e un'anima vola via dal purgatorio. Suona bene, vero? Ecco, il problema è proprio quello. 🪙\n\n1517: un frate predica un'indulgenza, un arcivescovo deve restituire un prestito ai banchieri, a Roma c'è il cantiere di una basilica da finire.\n\nNella lezione per la quarta separiamo tre cose che di solito finiscono nello stesso frullatore: che cosa la Chiesa insegnava, come veniva amministrato, che cosa succedeva davvero.\n\nSi leggono Paolo VI, la Treccani e alcune tesi di Lutero. E c'è una sorpresa: il martello sulla porta è un racconto tradizionale, mentre la lettera di Lutero all'arcivescovo Alberto è documentata.\n\nAlla fine resta una domanda per tutti: quando una protesta ha buone ragioni?\n\nLa lezione è gratuita sul Lab IRC: trovi il link in bio. 📚",
     "hashtag": [
       "religionecattolica",
@@ -1690,7 +1692,7 @@
       "classequarta"
     ],
     "whatsapp": "Ciao a tutti, ho preparato per la quarta una lezione sulle indulgenze del 1517: Tetzel, il debito di Alberto di Brandeburgo con i Fugger, la definizione di Paolo VI, alcune tesi di Lutero e la risposta di Roma fino a Trento. L'idea è insegnare ai ragazzi a distinguere dottrina, procedura e abusi. Se vi serve, è online gratis sul Lab IRC 🙂",
-    "telegram": "Indulgenze 1517: un debito, un cantiere e 95 tesi 📜\nUna curiosità: Tetzel non poteva predicare nella Sassonia elettorale, perché Federico il Saggio custodiva una ricchissima raccolta di reliquie con indulgenze proprie. Concorrenza non gradita. È solo uno dei fili della nuova lezione per la quarta sul Lab IRC, che separa dottrina, procedura e distorsioni nella pratica. Si leggono Paolo VI, la Treccani e alcune tesi di Lutero, fino alla risposta di Roma con Leone X e il Concilio di Trento.",
+    "telegram": "Indulgenze 1517: un debito, un cantiere e 95 tesi 📜\nTetzel non poteva predicare nella Sassonia elettorale: Federico il Saggio custodiva una delle più ricche raccolte di reliquie d'Europa, con indulgenze proprie, e un'indulgenza concorrente non era gradita. È uno dei fili della nuova lezione per la quarta sul Lab IRC, che separa dottrina, procedura e distorsioni nella pratica. Si leggono Paolo VI, la Treccani e alcune tesi di Lutero, fino alla risposta di Roma con Leone X e il Concilio di Trento.",
     "carosello": [
       {
         "titolo": "La Chiesa vendeva il perdono?",
@@ -1718,7 +1720,8 @@
       "input": 14000,
       "output": 7126
     },
-    "impronta": "28a3877854363a4b"
+    "impronta": "28a3877854363a4b",
+    "bloccato": true
   },
   "4|Riformare una Chiesa, cambiare una cultura|Un concilio può cambiare ciò che vediamo": {
     "frase_cartolina": "Da Trento al Giudizio universale: come una norma arriva fino a un affresco",
@@ -1973,8 +1976,8 @@
   },
   "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare": {
     "frase_cartolina": "Il Concilio ha vietato il latino? Spoiler: no. Il Vaticano II e la lingua della messa",
-    "facebook": "«Il Concilio ha vietato il latino?» La frase gira da sessant'anni, in casa e in parrocchia. Nella lezione per la quinta la prendiamo sul serio e facciamo la cosa più semplice: andiamo a leggere i testi.\n\nSi parte dalla messa tridentina e dal decreto di Trento che, sorpresa, non condannò la lingua del popolo ma il «solo». Poi il discorso con cui Giovanni XXIII apre il Concilio nel 1962: altro è il deposito della fede, altro è il modo di annunciarlo. Quindi Sacrosanctum Concilium 14, 36 e 54: partecipare alla messa è diritto e dovere di ogni battezzato. Infine Paolo VI, nel 1965 e nel 1969, e la Bibbia proclamata nella lingua di tutti.\n\nIn classe gli studenti leggono i documenti e cercano da sé che cosa il testo conserva, che cosa concede e chi decide. Lo slogan si smonta da solo 📜",
-    "instagram": "Nel 1950, a Roma come a Manila, entravi in chiesa e sentivi la stessa messa in latino. Poi arriva il Vaticano II e il latino sparisce. O no? 🤔\n\nLo slogan dice che il Concilio l'ha vietato. Noi abbiamo fatto una cosa rivoluzionaria: leggere i documenti.\n\nTrento, 1562: i padri non vietano la lingua del popolo. Condannano chi la vuole come unica lingua della messa.\n\nRoma, 1962: Giovanni XXIII apre il Concilio con una distinzione che vale oro. Altro è il deposito della fede, altro è il modo di annunciarlo.\n\n1963: Sacrosanctum Concilium conserva il latino e dà più spazio alla lingua nazionale, a cominciare dalle letture. La Bibbia, prima di tutto 📖\n\nNel 1965 Paolo VI porta la novità nelle parrocchie e ammette che per la Chiesa è un sacrificio.\n\nUna lezione per la quinta, da fare con i testi in mano. La trovi dal link in bio.",
+    "facebook": "«Il Concilio ha vietato il latino?» La frase gira da sessant'anni, in casa e in parrocchia. Nella lezione per la quinta la prendiamo sul serio: andiamo a leggere i testi.\n\nSi parte dalla messa tridentina e dal decreto di Trento che non condannò la lingua del popolo ma il «solo». Segue il discorso con cui Giovanni XXIII apre il Concilio nel 1962: altro è il deposito della fede, altro è il modo di annunciarlo. Quindi Sacrosanctum Concilium: la partecipazione piena, consapevole e attiva alla liturgia è diritto e dovere di ogni battezzato (n. 14), e i nn. 36 e 54 dicono che cosa ne segue per la lingua. Poi Paolo VI, nel 1965 e nel 1969, e la Bibbia proclamata nella lingua di tutti.\n\nIn classe gli studenti leggono i documenti e cercano da sé che cosa il testo conserva, che cosa concede e chi decide. Lo slogan si smonta da solo 📜",
+    "instagram": "Nel 1950, a Roma come a Manila, entravi in chiesa e sentivi la stessa messa in latino. Poi arriva il Vaticano II e il latino sparisce. O no? 🤔\n\nLo slogan dice che il Concilio l'ha vietato. In questa lezione facciamo una cosa rivoluzionaria: leggere i documenti.\n\nTrento, 1562: i padri non condannano la lingua del popolo. Condannano chi la vuole come unica lingua della messa.\n\nRoma, 1962: Giovanni XXIII apre il Concilio con una distinzione. Altro è il deposito della fede, altro è il modo di annunciarlo.\n\n1963: Sacrosanctum Concilium conserva il latino e dà più spazio alla lingua nazionale, a cominciare dalle letture. La Bibbia, prima di tutto 📖\n\nNel 1965 Paolo VI porta la novità nelle parrocchie e ammette che per la Chiesa è un sacrificio.\n\nUna lezione per la quinta, da fare con i testi in mano. La trovi dal link in bio.",
     "hashtag": [
       "religionecattolica",
       "irc",
@@ -1983,7 +1986,7 @@
       "classequinta"
     ],
     "whatsapp": "Ciao a tutti, per la quinta ho preparato una lezione sul Vaticano II e la lingua della messa. Parte dallo slogan «il Concilio ha vietato il latino?» e lo verifica sui testi: Trento, Giovanni XXIII, SC 14, 36 e 54, Paolo VI nel 1965 e nel 1969. Spoiler: il latino non è stato vietato. Gli studenti lavorano direttamente sui documenti. È online, gratis, se vi serve 🙂",
-    "telegram": "📜 Il Concilio ha vietato il latino? Nuova lezione per la quinta\n\nUno slogan che gira da sessant'anni, messo alla prova dei testi: dal decreto di Trento, che condannò il «solo» e non la lingua del popolo, al discorso di Giovanni XXIII su deposito e modo. Al centro Sacrosanctum Concilium 14, 36 e 54: partecipare è diritto e dovere di ogni battezzato, e per partecipare bisogna capire. In chiusura Paolo VI, il 1965 e il 1969, e la Bibbia proclamata nella lingua di tutti.",
+    "telegram": "📜 Il Concilio ha vietato il latino? Lezione per la quinta\n\nUno slogan che gira da sessant'anni, messo alla prova dei testi: dal decreto di Trento, che condannò il «solo» e non la lingua del popolo, al discorso di Giovanni XXIII su deposito e modo. Al centro Sacrosanctum Concilium 14, 36 e 54: partecipare è diritto e dovere di ogni battezzato, e per partecipare bisogna capire. Poi Paolo VI, il 1965 e il 1969, e la Bibbia proclamata nella lingua di tutti.",
     "carosello": [
       {
         "titolo": "Il Concilio ha vietato il latino?",
@@ -2011,7 +2014,8 @@
       "input": 14086,
       "output": 8102
     },
-    "impronta": "dddd4f0f804a29bb"
+    "impronta": "dddd4f0f804a29bb",
+    "bloccato": true
   },
   "5|Una Chiesa dentro la storia|Davanti ai totalitarismi, che cosa fece la Chiesa": {
     "frase_cartolina": "Trattare, condannare, soccorrere: tre scelte della Chiesa davanti al nazismo",
@@ -2057,8 +2061,8 @@
   },
   "5|Una Chiesa dentro la storia|Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille": {
     "frase_cartolina": "Dal no di Pio IX all'otto per mille: di che cosa vive la Chiesa?",
-    "facebook": "Una firma in una casella della dichiarazione dei redditi, e alla Chiesa cattolica in Italia arriva più di un miliardo di euro l'anno. Allora lo Stato la comanda? Il proverbio direbbe di sì: chi paga, comanda.\n\nLa lezione per la quinta cerca la risposta in una storia lunga centocinquant'anni. Nel 1871 Pio IX rifiuta la rendita offerta dalla legge delle Guarentigie, mentre i parroci più poveri ricevono dallo Stato la congrua. Il papa vive dell'Obolo di San Pietro (parola che, sorpresa, viene da «spiedo»), finché nel 1929 i Patti Lateranensi gli danno «quel tanto di territorio» che basta.\n\nIn classe gli studenti leggono le fonti, mettono a confronto le ragioni del papa con i giudizi degli storici e arrivano all'otto per mille di oggi. Spoiler: la risposta non sta tutta nel proverbio. 📜",
-    "instagram": "Nel 1871 lo Stato italiano offre al papa una rendita: 3.225.000 lire l'anno. Risposta di Pio IX: no, grazie. 🤔\n\nPerché? Quella legge l'aveva fatta un Parlamento da solo, e un altro Parlamento poteva cambiarla. E chi ti mantiene, ti può comandare.\n\nCosì il papa vive delle offerte dei fedeli: l'Obolo di San Pietro. Curiosità: obolo viene dal greco ed è parente dello spiedo, perché prima delle monete coniate si pagava con spiedi di metallo 💰\n\nIntanto i parroci più poveri l'assegno dello Stato lo ricevono: si chiama congrua. Poi, nel 1929, i Patti Lateranensi: 44 ettari, il più piccolo Stato indipendente del mondo.\n\nUna lezione per la quinta che parte dalle fonti e arriva all'otto per mille di oggi. Chi paga, comanda? La risposta è meno scontata del proverbio.\n\nLa trovi con il link in bio 📚",
+    "facebook": "Una firma in una casella della dichiarazione dei redditi, e alla Chiesa cattolica in Italia arriva più di un miliardo di euro l'anno. Allora lo Stato la comanda? Il proverbio direbbe di sì: chi paga, comanda.\n\nLa lezione per la quinta cerca la risposta in una storia lunga centocinquant'anni. Nel 1871 Pio IX rifiuta la rendita offerta dalla legge delle Guarentigie, mentre i parroci più poveri ricevono dallo Stato la congrua. Il papa vive dell'Obolo di San Pietro (obolo viene dal greco obolós, variante di obelós, «spiedo»). Nel 1929, con i Patti Lateranensi, ottiene «quel tanto di territorio», dirà Pio XI, che basti a reggere la sovranità: l'Obolo resta accanto, e ancora oggi il papa vive delle offerte dei fedeli.\n\nLa lezione propone di leggere l'Ubi nos, mettere le ragioni di Pio IX accanto a quelle del governo italiano e arrivare all'otto per mille di oggi. Spoiler: la risposta non sta tutta nel proverbio. 📜",
+    "instagram": "Nel 1871 lo Stato italiano offre al papa una rendita: 3.225.000 lire l'anno. Risposta di Pio IX: no. 🤔\n\nPerché? Quella legge l'aveva fatta un Parlamento da solo, e un altro Parlamento poteva cambiarla. E chi ti mantiene, ti può comandare.\n\nCosì il papa vive delle offerte dei fedeli: l'Obolo di San Pietro. Curiosità: obolo viene dal greco ed è parente dello spiedo, perché prima delle monete coniate si pagava con spiedi di metallo 💰\n\nIntanto i parroci più poveri ricevono dallo Stato un'integrazione, la congrua: non un dono, ma la contropartita dei beni ecclesiastici confiscati. Poi, nel 1929, i Patti Lateranensi: 44 ettari, il più piccolo Stato indipendente del mondo.\n\nUna lezione per la quinta che parte dalle fonti e arriva all'otto per mille di oggi. Chi paga, comanda? La risposta è meno scontata del proverbio.\n\nLa trovi con il link in bio 📚",
     "hashtag": [
       "religionecattolica",
       "irc",
@@ -2066,8 +2070,8 @@
       "questioneromana",
       "classequinta"
     ],
-    "whatsapp": "Colleghi, vi è mai capitato che in quinta qualcuno chieda se con l'otto per mille la Chiesa dipende dallo Stato? Ho preparato una lezione proprio su questo: dal no di Pio IX alla rendita del 1871, passando per l'Obolo di San Pietro, la congrua dei parroci e i Patti Lateranensi. Si lavora sulle fonti. Se vi serve, il link è qui sotto 🙂",
-    "telegram": "Chi paga, comanda? Una domanda lunga 150 anni, dalla questione romana all'otto per mille 📜\n\nNuova lezione per la quinta. Nel 1871 lo Stato offre una rendita al papa e un assegno ai parroci più poveri: il papa rifiuta, i parroci lo ricevono. Da lì si segue tutta la storia, tra Obolo di San Pietro e Patti Lateranensi, fino alla firma sull'otto per mille. Gli studenti leggono le fonti e mettono le ragioni di Pio IX accanto ai giudizi degli storici.",
+    "whatsapp": "Colleghi, a voi capita di dover spiegare se con l'otto per mille la Chiesa dipende dallo Stato? Ho preparato per la quinta una lezione proprio su questo: dal no di Pio IX alla rendita del 1871, passando per l'Obolo di San Pietro, la congrua dei parroci e i Patti Lateranensi. Si lavora sulle fonti. Se vi serve, il link è qui sotto 🙂",
+    "telegram": "Chi paga, comanda? Una domanda lunga 150 anni, dalla questione romana all'otto per mille 📜\n\nNel 1871 lo Stato offre una rendita al papa e paga già un assegno ai parroci più poveri: il papa rifiuta, i parroci lo ricevono. Da lì la lezione segue la storia, tra Obolo di San Pietro e Patti Lateranensi, fino alla firma sull'otto per mille. Propone di leggere l'Ubi nos e di mettere le ragioni di Pio IX accanto a quelle del governo italiano.",
     "carosello": [
       {
         "titolo": "Chi paga, comanda?",
@@ -2095,7 +2099,8 @@
       "input": 14299,
       "output": 9236
     },
-    "impronta": "ef8e322da1360cf9"
+    "impronta": "ef8e322da1360cf9",
+    "bloccato": true
   },
   "5|Una Chiesa dentro la storia|La libertà vale anche per chi crede diversamente": {
     "frase_cartolina": "Un cardinale, uno storico ebreo e il sì del Concilio alla libertà religiosa",
