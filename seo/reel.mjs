@@ -17,6 +17,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
+// l'avatar del prof in una posa: assets/avatar/<posa>.png o .jpg (null se manca)
+const avatarDi = (posa) => ['png', 'jpg'].map((e) => `assets/avatar/${posa}.${e}`).find((f) => existsSync(join(RADICE, f))) || null;
 const CARTELLA = join(RADICE, 'promozione', 'reel');
 const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.js';
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium';
@@ -49,8 +51,8 @@ const ORO = '#E3C27A';
 
 // I tempi delle scene, in secondi: gancio, una scena per scheda, invito finale
 const T_GANCIO = 3.8, T_SCENA = 4.6, T_FINE = 3.8, T_PASSAGGIO = 0.4;
-// Le espressioni del prof, scena dopo scena (assets/avatar/<posa>.png)
-const POSE = ['spiega', 'sorpreso', 'sorriso', 'buffo', 'spiega', 'pensieroso', 'sorriso', 'sorpreso'];
+// Le espressioni del prof, scena dopo scena (assets/avatar/<posa>.png o .jpg; quelle che mancano diventano «sorriso»)
+const POSE = ['spiega', 'idea', 'sorpreso', 'lente', 'presenta', 'meraviglia', 'pollice', 'appunti', 'occhiolino', 'lavagna'];
 
 /* Il video è una striscia a fumetti animata: in basso il prof (il suo avatar, che cambia
    espressione) e la mascotte della classe; sopra, il fumetto di chi parla e, se c'è,
@@ -60,7 +62,7 @@ function pagina(r) {
   const n = r.scene.length;
   const durata = T_GANCIO + n * T_SCENA + T_FINE;
   const mascotte = url(`assets/mascotte/svg/${r.mascotte || MASCOTTE[+r.anno] || MASCOTTE[1]}.svg`);
-  const pose = ['pensieroso', ...r.scene.map((_, i) => POSE[i % POSE.length]), 'ride'];
+  const pose = ['saluta', ...r.scene.map((_, i) => POSE[i % POSE.length]), 'ride'].map((p) => (avatarDi(p) ? p : 'sorriso'));
   const disegno = (s) => (s.disegno && existsSync(join(RADICE, s.disegno)) ? `<div class="disegno"><img src="${url(s.disegno)}"></div>` : '');
   const scene = r.scene.map((s, i) => `<section class="scena da-prof">
   ${disegno(s)}
@@ -121,7 +123,7 @@ ${scene}
 </section>
 <div class="palco">
   <div class="ombra" style="left:90px;width:320px"></div><div class="ombra" style="right:60px;width:220px"></div>
-  <div class="prof">${pose.map((p) => `<img src="${url(`assets/avatar/${p}.png`)}">`).join('')}</div>
+  <div class="prof">${pose.map((p) => `<img src="${url(avatarDi(p))}">`).join('')}</div>
   <img class="mascotte" src="${mascotte}">
 </div>
 <script>

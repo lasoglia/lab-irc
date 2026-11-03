@@ -19,6 +19,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
+// l'avatar del prof in una posa: assets/avatar/<posa>.png o .jpg (null se manca)
+const avatarDi = (posa) => ['png', 'jpg'].map((e) => `assets/avatar/${posa}.${e}`).find((f) => existsSync(join(RADICE, f))) || null;
 const CARTELLA = join(RADICE, 'promozione', 'cartoline');
 const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.js';
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium';
@@ -134,13 +136,13 @@ function vignetta(p, i, totale, v) {
   const anno = String(p.anno || '1');
   const colore = COLORI[anno] || '#22D3EE';
   const parlaProf = v.parla !== 'studente';
-  const posa = ['sorriso', 'buffo', 'pensieroso', 'sorpreso', 'spiega', 'ride'].includes(v.posa) ? v.posa : 'sorriso';
+  const posa = avatarDi(v.posa) ? v.posa : 'sorriso';
   return pagina(colore, `
 <div class="alto">${logo}<div class="rubrica">${esc(p.formato)} · ${i}/${totale}</div></div>
 ${v.didascalia ? `<div class="didascalia">${esc(v.didascalia)}</div>` : '<div class="spazio"></div>'}
 <div class="fumetto ${parlaProf ? 'da-prof' : 'da-studente'}"><h2>${esc(v.fumetto)}</h2></div>
 <div class="scena">
-  <img class="prof ${parlaProf ? 'parla' : ''}" src="${url(`assets/avatar/${posa}.png`)}">
+  <img class="prof ${parlaProf ? 'parla' : ''}" src="${url(avatarDi(posa))}">
   <img class="studente ${parlaProf ? '' : 'parla'}" src="${url(`assets/mascotte/svg/${MASCOTTE[+anno] || MASCOTTE[1]}.svg`)}">
 </div>
 <div class="piede"><div class="uda">${esc(p.titolo)}${i === totale ? ' · la lezione è su labirc.it' : ''}</div><div class="web">www.labirc.it</div></div>`,
@@ -295,8 +297,8 @@ for (const c of leggi('cartoline.json')) {
 for (const p of leggi('prof.json')) {
   const vignette = p.vignette || [];
   // senza le illustrazioni del prof (assets/avatar/) le strisce aspettano: meglio nessuna che sgranata
-  const manca = vignette.find((v) => !existsSync(join(RADICE, 'assets', 'avatar', `${v.posa}.png`)));
-  if (manca) { console.log(`! Manca assets/avatar/${manca.posa}.png: salto la striscia ${p.chiave}.`); continue; }
+  const manca = vignette.find((v) => !avatarDi(v.posa));
+  if (manca) { console.log(`! Manca l'avatar «${manca.posa}» in assets/avatar/: salto la striscia ${p.chiave}.`); continue; }
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
 for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')]) {
@@ -322,11 +324,11 @@ const prima_ = lavori.length;
 for (const c of leggi('cartoline.json').filter((x) => daRaccontare(x.chiave))) {
   const prima = (c.immagini && c.immagini[0]) || c.file;
   lavori.push({ file: storiaDi(prima), alto: 1920, html: () => storia(c.colore || ORO, prima,
-    c.anno ? `Nuova lezione · classe ${c.classe}` : 'Religione Cattolica', c.carosello && c.carosello.length ? 'Scorri il carosello sul profilo' : 'Il post completo è sul profilo') });
+    c.anno ? `Nuova lezione · classe ${c.classe}` : 'Religione Cattolica', 'Il post completo è sul profilo') });
 }
 for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
-  lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'La striscia completa è sul profilo') });
+  lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'Il post completo è sul profilo') });
 }
 for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, v: d.sfondo ? 2 : 1, html: () => storia(d.colore || ORO, d.file, d.formato === 'shabbat' ? 'Lo Shabbat del Lab' : d.formato === 'grande-domanda' ? 'La grande domanda' : 'La domenica del Lab', d.carosello && d.carosello.length ? 'La risposta è nel carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori.slice(prima_)) l.soloJpg = true;
