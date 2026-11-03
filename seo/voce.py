@@ -30,11 +30,15 @@ from pathlib import Path
 MODELLO = "tts_models/multilingual/multi-dataset/xtts_v2"
 # come si dicono sigle e indirizzi (i sottotitoli restano scritti normali)
 PRONUNCIA = [
-    (r"\blabirc\.it\b", "lab i erre ci punto it"),
+    (r"\blabirc\.it\b", "lab i erre ci"),          # il sito si dice senza «punto it»
     (r"\bLab IRC\b", "Lab i erre ci"),
     (r"\ba\.\s?C\.", "avanti Cristo"),
     (r"\bd\.\s?C\.", "dopo Cristo"),
     (r"…", ", "),
+    (r"[:;]", ","),                                  # il modello a volte «legge» i segni: meglio virgole
+    (r"\s*\.\s+", ", "),                            # punti dentro la frase: pause, non parole
+    (r"[.!]+\s*$", ""),                             # niente punto finale (a volte lo pronuncia)
+    (r"\s{2,}", " "),
 ]
 # un po' di calore e volume costante, come il campione pulito
 FILTRO = ("highpass=f=70,equalizer=f=180:t=q:w=1.0:g=2,highshelf=f=9000:g=-1.5,"
