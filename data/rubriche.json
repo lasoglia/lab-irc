@@ -317,105 +317,245 @@
     "2026-11-08": {
       "chiave": "dom-2026-11-08",
       "data": "2026-11-08",
-      "tempo": "Tempo ordinario",
-      "colore": "#34D399",
-      "lezione": "Segni e simboli",
-      "url": "https://www.labirc.it/lezioni/1/l-uomo-che-cerca-oltre-il-senso-religioso/segni-e-simboli/",
+      "formato": "grande-domanda",
+      "tempo": "",
+      "colore": "#FB7BB5",
+      "anno": "4",
+      "lezione": "Come si vadia al cielo, la Bibbia insegna astronomia · Che cosa accadde nel 1616 e nel 1633, e nel 1992 · Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+      "url": "https://www.labirc.it/lezioni/4/galileo-le-prove-e-l-autorita/come-si-vadia-al-cielo-la-bibbia-insegna-astronomia/",
+      "lezioni": [
+        {
+          "titolo": "Come si vadia al cielo, la Bibbia insegna astronomia",
+          "url": "https://www.labirc.it/lezioni/4/galileo-le-prove-e-l-autorita/come-si-vadia-al-cielo-la-bibbia-insegna-astronomia/"
+        },
+        {
+          "titolo": "Che cosa accadde nel 1616 e nel 1633, e nel 1992",
+          "url": "https://www.labirc.it/lezioni/4/galileo-le-prove-e-l-autorita/che-cosa-accadde-nel-1616-e-nel-1633-e-nel-1992/"
+        },
+        {
+          "titolo": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+          "url": "https://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/"
+        }
+      ],
       "testi": {
-        "indice_lezione": 4,
-        "titolo": "Un giorno diverso dagli altri?",
-        "frase": "C'è un giorno della tua settimana che ha un senso diverso dagli altri? Che cosa lo rende tale?",
-        "facebook": "Una freccia ti indica dove andare. Un anello, invece, che cosa dice? 💍 Da qui parte la lezione «Segni e simboli», per la classe prima: la differenza tra segno e simbolo, il sacro e il profano, fino ai tempi sacri, cioè Shabbat, domenica e anno liturgico. Siamo nelle ultime settimane del Tempo ordinario. Domenica 22 novembre la solennità di Cristo Re chiuderà l'anno liturgico, poi comincerà l'Avvento. In questo tempo la Chiesa celebra il mistero di Cristo nella sua pienezza, soprattutto la domenica, giorno della risurrezione. Per chi crede non è un giorno qualunque. E per te, quale giorno della settimana ha un significato che il calendario non dice?",
-        "instagram": "Sul calendario la domenica è un giorno come gli altri. Che cosa la rende diversa? 🌿\n\nSiamo alla fine del Tempo ordinario. In queste settimane la Chiesa non celebra un aspetto particolare del mistero di Cristo, ma il mistero stesso nella sua pienezza, soprattutto la domenica, giorno della risurrezione.\n\nLa lezione «Segni e simboli» parte da una freccia e da un anello per distinguere segno e simbolo. Poi incontra Cassirer e l'uomo come animale simbolico, il sacro e il profano, Giacobbe a Betel, lo Shabbat e l'anno liturgico. Così si impara a leggere un luogo o un giorno a partire dal contesto e dalle fonti.\n\nQuale giorno, per te, ha un significato che va oltre il calendario?",
+        "titolo": "Ma la Chiesa ha davvero condannato Galileo? E perché?",
+        "frase": "Sì, nel 1633. Ma la sentenza non dice ciò che pensano tutti: leggiamo i documenti, dal 1613 al 1992.",
+        "carosello": [
+          {
+            "titolo": "Quello che si pensa",
+            "testo": "Galileo fu condannato perché diceva che la Terra gira: lo sanno tutti. Ma la sentenza del 1633 dice una cosa più precisa. E la storia comincia vent'anni prima, a tavola."
+          },
+          {
+            "titolo": "Un versetto a cena",
+            "testo": "Pisa, dicembre 1613. A corte la granduchessa Cristina di Lorena oppone a Castelli, allievo di Galileo, un versetto: «Férmati, sole» (Gs 10,12). Se Dio lo ferma, il sole si muove."
+          },
+          {
+            "titolo": "Come si va al cielo",
+            "testo": "Galileo risponde: la Scrittura non sbaglia, ma chi la interpreta sì. E cita un cardinale: la Bibbia vuole insegnare «come si vadia al cielo, e non come vadia il cielo»."
+          },
+          {
+            "titolo": "Bellarmino: serve la prova",
+            "testo": "Il cardinale Bellarmino, 1615: con una «vera demonstratione», meglio dire che le Scritture non le capiamo. Ma la prova decisiva, la parallasse, arriverà solo nel 1838."
+          },
+          {
+            "titolo": "1616: la tesi bocciata",
+            "testo": "24 febbraio: i teologi del Sant'Uffizio dicono «eretica» la tesi del Sole fermo al centro. 5 marzo: il decreto la dice «falsa e contraria alla Scrittura». Nessun processo a Galileo."
+          },
+          {
+            "titolo": "1632: il Dialogo",
+            "testo": "Roma permette di stampare il Dialogo, se Copernico resta un'ipotesi. Ma chi parla per Galileo vince sempre, e l'argomento del papa lo dice chi ha sempre torto. Urbano VIII si sente deriso."
+          },
+          {
+            "titolo": "1633: la sentenza",
+            "testo": "22 giugno 1633: Galileo è dichiarato «vehementemente sospetto d'heresia», non eretico. La colpa: aver difeso il moto della Terra dopo che nel 1616 era stato detto contrario alla Scrittura."
+          },
+          {
+            "titolo": "1992: l'errore riconosciuto",
+            "testo": "Il 31 ottobre 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo»: credere che la lettera della Scrittura imponesse come è fatto il mondo. E tu, alla Bibbia, che domanda fai?"
+          }
+        ],
+        "gancio": "Galileo fu condannato. Ma per che cosa, davvero?",
+        "scene_video": [
+          {
+            "titolo": "Tutti sanno che...",
+            "testo": "Galileo condannato nel 1633. Ma la sentenza dice una cosa più precisa.",
+            "scheda": 1
+          },
+          {
+            "titolo": "Un versetto contro",
+            "testo": "1613: «Férmati, sole» (Gs 10). Se Dio lo ferma, il sole si muove?",
+            "scheda": 2
+          },
+          {
+            "titolo": "La risposta di Galileo",
+            "testo": "La Bibbia insegna «come si vadia al cielo, e non come vadia il cielo».",
+            "scheda": 3
+          },
+          {
+            "titolo": "1616",
+            "testo": "La tesi del Sole immobile è dichiarata contraria alla Scrittura.",
+            "scheda": 5
+          },
+          {
+            "titolo": "22 giugno 1633",
+            "testo": "«Vehementemente sospetto d'heresia»: difese Copernico dopo il 1616.",
+            "scheda": 7
+          },
+          {
+            "titolo": "1992",
+            "testo": "Giovanni Paolo II riconosce «l'errore dei teologi del tempo».",
+            "scheda": 8
+          }
+        ],
+        "facebook": "Roma, 22 giugno 1633. Un uomo di quasi settant'anni, malato, è in ginocchio davanti a sette cardinali e legge: «abiuro, maledico e detesto». È Galileo Galilei.\n\nQuindi sì, la Chiesa lo condannò. Ma per che cosa? La sentenza lo dichiara «vehementemente sospetto d'heresia», non eretico: aveva difeso il moto della Terra dopo che nel 1616 era stato dichiarato contrario alla Scrittura. In mezzo c'è il Dialogo del 1632, dove Copernico doveva restare un'ipotesi e invece vinceva sempre.\n\nNel 1992 Giovanni Paolo II ha riconosciuto «l'errore dei teologi del tempo».\n\nSfoglia il carosello: otto schede, dai documenti alla risposta. Poi apri le lezioni del Lab IRC per leggere i testi originali. 📜",
+        "instagram": "«Férmati, sole».\n\nPisa, 1613. A una cena di corte questo versetto di Giosuè diventa un'accusa: se Dio ferma il sole, il sole si muove. Quindi Galileo sbaglia.\n\nGalileo risponde che la Bibbia non sbaglia. Può sbagliare chi la legge.\n\nVent'anni dopo, nel 1633, la Chiesa lo condanna. Ma la sentenza dice qualcosa di più preciso di quanto si pensa.\n\nNelle schede trovi i documenti: un cardinale che chiede una prova, un libro che irrita il papa, una sentenza, e un riconoscimento arrivato nel 1992.\n\nLa Bibbia insegna come va il cielo, o come si va al cielo?\n\nSfoglia fino all'ultima scheda, poi apri le lezioni sul sito.",
         "hashtag": [
           "religionecattolica",
           "irc",
-          "annoliturgico",
-          "segniesimboli",
-          "domenica"
+          "galileo",
+          "fedeescienza"
         ],
-        "telegram": "Betel, lo Shabbat, la domenica: perché certi luoghi e certi giorni diventano sacri? 📌 Il Tempo ordinario volge al termine e il 22 novembre la solennità di Cristo Re chiuderà l'anno liturgico. Per la Chiesa la domenica resta il giorno della risurrezione. La lezione «Segni e simboli» (classe prima) distingue segno e simbolo e insegna a leggere un giorno a partire dal contesto e dalle fonti. Per la settimana: che cosa trasforma un giorno qualunque in un giorno che conta?",
-        "carosello": [
-          {
-            "titolo": "Il tempo che viviamo",
-            "testo": "La Chiesa celebra il mistero di Cristo nella sua pienezza, soprattutto la domenica, giorno della risurrezione. L'anno liturgico sta per chiudersi."
-          },
-          {
-            "titolo": "Lo sapevi?",
-            "testo": "Il colore del Tempo ordinario è il verde. Dura 33 o 34 settimane e si chiude con la solennità di Cristo Re."
-          },
-          {
-            "titolo": "Dal Lab",
-            "testo": "Freccia o anello: che differenza c'è tra segno e simbolo? Da Betel allo Shabbat e alla domenica, si impara a leggere luoghi e giorni sacri."
-          },
-          {
-            "titolo": "Per la settimana",
-            "testo": "Se a un giorno togli il suo significato, resta solo una data. Quale giorno, per te, conta davvero? E perché?"
-          }
-        ],
+        "telegram": "Galileo non fu condannato come eretico. La sentenza del 22 giugno 1633 lo dichiara «vehementemente sospetto d'heresia»: aveva difeso il moto della Terra dopo che nel 1616 era stato dichiarato contrario alla Scrittura. È la grande domanda di questa domenica: la Chiesa ha davvero condannato Galileo? E perché? Carosello e lezioni del Lab IRC ricostruiscono la storia nei documenti.",
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 25525,
-          "output": 10156
+          "input": 35153,
+          "output": 16155
         }
       },
       "illustrazioni": [
-        "2026-11-08-4136e5-1.svg",
-        "2026-11-08-4136e5-2.svg",
-        "2026-11-08-4136e5-3.svg",
-        "2026-11-08-4136e5-4.svg"
+        "2026-11-08-94ee6a-1.svg",
+        "2026-11-08-94ee6a-2.svg",
+        "2026-11-08-94ee6a-3.svg",
+        "2026-11-08-94ee6a-4.svg",
+        "2026-11-08-94ee6a-5.svg",
+        "2026-11-08-94ee6a-6.svg",
+        "2026-11-08-94ee6a-7.svg",
+        "2026-11-08-94ee6a-8.svg"
       ]
     },
     "2026-11-15": {
       "chiave": "dom-2026-11-15",
       "data": "2026-11-15",
-      "tempo": "Tempo ordinario",
-      "colore": "#34D399",
-      "lezione": "Chi cura chi non può ricambiare",
-      "url": "https://www.labirc.it/lezioni/3/i-luoghi-che-cambiano-la-vita-regola-di-san-benedetto/chi-cura-chi-non-puo-ricambiare/",
+      "formato": "grande-domanda",
+      "tempo": "",
+      "colore": "#FF7A59",
+      "anno": "1",
+      "lezione": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1 · La visione cosmologica di Lemaître · Creazione e primo istante",
+      "url": "https://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/",
+      "lezioni": [
+        {
+          "titolo": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+          "url": "https://www.labirc.it/lezioni/1/la-bibbia-si-impara-a-leggere/genesi-vuole-spiegare-un-meccanismo-arte-fede-e-scienza-su-gen-1/"
+        },
+        {
+          "titolo": "La visione cosmologica di Lemaître",
+          "url": "https://www.labirc.it/lezioni/5/le-due-vie-di-lemaitre/la-visione-cosmologica-di-lemaitre/"
+        },
+        {
+          "titolo": "Creazione e primo istante",
+          "url": "https://www.labirc.it/lezioni/5/le-due-vie-di-lemaitre/creazione-e-primo-istante/"
+        }
+      ],
       "testi": {
-        "indice_lezione": 11,
-        "titolo": "Curare chi non può ricambiare",
-        "frase": "Che cosa puoi dare, questa settimana, a chi non potrà mai restituirtelo?",
-        "facebook": "Perché prendersi cura di chi non potrà mai ricambiare? È la domanda al centro di una lezione di terza del Lab, e ci sembra adatta a questa domenica. È la penultima del Tempo ordinario: l'anno liturgico sta per chiudersi e la liturgia orienta lo sguardo al compimento, a Cristo che tornerà nella gloria. La lezione racconta la nascita dell'ospedale di Santo Spirito a Roma, da Guido di Montpellier a Innocenzo III. Gli studenti leggono le fonti e due pagine del Vangelo (Mt 25 e Lc 14) e chiariscono tre parole: ospedale, gratuità, carità. Una domanda per la settimana: che cosa significa, oggi, prendersi cura gratuitamente di qualcuno?",
-        "instagram": "Una regola medievale stabilisce come deve funzionare un ospedale di Roma. Ma ci dice come venivano curati davvero i malati? Non del tutto: una regola prescrive, non prova. 🌿 Parte anche da qui la lezione di terza che il Lab propone per questa domenica, la penultima dell'anno liturgico. Nel Tempo ordinario la Chiesa celebra il mistero di Cristo nella sua pienezza. In queste ultime settimane guarda al suo ritorno glorioso. La lezione racconta la nascita dell'ospedale di Santo Spirito, nella casa romana di Sassia. Si chiede chi ne sosteneva i costi e perché aiutare chi non può ricambiare. Sfoglia il carosello e portati dietro una domanda: quando è stata l'ultima volta che qualcuno si è preso cura di te senza chiedere nulla?",
+        "titolo": "Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?",
+        "frase": "L'universo con un inizio l'ha proposto un prete. E proprio lui spiegò che cosa una scoperta non può dimostrare.",
+        "carosello": [
+          {
+            "titolo": "Quello che si pensa",
+            "testo": "«Il Big Bang spiega come è nato l'universo: Dio non serve più.» È un'idea diffusa. Ma scienza e fede rispondono davvero alla stessa domanda?"
+          },
+          {
+            "titolo": "Lo propose un prete",
+            "testo": "Georges Lemaître, sacerdote e fisico belga. Nel 1927 descrive un universo in espansione. Nel 1931 uno stato iniziale densissimo, l'«atomo primitivo»: l'antenato del Big Bang."
+          },
+          {
+            "titolo": "Eppure non ne fece una prova",
+            "testo": "Lemaître amava ripetere: «Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica». Il suo atomo primitivo non era una prova di Dio."
+          },
+          {
+            "titolo": "Tre domande, non una",
+            "testo": "L'inizio naturale, che la fisica descrive. Il fatto che il mondo esista invece di non esistere. La creazione: il legame per cui Dio fa esistere il mondo."
+          },
+          {
+            "titolo": "Creare è far esistere, ora",
+            "testo": "Per la fede tutto riceve l'essere da Dio, dal nulla, in ogni istante. Tommaso d'Aquino: come l'aria, illuminata solo finché il sole la illumina."
+          },
+          {
+            "titolo": "Lo stesso errore, rovesciato",
+            "testo": "Nel 1951 Pio XII accostò i dati dell'astronomia al Creatore, e Lemaître ne fu contrariato. Dire che il Big Bang prova che Dio non serve è lo stesso salto, al contrario."
+          },
+          {
+            "titolo": "La risposta",
+            "testo": "Il Big Bang non dimostra la creazione e non la smentisce. Che il mondo abbia avuto inizio, la Chiesa lo professa per fede: non lo ricava dalla fisica."
+          },
+          {
+            "titolo": "La domanda resta a te",
+            "testo": "Il Catechismo: non basta sapere quando e come è sorto il cosmo, conta scoprire «quale sia il senso» di questa origine. E per te, perché esiste qualcosa invece del nulla?"
+          }
+        ],
+        "gancio": "Il Big Bang ha mandato in pensione Dio?",
+        "scene_video": [
+          {
+            "titolo": "Dio non serve più?",
+            "testo": "Il Big Bang spiega l'inizio dell'universo. Basta questo a rispondere a tutto?",
+            "scheda": 1
+          },
+          {
+            "titolo": "L'idea di un prete",
+            "testo": "1931: il prete e fisico Georges Lemaître propone l'antenato del Big Bang.",
+            "scheda": 2
+          },
+          {
+            "titolo": "Mai una prova di Dio",
+            "testo": "«Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica» (Lemaître)",
+            "scheda": 3
+          },
+          {
+            "titolo": "Creare è far esistere, ora",
+            "testo": "Tommaso d'Aquino: il creato è come l'aria, illuminata solo finché il sole la illumina.",
+            "scheda": 5
+          },
+          {
+            "titolo": "Né prova né smentita",
+            "testo": "Il Big Bang non dimostra la creazione e non la smentisce. Sono piani diversi.",
+            "scheda": 7
+          },
+          {
+            "titolo": "E tu che ne pensi?",
+            "testo": "Perché esiste qualcosa invece del nulla? Sfoglia il carosello.",
+            "scheda": 8
+          }
+        ],
+        "facebook": "«Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?» È una domanda che arriva dalle nostre classi, ed è la grande domanda di questa domenica. 🌌\n\nPrima sorpresa: l'idea di un universo con un inizio l'ha proposta nel 1931 un sacerdote e fisico belga, Georges Lemaître. Seconda sorpresa: proprio lui rifiutò di farne una prova di Dio.\n\nLa chiave è distinguere. La fisica descrive lo stato iniziale dell'universo. La fede parla di creazione: tutto riceve l'essere da Dio, in ogni istante. Usare il Big Bang per dimostrare Dio, o per dire che non serve, è lo stesso salto da un piano all'altro.\n\nNel carosello trovi il percorso completo, scheda dopo scheda. Le lezioni del Lab IRC lo allargano a Genesi, a Galileo e a Tommaso d'Aquino.",
+        "instagram": "Nel 1931 un prete scrive a «Nature»: l'universo potrebbe essere partito da uno stato densissimo.\n\nSi chiama Georges Lemaître. La sua idea, l'«atomo primitivo», è l'antenato del Big Bang.\n\nNel dattiloscritto c'era un'ultima frase su Dio. La cancellò. Diceva che la fisica fornisce «un velo che nasconde la creazione».\n\nNon una prova, quindi. Un velo.\n\nE allora: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?\n\nLa fisica racconta come si è sviluppato l'universo. La creazione dice che tutto esiste perché dipende da Dio, adesso.\n\nSfoglia fino all'ultima scheda e apri le lezioni per andare a fondo ✨",
         "hashtag": [
           "religionecattolica",
           "irc",
-          "tempoordinario",
-          "annoliturgico"
+          "bigbang",
+          "scienzaefede",
+          "lemaitre"
         ],
-        "telegram": "Chi pagava le cure di chi non aveva nulla? 🏥 Se lo chiedono gli studenti di terza nella lezione sull'ospedale di Santo Spirito a Roma: fonti, regola dell'ospedale e Vangelo. È la nostra proposta per questa penultima domenica del Tempo ordinario, quando la liturgia guarda al ritorno di Cristo nella gloria. La domanda per la settimana: chi, intorno a noi, rischia di non essere visto perché non può ricambiare?",
-        "carosello": [
-          {
-            "titolo": "Il tempo che viviamo",
-            "testo": "Penultima domenica dell'anno liturgico. Nel Tempo ordinario la Chiesa celebra il mistero di Cristo nella sua pienezza. Ora guarda al suo ritorno nella gloria."
-          },
-          {
-            "titolo": "Lo sapevi?",
-            "testo": "Il colore del Tempo ordinario è il verde. Domenica prossima, con Cristo Re, l'anno liturgico si chiude. Il 29 novembre comincia l'Avvento."
-          },
-          {
-            "titolo": "Dal Lab",
-            "testo": "Come nacque l'ospedale di Santo Spirito a Roma, chi ne sosteneva i costi e perché aiutare chi non può ricambiare."
-          },
-          {
-            "titolo": "Per la settimana",
-            "testo": "Si può fare del bene senza aspettarsi niente in cambio? E chi, intorno a te, ne avrebbe bisogno?"
-          }
-        ],
+        "telegram": "L'aria resta illuminata solo finché il sole la illumina. Con questa immagine Tommaso d'Aquino spiegava che cosa vuol dire «creare»: non solo far cominciare, ma far esistere in ogni istante. È la chiave della grande domanda di oggi: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore? Il carosello parte dal prete e fisico Georges Lemaître e mostra perché il Big Bang non dimostra la creazione e non la smentisce. Sfoglialo e apri le lezioni.",
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 25622,
-          "output": 8351
+          "input": 34609,
+          "output": 13394
         }
       },
       "illustrazioni": [
-        "2026-11-15-7d3b2c-1.svg",
-        "2026-11-15-7d3b2c-2.svg",
-        "2026-11-15-7d3b2c-3.svg",
-        "2026-11-15-7d3b2c-4.svg"
+        "2026-11-15-12a9ec-1.svg",
+        "2026-11-15-12a9ec-2.svg",
+        "2026-11-15-12a9ec-3.svg",
+        "2026-11-15-12a9ec-4.svg",
+        "2026-11-15-12a9ec-5.svg",
+        "2026-11-15-12a9ec-6.svg",
+        "2026-11-15-12a9ec-7.svg",
+        "2026-11-15-12a9ec-8.svg"
       ]
     }
-  }
+  },
+  "domande_usate": [
+    "Ma la Chiesa ha davvero condannato Galileo? E perché?",
+    "Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?"
+  ]
 }
