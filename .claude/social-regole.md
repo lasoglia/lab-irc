@@ -21,8 +21,9 @@ Il registro è sobrio, caldo e preciso, da insegnante.
 - Nessuna foto di persone. Solo le immagini del sito: cartoline, caroselli, le illustrazioni del prof
   (l'avatar del docente) e le mascotte delle classi.
 - Nessuna recensione, testimonianza o cifra inventata.
-- Tono leggero e simpatico, mai serioso o da predica: le battute bonarie vanno bene, purché non prendano
-  in giro persone, fedi o chi non crede e i fatti restino esatti.
+- Tono leggero e simpatico ma misurato, mai serioso o da predica: al massimo una battuta garbata per post,
+  che strappi un sorriso e non una risata forzata. Niente esagerazioni, iperboli o giochi di parole tirati.
+  Le battute non prendono in giro persone, fedi o chi non crede, e i fatti restano esatti.
 - Nessun tono pubblicitario, superlativo o urgenza. Niente punti esclamativi a raffica.
 - Nessun link nel testo: lo aggiunge lo script.
 - Lo Shabbat del Lab (sabato): l'ebraismo raccontato come lo vivono e lo spiegano gli ebrei, solo dalle
