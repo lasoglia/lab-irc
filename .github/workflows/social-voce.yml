@@ -41,6 +41,8 @@ jobs:
       - name: Genera le frasi
         env:
           VOCE_CAMPIONE: ${{ secrets.VOCE_CAMPIONE }}
+          VOCE_CAMPIONE_2: ${{ secrets.VOCE_CAMPIONE_2 }}
+          VOCE_CAMPIONE_3: ${{ secrets.VOCE_CAMPIONE_3 }}
           FRASI: ${{ inputs.frasi }}
         run: |
           python -c "import json,os; print(json.dumps([f.strip() for f in os.environ['FRASI'].split('|') if f.strip()], ensure_ascii=False))" > frasi.json

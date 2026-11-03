@@ -28,20 +28,40 @@ import tempfile
 from pathlib import Path
 
 MODELLO = "tts_models/multilingual/multi-dataset/xtts_v2"
+# come si dicono sigle e indirizzi (i sottotitoli restano scritti normali)
+PRONUNCIA = [
+    (r"\blabirc\.it\b", "lab i erre ci punto it"),
+    (r"\bLab IRC\b", "Lab i erre ci"),
+    (r"\bIRC\b", "i erre ci"),
+    (r"\ba\.\s?C\.", "avanti Cristo"),
+    (r"\bd\.\s?C\.", "dopo Cristo"),
+    (r"…", ", "),
+]
 # un po' di calore e volume costante, come il campione pulito
 FILTRO = ("highpass=f=70,equalizer=f=180:t=q:w=1.0:g=2,highshelf=f=9000:g=-1.5,"
           "acompressor=threshold=-22dB:ratio=2.5:attack=10:release=160:makeup=3,loudnorm=I=-17:TP=-1.5")
 
 
-def campione(cartella: Path) -> Path | None:
-    dati = os.environ.get("VOCE_CAMPIONE", "").strip()
-    if not dati:
-        return None
-    ogg = cartella / "campione.ogg"
-    ogg.write_bytes(base64.b64decode(dati))
-    wav = cartella / "campione.wav"
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(ogg), "-ac", "1", "-ar", "24000", str(wav)], check=True)
-    return wav
+def pronuncia(frase: str) -> str:
+    import re
+    for schema, detto in PRONUNCIA:
+        frase = re.sub(schema, detto, frase)
+    return frase
+
+
+def campioni(cartella: Path) -> list[str]:
+    """I campioni della voce (VOCE_CAMPIONE, VOCE_CAMPIONE_2, _3): più sono, più la voce somiglia."""
+    file = []
+    for n, nome in enumerate(("VOCE_CAMPIONE", "VOCE_CAMPIONE_2", "VOCE_CAMPIONE_3")):
+        dati = os.environ.get(nome, "").strip()
+        if not dati:
+            continue
+        ogg = cartella / f"campione{n}.ogg"
+        ogg.write_bytes(base64.b64decode(dati))
+        wav = cartella / f"campione{n}.wav"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(ogg), "-ac", "1", "-ar", "24000", str(wav)], check=True)
+        file.append(str(wav))
+    return file
 
 
 def main() -> int:
@@ -52,8 +72,8 @@ def main() -> int:
     uscita = Path(sys.argv[2])
     uscita.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
-        riferimento = campione(Path(tmp))
-        if riferimento is None:
+        riferimento = campioni(Path(tmp))
+        if not riferimento:
             print("Voce: segreto VOCE_CAMPIONE non impostato, i video restano senza voce.")
             return 0
         os.environ.setdefault("COQUI_TOS_AGREED", "1")
@@ -63,8 +83,10 @@ def main() -> int:
             if not str(frase).strip():
                 continue
             grezzo = Path(tmp) / f"g{i}.wav"
-            tts.tts_to_file(text=frase, speaker_wav=str(riferimento), language="it", file_path=str(grezzo),
-                            temperature=0.7, speed=1.0, split_sentences=False)
+            # più libertà all'intonazione (meno piatta) e un ritmo un po' più vivo
+            tts.tts_to_file(text=pronuncia(frase), speaker_wav=riferimento, language="it", file_path=str(grezzo),
+                            temperature=0.85, top_p=0.9, top_k=60, repetition_penalty=5.0, speed=1.08,
+                            split_sentences=False)
             finale = uscita / f"voce-{i:02d}.wav"
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", FILTRO, "-ac", "1", "-ar", "24000",
                             str(finale)], check=True)
