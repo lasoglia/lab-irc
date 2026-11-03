@@ -6,9 +6,9 @@ Scrive data/social-metriche.json: reazioni, commenti e condivisioni per post,
 follower, iscritti. Il repository è pubblico, quindi qui NON finiscono mai testi
 dei commenti, nomi o profili di chi commenta: solo conteggi.
 
-Bastano i permessi già presenti nella chiave META_TOKEN. Copertura, visualizzazioni
-e salvataggi di Instagram richiedono anche instagram_manage_insights: se manca,
-lo script lo segnala tra gli avvisi e prosegue con il resto.
+Per ogni post Instagram anche tipo (reel o carosello), ora di uscita, copertura,
+visualizzazioni, salvataggi, condivisioni e, per i reel, il tempo medio di visione:
+sono i dati con cui il quaderno del Lab (data/social-quaderno.json) impara che cosa funziona.
 
 USO
 ---
@@ -61,27 +61,40 @@ def metriche_facebook(pagina_id: str, chiave_pagina: str, indice: dict) -> tuple
     return post, pagina.get("followers_count")
 
 
+# le statistiche chieste a Instagram per tipo di post (una metrica non adatta al tipo fa fallire la richiesta)
+METRICHE_IG = {"REELS": "reach,views,saved,shares,total_interactions,ig_reels_avg_watch_time,ig_reels_video_view_total_time",
+               "FEED": "reach,views,saved,shares,total_interactions"}
+
+
+def ora_di_roma(istante: str) -> str:
+    try:
+        from zoneinfo import ZoneInfo
+        return dt.datetime.fromisoformat(istante.replace("+0000", "+00:00")).astimezone(ZoneInfo("Europe/Rome")).strftime("%H:%M")
+    except (ValueError, KeyError):
+        return ""
+
+
 def metriche_instagram(ig_id: str, chiave: str, indice: dict, avvisi: list[str]) -> tuple[list, int | None]:
     risposta = m.chiama("GET", f"{ig_id}/media", access_token=chiave, limit=50,
-                        fields="caption,timestamp,permalink,like_count,comments_count")
+                        fields="caption,timestamp,permalink,like_count,comments_count,media_type,media_product_type")
     post = []
-    approfondite = True
+    errori = 0
     for voce in risposta.get("data", []):
         k = indice.get(inizio(voce.get("caption", "")))
         if not k:
             continue
-        riga = {"chiave": k, "data": voce.get("timestamp", "")[:10], "mi_piace": voce.get("like_count"),
-                "commenti": voce.get("comments_count"), "link": voce.get("permalink")}
-        if approfondite:
-            try:
-                dati = m.chiama("GET", f"{voce['id']}/insights", access_token=chiave,
-                                metric="reach,views,saved,shares")
-                for metrica in dati.get("data", []):
-                    riga[metrica["name"]] = metrica.get("values", [{}])[0].get("value")
-            except m.ErroreMeta as err:
-                approfondite = False
-                avvisi.append(f"Instagram: copertura e visualizzazioni non disponibili ({err}). "
-                              "Serve il permesso instagram_manage_insights.")
+        tipo = voce.get("media_product_type") or "FEED"
+        riga = {"chiave": k, "data": voce.get("timestamp", "")[:10], "ora": ora_di_roma(voce.get("timestamp", "")),
+                "tipo": "reel" if tipo == "REELS" else ("carosello" if voce.get("media_type") == "CAROUSEL_ALBUM" else "foto"),
+                "mi_piace": voce.get("like_count"), "commenti": voce.get("comments_count"), "link": voce.get("permalink")}
+        try:
+            dati = m.chiama("GET", f"{voce['id']}/insights", access_token=chiave, metric=METRICHE_IG.get(tipo, METRICHE_IG["FEED"]))
+            for metrica in dati.get("data", []):
+                riga[metrica["name"]] = metrica.get("values", [{}])[0].get("value")
+        except m.ErroreMeta as err:
+            errori += 1
+            if errori == 1:
+                avvisi.append(f"Instagram: statistiche di un post non disponibili ({err}).")
         post.append(riga)
     account = m.chiama("GET", ig_id, access_token=chiave, fields="followers_count")
     return post, account.get("followers_count")
@@ -106,7 +119,12 @@ def main() -> int:
     if not token:
         print("! Segreto META_TOKEN non impostato: metriche non aggiornate.")
         return 0
-    elenco = json.loads((g.RADICE / "promozione" / "cartoline.json").read_text(encoding="utf-8"))
+    # tutti i post del Lab, non solo le lezioni: reel, strisce, Shabbat, grande domanda
+    elenco = []
+    for nome in ("cartoline.json", "reel.json", "reel-domenica.json", "prof.json", "sabato.json", "domenica.json"):
+        f = g.RADICE / "promozione" / nome
+        if f.exists():
+            elenco += json.loads(f.read_text(encoding="utf-8"))
     precedenti = json.loads(FILE_METRICHE.read_text(encoding="utf-8")) if FILE_METRICHE.exists() else {}
     avvisi: list[str] = []
     fb, ig, seguaci_fb, seguaci_ig = [], [], None, None

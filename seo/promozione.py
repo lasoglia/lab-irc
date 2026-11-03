@@ -171,7 +171,13 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
 
 
 def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict) -> dict:
-    """L'autore scrive la bozza, il caporedattore la rilegge e la migliora."""
+    """L'autore scrive la bozza, il caporedattore la rilegge e la migliora.
+    In coda alle istruzioni, ciò che il Lab ha imparato dai numeri (seo/social_quaderno.py)."""
+    try:
+        import social_quaderno
+        istruzioni = istruzioni + social_quaderno.istruzioni_apprese()
+    except (ImportError, ValueError, OSError):
+        pass
     bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high")
     finale, r2 = chiama_claude(
         client, REDATTORE,
