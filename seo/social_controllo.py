@@ -51,7 +51,9 @@ def valuta(giorno: str, telegram: dict, meta: dict, stato_coda: dict | None) -> 
             attivi[canale] = any(v.get(canale) == giorno for v in meta.values())
     mancanti = sorted(c for c, fatto in attivi.items() if not fatto)
 
-    if stato_coda is not None and stato_coda.get("solo_coda", True) and not any(attivi.values()):
+    # il reel del gioco non passa dalla coda degli agenti (testi fissi, seo/gioco_reel.py)
+    del_gioco = cal.tipo_del_giorno(dt.date.fromisoformat(giorno)) == "gioco"
+    if stato_coda is not None and stato_coda.get("solo_coda", True) and not any(attivi.values()) and not del_gioco:
         escluse = coda.chiavi_escluse(stato_coda)
         previsti = [v for v in stato_coda.get("coda", [])
                     if v.get("quando") == giorno and v.get("chiave") not in escluse]

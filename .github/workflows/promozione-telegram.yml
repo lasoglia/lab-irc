@@ -2,7 +2,8 @@ name: Social · post automatico
 # Esce il post del giorno (seo/pubblica.py), secondo il calendario di seo/social_calendario.py:
 #   scuola    lunedì, mercoledì e venerdì il reel di una lezione (alle 19), martedì il
 #             carosello di una lezione (13:30), sabato «Lo Shabbat del Lab» (11),
-#             domenica «La grande domanda» (carosello alle 18, video alle 19:30); giovedì niente
+#             domenica «La grande domanda» (carosello alle 18, video alle 19:30); giovedì niente,
+#             tranne nei 14 giorni dopo l'uscita di un gioco di verifica: il reel di una partita
 #   vacanze   lunedì e giovedì una striscia simpatica del prof
 # Gli orari li dà l'orologio su Cloudflare (seo/orologio-cloudflare.js), puntuale al minuto.
 # L'esecuzione programmata qui sotto è la rete di sicurezza della sera: se l'orologio non è
@@ -23,7 +24,7 @@ on:
       coda:
         description: 'Che cosa pubblicare (oggi = il calendario)'
         type: choice
-        options: [oggi, reel, lezioni, prof, sabato, domenica, video, nulla]
+        options: [oggi, reel, gioco, lezioni, prof, sabato, domenica, video, nulla]
         default: oggi
       canali:
         description: 'Dove pubblicare'
@@ -134,7 +135,7 @@ jobs:
         run: |
           argomenti=""
           canali=""
-          case "$CODA" in reel|lezioni|prof|sabato|domenica|video) argomenti="--coda $CODA";; esac
+          case "$CODA" in reel|gioco|lezioni|prof|sabato|domenica|video) argomenti="--coda $CODA";; esac
           case "$CANALI" in
             telegram) canali="--canali telegram";;
             facebook-instagram) canali="--canali facebook,instagram";;

@@ -1,0 +1,127 @@
+name: Social · reel del gioco
+# Nei 14 giorni dopo l'uscita di un gioco di verifica (seo/social_calendario.py), il giovedì esce
+# il reel di una partita. Il mercoledì sera questa Action lo prepara:
+#   1. segna i giochi nuovi della pagina Verifiche (data/social-giochi.json);
+#   2. se domani è il giorno del gioco: registra una partita (seo/gioco_registra.mjs, password del
+#      giorno dal segreto LUCCHETTO_NUMERO, mai nel repo), scrive copione e testi (seo/gioco_reel.py),
+#      monta il reel con la voce (seo/regia.py + seo/reel2.mjs) e lo mette su Cloudflare R2;
+#   3. aggiunge il post a promozione/gioco.json con la data di domani.
+# Lo pubblica «Social · post automatico» il giovedì (orologio o rete di sicurezza della sera).
+
+on:
+  schedule:
+    - cron: '41 18 * * 3'   # mercoledì 18:41 UTC (19:41 d'inverno)
+  workflow_dispatch:
+    inputs:
+      giorno:
+        description: 'Per quale giorno preparare (AAAA-MM-GG; vuoto = domani)'
+        default: ''
+      gioco:
+        description: 'Gioco da usare (file in uploads/; vuoto = quello del calendario)'
+        default: ''
+
+concurrency:
+  group: telegram-kit-social
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
+jobs:
+  gioco:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Giochi nuovi e giorno del gioco
+        id: piano
+        env:
+          GIORNO: ${{ inputs.giorno }}
+          GIOCO: ${{ inputs.gioco }}
+        run: |
+          python seo/social_calendario.py --giochi
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import datetime as dt, os, sys
+          from zoneinfo import ZoneInfo
+          sys.path.insert(0, "seo")
+          import social_calendario as cal
+          giorno = os.environ.get("GIORNO") or (dt.datetime.now(ZoneInfo("Europe/Rome")).date() + dt.timedelta(days=1)).isoformat()
+          d = dt.date.fromisoformat(giorno)
+          g = os.environ.get("GIOCO") or ((cal.gioco_del_giorno(d) or {}).get("file") if cal.tipo_del_giorno(d) == "gioco" else "")
+          print(f"giorno={giorno}")
+          print(f"gioco={g or ''}")
+          print(f"variante={d.isocalendar()[1] % 2}")
+          PY
+          cat "$GITHUB_OUTPUT"
+
+      - name: Strumenti
+        if: steps.piano.outputs.gioco != ''
+        run: |
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1 || true
+          pip install --quiet numpy
+          npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+
+      - name: Partita, copione, voce e montaggio
+        if: steps.piano.outputs.gioco != ''
+        env:
+          LUCCHETTO_NUMERO: ${{ secrets.LUCCHETTO_NUMERO }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GIOCO: ${{ steps.piano.outputs.gioco }}
+          GIORNO: ${{ steps.piano.outputs.giorno }}
+          VARIANTE: ${{ steps.piano.outputs.variante }}
+        run: |
+          export PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)"
+          mkdir -p lavoro promozione/reel
+          node seo/gioco_registra.mjs "$GIOCO" lavoro/partita.mp4 lavoro/momenti.json
+          test -s lavoro/partita.mp4
+          python seo/gioco_reel.py "$GIOCO" lavoro/momenti.json "$PWD/lavoro/partita.mp4" lavoro/copione.json lavoro/post.json "$VARIANTE"
+          python seo/regia.py lavoro/copione.json lavoro/regia.json lavoro/regia
+          nome="gioco-$(basename "$GIOCO" .html)-$GIORNO.mp4"
+          node seo/reel2.mjs lavoro/regia.json "promozione/reel/$nome"
+          python - "$nome" <<'PY'
+          import datetime as dt, json, os, sys
+          from pathlib import Path
+          nome, giorno, gioco = sys.argv[1], os.environ["GIORNO"], os.environ["GIOCO"]
+          p = json.loads(Path("lavoro/post.json").read_text(encoding="utf-8"))
+          f = Path("promozione/gioco.json")
+          elenco = json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
+          limite = (dt.date.fromisoformat(giorno) - dt.timedelta(days=30)).isoformat()   # si tiene un mese
+          elenco = [x for x in elenco if x.get("data") != giorno and x.get("data", "") >= limite]
+          elenco.append({"chiave": f"gioco|{gioco}|{giorno}", "origine": gioco, "data": giorno, "video": nome, **p})
+          f.write_text(json.dumps(elenco, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+          print(f"Reel del gioco pronto per il {giorno}: {nome}")
+          PY
+
+      - name: Su Cloudflare R2 e nel sito
+        if: always()
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          if ls promozione/reel/gioco-*.mp4 >/dev/null 2>&1; then
+            python seo/media_r2.py
+            git add -f promozione/reel/*.mp4 2>/dev/null || true
+          fi
+          for f in data/social-giochi.json promozione/gioco.json data/media-r2.json promozione/reel; do if [ -e "$f" ]; then git add -A "$f"; fi; done
+          if git diff --cached --quiet; then echo "Niente di nuovo da salvare."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Social: il reel del gioco"
+          for prova in 1 2 3; do
+            git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
+            sleep 10
+          done
