@@ -16,6 +16,10 @@ import social_calendario as cal  # noqa: E402
 import social_controllo as ctrl  # noqa: E402
 import social_stato as stato  # noqa: E402
 import social_quaderno as quaderno  # noqa: E402
+import gioco_reel  # noqa: E402
+
+# i giochi veri del sito non devono cambiare il calendario dei test (c'è un test apposta)
+cal.FILE_GIOCHI = Path("/non/esiste/social-giochi.json")
 
 ELENCO = [{"chiave": "a"}, {"chiave": "b"}, {"chiave": "c"}]
 
@@ -110,6 +114,50 @@ class CalendarioSocial(unittest.TestCase):
             cal.FILE_VACANZE.write_text(json.dumps({"vacanze": [{"dal": "2026-11-09", "al": "2026-11-10", "nome": "ponte"}]}))
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 9)), "prof")
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "reel")   # lunedì: il reel di una lezione
+
+
+class Giochi(unittest.TestCase):
+    """Nei 14 giorni dopo l'uscita di un gioco di verifica, il giovedì di scuola esce il suo reel."""
+
+    def setUp(self):
+        self._dir = tempfile.TemporaryDirectory()
+        self._file, self._ver, self._vac = cal.FILE_GIOCHI, cal.FILE_VERIFICHE, cal.FILE_VACANZE
+        cal.FILE_GIOCHI = Path(self._dir.name) / "social-giochi.json"
+        cal.FILE_VERIFICHE = Path(self._dir.name) / "verifiche.json"
+        cal.FILE_VACANZE = Path("/non/esiste/vacanze.json")
+        cal.FILE_VERIFICHE.write_text(json.dumps({"verifiche": [
+            {"titolo": "Gioco A", "anno": "2", "file": "/uploads/ii-1-g-a-gioco.html"},
+            {"titolo": "Altro", "anno": "1", "file": "/uploads/altro.pdf"}]}))
+
+    def tearDown(self):
+        cal.FILE_GIOCHI, cal.FILE_VERIFICHE, cal.FILE_VACANZE = self._file, self._ver, self._vac
+        self._dir.cleanup()
+
+    def test_periodo_del_gioco(self):
+        nuovi = cal.registra_giochi_nuovi(dt.date(2026, 11, 10))
+        self.assertEqual([v["file"] for v in nuovi], ["uploads/ii-1-g-a-gioco.html"])
+        self.assertEqual(cal.registra_giochi_nuovi(dt.date(2026, 11, 11)), [])        # già visto: non riparte
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 12)), "gioco")          # giovedì nel periodo
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 19)), "gioco")
+        self.assertIsNone(cal.tipo_del_giorno(dt.date(2026, 11, 26)))                 # periodo finito
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 13)), "reel")           # gli altri giorni non cambiano
+
+    def test_periodo_a_mano(self):
+        cal.FILE_GIOCHI.write_text(json.dumps({"giochi": [{"file": "uploads/x-gioco.html", "titolo": "X",
+                                                           "uscito": "2026-10-01", "dal": "2026-12-01", "al": "2026-12-04"}]}))
+        self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 3)), "gioco")
+        self.assertIsNone(cal.tipo_del_giorno(dt.date(2026, 11, 26)))   # «uscito» non conta se c'è «dal»
+
+    def test_reel_del_gioco(self):
+        m = {"presentazione": "Quattro luoghi.", "momenti": [{"cosa": c, "s": s} for c, s in
+             [("parla", 7.5), ("domanda", 10.1), ("sbagliata", 14.2), ("ombra", 17.8), ("giusta", 32.6)]]}
+        c = gioco_reel.copione("uploads/ii-1-g-a-gioco.html", m, "v.mp4")
+        self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["clip"] * 5 + ["chiusa"])
+        self.assertEqual(c["inquadrature"][2]["da"], 13.6)
+        p = gioco_reel.post("uploads/ii-1-g-a-gioco.html", m, 1)
+        for canale in ("facebook", "instagram", "telegram"):
+            self.assertIn("password", p[canale])                                       # mai l'accesso libero
+        self.assertIn("#religionecattolica", p["instagram"])
 
 
 class Controllo(unittest.TestCase):

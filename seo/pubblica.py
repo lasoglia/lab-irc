@@ -7,6 +7,8 @@ Il calendario (ora italiana) sta in seo/social_calendario.py (tipo_del_giorno):
   scuola, domenica         «La grande domanda» (carosello)           promozione/domenica.json
   scuola, sabato           «Lo Shabbat del Lab» (carosello)          promozione/sabato.json
   vacanze, lun-mer-ven     «Il prof del Lab», la striscia a fumetti  promozione/prof.json
+  scuola, giovedì (nei 14 giorni dopo l'uscita di un gioco di verifica)
+                           il reel di una partita al gioco        promozione/gioco.json
 
 Dopo ogni post su Facebook e Instagram esce anche la sua storia (l'immagine
 verticale <nome>-storia.jpg). Poi, con --coda video, esce il video a fumetti del
@@ -56,9 +58,10 @@ import telegram as tg  # noqa: E402
 import media_r2 as r2  # noqa: E402
 from rubriche import oggi_in_italia  # noqa: E402
 
-CODE = {"lezione": "lezioni", "reel": "reel", "prof": "prof", "shabbat": "sabato", "domenica": "domenica", None: None}
+CODE = {"lezione": "lezioni", "reel": "reel", "gioco": "gioco", "prof": "prof", "shabbat": "sabato", "domenica": "domenica",
+        None: None}
 FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "sabato": "sabato.json", "domenica": "domenica.json",
-             "reel": "reel.json", "video": "reel-domenica.json"}
+             "reel": "reel.json", "video": "reel-domenica.json", "gioco": "gioco.json"}
 CANALI = ("telegram", "facebook", "instagram")
 
 
@@ -242,7 +245,15 @@ def main():
     if coda == "lezioni":
         # le strisce del prof già approvate per un giorno di scuola escono ancora (prima del nuovo calendario)
         elenco = elenco + leggi_json(g.RADICE / "promozione" / "prof.json", [])
-    if coda in ("reel", "video"):
+    if coda == "gioco":
+        # il reel di una partita a un gioco di verifica (seo/gioco_reel.py), preparato per oggi;
+        # testi fissi controllati una volta per tutte, quindi non passa dalla coda degli agenti
+        try:
+            stato = coda_agenti.leggi()
+        except (ValueError, OSError):
+            stato = {"pausa": True}
+        elenco = [] if stato and stato.get("pausa") else [r for r in elenco if r.get("data") == oggi.isoformat()]
+    elif coda in ("reel", "video"):
         # Un video esce solo se la sua lezione (o la sua domenica) è approvata dagli agenti:
         # - «reel» (lunedì, mercoledì, venerdì): il reel della lezione in coda per oggi;
         # - «video» (dopo il carosello della domenica): il video della grande domanda uscita oggi.
