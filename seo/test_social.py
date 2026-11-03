@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import coda  # noqa: E402
 import social_calendario as cal  # noqa: E402
 import social_controllo as ctrl  # noqa: E402
+import social_stato as stato  # noqa: E402
 
 ELENCO = [{"chiave": "a"}, {"chiave": "b"}, {"chiave": "c"}]
 
@@ -131,6 +132,21 @@ class Controllo(unittest.TestCase):
         esito, mancanti = ctrl.valuta("2026-11-11", self.TG, self.META, {"coda": []})   # mercoledì
         self.assertEqual(esito, "mancante")
         self.assertIn("nessun post in coda", mancanti[0])
+
+
+class Schede(unittest.TestCase):
+    """Le schede che leggono gli agenti si scrivono senza errori, per ogni tipo di post."""
+
+    def test_scheda_lezione(self):
+        testo = stato.scheda({"chiave": "k", "titolo": "T", "file": "a.png", "url": "u"}, {}, None)
+        self.assertIn("Testo della lezione", testo)
+
+    def test_schede_rubriche(self):
+        quando = dt.date(2026, 11, 7)
+        for r in ({"chiave": "p", "titolo": "P", "file": "p.png", "tipo": "prof", "vignette": [{"parla": "prof"}]},
+                  {"chiave": "s", "titolo": "S", "file": "s.png", "formato": "shabbat", "fonti": [{"titolo": "x", "url": "y"}]},
+                  {"chiave": "d", "titolo": "D", "file": "d.png", "formato": "grande-domanda", "carosello": [{"titolo": "a", "testo": "b"}]}):
+            self.assertIn(r["titolo"], stato.scheda_rubrica(r, quando, None))
 
 
 if __name__ == "__main__":
