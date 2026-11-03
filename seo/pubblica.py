@@ -51,6 +51,7 @@ import social_calendario as cal  # noqa: E402
 import genera as g  # noqa: E402
 import meta  # noqa: E402
 import telegram as tg  # noqa: E402
+import video_r2 as vr2  # noqa: E402
 from rubriche import oggi_in_italia  # noqa: E402
 
 CODE = {"lezione": "lezioni", "prof": "prof", "shabbat": "sabato", "domenica": "domenica", None: None}
@@ -69,7 +70,8 @@ def immagini(post: dict) -> list[str]:
 
 
 def url_video(post: dict) -> str:
-    return f"{g.URL_SITO}/promozione/reel/{post['video']}"
+    """Su Cloudflare R2 se è stato caricato là (seo/video_r2.py), altrimenti sul sito."""
+    return vr2.url_video(post["video"]) or f"{g.URL_SITO}/promozione/reel/{post['video']}"
 
 
 def url_storia(post: dict) -> str:

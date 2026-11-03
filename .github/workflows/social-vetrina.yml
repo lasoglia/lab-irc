@@ -5,7 +5,7 @@ name: Social · vetrina dei profili
 # la copertina e la descrizione della Pagina Facebook (se la chiave di Meta lo permette).
 # Disegna anche le icone delle storie in evidenza di Instagram, che si caricano a mano.
 # I post già usciti sono segnati nei registri: rilanciarla non li ripubblica.
-# «controlla» non pubblica nulla: dice quali permessi ha la chiave di Meta.
+# «controlla» non pubblica nulla: dice quali permessi ha la chiave di Meta e prova Cloudflare R2.
 
 on:
   workflow_dispatch:
@@ -73,11 +73,14 @@ jobs:
           TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
           META_TOKEN: ${{ secrets.META_TOKEN }}
           META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AZIONE: ${{ inputs.azione }}
         run: |
           case "$AZIONE" in
             storia) python seo/vetrina.py --storia ;;
-            controlla) python seo/vetrina.py --controlla ;;
+            controlla) e=0; python seo/vetrina.py --controlla || e=1; python seo/video_r2.py --prova || e=1; exit $e ;;
             *) python seo/vetrina.py --pubblica ;;
           esac
 
