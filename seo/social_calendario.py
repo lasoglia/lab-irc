@@ -10,8 +10,8 @@ Corpus Domini si celebrano di domenica.
 
 Qui sta anche il calendario dei social (tipo_del_giorno), usato da chi pubblica,
 dagli agenti e dai controlli:
-  scuola     lunedì-venerdì una lezione (carosello, storia e video), sabato niente,
-             domenica «La grande domanda»
+  scuola     lunedì-venerdì una lezione (carosello, storia e video), sabato «Lo Shabbat
+             del Lab» (la cultura ebraica), domenica «La grande domanda»
   vacanze    lunedì, mercoledì e venerdì una striscia simpatica del prof, nient'altro
 Le vacanze sono quelle di data/vacanze.json (da correggere ogni anno con il calendario
 della regione); se il file manca valgono le date nazionali più comuni.
@@ -151,10 +151,10 @@ def in_vacanza(giorno: dt.date) -> str:
 
 
 def tipo_del_giorno(giorno: dt.date) -> str | None:
-    """Che cosa esce quel giorno: 'lezione', 'prof', 'domenica' oppure None."""
+    """Che cosa esce quel giorno: 'lezione', 'prof', 'shabbat', 'domenica' oppure None."""
     if in_vacanza(giorno):
         return "prof" if giorno.weekday() in (0, 2, 4) else None
-    return {5: None, 6: "domenica"}.get(giorno.weekday(), "lezione")
+    return {5: "shabbat", 6: "domenica"}.get(giorno.weekday(), "lezione")
 
 
 def giorni_di(tipo: str, inizio: dt.date, giorni: int) -> list[dt.date]:

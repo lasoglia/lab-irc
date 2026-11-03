@@ -248,6 +248,12 @@ SCHEMA_DOMENICA = {
     "additionalProperties": False,
 }
 
+SCHEMA_SHABBAT = json.loads(json.dumps(SCHEMA_DOMENICA))
+SCHEMA_SHABBAT["properties"]["fonti"] = {"type": "array", "items": {
+    "type": "object", "properties": {"titolo": {"type": "string"}, "url": {"type": "string"}},
+    "required": ["titolo", "url"], "additionalProperties": False}}
+SCHEMA_SHABBAT["required"] = SCHEMA_SHABBAT["required"] + ["fonti"]
+
 ISTRUZIONI_DOMENICA = """Scrivi «La grande domanda», il super post della domenica sui \
 social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, docente \
 nella scuola secondaria di secondo grado. È il pezzo forte della settimana: un carosello \
@@ -287,6 +293,123 @@ li aggiunge il sistema.
 - Italiano corretto e naturale.
 
 """ + pr.TONO
+
+
+# --------------------------------------------------------------------------
+# Il sabato: «Lo Shabbat del Lab», la cultura ebraica da fonti ebraiche
+# --------------------------------------------------------------------------
+FORMATO_SHABBAT = "shabbat"
+VERSIONE_SHABBAT = "1"
+SABATI_AVANTI = 2
+# Solo siti ebraici autorevoli: testi (Sefaria), divulgazione rabbinica, comunità ebraiche italiane
+FONTI_EBRAICHE = ["sefaria.org", "chabad.org", "myjewishlearning.com", "aish.com", "ucei.it", "moked.it",
+                  "romaebraica.it", "museoebraico.roma.it", "cdec.it", "jewishvirtuallibrary.org"]
+
+ISTRUZIONI_RICERCA_SHABBAT = """Sei il ricercatore di «Lo Shabbat del Lab», l'approfondimento \
+del sabato sulla cultura ebraica nei social del Lab IRC, un sito di materiali di Religione \
+Cattolica per la scuola secondaria di secondo grado. Il sabato è lo Shabbat: ogni settimana \
+si racconta un aspetto della vita, delle feste, dei testi, della storia o delle parole del \
+popolo ebraico, come lo vive e lo spiega l'ebraismo stesso.
+
+Ricevi la data, la parashà (la porzione settimanale della Torah) di quel sabato e le feste \
+ebraiche delle prossime settimane (le ha calcolate il sistema: sono sicure) e i temi già \
+trattati. Fai così:
+1. Scegli un tema nuovo, concreto e curioso per studenti e insegnanti (per esempio: che cos'è \
+lo Shabbat e perché il «settimo giorno»; le candele e la challah; la havdalà; la mezuzà; la \
+kippà; il rotolo della Torah e come si scrive; la sinagoga; il calendario ebraico; una festa; \
+la parashà della settimana; le parole ebraiche entrate nell'uso; la comunità ebraica di Roma, \
+la più antica d'Europa). Se una festa è vicina, preferiscila. Non ripetere i temi già trattati.
+2. Cerca con web_search e leggi con web_fetch le pagine dei siti consentiti, che sono fonti \
+ebraiche autorevoli. Leggi almeno tre pagine diverse, se possibile di due siti diversi.
+3. Rispondi solo in testo semplice, in italiano, in questo formato:
+TEMA: <il tema, in poche parole>
+FATTI:
+- <un fatto preciso> [<indirizzo della pagina da cui viene>]
+(da 12 a 25 fatti)
+Solo fatti che hai letto nelle pagine, ognuno con il suo indirizzo: niente dalla memoria. \
+Riporta le parole ebraiche con la traslitterazione della fonte e il loro significato."""
+
+ISTRUZIONI_SHABBAT = """Scrivi «Lo Shabbat del Lab», l'approfondimento del sabato sulla \
+cultura ebraica nei social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo \
+Sestili per la scuola secondaria di secondo grado. Lo leggono studenti, colleghi e famiglie: \
+deve far scoprire qualcosa di bello e vero dell'ebraismo, con curiosità e rispetto.
+
+Ricevi il tema e un dossier di fatti raccolti da fonti ebraiche autorevoli, ognuno con \
+l'indirizzo della pagina. Restituisci nel formato JSON:
+- titolo: il titolo della copertina (massimo 60 caratteri), una domanda o un'immagine che incuriosisce;
+- frase: il sottotitolo della copertina (massimo 120 caratteri);
+- carosello: esattamente 8 schede, ognuna con titolo (massimo 30 caratteri) e testo \
+(massimo 200 caratteri): un percorso che si sfoglia volentieri, una cosa sola per scheda, \
+con le parole ebraiche spiegate; l'ultima scheda chiude con «Shabbat shalom» e il suo significato;
+- gancio: la prima scritta del video, massimo 60 caratteri;
+- scene_video: esattamente 6 scene (titolo massimo 28 caratteri, testo massimo 90, scheda: il \
+numero da 1 a 8 della scheda di cui riusa il disegno);
+- facebook: 500-900 caratteri; instagram: 400-800, senza hashtag; telegram: 300-500;
+- hashtag: da 3 a 5, senza #, sempre irc e culturaebraica;
+- fonti: le pagine del dossier che hai usato, con titolo breve e indirizzo esatto.
+
+Regole vincolanti:
+- Usa SOLO i fatti del dossier: niente dalla memoria, niente date o citazioni aggiunte.
+- Racconta l'ebraismo come lo vivono e lo spiegano gli ebrei: niente letture cristiane, \
+niente confronti con il cristianesimo, niente idea che l'ebraismo sia «superato» o una \
+preparazione ad altro. Rispetto pieno, anche nelle battute.
+- Non scrivere il nome di Dio in ebraico (il tetragramma): scrivi «Dio» o «il Signore», o \
+HaShem se lo usa la fonte.
+- Al massimo due emoji per testo, nessuna nel carosello e nel video. Non scrivere link nei \
+testi: li aggiunge il sistema.
+- Italiano corretto e naturale.
+
+""" + pr.TONO
+
+
+def ricerca_shabbat(client, messaggio: str) -> tuple[str, int, int]:
+    """Claude cerca e legge solo fonti ebraiche autorevoli; restituisce il dossier dei fatti."""
+    strumenti = [{"type": "web_search_20260209", "name": "web_search", "max_uses": 6, "allowed_domains": FONTI_EBRAICHE},
+                 {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 6, "allowed_domains": FONTI_EBRAICHE}]
+    messaggi = [{"role": "user", "content": messaggio}]
+    testo, tok_in, tok_out = "", 0, 0
+    for _ in range(6):
+        with client.beta.messages.stream(
+            model=pr.MODELLO, max_tokens=32000, system=ISTRUZIONI_RICERCA_SHABBAT,
+            output_config={"effort": "medium"}, betas=["server-side-fallback-2026-07-01"], fallbacks="default",
+            tools=strumenti, messages=messaggi,
+        ) as flusso:
+            r = flusso.get_final_message()
+        tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+        testo += "".join(b.text for b in r.content if b.type == "text")
+        if r.stop_reason != "pause_turn":
+            break
+        # il server si è fermato a metà ricerca: gli si rimanda il pezzo fatto e riprende da lì
+        messaggi.append({"role": "assistant", "content": r.content})
+    if r.stop_reason != "end_turn":
+        raise RuntimeError(f"ricerca incompleta ({r.stop_reason})")
+    if "FATTI" not in testo or "http" not in testo:
+        raise RuntimeError("la ricerca non ha restituito fatti con le fonti")
+    return testo.strip(), tok_in, tok_out
+
+
+def feste_ebraiche(inizio: dt.date, giorni: int) -> list[str]:
+    """Le feste ebraiche dei prossimi giorni (calendario calcolato con pyluach)."""
+    try:
+        from pyluach import dates
+    except ImportError:
+        return []
+    feste, viste = [], set()
+    for i in range(giorni):
+        d = inizio + dt.timedelta(days=i)
+        f = dates.GregorianDate(d.year, d.month, d.day).to_heb().festival(israel=False, hebrew=False)
+        if f and f not in viste:
+            viste.add(f)
+            feste.append(f"{f}: dal {d.day} {MESI[d.month - 1]} {d.year}")
+    return feste
+
+
+def parasha(d: dt.date) -> str:
+    try:
+        from pyluach import dates, parshios
+        return parshios.getparsha_string(dates.GregorianDate(d.year, d.month, d.day), israel=False) or ""
+    except Exception:
+        return ""
 
 
 def nome_file(prefisso: str, chiave: str, contenuto: dict) -> str:
@@ -427,14 +550,60 @@ def main():
             usate_dom.append(t["titolo"])
         print(f"  ✓ domenica {k} · {t['titolo']} · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
 
+    # --- il sabato: «Lo Shabbat del Lab», i prossimi due se mancano ---
+    cache.setdefault("sabato", {})
+    temi_usati = cache.setdefault("temi_shabbat", [])
+    sabati = cal.giorni_di("shabbat", oggi - dt.timedelta(days=1), 7 * SABATI_AVANTI)[:SABATI_AVANTI]
+    for d in sabati:
+        k = d.isoformat()
+        if not client or (k in cache["sabato"] and cache["sabato"][k].get("versione") == VERSIONE_SHABBAT):
+            continue
+        try:
+            feste = feste_ebraiche(d, 45)
+            messaggio = (f"Sabato {d.day} {MESI[d.month - 1]} {d.year}. Parashà della settimana: {parasha(d) or 'non disponibile'}.\n"
+                         f"Feste ebraiche nelle prossime settimane: {'; '.join(feste) or 'nessuna'}.\n"
+                         f"Temi già trattati: {'; '.join(temi_usati[-40:]) or 'nessuno'}.")
+            dossier, ti, to = ricerca_shabbat(client, messaggio)
+            tok_in += ti; tok_out += to
+            tema = next((r.split(":", 1)[1].strip() for r in dossier.splitlines() if r.startswith("TEMA:")), "")
+            t = pr.scrivi_e_rivedi(client, ISTRUZIONI_SHABBAT,
+                                   f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", SCHEMA_SHABBAT)
+        except Exception as err:
+            print(f"  ✗ sabato {k}: {err}")
+            continue
+        tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
+        # solo fonti consentite e presenti davvero nel dossier
+        t["fonti"] = [f for f in t.get("fonti", []) if f.get("url", "") in dossier
+                      and any(dom in f["url"] for dom in FONTI_EBRAICHE)]
+        voce = {"chiave": f"sab-{k}", "data": k, "formato": FORMATO_SHABBAT, "versione": VERSIONE_SHABBAT,
+                "colore": "#4FB0FF", "anno": "", "tema": tema, "dossier": dossier, "lezione": "",
+                "lezioni": [], "url": g.URL_SITO + "/", "testi": t, "illustrazioni": []}
+        schede = t.get("carosello", [])[:8]
+        try:
+            messaggio = (f"«Lo Shabbat del Lab»: {t['titolo']}. Le schede del carosello sono {len(schede)}. "
+                         "Tema ebraico: niente scritte in caratteri ebraici, niente raffigurazioni di Dio né di "
+                         "persone reali; usa oggetti e simboli (candele, challah, rotolo, mezuzà, calendario…).\n\n"
+                         + "\n\n".join(f"Scheda {i}: {x['titolo']}\n{x['testo']}" for i, x in enumerate(schede, start=1)))
+            file, r = ill.disegna(client, messaggio, len(schede), CARTELLA_DOMENICA,
+                                  f"sab-{k}-{hashlib.sha256(json.dumps(schede).encode()).hexdigest()[:6]}")
+            voce["illustrazioni"] = file
+            tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+        except Exception as err:
+            print(f"  ! sabato {k}: disegni non fatti ({err})")
+        cache["sabato"][k] = voce
+        if tema and tema not in temi_usati:
+            temi_usati.append(tema)
+        print(f"  ✓ sabato {k} · {tema} · {len(t['fonti'])} fonti · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
+
     # --- gli elenchi per il disegnatore e per la pubblicazione ---
     limite = (oggi - dt.timedelta(days=GIORNI_ARCHIVIO)).isoformat()
     tieni = lambda v: (pubblicato(v["chiave"], registri) or "9999") >= limite   # noqa: E731
     cache["prof"] = [p for p in cache["prof"] if tieni(p) or pubblicato(p["chiave"], registri) == ""]
     cache["domenica"] = {k: v for k, v in sorted(cache["domenica"].items()) if k >= limite}
+    cache["sabato"] = {k: v for k, v in sorted(cache.get("sabato", {}).items()) if k >= limite}
     cache_file.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     # via i disegni delle domeniche uscite dall'archivio
-    usati = {f for v in cache["domenica"].values() for f in v.get("illustrazioni", []) if f}
+    usati = {f for v in [*cache["domenica"].values(), *cache["sabato"].values()] for f in v.get("illustrazioni", []) if f}
     for f in CARTELLA_DOMENICA.glob("*.svg"):
         if f.name not in usati:
             f.unlink()
@@ -448,44 +617,52 @@ def main():
                      "anno": p.get("anno", ""), "lezione": p["lezione"], "url": p["url"], "vignette": vignette,
                      "file": f"{base}-1.png", "immagini": [f"{base}-{i}.png" for i in range(1, len(vignette) + 1)],
                      **testi_canali(t, p["url"])})
-    domenica, reel_domenica = [], []
-    for k, v in cache["domenica"].items():
-        t, d = v["testi"], dt.date.fromisoformat(k)
-        schede = t.get("carosello", [])[:8]
-        disegni = ["promozione/illustrazioni/domenica/" + f if f else "" for f in v.get("illustrazioni", [])]
-        f = nome_file("domenica", k, {"t": t["titolo"], "f": t["frase"], "c": v["colore"], "s": schede, "d": disegni})
-        base = f.removesuffix(".png")
-        # copertina, le schede, il saluto finale (al massimo 10 immagini: il limite di Instagram)
-        immagini = [f] + ([f"{base}-{i}.png" for i in range(2, len(schede) + 3)] if schede else [])
-        domenica.append({"chiave": v["chiave"], "tipo": "domenica", "formato": v.get("formato", ""), "data": k,
-                         "data_breve": f"Domenica {d.day} {MESI[d.month - 1]}", "tempo": v.get("tempo", ""),
-                         "colore": v["colore"], "titolo": t["titolo"], "frase": t["frase"],
-                         "lezione": v["lezione"], "lezioni": v.get("lezioni", []), "url": v["url"],
-                         "carosello": schede, "illustrazioni": disegni, "file": f, "immagini": immagini,
-                         "gancio": t.get("gancio", ""), "scene_video": t.get("scene_video", []),
-                         **testi_canali(t, v["url"])})
-        # il video della domenica: stesse idee, scene brevi, i disegni del carosello
-        if v.get("formato") == FORMATO_DOMENICA and t.get("scene_video"):
-            scene = [{"titolo": x["titolo"], "testo": x["testo"],
-                      "disegno": disegni[x["scheda"] - 1] if 1 <= x.get("scheda", 0) <= len(disegni) else ""}
-                     for x in t["scene_video"][:6]]
-            impronta = hashlib.sha256(json.dumps([t["gancio"], scene], ensure_ascii=False).encode()).hexdigest()[:8]
-            reel_domenica.append({
-                "chiave": f"reel|{v['chiave']}", "origine": v["chiave"], "data": k, "titolo": t["titolo"],
-                "anno": v.get("anno", ""), "classe": "", "etichetta": "La grande domanda",
-                "sottotitolo": "La grande domanda della domenica", "colore": v["colore"],
-                "mascotte": pr.MASCOTTE.get(v.get("anno", ""), ""), "url": v["url"], "gancio": t["gancio"],
-                "scene": scene, "video": f"domenica-{k}-{impronta}.mp4",
-                **testi_canali(t, v["url"])})
+    domenica, sabato, reel_domenica = [], [], []
+    for gruppo, uscita, prefisso, nome_giorno in ((cache["domenica"], domenica, "domenica", "Domenica"),
+                                                 (cache["sabato"], sabato, "sabato", "Sabato")):
+        for k, v in gruppo.items():
+            t, d = v["testi"], dt.date.fromisoformat(k)
+            schede = t.get("carosello", [])[:8]
+            disegni = ["promozione/illustrazioni/domenica/" + f if f else "" for f in v.get("illustrazioni", [])]
+            f = nome_file(prefisso, k, {"t": t["titolo"], "f": t["frase"], "c": v["colore"], "s": schede, "d": disegni})
+            base = f.removesuffix(".png")
+            # copertina, le schede, il saluto finale (al massimo 10 immagini: il limite di Instagram)
+            immagini = [f] + ([f"{base}-{i}.png" for i in range(2, len(schede) + 3)] if schede else [])
+            uscita.append({"chiave": v["chiave"], "tipo": "shabbat" if prefisso == "sabato" else "domenica",
+                           "formato": v.get("formato", ""), "data": k,
+                           "data_breve": f"{nome_giorno} {d.day} {MESI[d.month - 1]}", "tempo": v.get("tempo", ""),
+                           "colore": v["colore"], "titolo": t["titolo"], "frase": t["frase"],
+                           "lezione": v["lezione"], "lezioni": v.get("lezioni", []), "url": v["url"],
+                           "tema": v.get("tema", ""), "fonti": t.get("fonti", []), "dossier": v.get("dossier", ""),
+                           "carosello": schede, "illustrazioni": disegni, "file": f, "immagini": immagini,
+                           "gancio": t.get("gancio", ""), "scene_video": t.get("scene_video", []),
+                           **testi_canali(t, v["url"])})
+            # il video: stesse idee, scene brevi, i disegni del carosello
+            if v.get("formato") in (FORMATO_DOMENICA, FORMATO_SHABBAT) and t.get("scene_video"):
+                scene = [{"titolo": x["titolo"], "testo": x["testo"],
+                          "disegno": disegni[x["scheda"] - 1] if 1 <= x.get("scheda", 0) <= len(disegni) else ""}
+                         for x in t["scene_video"][:6]]
+                impronta = hashlib.sha256(json.dumps([t["gancio"], scene], ensure_ascii=False).encode()).hexdigest()[:8]
+                shabbat = prefisso == "sabato"
+                reel_domenica.append({
+                    "chiave": f"reel|{v['chiave']}", "origine": v["chiave"], "data": k, "titolo": t["titolo"],
+                    "anno": v.get("anno", ""), "classe": "",
+                    "etichetta": "Lo Shabbat del Lab" if shabbat else "La grande domanda",
+                    "sottotitolo": "Lo Shabbat del Lab" if shabbat else "La grande domanda della domenica",
+                    "finale": "Shabbat shalom!" if shabbat else "",
+                    "colore": v["colore"], "mascotte": pr.MASCOTTE.get(v.get("anno", ""), ""), "url": v["url"],
+                    "gancio": t["gancio"], "scene": scene, "video": f"{prefisso}-{k}-{impronta}.mp4",
+                    **testi_canali(t, v["url"])})
     cartella = g.RADICE / "promozione"
     cartella.mkdir(exist_ok=True)
-    for nome, dati in (("prof.json", prof), ("domenica.json", domenica), ("reel-domenica.json", reel_domenica)):
+    for nome, dati in (("prof.json", prof), ("domenica.json", domenica), ("sabato.json", sabato),
+                       ("reel-domenica.json", reel_domenica)):
         (cartella / nome).write_text(json.dumps(dati, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     if tok_in:
         costo = tok_in / 1e6 * 4 + tok_out / 1e6 * 20   # listino Opus 5.5 al 10/2026
         print(f"Rubriche: {tok_in} token in, {tok_out} out · circa {costo:.2f} $")
-    print(f"Rubriche: {len(prof)} post del prof, {len(domenica)} domeniche")
+    print(f"Rubriche: {len(prof)} post del prof, {len(domenica)} domeniche, {len(sabato)} sabati")
 
 
 if __name__ == "__main__":

@@ -12,7 +12,9 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
   del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
 - Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`). A scuola: lezioni dal lunedì al
-  venerdì, sabato niente, domenica «La grande domanda». In vacanza (`data/vacanze.json`, o le date
+  venerdì, sabato «Lo Shabbat del Lab» (cultura ebraica: Claude cerca solo su fonti ebraiche
+  autorevoli, `FONTI_EBRAICHE` in `seo/rubriche.py`, e scrive solo ciò che ha trovato), domenica
+  «La grande domanda». In vacanza (`data/vacanze.json`, o le date
   nazionali più comuni): una striscia del prof lunedì, mercoledì e venerdì, nient'altro.
 - `seo/pubblica.py` pubblica il post del giorno con la sua storia, poi (`--coda video`) il suo video a
   fumetti col prof: `seo/reel.py` scrive i copioni delle lezioni dei prossimi 7 giorni, `seo/rubriche.py`
