@@ -2,7 +2,7 @@ name: Social · post automatico
 # Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py):
 #   lunedì, mercoledì, venerdì   una lezione, con il carosello
 #   martedì, sabato              «Il prof del Lab», una striscia a fumetti
-#   domenica                     «La domenica del Lab»
+#   domenica                     «La grande domanda»: carosello di 10 immagini e video
 #   giovedì                      il reel: una lezione già uscita, in 30 secondi
 # Dopo ogni post su Facebook e Instagram esce anche la sua storia.
 # Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
@@ -112,12 +112,19 @@ jobs:
           CANALI: ${{ inputs.canali }}
         run: |
           argomenti=""
+          canali=""
           case "$CODA" in lezioni|prof|domenica|reel) argomenti="--coda $CODA";; esac
           case "$CANALI" in
-            telegram) argomenti="$argomenti --canali telegram";;
-            facebook-instagram) argomenti="$argomenti --canali facebook,instagram";;
+            telegram) canali="--canali telegram";;
+            facebook-instagram) canali="--canali facebook,instagram";;
           esac
-          python seo/pubblica.py $argomenti
+          esito=0
+          python seo/pubblica.py $argomenti $canali || esito=1
+          # la domenica, dopo il carosello, esce anche il video della grande domanda
+          if [ "$(TZ=Europe/Rome date +%u)" = 7 ] && { [ -z "$CODA" ] || [ "$CODA" = oggi ] || [ "$CODA" = domenica ]; }; then
+            python seo/pubblica.py --coda reel-domenica $canali || esito=1
+          fi
+          exit $esito
 
       - name: Salva rubriche, immagini e registro dei post usciti
         if: always()

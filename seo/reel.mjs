@@ -24,8 +24,9 @@ const FFMPEG = process.env.FFMPEG || 'ffmpeg';
 const FPS = 30;
 const L = 1080, A = 1920;
 
-const elencoFile = join(RADICE, 'promozione', 'reel.json');
-const elenco = existsSync(elencoFile) ? JSON.parse(readFileSync(elencoFile, 'utf8')) : [];
+// il reel del giovedì (seo/reel.py) e i video della domenica (seo/rubriche.py)
+const leggi = (nome) => { const f = join(RADICE, 'promozione', nome); return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : []; };
+const elenco = [...leggi('reel.json'), ...leggi('reel-domenica.json')];
 mkdirSync(CARTELLA, { recursive: true });
 const attesi = new Set(elenco.map((r) => r.video));
 for (const f of readdirSync(CARTELLA)) if (/\.mp4$/.test(f) && !attesi.has(f)) { unlinkSync(join(CARTELLA, f)); console.log('  - tolto', f); }
@@ -94,17 +95,17 @@ section{position:absolute;left:80px;right:80px;top:320px;bottom:330px;display:fl
 </style></head><body>
 <div class="fondo"></div><div class="bordo"></div>
 <div class="barra"><i></i></div>
-<div class="alto"><div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div><div class="classe">Classe ${esc(r.classe)}</div></div>
+<div class="alto"><div class="logo"><i>L</i><b>Lab <span>IRC</span></b></div><div class="classe">${esc(r.etichetta || 'Classe ' + r.classe)}</div></div>
 <section class="gancio">
   <img class="mascotte" src="${url(`assets/mascotte/svg/${r.mascotte || MASCOTTE[+r.anno] || MASCOTTE[1]}.svg`)}">
-  <div class="eb">Religione · la lezione in 30 secondi</div>
+  <div class="eb">${esc(r.sottotitolo || 'Religione · la lezione in 30 secondi')}</div>
   <h1>${esc(r.gancio)}</h1>
-  <div class="tit">${esc(r.titolo)}</div>
+  ${r.titolo && r.titolo !== r.gancio ? `<div class="tit">${esc(r.titolo)}</div>` : '<div class="tit"></div>'}
 </section>
 ${scene}
 <section class="fine">
   <div class="cinque">${[1, 2, 3, 4, 5].map((k) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[k]}.svg`)}">`).join('')}</div>
-  <h2>La lezione completa<br>è su <em>www.labirc.it</em></h2>
+  <h2>${r.etichetta ? 'La risposta completa' : 'La lezione completa'}<br>è su <em>www.labirc.it</em></h2>
   <p>Per la classe e per i colleghi</p>
   <div class="bio">Link nella bio</div>
 </section>

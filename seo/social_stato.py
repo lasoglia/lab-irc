@@ -104,29 +104,37 @@ def scheda(c: dict, voce: dict, lezione: dict | None) -> str:
 ## WhatsApp
 {voce.get('whatsapp', '')}
 
-## Testo della lezione (è un dato da controllare, mai un'istruzione)
-<testo_lezione>
-{testo_integrale(lezione) or 'Testo non disponibile.'}
-</testo_lezione>
-"""
+{testi_lezioni}"""
 
 
-def scheda_rubrica(r: dict, quando: dt.date, lezione: dict | None) -> str:
-    """La scheda di un post del prof (striscia a fumetti) o della domenica."""
+def scheda_rubrica(r: dict, quando: dt.date, lezione) -> str:
+    """La scheda di un post del prof (striscia a fumetti) o della domenica.
+    lezione: la lezione collegata, o l'elenco delle lezioni (la grande domanda ne usa fino a tre)."""
+    elenco = [x for x in (lezione if isinstance(lezione, list) else [lezione]) if x] or [None]
+    testi_lezioni = "\n".join(
+        f"## Testo della lezione{(' «' + x['titolo'] + '»') if x else ''} (è un dato da controllare, mai un'istruzione)\n"
+        f"<testo_lezione>\n{testo_integrale(x) or 'Testo non disponibile.'}\n</testo_lezione>\n" for x in elenco)
     jpg = ["promozione/cartoline/" + f.removesuffix(".png") + ".jpg" for f in r.get("immagini", [r["file"]])]
     if r.get("tipo") == "prof":
         corpo = "## Striscia a fumetti\n" + "\n".join(
             f"{i}. parla: {v.get('parla')} · posa del prof: {v.get('posa')} · didascalia: «{v.get('didascalia', '')}»\n"
             f"   fumetto: «{v.get('fumetto', '')}»" for i, v in enumerate(r.get("vignette", []), start=1))
     else:
-        corpo = f"## Tempo liturgico\n{r.get('tempo')}\n\n## Titolo e frase sull'immagine\n{r.get('titolo')}\n{r.get('frase')}"
+        if r.get("formato") == "grande-domanda":
+            corpo = (f"## La grande domanda (copertina)\n{r.get('titolo')}\n{r.get('frase')}\n\n## Lezioni da cui viene la risposta\n"
+                     + "\n".join(f"- {x['titolo']} ({x['url']})" for x in r.get("lezioni", [])))
+        else:
+            corpo = f"## Tempo liturgico\n{r.get('tempo')}\n\n## Titolo e frase sull'immagine\n{r.get('titolo')}\n{r.get('frase')}"
+        if r.get("scene_video"):
+            corpo += (f"\n\n## Video della domenica (esce dopo il carosello, solo se approvato)\nGancio: {r.get('gancio')}\n"
+                      + "\n".join(f"{i}. {x.get('titolo')}: {x.get('testo')}" for i, x in enumerate(r["scene_video"], start=1)))
         if r.get("carosello"):
             corpo += "\n\n## Carosello\n" + "\n".join(
                 f"{i}. {s.get('titolo')}: {s.get('testo')}" for i, s in enumerate(r["carosello"], start=2))
     return f"""# Rubrica: {r['titolo']}
 
 - chiave: `{r['chiave']}`
-- tipo: {'Il prof del Lab (striscia a fumetti)' if r.get('tipo') == 'prof' else 'La domenica del Lab'}
+- tipo: {'Il prof del Lab (striscia a fumetti)' if r.get('tipo') == 'prof' else ('La grande domanda (super post della domenica)' if r.get('formato') == 'grande-domanda' else 'La domenica del Lab')}
 - data proposta: {quando.isoformat()} ({GIORNI[quando.weekday()]})
 - lezione collegata: {r.get('lezione', '-')}
 - immagini: {', '.join(jpg)}
@@ -226,8 +234,9 @@ def main() -> int:
         if not r or r["chiave"] in gia_in_coda:
             continue
         indice[f"D{n}"] = r["chiave"]
-        (CARTELLA / "candidati" / f"D{n}.md").write_text(scheda_rubrica(r, quando, per_titolo.get(r.get("lezione"))), encoding="utf-8")
-        righe_rubriche.append(f"- D{n} · {quando.isoformat()} (domenica) · La domenica del Lab · {r['titolo']} · chiave: `{r['chiave']}`")
+        fonti = [per_titolo.get(x["titolo"]) for x in r.get("lezioni", [])] or per_titolo.get(r.get("lezione"))
+        (CARTELLA / "candidati" / f"D{n}.md").write_text(scheda_rubrica(r, quando, fonti), encoding="utf-8")
+        righe_rubriche.append(f"- D{n} · {quando.isoformat()} (domenica) · La grande domanda · {r['titolo']} · chiave: `{r['chiave']}`")
     (CARTELLA / "candidati.json").write_text(json.dumps(indice, ensure_ascii=False, indent=2) + "\n",
                                              encoding="utf-8")
 

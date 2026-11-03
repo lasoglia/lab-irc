@@ -6,11 +6,11 @@ seo/rubriche.py — Le rubriche social del Lab IRC, oltre ai post delle lezioni.
     illustrato del prof e un fumetto. Ognuno nasce da una lezione vera: una
     curiosità («Lo sapevi?»), una domanda degli studenti («Il prof risponde»),
     un piccolo indovinello, oppure un momento di vita da insegnante.
-  · «La domenica del Lab»: il post speciale della settimana, un carosello legato
-    al tempo liturgico (calcolato qui, non indovinato) e a una lezione del sito:
-    copertina, il tempo che viviamo, «Lo sapevi?», dal Lab, la domanda per la
-    settimana e il saluto finale. Ogni scheda ha un disegno fatto da Claude
-    (seo/illustrazioni.py), in promozione/illustrazioni/domenica/.
+  · «La grande domanda» (domenica): il super post della settimana. Claude sceglie
+    una domanda vera degli studenti e le lezioni del sito che rispondono, poi
+    scrive un carosello di 10 immagini (copertina, 8 schede, saluto) e le scene
+    di un video. Ogni scheda ha un disegno fatto da Claude (seo/illustrazioni.py,
+    in promozione/illustrazioni/domenica/); il video lo monta seo/reel.mjs.
 
 Come per il kit delle lezioni, scrive Claude e un secondo passaggio da
 caporedattore rilegge. Lo script prepara i post IN ANTICIPO (una riserva di
@@ -19,7 +19,8 @@ quando arriva il giorno di pubblicarle.
 
   data/rubriche.json        i testi (cache)
   promozione/prof.json      i post del prof, per seo/cartoline.mjs e seo/pubblica.py
-  promozione/domenica.json  gli speciali della domenica
+  promozione/domenica.json  i super post della domenica
+  promozione/reel-domenica.json  i loro video (per seo/reel.mjs e seo/pubblica.py)
 
 USO
 ---
@@ -45,6 +46,7 @@ import promozione as pr  # noqa: E402
 RISERVA_PROF = 6           # post del prof pronti in anticipo (tre settimane)
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
+FORMATO_DOMENICA = "grande-domanda"
 CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 POSE = ["sorriso", "buffo", "pensieroso", "sorpreso", "spiega", "ride"]
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
@@ -192,60 +194,93 @@ crede. Niente doppi sensi.
 - Non scrivere link o «clicca qui»: il link alla lezione lo aggiunge il sistema.
 - Italiano corretto e naturale."""
 
+SCHEMA_SCELTA = {
+    "type": "object",
+    "properties": {
+        "domanda": {"type": "string"},
+        "lezioni": {"type": "array", "items": {"type": "integer"}},
+        "perche": {"type": "string"},
+    },
+    "required": ["domanda", "lezioni", "perche"],
+    "additionalProperties": False,
+}
+
+ISTRUZIONI_SCELTA = """Sei il redattore di «La grande domanda», il super post della \
+domenica sui social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo \
+Sestili per la scuola secondaria di secondo grado. Ogni domenica il post risponde a una \
+domanda vera, di quelle che gli studenti fanno davvero in classe o si chiedono tra loro \
+(per esempio: «Gesù è esistito davvero?», «La scienza ha smentito la Bibbia?», «Perché la \
+Chiesa ha condannato Galileo?», «Che differenza c'è tra fede e superstizione?»).
+
+Ricevi l'elenco numerato delle lezioni del sito con la loro sintesi e le domande già \
+usate nelle domeniche passate. Scegli:
+- domanda: una domanda nuova (diversa da quelle già usate), formulata come la direbbe \
+uno studente, massimo 70 caratteri, a cui le lezioni del sito sanno rispondere bene;
+- lezioni: i numeri di 1, 2 o 3 lezioni dell'elenco che contengono la risposta (meglio \
+se di classi diverse);
+- perche: in una riga, perché queste lezioni rispondono alla domanda."""
+
 SCHEMA_DOMENICA = {
     "type": "object",
     "properties": {
-        "indice_lezione": {"type": "integer"},
         "titolo": {"type": "string"},
         "frase": {"type": "string"},
-        "facebook": {"type": "string"},
-        "instagram": {"type": "string"},
-        "hashtag": {"type": "array", "items": {"type": "string"}},
-        "telegram": {"type": "string"},
         "carosello": {"type": "array", "items": {
             "type": "object",
             "properties": {"titolo": {"type": "string"}, "testo": {"type": "string"}},
             "required": ["titolo", "testo"], "additionalProperties": False}},
+        "gancio": {"type": "string"},
+        "scene_video": {"type": "array", "items": {
+            "type": "object",
+            "properties": {"titolo": {"type": "string"}, "testo": {"type": "string"},
+                           "scheda": {"type": "integer"}},
+            "required": ["titolo", "testo", "scheda"], "additionalProperties": False}},
+        "facebook": {"type": "string"},
+        "instagram": {"type": "string"},
+        "hashtag": {"type": "array", "items": {"type": "string"}},
+        "telegram": {"type": "string"},
     },
-    "required": ["indice_lezione", "titolo", "frase", "facebook", "instagram", "hashtag", "telegram", "carosello"],
+    "required": ["titolo", "frase", "carosello", "gancio", "scene_video", "facebook", "instagram",
+                 "hashtag", "telegram"],
     "additionalProperties": False,
 }
 
-ISTRUZIONI_DOMENICA = """Scrivi «La domenica del Lab», il post speciale della domenica \
-sui social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, \
-docente nella scuola secondaria di secondo grado. È il post più curato della settimana: \
-un carosello da sfogliare per iniziare la settimana, per colleghi, studenti e famiglie. \
-Caldo, sobrio, preciso, mai una predica.
+ISTRUZIONI_DOMENICA = """Scrivi «La grande domanda», il super post della domenica sui \
+social del Lab IRC, il sito di materiali di Religione Cattolica di Matteo Sestili, docente \
+nella scuola secondaria di secondo grado. È il pezzo forte della settimana: un carosello \
+da sfogliare e un breve video che rispondono a una domanda vera degli studenti, in modo \
+serio, chiaro e appassionante. Lo leggono studenti, colleghi e famiglie.
 
-Ricevi la data, il tempo liturgico ed eventualmente la festa del giorno (sono sicuri: \
-li ha calcolati il sistema) e l'elenco numerato delle lezioni del sito con la loro sintesi. \
-Scegli la lezione più adatta al tempo o alla festa e restituisci nel formato JSON:
-- indice_lezione: il numero della lezione scelta;
-- titolo: massimo 45 caratteri, per l'immagine;
-- frase: massimo 140 caratteri, un pensiero o una domanda per la settimana, per l'immagine;
-- facebook: 400-700 caratteri; instagram: 400-800 caratteri, senza hashtag; telegram: \
-250-500 caratteri. Ogni testo collega il tempo liturgico alla lezione e chiude con una \
-domanda aperta per la settimana;
-- hashtag: da 3 a 5, senza #, sempre religionecattolica e irc;
-- carosello: esattamente 4 schede, in quest'ordine, ognuna con titolo (massimo 28 \
-caratteri) e testo (massimo 170 caratteri, si legge in pochi secondi sul telefono):
-  1. «Il tempo che viviamo»: che cosa celebra la Chiesa in questo tempo o in questa \
-festa, detto in modo semplice e teologicamente esatto;
-  2. «Lo sapevi?»: una curiosità sicura sul tempo liturgico o sulla festa (un segno, \
-un colore, un'usanza della liturgia): solo cose certe e note, che trovi nel Catechismo \
-o nelle norme liturgiche; se non sei sicuro, scegli una cosa più generale;
-  3. «Dal Lab»: che cosa fa scoprire la lezione scelta, preso dalla sua sintesi;
-  4. «Per la settimana»: una domanda aperta su cui pensare, per chi crede e per chi no.
-Puoi variare un po' i titoli delle schede, ma non il loro contenuto.
+Ricevi la domanda della settimana e il testo delle lezioni del sito che contengono la \
+risposta. Restituisci nel formato JSON:
+- titolo: la domanda, come apparirà in copertina (massimo 70 caratteri);
+- frase: il sottotitolo della copertina, che promette la risposta senza darla tutta \
+(massimo 120 caratteri);
+- carosello: esattamente 8 schede, ognuna con titolo (massimo 30 caratteri) e testo \
+(massimo 200 caratteri, si legge in pochi secondi sul telefono). Un percorso che si \
+sfoglia con il desiderio di arrivare in fondo: si parte da ciò che si pensa di solito, \
+poi i fatti, i testi e le fonti delle lezioni, le distinzioni che fanno capire, fino \
+alla risposta; l'ultima scheda lascia una domanda aperta per chi legge. Ogni scheda \
+dice una cosa sola;
+- gancio: la prima scritta del video, massimo 60 caratteri;
+- scene_video: esattamente 6 scene per il video (verticale, senza voce, una scena ogni \
+quattro secondi), ognuna con titolo (massimo 28 caratteri), testo (massimo 90 caratteri) \
+e scheda (il numero, da 1 a 8, della scheda del carosello di cui riusa il disegno);
+- facebook: 500-900 caratteri; instagram: 400-800 caratteri, paragrafi corti, senza \
+hashtag; telegram: 300-500 caratteri. Presentano la domanda, anticipano un po' della \
+risposta e invitano a sfogliare il carosello e ad aprire le lezioni;
+- hashtag: da 3 a 5, senza #, sempre religionecattolica e irc.
 
 Regole vincolanti:
-- Non citare le letture della messa di quella domenica: non ti vengono date.
-- Sulla fede e sulla liturgia sii preciso come un buon libro di testo: niente formule \
-vaghe che indeboliscono ciò che la Chiesa insegna.
-- Usa solo ciò che dicono la sintesi della lezione e il tempo liturgico: niente fatti inventati.
-- Rispetto per chi crede e per chi non crede: si propone, non si impone.
-- Al massimo due emoji per testo. Non scrivere link: li aggiunge il sistema.
-- Italiano corretto."""
+- Ogni fatto, data, nome e citazione deve venire dal testo delle lezioni: niente di \
+inventato. Se le lezioni non bastano per una parte della risposta, non riempirla.
+- Sulla fede, sulla Chiesa e sulla Scrittura sii preciso come un buon libro di testo: \
+niente formule vaghe che indeboliscono o deformano ciò che la Chiesa insegna.
+- Rispetto per chi crede e per chi non crede: si propone, non si impone; si distingue ciò \
+che dice la scienza, la storia e la fede.
+- Al massimo due emoji per testo, nessuna nel carosello e nel video. Non scrivere link: \
+li aggiunge il sistema.
+- Italiano corretto e naturale."""
 
 
 def nome_file(prefisso: str, chiave: str, contenuto: dict) -> str:
@@ -322,45 +357,53 @@ def main():
         in_attesa.append(voce); usate.append(voce["lezione_chiave"])
         print(f"  ✓ prof {n:03d} · {formato} · {l['titolo']}")
 
-    # --- la domenica: le prossime due, se mancano ---
+    # --- la domenica: «La grande domanda», le prossime due se mancano ---
     prossima = oggi + dt.timedelta(days=(6 - oggi.weekday()) % 7)
     domeniche = [prossima + dt.timedelta(days=7 * i) for i in range(DOMENICHE_AVANTI)]
     elenco_lez = "\n".join(f"{i}. {l['titolo']} (classe {g.NOMI_ANNO.get(str(l.get('anno')), '')}): "
                            f"{seo.get(g.chiave_lezione(l), {}).get('sintesi', '')}"
                            for i, l in enumerate(ordinate, start=1))
+    usate_dom = cache.setdefault("domande_usate", [])
     for d in domeniche:
         k = d.isoformat()
-        vecchia = k in cache["domenica"] and "carosello" not in cache["domenica"][k]["testi"] \
+        vecchia = k in cache["domenica"] and cache["domenica"][k].get("formato") != FORMATO_DOMENICA \
             and not pubblicato(cache["domenica"][k]["chiave"], registri)
         if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
             continue
-        tempo, festa, colore = tempo_liturgico(d)
-        messaggio = (f"Data: domenica {d.day} {MESI[d.month - 1]} {d.year}\n"
-                     f"Tempo liturgico: {tempo}\n" + (f"Festa del giorno: {festa}\n" if festa else "")
-                     + f"\nLezioni del sito:\n{elenco_lez}")
         try:
+            # prima la domanda e le lezioni che rispondono, poi i testi letti per intero
+            scelta, r = pr.chiama_claude(client, ISTRUZIONI_SCELTA,
+                                         f"Domande già usate:\n" + ("\n".join(f"- {x}" for x in usate_dom[-60:]) or "nessuna")
+                                         + f"\n\nLezioni del sito:\n{elenco_lez}", SCHEMA_SCELTA, "medium")
+            tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+            scelte = [ordinate[i - 1] for i in scelta["lezioni"] if 1 <= i <= len(ordinate)][:3] or [ordinate[0]]
+            messaggio = (f"Domanda della settimana: {scelta['domanda']}\n\n" + "\n\n".join(
+                f"<lezione titolo=\"{l['titolo']}\" classe=\"{g.NOMI_ANNO.get(str(l.get('anno')), '')}\">\n"
+                f"{g.testo_lezione(l)}\n</lezione>" for l in scelte))
             t = pr.scrivi_e_rivedi(client, ISTRUZIONI_DOMENICA, messaggio, SCHEMA_DOMENICA)
         except Exception as err:
             print(f"  ✗ domenica {k}: {err}")
             continue
         tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
-        l = ordinate[max(1, min(len(ordinate), int(t.get("indice_lezione") or 1))) - 1]
-        voce = {"chiave": f"dom-{k}", "data": k, "tempo": festa or tempo, "colore": colore,
-                "lezione": l["titolo"], "url": pr.url_lezione(l), "testi": t, "illustrazioni": []}
-        schede = t.get("carosello", [])[:4]
-        if schede:
-            try:
-                messaggio = (f"La domenica del Lab, {d.day} {MESI[d.month - 1]} {d.year} · {festa or tempo}. "
-                             f"Le schede del carosello sono {len(schede)}.\n\n" + "\n\n".join(
-                                 f"Scheda {i}: {x['titolo']}\n{x['testo']}" for i, x in enumerate(schede, start=1)))
-                file, r = ill.disegna(client, messaggio, len(schede), CARTELLA_DOMENICA,
-                                      f"{k}-{hashlib.sha256(json.dumps(schede).encode()).hexdigest()[:6]}")
-                voce["illustrazioni"] = file
-                tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
-            except Exception as err:   # senza disegni il carosello esce lo stesso
-                print(f"  ! domenica {k}: disegni non fatti ({err})")
+        anno = str(scelte[0].get("anno", ""))
+        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "tempo": "",
+                "colore": pr.COLORI_ANNO.get(anno, ORO), "anno": anno,
+                "lezione": " · ".join(l["titolo"] for l in scelte), "url": pr.url_lezione(scelte[0]),
+                "lezioni": [{"titolo": l["titolo"], "url": pr.url_lezione(l)} for l in scelte],
+                "testi": t, "illustrazioni": []}
+        schede = t.get("carosello", [])[:8]
+        try:
+            messaggio = (f"«La grande domanda»: {t['titolo']}. Le schede del carosello sono {len(schede)}.\n\n"
+                         + "\n\n".join(f"Scheda {i}: {x['titolo']}\n{x['testo']}" for i, x in enumerate(schede, start=1)))
+            file, r = ill.disegna(client, messaggio, len(schede), CARTELLA_DOMENICA,
+                                  f"{k}-{hashlib.sha256(json.dumps(schede).encode()).hexdigest()[:6]}")
+            voce["illustrazioni"] = file
+            tok_in += r.usage.input_tokens; tok_out += r.usage.output_tokens
+        except Exception as err:   # senza disegni il carosello esce lo stesso
+            print(f"  ! domenica {k}: disegni non fatti ({err})")
         cache["domenica"][k] = voce
-        print(f"  ✓ domenica {k} · {festa or tempo} · {l['titolo']} · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
+        usate_dom.append(t["titolo"])
+        print(f"  ✓ domenica {k} · {t['titolo']} · {sum(1 for f in voce['illustrazioni'] if f)} disegni")
 
     # --- gli elenchi per il disegnatore e per la pubblicazione ---
     limite = (oggi - dt.timedelta(days=GIORNI_ARCHIVIO)).isoformat()
@@ -383,23 +426,38 @@ def main():
                      "anno": p.get("anno", ""), "lezione": p["lezione"], "url": p["url"], "vignette": vignette,
                      "file": f"{base}-1.png", "immagini": [f"{base}-{i}.png" for i in range(1, len(vignette) + 1)],
                      **testi_canali(t, p["url"])})
-    domenica = []
+    domenica, reel_domenica = [], []
     for k, v in cache["domenica"].items():
         t, d = v["testi"], dt.date.fromisoformat(k)
-        schede = t.get("carosello", [])[:4]
+        schede = t.get("carosello", [])[:8]
         disegni = ["promozione/illustrazioni/domenica/" + f if f else "" for f in v.get("illustrazioni", [])]
         f = nome_file("domenica", k, {"t": t["titolo"], "f": t["frase"], "c": v["colore"], "s": schede, "d": disegni})
         base = f.removesuffix(".png")
-        # copertina, le schede, il saluto finale
+        # copertina, le schede, il saluto finale (al massimo 10 immagini: il limite di Instagram)
         immagini = [f] + ([f"{base}-{i}.png" for i in range(2, len(schede) + 3)] if schede else [])
-        domenica.append({"chiave": v["chiave"], "tipo": "domenica", "data": k,
-                         "data_breve": f"Domenica {d.day} {MESI[d.month - 1]}", "tempo": v["tempo"],
+        domenica.append({"chiave": v["chiave"], "tipo": "domenica", "formato": v.get("formato", ""), "data": k,
+                         "data_breve": f"Domenica {d.day} {MESI[d.month - 1]}", "tempo": v.get("tempo", ""),
                          "colore": v["colore"], "titolo": t["titolo"], "frase": t["frase"],
-                         "lezione": v["lezione"], "url": v["url"], "carosello": schede,
-                         "illustrazioni": disegni, "file": f, "immagini": immagini, **testi_canali(t, v["url"])})
+                         "lezione": v["lezione"], "lezioni": v.get("lezioni", []), "url": v["url"],
+                         "carosello": schede, "illustrazioni": disegni, "file": f, "immagini": immagini,
+                         "gancio": t.get("gancio", ""), "scene_video": t.get("scene_video", []),
+                         **testi_canali(t, v["url"])})
+        # il video della domenica: stesse idee, scene brevi, i disegni del carosello
+        if v.get("formato") == FORMATO_DOMENICA and t.get("scene_video"):
+            scene = [{"titolo": x["titolo"], "testo": x["testo"],
+                      "disegno": disegni[x["scheda"] - 1] if 1 <= x.get("scheda", 0) <= len(disegni) else ""}
+                     for x in t["scene_video"][:6]]
+            impronta = hashlib.sha256(json.dumps([t["gancio"], scene], ensure_ascii=False).encode()).hexdigest()[:8]
+            reel_domenica.append({
+                "chiave": f"reel|{v['chiave']}", "origine": v["chiave"], "data": k, "titolo": t["titolo"],
+                "anno": v.get("anno", ""), "classe": "", "etichetta": "La grande domanda",
+                "sottotitolo": "La grande domanda della domenica", "colore": v["colore"],
+                "mascotte": pr.MASCOTTE.get(v.get("anno", ""), ""), "url": v["url"], "gancio": t["gancio"],
+                "scene": scene, "video": f"domenica-{k}-{impronta}.mp4",
+                **testi_canali(t, v["url"])})
     cartella = g.RADICE / "promozione"
     cartella.mkdir(exist_ok=True)
-    for nome, dati in (("prof.json", prof), ("domenica.json", domenica)):
+    for nome, dati in (("prof.json", prof), ("domenica.json", domenica), ("reel-domenica.json", reel_domenica)):
         (cartella / nome).write_text(json.dumps(dati, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     if tok_in:
