@@ -11,11 +11,14 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 ## Social
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
   del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
-- Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`). A scuola: lezioni dal lunedì al
-  venerdì, sabato «Lo Shabbat del Lab» (cultura ebraica: Claude cerca solo su fonti ebraiche
+- Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`), dal 9 novembre 2026 più leggero.
+  A scuola: lunedì e venerdì il carosello di una lezione, mercoledì il video a fumetti della lezione
+  del lunedì, sabato «Lo Shabbat del Lab» (cultura ebraica: Claude cerca solo su fonti ebraiche
   autorevoli, `FONTI_EBRAICHE` in `seo/rubriche.py`, e scrive solo ciò che ha trovato), domenica
-  «La grande domanda». In vacanza (`data/vacanze.json`, o le date
-  nazionali più comuni): una striscia del prof lunedì, mercoledì e venerdì, nient'altro.
+  «La grande domanda» (carosello e video); martedì e giovedì niente. In vacanza (`data/vacanze.json`,
+  o le date nazionali più comuni): una striscia del prof lunedì e giovedì, nient'altro.
+- Immagini e video dei post non stanno nel repo: `seo/cartoline.mjs` disegna solo i post in coda,
+  `seo/media_r2.py` li carica su Cloudflare R2 (cancellati dopo 30 giorni).
 - `seo/pubblica.py` pubblica il post del giorno con la sua storia, poi (`--coda video`) il suo video a
   fumetti col prof: `seo/reel.py` scrive i copioni delle lezioni dei prossimi 7 giorni, `seo/rubriche.py`
   quelli della domenica, `seo/reel.mjs` monta i video (MP4 in `promozione/reel/`). Il video non va

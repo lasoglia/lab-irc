@@ -150,11 +150,26 @@ def in_vacanza(giorno: dt.date) -> str:
     return next((nome for dal, al, nome in vacanze(giorno.year) if dal <= giorno <= al), "")
 
 
+# La settimana del Lab, sul modello dei canali che funzionano meglio: meno uscite, ognuna
+# curata. Lunedì e venerdì il carosello di una lezione (con la sua rubrica), mercoledì il
+# video a fumetti della lezione del lunedì, sabato lo Shabbat, domenica la grande domanda
+# (carosello e video). Martedì e giovedì riposo. In vacanza una striscia del prof lunedì e giovedì.
+SETTIMANA_SCUOLA = {0: "lezione", 2: "video", 4: "lezione", 5: "shabbat", 6: "domenica"}
+SETTIMANA_VACANZA = {0: "prof", 3: "prof"}
+
+
+INIZIO_SETTIMANA_NUOVA = dt.date(2026, 11, 9)   # prima: lezioni dal lunedì al venerdì
+
+
 def tipo_del_giorno(giorno: dt.date) -> str | None:
-    """Che cosa esce quel giorno: 'lezione', 'prof', 'shabbat', 'domenica' oppure None."""
+    """Che cosa esce quel giorno: 'lezione', 'video', 'prof', 'shabbat', 'domenica' oppure None."""
+    if giorno < INIZIO_SETTIMANA_NUOVA:   # il calendario di prima, per i post già approvati
+        if in_vacanza(giorno):
+            return "prof" if giorno.weekday() in (0, 2, 4) else None
+        return {5: "shabbat", 6: "domenica"}.get(giorno.weekday(), "lezione")
     if in_vacanza(giorno):
-        return "prof" if giorno.weekday() in (0, 2, 4) else None
-    return {5: "shabbat", 6: "domenica"}.get(giorno.weekday(), "lezione")
+        return SETTIMANA_VACANZA.get(giorno.weekday())
+    return SETTIMANA_SCUOLA.get(giorno.weekday())
 
 
 def giorni_di(tipo: str, inizio: dt.date, giorni: int) -> list[dt.date]:
