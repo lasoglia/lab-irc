@@ -389,7 +389,7 @@ const BIO = "Insegno Religione Cattolica nella scuola secondaria. Qui raccolgo i
 const SOCIAL = [
   { nome: "Instagram", href: "https://www.instagram.com/lab_irc/",
     icona: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" /></> },
-  { nome: "Facebook", href: "https://www.facebook.com/profile.php?id=61595378708247",
+  { nome: "Facebook", href: "https://www.facebook.com/Labirc.religione/",
     icona: <path d="M14.5 8.5h2.2V5.2h-2.6c-2.6 0-4 1.6-4 4.1v2.1H7.6v3.2h2.5V21h3.3v-6.4h2.6l.5-3.2h-3.1V9.6c0-.7.4-1.1 1.1-1.1z" fill="currentColor" stroke="none" /> },
   { nome: "Telegram", href: "https://t.me/labirc",
     icona: <><path d="M21 4.5 3.6 11.3c-.9.4-.9 1.1.1 1.4l4.4 1.4 1.7 5.2c.2.6.5.7 1 .3l2.4-2 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.1c.3-1.3-.5-1.8-1.4-1.6z" /><path d="m8.2 14 9.1-6" /></> },
