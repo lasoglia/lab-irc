@@ -1,0 +1,53 @@
+[
+  {
+    "chiave": "reel|vetrina-prof",
+    "origine": "vetrina-prof",
+    "titolo": "Il prof si presenta",
+    "anno": "",
+    "classe": "",
+    "etichetta": "Lab IRC",
+    "sottotitolo": "Piacere!",
+    "finale": "Ti aspetto nel Lab!",
+    "colore": "#E3C27A",
+    "mascotte": "1-semino",
+    "url": "https://www.labirc.it/",
+    "gancio": "Ciao! Sono il prof del Lab IRC",
+    "scene": [
+      {
+        "titolo": "Che cos'è",
+        "testo": "Il Lab IRC è il laboratorio di Religione Cattolica per le superiori. Online e gratis.",
+        "disegno": ""
+      },
+      {
+        "titolo": "Per chi",
+        "testo": "Per i colleghi che cercano materiali pronti e per i ragazzi, dalla prima alla quinta.",
+        "disegno": ""
+      },
+      {
+        "titolo": "Che cosa trovi",
+        "testo": "Lezioni da proiettare, fascicoli da sfogliare e giochi per ripassare.",
+        "disegno": ""
+      },
+      {
+        "titolo": "Ogni giorno di scuola",
+        "testo": "Una lezione in un carosello e in un video a fumetti. Come questo, sì.",
+        "disegno": ""
+      },
+      {
+        "titolo": "Il sabato",
+        "testo": "Lo Shabbat del Lab: la cultura ebraica, raccontata dalle fonti ebraiche.",
+        "disegno": ""
+      },
+      {
+        "titolo": "La domenica",
+        "testo": "La grande domanda: quelle che i ragazzi fanno davvero. Con risposte serie.",
+        "disegno": ""
+      }
+    ],
+    "video": "vetrina-prof-1-ia.mp4",
+    "instagram": "Piacere, sono il prof del Lab IRC 👋\n\nQui trovi la Religione Cattolica delle superiori in formato social: ogni giorno di scuola una lezione in un carosello e in un video a fumetti, il sabato lo Shabbat del Lab, la domenica la grande domanda.\n\nLezioni, fascicoli e giochi sono gratis, dalla prima alla quinta: il link è nella bio.\n\n#religionecattolica #irc #insegnantidireligione",
+    "facebook": "Piacere, sono il prof del Lab IRC 👋\n\nOgni giorno di scuola una lezione di Religione in un carosello e in un video a fumetti; il sabato lo Shabbat del Lab, la domenica la grande domanda. Lezioni, fascicoli e giochi sono gratis, dalla prima alla quinta.\n\nhttps://www.labirc.it/",
+    "telegram": "👋 Piacere, sono il prof del Lab IRC!\n\nOgni giorno di scuola una lezione a fumetti, il sabato lo Shabbat del Lab, la domenica la grande domanda. Tutto gratis su https://www.labirc.it/",
+    "sfondo": "promozione/immagini-ia/vetrina-prof-c68199c44c8f.jpg"
+  }
+]

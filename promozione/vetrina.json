@@ -1,0 +1,49 @@
+{
+  "benvenuto": {
+    "chiave": "vetrina-benvenuto",
+    "titolo": "Benvenuto nel Lab IRC",
+    "file": "sito-lab-irc-87e6fe7f.png",
+    "immagini": [
+      "sito-lab-irc-87e6fe7f.png",
+      "sito-lab-irc-87e6fe7f-2.png",
+      "sito-lab-irc-87e6fe7f-3.png",
+      "sito-lab-irc-87e6fe7f-4.png",
+      "sito-lab-irc-87e6fe7f-5.png",
+      "sito-lab-irc-87e6fe7f-6.png",
+      "sito-lab-irc-87e6fe7f-7.png"
+    ],
+    "facebook": "Che cosa ci fanno san Benedetto, Galileo e Lemaître nello stesso posto? No, non è l'inizio di una barzelletta: sono alcuni degli ospiti del Lab IRC, il laboratorio di Religione.\n\nQui raccolgo i materiali che uso davvero in classe: slide, documenti, video e strumenti interattivi, ordinati per anno di corso. In prima si parte dalle radici (il sacro, le grandi domande, la Bibbia). In seconda si incontra Gesù di Nazaret, in terza la Chiesa con le sue luci e ombre, in quarta l'etica, in quinta le sfide di oggi. E ogni classe ha la sua unità di accoglienza, per cominciare con il piede giusto.\n\nTutto si consulta online, gratis. Puoi proiettare una lezione, usarla come traccia o adattarla ai tuoi ragazzi. Fai un giro: magari c'è proprio la lezione che ti mancava 📚\n\nhttps://www.labirc.it/",
+    "instagram": "San Benedetto e la sua regola.\nGalileo e le sue prove.\nLemaître e le sue due vie.\nChe ci fanno tutti insieme? 👀\n\nAbitano nel Lab IRC, il laboratorio di Religione: lezioni da proiettare, da sfogliare, da giocare.\n\nCinque classi, cinque tappe:\nPrima: il sacro, le grandi domande, la Bibbia.\nSeconda: Gesù di Nazaret nella storia e nella fede.\nTerza: la Chiesa tra luci, ombre e svolte.\nQuarta: libertà, coscienza, relazioni, giustizia.\nQuinta: bioetica, ecologia, dottrina sociale.\n\nSlide, video, fascicoli e giochi di verifica. Tutto online, tutto gratis.\n\nPerché ogni domanda seria merita tempo, cura e bellezza ✨\n\nIl link è in bio.\n\n#religionecattolica #irc #materialididattici #docentiirc",
+    "telegram": "🧭 Lab IRC: la Religione in cinque tappe\n\nDal sacro e dalla Bibbia in prima fino a bioetica, ecologia e dottrina sociale in quinta, passando per Gesù di Nazaret, la Chiesa nella storia, scienza e fede ed etica. Ogni anno ha le sue unità, a partire dall'accoglienza. Dentro trovi slide, documenti, video, fascicoli e giochi di verifica: si consulta online, gratuitamente, e si adatta alle proprie classi.\n\nhttps://www.labirc.it/"
+  },
+  "copertina_facebook": "vetrina-copertina-facebook.png",
+  "icone": [
+    {
+      "chiave": "lezioni",
+      "titolo": "Lezioni",
+      "file": "vetrina-icona-lezioni.png"
+    },
+    {
+      "chiave": "domanda",
+      "titolo": "La grande domanda",
+      "file": "vetrina-icona-domanda.png"
+    },
+    {
+      "chiave": "shabbat",
+      "titolo": "Shabbat",
+      "file": "vetrina-icona-shabbat.png"
+    },
+    {
+      "chiave": "prof",
+      "titolo": "Il prof",
+      "file": "vetrina-icona-prof.png"
+    },
+    {
+      "chiave": "come",
+      "titolo": "Come si usa",
+      "file": "vetrina-icona-come.png"
+    }
+  ],
+  "presentazione": "Il laboratorio di Religione per le superiori. Lezioni, fascicoli e giochi gratis, dalla prima alla quinta. Ogni giorno di scuola una lezione a fumetti, il sabato lo Shabbat, la domenica la grande domanda.",
+  "descrizione_telegram": "Il Lab IRC: lezioni di Religione Cattolica per le superiori, in caroselli e video a fumetti. Sabato lo Shabbat del Lab, domenica la grande domanda. Tutto gratis su www.labirc.it"
+}
