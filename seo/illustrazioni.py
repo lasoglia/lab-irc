@@ -107,6 +107,24 @@ def pulisci_svg(svg: str) -> str:
     return ET.tostring(radice, encoding="unicode")
 
 
+def disegna(client, messaggio: str, n: int, cartella: Path, prefisso: str) -> tuple[list[str], object]:
+    """Fa disegnare a Claude n illustrazioni e salva quelle valide in cartella/<prefisso>-<i>.svg.
+    Restituisce i nomi dei file ("" dove il disegno è stato scartato) e la risposta (per i token)."""
+    dati, risposta = pr.chiama_claude(client, ISTRUZIONI, messaggio, SCHEMA, "medium", 48000)
+    cartella.mkdir(parents=True, exist_ok=True)
+    file = []
+    for i, ill in enumerate(dati.get("illustrazioni", [])[:n], start=1):
+        try:
+            svg = pulisci_svg(ill["svg"])
+        except Exception as err:   # un disegno non valido: quella scheda resta senza
+            print(f"  ! {prefisso} scheda {i}: disegno scartato ({err})")
+            file.append("")
+            continue
+        (cartella / f"{prefisso}-{i}.svg").write_text(svg, encoding="utf-8")
+        file.append(f"{prefisso}-{i}.svg")
+    return file + [""] * (n - len(file)), risposta
+
+
 def impronta(testi: dict) -> str:
     return hashlib.sha256((VERSIONE + json.dumps(testi.get("carosello", []), ensure_ascii=False))
                           .encode()).hexdigest()[:12]
