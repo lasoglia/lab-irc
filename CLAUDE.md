@@ -20,6 +20,9 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   fumetti col prof: `seo/reel.py` scrive i copioni delle lezioni dei prossimi 7 giorni, `seo/rubriche.py`
   quelli della domenica, `seo/reel.mjs` monta i video (MP4 in `promozione/reel/`). Il video non va
   pianificato: esce solo se il suo post è uscito.
+- `seo/immagini_ia.py` fa gli sfondi pittorici di video e copertine del weekend: Claude descrive la
+  scena (mai persone, volti, Dio o santi, mai scritte), Cloudflare Workers AI la dipinge gratis
+  (segreti CLOUDFLARE_ACCOUNT_ID e CLOUDFLARE_API_TOKEN; senza, non fa nulla).
 - `seo/coda.py` limita la pubblicazione ai post approvati in `data/social-coda.json`.
 - Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`.
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
