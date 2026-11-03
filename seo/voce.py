@@ -202,6 +202,12 @@ def _gemini_con_riprova(modelli: list, chiave: str, testo: str, voce: str) -> by
                 time.sleep(attesa)
                 continue
             raise SystemExit(f"Gemini ha risposto {err.code} {limite}".strip())
+        except (urllib.error.URLError, OSError) as err:   # rete interrotta o risposta che non arriva
+            tentativi += 1
+            if tentativi > 4:
+                raise
+            print(f"  · rete interrotta ({type(err).__name__}), riprovo fra {10 * tentativi} s")
+            time.sleep(10 * tentativi)
 
 
 def _silenzi(wav: Path) -> list[tuple[float, float]]:
