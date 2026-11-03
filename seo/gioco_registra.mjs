@@ -48,6 +48,7 @@ const browser = await pw.chromium.launch({
 const pg = await browser.newPage({ viewport: { width: L, height: A }, deviceScaleFactor: SCALA });
 pg.on('pageerror', (e) => console.log('  ! errore nella pagina:', e.message));
 const fine = () => { try { server.kill(); } catch { /* già chiuso */ } };
+let presentazione = '';
 
 try {
   await pg.goto(`http://127.0.0.1:${porta}/${gioco.replace(/^\/+/, '')}`, { waitUntil: 'load' });
@@ -57,6 +58,11 @@ try {
   await pg.evaluate((p) => { document.getElementById('lc-pw').value = p; document.getElementById('lc-form').requestSubmit(); },
     String(giorno * mese + Number(numero)));
   await pg.waitForSelector('#campo-nome', { state: 'visible', timeout: 30000 });
+  // la presentazione scritta dal docente nella prima schermata: serve alla didascalia del post
+  presentazione = await pg.evaluate(() => {
+    const testi = [...document.querySelectorAll('#inizio p, #inizio div')].map((e) => e.innerText.trim()).filter((t) => t.length > 80 && t.length < 900 && !/\n/.test(t));
+    return testi.sort((a, b) => b.length - a.length)[0] || '';
+  });
   await pg.fill('#campo-nome', 'Prova Lab');
   await pg.evaluate(() => { const c = document.getElementById('campo-classe'); if (c && !c.value) c.value = 'Lab'; });
   await pg.click('text=Inizia il viaggio');
@@ -251,5 +257,5 @@ ff.stdin.end();
 await chiuso;
 await browser.close();
 fine();
-if (fileMomenti) writeFileSync(fileMomenti, JSON.stringify({ gioco, durata: +(fotogrammi / FPS).toFixed(2), momenti }, null, 1));
+if (fileMomenti) writeFileSync(fileMomenti, JSON.stringify({ gioco, durata: +(fotogrammi / FPS).toFixed(2), presentazione, momenti }, null, 1));
 console.log(`gioco: ${uscita} (${(fotogrammi / FPS).toFixed(1)} s, ${fotogrammi} fotogrammi)`);

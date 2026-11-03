@@ -1,0 +1,35 @@
+{
+  "nota": "Quando ogni gioco di verifica è comparso sul sito: nei 14 giorni dopo, il giovedì esce il suo reel. Per un periodo diverso aggiungi «dal» e «al».",
+  "giochi": [
+    {
+      "file": "uploads/i-1-g-l-uomo-che-cerca-oltre-gioco.html",
+      "titolo": "L’uomo che cerca oltre",
+      "anno": "1",
+      "uscito": "2026-10-15"
+    },
+    {
+      "file": "uploads/ii-1-g-gesu-quali-tracce-gioco.html",
+      "titolo": "Gesù, quali tracce?",
+      "anno": "2",
+      "uscito": "2026-10-25"
+    },
+    {
+      "file": "uploads/iii-1-g-luoghi-che-cambiano-la-vita-gioco.html",
+      "titolo": "Luoghi che cambiano la vita",
+      "anno": "3",
+      "uscito": "2026-10-25"
+    },
+    {
+      "file": "uploads/iv-1-g-riformare-una-chiesa-gioco.html",
+      "titolo": "Riformare una Chiesa",
+      "anno": "4",
+      "uscito": "2026-10-25"
+    },
+    {
+      "file": "uploads/v-1-g-il-cosmo-esaurisce-le-domande-gioco.html",
+      "titolo": "Le due vie di Lemaitre",
+      "anno": "5",
+      "uscito": "2026-11-01"
+    }
+  ]
+}
