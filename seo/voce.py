@@ -67,6 +67,76 @@ def campioni(cartella: Path) -> list[str]:
     return file
 
 
+def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", FILTRO, "-ac", "1", "-ar", "24000",
+                    str(finale)], check=True)
+    print(f"  ✓ {finale.name}: {frase[:60]}")
+
+
+def genera_xtts(frasi: list, riferimento: list[str], tmp: Path, uscita: Path) -> None:
+    os.environ.setdefault("COQUI_TOS_AGREED", "1")
+    from TTS.api import TTS   # import qui: è pesante e serve solo con il campione
+    tts = TTS(MODELLO)
+    for i, frase in enumerate(frasi):
+        if not str(frase).strip():
+            continue
+        grezzo = tmp / f"g{i}.wav"
+        # più libertà all'intonazione (meno piatta) e un ritmo un po' più vivo
+        tts.tts_to_file(text=pronuncia(frase), speaker_wav=riferimento, language="it", file_path=str(grezzo),
+                        temperature=0.85, top_p=0.9, top_k=60, repetition_penalty=5.0, speed=1.08,
+                        split_sentences=False)
+        rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
+
+
+def genera_chatterbox(frasi: list, riferimento: list[str], tmp: Path, uscita: Path) -> None:
+    """Chatterbox Multilingual (Resemble AI, licenza MIT): più espressivo, con la manopola
+    «exaggeration» (VOCE_ESPRESSIVITA, 0.5 naturale, 0.7-0.8 più teatrale)."""
+    unico = tmp / "riferimento.wav"   # i campioni uno dopo l'altro: un solo riferimento più lungo
+    elenco = tmp / "rif.txt"
+    elenco.write_text("".join(f"file '{f}'\n" for f in riferimento), encoding="utf-8")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", str(elenco), "-ac", "1",
+                    "-ar", "24000", str(unico)], check=True)
+    import torchaudio as ta
+    from chatterbox.mtl_tts import ChatterboxMultilingualTTS
+    modello = ChatterboxMultilingualTTS.from_pretrained(device="cpu")
+    espressivita = float(os.environ.get("VOCE_ESPRESSIVITA", "0.65"))
+    for i, frase in enumerate(frasi):
+        if not str(frase).strip():
+            continue
+        grezzo = tmp / f"c{i}.wav"
+        wav = modello.generate(pronuncia(frase), language_id="it", audio_prompt_path=str(unico),
+                               exaggeration=espressivita, cfg_weight=0.4, temperature=0.8)
+        ta.save(str(grezzo), wav, modello.sr)
+        rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
+
+
+def genera_edge(frasi: list, tmp: Path, uscita: Path) -> None:
+    """Voce neurale italiana di Microsoft (non clonata), tramite edge-tts: molto pulita."""
+    voce = os.environ.get("VOCE_EDGE", "it-IT-DiegoNeural")
+    for i, frase in enumerate(frasi):
+        if not str(frase).strip():
+            continue
+        grezzo = tmp / f"e{i}.mp3"
+        subprocess.run(["edge-tts", "--voice", voce, "--rate", "+4%", "--text", pronuncia(frase),
+                        "--write-media", str(grezzo)], check=True)
+        rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
+
+
+def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
+    """Kokoro (licenza Apache), voce italiana maschile «im_nicola», non clonata."""
+    import numpy as np
+    import soundfile as sf
+    from kokoro import KPipeline
+    pipeline = KPipeline(lang_code="i")
+    for i, frase in enumerate(frasi):
+        if not str(frase).strip():
+            continue
+        pezzi = [audio for _, _, audio in pipeline(pronuncia(frase), voice=os.environ.get("VOCE_KOKORO", "im_nicola"))]
+        grezzo = tmp / f"k{i}.wav"
+        sf.write(str(grezzo), np.concatenate(pezzi), 24000)
+        rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
+
+
 def main() -> int:
     if len(sys.argv) != 3:
         print(__doc__)
@@ -75,25 +145,18 @@ def main() -> int:
     uscita = Path(sys.argv[2])
     uscita.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
+        motore = os.environ.get("VOCE_MOTORE", "xtts")
+        if motore in ("edge", "kokoro"):   # voci pronte: non serve il campione
+            (genera_edge if motore == "edge" else genera_kokoro)(frasi, Path(tmp), uscita)
+            return 0
         riferimento = campioni(Path(tmp))
         if not riferimento:
             print("Voce: segreto VOCE_CAMPIONE non impostato, i video restano senza voce.")
             return 0
-        os.environ.setdefault("COQUI_TOS_AGREED", "1")
-        from TTS.api import TTS   # import qui: è pesante e serve solo con il campione
-        tts = TTS(MODELLO)
-        for i, frase in enumerate(frasi):
-            if not str(frase).strip():
-                continue
-            grezzo = Path(tmp) / f"g{i}.wav"
-            # più libertà all'intonazione (meno piatta) e un ritmo un po' più vivo
-            tts.tts_to_file(text=pronuncia(frase), speaker_wav=riferimento, language="it", file_path=str(grezzo),
-                            temperature=0.85, top_p=0.9, top_k=60, repetition_penalty=5.0, speed=1.08,
-                            split_sentences=False)
-            finale = uscita / f"voce-{i:02d}.wav"
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", FILTRO, "-ac", "1", "-ar", "24000",
-                            str(finale)], check=True)
-            print(f"  ✓ {finale.name}: {frase[:60]}")
+        if motore == "chatterbox":
+            genera_chatterbox(frasi, riferimento, Path(tmp), uscita)
+        else:
+            genera_xtts(frasi, riferimento, Path(tmp), uscita)
     return 0
 
 
