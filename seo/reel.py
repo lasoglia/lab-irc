@@ -79,7 +79,9 @@ Regole vincolanti:
 - Solo fatti presenti nel materiale: niente date, nomi o citazioni inventati.
 - Al massimo due emoji per didascalia, nessuna nel gancio e nelle scene.
 - Non scrivere link o «clicca qui»: il link alla lezione lo aggiunge il sistema.
-- Italiano corretto e naturale."""
+- Italiano corretto e naturale.
+
+""" + pr.TONO
 
 
 def leggi(p: Path, vuoto):
