@@ -60,6 +60,13 @@ body.viewing .lab-tema, body.viewing .lab-lim, body.viewing .lab-alone{ display:
   animation:labFloaty var(--lab-dur-float, 21s) ease-in-out infinite alternate; }
 html[data-tema="chiaro"] .lab-hero::before{ background:radial-gradient(55% 89% at 21% 0%, rgba(109,63,224,.07), transparent 61.8%), radial-gradient(55% 89% at 79% 34%, rgba(166,124,46,.10), transparent 61.8%); }
 .lab-about{ border:1px solid color-mix(in srgb, var(--lab-oro) 22%, var(--lab-line)); background:radial-gradient(55% 89% at 0% 50%, var(--lab-oro-soft), transparent 61.8%), var(--lab-grad-soft); }
+.lab-social{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 12px; }
+.lab-social__titolo{ width:100%; font-family:var(--lab-font-inscription); font-size:12px; letter-spacing:.18em; text-transform:uppercase; font-weight:600; color:var(--lab-oro-text); margin-bottom:2px; }
+.lab-social__btn{ display:inline-flex; align-items:center; gap:9px; padding:10px 17px 10px 14px; border-radius:999px; border:1px solid color-mix(in srgb, var(--lab-oro) 35%, var(--lab-line)); background:color-mix(in srgb, var(--lab-surface) 70%, transparent); color:var(--lab-ink); font-size:15px; font-weight:600; text-decoration:none; transition:transform .18s ease, border-color .18s ease, background .18s ease, color .18s ease; }
+.lab-social__btn svg{ color:var(--lab-oro-text); transition:color .18s ease; }
+.lab-social__btn:hover, .lab-social__btn:focus-visible{ transform:translateY(-2px); border-color:var(--lab-oro); background:var(--lab-oro-soft); }
+.lab-social__btn--mail{ border-style:dashed; }
+@media (prefers-reduced-motion: reduce){ .lab-social__btn{ transition:none; } .lab-social__btn:hover{ transform:none; } }
 
 /* schede degli anni: tutte alte uguali nella stessa riga
    (il testo più lungo non deve allungare solo la sua) */

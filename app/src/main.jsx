@@ -385,16 +385,39 @@ function Tools({ nS, nV }) {
 
 const BIO = "Insegno Religione Cattolica nella scuola secondaria. Qui raccolgo i materiali che uso in classe, perché ogni domanda seria merita tempo, cura e bellezza.";
 
+/* I profili social del Lab: semplici link (nessuno script esterno, nessun contatore) */
+const SOCIAL = [
+  { nome: "Instagram", href: "https://www.instagram.com/lab_irc/",
+    icona: <><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" /></> },
+  { nome: "Facebook", href: "https://www.facebook.com/1450849821438605",
+    icona: <path d="M14.5 8.5h2.2V5.2h-2.6c-2.6 0-4 1.6-4 4.1v2.1H7.6v3.2h2.5V21h3.3v-6.4h2.6l.5-3.2h-3.1V9.6c0-.7.4-1.1 1.1-1.1z" fill="currentColor" stroke="none" /> },
+  { nome: "Telegram", href: "https://t.me/labirc",
+    icona: <><path d="M21 4.5 3.6 11.3c-.9.4-.9 1.1.1 1.4l4.4 1.4 1.7 5.2c.2.6.5.7 1 .3l2.4-2 4.6 3.4c.8.5 1.4.2 1.6-.8l3-14.1c.3-1.3-.5-1.8-1.4-1.6z" /><path d="m8.2 14 9.1-6" /></> },
+];
+
 function About({ site }) {
   return (
     <Reveal className="lab-about" style={{ margin: "89px 0 0", padding: "55px 34px", borderRadius: 34, display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1.618fr)", gap: 55, alignItems: "center" }}>
       <div id="chisono" style={{ minWidth: 0 }}>
-        <Eyebrow>Chi sono</Eyebrow>
-        <h2 style={{ fontSize: "clamp(26px,3.2vw,42px)", margin: 0 }}>{site.autore || "L'insegnante"}</h2>
+        <Eyebrow>Il Lab</Eyebrow>
+        <h2 style={{ fontSize: "clamp(26px,3.2vw,40px)", margin: 0, lineHeight: 1.12 }}>Un laboratorio per chi insegna <em style={{ fontStyle: "italic", color: "var(--lab-oro-text)" }}>e per chi impara</em></h2>
+        {site.autore && <p style={{ margin: "13px 0 0", fontSize: 14.5, color: "var(--lab-muted)", letterSpacing: ".02em" }}>a cura di {site.autore}</p>}
       </div>
       <div style={{ minWidth: 0 }}>
         <p style={{ fontSize: 17, lineHeight: 1.5, color: "var(--lab-ink-soft)", margin: "0 0 21px" }}>{site.bio || BIO}</p>
-        {site.email && <Button variant="ghost" size="sm" href={"mailto:" + site.email}>Scrivimi</Button>}
+        <div className="lab-social">
+          <span className="lab-social__titolo">Il Lab anche qui</span>
+          {SOCIAL.map((s) => (
+            <a key={s.nome} className="lab-social__btn" href={s.href} target="_blank" rel="noopener" aria-label={`Lab IRC su ${s.nome}`}>
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{s.icona}</svg>
+              <span>{s.nome}</span>
+            </a>
+          ))}
+          {site.email && <a className="lab-social__btn lab-social__btn--mail" href={"mailto:" + site.email}>
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="m4 7 8 6 8-6" /></svg>
+            <span>Scrivimi</span>
+          </a>}
+        </div>
       </div>
     </Reveal>
   );
