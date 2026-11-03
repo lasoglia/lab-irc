@@ -121,7 +121,8 @@ def main() -> int:
         return 0
     # tutti i post del Lab, non solo le lezioni: reel, strisce, Shabbat, grande domanda
     elenco = []
-    for nome in ("cartoline.json", "reel.json", "reel-domenica.json", "prof.json", "sabato.json", "domenica.json"):
+    for nome in ("cartoline.json", "reel.json", "reel-domenica.json", "prof.json", "sabato.json", "domenica.json",
+                 "gioco.json"):
         f = g.RADICE / "promozione" / nome
         if f.exists():
             elenco += json.loads(f.read_text(encoding="utf-8"))
@@ -143,6 +144,21 @@ def main() -> int:
             ig, seguaci_ig = metriche_instagram(ig_id, chiave_pagina, indice_testi(elenco, "instagram"), avvisi)
         except m.ErroreMeta as err:
             avvisi.append(f"Instagram: {err}")
+
+    # per imparare (seo/social_quaderno.py): la serie del reel, la leva del suo gancio, il motore
+    extra = {}
+    for c in elenco:
+        e = {}
+        if c.get("regia"):
+            e["serie"] = c["regia"].get("serie")
+        if c.get("ganci"):
+            e["leva"] = c["ganci"][0].get("leva")
+        if c.get("motore") or str(c.get("chiave", "")).startswith("gioco|"):
+            e["motore"] = c.get("motore") or "gioco"
+        if e:
+            extra[c["chiave"]] = e
+    for riga in fb + ig:
+        riga.update(extra.get(riga.get("chiave"), {}))
 
     oggi = dt.date.today().isoformat()
     storico = [s for s in precedenti.get("storico", []) if s.get("data") != oggi]
