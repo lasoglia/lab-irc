@@ -40,6 +40,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402
+import coda as coda_agenti  # noqa: E402
 import illustrazioni as ill  # noqa: E402
 import promozione as pr  # noqa: E402
 
@@ -47,6 +48,7 @@ RISERVA_PROF = 6           # post del prof pronti in anticipo (tre settimane)
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
 FORMATO_DOMENICA = "grande-domanda"
+VERSIONE_DOMENICA = "2"   # cambiala per far riscrivere le domeniche non ancora uscite né approvate (2: tono)
 CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 POSE = ["sorriso", "buffo", "pensieroso", "sorpreso", "spiega", "ride"]
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
@@ -367,10 +369,16 @@ def main():
                            f"{seo.get(g.chiave_lezione(l), {}).get('sintesi', '')}"
                            for i, l in enumerate(ordinate, start=1))
     usate_dom = cache.setdefault("domande_usate", [])
+    try:   # le domeniche già approvate dagli agenti non si riscrivono
+        approvate = {v.get("chiave") for v in (coda_agenti.leggi() or {}).get("coda", []) if v.get("esito") == "approvato"}
+    except (ValueError, OSError):
+        approvate = set()
     for d in domeniche:
         k = d.isoformat()
-        vecchia = k in cache["domenica"] and cache["domenica"][k].get("formato") != FORMATO_DOMENICA \
-            and not pubblicato(cache["domenica"][k]["chiave"], registri)
+        vecchia = k in cache["domenica"] \
+            and (cache["domenica"][k].get("formato"), cache["domenica"][k].get("versione")) != (FORMATO_DOMENICA, VERSIONE_DOMENICA) \
+            and not pubblicato(cache["domenica"][k]["chiave"], registri) \
+            and cache["domenica"][k]["chiave"] not in approvate
         if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
             continue
         try:
@@ -389,7 +397,7 @@ def main():
             continue
         tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
         anno = str(scelte[0].get("anno", ""))
-        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "tempo": "",
+        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "versione": VERSIONE_DOMENICA, "tempo": "",
                 "colore": pr.COLORI_ANNO.get(anno, ORO), "anno": anno,
                 "lezione": " · ".join(l["titolo"] for l in scelte), "url": pr.url_lezione(scelte[0]),
                 "lezioni": [{"titolo": l["titolo"], "url": pr.url_lezione(l)} for l in scelte],

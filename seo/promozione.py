@@ -46,7 +46,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import genera as g  # noqa: E402  (stesse letture dei dati delle pagine SEO)
 
 MODELLO = os.environ.get("PROMO_MODELLO", "claude-opus-5-5")
-VERSIONE = "2"                      # cambiala per far riscrivere tutti i testi (2: caroselli e redattore)
+VERSIONE = "3"                      # cambiala per far riscrivere tutti i testi (3: tono più leggero)
 PARALLELI = int(os.environ.get("PROMO_PARALLELI", "6"))   # lezioni scritte contemporaneamente
 CHIAVE_SITO = "_sito"               # la voce con il post di presentazione del sito
 COLORI_ANNO = {"1": "#FF7A59", "2": "#4FB0FF", "3": "#A78BFA", "4": "#FB7BB5", "5": "#FBBF24"}
@@ -227,7 +227,7 @@ def aggiorna_testi(sito, anni, uda, lezioni, usa_ia: bool, forza: bool) -> dict:
 
     da_scrivere = []
     for k, base, messaggio in lavori:
-        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI).encode()).hexdigest()[:16]
+        impronta = hashlib.sha256((base + MODELLO + VERSIONE + ISTRUZIONI + TONO).encode()).hexdigest()[:16]
         voce = cache.get(k)
         if voce and voce.get("bloccato"):
             continue
