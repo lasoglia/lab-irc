@@ -120,6 +120,9 @@ def scheda_rubrica(r: dict, quando: dt.date, lezione: dict | None) -> str:
             f"   fumetto: «{v.get('fumetto', '')}»" for i, v in enumerate(r.get("vignette", []), start=1))
     else:
         corpo = f"## Tempo liturgico\n{r.get('tempo')}\n\n## Titolo e frase sull'immagine\n{r.get('titolo')}\n{r.get('frase')}"
+        if r.get("carosello"):
+            corpo += "\n\n## Carosello\n" + "\n".join(
+                f"{i}. {s.get('titolo')}: {s.get('testo')}" for i, s in enumerate(r["carosello"], start=2))
     return f"""# Rubrica: {r['titolo']}
 
 - chiave: `{r['chiave']}`

@@ -115,9 +115,9 @@ function finale(c, totale) {
 <div class="alto">${logo}<div class="conta" style="color:${colore}">${totale}/${totale}</div></div>
 <div class="centro">
 <div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>
-<div class="eb" style="justify-content:center">La lezione completa</div>
-<h2>Slide, fascicolo e attività<br>sono su <em>www.labirc.it</em></h2>
-<div class="bio">Link nella bio · gratis per tutti i colleghi</div></div>
+<div class="eb" style="justify-content:center">${esc(c.saluto || 'Per continuare')}</div>
+<h2>La lezione completa<br>è su <em>www.labirc.it</em></h2>
+<div class="bio">Link nella bio</div></div>
 <div class="piede"><div class="uda">${esc(c.titolo)}</div><div class="web">www.labirc.it</div></div>`,
   `.conta{font:600 26px Cinzel;letter-spacing:.12em}
 .centro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
@@ -205,7 +205,7 @@ for (const c of leggi('cartoline.json')) {
   const schede = c.carosello || [];
   const totale = immagini.length;
   schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s, (c.illustrazioni || [])[k]), adatta: 'h2' }));
-  if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale) });
+  if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale), v: 2 });
 }
 for (const p of leggi('prof.json')) {
   const vignette = p.vignette || [];
@@ -214,7 +214,15 @@ for (const p of leggi('prof.json')) {
   if (manca) { console.log(`! Manca assets/avatar/${manca.posa}.png: salto la striscia ${p.chiave}.`); continue; }
   vignette.forEach((v, k) => lavori.push({ file: p.immagini[k], html: () => vignetta(p, k + 1, vignette.length, v), adatta: 'h2' }));
 }
-for (const d of leggi('domenica.json')) lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
+for (const d of leggi('domenica.json')) {
+  lavori.push({ file: d.file, html: () => domenica(d), adatta: 'h1' });
+  // il carosello della domenica: le schede con i disegni, poi il saluto finale
+  const schede = d.carosello || [];
+  const totale = (d.immagini || []).length;
+  const piede = { colore: d.colore || ORO, titolo: `La domenica del Lab · ${d.tempo}` };
+  schede.forEach((s, k) => lavori.push({ file: d.immagini[k + 1], html: () => scheda(piede, k + 2, totale, s, (d.illustrazioni || [])[k]), adatta: 'h2' }));
+  if (schede.length) lavori.push({ file: d.immagini[totale - 1], html: () => finale({ colore: d.colore || ORO, titolo: d.lezione, saluto: 'Buona domenica' }, totale), v: 2 });
+}
 // le storie vengono per ultime (mostrano la copertina appena disegnata), solo in JPG
 // e solo per i post non ancora usciti su Facebook e Instagram
 const registroMeta = existsSync(join(RADICE, 'data', 'meta.json')) ? JSON.parse(readFileSync(join(RADICE, 'data', 'meta.json'), 'utf8')) : {};
@@ -229,15 +237,24 @@ for (const p of leggi('prof.json').filter((x) => daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'La striscia completa è sul profilo') });
 }
-for (const d of leggi('domenica.json').filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, 'La domenica del Lab', 'Buona domenica dal Lab') });
+for (const d of leggi('domenica.json').filter((x) => daRaccontare(x.chiave))) lavori.push({ file: storiaDi(d.file), alto: 1920, html: () => storia(d.colore || ORO, d.file, 'La domenica del Lab', d.carosello && d.carosello.length ? 'Buona domenica: scorri il carosello sul profilo' : 'Buona domenica dal Lab') });
 for (const l of lavori.slice(prima_)) l.soloJpg = true;
 
 mkdirSync(CARTELLA, { recursive: true });
 const attese = new Set(lavori.flatMap((l) => (l.soloJpg ? [jpg(l.file)] : [l.file, jpg(l.file)])));
 for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
 
-const daFare = lavori.filter((l) => (!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))));
-if (!daFare.length) { console.log('Immagini già pronte: niente da disegnare.'); process.exit(0); }
+// Quando cambia la grafica di un tipo di immagine (il suo «v»), quelle già disegnate si rifanno:
+// promozione/cartoline/versioni.json ricorda con che versione è stata disegnata ciascuna
+const VERSIONI = join(CARTELLA, 'versioni.json');
+const versioni = existsSync(VERSIONI) ? JSON.parse(readFileSync(VERSIONI, 'utf8')) : {};
+const vecchia = (l) => (versioni[l.file] || 1) !== (l.v || 1);
+const daFare = lavori.filter((l) => vecchia(l) || (!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))));
+const salvaVersioni = () => {
+  const tieni = Object.fromEntries(lavori.filter((l) => (l.v || 1) > 1 && !vecchia(l)).map((l) => [l.file, l.v]));
+  writeFileSync(VERSIONI, JSON.stringify(tieni, null, 1) + '\n');
+};
+if (!daFare.length) { salvaVersioni(); console.log('Immagini già pronte: niente da disegnare.'); process.exit(0); }
 if (!existsSync(PW) || !existsSync(CHROME)) {
   console.log(`! Manca Playwright o il browser: salto ${daFare.length} immagini.`);
   process.exit(0);
@@ -263,8 +280,10 @@ for (const l of daFare) {
   }, [l.adatta || '', alto]);
   if (!l.soloJpg) await scheda_.screenshot({ path: join(CARTELLA, l.file) });
   await scheda_.screenshot({ path: join(CARTELLA, jpg(l.file)), type: 'jpeg', quality: 90 });
+  versioni[l.file] = l.v || 1;
   console.log('  ✓', l.soloJpg ? jpg(l.file) : l.file);
 }
 await browser.close();
+salvaVersioni();
 rmSync(lavoro, { recursive: true, force: true });
 console.log(`Immagini disegnate: ${daFare.length}`);
