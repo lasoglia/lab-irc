@@ -1,9 +1,12 @@
 name: Social · post automatico
-# Ogni giorno, verso le 17 ora italiana, esce il post del giorno (seo/pubblica.py),
-# secondo il calendario di seo/social_calendario.py:
-#   scuola    lunedì-venerdì una lezione (carosello, storia e video a fumetti col prof),
-#             sabato «Lo Shabbat del Lab», domenica «La grande domanda» (carosello, storia e video)
-#   vacanze   lunedì, mercoledì e venerdì una striscia simpatica del prof
+# Esce il post del giorno (seo/pubblica.py), secondo il calendario di seo/social_calendario.py:
+#   scuola    lunedì, mercoledì e venerdì il reel di una lezione (alle 19), martedì il
+#             carosello di una lezione (13:30), sabato «Lo Shabbat del Lab» (11),
+#             domenica «La grande domanda» (carosello alle 18, video alle 19:30); giovedì niente
+#   vacanze   lunedì e giovedì una striscia simpatica del prof
+# Gli orari li dà l'orologio su Cloudflare (seo/orologio-cloudflare.js), puntuale al minuto.
+# L'esecuzione programmata qui sotto è la rete di sicurezza della sera: se l'orologio non è
+# partito pubblica quello che manca (un post già uscito non esce due volte).
 # Se esiste data/social-coda.json escono solo i post approvati dagli agenti.
 # Prima di pubblicare prepara in anticipo le rubriche dei giorni seguenti
 # (seo/rubriche.py, con Claude) e le loro immagini (seo/cartoline.mjs).
@@ -14,13 +17,13 @@ name: Social · post automatico
 
 on:
   schedule:
-    - cron: '47 15 * * *'   # ogni giorno alle 15:47 UTC (17:47 d'estate, 16:47 d'inverno)
+    - cron: '17 20 * * *'   # rete di sicurezza: 20:17 UTC (21:17 d'inverno, 22:17 d'estate)
   workflow_dispatch:
     inputs:
       coda:
         description: 'Che cosa pubblicare (oggi = il calendario)'
         type: choice
-        options: [oggi, lezioni, prof, domenica, video, nulla]
+        options: [oggi, reel, lezioni, prof, sabato, domenica, video, nulla]
         default: oggi
       canali:
         description: 'Dove pubblicare'
@@ -127,18 +130,20 @@ jobs:
           META_PAGINA_ID: '1450849821438605'   # Pagina «Lab IRC» (non è un segreto)
           CODA: ${{ inputs.coda }}
           CANALI: ${{ inputs.canali }}
+          EVENTO: ${{ github.event_name }}
         run: |
           argomenti=""
           canali=""
-          case "$CODA" in lezioni|prof|domenica|video) argomenti="--coda $CODA";; esac
+          case "$CODA" in reel|lezioni|prof|sabato|domenica|video) argomenti="--coda $CODA";; esac
           case "$CANALI" in
             telegram) canali="--canali telegram";;
             facebook-instagram) canali="--canali facebook,instagram";;
           esac
           esito=0
           python seo/pubblica.py $argomenti $canali || esito=1
-          # dopo il post, il suo video a fumetti (esce solo se il post è uscito oggi)
-          if [ "$CODA" != video ]; then
+          # il video della grande domanda lo fa partire l'orologio alle 19:30; la sera, nella rete
+          # di sicurezza, esce qui se manca (solo se il suo carosello è uscito oggi)
+          if [ "$EVENTO" = schedule ]; then
             python seo/pubblica.py --coda video $canali || esito=1
           fi
           exit $esito

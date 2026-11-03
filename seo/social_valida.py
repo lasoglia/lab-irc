@@ -43,10 +43,10 @@ CAMPI = {  # campo: lunghezza minima e massima
     "whatsapp": (100, 450),
 }
 HASHTAG_MAX = 5
-# il calendario è quello di seo/social_calendario.py: a scuola lezioni lunedì e venerdì
-# (il mercoledì il loro video), sabato lo Shabbat, domenica la grande domanda;
-# in vacanza le strisce del prof lunedì e giovedì
-MASSIMO_PER_TIPO = {"lezione": 2, "prof": 2, "shabbat": 1, "domenica": 1}
+# il calendario è quello di seo/social_calendario.py: a scuola una lezione lunedì, martedì,
+# mercoledì e venerdì (il martedì come carosello, gli altri giorni come reel), sabato lo
+# Shabbat, domenica la grande domanda; in vacanza le strisce del prof lunedì e giovedì
+MASSIMO_PER_TIPO = {"lezione": 4, "prof": 2, "shabbat": 1, "domenica": 1}
 VIETATI = [
     (r"https?://|www\.", "contiene un link: i link li aggiunge lo script"),
     (r"clicca qui", "contiene «clicca qui»"),
@@ -103,7 +103,10 @@ def controlla_coda(errori: list[str]) -> None:
             errori.append(f"coda: data non valida per {chiave}: {quando}")
             continue
         tipo = tipi.get(chiave, "lezione")
-        if giorno > oggi and cal.tipo_del_giorno(giorno) != tipo:   # le voci di oggi e passate restano come sono
+        del_giorno = cal.tipo_del_giorno(giorno)
+        if del_giorno in cal.DI_LEZIONE:   # nei giorni «reel» la lezione esce come video
+            del_giorno = "lezione"
+        if giorno > oggi and del_giorno != tipo:   # le voci di oggi e passate restano come sono
             errori.append(f"coda: {quando} non è un giorno di uscita per «{tipo}» ({chiave})")
         if tipo in ("domenica", "shabbat") and not str(chiave).endswith(str(quando)):
             errori.append(f"coda: la domenica {chiave} va pubblicata nella sua data, non il {quando}")
