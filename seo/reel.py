@@ -2,12 +2,12 @@
 """
 seo/reel.py — I video a fumetti delle lezioni (uno per ogni lezione che esce).
 
-Per ogni mercoledì dei prossimi 7 giorni prende la lezione approvata in
-data/social-coda.json che esce prima (il lunedì; senza coda, le prossime 5 del kit), chiede a Claude il
+Per ogni lezione approvata in data/social-coda.json per un giorno «reel» dei prossimi 7
+giorni (lunedì, mercoledì, venerdì; senza coda, le prossime 5 del kit) chiede a Claude il
 copione (un gancio, una frase breve per ogni scheda del carosello, le didascalie)
 e lo scrive in promozione/reel.json. Il video lo monta seo/reel.mjs: il prof
 (l'avatar) risponde nei fumetti, sopra i disegni del carosello. Lo pubblica
-seo/pubblica.py il mercoledì (giorno «video» di seo/social_calendario.py).
+seo/pubblica.py nel suo giorno, al posto del carosello.
 
   promozione/reel.json     i video da montare e pubblicare
   data/reel.json           i copioni già scritti, che fanno da cache
@@ -112,16 +112,13 @@ def da_preparare(lezioni: list[dict], registri: tuple, oggi: dt.date) -> list[di
     if stato is None:
         scelte = [c for c in lezioni if not pubblicato(c["chiave"], registri)][:5]
     else:
-        # per ogni mercoledì dei prossimi 7 giorni, la lezione in coda che esce prima (il lunedì)
-        voci = [v for v in stato.get("coda", []) if v.get("esito") == "approvato" and v.get("chiave") in per_chiave]
-        scelte = []
-        for giorno in cal.giorni_di("video", oggi - dt.timedelta(days=1), GIORNI_AVANTI + 1):
-            prima = [v for v in voci if (giorno - dt.timedelta(days=7)).isoformat() <= str(v.get("quando", ""))
-                     < giorno.isoformat()]
-            if prima:
-                c = per_chiave[max(prima, key=lambda v: str(v["quando"]))["chiave"]]
-                if c not in scelte:
-                    scelte.append(c)
+        # le lezioni in coda nei prossimi 7 giorni per un giorno «reel» (lunedì, mercoledì, venerdì)
+        fine = (oggi + dt.timedelta(days=GIORNI_AVANTI)).isoformat()
+        voci = sorted((v for v in stato.get("coda", []) if v.get("esito") == "approvato"
+                       and oggi.isoformat() <= str(v.get("quando", "")) <= fine
+                       and cal.tipo_del_giorno(dt.date.fromisoformat(str(v["quando"]))) == "reel"),
+                      key=lambda v: str(v["quando"]))
+        scelte = [per_chiave[v["chiave"]] for v in voci if v.get("chiave") in per_chiave]
     return [c for c in scelte if c.get("carosello") and not pubblicato("reel|" + c["chiave"], registri)]
 
 

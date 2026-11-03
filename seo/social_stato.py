@@ -41,7 +41,7 @@ def prossime_uscite(oggi: dt.date, quante: int = 5) -> list[dt.date]:
     giorno, date = oggi, []
     while len(date) < quante:
         giorno += dt.timedelta(days=1)
-        if cal.tipo_del_giorno(giorno) == "lezione":   # il calendario di seo/social_calendario.py
+        if cal.tipo_del_giorno(giorno) in cal.DI_LEZIONE:   # il calendario di seo/social_calendario.py
             date.append(giorno)
         if giorno > oggi + dt.timedelta(days=21):
             break
@@ -273,9 +273,11 @@ def main() -> int:
         f"# Stato social Lab IRC, {oggi.isoformat()}",
         "",
         "## Uscite da coprire",
-        *[f"- {GIORNI[d.weekday()]} {d.isoformat()}" for d in uscite],
+        *[f"- {GIORNI[d.weekday()]} {d.isoformat()}: "
+          + ("REEL (la lezione esce come video a fumetti: sceglila perché renda bene raccontata)"
+             if cal.tipo_del_giorno(d) == "reel" else "carosello") for d in uscite],
         *([f"- Vacanze in arrivo: {', '.join(sorted({cal.in_vacanza(oggi + dt.timedelta(days=i)) for i in range(1, 8)} - {''}))}: "
-           "niente lezioni né domenica, una striscia del prof lunedì, mercoledì e venerdì."]
+           "niente lezioni né domenica, una striscia del prof lunedì e giovedì."]
           if any(cal.in_vacanza(oggi + dt.timedelta(days=i)) for i in range(1, 8)) else []),
         "",
         "## Tempo liturgico e ricorrenze dei prossimi 21 giorni",

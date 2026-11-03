@@ -11,12 +11,13 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 ## Social
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
   del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
-- Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`), dal 9 novembre 2026 più leggero.
-  A scuola: lunedì e venerdì il carosello di una lezione, mercoledì il video a fumetti della lezione
-  del lunedì, sabato «Lo Shabbat del Lab» (cultura ebraica: Claude cerca solo su fonti ebraiche
-  autorevoli, `FONTI_EBRAICHE` in `seo/rubriche.py`, e scrive solo ciò che ha trovato), domenica
-  «La grande domanda» (carosello e video); martedì e giovedì niente. In vacanza (`data/vacanze.json`,
-  o le date nazionali più comuni): una striscia del prof lunedì e giovedì, nient'altro.
+- Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`), dal 9 novembre 2026 più reel che caroselli.
+  A scuola: lunedì, mercoledì e venerdì il reel di una lezione (19:00), martedì il carosello di una lezione
+  (13:30), giovedì niente, sabato «Lo Shabbat del Lab» (11:00; cultura ebraica: Claude cerca solo su fonti
+  ebraiche autorevoli, `FONTI_EBRAICHE` in `seo/rubriche.py`, e scrive solo ciò che ha trovato), domenica
+  «La grande domanda» (carosello alle 18, video alle 19:30). In vacanza (`data/vacanze.json`, o le date
+  nazionali più comuni): una striscia del prof lunedì e giovedì, nient'altro. Gli orari li dà l'orologio
+  su Cloudflare (`seo/orologio-cloudflare.js`); l'Action programmata di GitHub è la rete di sicurezza serale.
 - Immagini e video dei post non stanno nel repo: `seo/cartoline.mjs` disegna solo i post in coda,
   `seo/media_r2.py` li carica su Cloudflare R2 (cancellati dopo 30 giorni).
 - `seo/pubblica.py` pubblica il post del giorno con la sua storia, poi (`--coda video`) il suo video a
