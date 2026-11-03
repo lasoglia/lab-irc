@@ -45,7 +45,7 @@ CAMPI = {  # campo: lunghezza minima e massima
 HASHTAG_MAX = 5
 # il calendario è quello di seo/social_calendario.py: a scuola lezioni lun-ven e la domenica,
 # in vacanza solo le strisce del prof lunedì, mercoledì e venerdì
-MASSIMO_PER_TIPO = {"lezione": 5, "prof": 3, "domenica": 1}
+MASSIMO_PER_TIPO = {"lezione": 5, "prof": 3, "shabbat": 1, "domenica": 1}
 VIETATI = [
     (r"https?://|www\.", "contiene un link: i link li aggiunge lo script"),
     (r"clicca qui", "contiene «clicca qui»"),
@@ -78,7 +78,8 @@ def controlla_coda(errori: list[str]) -> None:
         errori.append("manca data/social-coda.json")
         return
     tipi: dict[str, str] = {}   # chiave -> lezione | prof | domenica
-    for nome, tipo in (("cartoline.json", "lezione"), ("prof.json", "prof"), ("domenica.json", "domenica")):
+    for nome, tipo in (("cartoline.json", "lezione"), ("prof.json", "prof"), ("sabato.json", "shabbat"),
+                       ("domenica.json", "domenica")):
         p = RADICE / "promozione" / nome
         for c in (json.loads(p.read_text(encoding="utf-8")) if p.exists() else []):
             tipi[c["chiave"]] = tipo
@@ -103,7 +104,7 @@ def controlla_coda(errori: list[str]) -> None:
         tipo = tipi.get(chiave, "lezione")
         if giorno > oggi and cal.tipo_del_giorno(giorno) != tipo:   # le voci di oggi e passate restano come sono
             errori.append(f"coda: {quando} non è un giorno di uscita per «{tipo}» ({chiave})")
-        if tipo == "domenica" and not str(chiave).endswith(str(quando)):
+        if tipo in ("domenica", "shabbat") and not str(chiave).endswith(str(quando)):
             errori.append(f"coda: la domenica {chiave} va pubblicata nella sua data, non il {quando}")
         if giorno >= oggi:
             settimana = tuple(giorno.isocalendar())[:2] + (tipo,)

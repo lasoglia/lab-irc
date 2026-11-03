@@ -107,7 +107,7 @@ section{position:absolute;left:80px;right:80px;top:310px;height:720px;display:fl
 ${scene}
 <section class="fine da-prof">
   <div class="cinque">${[1, 2, 3, 4, 5].map((k) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[k]}.svg`)}">`).join('')}</div>
-  <div class="fumetto"><h2>${r.etichetta ? 'La risposta completa' : 'La lezione completa'}<br>è su <em>www.labirc.it</em></h2><div class="bio">Link nella bio</div></div>
+  <div class="fumetto"><h2>${r.finale ? `${esc(r.finale)}<br>Il Lab è su <em>www.labirc.it</em>` : `${r.etichetta ? 'La risposta completa' : 'La lezione completa'}<br>è su <em>www.labirc.it</em>`}</h2><div class="bio">Link nella bio</div></div>
 </section>
 <div class="palco">
   <div class="ombra" style="left:90px;width:320px"></div><div class="ombra" style="right:60px;width:220px"></div>

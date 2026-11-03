@@ -5,7 +5,7 @@ seo/pubblica.py — Ogni giorno decide che cosa esce sui social e lo pubblica.
 Il calendario (ora italiana) sta in seo/social_calendario.py (tipo_del_giorno):
   scuola, lunedì-venerdì   una lezione (copertina + carosello)       promozione/cartoline.json
   scuola, domenica         «La grande domanda» (carosello)           promozione/domenica.json
-  scuola, sabato           niente
+  scuola, sabato           «Lo Shabbat del Lab» (carosello)          promozione/sabato.json
   vacanze, lun-mer-ven     «Il prof del Lab», la striscia a fumetti  promozione/prof.json
 
 Dopo ogni post su Facebook e Instagram esce anche la sua storia (l'immagine
@@ -53,8 +53,9 @@ import meta  # noqa: E402
 import telegram as tg  # noqa: E402
 from rubriche import oggi_in_italia  # noqa: E402
 
-CODE = {"lezione": "lezioni", "prof": "prof", "domenica": "domenica", None: None}
-FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "domenica": "domenica.json", "video": "reel.json"}
+CODE = {"lezione": "lezioni", "prof": "prof", "shabbat": "sabato", "domenica": "domenica", None: None}
+FILE_CODA = {"lezioni": "cartoline.json", "prof": "prof.json", "sabato": "sabato.json", "domenica": "domenica.json",
+             "video": "reel.json"}
 CANALI = ("telegram", "facebook", "instagram")
 
 
@@ -231,7 +232,7 @@ def main():
         print("Oggi non è previsto nulla.")
         return 0
     elenco = leggi_json(g.RADICE / "promozione" / FILE_CODA[coda], [])
-    if coda == "domenica" and not a.coda:
+    if coda in ("domenica", "sabato") and not a.coda:
         elenco = [d for d in elenco if d.get("data") == oggi.isoformat()]
     if coda == "lezioni":
         # le strisce del prof già approvate per un giorno di scuola escono ancora (prima del nuovo calendario)
