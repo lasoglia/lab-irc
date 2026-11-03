@@ -318,6 +318,7 @@
       "chiave": "dom-2026-11-08",
       "data": "2026-11-08",
       "formato": "grande-domanda",
+      "versione": "2",
       "tempo": "",
       "colore": "#FB7BB5",
       "anno": "4",
@@ -339,51 +340,46 @@
       ],
       "testi": {
         "titolo": "Ma la Chiesa ha davvero condannato Galileo? E perché?",
-        "frase": "Sì, nel 1633. Ma la sentenza non dice ciò che pensano tutti: leggiamo i documenti, dal 1613 al 1992.",
+        "frase": "Una cena, un verso di Giosuè, due fogli e una sentenza: la storia vera è più sorprendente di quella che conosci.",
         "carosello": [
           {
-            "titolo": "Quello che si pensa",
-            "testo": "Galileo fu condannato perché diceva che la Terra gira: lo sanno tutti. Ma la sentenza del 1633 dice una cosa più precisa. E la storia comincia vent'anni prima, a tavola."
+            "titolo": "Il film che abbiamo in testa",
+            "testo": "Da una parte la Chiesa, dall'altra la scienza, in mezzo un genio punito perché aveva ragione. C'è del vero, ma i documenti raccontano una storia più precisa. E molto più sorprendente."
           },
           {
-            "titolo": "Un versetto a cena",
-            "testo": "Pisa, dicembre 1613. A corte la granduchessa Cristina di Lorena oppone a Castelli, allievo di Galileo, un versetto: «Férmati, sole» (Gs 10,12). Se Dio lo ferma, il sole si muove."
+            "titolo": "Tutto parte da una cena",
+            "testo": "Dicembre 1613, alla corte del Granduca: si parla delle lune di Giove. Poi Cristina di Lorena tira fuori Giosuè: «Férmati, sole». Se Dio lo ferma, allora si muove. Scacco?"
           },
           {
             "titolo": "Come si va al cielo",
-            "testo": "Galileo risponde: la Scrittura non sbaglia, ma chi la interpreta sì. E cita un cardinale: la Bibbia vuole insegnare «come si vadia al cielo, e non come vadia il cielo»."
+            "testo": "Galileo risponde: la Bibbia non sbaglia, sbaglia chi la legge sempre alla lettera. E cita un cardinale: lo Spirito Santo insegna «come si vadia al cielo, e non come vadia il cielo»."
           },
           {
-            "titolo": "Bellarmino: serve la prova",
-            "testo": "Il cardinale Bellarmino, 1615: con una «vera demonstratione», meglio dire che le Scritture non le capiamo. Ma la prova decisiva, la parallasse, arriverà solo nel 1838."
+            "titolo": "Bellarmino: mostrami la prova",
+            "testo": "1615, il cardinale: con una «vera dimostrazione» bisognerebbe rileggere la Scrittura con cura. Ma senza prova non ci crede. E la prova decisiva, la parallasse delle stelle, arriverà nel 1838."
           },
           {
-            "titolo": "1616: la tesi bocciata",
-            "testo": "24 febbraio: i teologi del Sant'Uffizio dicono «eretica» la tesi del Sole fermo al centro. 5 marzo: il decreto la dice «falsa e contraria alla Scrittura». Nessun processo a Galileo."
+            "titolo": "1616: nessun processo",
+            "testo": "Per gli esperti del Sant'Uffizio il Sole fermo al centro è un'idea «eretica». A Galileo l'ordine di non sostenerla. Il decreto pubblico la dice solo «falsa e contraria alla Scrittura»."
           },
           {
-            "titolo": "1632: il Dialogo",
-            "testo": "Roma permette di stampare il Dialogo, se Copernico resta un'ipotesi. Ma chi parla per Galileo vince sempre, e l'argomento del papa lo dice chi ha sempre torto. Urbano VIII si sente deriso."
+            "titolo": "1632: il libro dello scandalo",
+            "testo": "Il papa ora è Urbano VIII, amico di Galileo. Nel Dialogo, però, il suo argomento finisce in bocca a Simplicio, quello che per 400 pagine ha sempre torto. Il papa si sente deriso."
           },
           {
-            "titolo": "1633: la sentenza",
-            "testo": "22 giugno 1633: Galileo è dichiarato «vehementemente sospetto d'heresia», non eretico. La colpa: aver difeso il moto della Terra dopo che nel 1616 era stato detto contrario alla Scrittura."
+            "titolo": "1633: sì, condannato",
+            "testo": "In ginocchio davanti a sette cardinali, Galileo abiura. La sentenza: «veementemente sospetto d'eresia», per aver difeso un'idea già dichiarata contraria alla Scrittura nel 1616."
           },
           {
-            "titolo": "1992: l'errore riconosciuto",
-            "testo": "Il 31 ottobre 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo»: credere che la lettera della Scrittura imponesse come è fatto il mondo. E tu, alla Bibbia, che domanda fai?"
+            "titolo": "1992, e ora tocca a te",
+            "testo": "Nel 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo». Pensavano che la Bibbia insegnasse anche la fisica. E tu: che cosa chiedi alla Bibbia, e che cosa al cannocchiale?"
           }
         ],
-        "gancio": "Galileo fu condannato. Ma per che cosa, davvero?",
+        "gancio": "Galileo condannato? Sì. Ma per cosa, esattamente?",
         "scene_video": [
           {
-            "titolo": "Tutti sanno che...",
-            "testo": "Galileo condannato nel 1633. Ma la sentenza dice una cosa più precisa.",
-            "scheda": 1
-          },
-          {
-            "titolo": "Un versetto contro",
-            "testo": "1613: «Férmati, sole» (Gs 10). Se Dio lo ferma, il sole si muove?",
+            "titolo": "1613: tutto parte a tavola",
+            "testo": "La Granduchessa cita Giosuè: «Férmati, sole». Quindi il sole si muove?",
             "scheda": 2
           },
           {
@@ -392,51 +388,57 @@
             "scheda": 3
           },
           {
-            "titolo": "1616",
-            "testo": "La tesi del Sole immobile è dichiarata contraria alla Scrittura.",
-            "scheda": 5
+            "titolo": "Bellarmino vuole la prova",
+            "testo": "Richiesta ragionevole: la prova decisiva arriverà solo nel 1838.",
+            "scheda": 4
           },
           {
-            "titolo": "22 giugno 1633",
-            "testo": "«Vehementemente sospetto d'heresia»: difese Copernico dopo il 1616.",
+            "titolo": "1632: il papa si offende",
+            "testo": "Nel Dialogo il suo argomento lo dice Simplicio, quello che ha sempre torto.",
+            "scheda": 6
+          },
+          {
+            "titolo": "1633: sì, condannato",
+            "testo": "«Veementemente sospetto d'eresia»: aveva difeso un'idea già vietata nel 1616.",
             "scheda": 7
           },
           {
-            "titolo": "1992",
-            "testo": "Giovanni Paolo II riconosce «l'errore dei teologi del tempo».",
+            "titolo": "1992: errore riconosciuto",
+            "testo": "Giovanni Paolo II: «l'errore dei teologi del tempo». Il resto è nel carosello.",
             "scheda": 8
           }
         ],
-        "facebook": "Roma, 22 giugno 1633. Un uomo di quasi settant'anni, malato, è in ginocchio davanti a sette cardinali e legge: «abiuro, maledico e detesto». È Galileo Galilei.\n\nQuindi sì, la Chiesa lo condannò. Ma per che cosa? La sentenza lo dichiara «vehementemente sospetto d'heresia», non eretico: aveva difeso il moto della Terra dopo che nel 1616 era stato dichiarato contrario alla Scrittura. In mezzo c'è il Dialogo del 1632, dove Copernico doveva restare un'ipotesi e invece vinceva sempre.\n\nNel 1992 Giovanni Paolo II ha riconosciuto «l'errore dei teologi del tempo».\n\nSfoglia il carosello: otto schede, dai documenti alla risposta. Poi apri le lezioni del Lab IRC per leggere i testi originali. 📜",
-        "instagram": "«Férmati, sole».\n\nPisa, 1613. A una cena di corte questo versetto di Giosuè diventa un'accusa: se Dio ferma il sole, il sole si muove. Quindi Galileo sbaglia.\n\nGalileo risponde che la Bibbia non sbaglia. Può sbagliare chi la legge.\n\nVent'anni dopo, nel 1633, la Chiesa lo condanna. Ma la sentenza dice qualcosa di più preciso di quanto si pensa.\n\nNelle schede trovi i documenti: un cardinale che chiede una prova, un libro che irrita il papa, una sentenza, e un riconoscimento arrivato nel 1992.\n\nLa Bibbia insegna come va il cielo, o come si va al cielo?\n\nSfoglia fino all'ultima scheda, poi apri le lezioni sul sito.",
+        "facebook": "Roma, 22 giugno 1633. Un uomo di quasi settant'anni, malato, arrivato in lettiga, legge in ginocchio un foglio davanti a sette cardinali. È Galileo Galilei. 🔭\n\nQuindi sì, la condanna c'è stata. Ma la domanda arrivata dai banchi è più furba: condannato per che cosa? La chiave della sentenza è una riga: Galileo aveva difeso un'idea dopo che, nel 1616, era stata dichiarata contraria alla Scrittura.\n\nPer arrivarci si passa da una cena a Pisa, da un cardinale che chiede una prova (richiesta ragionevole, per l'epoca) e da un libro in cui l'argomento del papa finisce in bocca al personaggio che sbaglia sempre. Spoiler: al papa non piacque.\n\nIl carosello racconta tutto in otto schede, fino al 1992. Le lezioni del Lab IRC per la prima e la quarta hanno i documenti originali.",
+        "instagram": "Pisa, dicembre 1613: a cena si chiacchiera di lune di Giove. Poi la granduchessa madre tira fuori la Bibbia: «Férmati, sole». ☀️\n\nDa lì parte la storia di Galileo e della Chiesa.\n\nGalileo risponde con una frase da tenere a mente: la Bibbia insegna come si va in cielo, non come va il cielo.\n\nIl cardinale Bellarmino chiede la prova. Galileo non ce l'ha ancora: arriverà nel 1838.\n\nNel 1633 la condanna arriva davvero. Ma la sentenza dice una cosa più precisa di quanto pensi.\n\nOtto schede per scoprirla, e l'ultima è una domanda per te. Le lezioni complete sono sul Lab IRC.",
         "hashtag": [
           "religionecattolica",
           "irc",
           "galileo",
           "fedeescienza"
         ],
-        "telegram": "Galileo non fu condannato come eretico. La sentenza del 22 giugno 1633 lo dichiara «vehementemente sospetto d'heresia»: aveva difeso il moto della Terra dopo che nel 1616 era stato dichiarato contrario alla Scrittura. È la grande domanda di questa domenica: la Chiesa ha davvero condannato Galileo? E perché? Carosello e lezioni del Lab IRC ricostruiscono la storia nei documenti.",
+        "telegram": "Galileo fu condannato davvero? Sì: il 22 giugno 1633 il Sant'Uffizio lo dichiarò «veementemente sospetto d'eresia». Non eretico, sospetto. E il motivo sta in un foglio di diciassette anni prima. Nel super post della domenica: la cena del 1613, la lettera di Bellarmino, il decreto del 1616, il Dialogo e il 1992. Otto schede da sfogliare, poi le lezioni con i documenti originali.",
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 35153,
-          "output": 16155
+          "input": 35421,
+          "output": 18362
         }
       },
       "illustrazioni": [
-        "2026-11-08-94ee6a-1.svg",
-        "2026-11-08-94ee6a-2.svg",
-        "2026-11-08-94ee6a-3.svg",
-        "2026-11-08-94ee6a-4.svg",
-        "2026-11-08-94ee6a-5.svg",
-        "2026-11-08-94ee6a-6.svg",
-        "2026-11-08-94ee6a-7.svg",
-        "2026-11-08-94ee6a-8.svg"
+        "2026-11-08-bfde53-1.svg",
+        "2026-11-08-bfde53-2.svg",
+        "2026-11-08-bfde53-3.svg",
+        "2026-11-08-bfde53-4.svg",
+        "2026-11-08-bfde53-5.svg",
+        "2026-11-08-bfde53-6.svg",
+        "2026-11-08-bfde53-7.svg",
+        "2026-11-08-bfde53-8.svg"
       ]
     },
     "2026-11-15": {
       "chiave": "dom-2026-11-15",
       "data": "2026-11-15",
       "formato": "grande-domanda",
+      "versione": "2",
       "tempo": "",
       "colore": "#FF7A59",
       "anno": "1",
@@ -458,76 +460,76 @@
       ],
       "testi": {
         "titolo": "Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?",
-        "frase": "L'universo con un inizio l'ha proposto un prete. E proprio lui spiegò che cosa una scoperta non può dimostrare.",
+        "frase": "L'idea del Big Bang viene da un prete. E proprio lui spiega perché scienza e fede non si rubano il posto.",
         "carosello": [
           {
-            "titolo": "Quello che si pensa",
-            "testo": "«Il Big Bang spiega come è nato l'universo: Dio non serve più.» È un'idea diffusa. Ma scienza e fede rispondono davvero alla stessa domanda?"
+            "titolo": "Big Bang batte Dio 1-0?",
+            "testo": "C'è chi pensa: la scienza ha spiegato l'origine, Dio può andare in pensione. E chi ribatte: il Big Bang dimostra Dio. Sorpresa: fanno lo stesso errore."
           },
           {
-            "titolo": "Lo propose un prete",
-            "testo": "Georges Lemaître, sacerdote e fisico belga. Nel 1927 descrive un universo in espansione. Nel 1931 uno stato iniziale densissimo, l'«atomo primitivo»: l'antenato del Big Bang."
+            "titolo": "Il papà del Big Bang? Un prete",
+            "testo": "Georges Lemaître, sacerdote belga e fisico. Nel 1931 propone l'«atomo primitivo», antenato del Big Bang. Il nome glielo darà un suo avversario, Fred Hoyle, alla radio BBC."
           },
           {
-            "titolo": "Eppure non ne fece una prova",
-            "testo": "Lemaître amava ripetere: «Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica». Il suo atomo primitivo non era una prova di Dio."
+            "titolo": "Prova di Dio? No, grazie",
+            "testo": "Lemaître non usò l'atomo primitivo come prova di Dio. Amava ripetere: «Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica»."
           },
           {
-            "titolo": "Tre domande, non una",
-            "testo": "L'inizio naturale, che la fisica descrive. Il fatto che il mondo esista invece di non esistere. La creazione: il legame per cui Dio fa esistere il mondo."
+            "titolo": "Tre domande in una",
+            "testo": "Lemaître distingueva tre cose: lo stato iniziale, che studia la fisica; il fatto che il mondo esista invece di non esistere; la creazione, cioè Dio che dà l'essere al mondo."
           },
           {
-            "titolo": "Creare è far esistere, ora",
-            "testo": "Per la fede tutto riceve l'essere da Dio, dal nulla, in ogni istante. Tommaso d'Aquino: come l'aria, illuminata solo finché il sole la illumina."
+            "titolo": "Più di un interruttore",
+            "testo": "Per la fede il mondo è cominciato, ma creare vuol dire di più: il mondo dipende da Dio in ogni istante. Tommaso: come l'aria, illuminata solo finché il sole la illumina."
           },
           {
-            "titolo": "Lo stesso errore, rovesciato",
-            "testo": "Nel 1951 Pio XII accostò i dati dell'astronomia al Creatore, e Lemaître ne fu contrariato. Dire che il Big Bang prova che Dio non serve è lo stesso salto, al contrario."
+            "titolo": "Il salto da evitare",
+            "testo": "Nel 1951 Pio XII passò dalle galassie a «dunque Dio!». Lemaître ne fu contrariato: così si scavalcano i piani. Dire «il Big Bang rende Dio inutile» è lo stesso salto, al contrario."
           },
           {
-            "titolo": "La risposta",
-            "testo": "Il Big Bang non dimostra la creazione e non la smentisce. Che il mondo abbia avuto inizio, la Chiesa lo professa per fede: non lo ricava dalla fisica."
+            "titolo": "Allora, serve un Creatore?",
+            "testo": "La fisica dice come si è evoluto l'universo, non perché esiste. Papa Francesco, 2024: «creazione e big-bang sono due realtà distinte». Non sono rivali: rispondono a domande diverse."
           },
           {
-            "titolo": "La domanda resta a te",
-            "testo": "Il Catechismo: non basta sapere quando e come è sorto il cosmo, conta scoprire «quale sia il senso» di questa origine. E per te, perché esiste qualcosa invece del nulla?"
+            "titolo": "E tu che ne dici?",
+            "testo": "Il Catechismo dice che non basta sapere quando e come è sorto il cosmo: conta scoprire il senso di tale origine. Secondo te, quale domanda pesa di più: il come o il perché?"
           }
         ],
-        "gancio": "Il Big Bang ha mandato in pensione Dio?",
+        "gancio": "Big Bang contro Dio: chi vince?",
         "scene_video": [
           {
-            "titolo": "Dio non serve più?",
-            "testo": "Il Big Bang spiega l'inizio dell'universo. Basta questo a rispondere a tutto?",
+            "titolo": "Il dubbio",
+            "testo": "Se la scienza spiega l'origine, Dio può andare in pensione?",
             "scheda": 1
           },
           {
-            "titolo": "L'idea di un prete",
-            "testo": "1931: il prete e fisico Georges Lemaître propone l'antenato del Big Bang.",
+            "titolo": "Colpo di scena",
+            "testo": "L'idea del Big Bang viene da un prete: Georges Lemaître, nel 1931.",
             "scheda": 2
           },
           {
-            "titolo": "Mai una prova di Dio",
-            "testo": "«Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica» (Lemaître)",
+            "titolo": "Niente prove di Dio",
+            "testo": "«Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica»",
             "scheda": 3
           },
           {
-            "titolo": "Creare è far esistere, ora",
-            "testo": "Tommaso d'Aquino: il creato è come l'aria, illuminata solo finché il sole la illumina.",
+            "titolo": "Tre domande diverse",
+            "testo": "Come si è evoluto? Perché esiste? Da chi dipende? La fisica risponde alla prima.",
+            "scheda": 4
+          },
+          {
+            "titolo": "Come l'aria e il sole",
+            "testo": "Creare è far essere adesso: l'aria è illuminata finché il sole la illumina.",
             "scheda": 5
           },
           {
-            "titolo": "Né prova né smentita",
-            "testo": "Il Big Bang non dimostra la creazione e non la smentisce. Sono piani diversi.",
+            "titolo": "Due realtà distinte",
+            "testo": "Big Bang e creazione non sono rivali. E tu: conta di più il come o il perché?",
             "scheda": 7
-          },
-          {
-            "titolo": "E tu che ne pensi?",
-            "testo": "Perché esiste qualcosa invece del nulla? Sfoglia il carosello.",
-            "scheda": 8
           }
         ],
-        "facebook": "«Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?» È una domanda che arriva dalle nostre classi, ed è la grande domanda di questa domenica. 🌌\n\nPrima sorpresa: l'idea di un universo con un inizio l'ha proposta nel 1931 un sacerdote e fisico belga, Georges Lemaître. Seconda sorpresa: proprio lui rifiutò di farne una prova di Dio.\n\nLa chiave è distinguere. La fisica descrive lo stato iniziale dell'universo. La fede parla di creazione: tutto riceve l'essere da Dio, in ogni istante. Usare il Big Bang per dimostrare Dio, o per dire che non serve, è lo stesso salto da un piano all'altro.\n\nNel carosello trovi il percorso completo, scheda dopo scheda. Le lezioni del Lab IRC lo allargano a Genesi, a Galileo e a Tommaso d'Aquino.",
-        "instagram": "Nel 1931 un prete scrive a «Nature»: l'universo potrebbe essere partito da uno stato densissimo.\n\nSi chiama Georges Lemaître. La sua idea, l'«atomo primitivo», è l'antenato del Big Bang.\n\nNel dattiloscritto c'era un'ultima frase su Dio. La cancellò. Diceva che la fisica fornisce «un velo che nasconde la creazione».\n\nNon una prova, quindi. Un velo.\n\nE allora: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?\n\nLa fisica racconta come si è sviluppato l'universo. La creazione dice che tutto esiste perché dipende da Dio, adesso.\n\nSfoglia fino all'ultima scheda e apri le lezioni per andare a fondo ✨",
+        "facebook": "Il primo a dire che l'universo ha avuto un inizio? Un prete belga con la passione per i conti. 🔭\n\nSi chiamava Georges Lemaître e nel 1931 propose l'«atomo primitivo», l'antenato del Big Bang. Il colpo di scena è che si rifiutò di usarlo come prova di Dio: «Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica».\n\nÈ la chiave della grande domanda di questa domenica: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore? La fisica studia come l'universo si è sviluppato. Per la fede cristiana, invece, creare non è solo far cominciare: tutto dipende da Dio in ogni istante, come l'aria che resta illuminata finché c'è il sole (l'immagine è di Tommaso d'Aquino). Domande diverse, nessuna partita da vincere.\n\nNel carosello trovate il percorso in otto schede; nelle lezioni del Lab IRC, Lemaître, Tommaso e la Genesi raccontati per bene.",
+        "instagram": "Un universo che nasce da un «atomo primitivo». A proporlo, nel 1931, un prete e fisico belga: Georges Lemaître. 🤯\n\nAvrebbe potuto dire: «Ecco la prova di Dio!». Non lo fece.\n\nPer lui una cosa è lo stato iniziale che studia la fisica. Un'altra è la creazione: Dio che fa esistere il mondo, adesso e in ogni istante.\n\nQuindi Big Bang e Dio non giocano la stessa partita.\n\nSfoglia il carosello fino all'ultima scheda: lì c'è una domanda per te.\n\nE se vuoi scavare, le lezioni sul sito ti aspettano.",
         "hashtag": [
           "religionecattolica",
           "irc",
@@ -535,22 +537,22 @@
           "scienzaefede",
           "lemaitre"
         ],
-        "telegram": "L'aria resta illuminata solo finché il sole la illumina. Con questa immagine Tommaso d'Aquino spiegava che cosa vuol dire «creare»: non solo far cominciare, ma far esistere in ogni istante. È la chiave della grande domanda di oggi: se c'è stato il Big Bang, che bisogno c'è di un Dio creatore? Il carosello parte dal prete e fisico Georges Lemaître e mostra perché il Big Bang non dimostra la creazione e non la smentisce. Sfoglialo e apri le lezioni.",
+        "telegram": "Un prete ha proposto l'antenato del Big Bang. E allora: se c'è stato il Big Bang, serve ancora un Dio creatore? Nella grande domanda di oggi rispondiamo in otto schede, seguendo Georges Lemaître, sacerdote e fisico, che teneva ben distinte la fisica e la fede. Con un aiuto da Tommaso d'Aquino e da papa Francesco. Sfogliate il carosello e aprite le lezioni su Lemaître e sulla creazione.",
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 34609,
-          "output": 13394
+          "input": 34794,
+          "output": 13570
         }
       },
       "illustrazioni": [
-        "2026-11-15-12a9ec-1.svg",
-        "2026-11-15-12a9ec-2.svg",
-        "2026-11-15-12a9ec-3.svg",
-        "2026-11-15-12a9ec-4.svg",
-        "2026-11-15-12a9ec-5.svg",
-        "2026-11-15-12a9ec-6.svg",
-        "2026-11-15-12a9ec-7.svg",
-        "2026-11-15-12a9ec-8.svg"
+        "2026-11-15-f60a49-1.svg",
+        "2026-11-15-f60a49-2.svg",
+        "2026-11-15-f60a49-3.svg",
+        "2026-11-15-f60a49-4.svg",
+        "2026-11-15-f60a49-5.svg",
+        "2026-11-15-f60a49-6.svg",
+        "2026-11-15-f60a49-7.svg",
+        "2026-11-15-f60a49-8.svg"
       ]
     }
   },
