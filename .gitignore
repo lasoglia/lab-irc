@@ -3,6 +3,7 @@ node_modules/
 !.claude/agents/
 !.claude/skills/
 !.claude/social-regole.md
+!.claude/social-metodo.md
 .social/
 __pycache__/
 
