@@ -5,3 +5,10 @@ node_modules/
 !.claude/social-regole.md
 .social/
 __pycache__/
+
+# File dei post social: si disegnano quando servono e vanno su Cloudflare R2 (seo/media_r2.py),
+# non nel repo. Resta solo la vetrina dei profili.
+promozione/cartoline/*.jpg
+promozione/cartoline/*.png
+!promozione/cartoline/vetrina-*
+promozione/reel/*.mp4
