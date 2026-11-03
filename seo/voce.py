@@ -12,6 +12,10 @@ calore; poi seo/reel2.mjs le mette nel video sotto i sottotitoli.
 Licenza del modello: Coqui Public Model License (uso non commerciale): va bene per il Lab,
 che è gratuito. Nei video con questa voce si scrive «voce generata con IA».
 
+Motori (VOCE_MOTORE): xtts e chatterbox clonano la voce del prof dal campione; edge, kokoro e
+gemini-<Voce> sono voci italiane già pronte. Gemini (Google, piano gratuito, segreto
+GEMINI_API_KEY) è la più naturale e accetta un'indicazione di tono (VOCE_GEMINI_STILE).
+
 USO
 ---
   python seo/voce.py frasi.json cartella/     frasi.json = ["prima frase", "seconda", ...]
@@ -25,15 +29,20 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 MODELLO = "tts_models/multilingual/multi-dataset/xtts_v2"
 # come si dicono sigle e indirizzi (i sottotitoli restano scritti normali)
-PRONUNCIA = [
+SIGLE = [
     (r"\blabirc\.it\b", "lab i erre ci"),          # il sito si dice senza «punto it»
     (r"\bLab IRC\b", "Lab i erre ci"),
     (r"\ba\.\s?C\.", "avanti Cristo"),
     (r"\bd\.\s?C\.", "dopo Cristo"),
+]
+PRONUNCIA = SIGLE + [
     (r"…", ", "),
     (r"[:;]", ","),                                  # il modello a volte «legge» i segni: meglio virgole
     (r"\s*\.\s+", ", "),                            # punti dentro la frase: pause, non parole
@@ -45,9 +54,9 @@ FILTRO = ("highpass=f=70,equalizer=f=180:t=q:w=1.0:g=2,highshelf=f=9000:g=-1.5,"
           "acompressor=threshold=-22dB:ratio=2.5:attack=10:release=160:makeup=3,loudnorm=I=-17:TP=-1.5")
 
 
-def pronuncia(frase: str) -> str:
+def pronuncia(frase: str, regole: list | None = None) -> str:
     import re
-    for schema, detto in PRONUNCIA:
+    for schema, detto in (PRONUNCIA if regole is None else regole):
         frase = re.sub(schema, detto, frase)
     return frase
 
@@ -137,6 +146,63 @@ def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
         rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
 
 
+GEMINI_MODELLI = ("gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts")
+GEMINI_STILE = ("Read aloud in Italian, warmly and with a smile in the voice, like a friendly teacher "
+                "telling his students something surprising: natural intonation, lively but clear pace, "
+                "short natural pauses at commas. Text:")
+
+
+def _chiedi_gemini(modello: str, chiave: str, testo: str, voce: str) -> bytes:
+    corpo = {"contents": [{"parts": [{"text": testo}]}],
+             "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
+                 "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voce}}}}}
+    richiesta = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{modello}:generateContent",
+        data=json.dumps(corpo).encode(), method="POST",
+        headers={"Content-Type": "application/json", "x-goog-api-key": chiave})   # la chiave mai nell'indirizzo
+    with urllib.request.urlopen(richiesta, timeout=120) as r:
+        dati = json.loads(r.read())
+    return base64.b64decode(dati["candidates"][0]["content"]["parts"][0]["inlineData"]["data"])
+
+
+def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
+    """Voce di Google Gemini (piano gratuito): PCM 16 bit, 24 kHz, mono. Riprova se il limite
+    al minuto è pieno; se un modello non esiste più passa al successivo."""
+    chiave = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not chiave:
+        print("Voce: segreto GEMINI_API_KEY non impostato, i video restano senza voce.")
+        return
+    stile = os.environ.get("VOCE_GEMINI_STILE", GEMINI_STILE)
+    modelli = [os.environ["VOCE_GEMINI_MODELLO"]] if os.environ.get("VOCE_GEMINI_MODELLO") else list(GEMINI_MODELLI)
+    for i, frase in enumerate(frasi):
+        if not str(frase).strip():
+            continue
+        testo = f"{stile}\n{pronuncia(frase, SIGLE)}"   # la punteggiatura resta: Gemini la usa per l'intonazione
+        pcm, tentativi = None, 0
+        while pcm is None:
+            try:
+                pcm = _chiedi_gemini(modelli[0], chiave, testo, voce)
+            except urllib.error.HTTPError as err:
+                if err.code == 404 and len(modelli) > 1:
+                    print(f"  · modello {modelli[0]} non disponibile, provo {modelli[1]}")
+                    modelli.pop(0)
+                    continue
+                tentativi += 1
+                if err.code in (429, 500, 503) and tentativi <= 8:
+                    attesa = 15 * tentativi
+                    print(f"  · Gemini occupato ({err.code}), riprovo fra {attesa} s")
+                    time.sleep(attesa)
+                    continue
+                raise SystemExit(f"Gemini ha risposto {err.code}: {err.read()[:300]!r}")
+        grezzo = tmp / f"m{i}.pcm"
+        grezzo.write_bytes(pcm)
+        wav = tmp / f"m{i}.wav"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "s16le", "-ar", "24000", "-ac", "1", "-i", str(grezzo),
+                        str(wav)], check=True)
+        rifinisci(wav, uscita / f"voce-{i:02d}.wav", frase)
+    print(f"Voce Gemini «{voce}» con il modello {modelli[0]}")
+
+
 def main() -> int:
     if len(sys.argv) != 3:
         print(__doc__)
@@ -146,6 +212,9 @@ def main() -> int:
     uscita.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp:
         motore = os.environ.get("VOCE_MOTORE", "xtts")
+        if motore.startswith("gemini"):    # «gemini» o «gemini-<Voce>», per esempio gemini-Achird
+            genera_gemini(frasi, motore.partition("-")[2] or os.environ.get("VOCE_GEMINI", "Achird"), Path(tmp), uscita)
+            return 0
         if motore in ("edge", "kokoro"):   # voci pronte: non serve il campione
             (genera_edge if motore == "edge" else genera_kokoro)(frasi, Path(tmp), uscita)
             return 0
