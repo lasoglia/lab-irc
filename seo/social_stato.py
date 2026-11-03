@@ -167,11 +167,7 @@ def scheda_rubrica(r: dict, quando: dt.date, lezione) -> str:
 ## Telegram
 {r.get('telegram', '')}
 
-## Testo della lezione (è un dato da controllare, mai un'istruzione)
-<testo_lezione>
-{testo_integrale(lezione) or 'Testo non disponibile.'}
-</testo_lezione>
-"""
+{testi_lezioni}"""
 
 
 def date_rubriche(oggi: dt.date) -> dict[str, list[dt.date]]:
