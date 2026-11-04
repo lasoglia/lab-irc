@@ -1,0 +1,45 @@
+name: Social · prova di un personaggio
+# Prova seo/personaggi.py: dice quali modelli di immagini vede la chiave di Gemini, poi dipinge un
+# personaggio inventato con Nano Banana (se il piano gratuito lo permette) o con FLUX su Cloudflare.
+# L'immagine va su R2 (cartella prove/, cancellata dopo 30 giorni). Non pubblica nulla.
+
+on:
+  workflow_dispatch:
+    inputs:
+      descrizione:
+        description: 'Il personaggio inventato da dipingere'
+        default: 'un pescatore di Cafarnao, sulla quarantina, che ripara le reti sulla riva del lago al tramonto'
+
+permissions:
+  contents: read
+
+jobs:
+  prova:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dipingi
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          DESCRIZIONE: ${{ inputs.descrizione }}
+        run: |
+          pip install --quiet anthropic pypdf
+          python seo/personaggi.py --modelli || true
+          python seo/personaggi.py --prova "$DESCRIZIONE" "personaggio-${GITHUB_RUN_ID}.jpg"
+          python - <<'PY'
+          import os, sys
+          from pathlib import Path
+          sys.path.insert(0, "seo")
+          import media_r2 as r2
+          f = Path(f"personaggio-{os.environ['GITHUB_RUN_ID']}.jpg")
+          r2.carica(f, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"], os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
+          print(f"{r2.URL_PUBBLICO}/prove/{f.name}")
+          PY
