@@ -47,7 +47,11 @@ STILI = {
     "c": "Clean vector cartoon, flat shading, big simple shapes, limited warm palette of deep indigo, gold and "
          "coral, minimal background, playful but dignified",
 }
-STILE_SCELTO = "a"
+# scelta del docente: la B (morbida, tipo adesivo) con un po' della C (i colori del Lab)
+STILI["bc"] = ("Cute rounded cartoon style, sticker-like character with a thick dark outline, soft flat colors, "
+               "minimal details, limited warm palette of deep indigo, gold and coral, simple plain background, "
+               "playful but dignified")
+STILE_SCELTO = "bc"
 COMUNE = (". Vertical 9:16 composition, the character in the lower two thirds, empty space at the top. One "
           "invented, generic adult character from the past, respectful, historically plausible clothing. No "
           "text, no letters, no logos, no halos, no religious figures, no children. Scene: ")
