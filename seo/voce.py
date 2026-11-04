@@ -81,8 +81,9 @@ def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
     # VOCE_VELOCITA (per esempio 1.06) accelera senza cambiare il tono della voce
     velocita = float(os.environ.get("VOCE_VELOCITA") or VELOCITA_SCELTA)
     filtro = (f"atempo={velocita}," if abs(velocita - 1) > 0.001 else "") + FILTRO
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", filtro, "-ac", "1", "-ar", "24000",
-                    str(finale)], check=True)
+    # a 44,1 kHz con un buon ricampionamento, la stessa frequenza della colonna sonora (seo/audio_reel.py)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", filtro + ",aresample=44100:filter_size=64",
+                    "-ac", "1", "-ar", "44100", str(finale)], check=True)
     print(f"  ✓ {finale.name}: {frase[:60]}")
 
 

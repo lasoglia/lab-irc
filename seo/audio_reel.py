@@ -167,11 +167,23 @@ def metti(traccia: np.ndarray, suono: np.ndarray, quando: float, volume: float) 
 
 def leggi_wav(percorso: str) -> np.ndarray:
     with wave.open(percorso, "rb") as w:
+        sr = w.getframerate()
+    if sr != SR:
+        # ricampionamento di qualità con ffmpeg: quello lineare rendeva la voce metallica, «robotica»
+        import subprocess
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            nuovo = f"{tmp}/r.wav"
+            esito = subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", percorso, "-af",
+                                    f"aresample={SR}:filter_size=64:cutoff=0.97", "-ac", "1", nuovo])
+            if esito.returncode == 0:
+                return leggi_wav(nuovo)
+    with wave.open(percorso, "rb") as w:
         dati = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(float) / 32768
         canali, sr = w.getnchannels(), w.getframerate()
     if canali == 2:
         dati = dati.reshape(-1, 2).mean(axis=1)
-    if sr != SR:                                       # ricampionamento semplice
+    if sr != SR:                                       # di riserva, se ffmpeg non c'è
         dati = np.interp(np.arange(0, len(dati), sr / SR), np.arange(len(dati)), dati)
     return dati
 
