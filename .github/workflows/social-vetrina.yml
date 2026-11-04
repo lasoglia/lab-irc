@@ -5,6 +5,7 @@ name: Social · vetrina dei profili
 # la copertina e la descrizione della Pagina Facebook (se la chiave di Meta lo permette).
 # Disegna anche le icone delle storie in evidenza di Instagram, che si caricano a mano.
 # I post già usciti sono segnati nei registri: rilanciarla non li ripubblica.
+# «icone» ridisegna soltanto le icone delle storie in evidenza (e le salva sul sito).
 # «controlla» non pubblica nulla: dice quali permessi ha la chiave di Meta e prova Cloudflare R2.
 
 on:
@@ -13,7 +14,7 @@ on:
       azione:
         description: 'Che cosa fare'
         type: choice
-        options: [tutto, storia, controlla]
+        options: [tutto, storia, controlla, icone]
         default: tutto
 
 concurrency:
@@ -68,6 +69,7 @@ jobs:
           fi
 
       - name: Pubblica la vetrina
+        if: inputs.azione != 'icone'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CANALE: ${{ secrets.TELEGRAM_CANALE }}
