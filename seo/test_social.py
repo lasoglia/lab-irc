@@ -184,16 +184,31 @@ class Storie(unittest.TestCase):
 
 
 class LezioneNelReel(unittest.TestCase):
-    """Con la lezione interattiva il reel la mostra sempre (una o due inquadrature), senza mai."""
+    """La lezione interattiva non si presenta: le sue scene illustrano le frasi del racconto."""
+    SCENE = [{"n": 1, "fase": "Aggancio", "titolo": "Una frase famosa", "contenuto": "Cesare"},
+             {"n": 3, "fase": "Scoperta", "titolo": "Un regno spezzato", "contenuto": "tetrarca Erode quattro parti"},
+             {"n": 4, "fase": "Scoperta", "titolo": "Una frase che è una mappa", "contenuto": "Luca governanti Pilato Tiberio"}]
 
-    def test_garantisci_lezione(self):
+    def test_scena_per_la_frase(self):
         import regista
-        base = [{"tipo": "gancio"}, {"tipo": "pagina"}, {"tipo": "chiusa"}]
-        c = regista.garantisci_lezione({"artefatto": "uploads/x-artefatto.html", "inquadrature": [dict(q) for q in base]})
+        inq = [{"tipo": "gancio"}, {"tipo": "pagina"}, {"tipo": "prof", "voce": "Luca elenca i governanti: Tiberio e Pilato."},
+               {"tipo": "chiusa"}]
+        c = regista.garantisci_lezione({"artefatto": "a.html", "scene_lezione": self.SCENE, "inquadrature": inq})
         self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["gancio", "pagina", "lezione", "chiusa"])
-        tre = [{"tipo": "lezione", "momento": "scena"}, {"tipo": "lezione", "momento": "quiz"}, {"tipo": "lezione", "voce": "x"}]
-        c = regista.garantisci_lezione({"artefatto": "a.html", "inquadrature": tre + [{"tipo": "chiusa"}]})
-        self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["lezione", "lezione", "prof", "chiusa"])
+        self.assertEqual(c["inquadrature"][2]["scena"], 4)
+        self.assertIn("Pilato", c["inquadrature"][2]["voce"])                     # la voce resta quella del racconto
+
+    def test_scena_sbagliata_o_doppia(self):
+        import regista
+        inq = [{"tipo": "lezione", "scena": 99, "voce": "il regno di Erode diviso in quattro"},
+               {"tipo": "lezione", "scena": 3, "voce": "x"}, {"tipo": "lezione", "scena": 4, "voce": "y"}]
+        c = regista.garantisci_lezione({"artefatto": "a.html", "scene_lezione": self.SCENE, "inquadrature": inq})
+        self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["lezione", "lezione", "prof"])
+        self.assertEqual(c["inquadrature"][0]["scena"], 3)
+        self.assertNotEqual(c["inquadrature"][1]["scena"], 3)
+
+    def test_senza_lezione(self):
+        import regista
         c = regista.garantisci_lezione({"artefatto": "", "inquadrature": [{"tipo": "lezione", "voce": "y"}]})
         self.assertEqual(c["inquadrature"][0]["tipo"], "prof")
 
