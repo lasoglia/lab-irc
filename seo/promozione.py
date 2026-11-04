@@ -160,12 +160,15 @@ Se una parte è già ottima, lasciala com'è."""
 
 
 def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: str,
-                  max_token: int = 16000) -> tuple:
+                  max_token: int = 16000, modello: str | None = None, pensiero: bool = False) -> tuple:
     """Una chiamata con risposta in JSON garantito; restituisce (dati, risposta).
-    In streaming, così anche le risposte lunghe (i disegni) non vanno in timeout."""
+    In streaming, così anche le risposte lunghe (i disegni) non vanno in timeout.
+    Con «pensiero» il modello ragiona prima di rispondere (pensiero adattivo)."""
+    extra = {"thinking": {"type": "adaptive"}} if pensiero else {}
     with client.beta.messages.stream(
-        model=MODELLO,
-        max_tokens=max_token,
+        model=modello or MODELLO,
+        max_tokens=max(max_token, 32000) if pensiero else max_token,
+        **extra,
         # Le istruzioni sono identiche per ogni post: le mettiamo in cache
         system=[{"type": "text", "text": sistema, "cache_control": {"type": "ephemeral"}}],
         output_config={"effort": sforzo, "format": {"type": "json_schema", "schema": schema}},
@@ -181,7 +184,8 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
     return json.loads(testo_json), risposta
 
 
-def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict) -> dict:
+def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
+                    modello: str | None = None, pensiero: bool = False) -> dict:
     """L'autore scrive la bozza, il caporedattore la rilegge e la migliora.
     In coda alle istruzioni, ciò che il Lab ha imparato dai numeri (seo/social_quaderno.py)."""
     try:
@@ -189,13 +193,13 @@ def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict) -> di
         istruzioni = istruzioni + social_quaderno.istruzioni_apprese()
     except (ImportError, ValueError, OSError):
         pass
-    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high")
+    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high", modello=modello, pensiero=pensiero)
     finale, r2 = chiama_claude(
         client, REDATTORE,
         f"<istruzioni_autore>\n{istruzioni}\n</istruzioni_autore>\n\n"
         f"<materiale>\n{messaggio}\n</materiale>\n\n"
         f"<bozza>\n{json.dumps(bozza, ensure_ascii=False, indent=1)}\n</bozza>",
-        schema, "high")
+        schema, "high", modello=modello, pensiero=pensiero)
     if "hashtag" in finale:
         finale["hashtag"] = [h.lstrip("#").replace(" ", "") for h in finale["hashtag"] if h.strip("# ")]
     finale["origine"] = r2.model
