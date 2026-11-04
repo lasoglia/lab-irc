@@ -155,6 +155,14 @@ def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
 GEMINI_MODELLI = ("gemini-2.5-flash-preview-tts", "gemini-3.1-flash-tts-preview")
 VOCE_SCELTA = "gemini-Rasalgethi"
 VELOCITA_SCELTA = "1.06"
+# Stile da narratore appassionato di storia (richiesta del docente: «più entusiasta»): lo stile, non
+# l'imitazione di una persona reale.
+GEMINI_STILE_NARRATORE = (
+    "Read aloud in Italian as a passionate history storyteller who genuinely loves this anecdote and can't "
+    "wait to tell it: lively and enthusiastic, expressive intonation with real ups and downs, a smile and a "
+    "touch of irony in the voice, emphasis on the key words, short dramatic pauses before the surprising part, "
+    "quicker pace on the build-up and slower on the reveal. Warm, adult, conversational, never shouting, never "
+    "childish, never like an announcer. Text:")
 # Dopo il primo ascolto: «più veloce, più calda e narrativa, a tratti troppo infantile».
 GEMINI_STILE = ("Read aloud in Italian as a mature, warm storyteller: a teacher in his forties telling a "
                 "fascinating story to adults. Deep, warm and calm voice, quietly confident, engaging "
@@ -253,7 +261,8 @@ def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
             taglio = f"atrim={da:.3f}" + (f":{a:.3f}" if a else "")   # atrim: -ss/-to qui non accorcerebbero
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(tutto), "-af", f"{taglio},asetpts=N/SR/TB,"
                             "silenceremove=start_periods=1:start_threshold=-45dB,areverse,"
-                            "silenceremove=start_periods=1:start_threshold=-45dB,areverse", str(pezzo)], check=True)
+                            "silenceremove=start_periods=1:start_threshold=-45dB,afade=t=in:d=0.012,areverse,"
+                            "afade=t=in:d=0.012", str(pezzo)], check=True)
             rifinisci(pezzo, uscita / f"voce-{i:02d}.wav", frasi[i])
     else:
         print(f"  · pause trovate {len(pause)} su {len(righe) - 1}: chiedo una frase per volta")
@@ -274,7 +283,10 @@ def main() -> int:
     with tempfile.TemporaryDirectory() as tmp:
         motore = os.environ.get("VOCE_MOTORE") or VOCE_SCELTA
         if motore.startswith("gemini"):    # «gemini» o «gemini-<Voce>», per esempio gemini-Achird
-            genera_gemini(frasi, motore.partition("-")[2] or os.environ.get("VOCE_GEMINI", "Rasalgethi"), Path(tmp), uscita)
+            nome, _, versione = motore.partition("-")[2].partition("@")   # gemini-<Voce>[@2.5|@3.1]
+            if versione:
+                os.environ["VOCE_GEMINI_MODELLO"] = {"2.5": GEMINI_MODELLI[0], "3.1": GEMINI_MODELLI[1]}.get(versione, versione)
+            genera_gemini(frasi, nome or os.environ.get("VOCE_GEMINI", "Rasalgethi"), Path(tmp), uscita)
             return 0
         if motore in ("edge", "kokoro"):   # voci pronte: non serve il campione
             (genera_edge if motore == "edge" else genera_kokoro)(frasi, Path(tmp), uscita)
