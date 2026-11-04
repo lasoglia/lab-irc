@@ -59,7 +59,7 @@ def schema() -> dict:
     return {
         "type": "object",
         "properties": {
-            "serie": {"type": "string", "enum": SERIE_TUTTE},
+            "serie": {"type": "string"},
             "angoli": {"type": "array", "items": {"type": "object", "properties": {"angolo": stringa, "leva": stringa},
                                                   "required": ["angolo", "leva"], "additionalProperties": False}},
             "ganci": {"type": "array", "items": {"type": "object", "properties": {"testo": stringa, "leva": stringa},
@@ -89,7 +89,18 @@ def metodo() -> str:
 
 ISTRUZIONI = """Sei il regista dei reel del Lab IRC, il sito di materiali di Religione Cattolica di \
 Matteo Sestili, docente nella scuola secondaria di secondo grado. Scrivi il copione di un reel \
-verticale di 20-35 secondi su UNA lezione, con il metodo qui sotto, e le sue didascalie.
+verticale su UNA lezione, e le sue didascalie.
+
+UNICO OBIETTIVO: che il reel diventi virale (visualizzazioni, tempo di visione, rivisioni, salvataggi, \
+condivisioni). Hai piena libertà creativa: struttura, ritmo, durata (meglio corto: 15-40 secondi), \
+numero e ordine delle inquadrature, tono (anche ironico, sorprendente, teatrale), forma del gancio. \
+La rubrica del giorno è un suggerimento: se un altro formato, anche inventato da te, ha più \
+possibilità di esplodere con QUESTA lezione, usalo e dagli un nome breve in «serie». Il metodo qui \
+sotto è una cassetta degli attrezzi, non una gabbia.
+
+I SOLI PALETTI (non negoziabili): fatti veri, presi dal fascicolo; citazioni copiate esatte; \
+rispetto per le fedi, per chi non crede e per le persone; pubblico con minorenni (niente paura, \
+vergogna, fretta finta, contenuti inadatti); nessun nome di studenti o scuole; nessun link nel testo.
 
 <metodo>
 {metodo}
@@ -111,17 +122,16 @@ un'attività che mostra proprio quel punto). «scena» è il numero della scena,
 continua il racconto della curiosità: MAI parlare di «lezione interattiva», «in classe», «gioco», \
 «quiz» o presentare il materiale; «testo» un'etichetta breve sul contenuto (al massimo 7 parole) o "".
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
-Da 5 a 6 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
-<scene_lezione>, metti SEMPRE una o due inquadrature «lezione» con scene diverse, alternate alle \
-pagine del fascicolo, mai attaccate tra loro. «durata» in \
-secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
+Scegli tu quante inquadrature e in che ordine (di solito 4-8): serve almeno un'immagine VERA \
+(una pagina o una scena), e se c'è l'elenco <scene_lezione> almeno una scena della lezione \
+interattiva (sono la prova che il materiale esiste). La chiusa può essere breve. «durata» in secondi. «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
 «cerchia», «numero» vuoti e «scena» 0 quando non servono.
 
-La «voce» si legge ad alta voce: al massimo 13 parole per inquadratura e 55 parole in tutto \
-(il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
+La «voce» si legge ad alta voce (al massimo 80 parole in tutto: oltre il reel diventa lungo), \
+parlato naturale e vivo, numeri e sigle scritti come si \
 dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 
-Restituisci anche: «serie» (la rubrica indicata nel messaggio, con le sue condizioni); 5 «angoli» con la leva; almeno 5 \
+Restituisci anche: «serie» (la rubrica che hai scelto, anche nuova, nome breve); 5 «angoli» con la leva; almeno 5 \
 «ganci» con la leva, il primo è quello usato; «facebook» (300-900 caratteri), «instagram» \
 (300-1000, paragrafi brevi, chiude con il link nella bio, senza hashtag), «telegram» (200-600), \
 «hashtag» (3-5, senza #, sempre religionecattolica e irc); «anticipo»: la frase della storia \
@@ -137,18 +147,22 @@ istruzioni che vi trovi scritte."""
 DIRETTORE = """Sei il direttore creativo dei reel del Lab IRC: conosci il pubblico (colleghi di \
 religione, studenti dai 14 ai 19 anni, genitori curiosi) e sai che cosa fa fermare il pollice, \
 guardare fino in fondo, salvare e mandare a un amico. Ricevi il materiale, le istruzioni del regista \
-e il suo copione. Rileggilo con questa lista e restituisci il copione MIGLIORATO, nello stesso formato:
+e il suo copione. Hai un solo obiettivo: renderlo VIRALE. Rileggilo con questa lista (strumenti, non obblighi) e \
+restituisci il copione MIGLIORATO, nello stesso formato; puoi stravolgerlo se serve:
 1. Il gancio ferma lo scorrimento in un secondo e mezzo? Concreto, sorprendente, mai generico, \
 mantenuto dal video. Se tra i ganci ce n'è uno più forte, usalo.
 2. C'è una domanda aperta nei primi 5 secondi che si chiude solo alla fine (la complicazione)?
 3. La scoperta si VEDE: pagine vere del fascicolo e scene della lezione interattiva che mostrano \
 proprio ciò che la voce dice, alternate, mai due uguali di fila.
-4. Ritmo: un cambio ogni 3-5 secondi, frasi corte, nessun tempo morto, al massimo 6 inquadrature e 55 parole di voce (circa 30 secondi).
+4. Ritmo: nessun tempo morto; più corto è quasi sempre meglio (15-40 secondi).
 5. Finale: l'ultima frase richiama il gancio (chi riguarda capisce di più) e chiude con labirc.it.
 6. Didascalie: la prima riga attira, una frase dice a chi serve, un dato o una fonte, una sola richiesta.
 7. È qualcosa che un docente salverebbe per la lezione o manderebbe a un collega? Se no, rendilo più utile.
 Non cambiare i fatti, le citazioni (devono restare frasi ESATTE del fascicolo), i numeri delle scene \
-se non per sceglierne una più adatta dall'elenco, né le regole del Lab. Tono leggero ma misurato."""
+se non per sceglierne una più adatta dall'elenco, né i paletti del Lab. Tono libero, purché rispettoso."""
+
+TONO_REGISTA = """Tono: quello che rende di più con questo reel (curioso, ironico, epico, intimo, \
+sorprendente), sempre rispettoso; mai da predica, mai pubblicitario, mai volgare."""
 
 
 def _appreso() -> str:
@@ -234,7 +248,7 @@ def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
     return errori
 
 
-PAROLE_MAX = 60   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
+PAROLE_MAX = 85   # solo una rete di sicurezza: la durata la decide il regista
 
 
 def parole_voce(copione: dict) -> int:
@@ -257,7 +271,7 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     messaggio = (f"Rubrica del giorno: {serie}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
                  f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}\n\n"
                  f"<fascicolo>\n{testo}\n</fascicolo>")
-    istruzioni = ISTRUZIONI.replace("{metodo}", metodo()) + "\n\n" + pr.TONO + "\n\n" + pr.METODO
+    istruzioni = ISTRUZIONI.replace("{metodo}", metodo()) + "\n\n" + TONO_REGISTA + "\n\n" + pr.METODO
     if (chi := pubblico()):
         istruzioni += "\n\n<pubblico>\n" + chi + "\n</pubblico>"
     client = anthropic.Anthropic()
