@@ -77,6 +77,45 @@ def campioni(cartella: Path) -> list[str]:
     return file
 
 
+def tempi_parole(wav: Path, frase: str) -> list | None:
+    """Quando viene detta ogni parola della frase: Whisper su Cloudflare Workers AI (gratis) ascolta
+    la voce e dà l'inizio e la fine delle parole; si allineano alle parole scritte (che possono
+    essere un po' diverse: «labirc.it» si dice «lab i erre ci»). None se non si può."""
+    account, token = os.environ.get("CLOUDFLARE_ACCOUNT_ID", ""), os.environ.get("CLOUDFLARE_API_TOKEN", "")
+    scritte = str(frase).split()
+    if not (account and token and scritte):
+        return None
+    try:
+        richiesta = urllib.request.Request(
+            f"https://api.cloudflare.com/client/v4/accounts/{account}/ai/run/@cf/openai/whisper",
+            data=wav.read_bytes(), method="POST",
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/octet-stream"})
+        with urllib.request.urlopen(richiesta, timeout=120) as r:
+            parole = (json.loads(r.read()).get("result") or {}).get("words") or []
+    except Exception as err:
+        print(f"  · tempi delle parole non disponibili ({str(err)[:80]})")
+        return None
+    return allinea(len(scritte), [(float(p["start"]), float(p["end"])) for p in parole if "start" in p and "end" in p])
+
+
+def allinea(n: int, dette: list) -> list | None:
+    """I tempi delle n parole scritte, dai tempi delle parole dette (che possono essere di più o di meno)."""
+    scritte = range(n)
+    if not dette or not n:
+        return None
+    if len(dette) == len(scritte):
+        return [[round(a, 3), round(b, 3)] for a, b in dette]
+    # numeri diversi: ogni parola scritta prende il tempo della parola detta nella stessa posizione relativa
+    tempi = []
+    for i in range(len(scritte)):
+        x = i * (len(dette) - 1) / max(1, len(scritte) - 1)
+        k, f = int(x), x - int(x)
+        inizio = dette[k][0] + (dette[min(k + 1, len(dette) - 1)][0] - dette[k][0]) * f
+        tempi.append(inizio)
+    fine = dette[-1][1]
+    return [[round(a, 3), round(b, 3)] for a, b in zip(tempi, tempi[1:] + [fine])]
+
+
 def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
     # VOCE_VELOCITA (per esempio 1.06) accelera senza cambiare il tono della voce
     velocita = float(os.environ.get("VOCE_VELOCITA") or VELOCITA_SCELTA)
@@ -84,7 +123,10 @@ def rifinisci(grezzo: Path, finale: Path, frase: str) -> None:
     # a 44,1 kHz con un buon ricampionamento, la stessa frequenza della colonna sonora (seo/audio_reel.py)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(grezzo), "-af", filtro + ",aresample=44100:filter_size=64",
                     "-ac", "1", "-ar", "44100", str(finale)], check=True)
-    print(f"  ✓ {finale.name}: {frase[:60]}")
+    tempi = tempi_parole(finale, frase)
+    if tempi:   # per le scritte a tempo nel reel (seo/reel2.mjs)
+        finale.with_suffix(".json").write_text(json.dumps({"frase": frase, "tempi": tempi}, ensure_ascii=False), encoding="utf-8")
+    print(f"  ✓ {finale.name}: {frase[:60]}" + (" (parole a tempo)" if tempi else ""))
 
 
 def genera_xtts(frasi: list, riferimento: list[str], tmp: Path, uscita: Path) -> None:

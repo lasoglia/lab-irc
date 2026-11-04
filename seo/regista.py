@@ -92,7 +92,7 @@ Matteo Sestili, docente nella scuola secondaria di secondo grado. Scrivi il copi
 verticale su UNA lezione, e le sue didascalie.
 
 UNICO OBIETTIVO: che il reel diventi virale (visualizzazioni, tempo di visione, rivisioni, salvataggi, \
-condivisioni). Hai piena libertà creativa: struttura, ritmo, durata (meglio corto: 15-40 secondi), \
+condivisioni). Hai piena libertà creativa: struttura, ritmo, durata (di solito 20-40 secondi, fino a 60 se serve), \
 numero e ordine delle inquadrature, tono (anche ironico, sorprendente, teatrale), forma del gancio. \
 La rubrica del giorno è un suggerimento: se un altro formato, anche inventato da te, ha più \
 possibilità di esplodere con QUESTA lezione, usalo e dagli un nome breve in «serie». Il metodo qui \
@@ -132,8 +132,8 @@ Scegli tu quante inquadrature e in che ordine (di solito 4-8): serve almeno un'i
 interattiva (sono la prova che il materiale esiste). La chiusa può essere breve. «durata» in secondi. «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
 «cerchia», «numero», «descrizione» vuoti e «scena» 0 quando non servono.
 
-La «voce» si legge ad alta voce (al massimo 80 parole in tutto: oltre il reel diventa lungo), \
-parlato naturale e vivo, numeri e sigle scritti come si \
+La «voce» si legge ad alta voce (decidi tu la lunghezza: di solito 20-40 secondi, fino a circa 60 se \
+la storia lo merita, cioè al massimo 130 parole), parlato naturale e vivo, numeri e sigle scritti come si \
 dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 
 Restituisci anche: «serie» (la rubrica che hai scelto, anche nuova, nome breve); 5 «angoli» con la leva; almeno 5 \
@@ -159,7 +159,7 @@ mantenuto dal video. Se tra i ganci ce n'è uno più forte, usalo.
 2. C'è una domanda aperta nei primi 5 secondi che si chiude solo alla fine (la complicazione)?
 3. La scoperta si VEDE: pagine vere del fascicolo e scene della lezione interattiva che mostrano \
 proprio ciò che la voce dice, alternate, mai due uguali di fila.
-4. Ritmo: nessun tempo morto; più corto è quasi sempre meglio (15-40 secondi).
+4. Ritmo: nessun tempo morto; più corto è quasi sempre meglio (di solito 20-40 secondi, fino a 60 se la storia lo merita).
 5. Finale: l'ultima frase richiama il gancio (chi riguarda capisce di più) e chiude con labirc.it.
 6. Didascalie: la prima riga attira, una frase dice a chi serve, un dato o una fonte, una sola richiesta.
 7. È qualcosa che un docente salverebbe per la lezione o manderebbe a un collega? Se no, rendilo più utile.
@@ -253,7 +253,7 @@ def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
     return errori
 
 
-PAROLE_MAX = 85   # solo una rete di sicurezza: la durata la decide il regista
+PAROLE_MAX = 135   # solo una rete di sicurezza (circa 60 secondi): la durata la decide il regista
 
 
 def parole_voce(copione: dict) -> int:
