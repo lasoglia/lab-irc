@@ -142,7 +142,7 @@ def main():
     return 0
 
 
-VERSIONE_REGIA = "10"   # cambiala per far riscrivere i copioni (3: sempre anche la lezione interattiva)
+VERSIONE_REGIA = "11"   # cambiala per far riscrivere i copioni (3: sempre anche la lezione interattiva)
 
 
 def prepara_regia(c: dict, cache: dict) -> dict | None:
