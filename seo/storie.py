@@ -5,8 +5,10 @@ seo/storie.py — Le storie di ogni giorno su Instagram e Facebook (Progetto Ree
 Tre momenti, sul modello dei creatori che funzionano (presenza costante, poche parole):
   mattina (7:45)  la ricorrenza del giorno (date calcolate, mai inventate) oppure la frase della
                   lezione di oggi: «Oggi nel Lab»
-  pranzo  (13:30) l'anticipo del post della sera: «Stasera alle 19» con il gancio del reel
-                  (solo nei giorni di reel e di gioco: il martedì il carosello ha già la sua storia)
+  pranzo  (13:30) l'anticipo del reel della sera: su Instagram il video di 10 secondi montato
+                  dal regista (gancio, un'immagine, «Stasera alle 19»), su Facebook l'immagine
+                  con la frase di anticipo (solo nei giorni di reel e di gioco)
+Le API di Instagram e Facebook non permettono adesivi con link nelle storie: si rimanda al profilo.
   sera    (20:45) il reel uscito oggi, rilanciato come storia (solo Instagram)
 Senza IA: i testi vengono dal calendario e dai post già approvati. Niente quiz, niente link
 nel testo. Una storia non esce due volte (data/storie.json).
@@ -86,7 +88,7 @@ def scheda(fascia: str, oggi: dt.date) -> dict | None:
         if not post or tipo not in ("reel", "gioco"):
             return None
         gancio = ("La verifica di fine unità? *Si gioca.*" if tipo == "gioco" else
-                  post.get("gancio") or lezione_di(post).get("frase", "") or post.get("titolo", ""))
+                  post.get("anticipo") or post.get("gancio") or lezione_di(post).get("frase", "") or post.get("titolo", ""))
         return {"sopra": "Stasera alle " + ORE[tipo], "titolo": gancio, "testo": post.get("titolo", ""),
                 "anno": str(post.get("anno", "")), "mascotte": MASCOTTE.get(str(post.get("anno", ""))),
                 "piede": "Il reel esce alle " + ORE[tipo], "posa": "occhiolino"}
@@ -156,6 +158,11 @@ def main() -> int:
         r2.carica(cartella / nome, chiave_id, segreto, account, "cartoline")
         immagine = f"{r2.URL_PUBBLICO}/cartoline/{nome}"
         (cartella / nome).unlink(missing_ok=True)
+        # a pranzo, su Instagram, il video di anticipo montato dal regista (su Facebook resta l'immagine)
+        if a.fascia == "pranzo" and (p := post_di_oggi(oggi)) and p.get("anticipo_video"):
+            video = r2.url_video(p["anticipo_video"])
+            if video:
+                print(f"Su Instagram il video di anticipo: {p['anticipo_video']}")
     if a.anteprima:
         return 0
 

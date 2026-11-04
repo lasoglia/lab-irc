@@ -142,7 +142,7 @@ def main():
     return 0
 
 
-VERSIONE_REGIA = "5"   # cambiala per far riscrivere i copioni (3: sempre anche la lezione interattiva)
+VERSIONE_REGIA = "7"   # cambiala per far riscrivere i copioni (3: sempre anche la lezione interattiva)
 
 
 def prepara_regia(c: dict, cache: dict) -> dict | None:
@@ -177,6 +177,8 @@ def prepara_regia(c: dict, cache: dict) -> dict | None:
             "mascotte": c.get("mascotte", ""), "url": c["url"], "motore": "reel2", "regia": regia,
             "gancio": next((q.get("testo", "") for q in regia["inquadrature"] if q["tipo"] == "gancio"), ""),
             "ganci": t.get("ganci", []), "video": video,
+            # la storia delle 13:30: un video di anticipo (seo/reel_lezioni.py) con la frase del regista
+            "anticipo": t.get("anticipo", ""), "anticipo_video": "anticipo-" + video,
             "facebook": pr.testo_completo(post, "facebook"), "instagram": pr.testo_completo(post, "instagram"),
             "telegram": pr.testo_completo(post, "telegram")}
 

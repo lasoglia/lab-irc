@@ -72,10 +72,10 @@ def schema() -> dict:
                                "posa": {"type": "string", "enum": pose()}, "durata": {"type": "number"}},
                 "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "scena", "posa", "durata"],
                 "additionalProperties": False}},
-            "facebook": stringa, "instagram": stringa, "telegram": stringa,
+            "facebook": stringa, "instagram": stringa, "telegram": stringa, "anticipo": stringa,
             "hashtag": {"type": "array", "items": stringa},
         },
-        "required": ["serie", "angoli", "ganci", "inquadrature", "facebook", "instagram", "telegram", "hashtag"],
+        "required": ["serie", "angoli", "ganci", "inquadrature", "facebook", "instagram", "telegram", "hashtag", "anticipo"],
         "additionalProperties": False,
     }
 
@@ -111,20 +111,22 @@ un'attività che mostra proprio quel punto). «scena» è il numero della scena,
 continua il racconto della curiosità: MAI parlare di «lezione interattiva», «in classe», «gioco», \
 «quiz» o presentare il materiale; «testo» un'etichetta breve sul contenuto (al massimo 7 parole) o "".
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
-Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
+Da 5 a 6 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
 <scene_lezione>, metti SEMPRE una o due inquadrature «lezione» con scene diverse, alternate alle \
 pagine del fascicolo, mai attaccate tra loro. «durata» in \
 secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
 «cerchia», «numero» vuoti e «scena» 0 quando non servono.
 
-La «voce» si legge ad alta voce: al massimo 18 parole per inquadratura e 80 parole in tutto \
+La «voce» si legge ad alta voce: al massimo 15 parole per inquadratura e 65 parole in tutto \
 (il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
 dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 
 Restituisci anche: «serie» (la rubrica indicata nel messaggio, con le sue condizioni); 5 «angoli» con la leva; almeno 5 \
 «ganci» con la leva, il primo è quello usato; «facebook» (300-900 caratteri), «instagram» \
 (300-1000, paragrafi brevi, chiude con il link nella bio, senza hashtag), «telegram» (200-600), \
-«hashtag» (3-5, senza #, sempre religionecattolica e irc).
+«hashtag» (3-5, senza #, sempre religionecattolica e irc); «anticipo»: la frase della storia \
+delle 13:30 che annuncia il reel della sera, al massimo 9 parole, che incuriosisce SENZA svelare \
+la scoperta (*parola* = in oro), per esempio "Una pietra del 1961 cambia *una parola*".
 
 Regole vincolanti: solo fatti presenti nel fascicolo (niente nomi, date, numeri o citazioni \
 aggiunti); rispetto per la fede e per chi non crede; nessun nome di studenti o scuole; nessun \
@@ -141,7 +143,7 @@ mantenuto dal video. Se tra i ganci ce n'è uno più forte, usalo.
 2. C'è una domanda aperta nei primi 5 secondi che si chiude solo alla fine (la complicazione)?
 3. La scoperta si VEDE: pagine vere del fascicolo e scene della lezione interattiva che mostrano \
 proprio ciò che la voce dice, alternate, mai due uguali di fila.
-4. Ritmo: un cambio ogni 3-5 secondi, frasi corte, nessun tempo morto, totale 20-35 secondi.
+4. Ritmo: un cambio ogni 3-5 secondi, frasi corte, nessun tempo morto, al massimo 6 inquadrature e 65 parole di voce (circa 30 secondi).
 5. Finale: l'ultima frase richiama il gancio (chi riguarda capisce di più) e chiude con labirc.it.
 6. Didascalie: la prima riga attira, una frase dice a chi serve, un dato o una fonte, una sola richiesta.
 7. È qualcosa che un docente salverebbe per la lezione o manderebbe a un collega? Se no, rendilo più utile.
@@ -232,7 +234,7 @@ def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
     return errori
 
 
-PAROLE_MAX = 85   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
+PAROLE_MAX = 70   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
 
 
 def parole_voce(copione: dict) -> int:
@@ -399,7 +401,8 @@ def main() -> int:
         print("Nessun fascicolo per questa lezione")
         return 1
     uscita = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("copione.json")
-    uscita.write_text(json.dumps(copione_regia(c, lezione), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    uscita.write_text(json.dumps({**copione_regia(c, lezione), "anticipo": c.get("anticipo", "")}, ensure_ascii=False, indent=1)
+                      + "\n", encoding="utf-8")
     print(json.dumps({k: c[k] for k in ("serie", "ganci", "facebook")}, ensure_ascii=False, indent=1))
     print(f"Copione in {uscita} (citazioni sbagliate rimaste: {c['citazioni_sbagliate']}, parole della voce: "
           f"{c['parole_voce']}, modello: {c['modello']}, scene della lezione: {len(c.get('scene_lezione') or [])})")
