@@ -265,7 +265,11 @@ def componi(tempi: dict) -> np.ndarray:
     traccia = (base + effetti + voce)[: int(durata * SR)]
     k = int(1.2 * SR)
     traccia[-k:] *= np.linspace(1, 0, k)
-    traccia = np.tanh(1.4 * traccia / (np.max(np.abs(traccia)) or 1))   # più «pieno», senza distorcere
+    if np.any(voce):
+        # con la voce niente saturazione (sporcava la voce): solo un volume pulito, lineare
+        traccia = 0.89 * traccia / (np.max(np.abs(traccia)) or 1)
+    else:
+        traccia = np.tanh(1.4 * traccia / (np.max(np.abs(traccia)) or 1))   # solo musica: più «pieno»
     return traccia / (np.max(np.abs(traccia)) or 1) * 0.89
 
 

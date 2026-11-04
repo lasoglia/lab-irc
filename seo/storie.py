@@ -5,11 +5,11 @@ seo/storie.py — Le storie di ogni giorno su Instagram e Facebook (Progetto Ree
 Tre momenti, sul modello dei creatori che funzionano (presenza costante, poche parole):
   mattina (7:45)  la ricorrenza del giorno (date calcolate, mai inventate) oppure la frase della
                   lezione di oggi: «Oggi nel Lab»
-  pranzo  (13:30) l'anticipo del reel della sera: su Instagram il video di 10 secondi montato
-                  dal regista (gancio, un'immagine, «Stasera alle 19»), su Facebook l'immagine
-                  con la frase di anticipo (solo nei giorni di reel e di gioco)
+  pranzo  (13:30) l'anticipo del reel della sera: il video di 10 secondi montato dal regista
+                  (gancio, un'immagine, «Stasera alle 19»), o l'immagine con la frase di anticipo
+                  (solo nei giorni di reel e di gioco)
 Le API di Instagram e Facebook non permettono adesivi con link nelle storie: si rimanda al profilo.
-  sera    (20:45) il reel uscito oggi, rilanciato come storia (solo Instagram)
+  sera    (20:45) il reel uscito oggi, rilanciato come storia (Instagram e Facebook)
 Senza IA: i testi vengono dal calendario e dai post già approvati. Niente quiz, niente link
 nel testo. Una storia non esce due volte (data/storie.json).
 
@@ -158,7 +158,7 @@ def main() -> int:
         r2.carica(cartella / nome, chiave_id, segreto, account, "cartoline")
         immagine = f"{r2.URL_PUBBLICO}/cartoline/{nome}"
         (cartella / nome).unlink(missing_ok=True)
-        # a pranzo, su Instagram, il video di anticipo montato dal regista (su Facebook resta l'immagine)
+        # a pranzo il video di anticipo montato dal regista (l'immagine resta di riserva)
         if a.fascia == "pranzo" and (p := post_di_oggi(oggi)) and p.get("anticipo_video"):
             video = r2.url_video(p["anticipo_video"])
             if video:
@@ -184,7 +184,19 @@ def main() -> int:
             print("✓ storia su Instagram")
         except Exception as err:
             print(f"✗ Instagram: {err}")
-    if immagine:
+    # Facebook: la storia video (si apre il caricamento, Meta scarica il video da R2, si pubblica);
+    # se non riesce e c'è l'immagine, la storia con l'immagine
+    if video:
+        try:
+            inizio = meta.chiama("POST", f"{pagina_id}/video_stories", upload_phase="start", access_token=chiave_pagina)
+            meta.carica_video(inizio["upload_url"], chiave_pagina, video)
+            meta.chiama("POST", f"{pagina_id}/video_stories", upload_phase="finish", video_id=inizio["video_id"],
+                        access_token=chiave_pagina)
+            esiti["facebook"] = True
+            print("✓ storia video su Facebook")
+        except Exception as err:
+            print(f"✗ Facebook (video): {err}")
+    if immagine and not esiti.get("facebook"):
         try:
             foto = meta.chiama("POST", f"{pagina_id}/photos", url=immagine, published="false", access_token=chiave_pagina)["id"]
             meta.chiama("POST", f"{pagina_id}/photo_stories", photo_id=foto, access_token=chiave_pagina)
