@@ -53,6 +53,7 @@ function pagina(r) {
         </div></div><div class="didascalia">${esc(s.fonte || '')}</div></div>`;
       case 'numero': return `<div class="numero"><div class="cifra">${esc(s.numero)}</div><h2>${ricco(s.testo)}</h2></div>`;
       case 'prof': return `<div class="frase"><h2>${ricco(s.testo)}</h2></div>`;
+      case 'personaggio': return `<div class="dipinto"><img src="${url(s.immagine)}"></div>${s.testo ? `<div class="etichetta">${ricco(s.testo)}</div>` : ''}<div class="marchio-ia">${esc(s.etichetta_ia || 'personaggio inventato · immagine generata con IA')}</div>`;
       case 'clip': return `<div class="schermo"><img class="fot" src="${url(s.fotogrammi[0])}"></div>${s.testo ? `<div class="etichetta">${ricco(s.testo)}</div>` : ''}`;
       case 'chiusa': return `<div class="chiusa"><img class="masc" src="${url(`assets/mascotte/svg/${r.mascotte}.svg`)}"><div class="sopra">${esc(s.sopra || 'Per continuare')}</div><h2>${s.testo ? ricco(s.testo) : 'La lezione completa è su <i>labirc.it</i>'}</h2><div class="tit">${esc(r.titolo)}</div></div>`;
       default: return '';
@@ -100,13 +101,17 @@ h1 i,h2 i{font-style:italic;font-weight:500;color:#E3C27A}
 .schermo .fot{width:100%;height:100%;object-fit:cover;display:block}
 .etichetta{position:absolute;left:50%;top:44px;transform:translateX(-50%);width:820px;box-sizing:border-box;padding:22px 34px 26px;border-radius:26px;background:rgba(20,19,31,.94);box-shadow:0 0 0 3px #E3C27A,0 24px 60px rgba(0,0,0,.55);font:600 72px/1.02 Cormorant;color:#fff;text-align:center;text-wrap:balance}
 .etichetta i{font-style:italic;font-weight:500;color:#E3C27A}
+.scena.t-personaggio{left:0;right:0;top:340px;height:1100px;display:flex;justify-content:center;align-items:flex-start}
+.dipinto{position:relative;width:618px;height:1100px;border-radius:40px;overflow:hidden;box-shadow:0 0 0 4px rgba(227,194,122,.85),0 40px 90px rgba(0,0,0,.6)}
+.dipinto img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:50% 40%}
+.marchio-ia{position:absolute;left:50%;transform:translateX(-50%);top:1060px;padding:10px 22px;border-radius:999px;background:rgba(20,19,31,.85);font:700 24px Figtree;color:#C7C3DA;letter-spacing:.02em;white-space:nowrap}
 .con-clip .prof{top:1490px;width:200px;height:200px}
 .con-clip .sott{top:1470px;left:310px;height:250px}
 .con-clip .blocco{font-size:54px}
 .con-clip .logo{top:1790px}
 .avanza,.serie,.prof,.sott,.logo,.barra-anno{z-index:2}.scena{z-index:1}
 .logo{position:absolute;left:80px;top:1460px;font:700 26px Figtree;color:#8E89A6;letter-spacing:.04em}
-</style></head><body class="${r.inquadrature.some((q) => q.tipo === 'clip') ? 'con-clip' : ''}">
+</style></head><body class="${r.inquadrature.some((q) => q.tipo === 'clip' || q.tipo === 'personaggio') ? 'con-clip' : ''}">
 <div class="vetrata"></div><div class="grana"></div><div class="barra-anno"></div>
 <div class="avanza"><i></i></div>
 <div class="serie"><b>${esc(r.serie)}</b><span>Anno ${esc(r.anno_romano || '')}</span></div>
@@ -135,6 +140,7 @@ scene.forEach((s, i) => {
     f.querySelectorAll('.evid').forEach((x) => x.animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { delay: s.inizio + 500, duration: 900, fill: 'both', easing: 'ease-out' }));
     f.querySelectorAll('.cerchio ellipse').forEach((x) => x.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { delay: s.inizio + 1500, duration: 700, fill: 'both', easing: 'ease-out' }));
   }
+  if (s.tipo === 'personaggio') el.querySelector('.dipinto img').animate([{ transform: 'scale(1.0)' }, { transform: 'scale(1.12)' }], { delay: s.inizio, duration: s.durata, fill: 'both', easing: 'ease-in-out' });   // lento avvicinamento
   if (s.tipo === 'numero') el.querySelector('.cifra').animate([{ transform: 'translateY(80px) scale(.7)', opacity: 0 }, { transform: 'none', opacity: 1 }], { delay: s.inizio + 60, duration: 700, fill: 'both', easing: molla });
   if (s.tipo === 'gancio' || s.tipo === 'prof' || s.tipo === 'chiusa') el.querySelectorAll('h1,h2,.sopra,.masc').forEach((x, k) => x.animate([{ transform: 'translateY(40px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { delay: s.inizio + 60 + k * 90, duration: 520, fill: 'both', easing: morbido }));
 });

@@ -68,6 +68,26 @@ def con_lezione(copione: dict, cartella: Path) -> dict:
     return copione
 
 
+def con_personaggi(copione: dict, cartella: Path) -> dict:
+    """Le inquadrature «personaggio» diventano un'immagine dipinta (seo/personaggi.py); se la
+    descrizione non è ammessa o nessun servizio risponde, diventano frasi del prof."""
+    import personaggi
+    for i, q in enumerate(copione.get("inquadrature", [])):
+        if q.get("tipo") != "personaggio":
+            continue
+        try:
+            immagine, chi = personaggi.dipingi(q.get("descrizione", ""))
+            f = cartella / f"personaggio-{i}.jpg"
+            f.write_bytes(immagine)
+            q.update({"immagine": str(f), "etichetta_ia": personaggi.ETICHETTA})
+            print(f"  ✓ personaggio dipinto da {chi}")
+        except Exception as err:
+            print(f"  ! personaggio non dipinto ({err}): frase del prof")
+            q["tipo"] = "prof"
+            q.setdefault("testo", q.get("voce", ""))
+    return copione
+
+
 def copione_anticipo(copione: dict, anticipo: str) -> dict:
     """L'anticipo per la storia delle 13:30 (circa 10 secondi): il gancio con la sua voce, una
     immagine del reel senza voce (non svela la scoperta) e la chiusa «Stasera alle 19»."""
@@ -104,7 +124,7 @@ def main() -> int:
                     copione["artefatto"] = str(a.relative_to(RADICE)) if a else ""
                 if copione.get("artefatto") and not copione.get("scene_lezione"):
                     copione["scene_lezione"] = regista.scene_di(r)
-                copione = con_lezione(regista.garantisci_lezione(copione), t)
+                copione = con_personaggi(con_lezione(regista.garantisci_lezione(copione), t), t)
                 (t / "copione.json").write_text(json.dumps(copione, ensure_ascii=False), encoding="utf-8")
                 subprocess.run([sys.executable, str(RADICE / "seo" / "regia.py"), str(t / "copione.json"),
                                 str(t / "regia.json"), str(t / "lavoro")], check=True)
