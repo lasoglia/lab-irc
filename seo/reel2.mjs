@@ -43,7 +43,7 @@ function pagina(r) {
   const scene = r.inquadrature.map((q, i) => { const s = { ...q, i, inizio: t }; t += q.durata; return s; });
   // (le durate sono già adattate alla voce da adatta())
   const durata = t;
-  const blocchi = scene.flatMap((s) => sottotitoli(s.voce, s.inizio + (s.voce_durata ? 0.25 : 0), s.voce_durata ? s.voce_durata + 0.35 : s.durata));
+  const blocchi = scene.flatMap((s) => sottotitoli(s.voce, s.inizio + (s.voce_durata ? 0.15 : 0), s.voce_durata ? s.voce_durata + 0.35 : s.durata));
   const vista = (s) => {
     switch (s.tipo) {
       case 'gancio': return `<div class="gancio"><div class="sopra">${esc(r.serie)}</div><h1>${ricco(s.testo)}</h1></div>`;
@@ -171,7 +171,7 @@ function adatta(r) {
     if (q.voce_file && existsSync(q.voce_file)) {
       const d = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', q.voce_file], { encoding: 'utf8' });
       q.voce_durata = parseFloat(d.stdout) || 0;
-      q.durata = Math.max(q.durata, q.voce_durata + 0.6);
+      q.durata = Math.max(q.durata, q.voce_durata + 0.45);
     }
   }
 }
@@ -179,7 +179,7 @@ function adatta(r) {
 function colonnaSonora(r, cartella) {
   let t = 0;
   const cambi = r.inquadrature.map((q) => { const s = t; t += q.durata; return s; });
-  const voce = r.inquadrature.map((q, i) => (q.voce_file ? { file: q.voce_file, inizio: cambi[i] + 0.25 } : null)).filter(Boolean);
+  const voce = r.inquadrature.map((q, i) => (q.voce_file ? { file: q.voce_file, inizio: cambi[i] + 0.15 } : null)).filter(Boolean);
   const tempi = { durata: t, seme: r.titolo, voce, pop: cambi.slice(1).map((s) => s + 0.05), whoosh: cambi.slice(1).map((s) => Math.max(0, s - 0.12)), campanello: [t - 3.2] };
   const f = join(cartella, 'tempi.json'), wav = join(cartella, 'audio.wav');
   writeFileSync(f, JSON.stringify(tempi));
@@ -210,7 +210,7 @@ const durata = await pg.evaluate(async () => { await document.fonts.ready; retur
 const audio = colonnaSonora(r, lavoro);
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-i', '-',
   ...(audio ? ['-i', audio] : ['-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo']), '-shortest', '-ar', '48000',
-  '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-c:a', 'aac', '-b:a', '96k', '-movflags', '+faststart', uscita],
+  '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart', uscita],
 { stdio: ['pipe', 'inherit', 'inherit'] });
 const fine = new Promise((ok) => ff.on('close', ok));
 const n = Math.ceil((durata / 1000) * FPS);
