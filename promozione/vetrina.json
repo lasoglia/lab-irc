@@ -43,6 +43,16 @@
       "chiave": "come",
       "titolo": "Come si usa",
       "file": "vetrina-icona-come.png"
+    },
+    {
+      "chiave": "sapevi",
+      "titolo": "Lo sapevi?",
+      "file": "vetrina-icona-sapevi.png"
+    },
+    {
+      "chiave": "giochi",
+      "titolo": "Giochi",
+      "file": "vetrina-icona-giochi.png"
     }
   ],
   "presentazione": "Il laboratorio di Religione per le superiori. Lezioni, fascicoli e giochi gratis, dalla prima alla quinta. Ogni giorno di scuola una lezione a fumetti, il sabato lo Shabbat, la domenica la grande domanda.",
