@@ -1,9 +1,4 @@
 {
-  "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie": {
-    "firma": "0ee406779f46",
-    "scena": "Golden dawn light over Jerusalem's Old City seen from afar: the Dome of the Rock gleaming, church domes and pale limestone walls, ancient stones of the Western Wall, olive trees and soft mist in the valley below.",
-    "file": "promozione/immagini-ia/1-israele-una-promessa-una-storia-fino-a-0ee406779f46.jpg"
-  },
   "dom-2026-11-08": {
     "firma": "ab9fe37ca67f",
     "scena": "An old brass telescope on a wooden table beside a closed leather-bound book, by an open Renaissance window overlooking Florence rooftops at dusk, Jupiter and the first stars glowing in a deep blue sky, warm candlelight.",
@@ -28,5 +23,10 @@
     "firma": "c68199c44c8f",
     "scena": "A sunlit high school classroom at morning, empty wooden desks, a projector glowing softly, open notebooks and colorful folders on a teacher's desk, a window framing green hills and a distant bell tower, warm hopeful light.",
     "file": "promozione/immagini-ia/vetrina-prof-c68199c44c8f.jpg"
+  },
+  "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi": {
+    "firma": "f28f2aaa7edb",
+    "scena": "A sunlit old library corridor with an open wooden door leading to a garden; two chairs face each other beside a low table with stacked books, a teacup and a small sprouting plant, warm morning light streaming in.",
+    "file": "promozione/immagini-ia/3-i-luoghi-che-cambiano-la-vita-regola-d-f28f2aaa7edb.jpg"
   }
 }
