@@ -74,6 +74,18 @@ jobs:
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)" \
           PROVINO="$PWD/uscita" node seo/reel2.mjs uscita/regia.json uscita/reel.mp4
+          if [ -n "$LEZIONE" ]; then   # anche il video di anticipo per la storia delle 13:30
+            python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, "seo")
+          import reel_lezioni
+          c = json.loads(Path("uscita/copione.json").read_text(encoding="utf-8"))
+          Path("uscita/anticipo.json").write_text(json.dumps(reel_lezioni.copione_anticipo(c, c.get("anticipo", "")), ensure_ascii=False), encoding="utf-8")
+          PY
+            python seo/regia.py uscita/anticipo.json uscita/regia-anticipo.json lavoro-anticipo
+            node seo/reel2.mjs uscita/regia-anticipo.json uscita/anticipo.mp4 || true
+          fi
           if ls lavoro/voce/*.wav >/dev/null 2>&1; then
             for f in lavoro/voce/voce-*.wav; do echo "file '$PWD/$f'"; done > elenco.txt
             ffmpeg -v error -y -f concat -safe 0 -i elenco.txt -c:a libmp3lame -b:a 160k uscita/voce.mp3
@@ -95,7 +107,7 @@ jobs:
           import media_r2 as r2
           nome = sys.argv[1]
           righe = ["## Reel di prova", ""]
-          for f in ("reel.mp4", "voce.mp3"):
+          for f in ("reel.mp4", "voce.mp3", "anticipo.mp4"):
               p = Path("uscita") / f
               if not p.exists():
                   continue
