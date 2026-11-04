@@ -273,6 +273,31 @@ class PuliziaVideo(unittest.TestCase):
             self.assertEqual(rimasti, ["anticipo-reel2-x.mp4", "gioco-y-2026-11-12.mp4", "reel2-x.mp4"])
 
 
+class VoceCheNonRiesce(unittest.TestCase):
+    """Se seo/voce.py fallisce (Gemini senza quota), la regia prosegue senza voce invece di fermare il reel."""
+
+    def test_regia_senza_voce(self):
+        import os
+        import regia
+        copione = {"serie": "Prova", "titolo": "T", "anno": 2, "inquadrature": [
+            {"tipo": "gancio", "testo": "Ciao", "voce": "Ciao a tutti", "durata": 2},
+            {"tipo": "chiusa", "voce": "La lezione completa è su labirc.it", "durata": 3}]}
+        with tempfile.TemporaryDirectory() as d:
+            finto = Path(d) / "voce.py"
+            finto.write_text("import sys; sys.exit(3)\n", encoding="utf-8")
+            vera, regia.RADICE = regia.RADICE, Path(d) / "radice"
+            (regia.RADICE / "seo").mkdir(parents=True)
+            (regia.RADICE / "seo" / "voce.py").write_text(finto.read_text(), encoding="utf-8")
+            os.environ["GEMINI_API_KEY"] = "finta"
+            try:
+                r = regia.prepara(copione, Path(d) / "lavoro")
+            finally:
+                regia.RADICE = vera
+                del os.environ["GEMINI_API_KEY"]
+            self.assertEqual(len(r["inquadrature"]), 2)
+            self.assertFalse(any(q.get("voce_file") for q in r["inquadrature"]))
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
