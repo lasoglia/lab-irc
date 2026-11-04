@@ -269,6 +269,8 @@ function iconaVetrina(k, titolo) {
     shabbat: '<div class="candele"><i></i><i></i></div>',
     prof: `<img class="prof" src="${url('assets/avatar/sorriso.png')}">`,
     come: '<div class="passi"><b>1</b><b>2</b><b>3</b></div>',
+    sapevi: '<div class="punto esclama">!</div>',
+    giochi: `<div class="blocchi">${['#FF7A59', '#4FB0FF', '#A78BFA', '#FB7BB5', '#FBBF24', '#E3C27A'].map((c) => `<i style="background:${c}"></i>`).join('')}</div>`,
   };
   // niente scritta: Instagram mostra il nome della raccolta sotto il cerchio
   return pagina(ORO, `<div class="centro" title="${esc(titolo)}">${segni[k]}</div>`,
@@ -279,6 +281,8 @@ body{padding:0;align-items:center;justify-content:center;background:radial-gradi
 .cinque{display:flex;flex-wrap:wrap;justify-content:center;width:600px;gap:20px 34px}.cinque img{width:170px;height:170px}
 .punto{font:600 520px/0.9 Cormorant;color:#FB7BB5;text-shadow:0 0 90px rgba(251,123,181,.6)}
 .prof{width:600px;height:600px;border-radius:50%;object-fit:cover}
+.esclama{color:#E3C27A;text-shadow:0 0 90px rgba(227,194,122,.55)}
+.blocchi{display:grid;grid-template-columns:repeat(3,150px);gap:22px;transform:rotate(-8deg)}.blocchi i{width:150px;height:150px;border-radius:18px;box-shadow:inset 0 -18px 0 rgba(0,0,0,.25),0 18px 40px rgba(0,0,0,.45)}
 .passi{display:flex;gap:34px}.passi b{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;font:600 100px Cormorant;color:#14131F;background:${ORO}}
 ${CANDELE}
 .candele{margin-top:80px;transform:scale(1.5)}`);
