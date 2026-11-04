@@ -226,6 +226,38 @@ def tipo_del_giorno(giorno: dt.date) -> str | None:
     return SETTIMANA_SCUOLA.get(giorno.weekday())
 
 
+# Le rubriche (docs/progetto-rubriche.md): un nome fisso per ogni uscita, così chi sceglie le lezioni
+# (il calendarista), chi scrive i caroselli (seo/caroselli.py) e il regista sanno che cosa esce.
+# Il martedì a rotazione, dalla prima settimana del calendario nuovo: «Parole con una storia»,
+# «In classe domani», «In numeri» (seo/caroselli.py ha le istruzioni e i modelli).
+RUBRICHE_MARTEDI = ["Parole con una storia", "In classe domani", "In numeri"]
+RUBRICHE = {
+    0: "Lo sapevi?",
+    2: "a rotazione «Prova alla mano», «Mappa in 30 secondi» o «Due racconti» (sceglie il regista)",
+    4: "Falso mito (se la lezione non corregge un luogo comune: «Lo sapevi?»)",
+}
+RUBRICA_PER_TIPO = {"gioco": "Il gioco del Lab", "prof": "Il prof del Lab", "shabbat": "Lo Shabbat del Lab",
+                    "domenica": "La grande domanda"}
+
+
+def rubrica_martedi(giorno: dt.date) -> str:
+    """La rubrica del carosello di quel martedì: una a settimana, a rotazione."""
+    settimane = (giorno - INIZIO_SETTIMANA_NUOVA).days // 7
+    return RUBRICHE_MARTEDI[settimane % len(RUBRICHE_MARTEDI)]
+
+
+def rubrica_del_giorno(giorno: dt.date) -> str | None:
+    """Il nome della rubrica che esce quel giorno (None se non esce nulla)."""
+    tipo = tipo_del_giorno(giorno)
+    if tipo in RUBRICA_PER_TIPO:
+        return RUBRICA_PER_TIPO[tipo]
+    if tipo == "lezione":
+        return rubrica_martedi(giorno) if giorno >= INIZIO_SETTIMANA_NUOVA and giorno.weekday() == 1 else "La lezione in un carosello"
+    if tipo == "reel":
+        return RUBRICHE.get(giorno.weekday(), "Lo sapevi?")
+    return None
+
+
 def giorni_di(tipo: str, inizio: dt.date, giorni: int) -> list[dt.date]:
     """I giorni in cui esce quel tipo di post, da domani per «giorni» giorni."""
     return [d for d in (inizio + dt.timedelta(days=i) for i in range(1, giorni + 1)) if tipo_del_giorno(d) == tipo]
