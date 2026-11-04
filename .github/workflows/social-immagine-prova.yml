@@ -11,7 +11,7 @@ on:
         default: 'un pescatore di Cafarnao, sulla quarantina, che ripara le reti sulla riva del lago al tramonto'
       stili:
         description: 'Varianti di stile da provare (a, b, c)'
-        default: 'bc'
+        default: 'c'
 
 permissions:
   contents: read

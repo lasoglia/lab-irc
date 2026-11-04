@@ -51,7 +51,7 @@ STILI = {
 STILI["bc"] = ("Cute rounded cartoon style, sticker-like character with a thick dark outline, soft flat colors, "
                "minimal details, limited warm palette of deep indigo, gold and coral, simple plain background, "
                "playful but dignified")
-STILE_SCELTO = "bc"
+STILE_SCELTO = "c"   # dopo la prova della mercante il docente preferisce la C, i colori del Lab
 COMUNE = (". Vertical 9:16 composition, the character in the lower two thirds, empty space at the top. One "
           "invented, generic adult character from the past, respectful, historically plausible clothing. No "
           "text, no letters, no logos, no halos, no religious figures, no children. Scene: ")
