@@ -14,7 +14,7 @@ on:
         default: 'Lo sapevi? Gesù è nato… avanti Cristo. | Nel 525 un monaco, Dionigi il Piccolo, cominciò a contare gli anni dalla nascita di Gesù. | E l''Occidente conta ancora così. | Però sbagliò di qualche anno: Erode muore nel 4 avanti Cristo, e Gesù era già nato. | Quindi Gesù è nato qualche anno prima dell''anno uno. | La lezione completa è su labirc.it.'
       motori:
         description: 'Motori da confrontare (lista JSON): xtts, chatterbox, edge, kokoro, gemini-<Voce>'
-        default: '["gemini-Charon","gemini-Algieba","gemini-Rasalgethi"]'
+        default: '["gemini-Sadachbia"]'
       velocita:
         description: 'Velocità della voce (1 = normale, 1.06 = un po'' più veloce)'
         default: '1.06'
