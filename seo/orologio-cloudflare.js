@@ -12,6 +12,7 @@
 
 const REPO = 'lasoglia/lab-irc';
 const WORKFLOW = 'promozione-telegram.yml';
+const WORKFLOW_STORIE = 'social-storie.yml';
 
 // giorni: 0 domenica, 1 lunedì … 6 sabato · ora di Roma, multipla di 10 minuti ·
 // si parte 10 minuti prima dell'uscita (l'Action prepara e poi pubblica)
@@ -22,6 +23,10 @@ const PIANO = [
   { giorni: [6], ora: '10:50', coda: 'oggi', che: 'Shabbat delle 11' },
   { giorni: [0], ora: '17:50', coda: 'oggi', che: 'grande domanda delle 18' },
   { giorni: [0], ora: '19:20', coda: 'video', che: 'video della grande domanda alle 19:30' },
+  // le storie (Action «Social · storie del giorno»): partono 5 minuti prima
+  { giorni: [0, 1, 2, 3, 4, 5, 6], ora: '07:40', storia: 'mattina', che: 'storia del mattino (7:45)' },
+  { giorni: [1, 3, 4, 5], ora: '13:20', storia: 'pranzo', che: 'storia «stasera alle 19» (13:30)' },
+  { giorni: [0, 1, 2, 3, 4, 5, 6], ora: '20:40', storia: 'sera', che: 'il reel di oggi come storia (20:45)' },
 ];
 
 function oraDiRoma(data) {
@@ -32,8 +37,10 @@ function oraDiRoma(data) {
   return { giorno, ora: `${parti.hour}:${parti.minute}` };
 }
 
-async function lancia(env, coda) {
-  const risposta = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, {
+async function lancia(env, voce) {
+  // i post vanno all'Action dei post (input «coda»), le storie a quella delle storie (input «fascia»)
+  const [workflow, inputs] = voce.storia ? [WORKFLOW_STORIE, { fascia: voce.storia }] : [WORKFLOW, { coda: voce.coda }];
+  const risposta = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/${workflow}/dispatches`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${env.GITHUB_TOKEN}`,
@@ -41,7 +48,7 @@ async function lancia(env, coda) {
       'X-GitHub-Api-Version': '2022-11-28',
       'User-Agent': 'orologio-lab-irc',
     },
-    body: JSON.stringify({ ref: 'main', inputs: { coda } }),
+    body: JSON.stringify({ ref: 'main', inputs }),
   });
   if (!risposta.ok) console.log(`GitHub ha risposto ${risposta.status}: ${await risposta.text()}`);
   return risposta.ok;
@@ -51,7 +58,7 @@ export default {
   async scheduled(evento, env, ctx) {
     const { giorno, ora } = oraDiRoma(new Date(evento.scheduledTime));
     for (const voce of PIANO) {
-      if (voce.giorni.includes(giorno) && voce.ora === ora) ctx.waitUntil(lancia(env, voce.coda));
+      if (voce.giorni.includes(giorno) && voce.ora === ora) ctx.waitUntil(lancia(env, voce));
     }
   },
 

@@ -1,0 +1,81 @@
+name: Social · storie del giorno
+# Le storie di ogni giorno (seo/storie.py), fatte partire dall'orologio su Cloudflare:
+#   mattina 7:45  la ricorrenza del giorno o la lezione di oggi
+#   pranzo 13:30  «Stasera alle 19» con il gancio del reel (giorni di reel e di gioco)
+#   sera   20:45  il reel uscito oggi, come storia su Instagram
+# Niente IA, niente link, niente quiz. Una storia non esce due volte (data/storie.json).
+
+on:
+  workflow_dispatch:
+    inputs:
+      fascia:
+        description: 'Quale storia'
+        type: choice
+        options: [mattina, pranzo, sera]
+        default: mattina
+      anteprima:
+        description: 'Solo disegnarla, senza pubblicare'
+        type: boolean
+        default: false
+
+concurrency:
+  group: social-storie
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  RAMO: claude/lab-irc-exam-platform-v2-712y8s
+
+jobs:
+  storia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Scarica il sito
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.RAMO }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Browser
+        run: npm install --silent --no-save --prefix "$RUNNER_TEMP/pw" playwright-core@1.56.1
+
+      - name: Disegna e pubblica la storia
+        env:
+          META_TOKEN: ${{ secrets.META_TOKEN }}
+          META_PAGINA_ID: '1450849821438605'
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          FASCIA: ${{ inputs.fascia }}
+          ANTEPRIMA: ${{ inputs.anteprima }}
+        run: |
+          export PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)"
+          if [ "$ANTEPRIMA" = true ]; then python seo/storie.py --fascia "$FASCIA" --anteprima; else python seo/storie.py --fascia "$FASCIA"; fi
+
+      - name: Salva il registro delle storie
+        if: always() && inputs.anteprima != true
+        run: |
+          [ -e data/storie.json ] || exit 0
+          git add data/storie.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Social: storia del giorno"
+          for prova in 1 2 3; do
+            git pull --rebase --autostash --quiet origin "$RAMO" && git push origin "HEAD:$RAMO" && break
+            sleep 10
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: inputs.anteprima == true
+        with:
+          name: storia-anteprima
+          path: promozione/cartoline/storia-*.jpg
+          retention-days: 3

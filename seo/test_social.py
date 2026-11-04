@@ -160,6 +160,29 @@ class Giochi(unittest.TestCase):
         self.assertIn("#religionecattolica", p["instagram"])
 
 
+class Storie(unittest.TestCase):
+    """Le storie del giorno: ricorrenza al mattino, «stasera alle 19» a pranzo solo nei giorni di reel."""
+
+    def setUp(self):
+        import storie
+        self.storie = storie
+        self._post = storie.post_di_oggi
+
+    def tearDown(self):
+        self.storie.post_di_oggi = self._post
+
+    def test_mattina_con_ricorrenza(self):
+        s = self.storie.scheda("mattina", dt.date(2026, 12, 8))
+        self.assertIn("Immacolata", s["titolo"])
+
+    def test_pranzo(self):
+        self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "gancio": "Un gancio", "anno": "2", "origine": "x"}
+        self.assertEqual(self.storie.scheda("pranzo", dt.date(2026, 11, 9))["titolo"], "Un gancio")   # lunedì, reel
+        self.assertIsNone(self.storie.scheda("pranzo", dt.date(2026, 11, 10)))                         # martedì, carosello
+        self.storie.post_di_oggi = lambda d: None
+        self.assertIsNone(self.storie.scheda("pranzo", dt.date(2026, 11, 9)))                          # niente post, niente storia
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
