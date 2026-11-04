@@ -82,7 +82,8 @@ class Calendario(unittest.TestCase):
 
 
 class CalendarioSocial(unittest.TestCase):
-    """Scuola: lezioni lun-ven, sabato lo Shabbat, domenica la grande domanda. Vacanze: strisce lun-mer-ven."""
+    """Scuola: reel lun-mer-ven, carosello il martedì, sabato lo Shabbat, domenica la grande domanda.
+    Vacanze: le strisce del prof lunedì e giovedì."""
 
     def setUp(self):
         self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
@@ -336,6 +337,20 @@ class VoceCheNonRiesce(unittest.TestCase):
             self.assertFalse(any(q.get("voce_file") for q in r["inquadrature"]))
 
 
+class SfondiIA(unittest.TestCase):
+    """Gli sfondi dipinti servono ai video a fumetti e alle copertine del weekend, non ai reel del regista."""
+
+    def test_reel2_senza_sfondo(self):
+        import immagini_ia
+        elenchi = {"reel.json": [{"origine": "a", "motore": "reel2", "video": "reel2-a.mp4"},
+                                 {"origine": "b", "video": "reel-b.mp4"}],
+                   "domenica.json": [{"chiave": "dom-1", "carosello": [{"titolo": "t", "testo": "x"}]}],
+                   "reel-domenica.json": [{"origine": "dom-1", "video": "domenica-1.mp4"}]}
+        self.assertEqual(sorted(immagini_ia.voci_da_dipingere(elenchi)), ["b", "dom-1"])
+        self.assertIsNone(immagini_ia.chiave_sfondo("reel.json", elenchi["reel.json"][0]))
+        self.assertTrue(immagini_ia.voci_da_dipingere(elenchi)["dom-1"].get("carosello"))   # la copertina, non il video
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
@@ -402,6 +417,25 @@ class Quaderno(unittest.TestCase):
     def test_proposta_sbagliata(self):
         cattivo = {**self.BUONO, "idee": [{"idea": "x", "stato": "boh"}], "regole_apprese": [{"regola": "y"}]}
         self.assertTrue(len(quaderno.controlla(cattivo)) >= 2)
+
+    def test_regole_per_ambito(self):
+        with tempfile.TemporaryDirectory() as d:
+            vero, quaderno.FILE = quaderno.FILE, Path(d) / "q.json"
+            quaderno.FILE.write_text(json.dumps({"regole_apprese": [
+                {"regola": "Per tutti", "prova": "p", "forza": "confermata"},
+                {"regola": "Solo reel", "prova": "p", "forza": "confermata", "per": "reel"},
+                {"regola": "Solo storie", "prova": "p", "forza": "confermata", "per": "storie"},
+                {"regola": "Ipotesi", "prova": "p", "forza": "ipotesi"}]}))
+            try:
+                tutto = quaderno.istruzioni_apprese()
+                self.assertIn("Solo storie", tutto)
+                reel = quaderno.istruzioni_apprese("reel", "didascalie")
+                self.assertIn("Per tutti", reel)
+                self.assertIn("Solo reel", reel)
+                self.assertNotIn("Solo storie", reel)
+                self.assertNotIn("Ipotesi", reel)
+            finally:
+                quaderno.FILE = vero
 
     def test_niente_email(self):
         con_email = {**self.BUONO, "idee": [{"idea": "scrivere a prova@esempio.it", "stato": "nuova"}]}
