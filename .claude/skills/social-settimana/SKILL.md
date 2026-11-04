@@ -15,7 +15,7 @@ Leggi `.claude/social-regole.md` e `.social/stato.md`. Se lo stato manca, fermat
 Se lo stato dice che i social sono in pausa, passa direttamente al punto 6 e scrivi che non è stato preparato nulla.
 
 ## 2. Scelta
-Chiedi a **social-calendarista** il piano delle uscite delle lezioni (i giorni elencati in «Uscite da coprire»: a scuola lunedì, mercoledì e venerdì la lezione esce come REEL, cioè un video a fumetti col prof: scegli lezioni con una curiosità o una storia che si racconta bene; martedì esce come carosello; in vacanza nessuna). Prepara un elenco di lavoro con i post scelti e le riserve.
+Chiedi a **social-calendarista** il piano delle uscite delle lezioni (i giorni elencati in «Uscite da coprire», ognuno con la sua rubrica: a scuola lunedì, mercoledì e venerdì la lezione esce come REEL del regista, con le pagine vere del fascicolo e la voce: scegli lezioni con una curiosità o una storia che si racconta bene; martedì esce come carosello della rubrica del giorno, «Parole con una storia», «In classe domani» o «In numeri»; in vacanza nessuna). Prepara un elenco di lavoro con i post scelti e le riserve.
 
 ## 3. Controllo
 Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando a ciascuno il file `.social/candidati/NN.md`.

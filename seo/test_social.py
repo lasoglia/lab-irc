@@ -117,6 +117,32 @@ class CalendarioSocial(unittest.TestCase):
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "reel")   # lunedì: il reel di una lezione
 
 
+class Rubriche(unittest.TestCase):
+    """Ogni uscita ha il nome della sua rubrica; il martedì a rotazione (docs/progetto-rubriche.md)."""
+
+    def setUp(self):
+        self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
+
+    def tearDown(self):
+        cal.FILE_VACANZE = self._file
+
+    def test_rotazione_del_martedi(self):
+        martedi = [dt.date(2026, 11, 10) + dt.timedelta(days=7 * i) for i in range(4)]
+        self.assertEqual([cal.rubrica_del_giorno(d) for d in martedi],
+                         ["Parole con una storia", "In classe domani", "In numeri", "Parole con una storia"])
+
+    def test_rubriche_della_settimana(self):
+        giorni = [dt.date(2026, 11, 9) + dt.timedelta(days=i) for i in range(7)]
+        nomi = [cal.rubrica_del_giorno(d) for d in giorni]
+        self.assertEqual(nomi[0], "Lo sapevi?")
+        self.assertIn("Prova alla mano", nomi[2])
+        self.assertIsNone(nomi[3])
+        self.assertIn("Falso mito", nomi[4])
+        self.assertEqual(nomi[5:], ["Lo Shabbat del Lab", "La grande domanda"])
+        self.assertEqual(cal.rubrica_del_giorno(dt.date(2026, 12, 28)), "Il prof del Lab")   # lunedì di vacanza
+        self.assertEqual(cal.rubrica_del_giorno(dt.date(2026, 11, 5)), "La lezione in un carosello")   # prima del 9/11
+
+
 class Giochi(unittest.TestCase):
     """Nei 14 giorni dopo l'uscita di un gioco di verifica, il giovedì di scuola esce il suo reel."""
 
