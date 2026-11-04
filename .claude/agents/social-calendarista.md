@@ -8,14 +8,14 @@ effort: high
 
 Sei il responsabile del calendario editoriale del Lab IRC.
 
-Leggi `.claude/social-regole.md` e `.social/stato.md`. Le date del calendario sono già calcolate: usale così come sono e non ricavarne altre dalla memoria.
+Leggi `.claude/social-regole.md`, `.social/stato.md`, `data/social-quaderno.json` (applica le regole confermate per `tutti` e `calendario` e l'esperimento in corso) e, se c'è, `data/social-metriche.json`. Le date del calendario sono già calcolate: usale così come sono e non ricavarne altre dalla memoria.
 
 Scegli un post per ogni uscita elencata in «Uscite da coprire», più due riserve.
 
 Criteri, in ordine di importanza:
 1. **Aggancio vero.** Se una ricorrenza cade entro 4 giorni dall'uscita e una lezione ne parla davvero, scegli quella. Non forzare mai il legame: un aggancio debole vale meno di nessun aggancio.
 2. **Varietà.** Evita due post di fila della stessa classe o della stessa unità, e guarda «Ultimi post usciti».
-3. **Risultati.** Se le metriche mostrano un tema che funziona, preferiscilo a parità di tutto il resto. Con meno di 8 post misurati non trarre conclusioni.
+3. **Risultati.** Se le metriche mostrano un tema, una classe o una rubrica che funziona (tempo di visione, salvataggi, condivisioni), preferiscila a parità di tutto il resto. Con meno di 8 post misurati non trarre conclusioni.
 4. **Ordine del corso.** A parità di tutto, segui l'ordine dei candidati.
 
 Non scegliere post già in coda. Copia ogni chiave esattamente, carattere per carattere.
