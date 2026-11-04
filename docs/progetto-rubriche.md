@@ -292,6 +292,26 @@ Sono circa 3 reel e 1-2 caroselli a settimana, più le storie: è la cadenza gi�
 - Non ho trovato dati affidabili su creator italiani di divulgazione religiosa con formati simili. Gli
   esempi italiani citati sono di divulgazione storica e museale.
 
+## 9. Altre rubriche da provare
+
+Idee in più, da mettere alla prova una alla volta con gli esperimenti del quaderno. Valgono le
+stesse regole: fatti solo dalle lezioni o verificati dal ricercatore, niente persone in foto,
+niente quiz ai follower, tono leggero e misurato.
+
+| Rubrica | Formato | Promessa | Perché può piacere | Che cosa serve |
+|---|---|---|---|---|
+| **Detto così** | reel | Un modo di dire di tutti i giorni che viene dalla Bibbia o dalla storia della Chiesa («lavarsene le mani», «essere un buon samaritano») | Lo usi tutti i giorni senza saperlo: si condivide | Elenco delle espressioni presenti nelle lezioni; il ricercatore conferma l'origine |
+| **Il dettaglio** | reel | Una sola immagine o pagina, e un dettaglio cerchiato che cambia tutto | Si riguarda per vedere il dettaglio: tempo di visione alto | C'è già: pagina del fascicolo o scena con cerchio |
+| **A puntate** | 3 reel nella settimana | Una storia lunga a episodi («1/3, 2/3, 3/3»), per esempio un viaggio o un concilio | Chi vede la prima puntata torna e segue il profilo | Il regista con una serie di 3 copioni collegati |
+| **Il prof risponde** | reel con l'avatar | Una domanda che la gente cerca davvero online («Gesù è esistito?») e la risposta della lezione | Intercetta ciò che le persone cercano | L'esploratore raccoglie le domande frequenti dal web, mai dai commenti |
+| **Quanto tempo fa?** | carosello | Distanze nel tempo che sorprendono, messe in fila su una linea | Effetto «non ci avevo mai pensato», si salva | Date verificate dal ricercatore; il modello linea del tempo dei caroselli |
+| **Tre fedi, una parola** | carosello | Una parola (preghiera, digiuno, pellegrinaggio) in ebraismo, cristianesimo e islam, con rispetto | Utile in classe, si manda ai colleghi | Fonti autorevoli di ciascuna tradizione; nessun confronto di valore |
+| **Dietro le quinte** | reel | Come nasce una lezione del Lab: dal fascicolo alla lezione interattiva, a schermo | Fiducia dei colleghi: vedono il lavoro vero | Registrazioni a schermo (già pronte) e voce |
+| **Un'opera, una storia** | reel | Un'opera d'arte che sta in una lezione, raccontata in 30 secondi | Bellezza e curiosità: si salva | Solo opere già presenti nei materiali, di pubblico dominio; mai volti in primo piano come protagonisti del post |
+
+Per partire, la più semplice è **Il dettaglio** (usa ciò che c'è già); quella con più potenziale di
+crescita è **A puntate**, perché fa tornare le persone sul profilo.
+
 ## Fonti
 
 - [Social Media Today: che cosa ha detto Instagram sui segnali di distribuzione (2025)](https://www.socialmediatoday.com/news/instagram-shares-algorithm-insights-2025/738034/)
