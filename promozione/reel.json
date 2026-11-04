@@ -1,46 +1,193 @@
 [
   {
-    "chiave": "reel|1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie",
-    "origine": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie",
-    "titolo": "Gerusalemme, una città di memorie",
-    "anno": "1",
-    "classe": "prima",
-    "uda": "Israele, una promessa, una storia, fino a oggi",
-    "colore": "#FF7A59",
-    "mascotte": "1-semino",
-    "url": "https://www.labirc.it/lezioni/1/israele-una-promessa-una-storia-fino-a-oggi/gerusalemme-una-citta-di-memorie/",
-    "gancio": "Un muro, una tomba vuota, una roccia: che città è?",
-    "scene": [
+    "chiave": "reel|3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi",
+    "origine": "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi",
+    "titolo": "Chi può insegnare a chi",
+    "anno": "3",
+    "classe": "terza",
+    "uda": "I luoghi che cambiano la vita - regola di san Benedetto",
+    "colore": "#A78BFA",
+    "mascotte": "3-navicella",
+    "url": "https://www.labirc.it/lezioni/3/i-luoghi-che-cambiano-la-vita-regola-di-san-benedetto/chi-puo-insegnare-a-chi/",
+    "motore": "reel2",
+    "regia": {
+      "serie": "Lo sapevi?",
+      "anno": 3,
+      "titolo": "Chi può insegnare a chi",
+      "fascicolo": "uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf",
+      "artefatto": "uploads/iii-1-2-chi-puo-insegnare-a-chi-artefatto.html",
+      "scene_lezione": [
+        {
+          "n": 1,
+          "fase": "Aggancio",
+          "titolo": "Chi può insegnare a chi?",
+          "contenuto": "Anonimo · per alzata di mano · Chi dovrebbe decidere se una persona può insegnare? · Un’autorità che la nomina · Gli studenti che la ascoltano · Colleghi esperti, con un esame · Nessuno: conta solo se spiega bene · Le università medievali hanno messo alla prova, in modi diversi, quasi tutte queste risposte: oggi seguiamo come sono nate e che cosa resta della loro soluzione. Alla fine rifaremo la stessa domanda e conf"
+        },
+        {
+          "n": 2,
+          "fase": "Scoperta",
+          "titolo": "Cercare Dio chiede di imparare",
+          "contenuto": "La ricerca di Dio richiede quindi per intrinseca esigenza una cultura della parola… · Benedetto XVI, discorso al Collège des Bernardins, Parigi, 12 settembre 2008 · È una lettura dall’interno della fede: se Dio parla anche con parole umane, chi lo cerca deve imparare a leggerle. Per questo monasteri e scuole delle cattedrali coltivano lingua, lettura e biblioteche. Non dice che ogni scuola sia nata dal cristianesimo."
+        },
+        {
+          "n": 3,
+          "fase": "Scoperta",
+          "titolo": "Le città chiedono competenze",
+          "contenuto": "Avvia l’animazione · Studenti e maestri · Prima condizione: le scuole di monasteri e cattedrali insegnano a leggere e a ragionare. · Crescono città e commerci: contratti, proprietà e liti chiedono persone capaci di interpretare testi e norme. · Si studiano il diritto romano e il diritto canonico: a Bologna diventano una calamita. · Arrivano testi tradotti dal greco e dall’arabo, con le riflessioni di autori arabi ed "
+        },
+        {
+          "n": 4,
+          "fase": "Scoperta",
+          "titolo": "Bologna: prima vengono gli studenti",
+          "contenuto": "dal latino universitas, «totalità», da universus, «tutto intero» (Treccani) · Nel Medioevo, una corporazione di persone associate. · «volto», da vertere · «totalità»; nel Medioevo «corporazione» · Universus è ciò che è volto tutto insieme, tutto intero; universitas la totalità. Nel Medioevo la parola indica una corporazione: a Bologna, nell’ultimo quarto del XII secolo, quella degli studenti. Non un edificio, né «tut"
+        },
+        {
+          "n": 5,
+          "fase": "Scoperta",
+          "titolo": "Parigi: una comunità di maestri",
+          "contenuto": "Inizia il confronto · Chi si associa · Soprattutto gli studenti, per provenienza · Soprattutto i maestri delle scuole cittadine · Studi più forti · Diritto romano e canonico · Arti e teologia · Chi riconosce · L’imperatore: Constitutio Habita, 1155 · Il re (1200), il legato del papa (1215), il papa (1231) · 1088, convenzionale · Nessuna: una serie di riconoscimenti · Due strade diverse: per questo non esiste un’unica"
+        },
+        {
+          "n": 6,
+          "fase": "Scoperta",
+          "titolo": "Un’obiezione, una distinzione",
+          "contenuto": "Caso immaginario · «Ogni testimonianza scritta merita fiducia.» · «Ma anche una menzogna può essere messa per iscritto.» · Utrum… Se ogni testimonianza scritta meriti fiducia. · Il maestro ha tre strade. Quale risponde davvero all’obiezione? · «Il maestro sono io: si fa come dico.» · Il ruolo chiude la discussione, ma non risponde all’obiezione: la difficoltà resta dov’era. · «Allora nessuna testimonianza scritta val"
+        },
+        {
+          "n": 7,
+          "fase": "Scoperta",
+          "titolo": "Tommaso e l’argomento più debole",
+          "contenuto": "In quale frase Tommaso risponde a Boezio distinguendo due tipi di autorità? · Tommaso d’Aquino, Summa theologiae I, q. 1, a. 8, ad 2, che cita Agostino, Lettera 82, 1, 3 (testo latino: Corpus Thomisticum; traduzione redazionale, con tagli) · [[Argomentare a partire dall’autorità è massimamente proprio di questa dottrina, perché i suoi principi si ricevono per rivelazione.::È la tesi: in teologia i principi si ricevon"
+        },
+        {
+          "n": 8,
+          "fase": "Attività",
+          "titolo": "Sfida a squadre",
+          "contenuto": "Sfida a squadre · Due squadre, venti secondi a domanda; se una sbaglia, l’altra può rubare. · Un indizio: una data convenzionale non è una fondazione, e un’obiezione non è un insulto."
+        },
+        {
+          "n": 9,
+          "fase": "Attività",
+          "titolo": "Chi autorizza il maestro?",
+          "contenuto": "Stima della classe · Parigi, 1215: da che età si potevano insegnare le arti? · Lo statuto chiede almeno vent’anni e almeno sei anni di studio nelle arti. Per insegnare teologia: almeno trentacinque anni e otto di studio. · Statuti di Robert de Courçon, 1215 (trad. Univ. of Pennsylvania, Internet Medieval Sourcebook) · Requisito, tutela o limite? · Aver ascoltato lezioni nelle arti per almeno sei anni · È un requisito"
+        },
+        {
+          "n": 10,
+          "fase": "Attività",
+          "titolo": "Autorità o autorevolezza?",
+          "contenuto": "Il posto che permette di decidere o di insegnare: viene da una nomina, da un esame, da un riconoscimento. Da solo non rende vera ogni frase. · Autorevolezza · La fiducia motivata che si dà a chi mostra preparazione e sa spiegare le sue ragioni. Si guadagna e si può verificare. · Una difficoltà con una ragione. Non basta contraddire: anche chi obietta deve portare argomenti o fonti. · Una sola attività, a scelta: tutt"
+        },
+        {
+          "n": 11,
+          "fase": "Chiusura",
+          "titolo": "Rimettete in fila il percorso",
+          "contenuto": "Dal cercare Dio all’autorevolezza: in che ordine? · Chi cerca Dio nelle Scritture deve imparare a leggere e capire · Le città hanno bisogno di chi sa interpretare testi e norme · Studenti e maestri si associano: nasce l’universitas · Le difficoltà dei testi diventano questioni da discutere · Si fissano requisiti per insegnare, e anche limiti · Ci si fida di chi mostra competenza e ragioni · Ogni passaggio prepara il "
+        },
+        {
+          "n": 12,
+          "fase": "Chiusura",
+          "titolo": "Torniamo alla domanda",
+          "contenuto": "Di nuovo, a fine lezione · Chi dovrebbe decidere se una persona può insegnare? · Un’autorità che la nomina · Gli studenti che la ascoltano · Colleghi esperti, con un esame · Nessuno: conta solo se spiega bene · La risposta medievale tiene insieme preparazione verificata, riconoscimento e discussione. Ora a voce: perché uno studente può fare un’obiezione giusta senza diventare per questo più competente del maestro? · "
+        }
+      ],
+      "inquadrature": [
+        {
+          "tipo": "gancio",
+          "testo": "L'università di Bologna? L'hanno messa in piedi *gli studenti*",
+          "voce": "L'università di Bologna? L'hanno messa in piedi gli studenti.",
+          "scena": 0,
+          "posa": "sorpreso",
+          "durata": 3
+        },
+        {
+          "tipo": "numero",
+          "testo": "Una data convenzionale, non una fondazione",
+          "voce": "Milleottantotto, dicono tutti. Ma è una data convenzionale, nessun atto di fondazione. Allora da dove salta fuori?",
+          "numero": "1088",
+          "scena": 0,
+          "posa": "pensieroso",
+          "durata": 5
+        },
+        {
+          "tipo": "pagina",
+          "voce": "Da studenti arrivati da lontano per il diritto. Lontani da casa, si riuniscono in associazioni di mutua assistenza.",
+          "citazione": "A Bologna gli studenti si riunirono in associazioni di mutua assistenza.",
+          "cerchia": "studenti",
+          "scena": 0,
+          "posa": "lente",
+          "durata": 6
+        },
+        {
+          "tipo": "lezione",
+          "testo": "Universitas: una corporazione, non un edificio",
+          "voce": "E la parola lo dice: universitas, nel Medioevo, è una corporazione, persone associate. Non un edificio. A Bologna, quella degli studenti.",
+          "scena": 4,
+          "posa": "spiega",
+          "durata": 7
+        },
+        {
+          "tipo": "prof",
+          "testo": "Ma associarsi *non basta*: chi controlla i maestri?",
+          "voce": "Però associarsi non basta a produrre conoscenza. E i maestri, chi li controlla?",
+          "scena": 0,
+          "posa": "perplesso",
+          "durata": 4
+        },
+        {
+          "tipo": "pagina",
+          "voce": "A Parigi, nel milleduecentoquindici, per insegnare le arti servono almeno vent'anni, sei anni di studio e un esame. E la licenza non si può comprare.",
+          "citazione": "Per insegnare le arti richiedevano almeno vent'anni di età, sei anni di studio e un esame.",
+          "cerchia": "esame",
+          "scena": 0,
+          "posa": "idea",
+          "durata": 8
+        },
+        {
+          "tipo": "chiusa",
+          "voce": "Chi può insegnare a chi? Studenti che si associano, maestri che passano un esame. La lezione completa è su labirc.it.",
+          "scena": 0,
+          "posa": "saluta",
+          "durata": 5
+        }
+      ]
+    },
+    "gancio": "L'università di Bologna? L'hanno messa in piedi *gli studenti*",
+    "ganci": [
       {
-        "titolo": "Tre fedi, una città",
-        "testo": "Ebrei, cristiani e musulmani guardano Gerusalemme: ognuno ci vede una storia diversa.",
-        "disegno": "promozione/illustrazioni/cb4ff15c594e-1.svg"
+        "testo": "L'università di Bologna? L'hanno messa in piedi gli studenti",
+        "leva": "sorpresa"
       },
       {
-        "titolo": "Il Muro occidentale",
-        "testo": "Reggeva la spianata del Tempio, distrutto nel 70 d.C. Qui si prega Dio, non le pietre.",
-        "disegno": "promozione/illustrazioni/cb4ff15c594e-2.svg"
+        "testo": "Nel 1088 a Bologna nessuno fondò niente",
+        "leva": "affermazione controintuitiva"
       },
       {
-        "titolo": "Il Santo Sepolcro",
-        "testo": "Calvario e tomba di Gesù in una basilica. Il sepolcro vuoto? Un segno della risurrezione.",
-        "disegno": "promozione/illustrazioni/cb4ff15c594e-3.svg"
+        "testo": "Nel 1215 per insegnare servivano vent'anni e un esame",
+        "leva": "numero inatteso"
       },
       {
-        "titolo": "La Cupola della Roccia",
-        "testo": "Dal 691-692 copre la roccia che l'Islam lega all'ascesa di Muhammad. E no, non è al-Aqsa!",
-        "disegno": "promozione/illustrazioni/cb4ff15c594e-4.svg"
+        "testo": "Università non voleva dire edificio: voleva dire corporazione",
+        "leva": "curiosità"
       },
       {
-        "titolo": "E in classe?",
-        "testo": "Schemi, descrizioni da correggere, una parodia da verificare, quattro domande. Si parte!",
-        "disegno": "promozione/illustrazioni/cb4ff15c594e-5.svg"
+        "testo": "Prima arrivarono gli studenti, poi l'università",
+        "leva": "contrasto"
+      },
+      {
+        "testo": "In 30 secondi capisci chi ha inventato davvero l'università",
+        "leva": "promessa concreta"
+      },
+      {
+        "testo": "Chi decide se una persona può insegnare? Nel Medioevo risposero così",
+        "leva": "identità"
       }
     ],
-    "video": "reel-1-gerusalemme-una-citta-di-memorie-7f4c4dd6-ia.mp4",
-    "facebook": "Perché davanti al Muro occidentale si prega, ma le pietre non si adorano? È uno dei tre luoghi di Gerusalemme, una città di memorie, dove ebrei, cristiani e musulmani vedono storie diverse. Ecco la lezione in 30 secondi. Quella completa, per la classe prima, con schema, descrizioni da correggere e quattro domande di studio, vi aspetta sul sito 😉\n\nhttps://www.labirc.it/lezioni/1/israele-una-promessa-una-storia-fino-a-oggi/gerusalemme-una-citta-di-memorie/",
-    "instagram": "Cupola della Roccia e moschea al-Aqsa: sono la stessa cosa? Spoiler: no, al-Aqsa sta più a sud 🤔\n\nGerusalemme: tre fedi, una città sola.\nIl Muro occidentale, dove si prega Dio.\nIl Santo Sepolcro, con il Calvario e la tomba vuota di Gesù.\nLa Cupola della Roccia, costruita nel 691-692.\n\nLa lezione in 30 secondi è qui. Quella completa, con schemi, esercizi e una parodia da verificare, ti aspetta sul sito.\n\n#religionecattolica #irc #gerusalemme #dialogointerreligioso #scuola",
-    "telegram": "Una tomba vuota segno della risurrezione, una roccia legata all'ascesa di Muhammad, un muro dove si prega Dio. Gerusalemme, una città di memorie: la lezione in 30 secondi. Per la classe prima, con schema, parodia da verificare e domande di studio: la trovate completa sul sito 📌\n\nhttps://www.labirc.it/lezioni/1/israele-una-promessa-una-storia-fino-a-oggi/gerusalemme-una-citta-di-memorie/",
-    "sfondo": "promozione/immagini-ia/1-israele-una-promessa-una-storia-fino-a-0ee406779f46.jpg"
+    "video": "reel2-3-chi-puo-insegnare-a-chi-ce883b50-ia.mp4",
+    "anticipo": "Chi ha fondato davvero l'università di *Bologna*?",
+    "anticipo_video": "anticipo-reel2-3-chi-puo-insegnare-a-chi-ce883b50.mp4",
+    "facebook": "L'università di Bologna? L'hanno messa in piedi gli studenti.\n\nPer chi insegna in terza e per chi racconta il Medioevo senza leggende.\n\nIl 1088 è una data convenzionale: lo ricorda la ricostruzione storica dello stesso Ateneo, nessun atto di fondazione documentato, origini graduali. Nei documenti ci sono studenti arrivati da lontano per il diritto, che si riuniscono in associazioni di mutua assistenza: le universitates, corporazioni, non edifici.\n\nMa associarsi non basta. A Parigi, nel 1215, gli statuti di Robert de Courçon chiedono a chi vuole insegnare le arti almeno vent'anni di età, sei anni di studio e un esame. E vietano di comprare la licenza.\n\nSe un collega sta facendo il Medioevo in questi giorni, mandagli questo reel.\n\nhttps://www.labirc.it/lezioni/3/i-luoghi-che-cambiano-la-vita-regola-di-san-benedetto/chi-puo-insegnare-a-chi/",
+    "instagram": "Prima gli studenti, poi l'università: a Bologna è andata così.\n\nPer chi studia il Medioevo e per chi si è sempre chiesto da dove venga la parola università.\n\nUniversitas, in latino, è una totalità. Nel Medioevo indica una corporazione: persone associate, non un edificio. A Bologna, quella degli studenti, riuniti in associazioni di mutua assistenza.\n\nIl 1088 è una data convenzionale: lo spiega la ricostruzione storica dello stesso Ateneo.\n\nE i maestri? A Parigi, nel 1215, gli statuti di Robert de Courçon chiedono vent'anni di età, sei anni di studio e un esame. La licenza non si può comprare.\n\nLa lezione completa, con fascicolo e percorso interattivo, è nel link in bio.\n\n#religionecattolica #irc #medioevo #universita #bologna",
+    "telegram": "A Bologna gli studenti si associarono prima che esistesse un'università. Stasera il reel: perché il 1088 è una data convenzionale, che cosa voleva dire universitas nel Medioevo e che cosa chiedeva Parigi nel 1215 a chi voleva insegnare.\n\nLa lezione «Chi può insegnare a chi?» (classe terza) continua con l'obiezione di uno studente al maestro e la differenza tra autorità e autorevolezza. Fascicolo e lezione interattiva sono sul sito.\n\nhttps://www.labirc.it/lezioni/3/i-luoghi-che-cambiano-la-vita-regola-di-san-benedetto/chi-puo-insegnare-a-chi/",
+    "sfondo": "promozione/immagini-ia/3-i-luoghi-che-cambiano-la-vita-regola-d-f28f2aaa7edb.jpg"
   }
 ]
