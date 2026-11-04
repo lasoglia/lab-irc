@@ -18,8 +18,12 @@ Il registro è sobrio, caldo e preciso, da insegnante.
 - Nessun nome di studenti, classi reali, scuole o colleghi. Nessun episodio accaduto in classe.
 - Le strisce del prof sono scene di fantasia e generiche (il prof e la mascotte della classe):
   vanno bene, purché nessuno sia riconoscibile.
-- Nessuna foto di persone. Solo le immagini del sito: cartoline, caroselli, le illustrazioni del prof
-  (l'avatar del docente) e le mascotte delle classi.
+- Nessuna foto di persone reali. Le immagini sono quelle del sito (cartoline, caroselli, l'avatar del
+  prof, le mascotte, pagine dei fascicoli e scene delle lezioni interattive) e, quando servono a
+  raccontare una scena, PERSONAGGI INVENTATI E GENERICI generati con l'IA (`seo/personaggi.py`):
+  in stile illustrato, mai fotorealistico, sempre con la scritta «personaggio inventato · immagine
+  generata con IA». Mai Gesù, Dio, Maria, santi, angeli, papi, personaggi biblici o storici veri,
+  persone reali, bambini o ragazzi; mai violenza o scherno verso una fede o un popolo.
 - Nessuna recensione, testimonianza o cifra inventata.
 - Tono leggero e simpatico ma misurato, mai serioso o da predica: al massimo una battuta garbata per post,
   che strappi un sorriso e non una risata forzata. Niente esagerazioni, iperboli o giochi di parole tirati.
