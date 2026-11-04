@@ -31,6 +31,8 @@ FILE = RADICE / "data" / "social-quaderno.json"
 PROPOSTA = RADICE / ".social" / "quaderno-proposta.json"
 MAX_REGOLE, MAX_IDEE, MAX_ESPERIMENTI = 12, 30, 40
 STATI_IDEA = {"nuova", "in prova", "adottata", "scartata"}
+# a chi vale una regola (facoltativo): così ogni agente riceve quelle che lo riguardano
+AMBITI = {"tutti", "reel", "caroselli", "storie", "didascalie", "calendario", "grafica", "giochi"}
 VUOTO = {"regole_apprese": [], "esperimento": None, "esperimenti": [], "idee": []}
 
 
@@ -53,6 +55,8 @@ def controlla(q: dict) -> list[str]:
     for r in regole if isinstance(regole, list) else []:
         if not (_testo(r.get("regola"), 220) and _testo(r.get("prova"), 400)) or r.get("forza") not in ("ipotesi", "confermata"):
             errori.append(f"regola non valida: {str(r)[:80]}")
+        elif r.get("per", "tutti") not in AMBITI:
+            errori.append(f"regola con ambito sconosciuto «{r.get('per')}» (ammessi: {', '.join(sorted(AMBITI))})")
     e = q.get("esperimento")
     if e is not None and not (isinstance(e, dict) and _testo(e.get("ipotesi"), 300) and _testo(e.get("istruzione"), 300)
                               and _testo(e.get("misura"), 200)):
@@ -87,11 +91,14 @@ def applica_proposta() -> str:
     return f"quaderno: aggiornato ({len(q['regole_apprese'])} regole, {len(q['idee'])} idee)"
 
 
-def istruzioni_apprese() -> str:
-    """Il testo da aggiungere alle istruzioni di chi scrive: regole confermate ed esperimento in corso."""
+def istruzioni_apprese(ambito: str | None = None) -> str:
+    """Il testo da aggiungere alle istruzioni di chi scrive: regole confermate ed esperimento in corso.
+    Con «ambito» (reel, caroselli, storie…) solo le regole per tutti e per quell'ambito."""
     q = leggi()
     oggi = dt.date.today().isoformat()
-    righe = [f"- {r['regola']}" for r in q.get("regole_apprese", []) if r.get("forza") == "confermata"]
+    righe = [f"- {r['regola']}" + (f" (per: {r['per']})" if r.get("per", "tutti") != "tutti" else "")
+             for r in q.get("regole_apprese", [])
+             if r.get("forza") == "confermata" and (ambito is None or r.get("per", "tutti") in ("tutti", ambito))]
     e = q.get("esperimento")
     attivo = e and (not e.get("al") or e["al"] >= oggi) and (not e.get("dal") or e["dal"] <= oggi)
     if not righe and not attivo:

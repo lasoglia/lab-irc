@@ -61,7 +61,8 @@ jobs:
           g = os.environ.get("GIOCO") or ((cal.gioco_del_giorno(d) or {}).get("file") if cal.tipo_del_giorno(d) == "gioco" else "")
           print(f"giorno={giorno}")
           print(f"gioco={g or ''}")
-          print(f"variante={d.isocalendar()[1] % 2}")
+          import gioco_reel
+          print(f"variante={gioco_reel.scegli_variante(d.isocalendar()[1])}")
           PY
           cat "$GITHUB_OUTPUT"
 
@@ -100,7 +101,8 @@ jobs:
           elenco = json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
           limite = (dt.date.fromisoformat(giorno) - dt.timedelta(days=30)).isoformat()   # si tiene un mese
           elenco = [x for x in elenco if x.get("data") != giorno and x.get("data", "") >= limite]
-          elenco.append({"chiave": f"gioco|{gioco}|{giorno}", "origine": gioco, "data": giorno, "video": nome, **p})
+          elenco.append({"chiave": f"gioco|{gioco}|{giorno}", "origine": gioco, "data": giorno, "video": nome,
+                         "variante": int(os.environ["VARIANTE"]), **p})
           f.write_text(json.dumps(elenco, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
           print(f"Reel del gioco pronto per il {giorno}: {nome}")
           PY

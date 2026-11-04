@@ -155,6 +155,8 @@ def main() -> int:
             e["leva"] = c["ganci"][0].get("leva")
         if c.get("motore") or str(c.get("chiave", "")).startswith("gioco|"):
             e["motore"] = c.get("motore") or "gioco"
+        if c.get("variante") is not None:
+            e["variante"] = c["variante"]
         if e:
             extra[c["chiave"]] = e
     for riga in fb + ig:
