@@ -27,7 +27,7 @@ import fascicolo as fa  # noqa: E402
 RADICE = Path(__file__).resolve().parent.parent
 SERIE = {0: "Lo sapevi?", 2: "Dentro la lezione", 4: "Falsi miti"}
 TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "chiusa"]
-MOMENTI = ["", "scena", "quiz"]   # che pezzo della lezione interattiva registrata mostrare
+# la lezione interattiva non si «presenta»: le sue scene illustrano il racconto, come le pagine
 
 
 def pose() -> list[str]:
@@ -52,9 +52,9 @@ def schema() -> dict:
                 "type": "object",
                 "properties": {"tipo": {"type": "string", "enum": TIPI}, "testo": stringa, "voce": stringa,
                                "citazione": stringa, "cerchia": stringa, "numero": stringa,
-                               "momento": {"type": "string", "enum": MOMENTI},
+                               "scena": {"type": "integer"},
                                "posa": {"type": "string", "enum": pose()}, "durata": {"type": "number"}},
-                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "momento", "posa", "durata"],
+                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "scena", "posa", "durata"],
                 "additionalProperties": False}},
             "facebook": stringa, "instagram": stringa, "telegram": stringa,
             "hashtag": {"type": "array", "items": stringa},
@@ -88,17 +88,18 @@ titoli spezzati, niente parole di righe diverse saltate); «cerchia» è una par
 la citazione da cerchiare (o ""); «voce» racconta la frase con parole tue; «testo» "".
 - numero: un numero preso dal fascicolo («numero», per esempio "525") e una frase breve («testo»).
 - prof: una frase del prof sullo schermo («testo», al massimo 12 parole), detta dalla «voce».
-- lezione: la lezione interattiva VERA, registrata sullo schermo mentre si sfoglia. «momento» è \
-"scena" (le scene della lezione, con mappe, immagini e attività) o "quiz" (il quiz della modalità \
-Giochi: una risposta sbagliata in rosso, poi quella giusta in verde); «testo» è un'etichetta breve \
-(al massimo 7 parole, per esempio "In classe si *gioca*"); «voce» una frase sola su che cosa si fa \
-in classe con la lezione, senza dettagli che non sono nel fascicolo.
+- lezione: una scena VERA della lezione interattiva, registrata sullo schermo: serve a FAR VEDERE \
+ciò che la voce sta raccontando, come le pagine del fascicolo (una mappa, un testo, una fonte, \
+un'attività che mostra proprio quel punto). «scena» è il numero della scena, scelto dall'elenco \
+<scene_lezione> perché il suo contenuto corrisponde a ciò che dice la voce in quel momento. La «voce» \
+continua il racconto della curiosità: MAI parlare di «lezione interattiva», «in classe», «gioco», \
+«quiz» o presentare il materiale; «testo» un'etichetta breve sul contenuto (al massimo 7 parole) o "".
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
-Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se il messaggio \
-dice che la lezione interattiva c'è, metti SEMPRE una o due inquadrature «lezione» (al massimo una \
-"scena" e un "quiz"), alternate alle pagine del fascicolo, mai attaccate tra loro. «durata» in \
+Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
+<scene_lezione>, metti SEMPRE una o due inquadrature «lezione» con scene diverse, alternate alle \
+pagine del fascicolo, mai attaccate tra loro. «durata» in \
 secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
-«cerchia», «numero», «momento» vuoti quando non servono.
+«cerchia», «numero» vuoti e «scena» 0 quando non servono.
 
 La «voce» si legge ad alta voce: al massimo 18 parole per inquadratura e 80 parole in tutto \
 (il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
@@ -180,8 +181,9 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
         return None
     serie = SERIE.get(dt.date.fromisoformat(quando).weekday(), "Lo sapevi?") if quando else "Lo sapevi?"
     testo = testo_fascicolo(pdf)
-    interattiva = ("La lezione interattiva c'è: metti una o due inquadrature «lezione»." if artefatto_di(lezione)
-                   else "La lezione interattiva non c'è: niente inquadrature «lezione».")
+    scene = scene_di(lezione)
+    interattiva = ("<scene_lezione>\n" + "\n".join(f"{x['n']}. [{x['fase']}] {x['titolo']}: {x['contenuto']}" for x in scene)
+                   + "\n</scene_lezione>") if scene else "La lezione interattiva non c'è: niente inquadrature «lezione»."
     messaggio = (f"Serie del giorno: {serie}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
                  f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}\n\n"
                  f"<fascicolo>\n{testo}\n</fascicolo>")
@@ -209,35 +211,74 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
             corto["token"] = c.get("token")
             c = corto
     c["fascicolo"] = str(pdf.relative_to(RADICE))
+    c["scene_lezione"] = scene
     c["parole_voce"] = parole_voce(c)
     c["citazioni_sbagliate"] = len(citazioni_sbagliate(c, pdf))
     return c
 
 
-LEZIONE_DI_RISERVA = {"tipo": "lezione", "momento": "quiz", "testo": "In classe la lezione *si gioca*",
-                      "voce": "E in classe la lezione diventa interattiva.", "posa": "presenta", "durata": 4.0}
+def scene_di(lezione: dict) -> list[dict]:
+    """Le scene della lezione interattiva (numero, fase, titolo, contenuto), lette dal browser con
+    seo/lezione_registra.mjs --elenco. Lista vuota se la lezione non c'è o il browser manca."""
+    artefatto = artefatto_di(lezione)
+    if not artefatto:
+        return []
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        f = Path(tmp) / "scene.json"
+        try:
+            subprocess.run(["node", str(RADICE / "seo" / "lezione_registra.mjs"), "--elenco",
+                            str(artefatto.relative_to(RADICE)), str(f)], check=True, cwd=RADICE, timeout=120,
+                           capture_output=True)
+            return json.loads(f.read_text(encoding="utf-8"))
+        except (subprocess.SubprocessError, OSError, ValueError):
+            return []
+
+
+def _parole(t: str) -> set[str]:
+    import re
+    return {w for w in re.findall(r"[a-zàèéìòù]{4,}", str(t).lower())}
+
+
+def scena_piu_vicina(testo: str, scene: list[dict], escluse: set[int] = frozenset()) -> int:
+    """La scena il cui contenuto ha più parole in comune con la frase (se pari, la prima «Scoperta»)."""
+    voce = _parole(testo)
+    def punti(x):
+        return (len(voce & _parole(x["titolo"] + " " + x["contenuto"])), x.get("fase") == "Scoperta", -x["n"])
+    candidate = [x for x in scene if x["n"] not in escluse and x["n"] > 1] or scene
+    return max(candidate, key=punti)["n"] if candidate else 0
 
 
 def garantisci_lezione(copione: dict) -> dict:
-    """Con la lezione interattiva: almeno una inquadratura «lezione» (se manca, una prima della chiusa)
-    e al massimo due. Senza: nessuna (diventano frasi del prof)."""
+    """Con la lezione interattiva: una o due inquadrature «lezione», ognuna con la scena che illustra
+    la sua frase. Se il regista non ne ha messe, la frase del prof (o il numero) più vicina a una scena
+    diventa quella scena: la voce resta la stessa, cambia solo ciò che si vede. Senza lezione: nessuna."""
     inq = copione.get("inquadrature", [])
-    if not copione.get("artefatto"):
+    scene = copione.get("scene_lezione") or []
+    if not copione.get("artefatto") or not scene:
         for q in inq:
             if q.get("tipo") == "lezione":
                 q["tipo"] = "prof"
                 q.setdefault("testo", q.get("voce", ""))
         return copione
+    numeri = {x["n"] for x in scene}
     lezioni = [q for q in inq if q.get("tipo") == "lezione"]
     for q in lezioni[2:]:
         q["tipo"] = "prof"
         q.setdefault("testo", q.get("voce", ""))
     if not lezioni:
-        dove = next((i for i, q in enumerate(inq) if q.get("tipo") == "chiusa"), len(inq))
-        inq.insert(dove, dict(LEZIONE_DI_RISERVA))
-    for q in inq:
-        if q.get("tipo") == "lezione" and q.get("momento") not in ("scena", "quiz"):
-            q["momento"] = "quiz"
+        candidate = [q for q in inq if q.get("tipo") in ("prof", "numero")]
+        if candidate:
+            q = max(candidate, key=lambda q: len(_parole(q.get("voce", "")) & set().union(
+                *(_parole(x["titolo"] + " " + x["contenuto"]) for x in scene))))
+            q["tipo"] = "lezione"
+            q.pop("numero", None)
+            lezioni = [q]
+    usate: set[int] = set()
+    for q in [q for q in inq if q.get("tipo") == "lezione"]:
+        if q.get("scena") not in numeri or q.get("scena") in usate:
+            q["scena"] = scena_piu_vicina(q.get("voce", "") + " " + q.get("testo", ""), scene, usate)
+        usate.add(q["scena"])
     return copione
 
 
@@ -251,7 +292,7 @@ def copione_regia(c: dict, lezione: dict) -> dict:
     return garantisci_lezione({"serie": c.get("serie", "Lo sapevi?"), "anno": int(lezione.get("anno") or 1),
                                "titolo": lezione["titolo"], "fascicolo": c["fascicolo"],
                                "artefatto": str(artefatto.relative_to(RADICE)) if artefatto else "",
-                               "inquadrature": inq})
+                               "scene_lezione": c.get("scene_lezione") or [], "inquadrature": inq})
 
 
 def main() -> int:

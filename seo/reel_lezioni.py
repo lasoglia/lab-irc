@@ -49,21 +49,19 @@ def con_lezione(copione: dict, cartella: Path) -> dict:
     if not lezioni:
         return copione
     video, m = cartella / "lezione.mp4", None
+    scelte = sorted({int(q["scena"]) for q in lezioni if int(q.get("scena") or 0) > 0})
     if copione.get("artefatto"):
         try:
             subprocess.run(["node", str(RADICE / "seo" / "lezione_registra.mjs"), copione["artefatto"], str(video),
-                            str(cartella / "momenti.json")], check=True, cwd=RADICE)
+                            str(cartella / "momenti.json"), ",".join(map(str, scelte))], check=True, cwd=RADICE)
             m = json.loads((cartella / "momenti.json").read_text(encoding="utf-8"))
         except (subprocess.CalledProcessError, OSError, ValueError) as err:
             print(f"  ! registrazione della lezione non riuscita ({err}): uso frasi del prof")
     for q in lezioni:
-        if m and video.exists():
-            if q.get("momento") == "scena":
-                da = momento(m, "scena 3", "scena 2", "scena 1") or 0
-                da += 0.3
-            else:   # il quiz: la domanda, la risposta sbagliata in rosso, poi quella giusta
-                da = max(0.0, (momento(m, "sbagliata", "quiz") or 0) - 1.0)
-            q.update({"tipo": "clip", "video": str(video), "da": round(da, 2), "durata": max(float(q.get("durata") or 4), 3.5)})
+        da = momento(m, f"scena {q.get('scena')}") if m and video.exists() else None
+        if da is not None:   # la scena che illustra la frase: 5 secondi registrati, se ne usano fino a 4,6
+            q.update({"tipo": "clip", "video": str(video), "da": round(da + 0.3, 2),
+                      "durata": min(max(float(q.get("durata") or 4), 3.5), 4.6)})
         else:
             q["tipo"] = "prof"
             q.setdefault("testo", q.get("voce", ""))
@@ -88,6 +86,8 @@ def main() -> int:
                 if "artefatto" not in copione:   # copioni scritti prima della lezione interattiva
                     a = regista.artefatto_di(r)
                     copione["artefatto"] = str(a.relative_to(RADICE)) if a else ""
+                if copione.get("artefatto") and not copione.get("scene_lezione"):
+                    copione["scene_lezione"] = regista.scene_di(r)
                 copione = con_lezione(regista.garantisci_lezione(copione), t)
                 (t / "copione.json").write_text(json.dumps(copione, ensure_ascii=False), encoding="utf-8")
                 subprocess.run([sys.executable, str(RADICE / "seo" / "regia.py"), str(t / "copione.json"),

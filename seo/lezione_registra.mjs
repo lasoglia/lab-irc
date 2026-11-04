@@ -3,9 +3,10 @@
  * seo/lezione_registra.mjs — Registra a schermo una lezione interattiva (uploads/*-artefatto.html),
  * per i reel delle lezioni (inquadratura «lezione» del regista, montata da seo/reel_lezioni.py).
  *
- * Apre la lezione nel browser (servita in locale) e la sfoglia come in classe: la prima scena con
- * un leggero scorrimento, «Avanti» per due o tre scene, poi la modalità Giochi e il Quiz: una
- * risposta sbagliata, «Avanti», una risposta giusta con la spiegazione.
+ * Apre la lezione nel browser (servita in locale) e registra le scene scelte dal regista (quelle che
+ * illustrano ciò che dice la voce): per ognuna ci arriva senza registrare il tragitto, poi la tiene
+ * qualche secondo scorrendo piano. La lezione non si «presenta»: è materiale per il racconto.
+ * Con --elenco scrive solo l'elenco delle scene (titolo e contenuto), che il regista legge per scegliere.
  *
  * Il tempo della pagina lo decide il registratore: ogni fotogramma avanza di 1/30 di secondo
  * (orologio, setTimeout, requestAnimationFrame E animazioni CSS), così il video è fluido anche su
@@ -13,8 +14,9 @@
  *
  * USO
  * ---
- *   node seo/lezione_registra.mjs uploads/<lezione>-artefatto.html uscita.mp4 [momenti.json]
- *   (momenti.json: i secondi in cui accade ogni cosa, per i tagli del reel)
+ *   node seo/lezione_registra.mjs uploads/<lezione>-artefatto.html uscita.mp4 momenti.json [3,5]
+ *       registra le scene 3 e 5 (numerate da 1; senza elenco: la prima scena da toccare)
+ *   node seo/lezione_registra.mjs --elenco uploads/<lezione>-artefatto.html scene.json
  */
 import { spawn } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
@@ -28,8 +30,10 @@ const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium';
 const FPS = 30;
 const L = 432, A = 768, SCALA = 2.5;   // 1080 × 1920
 
-const [, , lezione, uscita, fileMomenti] = process.argv;
-if (!lezione || !uscita) { console.error('uso: node seo/lezione_registra.mjs uploads/<lezione>-artefatto.html uscita.mp4 [momenti.json]'); process.exit(2); }
+const ELENCO = process.argv[2] === '--elenco';
+const [lezione, uscita, fileMomenti, sceltaArg] = process.argv.slice(ELENCO ? 3 : 2);
+if (!lezione || !uscita) { console.error('uso: node seo/lezione_registra.mjs [--elenco] uploads/<lezione>-artefatto.html uscita.mp4|scene.json [momenti.json] [3,5]'); process.exit(2); }
+const scelte = String(sceltaArg || '').split(',').map(Number).filter((n) => n >= 1);
 
 const porta = await new Promise((ok) => { const s = createServer().listen(0, () => { const p = s.address().port; s.close(() => ok(p)); }); });
 const server = spawn('python3', ['-m', 'http.server', String(porta), '--bind', '127.0.0.1'], { cwd: RADICE, stdio: 'ignore' });
@@ -46,6 +50,22 @@ try {
   await pg.waitForFunction(() => typeof LEZIONE !== 'undefined' && document.querySelector('.ll-scroll'), null, { timeout: 30000 });
   await pg.evaluate(() => document.fonts && document.fonts.ready);
   await pg.waitForTimeout(800);
+  if (ELENCO) {
+    // le scene, con il loro contenuto in breve: tutte le frasi dei blocchi, senza segni di formattazione
+    const scene = await pg.evaluate(() => LEZIONE.scene.map((s, i) => {
+      const frasi = [];
+      const raccogli = (x) => {
+        if (typeof x === 'string') { const t = x.replace(/<[^>]+>/g, ' ').replace(/[*_]/g, '').replace(/\s+/g, ' ').trim(); if (t.length > 12) frasi.push(t); }
+        else if (Array.isArray(x)) x.forEach(raccogli);
+        else if (x && typeof x === 'object') Object.values(x).forEach(raccogli);
+      };
+      raccogli(s.blocchi || []);
+      return { n: i + 1, fase: s.fase || '', titolo: String(s.titolo || '').replace(/[*_]/g, ''), contenuto: frasi.join(' · ').slice(0, 420) };
+    }));
+    writeFileSync(uscita, JSON.stringify(scene, null, 1));
+    console.log(`scene della lezione: ${scene.length}`);
+    await browser.close(); fine(); process.exit(0);
+  }
   // --- il tempo della pagina passa solo quando lo dice il registratore (animazioni CSS comprese)
   await pg.evaluate(() => {
     const coda = [], timer = [];
@@ -132,21 +152,31 @@ async function scena(secondi, quanto = 0.45) {
   await per(secondi - Math.min(0.9, secondi / 3), () => R((d) => window.__regia.scorriA(d), meta));
 }
 
+// avanza il tempo senza registrare (il tragitto da una scena all'altra non si vede)
+async function senza(secondi) { for (let k = 0; k < Math.round(secondi * FPS); k++) await R(() => window.__passo(1000 / 30)); }
+
 try {
   const tipi = await R(() => window.__regia.scene());
-  // quante scene sfogliare: si arriva alla prima scena (dopo la prima) con un blocco da toccare, al massimo la quarta
-  const interattivi = ['smista', 'parola', 'leggi', 'chi', 'rivela', 'bivio', 'carte', 'quiz', 'domanda'];
-  let arrivo = tipi.findIndex((b, i) => i > 0 && b.some((t) => interattivi.includes(t)));
-  arrivo = arrivo < 1 ? 2 : Math.min(arrivo + 1, 3);
-  segna('scena 1');
-  await scena(2.6, 0.35);
-  for (let i = 1; i <= arrivo; i++) {
-    await R(() => window.__regia.avanti());
-    await per(0.15);
+  // senza scelta del regista: la prima scena (dopo la prima) con un blocco da toccare
+  const interattivi = ['smista', 'parola', 'leggi', 'chi', 'rivela', 'bivio', 'carte', 'domanda'];
+  const prima = tipi.findIndex((b, i) => i > 0 && b.some((t) => interattivi.includes(t)));
+  const da = (scelte.length ? scelte : [prima > 0 ? prima + 1 : 2]).filter((n) => n <= tipi.length).sort((a, b) => a - b);
+  let qui = 1;
+  for (const n of da) {
+    while (qui < n) { await R(() => window.__regia.avanti()); await senza(0.5); qui++; }
     await R(() => window.__regia.azzera());
-    segna(`scena ${i + 1}`);
-    await scena(i === arrivo ? 4.6 : 2.3, i === arrivo ? 0.6 : 0.3);   // l'ultima scena basta per un pezzo di 4 s
+    await senza(0.4);
+    segna(`scena ${n}`);
+    await scena(5.0, 0.55);
   }
+  segna('fine');
+} catch (e) {
+  console.log('  ! regia interrotta:', e.message);
+  segna('fine');
+}
+const QUIZ = false;   // il quiz non si registra più: la lezione illustra il racconto, non si presenta
+try {
+  if (!QUIZ) throw new Error('fine');
   segna('giochi');
   await R(() => window.__regia.giochi());
   await per(1.0);
@@ -169,8 +199,7 @@ try {
   }
   segna('fine');
 } catch (e) {
-  console.log('  ! regia interrotta:', e.message);
-  segna('fine');
+  if (e.message !== 'fine') { console.log('  ! regia interrotta:', e.message); segna('fine'); }
 }
 
 ff.stdin.end();
