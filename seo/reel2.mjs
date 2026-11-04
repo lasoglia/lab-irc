@@ -171,7 +171,8 @@ function adatta(r) {
     if (q.voce_file && existsSync(q.voce_file)) {
       const d = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', q.voce_file], { encoding: 'utf8' });
       q.voce_durata = parseFloat(d.stdout) || 0;
-      q.durata = Math.max(q.durata, q.voce_durata + 0.45);
+      // dura quanto la sua frase più un respiro (non di più: il ritmo tiene), con un minimo per tipo
+      q.durata = Math.max(q.voce_durata + 0.45, { pagina: 2.8, clip: 3.0, numero: 2.4, chiusa: 3.0 }[q.tipo] || 2.0);
     }
   }
 }

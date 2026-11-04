@@ -272,7 +272,7 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
         d, _ = pr.chiama_claude(
             client, DIRETTORE + _appreso(), f"<istruzioni_regista>\n{istruzioni}\n</istruzioni_regista>\n\n<materiale>\n{messaggio}"
             f"\n</materiale>\n\n<copione>\n{json.dumps(c, ensure_ascii=False)}\n</copione>", schema(), "max",
-            modello=modello, pensiero=pensiero)
+            max_token=64000, modello=modello, pensiero=pensiero)
         if len(citazioni_sbagliate(d, pdf)) <= len(citazioni_sbagliate(c, pdf)) and parole_voce(d) <= PAROLE_MAX + 10:
             d["token"] = c.get("token")
             c = d
