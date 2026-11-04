@@ -185,12 +185,14 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
 
 
 def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
-                    modello: str | None = None, pensiero: bool = False) -> dict:
+                    modello: str | None = None, pensiero: bool = False,
+                    ambiti: tuple[str, ...] = ("caroselli", "didascalie")) -> dict:
     """L'autore scrive la bozza, il caporedattore la rilegge e la migliora.
-    In coda alle istruzioni, ciò che il Lab ha imparato dai numeri (seo/social_quaderno.py)."""
+    In coda alle istruzioni, ciò che il Lab ha imparato dai numeri (seo/social_quaderno.py): le regole
+    per tutti e quelle degli «ambiti» di questo testo (reel, caroselli, didascalie…)."""
     try:
         import social_quaderno
-        istruzioni = istruzioni + social_quaderno.istruzioni_apprese()
+        istruzioni = istruzioni + social_quaderno.istruzioni_apprese(*ambiti)
     except (ImportError, ValueError, OSError):
         pass
     bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high", modello=modello, pensiero=pensiero)
