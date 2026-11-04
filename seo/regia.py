@@ -12,7 +12,7 @@ Questo script, senza IA:
     la pagina, prepara evidenziatore, cerchio e movimento di macchina; se la citazione non c'è,
     l'inquadratura diventa una frase del prof (meglio che mostrare una pagina sbagliata);
   - se c'è la chiave GEMINI_API_KEY (o il campione VOCE_CAMPIONE per le voci clonate), fa dire
-    le frasi alla voce dei reel (seo/voce.py; voce scelta: Rasalgethi).
+    le frasi alla voce dei reel (seo/voce.py; voce scelta: Sadachbia, da narratore appassionato).
 
 USO
 ---
