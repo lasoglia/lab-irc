@@ -159,6 +159,15 @@ class Giochi(unittest.TestCase):
             self.assertIn("password", p[canale])                                       # mai l'accesso libero
         self.assertIn("#religionecattolica", p["instagram"])
 
+    def test_variante_che_rende_di_piu(self):
+        riga = lambda v, t: {"motore": "gioco", "variante": v, "ig_reels_avg_watch_time": t}
+        self.assertEqual(gioco_reel.scegli_variante(45, {}), 1)                          # senza numeri: si alterna
+        m = {"instagram": [riga(0, 9000), riga(0, 8000), riga(1, 5000), riga(1, 6000)]}
+        self.assertEqual(gioco_reel.scegli_variante(46, m), 0)                           # vince la 0
+        self.assertEqual(gioco_reel.scegli_variante(47, m), 0)
+        self.assertEqual(gioco_reel.scegli_variante(48, m), 0)                           # 48 % 3 == 0: si prova la 0 (48 % 2)
+        self.assertEqual(gioco_reel.scegli_variante(51, m), 1)                           # 51 % 3 == 0: si riprova l'altra
+
 
 class Storie(unittest.TestCase):
     """Le storie del giorno: ricorrenza al mattino, «stasera alle 19» a pranzo solo nei giorni di reel."""

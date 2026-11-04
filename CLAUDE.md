@@ -36,8 +36,10 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 - `seo/coda.py` limita la pubblicazione ai post approvati in `data/social-coda.json`.
 - Il Lab impara: `seo/social_metriche.py` misura ogni post (reel con tempo di visione), e ogni settimana
   l'esploratore cerca idee nuove e l'analista aggiorna `data/social-quaderno.json` (regole imparate,
-  esperimento della settimana, idee; controllato da `seo/social_quaderno.py`). Chi scrive i post riceve
-  da solo le regole confermate e l'istruzione dell'esperimento.
+  esperimento della settimana, idee; controllato da `seo/social_quaderno.py`). Le regole confermate (con il loro
+  ambito: reel, caroselli, storie, calendario…) e l'esperimento in corso arrivano da soli a chi scrive i post,
+  al regista e al direttore creativo dei reel, al redattore e al calendarista; i reel dei giochi scelgono la
+  variante che rende di più.
 - Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`,
   metodo per angoli, ganci, copioni e didascalie in `.claude/social-metodo.md` (`/social-reel <argomento>` lo applica tutto).
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.

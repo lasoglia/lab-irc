@@ -149,6 +149,15 @@ Non cambiare i fatti, le citazioni (devono restare frasi ESATTE del fascicolo), 
 se non per sceglierne una più adatta dall'elenco, né le regole del Lab. Tono leggero ma misurato."""
 
 
+def _appreso() -> str:
+    """Le regole che il Lab ha imparato dai numeri, per il direttore creativo (reel)."""
+    try:
+        import social_quaderno
+        return social_quaderno.istruzioni_apprese("reel")
+    except (ImportError, ValueError, OSError):
+        return ""
+
+
 def pubblico() -> str:
     """Che cosa piace al pubblico del Lab: le rubriche progettate e i reel che hanno reso di più."""
     parti = []
@@ -261,7 +270,7 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     # il direttore creativo: rilegge con la lista dei reel che funzionano (fatti e citazioni non cambiano)
     try:
         d, _ = pr.chiama_claude(
-            client, DIRETTORE, f"<istruzioni_regista>\n{istruzioni}\n</istruzioni_regista>\n\n<materiale>\n{messaggio}"
+            client, DIRETTORE + _appreso(), f"<istruzioni_regista>\n{istruzioni}\n</istruzioni_regista>\n\n<materiale>\n{messaggio}"
             f"\n</materiale>\n\n<copione>\n{json.dumps(c, ensure_ascii=False)}\n</copione>", schema(), "max",
             modello=modello, pensiero=pensiero)
         if len(citazioni_sbagliate(d, pdf)) <= len(citazioni_sbagliate(c, pdf)) and parole_voce(d) <= PAROLE_MAX + 10:
