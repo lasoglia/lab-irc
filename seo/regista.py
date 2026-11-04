@@ -42,7 +42,7 @@ DEL_GIORNO = {
     4: "Falso mito (solo se il fascicolo corregge davvero un luogo comune; altrimenti «Lo sapevi?»)",
 }
 REGISTA_MODELLO = os.environ.get("REGISTA_MODELLO", "claude-fable-5-1")
-TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "chiusa"]
+TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "personaggio", "chiusa"]
 # la lezione interattiva non si «presenta»: le sue scene illustrano il racconto, come le pagine
 
 
@@ -68,9 +68,9 @@ def schema() -> dict:
                 "type": "object",
                 "properties": {"tipo": {"type": "string", "enum": TIPI}, "testo": stringa, "voce": stringa,
                                "citazione": stringa, "cerchia": stringa, "numero": stringa,
-                               "scena": {"type": "integer"},
+                               "scena": {"type": "integer"}, "descrizione": {"type": "string"},
                                "posa": {"type": "string", "enum": pose()}, "durata": {"type": "number"}},
-                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "scena", "posa", "durata"],
+                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "scena", "descrizione", "posa", "durata"],
                 "additionalProperties": False}},
             "facebook": stringa, "instagram": stringa, "telegram": stringa, "anticipo": stringa,
             "hashtag": {"type": "array", "items": stringa},
@@ -121,11 +121,16 @@ un'attività che mostra proprio quel punto). «scena» è il numero della scena,
 <scene_lezione> perché il suo contenuto corrisponde a ciò che dice la voce in quel momento. La «voce» \
 continua il racconto della curiosità: MAI parlare di «lezione interattiva», «in classe», «gioco», \
 «quiz» o presentare il materiale; «testo» un'etichetta breve sul contenuto (al massimo 7 parole) o "".
+- personaggio: un PERSONAGGIO INVENTATO E GENERICO dipinto con l'IA, quando aiuta a far vivere una \
+scena (per esempio «un pescatore di Cafarnao che ripara le reti all'alba»). «descrizione» dice in \
+italiano chi è, che cosa fa, dove e con che luce. Mai Gesù, Dio, Maria, santi, angeli, papi, \
+personaggi biblici o storici veri, persone reali, bambini o ragazzi; mai violenza. Sullo schermo \
+compare da sola la scritta «personaggio inventato». Al massimo uno per reel, e solo se serve.
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
 Scegli tu quante inquadrature e in che ordine (di solito 4-8): serve almeno un'immagine VERA \
 (una pagina o una scena), e se c'è l'elenco <scene_lezione> almeno una scena della lezione \
 interattiva (sono la prova che il materiale esiste). La chiusa può essere breve. «durata» in secondi. «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
-«cerchia», «numero» vuoti e «scena» 0 quando non servono.
+«cerchia», «numero», «descrizione» vuoti e «scena» 0 quando non servono.
 
 La «voce» si legge ad alta voce (al massimo 80 parole in tutto: oltre il reel diventa lungo), \
 parlato naturale e vivo, numeri e sigle scritti come si \
