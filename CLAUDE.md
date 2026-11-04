@@ -24,6 +24,12 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   fumetti col prof: `seo/reel.py` scrive i copioni delle lezioni dei prossimi 7 giorni, `seo/rubriche.py`
   quelli della domenica, `seo/reel.mjs` monta i video (MP4 in `promozione/reel/`). Il video non va
   pianificato: esce solo se il suo post è uscito.
+- Storie ogni giorno (`seo/storie.py` + `seo/storie.mjs`, Action «Social · storie del giorno»): 7:45 la
+  ricorrenza o la lezione di oggi, 13:30 «stasera alle 19» nei giorni di reel, 20:45 il reel di oggi come storia.
+- Giochi di verifica: nei 14 giorni dopo l'uscita di un gioco (`data/social-giochi.json`) il giovedì esce il
+  reel di una partita registrata (`seo/gioco_registra.mjs`, `seo/gioco_reel.py`, Action «Social · reel del gioco»).
+- I reel delle lezioni li scrive il regista (`seo/regista.py`) e li monta `seo/reel_lezioni.py` con `seo/reel2.mjs`
+  e la voce Gemini (`seo/voce.py`); `REEL_MOTORE=vecchio` torna al reel di prima.
 - `seo/immagini_ia.py` fa gli sfondi pittorici di video e copertine del weekend: Claude descrive la
   scena (mai persone, volti, Dio o santi, mai scritte), Cloudflare Workers AI la dipinge gratis
   (segreti CLOUDFLARE_ACCOUNT_ID e CLOUDFLARE_API_TOKEN; senza, non fa nulla).
