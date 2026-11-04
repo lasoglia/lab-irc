@@ -222,6 +222,18 @@ class LezioneNelReel(unittest.TestCase):
         self.assertEqual(c["inquadrature"][0]["tipo"], "prof")
 
 
+class Personaggi(unittest.TestCase):
+    """Personaggi inventati sì; figure sacre, persone reali e minori no (controllo prima di dipingere)."""
+
+    def test_parole_vietate(self):
+        import personaggi
+        self.assertIsNone(personaggi.vietata("un pescatore di Cafarnao che ripara le reti al tramonto"))
+        self.assertIsNone(personaggi.vietata("una mercante di stoffe nel foro di Roma"))
+        for t in ("Gesù sulla barca", "la Madonna", "San Benedetto", "un bambino al mercato", "una ragazza",
+                  "Mosè sul monte", "un angelo", "il papa", "a saint praying"):
+            self.assertIsNotNone(personaggi.vietata(t), t)
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
