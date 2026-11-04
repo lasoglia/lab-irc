@@ -49,6 +49,29 @@ POSE = {"gancio": "occhiolino", "domanda": "spiega", "sbagliata": "sorpreso", "o
         "giusta": "sorriso", "chiusa": "saluta"}
 
 
+def scegli_variante(settimana: int, metriche: dict | None = None) -> int:
+    """La variante del reel del gioco: si alternano finché non ci sono almeno 2 reel misurati per
+    variante; poi vince quella con il tempo medio di visione più alto (di almeno il 10%), ma una
+    settimana su tre si prova ancora l'altra, per continuare a imparare."""
+    if metriche is None:
+        try:
+            metriche = json.loads((RADICE / "data" / "social-metriche.json").read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            metriche = {}
+    tempi: dict[int, list[float]] = {}
+    for x in metriche.get("instagram", []):
+        if x.get("motore") == "gioco" and x.get("variante") is not None and x.get("ig_reels_avg_watch_time"):
+            tempi.setdefault(int(x["variante"]), []).append(float(x["ig_reels_avg_watch_time"]))
+    medie = {v: sum(t) / len(t) for v, t in tempi.items() if len(t) >= 2}
+    if len(medie) < len(VARIANTI):
+        return settimana % len(VARIANTI)
+    migliore = max(medie, key=medie.get)
+    altre = sorted(medie.values())
+    if medie[migliore] < altre[-2] * 1.10 or settimana % 3 == 0:
+        return settimana % len(VARIANTI)
+    return migliore
+
+
 def scheda_gioco(gioco: str) -> dict:
     """Titolo e anno dal catalogo delle verifiche del sito."""
     try:

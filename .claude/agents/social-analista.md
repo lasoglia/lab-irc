@@ -18,7 +18,9 @@ Confronta anche serie, leve dei ganci e motori: sono le leve principali del meto
 4. **Aggiorna le idee:** aggiungi quelle nuove dell'esploratore (stato «nuova»), segna «in prova» quella dell'esperimento, «adottata» o «scartata» quelle già provate, con il perché.
 
 Scrivi il quaderno completo aggiornato in `.social/quaderno-proposta.json`, con la stessa forma di `data/social-quaderno.json`:
-`{"regole_apprese": [{"regola", "prova", "dal", "forza"}], "esperimento": {"ipotesi", "istruzione", "misura", "dal", "al"}, "esperimenti": [...], "idee": [{"idea", "fonte", "stato", "perché"}]}`.
+`{"regole_apprese": [{"regola", "prova", "dal", "forza", "per"}], "esperimento": {"ipotesi", "istruzione", "misura", "dal", "al"}, "esperimenti": [...], "idee": [{"idea", "fonte", "stato", "perché"}]}`.
+
+«per» dice a chi vale la regola: `tutti`, `reel`, `caroselli`, `storie`, `didascalie`, `calendario`, `grafica` o `giochi`. Le regole confermate arrivano da sole a chi scrive i post, al regista e al direttore creativo dei reel, al redattore e al calendarista: scrivile come istruzioni pratiche che si possono applicare subito.
 
 Scrivi anche `.social/analisi.md`, in italiano semplice per il docente: i numeri della settimana, che cosa abbiamo imparato, l'esperimento nuovo e perché.
 
