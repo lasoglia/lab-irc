@@ -52,9 +52,21 @@ jobs:
           GIORNO: ${{ inputs.giorno }}
         run: |
           mkdir -p uscita
+          export PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium-browser)"
           if [ -n "$LEZIONE" ]; then
-            git fetch -q --depth=1 origin main && git checkout origin/main -- seo/regista.py seo/promozione.py .claude/social-metodo.md
             python seo/regista.py "$LEZIONE" "${GIORNO:-2026-11-09}" uscita/copione.json
+            # come nei reel veri: la lezione interattiva registrata a schermo (seo/reel_lezioni.py)
+            mkdir -p lavoro-lezione
+            python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, "seo")
+          import regista, reel_lezioni
+          f = Path("uscita/copione.json")
+          c = reel_lezioni.con_lezione(regista.garantisci_lezione(json.loads(f.read_text(encoding="utf-8"))), Path("lavoro-lezione").resolve())
+          f.write_text(json.dumps(c, ensure_ascii=False, indent=1), encoding="utf-8")
+          PY
             cat uscita/copione.json
             COPIONE=uscita/copione.json
           fi
