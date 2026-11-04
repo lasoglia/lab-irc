@@ -63,7 +63,7 @@ TESTI_PROF = {
                  "https://www.labirc.it/"),
 }
 ICONE = [("lezioni", "Lezioni"), ("domanda", "La grande domanda"), ("shabbat", "Shabbat"),
-         ("prof", "Il prof"), ("come", "Come si usa")]
+         ("prof", "Il prof"), ("come", "Come si usa"), ("sapevi", "Lo sapevi?"), ("giochi", "Giochi")]
 
 
 def leggi(p: Path, vuoto):
