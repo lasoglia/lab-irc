@@ -43,6 +43,7 @@ DEL_GIORNO = {
 }
 REGISTA_MODELLO = os.environ.get("REGISTA_MODELLO", "claude-fable-5-1")
 TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "personaggio", "chiusa"]
+AMBITI = ("reel", "didascalie")   # le regole imparate che arrivano al regista (seo/social_quaderno.py)
 # la lezione interattiva non si «presenta»: le sue scene illustrano il racconto, come le pagine
 
 
@@ -283,11 +284,11 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     # il regista ragiona a lungo; se il suo modello non risponde, quello dei post
     modello, pensiero = REGISTA_MODELLO, True
     try:
-        c = pr.scrivi_e_rivedi(client, istruzioni, messaggio, schema(), modello=modello, pensiero=pensiero)
+        c = pr.scrivi_e_rivedi(client, istruzioni, messaggio, schema(), modello=modello, pensiero=pensiero, ambiti=AMBITI)
     except Exception as err:
         print(f"  ! {modello} non disponibile ({str(err)[:120]}): uso il modello dei post")
         modello, pensiero = None, False
-        c = pr.scrivi_e_rivedi(client, istruzioni, messaggio, schema())
+        c = pr.scrivi_e_rivedi(client, istruzioni, messaggio, schema(), ambiti=AMBITI)
     # il direttore creativo: rilegge con la lista dei reel che funzionano (fatti e citazioni non cambiano)
     try:
         d, _ = pr.chiama_claude(
