@@ -24,9 +24,15 @@ const avatar = (posa) => ['png', 'jpg'].map((e) => `assets/avatar/${posa}.${e}`)
 
 // I sottotitoli: la frase in blocchi di al massimo 6 parole; ogni parola ha il suo istante
 // (senza voce vera: in proporzione alla lunghezza; con la voce: dai tempi di Whisper)
-function sottotitoli(frase, inizio, durata) {
+function sottotitoli(frase, inizio, durata, veri) {
   const parole = String(frase || '').split(/\s+/).filter(Boolean);
   if (!parole.length) return [];
+  if (veri && veri.length === parole.length) {   // i tempi veri, ascoltati da Whisper (seo/voce.py)
+    const tempi = parole.map((p, i) => ({ p, s: inizio + veri[i][0], e: inizio + Math.max(veri[i][1], veri[i][0] + 0.12) }));
+    const blocchi = [];
+    for (let i = 0; i < tempi.length; i += 6) blocchi.push(tempi.slice(i, i + 6));
+    return blocchi;
+  }
   const pesi = parole.map((p) => p.replace(/[^\p{L}\p{N}]/gu, '').length + 2);
   const totale = pesi.reduce((a, b) => a + b, 0);
   const utile = durata - 0.35;
@@ -43,7 +49,7 @@ function pagina(r) {
   const scene = r.inquadrature.map((q, i) => { const s = { ...q, i, inizio: t }; t += q.durata; return s; });
   // (le durate sono già adattate alla voce da adatta())
   const durata = t;
-  const blocchi = scene.flatMap((s) => sottotitoli(s.voce, s.inizio + (s.voce_durata ? 0.15 : 0), s.voce_durata ? s.voce_durata + 0.35 : s.durata));
+  const blocchi = scene.flatMap((s) => sottotitoli(s.voce, s.inizio + (s.voce_durata ? 0.15 : 0), s.voce_durata ? s.voce_durata + 0.35 : s.durata, s.voce_tempi));
   const vista = (s) => {
     switch (s.tipo) {
       case 'gancio': return `<div class="gancio"><div class="sopra">${esc(r.serie)}</div><h1>${ricco(s.testo)}</h1></div>`;
@@ -177,6 +183,8 @@ function adatta(r) {
     if (q.voce_file && existsSync(q.voce_file)) {
       const d = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', q.voce_file], { encoding: 'utf8' });
       q.voce_durata = parseFloat(d.stdout) || 0;
+      const fileTempi = q.voce_file.replace(/\.wav$/, '.json');
+      if (existsSync(fileTempi)) { try { q.voce_tempi = JSON.parse(readFileSync(fileTempi, 'utf8')).tempi; } catch { /* stima */ } }
       // dura quanto la sua frase più un respiro (non di più: il ritmo tiene), con un minimo per tipo
       q.durata = Math.max(q.voce_durata + 0.45, { pagina: 2.8, clip: 3.0, numero: 2.4, chiusa: 3.0 }[q.tipo] || 2.0);
     }

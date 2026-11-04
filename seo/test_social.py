@@ -234,6 +234,26 @@ class Personaggi(unittest.TestCase):
             self.assertIsNotNone(personaggi.vietata(t), t)
 
 
+class ParoleATempo(unittest.TestCase):
+    """Le scritte del reel si accendono quando la voce dice la parola (tempi di Whisper)."""
+
+    def test_stesso_numero(self):
+        import voce
+        self.assertEqual(voce.allinea(2, [(0.1, 0.4), (0.5, 0.9)]), [[0.1, 0.4], [0.5, 0.9]])
+
+    def test_parole_dette_in_piu(self):   # «labirc.it» detto «lab i erre ci»
+        import voce
+        t = voce.allinea(2, [(0.0, 0.3), (0.4, 0.5), (0.6, 0.7), (0.8, 0.9), (1.0, 1.2)])
+        self.assertEqual(len(t), 2)
+        self.assertEqual(t[0][0], 0.0)
+        self.assertEqual(t[-1][1], 1.2)
+        self.assertLess(t[0][0], t[1][0])
+
+    def test_senza_tempi(self):
+        import voce
+        self.assertIsNone(voce.allinea(3, []))
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
