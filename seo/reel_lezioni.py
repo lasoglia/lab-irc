@@ -68,6 +68,22 @@ def con_lezione(copione: dict, cartella: Path) -> dict:
     return copione
 
 
+def copione_anticipo(copione: dict, anticipo: str) -> dict:
+    """L'anticipo per la storia delle 13:30 (circa 10 secondi): il gancio con la sua voce, una
+    immagine del reel senza voce (non svela la scoperta) e la chiusa «Stasera alle 19»."""
+    inq = copione.get("inquadrature", [])
+    gancio = next((dict(q) for q in inq if q.get("tipo") == "gancio"), None)
+    vista = next((dict(q) for q in inq if q.get("tipo") in ("pagina", "clip", "numero")), None)
+    scelte = [q for q in (gancio, vista) if q]
+    if vista:
+        vista.pop("voce", None)
+        vista["durata"] = 3.2
+    chiusa = {"tipo": "chiusa", "sopra": "Stasera alle 19", "posa": "occhiolino", "durata": 3.2,
+              "testo": anticipo or "Il reel completo, *stasera alle 19*",
+              "voce": "Stasera alle diciannove, sul profilo del Lab."}
+    return {**copione, "inquadrature": scelte + [chiusa]}
+
+
 def main() -> int:
     try:
         elenco = json.loads((RADICE / "promozione" / "reel.json").read_text(encoding="utf-8"))
@@ -95,6 +111,19 @@ def main() -> int:
                 subprocess.run(["node", str(RADICE / "seo" / "reel2.mjs"), str(t / "regia.json"),
                                 str(CARTELLA / r["video"])], check=True, env={**os.environ, "PYTHON": sys.executable})
                 print(f"  ✓ {r['titolo']}: {r['video']}")
+                if r.get("anticipo_video"):   # la storia delle 13:30; se non riesce, resta l'immagine
+                    try:
+                        (t / "anticipo.json").write_text(json.dumps(copione_anticipo(copione, r.get("anticipo", "")),
+                                                                    ensure_ascii=False), encoding="utf-8")
+                        subprocess.run([sys.executable, str(RADICE / "seo" / "regia.py"), str(t / "anticipo.json"),
+                                        str(t / "regia-anticipo.json"), str(t / "lavoro-anticipo")], check=True)
+                        subprocess.run(["node", str(RADICE / "seo" / "reel2.mjs"), str(t / "regia-anticipo.json"),
+                                        str(CARTELLA / r["anticipo_video"])], check=True,
+                                       env={**os.environ, "PYTHON": sys.executable})
+                        print(f"  ✓ anticipo per la storia: {r['anticipo_video']}")
+                    except subprocess.CalledProcessError as err:
+                        print(f"  ! anticipo non montato ({err}): la storia resta un'immagine")
+                        (CARTELLA / r["anticipo_video"]).unlink(missing_ok=True)
             except subprocess.CalledProcessError as err:
                 print(f"  ✗ {r['titolo']}: {err}")
                 (CARTELLA / r["video"]).unlink(missing_ok=True)
