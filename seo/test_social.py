@@ -183,6 +183,21 @@ class Storie(unittest.TestCase):
         self.assertIsNone(self.storie.scheda("pranzo", dt.date(2026, 11, 9)))                          # niente post, niente storia
 
 
+class LezioneNelReel(unittest.TestCase):
+    """Con la lezione interattiva il reel la mostra sempre (una o due inquadrature), senza mai."""
+
+    def test_garantisci_lezione(self):
+        import regista
+        base = [{"tipo": "gancio"}, {"tipo": "pagina"}, {"tipo": "chiusa"}]
+        c = regista.garantisci_lezione({"artefatto": "uploads/x-artefatto.html", "inquadrature": [dict(q) for q in base]})
+        self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["gancio", "pagina", "lezione", "chiusa"])
+        tre = [{"tipo": "lezione", "momento": "scena"}, {"tipo": "lezione", "momento": "quiz"}, {"tipo": "lezione", "voce": "x"}]
+        c = regista.garantisci_lezione({"artefatto": "a.html", "inquadrature": tre + [{"tipo": "chiusa"}]})
+        self.assertEqual([q["tipo"] for q in c["inquadrature"]], ["lezione", "lezione", "prof", "chiusa"])
+        c = regista.garantisci_lezione({"artefatto": "", "inquadrature": [{"tipo": "lezione", "voce": "y"}]})
+        self.assertEqual(c["inquadrature"][0]["tipo"], "prof")
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
