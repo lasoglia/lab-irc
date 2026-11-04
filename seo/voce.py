@@ -253,7 +253,8 @@ def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
             taglio = f"atrim={da:.3f}" + (f":{a:.3f}" if a else "")   # atrim: -ss/-to qui non accorcerebbero
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(tutto), "-af", f"{taglio},asetpts=N/SR/TB,"
                             "silenceremove=start_periods=1:start_threshold=-45dB,areverse,"
-                            "silenceremove=start_periods=1:start_threshold=-45dB,areverse", str(pezzo)], check=True)
+                            "silenceremove=start_periods=1:start_threshold=-45dB,afade=t=in:d=0.012,areverse,"
+                            "afade=t=in:d=0.012", str(pezzo)], check=True)
             rifinisci(pezzo, uscita / f"voce-{i:02d}.wav", frasi[i])
     else:
         print(f"  · pause trovate {len(pause)} su {len(righe) - 1}: chiedo una frase per volta")
