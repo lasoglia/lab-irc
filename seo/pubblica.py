@@ -3,10 +3,11 @@
 seo/pubblica.py — Ogni giorno decide che cosa esce sui social e lo pubblica.
 
 Il calendario (ora italiana) sta in seo/social_calendario.py (tipo_del_giorno):
-  scuola, lunedì-venerdì   una lezione (copertina + carosello)       promozione/cartoline.json
+  scuola, lun-mer-ven      il reel di una lezione (regista + voce)   promozione/reel.json
+  scuola, martedì          una lezione (copertina + carosello)       promozione/cartoline.json
   scuola, domenica         «La grande domanda» (carosello)           promozione/domenica.json
   scuola, sabato           «Lo Shabbat del Lab» (carosello)          promozione/sabato.json
-  vacanze, lun-mer-ven     «Il prof del Lab», la striscia a fumetti  promozione/prof.json
+  vacanze, lun e gio       «Il prof del Lab», la striscia a fumetti  promozione/prof.json
   scuola, giovedì (nei 14 giorni dopo l'uscita di un gioco di verifica)
                            il reel di una partita al gioco        promozione/gioco.json
 

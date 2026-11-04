@@ -1,5 +1,5 @@
 name: Social · controllo delle uscite
-# Ogni mattina controlla che i post del giorno prima siano usciti (il giovedì non esce nulla).
+# Ogni mattina controlla che i post del giorno prima siano usciti (il giovedì solo nei periodi dei giochi).
 # Serve perché la pubblicazione usa continue-on-error e non segnala i rifiuti di Meta.
 # Se manca qualcosa, social-meccanico scrive la diagnosi in un Issue e l'Action fallisce,
 # così GitHub manda un'email. Se è tutto a posto Claude non parte e non si spende nulla.

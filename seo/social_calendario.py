@@ -10,9 +10,9 @@ Corpus Domini si celebrano di domenica.
 
 Qui sta anche il calendario dei social (tipo_del_giorno), usato da chi pubblica,
 dagli agenti e dai controlli:
-  scuola     lunedì-venerdì una lezione (carosello, storia e video), sabato «Lo Shabbat
-             del Lab» (la cultura ebraica), domenica «La grande domanda»
-  vacanze    lunedì, mercoledì e venerdì una striscia simpatica del prof, nient'altro
+  scuola     lunedì, mercoledì e venerdì il reel di una lezione, martedì il carosello di una
+             lezione, sabato «Lo Shabbat del Lab» (la cultura ebraica), domenica «La grande domanda»
+  vacanze    lunedì e giovedì una striscia simpatica del prof, nient'altro
   giochi     nei 14 giorni dopo l'uscita di un gioco di verifica, il giovedì il reel di una partita
 Le vacanze sono quelle di data/vacanze.json (da correggere ogni anno con il calendario
 della regione); se il file manca valgono le date nazionali più comuni.
