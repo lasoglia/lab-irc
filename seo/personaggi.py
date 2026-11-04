@@ -37,11 +37,24 @@ VIETATE = [
     r"jesus", r"\bgod\b", r"\bmary\b", r"\bsaint", r"\bpope\b", r"prophet", r"apostle",
     r"sangue", r"blood", r"crocifiss", r"crucif", r"violen", r"cadaver", r"\bmort[oi]\b",
 ]
-STILE = ("Painterly digital illustration in a warm, cinematic storybook style (not photorealistic), soft rim "
-         "light, deep indigo night tones with golden highlights, vertical 9:16 composition with empty space in "
-         "the upper third for text. One invented, generic adult character from the past, respectful and "
-         "dignified, historically plausible clothing. No text, no letters, no logos, no halos, no religious "
-         "figures, no children. Scene: ")
+# Lo stile scelto dal docente: cartoon semplice (non pittorico, non dettagliato), vicino all'avatar
+# del prof e alle mascotte. Le varianti servono alle prove (PERSONAGGI_STILE=a|b|c).
+STILI = {
+    "a": "Flat 2D cartoon illustration, simple geometric shapes, bold clean outlines, flat colors, very few "
+         "details, friendly expressive face, modern animated explainer-video style",
+    "b": "Cute rounded cartoon style, soft flat colors, thick dark outline, sticker-like character, simple "
+         "plain background, minimal details",
+    "c": "Clean vector cartoon, flat shading, big simple shapes, limited warm palette of deep indigo, gold and "
+         "coral, minimal background, playful but dignified",
+}
+STILE_SCELTO = "a"
+COMUNE = (". Vertical 9:16 composition, the character in the lower two thirds, empty space at the top. One "
+          "invented, generic adult character from the past, respectful, historically plausible clothing. No "
+          "text, no letters, no logos, no halos, no religious figures, no children. Scene: ")
+
+
+def stile() -> str:
+    return STILI.get(os.environ.get("PERSONAGGI_STILE", STILE_SCELTO), STILI[STILE_SCELTO]) + COMUNE
 NANO_BANANA = ["gemini-2.5-flash-image", "gemini-3.1-flash-image-preview", "gemini-3-pro-image-preview"]
 
 
@@ -70,7 +83,7 @@ def dipingi(descrizione: str) -> tuple[bytes, str]:
     """(immagine, chi l'ha dipinta). Solleva ValueError se la descrizione chiede qualcosa di vietato."""
     if (v := vietata(descrizione)):
         raise ValueError(f"descrizione non ammessa dalle regole del Lab ({v})")
-    testo = STILE + descrizione
+    testo = stile() + descrizione
     chiave = os.environ.get("GEMINI_API_KEY", "").strip()
     if chiave:
         for modello in NANO_BANANA:
