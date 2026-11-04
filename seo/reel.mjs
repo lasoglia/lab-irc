@@ -16,7 +16,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
+const RADICE = process.env.LAB_RADICE || join(dirname(fileURLToPath(import.meta.url)), '..');
 // l'avatar del prof in una posa: assets/avatar/<posa>.png o .jpg (null se manca)
 const avatarDi = (posa) => ['png', 'jpg'].map((e) => `assets/avatar/${posa}.${e}`).find((f) => existsSync(join(RADICE, f))) || null;
 const CARTELLA = join(RADICE, 'promozione', 'reel');
@@ -30,8 +30,12 @@ const L = 1080, A = 1920;
 const leggi = (nome) => { const f = join(RADICE, 'promozione', nome); return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')) : []; };
 const elenco = [...leggi('reel.json'), ...leggi('reel-domenica.json'), ...leggi('reel-vetrina.json')];
 mkdirSync(CARTELLA, { recursive: true });
-const attesi = new Set(elenco.map((r) => r.video));
-for (const f of readdirSync(CARTELLA)) if (/\.mp4$/.test(f) && !attesi.has(f)) { unlinkSync(join(CARTELLA, f)); console.log('  - tolto', f); }
+// Si tolgono solo i video di questo motore che non servono più: i video di anticipo delle storie
+// (seo/reel_lezioni.py) e i reel dei giochi (seo/gioco_reel.py) li gestiscono i loro script, e se
+// Cloudflare R2 non risponde restano qui in attesa di uscire.
+const attesi = new Set(elenco.flatMap((r) => [r.video, r.anticipo_video].filter(Boolean)));
+const altrui = (f) => /^(anticipo-|gioco-)/.test(f);
+for (const f of readdirSync(CARTELLA)) if (/\.mp4$/.test(f) && !attesi.has(f) && !altrui(f)) { unlinkSync(join(CARTELLA, f)); console.log('  - tolto', f); }
 
 // Quando cambia il montaggio (VERSIONE), i video già fatti si rimontano: promozione/reel/versioni.json
 // ricorda con che versione è stato montato ciascuno (2: con la colonna sonora)

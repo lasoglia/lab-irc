@@ -252,6 +252,25 @@ class ParoleATempo(unittest.TestCase):
     def test_senza_tempi(self):
         import voce
         self.assertIsNone(voce.allinea(3, []))
+class PuliziaVideo(unittest.TestCase):
+    """seo/reel.mjs toglie solo i suoi video: non i video di anticipo delle storie né i reel dei giochi,
+    che restano in promozione/reel/ quando Cloudflare R2 non risponde."""
+
+    def test_reel_mjs_non_cancella_anticipi_e_giochi(self):
+        import os
+        import subprocess
+        with tempfile.TemporaryDirectory() as d:
+            radice = Path(d)
+            (radice / "promozione" / "reel").mkdir(parents=True)
+            (radice / "promozione" / "reel.json").write_text(json.dumps([
+                {"video": "reel2-x.mp4", "anticipo_video": "anticipo-reel2-x.mp4", "motore": "reel2"}]), encoding="utf-8")
+            for nome in ("reel2-x.mp4", "anticipo-reel2-x.mp4", "gioco-y-2026-11-12.mp4", "vecchio.mp4"):
+                (radice / "promozione" / "reel" / nome).write_bytes(b"x")
+            esito = subprocess.run(["node", str(Path(__file__).resolve().parent / "reel.mjs")], capture_output=True, text=True,
+                                   env={**os.environ, "LAB_RADICE": d, "PW_MODULE": "/non/esiste"})
+            self.assertEqual(esito.returncode, 0, esito.stderr)
+            rimasti = sorted(f.name for f in (radice / "promozione" / "reel").glob("*.mp4"))
+            self.assertEqual(rimasti, ["anticipo-reel2-x.mp4", "gioco-y-2026-11-12.mp4", "reel2-x.mp4"])
 
 
 class Controllo(unittest.TestCase):
