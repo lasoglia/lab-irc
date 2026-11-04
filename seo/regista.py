@@ -26,7 +26,8 @@ import fascicolo as fa  # noqa: E402
 
 RADICE = Path(__file__).resolve().parent.parent
 SERIE = {0: "Lo sapevi?", 2: "Dentro la lezione", 4: "Falsi miti"}
-TIPI = ["gancio", "pagina", "numero", "prof", "chiusa"]
+TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "chiusa"]
+MOMENTI = ["", "scena", "quiz"]   # che pezzo della lezione interattiva registrata mostrare
 
 
 def pose() -> list[str]:
@@ -51,8 +52,9 @@ def schema() -> dict:
                 "type": "object",
                 "properties": {"tipo": {"type": "string", "enum": TIPI}, "testo": stringa, "voce": stringa,
                                "citazione": stringa, "cerchia": stringa, "numero": stringa,
+                               "momento": {"type": "string", "enum": MOMENTI},
                                "posa": {"type": "string", "enum": pose()}, "durata": {"type": "number"}},
-                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "posa", "durata"],
+                "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "momento", "posa", "durata"],
                 "additionalProperties": False}},
             "facebook": stringa, "instagram": stringa, "telegram": stringa,
             "hashtag": {"type": "array", "items": stringa},
@@ -86,10 +88,17 @@ titoli spezzati, niente parole di righe diverse saltate); «cerchia» è una par
 la citazione da cerchiare (o ""); «voce» racconta la frase con parole tue; «testo» "".
 - numero: un numero preso dal fascicolo («numero», per esempio "525") e una frase breve («testo»).
 - prof: una frase del prof sullo schermo («testo», al massimo 12 parole), detta dalla «voce».
+- lezione: la lezione interattiva VERA, registrata sullo schermo mentre si sfoglia. «momento» è \
+"scena" (le scene della lezione, con mappe, immagini e attività) o "quiz" (il quiz della modalità \
+Giochi: una risposta sbagliata in rosso, poi quella giusta in verde); «testo» è un'etichetta breve \
+(al massimo 7 parole, per esempio "In classe si *gioca*"); «voce» una frase sola su che cosa si fa \
+in classe con la lezione, senza dettagli che non sono nel fascicolo.
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
-Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. «durata» in \
+Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se il messaggio \
+dice che la lezione interattiva c'è, metti SEMPRE una o due inquadrature «lezione» (al massimo una \
+"scena" e un "quiz"), alternate alle pagine del fascicolo, mai attaccate tra loro. «durata» in \
 secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
-«cerchia», «numero» vuoti quando non servono.
+«cerchia», «numero», «momento» vuoti quando non servono.
 
 La «voce» si legge ad alta voce: al massimo 18 parole per inquadratura e 80 parole in tutto \
 (il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
@@ -116,8 +125,8 @@ def testo_fascicolo(pdf: Path) -> str:
     return "\n\n".join(pagine)
 
 
-def fascicolo_di(lezione: dict) -> Path | None:
-    """Il PDF del fascicolo della lezione, dai materiali in data/lezioni.json."""
+def materiale_di(lezione: dict, fine: str) -> Path | None:
+    """Il file della lezione che finisce con «fine», dai materiali in data/lezioni.json."""
     try:
         dati = json.loads((RADICE / "data" / "lezioni.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
@@ -126,9 +135,19 @@ def fascicolo_di(lezione: dict) -> Path | None:
         if l.get("titolo") == lezione.get("titolo") and str(l.get("anno")) == str(lezione.get("anno")):
             for m in l.get("materiali") or []:
                 f = str(m.get("file", ""))
-                if f.endswith("-fascicolo.pdf") and (RADICE / f.lstrip("/")).exists():
+                if f.endswith(fine) and (RADICE / f.lstrip("/")).exists():
                     return RADICE / f.lstrip("/")
     return None
+
+
+def fascicolo_di(lezione: dict) -> Path | None:
+    """Il PDF del fascicolo della lezione."""
+    return materiale_di(lezione, "-fascicolo.pdf")
+
+
+def artefatto_di(lezione: dict) -> Path | None:
+    """La lezione interattiva (HTML), da registrare a schermo per l'inquadratura «lezione»."""
+    return materiale_di(lezione, "-artefatto.html")
 
 
 def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
@@ -161,8 +180,10 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
         return None
     serie = SERIE.get(dt.date.fromisoformat(quando).weekday(), "Lo sapevi?") if quando else "Lo sapevi?"
     testo = testo_fascicolo(pdf)
+    interattiva = ("La lezione interattiva c'è: metti una o due inquadrature «lezione»." if artefatto_di(lezione)
+                   else "La lezione interattiva non c'è: niente inquadrature «lezione».")
     messaggio = (f"Serie del giorno: {serie}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
-                 f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n\n"
+                 f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}\n\n"
                  f"<fascicolo>\n{testo}\n</fascicolo>")
     istruzioni = ISTRUZIONI.replace("{metodo}", metodo()) + "\n\n" + pr.TONO + "\n\n" + pr.METODO
     client = anthropic.Anthropic()
@@ -193,14 +214,44 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     return c
 
 
+LEZIONE_DI_RISERVA = {"tipo": "lezione", "momento": "quiz", "testo": "In classe la lezione *si gioca*",
+                      "voce": "E in classe la lezione diventa interattiva.", "posa": "presenta", "durata": 4.0}
+
+
+def garantisci_lezione(copione: dict) -> dict:
+    """Con la lezione interattiva: almeno una inquadratura «lezione» (se manca, una prima della chiusa)
+    e al massimo due. Senza: nessuna (diventano frasi del prof)."""
+    inq = copione.get("inquadrature", [])
+    if not copione.get("artefatto"):
+        for q in inq:
+            if q.get("tipo") == "lezione":
+                q["tipo"] = "prof"
+                q.setdefault("testo", q.get("voce", ""))
+        return copione
+    lezioni = [q for q in inq if q.get("tipo") == "lezione"]
+    for q in lezioni[2:]:
+        q["tipo"] = "prof"
+        q.setdefault("testo", q.get("voce", ""))
+    if not lezioni:
+        dove = next((i for i, q in enumerate(inq) if q.get("tipo") == "chiusa"), len(inq))
+        inq.insert(dove, dict(LEZIONE_DI_RISERVA))
+    for q in inq:
+        if q.get("tipo") == "lezione" and q.get("momento") not in ("scena", "quiz"):
+            q["momento"] = "quiz"
+    return copione
+
+
 def copione_regia(c: dict, lezione: dict) -> dict:
     """Dal risultato di Claude al copione di seo/regia.py."""
     inq = []
     for q in c["inquadrature"]:
         x = {k: v for k, v in q.items() if v not in ("", None)}
         inq.append(x)
-    return {"serie": c.get("serie", "Lo sapevi?"), "anno": int(lezione.get("anno") or 1), "titolo": lezione["titolo"],
-            "fascicolo": c["fascicolo"], "inquadrature": inq}
+    artefatto = artefatto_di(lezione)
+    return garantisci_lezione({"serie": c.get("serie", "Lo sapevi?"), "anno": int(lezione.get("anno") or 1),
+                               "titolo": lezione["titolo"], "fascicolo": c["fascicolo"],
+                               "artefatto": str(artefatto.relative_to(RADICE)) if artefatto else "",
+                               "inquadrature": inq})
 
 
 def main() -> int:
