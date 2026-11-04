@@ -9,6 +9,9 @@ on:
       descrizione:
         description: 'Il personaggio inventato da dipingere'
         default: 'un pescatore di Cafarnao, sulla quarantina, che ripara le reti sulla riva del lago al tramonto'
+      stili:
+        description: 'Varianti di stile da provare (a, b, c)'
+        default: 'a b c'
 
 permissions:
   contents: read
@@ -30,16 +33,19 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           DESCRIZIONE: ${{ inputs.descrizione }}
+          STILI: ${{ inputs.stili }}
         run: |
           pip install --quiet anthropic pypdf
           python seo/personaggi.py --modelli || true
-          python seo/personaggi.py --prova "$DESCRIZIONE" "personaggio-${GITHUB_RUN_ID}.jpg"
+          for s in $STILI; do
+            PERSONAGGI_STILE=$s python seo/personaggi.py --prova "$DESCRIZIONE" "personaggio-$s-${GITHUB_RUN_ID}.jpg" || true
+          done
           python - <<'PY'
           import os, sys
           from pathlib import Path
           sys.path.insert(0, "seo")
           import media_r2 as r2
-          f = Path(f"personaggio-{os.environ['GITHUB_RUN_ID']}.jpg")
-          r2.carica(f, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"], os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
-          print(f"{r2.URL_PUBBLICO}/prove/{f.name}")
+          for f in sorted(Path(".").glob(f"personaggio-*-{os.environ['GITHUB_RUN_ID']}.jpg")):
+              r2.carica(f, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"], os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
+              print(f"{r2.URL_PUBBLICO}/prove/{f.name}")
           PY
