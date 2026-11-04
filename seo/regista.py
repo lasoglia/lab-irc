@@ -72,10 +72,10 @@ def schema() -> dict:
                                "posa": {"type": "string", "enum": pose()}, "durata": {"type": "number"}},
                 "required": ["tipo", "testo", "voce", "citazione", "cerchia", "numero", "scena", "posa", "durata"],
                 "additionalProperties": False}},
-            "facebook": stringa, "instagram": stringa, "telegram": stringa,
+            "facebook": stringa, "instagram": stringa, "telegram": stringa, "anticipo": stringa,
             "hashtag": {"type": "array", "items": stringa},
         },
-        "required": ["serie", "angoli", "ganci", "inquadrature", "facebook", "instagram", "telegram", "hashtag"],
+        "required": ["serie", "angoli", "ganci", "inquadrature", "facebook", "instagram", "telegram", "hashtag", "anticipo"],
         "additionalProperties": False,
     }
 
@@ -124,7 +124,9 @@ dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 Restituisci anche: «serie» (la rubrica indicata nel messaggio, con le sue condizioni); 5 «angoli» con la leva; almeno 5 \
 «ganci» con la leva, il primo è quello usato; «facebook» (300-900 caratteri), «instagram» \
 (300-1000, paragrafi brevi, chiude con il link nella bio, senza hashtag), «telegram» (200-600), \
-«hashtag» (3-5, senza #, sempre religionecattolica e irc).
+«hashtag» (3-5, senza #, sempre religionecattolica e irc); «anticipo»: la frase della storia \
+delle 13:30 che annuncia il reel della sera, al massimo 9 parole, che incuriosisce SENZA svelare \
+la scoperta (*parola* = in oro), per esempio "Una pietra del 1961 cambia *una parola*".
 
 Regole vincolanti: solo fatti presenti nel fascicolo (niente nomi, date, numeri o citazioni \
 aggiunti); rispetto per la fede e per chi non crede; nessun nome di studenti o scuole; nessun \
@@ -399,7 +401,8 @@ def main() -> int:
         print("Nessun fascicolo per questa lezione")
         return 1
     uscita = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("copione.json")
-    uscita.write_text(json.dumps(copione_regia(c, lezione), ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    uscita.write_text(json.dumps({**copione_regia(c, lezione), "anticipo": c.get("anticipo", "")}, ensure_ascii=False, indent=1)
+                      + "\n", encoding="utf-8")
     print(json.dumps({k: c[k] for k in ("serie", "ganci", "facebook")}, ensure_ascii=False, indent=1))
     print(f"Copione in {uscita} (citazioni sbagliate rimaste: {c['citazioni_sbagliate']}, parole della voce: "
           f"{c['parole_voce']}, modello: {c['modello']}, scene della lezione: {len(c.get('scene_lezione') or [])})")
