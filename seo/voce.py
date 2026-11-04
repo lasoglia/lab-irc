@@ -151,10 +151,11 @@ def genera_kokoro(frasi: list, tmp: Path, uscita: Path) -> None:
         rifinisci(grezzo, uscita / f"voce-{i:02d}.wav", frase)
 
 
-# Scelta del docente (3 novembre 2026): Rasalgethi, con il modello 2.5 e velocità 1.06.
+# Scelta del docente (4 novembre 2026): Sadachbia, modello 2.5, stile da narratore appassionato,
+# velocità 1.03 (prima: Rasalgethi con lo stile caldo e misurato).
 GEMINI_MODELLI = ("gemini-2.5-flash-preview-tts", "gemini-3.1-flash-tts-preview")
-VOCE_SCELTA = "gemini-Rasalgethi"
-VELOCITA_SCELTA = "1.06"
+VOCE_SCELTA = "gemini-Sadachbia"
+VELOCITA_SCELTA = "1.03"
 # Stile da narratore appassionato di storia (richiesta del docente: «più entusiasta»): lo stile, non
 # l'imitazione di una persona reale.
 GEMINI_STILE_NARRATORE = (
@@ -246,7 +247,7 @@ def genera_gemini(frasi: list, voce: str, tmp: Path, uscita: Path) -> None:
     if not chiave:
         print("Voce: segreto GEMINI_API_KEY non impostato, i video restano senza voce.")
         return
-    stile = os.environ.get("VOCE_GEMINI_STILE") or GEMINI_STILE
+    stile = os.environ.get("VOCE_GEMINI_STILE") or GEMINI_STILE_NARRATORE
     modelli = [os.environ["VOCE_GEMINI_MODELLO"]] if os.environ.get("VOCE_GEMINI_MODELLO") else list(GEMINI_MODELLI)
     righe = [(i, pronuncia(f, SIGLE)) for i, f in enumerate(frasi) if str(f).strip()]
     tutto = tmp / "gemini-tutto.wav"
@@ -286,7 +287,7 @@ def main() -> int:
             nome, _, versione = motore.partition("-")[2].partition("@")   # gemini-<Voce>[@2.5|@3.1]
             if versione:
                 os.environ["VOCE_GEMINI_MODELLO"] = {"2.5": GEMINI_MODELLI[0], "3.1": GEMINI_MODELLI[1]}.get(versione, versione)
-            genera_gemini(frasi, nome or os.environ.get("VOCE_GEMINI", "Rasalgethi"), Path(tmp), uscita)
+            genera_gemini(frasi, nome or os.environ.get("VOCE_GEMINI", "Sadachbia"), Path(tmp), uscita)
             return 0
         if motore in ("edge", "kokoro"):   # voci pronte: non serve il campione
             (genera_edge if motore == "edge" else genera_kokoro)(frasi, Path(tmp), uscita)
