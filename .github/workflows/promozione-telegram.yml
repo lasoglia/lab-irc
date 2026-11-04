@@ -97,6 +97,9 @@ jobs:
           CODA: ${{ inputs.coda }}
         run: |
           command -v pdftotext >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils; }
+          # il browser serve anche al regista, per leggere le scene della lezione interattiva
+          export PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)"
           python seo/reel.py
           python seo/immagini_ia.py
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
