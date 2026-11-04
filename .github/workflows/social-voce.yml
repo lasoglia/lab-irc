@@ -84,7 +84,7 @@ jobs:
           ls voce/*.wav >/dev/null 2>&1 || { echo "Nessuna frase generata"; exit 1; }
           ffmpeg -v error -y -f lavfi -i anullsrc=r=24000:cl=mono -t 0.7 pausa.wav
           for f in voce/voce-*.wav; do echo "file '$PWD/$f'"; echo "file '$PWD/pausa.wav'"; done > elenco.txt
-          ffmpeg -v error -y -f concat -safe 0 -i elenco.txt -c:a libmp3lame -b:a 160k "voce-${VOCE_MOTORE}-${GITHUB_RUN_ID}.mp3"
+          ffmpeg -v error -y -f concat -safe 0 -i elenco.txt -c:a libmp3lame -b:a 160k "voce-${VOCE_MOTORE//@/-}-${GITHUB_RUN_ID}.mp3"
 
       - name: Su Cloudflare, da ascoltare dal telefono
         env:
@@ -98,7 +98,7 @@ jobs:
           from pathlib import Path
           sys.path.insert(0, "seo")
           import media_r2 as r2
-          f = Path(f"voce-{os.environ['MOTORE']}-{os.environ['GITHUB_RUN_ID']}.mp3")
+          f = Path(f"voce-{os.environ['MOTORE'].replace('@', '-')}-{os.environ['GITHUB_RUN_ID']}.mp3")   # «@» rompe la firma di R2
           r2.carica(f, os.environ["R2_ACCESS_KEY_ID"], os.environ["R2_SECRET_ACCESS_KEY"], os.environ["CLOUDFLARE_ACCOUNT_ID"], "prove")
           url = f"{r2.URL_PUBBLICO}/prove/{f.name}"
           print(url)
