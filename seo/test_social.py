@@ -184,6 +184,44 @@ class Storie(unittest.TestCase):
         s = self.storie.scheda("mattina", dt.date(2026, 12, 8))
         self.assertIn("Immacolata", s["titolo"])
 
+    def test_mattina_annuncia_il_post_di_oggi(self):
+        self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "anno": "2", "origine": "x"}
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 9))["piede"], "Stasera alle 19")     # lunedì, reel
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 10))["piede"], "Oggi alle 13:30")   # martedì, carosello
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 14))["piede"], "Oggi alle 11")      # sabato, Shabbat
+
+    def test_post_di_oggi_per_tipo(self):
+        with tempfile.TemporaryDirectory() as d:
+            radice = Path(d)
+            (radice / "data").mkdir(); (radice / "promozione").mkdir()
+            (radice / "data" / "social-coda.json").write_text(json.dumps({"coda": [
+                {"chiave": "lez", "quando": "2026-11-10", "esito": "approvato"},
+                {"chiave": "sab-2026-11-14", "quando": "2026-11-14", "esito": "approvato"}]}))
+            (radice / "promozione" / "cartoline.json").write_text(json.dumps([{"chiave": "lez", "titolo": "L"}]))
+            (radice / "promozione" / "sabato.json").write_text(json.dumps([{"chiave": "sab-2026-11-14", "titolo": "S"}]))
+            vera, self.storie.RADICE = self.storie.RADICE, radice
+            try:
+                self.assertEqual(self.storie.post_di_oggi(dt.date(2026, 11, 10))["titolo"], "L")   # martedì: il carosello
+                self.assertEqual(self.storie.post_di_oggi(dt.date(2026, 11, 14))["titolo"], "S")   # sabato: lo Shabbat
+                self.assertIsNone(self.storie.post_di_oggi(dt.date(2026, 11, 9)))                  # lunedì: nessun reel pronto
+            finally:
+                self.storie.RADICE = vera
+
+    def test_pranzo_del_gioco_con_la_sua_variante(self):
+        import gioco_reel
+        with tempfile.TemporaryDirectory() as d:
+            vero, cal.FILE_GIOCHI = cal.FILE_GIOCHI, Path(d) / "social-giochi.json"
+            cal.FILE_GIOCHI.write_text(json.dumps({"giochi": [{"file": "uploads/x-gioco.html", "titolo": "X",
+                                                               "uscito": "2026-12-01"}]}))
+            try:
+                self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 3)), "gioco")   # giovedì nel periodo del gioco
+                for variante in (0, 1):
+                    self.storie.post_di_oggi = lambda d, v=variante: {"titolo": "Gioco", "anno": "5", "variante": v}
+                    s = self.storie.scheda("pranzo", dt.date(2026, 12, 3))
+                    self.assertEqual(s["titolo"], gioco_reel.VARIANTI[variante]["gancio"][0])
+            finally:
+                cal.FILE_GIOCHI = vero
+
     def test_pranzo(self):
         self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "gancio": "Un gancio", "anno": "2", "origine": "x"}
         self.assertEqual(self.storie.scheda("pranzo", dt.date(2026, 11, 9))["titolo"], "Un gancio")   # lunedì, reel
