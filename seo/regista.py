@@ -111,13 +111,13 @@ un'attività che mostra proprio quel punto). «scena» è il numero della scena,
 continua il racconto della curiosità: MAI parlare di «lezione interattiva», «in classe», «gioco», \
 «quiz» o presentare il materiale; «testo» un'etichetta breve sul contenuto (al massimo 7 parole) o "".
 - chiusa: l'ultima, «testo» "", «voce» che invita alla lezione completa su labirc.it (scritto così).
-Da 5 a 7 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
+Da 5 a 6 inquadrature: la prima è un gancio, l'ultima la chiusa, almeno due pagine. Se c'è l'elenco \
 <scene_lezione>, metti SEMPRE una o due inquadrature «lezione» con scene diverse, alternate alle \
 pagine del fascicolo, mai attaccate tra loro. «durata» in \
 secondi (2.5-6). «posa» è l'espressione dell'avatar del prof, coerente con la frase. «citazione», \
 «cerchia», «numero» vuoti e «scena» 0 quando non servono.
 
-La «voce» si legge ad alta voce: al massimo 18 parole per inquadratura e 80 parole in tutto \
+La «voce» si legge ad alta voce: al massimo 15 parole per inquadratura e 65 parole in tutto \
 (il reel deve restare sotto i 35 secondi), frasi brevi, parlato naturale, numeri e sigle scritti come si \
 dicono (avanti Cristo, non a.C.), nessun elenco, nessuna emoji.
 
@@ -141,7 +141,7 @@ mantenuto dal video. Se tra i ganci ce n'è uno più forte, usalo.
 2. C'è una domanda aperta nei primi 5 secondi che si chiude solo alla fine (la complicazione)?
 3. La scoperta si VEDE: pagine vere del fascicolo e scene della lezione interattiva che mostrano \
 proprio ciò che la voce dice, alternate, mai due uguali di fila.
-4. Ritmo: un cambio ogni 3-5 secondi, frasi corte, nessun tempo morto, totale 20-35 secondi.
+4. Ritmo: un cambio ogni 3-5 secondi, frasi corte, nessun tempo morto, al massimo 6 inquadrature e 65 parole di voce (circa 30 secondi).
 5. Finale: l'ultima frase richiama il gancio (chi riguarda capisce di più) e chiude con labirc.it.
 6. Didascalie: la prima riga attira, una frase dice a chi serve, un dato o una fonte, una sola richiesta.
 7. È qualcosa che un docente salverebbe per la lezione o manderebbe a un collega? Se no, rendilo più utile.
@@ -232,7 +232,7 @@ def citazioni_sbagliate(copione: dict, pdf: Path) -> list[str]:
     return errori
 
 
-PAROLE_MAX = 85   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
+PAROLE_MAX = 70   # la voce di tutto il reel: oltre, il reel supera i 35 secondi
 
 
 def parole_voce(copione: dict) -> int:
