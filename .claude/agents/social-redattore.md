@@ -12,7 +12,7 @@ Ricevi il numero di un candidato e, se ci sono, le correzioni chieste. Leggi `.c
 
 Regole di lavoro:
 - Applica le correzioni richieste e cambia il meno possibile: un post già buono non va riscritto.
-- Non aggiungere nulla che non stia nel testo della lezione, neppure se lo sai per certo. Unica eccezione: per correggere un errore puoi usare la «versione corretta» indicata da social-ricercatore, con le sue fonti.
+- Non aggiungere nulla che non stia nel testo della lezione, neppure se lo sai per certo. Unica eccezione: per correggere un errore puoi usare la «versione corretta» indicata da social-ricercatore, con le sue fonti. Le curiosità in fondo alla scheda sono frasi del fascicolo già verificate: puoi usarle per rendere il post più sorprendente.
 - Non cambiare la `frase_cartolina` senza un motivo: cambiarla obbliga a ridisegnare l'immagine.
 
 Scrivi il risultato in `.social/riscritture/NN.json`, con solo i campi cambiati:

@@ -22,6 +22,7 @@ funzionano. Fatti e citazioni restano quelli del fascicolo: li ricontrolla il co
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import os
 import subprocess
@@ -32,8 +33,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import fascicolo as fa  # noqa: E402
 
 RADICE = Path(__file__).resolve().parent.parent
+import social_calendario as cal  # noqa: E402
+
 SERIE = {0: "Lo sapevi?", 2: "Prova alla mano", 4: "Falso mito"}
 SERIE_TUTTE = ["Lo sapevi?", "Falso mito", "Prova alla mano", "Mappa in 30 secondi", "Due racconti", "Dentro la lezione"]
+# la rubrica del giorno la dà il calendario (seo/social_calendario.rubrica_del_giorno); qui solo che cosa vuol dire
 DEL_GIORNO = {
     0: "Lo sapevi?",
     2: "una tra «Prova alla mano» (un documento antico letto da vicino: che cosa dice e che cosa no), «Mappa in "
@@ -41,6 +45,33 @@ DEL_GIORNO = {
        "se il fascicolo confronta due racconti della stessa storia): scegli quella che rende di più con QUESTA lezione",
     4: "Falso mito (solo se il fascicolo corregge davvero un luogo comune; altrimenti «Lo sapevi?»)",
 }
+FILE_CODA = RADICE / "data" / "social-coda.json"
+
+
+def rubrica_del_giorno(quando: str | None) -> str:
+    """La rubrica suggerita per quel giorno, spiegata al regista (resta un suggerimento)."""
+    if not quando:
+        return "Lo sapevi?"
+    giorno = dt.date.fromisoformat(quando)
+    return DEL_GIORNO.get(giorno.weekday()) or cal.rubrica_del_giorno(giorno) or "Lo sapevi?"
+
+
+def note_di_regia(chiave: str, quando: str | None = None) -> str:
+    """Le note del direttore social e del regista-agente per questa uscita (campo «regia» della voce in
+    data/social-coda.json, scritto nel piano della settimana): angolo, gancio, curiosità, scena, tono.
+    Sono indicazioni di chi conosce il pubblico, non ordini: il regista resta libero."""
+    try:
+        voci = json.loads(FILE_CODA.read_text(encoding="utf-8")).get("coda", [])
+    except (OSError, ValueError):
+        return ""
+    voce = next((v for v in voci if v.get("chiave") == chiave and (not quando or str(v.get("quando")) == quando)
+                 and isinstance(v.get("regia"), dict)), None)
+    if not voce:
+        return ""
+    righe = [f"- {k}: {v}" for k, v in voce["regia"].items() if isinstance(v, str) and v.strip()]
+    return ("\n\n<note_del_direttore>\nIl direttore social e il regista del piano settimanale, che conoscono i numeri "
+            "del pubblico, propongono per questo reel (usa ciò che rende, cambia ciò che non ti convince):\n"
+            + "\n".join(righe) + "\n</note_del_direttore>") if righe else ""
 REGISTA_MODELLO = os.environ.get("REGISTA_MODELLO", "claude-fable-5-1")
 TIPI = ["gancio", "pagina", "numero", "prof", "lezione", "personaggio", "chiusa"]
 AMBITI = ("reel", "didascalie")   # le regole imparate che arrivano al regista (seo/social_quaderno.py)
@@ -287,20 +318,20 @@ def parole_voce(copione: dict) -> int:
 
 def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     """Il copione completo (formato di seo/regia.py) e le didascalie, oppure None."""
-    import datetime as dt
     import anthropic
     import promozione as pr
     pdf = fascicolo_di(lezione)
     if not pdf:
         return None
-    serie = DEL_GIORNO.get(dt.date.fromisoformat(quando).weekday(), "Lo sapevi?") if quando else "Lo sapevi?"
+    serie = rubrica_del_giorno(quando)
     testo = testo_fascicolo(pdf)
     scene = scene_di(lezione)
     interattiva = ("<scene_lezione>\n" + "\n".join(f"{x['n']}. [{x['fase']}] {x['titolo']}: {x['contenuto']}" for x in scene)
                    + "\n</scene_lezione>") if scene else "La lezione interattiva non c'è: niente inquadrature «lezione»."
     messaggio = (f"Rubrica del giorno: {serie}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
                  f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}"
-                 f"{blocco_curiosita(lezione.get('chiave', ''))}\n\n<fascicolo>\n{testo}\n</fascicolo>")
+                 f"{blocco_curiosita(lezione.get('chiave', ''))}{note_di_regia(lezione.get('chiave', ''), quando)}"
+                 f"\n\n<fascicolo>\n{testo}\n</fascicolo>")
     istruzioni = ISTRUZIONI.replace("{metodo}", metodo()) + "\n\n" + TONO_REGISTA + "\n\n" + pr.METODO
     if (chi := pubblico()):
         istruzioni += "\n\n<pubblico>\n" + chi + "\n</pubblico>"

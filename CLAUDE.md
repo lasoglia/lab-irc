@@ -29,7 +29,15 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 - Giochi di verifica: nei 14 giorni dopo l'uscita di un gioco (`data/social-giochi.json`) il giovedì esce il
   reel di una partita registrata (`seo/gioco_registra.mjs`, `seo/gioco_reel.py`, Action «Social · reel del gioco»).
 - I reel delle lezioni li scrive il regista (`seo/regista.py`) e li monta `seo/reel_lezioni.py` con `seo/reel2.mjs`
-  e la voce Gemini (`seo/voce.py`); `REEL_MOTORE=vecchio` torna al reel di prima.
+  e la voce Gemini (`seo/voce.py`); `REEL_MOTORE=vecchio` torna al reel di prima. Il regista è libero (un solo
+  obiettivo: diventare virale restando vero); riceve la rubrica del giorno dal calendario, le curiosità verificate
+  della lezione (`seo/curiosita.json`: frasi esatte del fascicolo con la pagina) e le note di regia del piano
+  settimanale (campo `regia` della voce in `data/social-coda.json`).
+- Ogni uscita ha una rubrica (`seo/social_calendario.rubrica_del_giorno`, da `docs/progetto-rubriche.md`): lunedì
+  «Lo sapevi?», mercoledì a rotazione, venerdì «Falso mito», martedì a rotazione «Parole con una storia», «In classe
+  domani», «In numeri». I caroselli del martedì li scrive `seo/caroselli.py` (citazioni controllate nel PDF, modelli
+  «Notte del Lab» in `seo/cartoline.mjs`, provini con `python seo/caroselli.py --provino CARTELLA`); se la lezione
+  non regge la rubrica esce il carosello del kit.
 - `seo/immagini_ia.py` fa gli sfondi pittorici di video e copertine del weekend: Claude descrive la
   scena (mai persone, volti, Dio o santi, mai scritte), Cloudflare Workers AI la dipinge gratis
   (segreti CLOUDFLARE_ACCOUNT_ID e CLOUDFLARE_API_TOKEN; senza, non fa nulla).
@@ -40,8 +48,11 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   ambito: reel, caroselli, storie, calendario…) e l'esperimento in corso arrivano da soli a chi scrive i post,
   al regista e al direttore creativo dei reel, al redattore e al calendarista; i reel dei giochi scelgono la
   variante che rende di più.
-- Agenti in `.claude/agents/`, comandi in `.claude/skills/`, regole dei testi in `.claude/social-regole.md`,
-  metodo per angoli, ganci, copioni e didascalie in `.claude/social-metodo.md` (`/social-reel <argomento>` lo applica tutto).
+- Agenti in `.claude/agents/` (il direttore decide la linea della settimana, il calendarista sceglie le lezioni,
+  verificatore e guardiano controllano, ricercatore e redattore correggono, il regista scrive le note di regia,
+  esploratore e analista fanno imparare il Lab), comandi in `.claude/skills/`, regole dei testi in
+  `.claude/social-regole.md`, metodo per angoli, ganci, copioni e didascalie in `.claude/social-metodo.md`
+  (`/social-reel <argomento>` lo applica tutto).
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
 
 ## Regole di lavoro

@@ -117,6 +117,14 @@ def controlla_coda(errori: list[str]) -> None:
         if quanti > MASSIMO_PER_TIPO[settimana[2]]:
             errori.append(f"coda: {quanti} post «{settimana[2]}» nella settimana {settimana[:2]}, "
                           f"il massimo è {MASSIMO_PER_TIPO[settimana[2]]}")
+    for voce in dati.get("coda", []):   # le note di regia del direttore e del regista: brevi, senza link
+        regia = voce.get("regia")
+        if regia is None:
+            continue
+        if not isinstance(regia, dict) or any(not isinstance(v, str) or len(v) > 500 for v in regia.values()):
+            errori.append(f"coda: le note di regia di {voce.get('chiave')} devono essere testi brevi (campo «regia»)")
+        elif re.search(r"https?://|www\.", json.dumps(regia)):
+            errori.append(f"coda: le note di regia di {voce.get('chiave')} contengono un link")
     for voce in dati.get("escluse", []):
         if not isinstance(voce, dict) or not voce.get("chiave") or not voce.get("motivo"):
             errori.append(f"escluse: ogni voce vuole chiave e motivo: {voce}")
