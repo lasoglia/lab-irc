@@ -50,7 +50,6 @@ TIPI = ["testo", "numero", "pagina"]
 AMBITI = ("caroselli", "didascalie")
 FILE_CACHE = RADICE / "data" / "caroselli.json"
 FILE_ELENCO = RADICE / "promozione" / "caroselli.json"
-FILE_CURIOSITA = RADICE / "seo" / "curiosita.json"
 
 # --------------------------------------------------------------------------
 # Le rubriche: promessa, struttura e istruzioni per chi scrive
@@ -159,22 +158,10 @@ def istruzioni(rubrica: str) -> str:
             + "\n\n" + pr.TONO + "\n\n" + pr.METODO)
 
 
-def curiosita_di(chiave: str) -> list[dict]:
-    """Le curiosità già verificate di seo/curiosita.json per questa lezione (materiale in più)."""
-    try:
-        return json.loads(FILE_CURIOSITA.read_text(encoding="utf-8")).get(chiave, [])
-    except (OSError, ValueError):
-        return []
-
-
 def messaggio(lezione: dict, rubrica: str, testo: str) -> str:
-    extra = curiosita_di(lezione["chiave"])
-    curiosita = ("\n\n<curiosita_verificate>\n" + "\n".join(
-        f"- [{c.get('rubrica', '')}] {c.get('gancio', '')}: {c.get('testo', '')} (frase esatta: «{c.get('citazione', '')}»)"
-        for c in extra) + "\n</curiosita_verificate>") if extra else ""
     return (f"Rubrica: {rubrica}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
-            f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}{curiosita}\n\n"
-            f"<fascicolo>\n{testo}\n</fascicolo>")
+            f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}"
+            f"{regista.blocco_curiosita(lezione['chiave'])}\n\n<fascicolo>\n{testo}\n</fascicolo>")
 
 
 # --------------------------------------------------------------------------

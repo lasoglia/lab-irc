@@ -420,6 +420,32 @@ class CaroselliMartedi(unittest.TestCase):
         self.assertEqual([p["titolo"] for p in pubblica.con_caroselli_martedi(kit, rubrica, pronto=lambda c: False)], ["kit", "k2"])
 
 
+class Curiosita(unittest.TestCase):
+    """La biblioteca seo/curiosita.json: forma giusta e arrivo al regista (le citazioni esatte si controllano
+    con i PDF del ramo del sito: python seo/fascicolo.py)."""
+
+    def test_forma(self):
+        dati = json.loads((Path(__file__).resolve().parent / "curiosita.json").read_text(encoding="utf-8"))
+        lezioni = {k: v for k, v in dati.items() if not k.startswith("_")}
+        self.assertGreaterEqual(len(lezioni), 40)
+        for chiave, voci in lezioni.items():
+            self.assertEqual(chiave.count("|"), 2, chiave)
+            self.assertTrue(2 <= len(voci) <= 4, chiave)
+            for v in voci:
+                self.assertLessEqual(len(v["gancio"]), 60, v["gancio"])
+                self.assertLessEqual(len(v["testo"]), 200, v["testo"])
+                self.assertGreaterEqual(len(v["citazione"].split()), 6, v["citazione"])
+                self.assertTrue(v["fascicolo"].endswith("-fascicolo.pdf"))
+                self.assertNotIn("http", json.dumps(v))
+
+    def test_al_regista(self):
+        import regista
+        blocco = regista.blocco_curiosita("3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini")
+        self.assertIn("<curiosita_verificate>", blocco)
+        self.assertIn("ora et labora", blocco)
+        self.assertEqual(regista.blocco_curiosita("chiave|che|non esiste"), "")
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}

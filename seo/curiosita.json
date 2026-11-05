@@ -1,0 +1,1663 @@
+{
+ "_nota": "Biblioteca di curiosità del Lab IRC: per ogni lezione del kit (chiave di promozione/cartoline.json) spunti sorprendenti presi dal fascicolo, con la frase ESATTA (controllata con seo/fascicolo.py) e la pagina. Materiale in più per il regista (seo/regista.py) e per i caroselli del martedì (seo/caroselli.py). Scritta il 4 novembre 2026; si aggiorna a mano quando cambiano i fascicoli.",
+ "1|Israele, una promessa, una storia, fino a oggi|Chi sono io per andare dal faraone": [
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Faraone vuol dire «casa elevata»",
+   "testo": "La parola viene da un termine egiziano che indicava il palazzo e poi divenne il titolo del re. Nel libro dell'Esodo il faraone non ha mai un nome: è il potere, e basta.",
+   "citazione": "La parola faraone viene, attraverso il greco e il latino, da una parola egiziana che significava «casa elevata»",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-4-mose-e-il-roveto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Mosè ha un nome egiziano, come Ramses",
+   "testo": "Il testo lega il nome a «tirar fuori» dall'acqua; gli studiosi vi riconoscono una parola egiziana che significa «figlio di», la stessa dei faraoni Tut-mosis e Ra-mses. Un ebreo con un nome egiziano.",
+   "citazione": "una parola egiziana che significa «figlio di», la stessa che si trova nei nomi di faraoni come Tut-mosis e Ra-mses",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-4-mose-e-il-roveto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Geova» è un errore di lettura",
+   "testo": "Il nome di Dio si scrive con quattro consonanti, YHWH; dopo l'esilio gli ebrei smisero di pronunciarlo e leggono Adonai. «Geova» nasce leggendo quelle consonanti con le vocali di Adonai.",
+   "citazione": "«Geova» è un errore: le consonanti del Nome lette con le vocali della parola Adonai",
+   "pagina": 5,
+   "fascicolo": "uploads/i-2-4-mose-e-il-roveto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un re di Accad fu affidato a un fiume come Mosè",
+   "testo": "In Mesopotamia si raccontava di Sargon di Accad, anche lui affidato da piccolo a un fiume: raccontare così una nascita significava dire che quel bambino era destinato a qualcosa di grande.",
+   "citazione": "Un racconto simile si trovava in Mesopotamia a proposito di un re antichissimo, Sargon di Accad, anche lui affidato da piccolo a un fiume",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-4-mose-e-il-roveto-fascicolo.pdf"
+  }
+ ],
+ "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Il Muro occidentale non era il muro del Tempio",
+   "testo": "Il Muro non è una parete del santuario distrutto da Tito nel 70: è parte delle strutture che sostenevano la spianata su cui sorgeva il Tempio. Un muro di sostegno, diventato memoria.",
+   "citazione": "conserva parte delle strutture che sostenevano la spianata su cui sorgeva il Tempio",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-1-gerusalemme-tre-fedi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Pellegrino vuol dire «straniero»",
+   "testo": "Pellegrino viene dal latino peregrinus, «straniero»: chi parte per un luogo santo lascia il proprio ambiente e si fa forestiero, per incontrare una memoria condivisa in un luogo concreto.",
+   "citazione": "Il pellegrinaggio è il viaggio compiuto per raggiungere un luogo santo; pellegrino deriva dal latino peregrinus, «straniero»",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-1-gerusalemme-tre-fedi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "A Bologna c'è una «Gerusalemme» dall'887",
+   "testo": "Il complesso di Santo Stefano a Bologna era chiamato Hierusalem già nell'887: una chiesa rotonda riproduce il Santo Sepolcro, per richiamare la Pasqua anche lontano dalla città dei Vangeli.",
+   "citazione": "Nel complesso di Santo Stefano, a Bologna, chiamato Hierusalem già nell’887, una chiesa rotonda riproduce il Santo Sepolcro",
+   "pagina": 3,
+   "fascicolo": "uploads/i-2-1-gerusalemme-tre-fedi-fascicolo.pdf"
+  }
+ ],
+ "1|Israele, una promessa, una storia, fino a oggi|Il male subito ha l'ultima parola": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Dio non parla mai a Giuseppe",
+   "testo": "In tutto il racconto di Genesi 37–50 Dio non rivolge mai la parola a Giuseppe: parla una volta a suo padre Giacobbe. Giuseppe lo riconosce nei fatti, guardando indietro: una fede che legge la storia.",
+   "citazione": "in tutto il racconto Dio non parla mai direttamente a Giuseppe",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-3-giuseppe-e-i-fratelli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Invidia: «guardare di traverso»",
+   "testo": "Dal latino invidēre, «guardare di traverso»: l'invidia non è volere anche noi ciò che ha l'altro, ma volere che l'altro non l'abbia. I fratelli di Giuseppe smettono di parlargli.",
+   "citazione": "L'invidia, dal latino invidēre, «guardare di traverso», non è il desiderio di avere anche noi ciò che ha l'altro",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-3-giuseppe-e-i-fratelli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "La tunica di Giuseppe non era «dai molti colori»",
+   "testo": "Nella Bibbia CEI Giacobbe fa a Giuseppe «una tunica con maniche lunghe»: i colori vengono da traduzioni antiche, riprese dal film di DreamWorks. Distinguere testo e film è leggere la Bibbia da sé.",
+   "citazione": "la Bibbia CEI dice «una tunica con maniche lunghe»: i colori vengono da traduzioni antiche",
+   "pagina": 6,
+   "fascicolo": "uploads/i-2-3-giuseppe-e-i-fratelli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "La Bibbia misura l'odio con una parola che manca",
+   "testo": "I fratelli «non riuscivano a parlargli amichevolmente»: in ebraico l'ultima parola è leshalom, «in pace». L'odio si vede da ciò che non c'è più: una parola detta in pace.",
+   "citazione": "la Bibbia misura l'odio con la parola che manca",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-3-giuseppe-e-i-fratelli-fascicolo.pdf"
+  }
+ ],
+ "1|Israele, una promessa, una storia, fino a oggi|Liberi da che cosa, liberi per che cosa": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "«Ricordati che sei stato schiavo»: cinque volte",
+   "testo": "Nel Deuteronomio la frase torna cinque volte a motivare le leggi: il riposo per il servo, lo straniero da non opprimere, chi si è venduto da liberare. La ragione delle regole è la memoria.",
+   "citazione": "il libro in cui Mosè ripete la legge al popolo prima di morire, questa frase torna cinque volte",
+   "pagina": 4,
+   "fascicolo": "uploads/i-2-5-liberi-da-liberi-per-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Servire un padrone e servire Dio: un solo verbo",
+   "testo": "In ebraico ‘avad vale «lavorare per un padrone» e «rendere culto a Dio». Israele esce dalla «casa dei servi» per servire il Signore: e proprio per questo non è più cosa di nessun uomo.",
+   "citazione": "In ebraico è sempre lo stesso verbo, ‘avad: vale «lavorare per un padrone» e «rendere culto a Dio»",
+   "pagina": 4,
+   "fascicolo": "uploads/i-2-5-liberi-da-liberi-per-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Appena liberi, rimpiangono la schiavitù",
+   "testo": "Davanti al mare, con l'esercito alle spalle, gli Israeliti dicono a Mosè: meglio servire l'Egitto che morire nel deserto. La schiavitù almeno era sicura; la libertà fa paura se non si sa che farne.",
+   "citazione": "Un popolo di schiavi liberati rimpiange la schiavitù: almeno quella era sicura",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-5-liberi-da-liberi-per-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Liberi da duemila anni, dicono ancora «eravamo schiavi»",
+   "testo": "Ogni primavera, nella cena del Seder, il più piccolo chiede perché questa notte è diversa, e la risposta comincia con «Eravamo schiavi del faraone in Egitto». Un memoriale, non un anniversario.",
+   "citazione": "un popolo che non è più schiavo da quasi duemila anni si dice ancora: eravamo schiavi",
+   "pagina": 5,
+   "fascicolo": "uploads/i-2-5-liberi-da-liberi-per-fascicolo.pdf"
+  }
+ ],
+ "1|Israele, una promessa, una storia, fino a oggi|Molti dèi o un Dio che chiama": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Abramo e Sara risero davanti alla promessa di Dio",
+   "testo": "Quando Dio annuncia che Sara avrà un figlio a novant'anni, Abramo ride con la faccia a terra e Sara ride nella tenda. Il figlio si chiamerà Isacco, «egli sorride»: il riso incredulo diventa gioia.",
+   "citazione": "Quando, anni dopo, Dio annuncia che Sara, a novant'anni, avrà un figlio, Abramo «si prostrò con la faccia a terra e rise»",
+   "pagina": 3,
+   "fascicolo": "uploads/i-2-2-abramo-dio-che-chiama-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Abramo non cercava Dio: serviva altri dèi",
+   "testo": "Il libro di Giosuè dice che i padri di Abramo, oltre l'Eufrate, «servivano altri dèi». La Genesi non lo presenta come un cercatore di Dio ma come un uomo qualunque, in un mondo pieno di dèi.",
+   "citazione": "Il racconto non dice che Abramo cercasse Dio: lo presenta come un uomo come gli altri, in un mondo pieno di dèi",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-2-abramo-dio-che-chiama-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Fede» e «amen» hanno la stessa radice",
+   "testo": "In ebraico fede si dice 'emunah, da 'aman, «stare saldo, sostenere»: è la radice di «amen». Credere, nella Bibbia, è appoggiarsi a chi regge, non credere senza ragioni.",
+   "citazione": "In ebraico 'emunah viene da 'aman, «stare saldo, sostenere», la radice di «amen»",
+   "pagina": 3,
+   "fascicolo": "uploads/i-2-2-abramo-dio-che-chiama-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Fra politeismo e monoteismo c'è una tappa in mezzo",
+   "testo": "Gli studiosi la chiamano monolatria: adorare un solo Dio senza ancora dire che gli altri non esistono. Israele dirà che gli altri dèi non sono nulla solo in esilio, nel VI secolo a.C.",
+   "citazione": "Fra i due gli studiosi mettono una tappa, la monolatria: adorare un solo Dio senza ancora dire che gli altri non esistono",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-2-abramo-dio-che-chiama-fascicolo.pdf"
+  }
+ ],
+ "1|Israele, una promessa, una storia, fino a oggi|Tanta storia e poca geografia, come si legge una linea del tempo lunga tremila anni": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "Da Dan a Bersabea: come da Roma a Napoli",
+   "testo": "La terra in cui si svolge quasi tutta la Bibbia è piccola: circa duecentoquaranta chilometri, poco più della strada da Roma a Napoli. Un corridoio stretto fra l'Egitto e la Mesopotamia.",
+   "citazione": "ci sono circa duecentoquaranta chilometri: poco più della strada da Roma a Napoli",
+   "pagina": 1,
+   "fascicolo": "uploads/i-2-6-tanta-storia-poca-geografia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Chi prese Samaria? La Bibbia e gli Assiri non concordano",
+   "testo": "Il libro dei Re attribuisce la caduta di Samaria (722 a.C.) a Salmanassar; gli annali assiri la rivendicano per il suo successore Sargon, che dichiara di aver deportato 27.290 Israeliti.",
+   "citazione": "il libro dei Re attribuisce la caduta di Samaria al re assiro Salmanassar, gli annali assiri la rivendicano per il suo successore Sargon",
+   "pagina": 2,
+   "fascicolo": "uploads/i-2-6-tanta-storia-poca-geografia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "La diaspora non comincia nel 70 d.C.",
+   "testo": "Il senso comune la fa partire dalla distruzione del Tempio; in realtà la dispersione comincia con le deportazioni e le fughe in Egitto, e diventa stabile con chi scelse di restare a Babilonia.",
+   "citazione": "Il senso comune la fa cominciare dal 70 d.C.; in realtà la dispersione comincia con le deportazioni",
+   "pagina": 5,
+   "fascicolo": "uploads/i-2-6-tanta-storia-poca-geografia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "L'emblema d'Israele copia l'Arco di Tito",
+   "testo": "Nel 1949 lo Stato d'Israele scelse come emblema un candelabro a sette bracci, modellato proprio sulla menorah scolpita sull'Arco di Tito a Roma: il segno della fine diventato segno di continuità.",
+   "citazione": "La commissione chiese che il candelabro fosse modellato proprio su quello scolpito sull'Arco di Tito",
+   "pagina": 7,
+   "fascicolo": "uploads/i-2-6-tanta-storia-poca-geografia-fascicolo.pdf"
+  }
+ ],
+ "1|L'uomo che cerca oltre il senso religioso|Segni e simboli": [
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Simbolo: in origine era un oggetto spezzato in due",
+   "testo": "La parola viene dal greco sýmbolon, «mettere insieme»: le due metà di un oggetto spezzato, accostate, facevano riconoscere un legame. Così un segno rimanda a qualcosa di più grande.",
+   "citazione": "Nell’antichità poteva indicare ciascuna delle due parti di un oggetto spezzato, conservate come mezzo di riconoscimento",
+   "pagina": 1,
+   "fascicolo": "uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Profano non vuol dire cattivo: sta solo fuori dal tempio",
+   "testo": "Viene dal latino profanus: pro, «davanti», e fanum, «tempio». Indica ciò che sta fuori dal recinto sacro, non ciò che è indegno: una strada o una scuola sono luoghi profani, non cattivi.",
+   "citazione": "In questo significato, profano non vuol dire cattivo o privo di valore.",
+   "pagina": 2,
+   "fascicolo": "uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Dio rinchiuso in chiesa? Il Catechismo dice di no",
+   "testo": "Una chiesa è un luogo destinato al culto, ma la distinzione fra chiesa e strada riguarda la destinazione del luogo: non traccia un confine oltre il quale Dio sarebbe assente.",
+   "citazione": "La Chiesa cattolica riconosce luoghi destinati al culto, ma non insegna che Dio sia rinchiuso in essi.",
+   "pagina": 3,
+   "fascicolo": "uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Lo Shabbat ferma il lavoro anche dei servi e del forestiero",
+   "testo": "Nel Decalogo il sabato è legato al riposo del Creatore e chiede di fermare il lavoro per tutti, servi e stranieri compresi: mettere a parte un giorno cambia la vita concreta, non solo il calendario.",
+   "citazione": "il riposo riguarda anche i servi e il forestiero",
+   "pagina": 4,
+   "fascicolo": "uploads/i-1-2-segni-simboli-sacro-e-profano-fascicolo.pdf"
+  }
+ ],
+ "1|La Bibbia si impara a leggere|Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Genesi 1 non dà un nome al sole e alla luna",
+   "testo": "Nel racconto sono «le due fonti di luce grandi», lampade appese al firmamento: non ricevono un nome perché non siano scambiate per dèi, come erano a Babilonia. Un inno scritto contro Babilonia.",
+   "citazione": "gli astri che sono lampade appese al firmamento, e per questo non ricevono un nome, perché non siano scambiati per dèi",
+   "pagina": 2,
+   "fascicolo": "uploads/i-3-2-genesi-arte-fede-scienza-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«Come si vadia al cielo, non come vadia il cielo»",
+   "testo": "Galileo attribuisce la frase a un cardinale, forse Baronio. Vadia è il toscano del Seicento per «vada»: la Bibbia insegna come si va in cielo, non come va il cielo.",
+   "citazione": "Vadia è il toscano del Seicento per «vada»: la Bibbia insegna come si va in cielo, non come va il cielo",
+   "pagina": 2,
+   "fascicolo": "uploads/i-3-2-genesi-arte-fede-scienza-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Escher, non credente, incise i giorni della creazione",
+   "testo": "Fra il dicembre 1925 e il marzo 1926, a Roma, Escher intagliò sei xilografie, una per ciascuno dei primi sei giorni. Senza la figura di Dio: trova nel testo una forma, un ritmo, un ordine.",
+   "citazione": "Non c'è la figura di Dio: Escher non era credente",
+   "pagina": 6,
+   "fascicolo": "uploads/i-3-2-genesi-arte-fede-scienza-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In classe domani",
+   "gancio": "Dieci domande sull'origine, due colonne",
+   "testo": "Si prendano dieci domande sull'origine del mondo e si dividano: quelle sul funzionamento (quanti anni ha l'universo?) e quelle sul significato (il mondo è buono?). Genesi 1 risponde alle seconde.",
+   "citazione": "Si prendano dieci domande sull'origine del mondo e si separino in due colonne",
+   "pagina": 4,
+   "fascicolo": "uploads/i-3-2-genesi-arte-fede-scienza-fascicolo.pdf"
+  }
+ ],
+ "1|La Bibbia si impara a leggere|Un diluvio più antico della Bibbia": [
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Noè manda il corvo, Utnapishtim la colomba",
+   "testo": "Gilgamesh e Genesi: stesse scene, stesso ordine (nave di bitume, animali, tempesta, monte, uccelli, sacrificio). Le differenze sono di dettaglio: là una rondine, qui una foglia di ulivo.",
+   "citazione": "manda prima il corvo, Utnapishtim prima la colomba; là c'è una rondine, qui una foglia di ulivo",
+   "pagina": 3,
+   "fascicolo": "uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "A Babilonia il diluvio arriva per il rumore",
+   "testo": "Nel poema di Atrahasis gli uomini si moltiplicano e fanno chiasso: Enlil non dorme e li spazza via. In Genesi il motivo è la violenza, e Dio non si arrabbia: «se ne addolorò in cuor suo».",
+   "citazione": "con il loro chiasso sono privato del sonno",
+   "pagina": 4,
+   "fascicolo": "uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Diluvio» significa «lavare via»",
+   "testo": "Dal latino diluvium, da diluere. In ebraico la parola è mabbûl, e il testo la spiega mentre la usa: «il diluvio, cioè le acque». Le acque che lavano via tutto.",
+   "citazione": "la nostra «diluvio» viene dal latino diluvium, da diluere, «lavare via»",
+   "pagina": 3,
+   "fascicolo": "uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "L'arcobaleno è un promemoria che Dio lascia a sé",
+   "testo": "In ebraico qešet è l'arco da guerra e l'arcobaleno. Il testo dice solo ciò che il segno fa: Dio lo pone, lo guarda e si ricorda dell'alleanza con ogni vivente.",
+   "citazione": "In ebraico qešet è una parola sola per l'arco da guerra e per l'arcobaleno",
+   "pagina": 6,
+   "fascicolo": "uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf"
+  }
+ ],
+ "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "73, 66 o 24: quanti libri ha la Bibbia?",
+   "testo": "Una Bibbia cattolica ha 73 libri, una protestante 66, quella letta in sinagoga 24. Stesso titolo, numero diverso dentro: il confine conteso è una striscia di sette libri.",
+   "citazione": "Prendete una Bibbia cattolica e contate i libri nell'indice: sono 73. Prendetene una protestante: 66",
+   "pagina": 1,
+   "fascicolo": "uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "I versetti li ha numerati uno stampatore nel 1551",
+   "testo": "I rotoli antichi non avevano numeri. I capitoli arrivano nel Duecento con Stefano Langton; i versetti li aggiunse Robert Estienne, stampatore di Parigi, nel Nuovo Testamento greco del 1551.",
+   "citazione": "i versetti numerati li aggiunse uno stampatore di Parigi, Robert Estienne, nell'edizione del Nuovo Testamento greco del 1551",
+   "pagina": 1,
+   "fascicolo": "uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Per i rabbini i libri sacri «sporcano le mani»",
+   "testo": "Era il loro modo di dire «questo libro è sacro»: chi lo tocca deve lavarsi le mani, come dopo una cosa consacrata. Del Siracide un testo rabbinico dice che «non sporca le mani».",
+   "citazione": "i libri sacri «sporcano le mani», cioè chi li ha toccati deve lavarsi le mani",
+   "pagina": 4,
+   "fascicolo": "uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Lutero non tolse i sette libri: li mise in appendice",
+   "testo": "Nella Bibbia tedesca del 1534 li raccolse in fondo come «Apocrifi», «parimenti utili e buoni a leggersi». A toglierli del tutto furono le Società bibliche protestanti, nell'Ottocento.",
+   "citazione": "Non li tolse: li mise in appendice. Nel Nuovo Testamento dubitò di quattro libri",
+   "pagina": 5,
+   "fascicolo": "uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf"
+  }
+ ],
+ "2|Gesù quali tracce|Anche i testi hanno una storia": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "Scritto nel I secolo, la copia più antica è dell'XI",
+   "testo": "Mille anni separano Giuseppe Flavio dal più antico manoscritto greco del libro XVIII. Ma il passo su Gesù non è comparso allora: Eusebio lo cita già nel IV secolo. Tre date da non confondere.",
+   "citazione": "Il più antico manoscritto greco conservato del libro XVIII delle Antichità risale all'XI secolo.",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-1-3-anche-i-testi-hanno-una-storia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Girolamo lesse «era creduto il Cristo», non «era il Cristo»",
+   "testo": "Nel testo tramandato di Giuseppe Flavio si legge «Egli era il Cristo». Girolamo, citandolo in latino nel 392-393, scrive «era creduto il Cristo»: una parola diversa proprio dove nasce il dubbio.",
+   "citazione": "scrive nel punto decisivo «era creduto il Cristo»: un testimone in più, con una parola diversa proprio dove nasce il dubbio",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-1-3-anche-i-testi-hanno-una-storia-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Una frase sulla Trinità che la Bibbia CEI non stampa più",
+   "testo": "In 1Gv 5,7-8 le antiche edizioni latine avevano una frase sulla Trinità aggiunta dai copisti. La CEI 2008 e la Nova Vulgata non la riportano: cercare il testo esatto è compatibile con la fede.",
+   "citazione": "le edizioni latine in uso fino all'età moderna contenevano una frase sulla Trinità che gli studiosi hanno riconosciuto come aggiunta di copisti",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-1-3-anche-i-testi-hanno-una-storia-fascicolo.pdf"
+  }
+ ],
+ "2|Gesù quali tracce|Che anno è, Una fede che ha una data": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "L'anno zero non esiste: dopo l'1 a.C. viene l'1 d.C.",
+   "testo": "I numeri romani non avevano lo zero e Dionigi contava dall'anno 1: dopo l'1 «prima di Cristo» viene subito l'1 «dopo Cristo». Dal 4 a.C. al 4 d.C., stesso giorno, passano sette anni, non otto.",
+   "citazione": "Nel conto di Dionigi non esiste l'anno zero.",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-1-4-che-anno-e-calendario-e-natale-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Il 25 dicembre è la festa, non la data di nascita",
+   "testo": "I Vangeli non dicono il giorno della nascita di Gesù. Il 25 dicembre è la data della festa, attestata a Roma al più tardi nel 336: una scelta della comunità, mai dichiarata data storica.",
+   "citazione": "la Chiesa non ha mai affermato che il 25 dicembre sia la data storica della nascita",
+   "pagina": 5,
+   "fascicolo": "uploads/ii-1-4-che-anno-e-calendario-e-natale-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Natale al posto del Sole Invitto? È un'ipotesi del 1889",
+   "testo": "L'ipotesi che il 25 dicembre sostituisca la festa del Sole la formulò il filologo Usener nel 1889. Nessuna fonte antica lo dice; la prima a nominare la festa solare è lo stesso Cronografo del 354.",
+   "citazione": "Nessuna fonte antica dice «abbiamo scelto il 25 dicembre per sostituire la festa del Sole».",
+   "pagina": 5,
+   "fascicolo": "uploads/ii-1-4-che-anno-e-calendario-e-natale-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Babbo Natale era rosso prima della Coca-Cola",
+   "testo": "Dal 1862 Thomas Nast lo disegnò per trent'anni, portando il mantello dal marrone al rosso. La Coca-Cola lo usò dal 1931 e lo dichiara: la pubblicità ha diffuso un'immagine, non l'ha inventata.",
+   "citazione": "La stessa azienda dichiara oggi che Babbo Natale vestiva di rosso prima dei suoi manifesti: la pubblicità ha diffuso un'immagine, non l'ha inventata",
+   "pagina": 8,
+   "fascicolo": "uploads/ii-1-4-che-anno-e-calendario-e-natale-fascicolo.pdf"
+  }
+ ],
+ "2|Gesù quali tracce|Gesù sotto il segno dell'aquila": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un'aquila d'oro abbattuta a colpi d'ascia sul Tempio",
+   "testo": "Negli ultimi mesi di Erode il Grande alcuni giovani si calarono con funi dal tetto del Tempio, in pieno giorno, e abbatterono a colpi d'ascia l'aquila d'oro del re: per loro violava la Legge.",
+   "citazione": "Tempio, in pieno giorno e davanti alla folla, e abbatterono l’aquila a colpi d’ascia",
+   "pagina": 1,
+   "fascicolo": "uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Pilato «procuratore»? Una pietra dice prefetto",
+   "testo": "Molti testi chiamano Pilato procuratore, ma quel titolo è dei governatori venuti dopo. Nel 1961 a Cesarea Marittima è emersa un'iscrizione latina con il suo nome e il titolo di praefectus.",
+   "citazione": "lo chiamano «procuratore», il titolo dei governatori venuti più tardi",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Gesù è nato qualche anno «avanti Cristo»",
+   "testo": "Nel 525 il monaco Dionigi il Piccolo cominciò a contare gli anni dalla nascita di Gesù, e l'Occidente conta ancora così. Ma sbagliò di qualche anno: Erode muore nel 4 a.C. e Gesù era già nato.",
+   "citazione": "cominciò a contare gli anni dalla nascita di Gesù, e l’Occidente conta ancora così",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Fariseo» non voleva dire «ipocrita»",
+   "testo": "I farisei erano interpreti della Legge stimati dal popolo e credevano nella risurrezione, come Gesù contro i sadducei. Dire «fariseo» per «ipocrita» è un uso nato dopo.",
+   "citazione": "dire «ipocrita» è nato dopo e non descrive il gruppo storico",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-1-1-gesu-quali-tracce-sotto-l-aquila-fascicolo.pdf"
+  }
+ ],
+ "2|Gesù quali tracce|Lo screenshot non basta": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Tacito sbaglia il titolo di Pilato",
+   "testo": "Negli Annali Tacito chiama Pilato «procurator», ma il titolo storico era «praefectus», prefetto. Una notizia preziosa da un autore non cristiano, che però non era testimone oculare.",
+   "citazione": "Tacito chiama Pilato procurator. Il titolo storico di Pilato era invece praefectus, prefetto",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Plinio: un inno «a Cristo come a un dio», verso il 112",
+   "testo": "Un governatore romano riferisce che i cristiani cantavano a voci alterne un inno a Cristo come a un dio. La lettera attesta una pratica di culto; non decide se ciò che credevano sia vero.",
+   "citazione": "La lettera attesta che quelle persone rendevano culto a Cristo; non dimostra che Cristo sia Dio.",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Traiano vietò di cercare i cristiani. Ma non li liberò",
+   "testo": "Traiano dispone che i cristiani non siano ricercati d'ufficio e che le denunce anonime non valgano. Ma chi è denunciato e non rinnega va punito: un ritaglio parziale sembrerebbe libertà religiosa.",
+   "citazione": "La direttiva limita alcuni modi della repressione, ma lascia la punizione di chi rimane cristiano.",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Annali: il racconto della storia, un anno alla volta",
+   "testo": "Il titolo viene dal latino annus: gli annali ordinano i fatti anno per anno. Nel libro XV Tacito racconta l'incendio di Roma del 64 e nomina Cristo solo per spiegare chi fossero i cristiani.",
+   "citazione": "Il titolo richiama il latino annus, anno: gli annali ordinano il racconto storico per anni.",
+   "pagina": 1,
+   "fascicolo": "uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf"
+  }
+ ],
+ "2|Quattro Vangeli, una Pasqua|Cambiare posto": [
+  {
+   "rubrica": "Mappa in 30 secondi",
+   "gancio": "Da Gerusalemme a Gerico si scende di mille metri",
+   "testo": "Gerusalemme è a 750-800 metri; Gerico, nella valle del Giordano, sta sotto il livello del mare. In mezzo, deserto e una gola di roccia: Girolamo scrive che un tratto si chiamava «del sangue».",
+   "citazione": "si scende per circa mille metri, attraverso il deserto di Giuda, in una gola di roccia dove è facile tendere agguati",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-2-2-cambiare-posto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Chi ascoltava aspettava un israelita. Arrivò un samaritano",
+   "testo": "Dopo sacerdote e levita, la Mishnah elenca «israelita»: il terzo doveva essere l'uomo comune. Gesù mette un samaritano, che il dottore della Legge non avrebbe mai scelto come maestro.",
+   "citazione": "La storia era pronta per finire così: i due del Tempio passano oltre, l'uomo comune si ferma.",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-2-2-cambiare-posto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Ebbe compassione»: in greco, gli si mossero le viscere",
+   "testo": "Il verbo di Luca è esplanchnísthē, da splánchna, «le viscere». Lo usa tre volte: per Gesù a Nain, per il samaritano, per il padre del figlio perduto. Il verbo della misericordia di Dio.",
+   "citazione": "Alla lettera: si commosse nelle viscere, qualcosa gli si mosse dentro.",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-2-2-cambiare-posto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Parabola: la stessa parola della curva in matematica",
+   "testo": "Dal greco parabállō, «mettere accanto, confrontare»: un racconto messo accanto a chi ascolta. Il nome della curva lo diede Apollonio di Perga: un confronto fra aree che nella parabola torna esatto.",
+   "citazione": "È la stessa parola della parabola in matematica: il nome della curva lo diede il matematico greco Apollonio di Perga",
+   "pagina": 6,
+   "fascicolo": "uploads/ii-2-2-cambiare-posto-fascicolo.pdf"
+  }
+ ],
+ "2|Quattro Vangeli, una Pasqua|Passaggi di libertà": [
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Pasqua vuol dire «passare oltre»",
+   "testo": "In ebraico Pesach. La Bibbia spiega il nome col verbo pāsaḥ: quella notte il Signore «passa oltre» le case segnate dal sangue, e il popolo passa dalla schiavitù alla libertà.",
+   "citazione": "Il senso basta a dire la cosa essenziale: quella notte Dio passa oltre, e il popolo passa dalla schiavitù alla libertà",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-2-3-passaggi-liberta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un'Ultima Cena del VI secolo: Cristo sdraiato, e due pesci",
+   "testo": "A Ravenna un mosaico del VI secolo mostra Cristo sdraiato alla romana a una mensa semicircolare, con i pani e due pesci. Nessun altare: una cena. Il Cristo al centro col calice arriva più tardi.",
+   "citazione": "mostra Cristo sdraiato alla maniera romana a un'estremità di una mensa semicircolare, i dodici attorno, e sulla tavola un piatto con due pesci",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-2-3-passaggi-liberta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Dal 70 la Pasqua ebraica si celebra senza agnello",
+   "testo": "Al tempo di Gesù l'agnello si immolava al Tempio e si mangiava nelle case di Gerusalemme. Distrutto il Tempio nel 70, la cena continua senza agnello, in ogni casa: è il Seder, «ordine».",
+   "citazione": "Nel 70 i Romani distruggono il Tempio, e senza il Tempio non si immola più l'agnello",
+   "pagina": 6,
+   "fascicolo": "uploads/ii-2-3-passaggi-liberta-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Eucaristia: il nome della Messa è un verbo di Luca",
+   "testo": "Nell'ultima cena Gesù prese il pane e «rese grazie». Da quel verbo viene il nome del rito: Eucaristia, in greco «rendimento di grazie», cioè la Messa.",
+   "citazione": "Il nome che il rito prende viene dal verbo di Luca, «rese grazie»: Eucaristia, in greco «rendimento di grazie»",
+   "pagina": 6,
+   "fascicolo": "uploads/ii-2-3-passaggi-liberta-fascicolo.pdf"
+  }
+ ],
+ "2|Quattro Vangeli, una Pasqua|Perché credere ai testimoni della Pasqua": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Nessun Vangelo racconta Gesù che esce dalla tomba",
+   "testo": "Lo dice la Chiesa: nessuno fu testimone oculare della risurrezione. I Vangeli raccontano una tomba vuota e incontri con Gesù vivo. Il Vangelo di Pietro, apocrifo, provò a descriverla: non fu accolto.",
+   "citazione": "Nessun Vangelo racconta Gesù che esce dalla tomba.",
+   "pagina": 1,
+   "fascicolo": "uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Gli apostoli presero l'annuncio per un delirio",
+   "testo": "Le donne raccontano, e agli apostoli «parvero un vaneggiamento». Lēros, la parola di Luca, compare solo qui nel Nuovo Testamento: per i medici era il delirio dei malati.",
+   "citazione": "La parola che Luca usa, lēros, compare solo qui in tutto il Nuovo Testamento: nel linguaggio dei medici indicava il delirio dei malati.",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un falsario avrebbe messo Pietro, non le donne",
+   "testo": "In tutti e quattro i Vangeli le prime testimoni della tomba vuota sono donne. Allora, in tribunale, la loro parola di norma non valeva: il pagano Celso, verso il 180, sfotteva i cristiani per questo.",
+   "citazione": "Un falsario, al posto delle donne, avrebbe messo Pietro. Nessuno le ha tolte.",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Martire vuol dire testimone",
+   "testo": "In latino testis è probabilmente «chi sta come terzo» fra due parti in lite. In greco testimone è mártys, da cui «martire»: chi risponde di ciò che dice fino a pagarlo con la vita.",
+   "citazione": "In greco testimone si dice mártys, e da questa parola viene «martire»: il testimone che risponde di ciò che dice fino a pagarlo con la vita.",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-2-5-perche-credere-ai-testimoni-della-pasqua-fascicolo.pdf"
+  }
+ ],
+ "2|Quattro Vangeli, una Pasqua|Perché fu condannato": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un chiodo nel tallone: la crocifissione letta sulle ossa",
+   "testo": "Nel 1968, presso Gerusalemme, è stato trovato l'ossuario di Yehohanan, un uomo del I secolo, con un chiodo di undici centimetri e mezzo ancora nel tallone: una crocifissione del tempo di Gesù.",
+   "citazione": "si è trovato l'ossuario di un uomo del I secolo, Yehohanan, con un chiodo di undici centimetri e mezzo ancora conficcato nel tallone",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-2-4-perche-fu-condannato-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Dei copisti cancellarono «Padre, perdona loro»",
+   "testo": "Alcuni copisti antichi tolsero da Luca la preghiera di Gesù in croce: la caduta di Gerusalemme nel 70 sembrava loro la prova che Dio non aveva perdonato. La Chiesa lo ha corretto nel 1965.",
+   "citazione": "alcuni copisti antichi arrivarono a togliere dal testo di Luca la preghiera «Padre, perdona loro»",
+   "pagina": 7,
+   "fascicolo": "uploads/ii-2-4-perche-fu-condannato-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il Catechismo dà ai cristiani la responsabilità più grave",
+   "testo": "Il Catechismo rovescia la domanda: poiché ogni peccatore è causa delle sofferenze di Cristo, la Chiesa imputa ai cristiani la responsabilità più grave, troppo spesso fatta ricadere solo sugli ebrei.",
+   "citazione": "la Chiesa non esita ad imputare ai cristiani la responsabilità più grave nel supplizio di Gesù, responsabilità che troppo spesso essi hanno fatto ricadere unicamente sugli Ebrei",
+   "pagina": 8,
+   "fascicolo": "uploads/ii-2-4-perche-fu-condannato-fascicolo.pdf"
+  }
+ ],
+ "2|Quattro Vangeli, una Pasqua|Prima dei Vangeli, una notizia ricevuta e trasmessa": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "Nel 56 i testimoni della Pasqua erano ancora vivi",
+   "testo": "Paolo elenca a chi è apparso il Risorto: Cefa, i Dodici, più di cinquecento fratelli in una volta, Giacomo, gli apostoli. E scrive che la maggior parte vive ancora: chi vuole può andare a chiedere.",
+   "citazione": "i testimoni, nel 56, in gran parte vivono ancora: chi vuole può andare a chiedere",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-2-1-prima-dei-vangeli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Tradizione e traditore hanno la stessa radice",
+   "testo": "Tradizione viene dal latino traditio, «consegna», da tradere: passare una cosa di mano in mano. Traditore è «chi consegna», poi «chi consegna con tradimento»: nella Bibbia Giuda «consegna» Gesù.",
+   "citazione": "Dalla stessa radice viene traditore: «chi consegna», e poi «chi consegna con tradimento».",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-2-1-prima-dei-vangeli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "660 versetti di Marco: quasi tutti anche in Matteo o Luca",
+   "testo": "Matteo, Marco e Luca si possono stampare su tre colonne e leggere con uno sguardo solo: per questo si chiamano sinottici, dal greco sýnopsis. Giovanni sta a parte: tre Pasque invece di una.",
+   "citazione": "Di circa 660 versetti di Marco, quasi tutti si ritrovano in Matteo o in Luca; altri 230 versetti stanno solo in Matteo e Luca.",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-2-1-prima-dei-vangeli-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Marco: un giovane in bianco. Matteo: angelo e terremoto",
+   "testo": "Stesso mattino: le donne, la pietra, l'annuncio con le stesse parole. Ma in Marco le donne fuggono e «non dissero niente a nessuno»; in Matteo corrono ad annunciare. Nessuno racconta la risurrezione.",
+   "citazione": "Nessuno dei due racconta la risurrezione: raccontano un sepolcro vuoto e un annuncio.",
+   "pagina": 5,
+   "fascicolo": "uploads/ii-2-1-prima-dei-vangeli-fascicolo.pdf"
+  }
+ ],
+ "2|Una comunità che sa riparare|Beati chi, Le regole di una comunità nuova": [
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Povero» nel Vangelo è il mendicante che si curva",
+   "testo": "Makários era la parola della felicità degli dèi; ptōchós è la parola più dura per la povertà: il verbo da cui viene vuol dire «abbassarsi». Gesù attacca la parola degli dèi a quella del mendicante.",
+   "citazione": "il verbo da cui viene, ptṓssein, vuol dire «abbassarsi»",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-3-1-beati-regole-comunita-nuova-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Quarantacinque «beati» nell'Antico Testamento",
+   "testo": "«Beato» viene dal latino beatus, da beare, «rendere felice»: è una congratulazione. L'Antico Testamento ne ha quarantacinque, e il primo Salmo comincia proprio così: «Beato l'uomo».",
+   "citazione": "Bibbia conosce bene questa frase. Nell'Antico Testamento ce ne sono quarantacinque",
+   "pagina": 1,
+   "fascicolo": "uploads/ii-3-1-beati-regole-comunita-nuova-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Luca ha 4 beatitudini, Matteo 9: che cosa cambia",
+   "testo": "In comune: i poveri, chi piange, chi ha fame, i perseguitati. Matteo cambia due parole («in spirito», «della giustizia») e ne aggiunge cinque. Luca descrive situazioni, Matteo atteggiamenti.",
+   "citazione": "Matteo cambia due parole: «poveri in spirito», «fame e sete della giustizia»",
+   "pagina": 4,
+   "fascicolo": "uploads/ii-3-1-beati-regole-comunita-nuova-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Regno di Dio» non è un luogo, e non è il paradiso",
+   "testo": "In ebraico e in greco «regno» indica prima un'azione: Dio che agisce da re e fa giustizia. Nelle beatitudini il primo verbo è al presente, «vostro è il regno»: qualcosa comincia subito.",
+   "citazione": "«Regno di Dio» non è un luogo: vuol dire che Dio regna, che si comporta da re",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-3-1-beati-regole-comunita-nuova-fascicolo.pdf"
+  }
+ ],
+ "2|Una comunità che sa riparare|Mettere in comune": [
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Comunione»: la parola dei beni finita sul pane",
+   "testo": "Koinōnía viene da koinós, «comune»: mettere in comune. Luca la usa per i beni divisi «secondo il bisogno di ciascuno»; nei secoli è diventata il nome del pane della Messa: «fare la comunione».",
+   "citazione": "in greco koinōnía, viene da koinós, «comune»: vuol dire, alla lettera, l'avere in comune, il mettere in comune",
+   "pagina": 2,
+   "fascicolo": "uploads/ii-3-2-mettere-comune-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Luca non chiama mai i cristiani «amici»",
+   "testo": "I lettori greci conoscevano il proverbio «le cose degli amici sono comuni», ma Luca li chiama «credenti»: ciò che li lega non è la simpatia, è la fede, che unisce anche chi non si sceglierebbe.",
+   "citazione": "non li chiama «amici», né «compagni», anche se i suoi lettori greci conoscevano il proverbio",
+   "pagina": 3,
+   "fascicolo": "uploads/ii-3-2-mettere-comune-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Mettere in comune non era una regola",
+   "testo": "Pietro dice ad Anania: il campo era tuo, i soldi erano tuoi. La colpa non è aver tenuto una parte, è aver mentito. A Qumran invece la messa in comune era una regola scritta per chi entrava.",
+   "citazione": "Non era una regola della comunità: restava una pratica lasciata alla libera iniziativa di ciascuno, anche se nasceva dalla fede",
+   "pagina": 5,
+   "fascicolo": "uploads/ii-3-2-mettere-comune-fascicolo.pdf"
+  }
+ ],
+ "3|Credere, ragionare, obbedire|Chi può limitare il potere. Canossa, 1077": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Andare a Canossa» non è una frase medievale",
+   "testo": "L'espressione nasce nel 1872: Bismarck, in lotta con i vescovi tedeschi, disse in Parlamento «Non andremo a Canossa». Ma nel 1077 il re ottenne ciò per cui era venuto: l'assoluzione.",
+   "citazione": "frase non è medievale: nel 1872 il cancelliere tedesco Bismarck, in lotta con i vescovi del suo Paese",
+   "pagina": 7,
+   "fascicolo": "uploads/iii-3-1-puo-limitare-potere-canossa-1077-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il re in ginocchio, ma non davanti al papa",
+   "testo": "La miniatura della Vita di Matilde, dipinta una quarantina d'anni dopo, mostra Enrico IV inginocchiato davanti alla contessa e all'abate Ugo di Cluny, suo padrino: sono loro a convincere il papa.",
+   "citazione": "Il re è in ginocchio, ma non davanti al papa",
+   "pagina": 1,
+   "fascicolo": "uploads/iii-3-1-puo-limitare-potere-canossa-1077-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Investitura: mettere in una carica come in un abito",
+   "testo": "Investitura viene dal latino investire, «vestire». Si fa consegnando l'oggetto della carica: pastorale e anello per il vescovo, scettro per le terre. La domanda: chi può consegnare il bastone?",
+   "citazione": "Dal latino investire, «vestire»: mettere qualcuno dentro una carica come dentro un abito",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-3-1-puo-limitare-potere-canossa-1077-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "1046: un imperatore depone tre papi. 1077: Canossa",
+   "testo": "A Sutri, nel 1046, Enrico III fa deporre tre uomini che si contendono il papato. Nel 1077 suo figlio aspetta scalzo tre giorni alla porta di un papa: ciò che sembrava un ordine era un'abitudine.",
+   "citazione": "imperatore depone tre papi; 1077, a Canossa un re aspetta tre giorni alla porta di un papa",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-3-1-puo-limitare-potere-canossa-1077-fascicolo.pdf"
+  }
+ ],
+ "3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "La bolla del 1300 non usa la parola «giubileo»",
+   "testo": "Bonifacio VIII parla di remissioni, indulgenze e «centesimo anno». A chiamare quell'anno «giubbileo» sono i contemporanei, come il mercante Villani che era a Roma e scrive «vi fui presente e vidi».",
+   "citazione": "c'è anche un'altra parola, «giubbileo», che la bolla del papa non usa",
+   "pagina": 1,
+   "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Giubileo» viene da un montone, non dalla gioia",
+   "testo": "L'ebraico yôbēl è il montone, e poi il corno che annunciava l'anno della liberazione. Girolamo non lo tradusse: scrisse iobeleus. Nei secoli la parola si avvicinò a iubilare, «gridare di gioia».",
+   "citazione": "davanti a yôbēl non tradusse: scrisse la parola ebraica in lettere latine, iobeleus",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "1° gennaio 1300: la folla in San Pietro, il papa no",
+   "testo": "Fine 1299, a Roma corre una voce: chi visita San Pietro nel nuovo secolo ottiene il perdono. La notte del 1° gennaio la folla accorre, ma il papa non c'è. La bolla arriva il 22 febbraio.",
+   "citazione": "il papa non c'è, e quel giorno non accade nulla",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Giubileo 2025: 33.475.369 pellegrini da 185 Paesi",
+   "testo": "Nel 1300 Villani stimava duecentomila pellegrini a Roma. Per il 2025 la Santa Sede ha contato 33.475.369 pellegrini da 185 Paesi. La struttura è quella del 1300: cammino, confessione, indulgenza.",
+   "citazione": "33.475.369 pellegrini da 185 Paesi, secondo il bilancio della Santa Sede",
+   "pagina": 7,
+   "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf"
+  }
+ ],
+ "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi cura chi non può ricambiare": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "La ruota degli esposti? È del Seicento, non del 1200",
+   "testo": "La ruota di legno sul fianco del Santo Spirito, dove lasciare un neonato senza essere visti, è del Seicento. Della casa del Duecento parla la regola, che manda a cercare i poveri per le strade.",
+   "citazione": "lasciarli senza essere visti, ancora visibile sul fianco dell'edificio, è però del Seicento",
+   "pagina": 3,
+   "fascicolo": "uploads/iii-1-3-chi-cura-chi-non-puo-ricambiare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Il sogno del papa sui neonati nel Tevere? Dipinto dopo",
+   "testo": "Il sogno di Innocenzo III sui neonati gettati nel Tevere è una tradizione posteriore, dipinta nel Quattrocento. I documenti del tempo non ne parlano: la ragione scritta è la misericordia.",
+   "citazione": "Una tradizione posteriore, dipinta nel Quattrocento come storia delle origini",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-3-chi-cura-chi-non-puo-ricambiare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Sassia» viene dai Sassoni: un ospizio del 727",
+   "testo": "Nel Borgo, fra Vaticano e Tevere, dall'VIII secolo c'era l'ospizio dei pellegrini anglosassoni, la schola Saxonum, fondata dal re Ina. Da «Sassoni» viene «Sassia»: lì nel 1198-1201 nasce l'ospedale.",
+   "citazione": "fondata dal re Ina intorno al 727–729: da «Sassoni» viene «Sassia»",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-3-chi-cura-chi-non-puo-ricambiare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Gratuito per chi riceve, non senza costi: 17 libbre",
+   "testo": "Chi pagava l'accoglienza di chi non poteva restituire nulla? Una bolla del 3 gennaio 1208 fissa una rendita annua di diciassette libbre; poi i lasciti dei fedeli, il primo conservato è del 1245.",
+   "citazione": "una bolla del 3 gennaio 1208 stabilisce una rendita annua di diciassette libbre",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-1-3-chi-cura-chi-non-puo-ricambiare-fascicolo.pdf"
+  }
+ ],
+ "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Bologna 1088? Una data scelta, non un atto di fondazione",
+   "testo": "L'anno di nascita dell'Università di Bologna è convenzionale: rappresenta origini graduali e non corrisponde a un singolo atto documentato. Lo ricorda lo stesso Ateneo.",
+   "citazione": "Il 1088, comunemente indicato come anno di nascita dell'Università di Bologna, è una data convenzionale, adottata per rappresentare origini graduali.",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Parigi 1215: per insegnare servivano 20 anni e 6 di studio",
+   "testo": "Gli statuti di Robert de Courçon fissavano età minima, sei anni di studio e un esame per insegnare le arti. E vietavano di ottenere la licenza con denaro o accordi di pagamento.",
+   "citazione": "Per insegnare le arti richiedevano almeno vent'anni di età, sei anni di studio e un esame.",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Università voleva dire corporazione, non edificio",
+   "testo": "Universitas indicava una totalità e, nel Medioevo, una corporazione di persone associate. Designava comunità di studio: non un edificio, né la promessa di insegnare tutte le conoscenze.",
+   "citazione": "La parola università deriva dal latino universitas, che indicava una totalità e, nell'uso medievale, anche una corporazione, cioè un insieme di persone associate.",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "A Parigi nel 1215 si poteva leggere Aristotele, ma non tutto",
+   "testo": "Gli stessi statuti ammettevano gli scritti logici di Aristotele ma vietavano allora metafisica e filosofia naturale: l'autorità sosteneva lo studio e insieme ne delimitava alcuni contenuti.",
+   "citazione": "Ammetteva gli scritti logici di Aristotele, mentre vietava allora l'insegnamento delle sue opere di metafisica e filosofia naturale.",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-1-2-chi-puo-insegnare-a-chi-fascicolo.pdf"
+  }
+ ],
+ "3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Ora et labora» non è scritto nella Regola",
+   "testo": "Il motto con cui tutti riassumono la vita benedettina non compare nel testo di Benedetto: Paolo VI lo chiama «il suo famoso motto», ma è la tradizione a dirlo, non la Regola.",
+   "citazione": "la formula ora et labora, con cui la tradizione riassume questa vita, non compare",
+   "pagina": 5,
+   "fascicolo": "uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Vino ai monaci: la razione è presa sui più deboli",
+   "testo": "La Regola dà a ogni fratello un'hemina di vino al giorno, misura romana di circa un quarto di litro (la traduzione dice «mezzo litro»), calcolata su chi fa più fatica e valida per tutti.",
+   "citazione": "Il latino usa una misura romana, l'hemina, che per i dizionari valeva circa un quarto di litro",
+   "pagina": 3,
+   "fascicolo": "uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Regola» era un'assicella di legno",
+   "testo": "Regula viene da regere, «guidare diritto»: in origine era il regolo con cui si tracciano linee dritte. Una regola traccia una direzione, non cammina al posto di chi la segue.",
+   "citazione": "Dal latino regula, derivato di regere, propriamente «guidare diritto»",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "L'abate deve ascoltare anche il più giovane",
+   "testo": "Per le decisioni importanti l'abate raduna tutti e sente ogni parere, «poiché spesso è al più giovane che Dio rivela la soluzione migliore». Decide lui, ma dopo aver ascoltato.",
+   "citazione": "la parola utile può venire da dove l'autorità non la cercherebbe",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-1-1-luoghi-che-cambiano-la-vita-regola-di-benedetto-fascicolo.pdf"
+  }
+ ],
+ "3|Quando un'abitudine prende il comando|Che cos'è un vizio": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "I vizi erano otto, e si chiamavano «pensieri»",
+   "testo": "Nel deserto d'Egitto, alla fine del IV secolo, Evagrio elenca otto «pensieri»: gola, lussuria, avarizia, tristezza, ira, accidia, vanagloria, superbia. Dai più legati al corpo ai più sottili.",
+   "citazione": "non sette; e «pensieri», non peccati. Il percorso va dai più legati al corpo ai più sottili",
+   "pagina": 1,
+   "fascicolo": "uploads/iii-2-2-cose-un-vizio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Siracide 10: la Vulgata e il greco dicono il contrario",
+   "testo": "Gregorio Magno leggeva nella Vulgata «principio di ogni peccato è la superbia». La Bibbia italiana di oggi, tradotta dal greco, inverte i termini: «principio della superbia è il peccato».",
+   "citazione": "fatta sul testo greco del Siracide, dice il contrario della Vulgata",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-2-2-cose-un-vizio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Etica e abitudine: due parole greche, una vocale",
+   "testo": "Etica viene da ēthos, «costume, carattere». Aristotele gioca sulla parola: la virtù etica deriva dall'abitudine, éthos. Le due parole differiscono solo per la lunghezza della prima vocale.",
+   "citazione": "Le due parole greche differiscono solo per la lunghezza della prima vocale",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-2-2-cose-un-vizio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In classe domani",
+   "gancio": "Telefono in un'altra stanza per 25 minuti: una prova",
+   "testo": "Quattro mosse per chi studia con il telefono sul banco: dare un nome al pensiero, una misura concreta (venticinque minuti senza, cinque con), ripetere l'atto per due settimane, dire il bene voluto.",
+   "citazione": "Ma una misura concreta: il telefono in un'altra stanza per venticinque minuti",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-2-2-cose-un-vizio-fascicolo.pdf"
+  }
+ ],
+ "3|Quando un'abitudine prende il comando|Che cosa ci rende liberi": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Poter scegliere non è ancora essere liberi",
+   "testo": "Il libero arbitrio, la facoltà di scegliere fra possibilità opposte, resta a tutti: a Truman nel set, ad Agostino incatenato. La libertà, per Agostino, è il potere di fare il bene: si perde da dentro.",
+   "citazione": "Resta a tutti, anche a chi è ingannato e a chi è incatenato dalle sue abitudini",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-2-4-cosa-ci-rende-liberi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In classe domani",
+   "gancio": "Tacere non è mentire: una regola per Christof",
+   "testo": "Protezione è tacere senza dire il falso; inganno è dire il falso per far credere il falso; consenso è sapere e accettare. Da applicare a quando ti hanno taciuto qualcosa «per il tuo bene».",
+   "citazione": "la regola che lo smaschera è semplice: tacere non è mentire",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-2-4-cosa-ci-rende-liberi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Truman: un annegamento finto per non farlo partire",
+   "testo": "Come si tiene un uomo in un mondo senza sbarre? Da bambino la regia inscena l'annegamento del «padre» in barca, perché non prenda mai più il mare. Il resto lo fa la ripetizione: la stessa strada.",
+   "citazione": "la regia inscena l'annegamento del «padre» durante una gita in barca",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-2-4-cosa-ci-rende-liberi-fascicolo.pdf"
+  }
+ ],
+ "3|Quando un'abitudine prende il comando|Quaranta giorni nel deserto, si può dire di no": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il diavolo cita il Salmo 91, ma a metà",
+   "testo": "Sul tempio il diavolo dice «sta scritto» e cita il Salmo 91, saltando «di custodirti in tutte le tue vie»: la custodia è promessa a chi cammina sulla strada di Dio, non a chi si getta nel vuoto.",
+   "citazione": "e la cita a metà: salta «di custodirti in tutte le tue vie»",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Da «non ci indurre» a «non abbandonarci»: il perché",
+   "testo": "Per secoli l'italiano ha detto «non ci indurre in tentazione», che poteva far pensare che Dio tenti. La Bibbia CEI 2008 ha scelto «non abbandonarci»; il Messale 2020 l'ha portata nella Messa.",
+   "citazione": "per secoli l'italiano ha detto «non ci indurre in tentazione»",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Diavolo vuol dire «calunniatore»",
+   "testo": "Diavolo viene dal greco diábolos, «calunniatore»: i cristiani di lingua greca lo usarono per tradurre l'ebraico śāṭān, «avversario». I due nomi dicono il mestiere: far credere il falso su Dio.",
+   "citazione": "Diavolo viene dal greco diábolos, «calunniatore», da diabállō, «gettare attraverso, calunniare»",
+   "pagina": 7,
+   "fascicolo": "uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Prima della Quaresima: due giorni di digiuno",
+   "testo": "Nei primi tre secoli la Pasqua era preceduta da un digiuno di due giorni. Nel IV secolo, finite le persecuzioni, la Chiesa la misura sui quaranta giorni della Scrittura: quadragesima, Quaresima.",
+   "citazione": "digiuno di due giorni; nel IV secolo, finite le persecuzioni, la Chiesa sente il bisogno di un tempo",
+   "pagina": 6,
+   "fascicolo": "uploads/iii-2-5-quaranta-giorni-nel-deserto-puo-dire-fascicolo.pdf"
+  }
+ ],
+ "3|Quando un'abitudine prende il comando|Un vizio si può dipingere": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "I baffetti di Hitler? Dix li dipinse solo nel 1947",
+   "testo": "Nel quadro del 1933 l'invidia era una maschera pallida con i capelli di stoppa. I baffetti che alludono a Hitler Dix li ha aggiunti nel 1947, a regime caduto: nel 1933 poteva soltanto alludere.",
+   "citazione": "il museo avverte che Dix li ha dipinti solo nel 1947",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-2-1-vizio-puo-dipingere-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Abito e abitudine: la stessa parola latina",
+   "testo": "Abito e abitudine vengono entrambe da habitus, da habere nel senso di «comportarsi»: il modo di essere che uno «ha» preso e la veste che porta. Per questo Dix dipinge i vizi come costumi.",
+   "citazione": "è il modo di essere che una persona «ha» preso e, insieme, la veste che porta",
+   "pagina": 3,
+   "fascicolo": "uploads/iii-2-1-vizio-puo-dipingere-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "La gola non è più grave di un omicidio",
+   "testo": "«Capitale» viene da caput, testa: i vizi capitali sono le «teste» da cui nascono altri peccati, non i peccati più gravi. La gola è una radice, non la colpa peggiore.",
+   "citazione": "La gola non è più grave di un omicidio: è una radice, non la colpa",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-2-1-vizio-puo-dipingere-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "I sette vizi capitali non stanno nella Bibbia",
+   "testo": "I Vangeli e Paolo hanno elenchi diversi. La lista di sette l'hanno costruita i monaci: Evagrio, alla fine del IV secolo, contava otto «pensieri»; Gregorio Magno, verso il 600, fissò il numero sette.",
+   "citazione": "La lista non è nella Bibbia: i Vangeli e le lettere di Paolo hanno elenchi diversi",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-2-1-vizio-puo-dipingere-fascicolo.pdf"
+  }
+ ],
+ "3|Quando un'abitudine prende il comando|«Dove sei». Il peccato in Genesi 3": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "In Genesi 3 la parola «peccato» non c'è",
+   "testo": "Nel capitolo del primo peccato la parola «peccato» non compare mai: la Bibbia la usa per la prima volta con Caino, nel capitolo 4. Il racconto mostra la cosa prima di darle il nome.",
+   "citazione": "Nel capitolo 3 la parola «peccato» non compare mai",
+   "pagina": 5,
+   "fascicolo": "uploads/iii-2-3-dove-sei-peccato-genesi-3-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Astuto» e «nudi»: un gioco di parole in ebraico",
+   "testo": "Il serpente è «astuto», in ebraico ārûm; i due erano «nudi», ărûmmîm. Il narratore accosta il furbo e gli indifesi: la nudità, che prima era innocenza, diventa vulnerabilità. In italiano si perde.",
+   "citazione": "E lo presenta con un gioco di parole che in italiano si perde: «astuto», in ebraico ārûm",
+   "pagina": 2,
+   "fascicolo": "uploads/iii-2-3-dove-sei-peccato-genesi-3-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«Dove sei?»: la prima domanda di Dio a un uomo",
+   "testo": "Prima Dio aveva benedetto e comandato, mai interrogato. Dopo il peccato non arriva una sentenza, ma la domanda di chi cerca: Dio sa dov'è l'uomo, chiede per farlo uscire. In ebraico: ayyekkāh.",
+   "citazione": "In ebraico una parola sola, ayyekkāh. È la prima domanda che Dio rivolge a un essere umano",
+   "pagina": 4,
+   "fascicolo": "uploads/iii-2-3-dove-sei-peccato-genesi-3-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Michelangelo contro il testo: il serpente ha volto di donna",
+   "testo": "Nella Sistina il serpente ha volto di donna, porge il frutto, Adamo afferra da sé, i due escono nudi. Nel testo il serpente è un animale e parla, la donna «prese», i due escono vestiti da Dio.",
+   "citazione": "ha busto, braccia e volto di donna: il testo ne fa un animale",
+   "pagina": 7,
+   "fascicolo": "uploads/iii-2-3-dove-sei-peccato-genesi-3-fascicolo.pdf"
+  }
+ ],
+ "4|Devo meritarmi tutto|Essere accolti prima di riuscire": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Sette parole di Agostino fecero quasi litigare Pelagio",
+   "testo": "«Dammi ciò che comandi e comanda ciò che vuoi»: quando a Roma un vescovo citò la preghiera di Agostino, Pelagio non riuscì a sopportarla e venne quasi a lite. Lì stava tutta la disputa.",
+   "citazione": "Pelagio «non riuscì a sopportarle» e, contraddicendo con troppa foga, «venne quasi a lite» con chi le aveva citate",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-2-1-essere-accolti-prima-riuscire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Premio: in origine la parte scelta del bottino",
+   "testo": "Dal latino praemium, «ciò che si prende prima»: la parte del bottino scelta per prima, poi la ricompensa dopo un'impresa. Il fascicolo distingue così salario, premio, dono e ricatto.",
+   "citazione": "premio da praemium, «ciò che si prende prima», la parte scelta del bottino, poi la ricompensa data dopo un'impresa",
+   "pagina": 1,
+   "fascicolo": "uploads/iv-2-1-essere-accolti-prima-riuscire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "214 vescovi a Cartagine, il 1° maggio 418",
+   "testo": "Dopo sette anni di sinodi e lettere, i vescovi d'Africa, con Agostino, fissano in un canone il punto della disputa: senza la grazia il bene non si fa «con più difficoltà», ma «nulla».",
+   "citazione": "Allora i vescovi d'Africa, in duecentoquattordici, si riuniscono a Cartagine il 1° maggio 418, presieduti dal vescovo della città, Aurelio.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-2-1-essere-accolti-prima-riuscire-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Giovanna d'Arco e la domanda trappola dei giudici",
+   "testo": "Nel 1431 le chiedono se sa di essere in grazia di Dio: nessuno può saperlo con certezza. Lei: «Se non vi sono, Dio mi vuole mettere; se vi sono, Dio mi vuole custodire in essa».",
+   "citazione": "i giudici chiedono a Giovanna d'Arco, diciannovenne, se sa di essere in grazia di Dio: una domanda trappola, perché nessuno può saperlo con certezza.",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-2-1-essere-accolti-prima-riuscire-fascicolo.pdf"
+  }
+ ],
+ "4|Devo meritarmi tutto|Il padre, due figli e una festa difficile": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Nel testo della parabola la parola «misericordia» non c'è",
+   "testo": "Lo ha notato Giovanni Paolo II: in Luca 15 non compaiono né «giustizia» né «misericordia». Ci sono un verbo, «ebbe compassione», che viene dalle viscere, e cinque gesti del padre.",
+   "citazione": "Giovanni Paolo II ha osservato che nella parabola non compare la parola «giustizia» e, nel testo originale, nemmeno la parola «misericordia»",
+   "pagina": 5,
+   "fascicolo": "uploads/iv-2-2-padre-due-figli-festa-difficile-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Al figlio minore spettava un terzo, non la metà",
+   "testo": "La Legge riservava al primogenito «il doppio» (Dt 21,17). E chiedere l'eredità con il padre vivo andava contro il consiglio del Siracide: assegnarla «al momento della morte».",
+   "citazione": "La parte del minore non era la metà: la Legge riservava al primogenito «il doppio» (Dt 21,17), e dunque al figlio minore spettava un terzo.",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-2-2-padre-due-figli-festa-difficile-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "La frase sui salariati, preparata, non viene mai detta",
+   "testo": "Il figlio aveva provato il discorso: «Trattami come uno dei tuoi salariati». Ma quando parla al padre quella terza frase non c'è: alcuni manoscritti la riportano, il testo CEI no.",
+   "citazione": "La terza frase, quella sui salariati, nel testo che leggiamo non c'è più.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-2-2-padre-due-figli-festa-difficile-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Parola viene da parabola",
+   "testo": "Dal greco parabállō, «gettare accanto», confrontare. Il latino tardo parabola ha dato l'italiano parola: le parabole di Gesù erano sentite come le parole per eccellenza.",
+   "citazione": "Dal latino tardo parabola viene anche l'italiano parola, perché le parabole di Gesù erano sentite come le parole per eccellenza.",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-2-2-padre-due-figli-festa-difficile-fascicolo.pdf"
+  }
+ ],
+ "4|Devo meritarmi tutto|Se è un dono, perché impegnarsi. La grazia a caro prezzo": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "A Westminster un pastore luterano accanto a Kolbe",
+   "testo": "Dal 1998 sopra la porta ovest di Westminster Abbey stanno dieci statue di martiri del Novecento: tra loro Bonhoeffer, pastore luterano, e Massimiliano Kolbe, frate cattolico morto ad Auschwitz.",
+   "citazione": "fra loro c'è Bonhoeffer, pastore luterano, accanto a Massimiliano Kolbe, frate cattolico morto ad Auschwitz",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-2-4-grazia-a-caro-prezzo-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "La condanna di Bonhoeffer annullata solo nel 1996",
+   "testo": "Impiccato a Flossenbürg il 9 aprile 1945, due settimane prima della liberazione del campo, Bonhoeffer restò formalmente un condannato per alto tradimento per cinquantun anni.",
+   "citazione": "Nel 1996 un tribunale di Berlino annullerà la condanna",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-2-4-grazia-a-caro-prezzo-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«A caro prezzo»: il «caro» lo aggiunge la traduzione",
+   "testo": "Paolo scrive ai Corinzi «siete stati comprati a prezzo» (1Cor 6,20). Grazia viene da gratia e dà gratis: gratuita per chi riceve, costosa per chi dona. I due termini non si contraddicono.",
+   "citazione": "«siete stati comprati a prezzo»; il «caro» lo aggiunge la traduzione.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-2-4-grazia-a-caro-prezzo-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In classe domani",
+   "gancio": "«Tanto Dio perdona»: presupposto o risultato?",
+   "testo": "L'esempio viene da Kierkegaard: «non possiamo sapere nulla» è vero in bocca a un vecchio studioso, autoinganno in bocca a una matricola pigra. Stessa frase, due vite: prova a cercarne un'altra.",
+   "citazione": "Uno studente del primo anno che ripete la stessa frase per giustificare la propria pigrizia dice un autoinganno",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-2-4-grazia-a-caro-prezzo-fascicolo.pdf"
+  }
+ ],
+ "4|Devo meritarmi tutto|Sola fide. La giustificazione nel suo orizzonte": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il decreto di Trento contro Lutero non lo nomina mai",
+   "testo": "Sedici capitoli e trentatré canoni sulla giustificazione, con gli scritti dei riformatori sul tavolo: si preferì l'esposizione positiva, anche se i canoni finali condannano dottrine erronee.",
+   "citazione": "Il decreto, sedici capitoli e trentatré canoni, non nomina mai Lutero",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«L'ha detto Lutero, dunque è falso»: a Trento era vietato",
+   "testo": "Il legato Reginald Pole chiese ai padri conciliari di non argomentare così. Teologi come Seripando, Soto, Salmerón e Vega avevano studiato davvero i testi dei riformatori.",
+   "citazione": "il legato Reginald Pole chiese che non si argomentasse «Questo l'ha detto Lutero, dunque è falso»",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Per Lutero la Lettera di Giacomo era «di paglia»",
+   "testo": "Giacomo scrive che «la fede senza le opere è morta». Paolo e Giacomo non si contraddicono: guardano Abramo in due momenti diversi, la fede nella promessa e l'obbedienza fino a offrire il figlio.",
+   "citazione": "Per questo la Lettera di Giacomo gli parve «una lettera di paglia»",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Giustificare: «rendere giusto» o «dichiarare giusto»?",
+   "testo": "Dal latino tardo iustificare, iustus più facere: rendere giusto. Il greco di Paolo, dikaioûn, può voler dire entrambe le cose, e su questo si è giocata la disputa del Cinquecento.",
+   "citazione": "Viene dal latino tardo iustificare, composto di iustus, «giusto», e di facere, «fare»: rendere giusto",
+   "pagina": 1,
+   "fascicolo": "uploads/iv-2-3-sola-fide-giustificazione-fascicolo.pdf"
+  }
+ ],
+ "4|Galileo, le prove e l'autorità|Che cosa accadde nel 1616 e nel 1633, e nel 1992": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Eppur si muove»: in nessun documento del 1633",
+   "testo": "Galileo non fu torturato, non fu chiuso in una cella, non fu bruciato. Ma le cose vere bastano: convocato sotto minaccia di prigione, interrogato sotto minaccia di tortura, confinato a vita.",
+   "citazione": "non disse «Eppur si muove»: la frase non compare in nessun documento del 1633",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Due fogli del 1616, due parole in più",
+   "testo": "Il verbale del precetto vieta di tenere, difendere e insegnare l'opinione «in qualsiasi modo»; il certificato di Bellarmino, che Galileo conservò 17 anni, dice solo «difendere né tenere».",
+   "citazione": "Il certificato dice solo che non si può «difendere né tenere»: con quel foglio, un libro che la discute come ipotesi, senza sostenerla, resta lecito.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "L'argomento del papa in bocca a chi ha sempre torto",
+   "testo": "Urbano VIII aveva chiesto che il Dialogo chiudesse con il suo argomento sull'onnipotenza di Dio. Galileo obbedì: lo fece dire a Simplicio, il personaggio che per quattrocento pagine perde sempre.",
+   "citazione": "E l'argomento del papa è pronunciato proprio da Simplicio, il personaggio che per quattrocento pagine ha avuto torto.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "La sentenza del 1633 non è mai stata annullata",
+   "testo": "Nel 1992 un titolo diceva «Il Vaticano cancella la condanna». Il discorso di Giovanni Paolo II non rifà il processo: dice che l'errore stava nel 1616. La sentenza non fu revocata, cadde in disuso.",
+   "citazione": "La sentenza del 1633, però, non viene annullata da nessun atto: cade in disuso.",
+   "pagina": 7,
+   "fascicolo": "uploads/iv-3-3-cosa-accadde-nel-1616-nel-1633-fascicolo.pdf"
+  }
+ ],
+ "4|Galileo, le prove e l'autorità|Come si vadia al cielo, la Bibbia insegna astronomia": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«Più tosto dire che non l'intendiamo»: parola di cardinale",
+   "testo": "Nel 1615 Bellarmino scrive: se fosse dimostrato che la Terra gira intorno al Sole, bisognerebbe rileggere le Scritture, «più tosto dire che non l'intendiamo» che dire falso ciò che si dimostra.",
+   "citazione": "«più tosto dire che non l'intendiamo», dice il cardinale; «due verità non posson mai contrariarsi», dice lo scienziato",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Prova alla mano",
+   "gancio": "Fermare il sole avrebbe accorciato il giorno, non allungato",
+   "testo": "Nel cielo di Tolomeo il sole ha due moti: uno quotidiano da est a ovest, uno proprio in senso contrario. Fermare il secondo avrebbe accorciato il giorno: per allungarlo serviva fermare tutto il cielo.",
+   "citazione": "Per allungare il giorno bisognava fermare il primo mobile, cioè tutto il cielo.",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Come si vadia al cielo, non come vadia il cielo»",
+   "testo": "Vadia è l'antico «vada». La frase, attribuita al cardinale Baronio, gioca sui due sensi di cielo: lo Spirito Santo insegna la strada, non la meccanica. Un papa la citerà in latino nel 1992.",
+   "citazione": "Vadia è l'antico congiuntivo di andare: «vada». E cielo ha due sensi: il cielo dove si va, e il cielo che va.",
+   "pagina": 5,
+   "fascicolo": "uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Due racconti",
+   "gancio": "Bellarmino e Galileo, nel 1615, d'accordo su tre cose",
+   "testo": "Le due lettere concordano: la Scrittura non può errare, l'ipotesi è lecita, se una cosa fosse dimostrata la Bibbia andrebbe riletta. Si dividono sul fatto (è dimostrato?) e sull'onere della prova.",
+   "citazione": "La Scrittura non può errare: lo scrivono tutti e due, con le stesse parole.",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-3-2-come-vadia-al-cielo-bibbia-insegna-fascicolo.pdf"
+  }
+ ],
+ "4|Galileo, le prove e l'autorità|Un'osservazione cambia tutto": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Galileo scambiò le lune di Giove per stelle fisse",
+   "testo": "La notte del 7 gennaio 1610 vide tre «stelle piccole ma luminosissime» in linea retta e non si curò della distanza da Giove. Capì solo l'11 gennaio: non si era mosso Giove, si erano mosse loro.",
+   "citazione": "Le prende per stelle fisse e non si cura della loro distanza da Giove.",
+   "pagina": 1,
+   "fascicolo": "uploads/iv-3-1-osservazione-cambia-tutto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Le fasi di Venere non dimostrano Copernico",
+   "testo": "Chiudono la strada di Tolomeo, ma nel sistema di Tycho Brahe Venere gira intorno al Sole e fa le stesse fasi, mentre la Terra sta ferma. Lo scrisse a Galileo nel 1611 un suo ammiratore bolognese.",
+   "citazione": "L'osservazione che ha chiuso la strada di Tolomeo lascia aperte le altre due.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-3-1-osservazione-cambia-tutto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "228 anni per la prova che mancava",
+   "testo": "La parallasse delle stelle, l'unica osservazione che divideva Copernico da Tycho, fu misurata da Bessel solo nel 1838. Quando ormai, grazie a Newton, erano tutti copernicani da più di un secolo.",
+   "citazione": "228 anni dopo il Sidereus Nuncius, la strada di Copernico è l'unica rimasta anche davanti al controllo che la divideva da Tycho.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-3-1-osservazione-cambia-tutto-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Prova alla mano",
+   "gancio": "La parallasse si prova con un pollice",
+   "testo": "Chiudi un occhio, guarda il pollice teso contro la parete, poi cambia occhio: il pollice salta di lato. Non si è mosso lui, ti sei spostato tu. La Terra in orbita fa lo stesso con le stelle vicine.",
+   "citazione": "Chiudi l'occhio sinistro e guarda il pollice teso davanti a te, contro la parete.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-3-1-osservazione-cambia-tutto-fascicolo.pdf"
+  }
+ ],
+ "4|Riformare una Chiesa, cambiare una cultura|Lutero a Worms": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Qui sto, non posso fare altrimenti»: forse mai detto",
+   "testo": "La frase simbolo di Worms sta nelle stampe del 1521, ma non è sicuro che Lutero l'abbia detta all'interrogatorio: la biblioteca di Worms distingue il discorso a voce dalla versione stampata.",
+   "citazione": "Compare già nelle versioni a stampa del 1521, ma non è una frase sicuramente pronunciata durante l'interrogatorio.",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-1-2-ritratta-lutero-a-worms-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Dopo Worms Lutero sparì: un rapimento finto",
+   "testo": "Sulla via del ritorno uomini di Federico il Saggio, suo protettore, lo portarono alla Wartburg con un rapimento simulato. Lì, al sicuro, poté continuare a scrivere.",
+   "citazione": "Durante il ritorno, uomini che agiscono per conto di Federico il Saggio lo conducono alla Wartburg con un rapimento simulato.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-1-2-ritratta-lutero-a-worms-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Coscienza: alla lettera «sapere insieme»",
+   "testo": "Dal latino conscientia, da con- e scire, sapere: la consapevolezza di ciò che si sa e si fa. Il fascicolo precisa che un'emozione intensa non basta a fare un giudizio fondato.",
+   "citazione": "Deriva dal latino conscientia, legato a conscire, essere consapevole, composto di con- e scire, sapere.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-1-2-ritratta-lutero-a-worms-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "A Worms Lutero ammise di aver scritto con troppa asprezza",
+   "testo": "Davanti all'imperatore distinse tre tipi di scritti e riconobbe un linguaggio troppo aspro nei testi polemici. Ma, disse, ammettere un eccesso verbale non significa ritirare la dottrina.",
+   "citazione": "Ammette di avere usato, in questi ultimi, un linguaggio troppo aspro.",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-1-2-ritratta-lutero-a-worms-fascicolo.pdf"
+  }
+ ],
+ "4|Riformare una Chiesa, cambiare una cultura|Un concilio può cambiare ciò che vediamo": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il decreto di Trento sulle immagini non nomina Michelangelo",
+   "testo": "Il testo del 1563 chiede decoro e vigilanza ai vescovi, ma non descrive un modello di chiesa né vieta ogni nudo. Per arrivare al Giudizio universale serve ricostruire chi decise e perché.",
+   "citazione": "Il decreto non descrive un modello unico di chiesa, non prescrive effetti teatrali e non nomina Michelangelo.",
+   "pagina": 3,
+   "fascicolo": "uploads/iv-1-3-trento-immagini-e-riforma-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "1563, 1564, 1565: tre date da non confondere",
+   "testo": "Norma generale del concilio nel 1563; decisione della Congregazione del Concilio di coprire alcune figure nel 1564, a concilio chiuso; intervento di Daniele da Volterra nel 1565.",
+   "citazione": "Teniamo separati i livelli: 1563, norma generale; 1564, decisione sul dipinto; 1565, intervento pittorico.",
+   "pagina": 4,
+   "fascicolo": "uploads/iv-1-3-trento-immagini-e-riforma-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Seminario vuol dire semenzaio",
+   "testo": "Dal latino seminarium, «vivaio», legato a semen, «seme». Trento nel 1563 volle in ogni diocesi un collegio per i futuri preti, dai dodici anni: formazione come crescita da coltivare.",
+   "citazione": "La parola aiuta a capire l'idea: seminario deriva dal latino seminarium, «semenzaio» o «vivaio», a sua volta legato a semen, «seme».",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-1-3-trento-immagini-e-riforma-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Trento non inventò il Barocco",
+   "testo": "Un criterio religioso non produce da solo una forma artistica: contarono artisti, tradizioni locali, denaro e politica. E un Barocco esiste anche nei paesi protestanti.",
+   "citazione": "Sarebbe sbagliato affermare che Trento inventò il Barocco, l'insieme di tendenze artistiche affermatesi soprattutto nel Seicento.",
+   "pagina": 5,
+   "fascicolo": "uploads/iv-1-3-trento-immagini-e-riforma-fascicolo.pdf"
+  }
+ ],
+ "4|Riformare una Chiesa, cambiare una cultura|Un'Europa divisa, perché la Riforma si moltiplica": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Cuius regio, eius religio» non è nel trattato del 1555",
+   "testo": "La formula con cui ricordiamo la pace di Augusta fu coniata quarant'anni dopo dal canonista luterano Joachim Stephani. Il contenuto c'era: il principe sceglie, il suddito segue o emigra.",
+   "citazione": "La formula con cui ricordiamo questa pace, cuius regio, eius religio, «di chi è il territorio, di lui sia la religione», non sta nel testo del 1555",
+   "pagina": 5,
+   "fascicolo": "uploads/iv-1-4-europa-divisa-cuius-regio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Protestante non viene da «lamentarsi»",
+   "testo": "Il nome nasce dalla protestatio del 19 aprile 1529: sei principi e quattordici città dichiarano in pubblico di non accettare il divieto della dieta di Spira. Protestari: dichiarare davanti a tutti.",
+   "citazione": "Protestare, nel latino protestari, vuol dire «dichiarare davanti a tutti», non lamentarsi",
+   "pagina": 2,
+   "fascicolo": "uploads/iv-1-4-europa-divisa-cuius-regio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Una Bibbia italiana a stampa nel 1471, prima di Lutero",
+   "testo": "La Bibbia di Nicolò Malermi esce a Venezia nel 1471, mezzo secolo prima di quella di Lutero. Ma dal 1559, e con l'Indice del 1564, leggerla in volgare richiese un permesso scritto.",
+   "citazione": "in Italia la Bibbia di Nicolò Malermi è stampata a Venezia dal 1° agosto 1471, mezzo secolo prima di Lutero",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-1-4-europa-divisa-cuius-regio-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Richelieu, cardinale, finanziò la Svezia luterana",
+   "testo": "Nella guerra dei Trent'anni il fattore politico finì per prevalere su quello religioso: la Francia cattolica del cardinale Richelieu pagò Gustavo Adolfo contro l'imperatore cattolico.",
+   "citazione": "la Francia cattolica del cardinale Richelieu finanziò la Svezia luterana di Gustavo Adolfo contro l'imperatore cattolico",
+   "pagina": 6,
+   "fascicolo": "uploads/iv-1-4-europa-divisa-cuius-regio-fascicolo.pdf"
+  }
+ ],
+ "5|Le due vie di Lemaître|Creazione e primo istante": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Tommaso: l'inizio del mondo non si dimostra",
+   "testo": "Verso il 1270 a Parigi Tommaso d'Aquino scandalizza i teologi: che il mondo abbia avuto un inizio si crede per fede, la ragione non può provarlo partendo dal mondo stesso.",
+   "citazione": "Che il mondo non sia sempre esistito è tenuto soltanto per fede",
+   "pagina": 4,
+   "fascicolo": "uploads/v-1-2-creazione-e-primo-istante-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Creare è come il sole che illumina l'aria",
+   "testo": "L'acqua resta calda anche spento il fuoco; l'aria no: è luminosa solo finché il sole la illumina. Così ogni creatura sta a Dio: non ha ricevuto l'esistenza una volta, la riceve adesso.",
+   "citazione": "non resta illuminata neppure un istante al cessare dell'azione del sole",
+   "pagina": 5,
+   "fascicolo": "uploads/v-1-2-creazione-e-primo-istante-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Cosa faceva Dio prima di creare? Agostino risponde",
+   "testo": "Qualcuno scherzava: «preparava l'inferno per chi scruta il cielo». Agostino rifiuta la battuta: meglio dire «non so». La sua risposta: non c'era un «allora», il tempo è creato con le cose.",
+   "citazione": "Resta la domanda che molti si fanno fin da bambini: che cosa faceva Dio prima di creare?",
+   "pagina": 6,
+   "fascicolo": "uploads/v-1-2-creazione-e-primo-istante-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Il Big Bang non prova la creazione",
+   "testo": "Due «no» uguali e contrari: il Big Bang non dimostra la creazione, e un universo senza inizio non la smentirebbe, perché ciò che Dio crea dal nulla potrebbe dipendere da lui da sempre.",
+   "citazione": "ciò che Dio ha creato dal nulla potrebbe dipendere da sempre da Dio",
+   "pagina": 7,
+   "fascicolo": "uploads/v-1-2-creazione-e-primo-istante-fascicolo.pdf"
+  }
+ ],
+ "5|Le due vie di Lemaître|Giobbe, dove comincia il mio limite": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Giobbe «paziente»? Protesta per trenta capitoli",
+   "testo": "Dopo la prima pagina Giobbe maledice il suo giorno, accusa Dio e chiede un processo: «Interrogami pure e io risponderò». E alla fine è il testo stesso ad approvare la sua protesta.",
+   "citazione": "la protesta dell'innocente sta dentro il testo sacro",
+   "pagina": 2,
+   "fascicolo": "uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Giobbe non era israelita",
+   "testo": "Viveva nella terra di Us, a oriente di Canaan, probabilmente Edom. Il libro sceglie uno straniero perché la domanda sul dolore dell'innocente sia quella di ogni uomo.",
+   "citazione": "Il libro sceglie uno straniero perché la sua domanda sia quella di ogni uomo.",
+   "pagina": 1,
+   "fascicolo": "uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Teodicea» è il titolo di un libro del 1710",
+   "testo": "Leibniz coniò la parola dal greco theós e díkē, «giustizia di Dio»: un processo a Dio in cui il filosofo fa l'avvocato. Il libro di Giobbe è più antico, ma ne contiene già problema e verdetto.",
+   "citazione": "era stata coniata da Leibniz nel 1710 come titolo di un libro",
+   "pagina": 3,
+   "fascicolo": "uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Dio preferisce chi grida a chi lo difende",
+   "testo": "Nel verdetto finale Dio rimprovera gli amici che «presumevano di sapere tutto», non Giobbe che lo ha accusato. Papa Francesco: «a Dio non piace quella enciclopedia di spiegazioni».",
+   "citazione": "la protesta sincera vale, davanti a Dio, più della difesa che finge",
+   "pagina": 5,
+   "fascicolo": "uploads/v-1-4-giobbe-dove-comincia-il-mio-limite-fascicolo.pdf"
+  }
+ ],
+ "5|Le due vie di Lemaître|La visione cosmologica di Lemaître": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Big Bang»: il nome lo diede un avversario",
+   "testo": "L'espressione «big bang» non è di Lemaître: la usò Fred Hoyle alla radio della BBC nel 1949 per contrapporre quell'ipotesi alla sua, lo stato stazionario. Lemaître non la userà mai.",
+   "citazione": "Ed è Hoyle che alla radio della BBC, nel 1949, chiama «big bang», il grande botto",
+   "pagina": 4,
+   "fascicolo": "uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "La legge di Hubble ha cambiato nome nel 2018",
+   "testo": "Lemaître trovò nel 1927 che lo spazio si dilata e tutto si allontana da tutto; Hubble la misurò nel 1929. Nel 2018 l'Unione Astronomica l'ha ribattezzata legge di Hubble-Lemaître.",
+   "citazione": "nel 2018 l'Unione Astronomica Internazionale ha raccomandato di chiamarla legge di Hubble-Lemaître",
+   "pagina": 2,
+   "fascicolo": "uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«Troppo rispetto per Dio per farne un'ipotesi»",
+   "testo": "Il prete che pensò l'atomo primitivo rifiutò di usarlo come prova della creazione: Dio, diceva, non è un'ipotesi scientifica. Lo ripeté davanti ai fisici del congresso Solvay nel 1958.",
+   "citazione": "Ho troppo rispetto per Dio per poterne fare un'ipotesi scientifica",
+   "pagina": 7,
+   "fascicolo": "uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Einstein: «la sua fisica è abominevole»",
+   "testo": "Al congresso Solvay del 1927 Lemaître mostrò a Einstein l'universo in espansione. Einstein non lo prese sul serio: si racconta che gli disse che la matematica era perfetta ma la fisica abominevole.",
+   "citazione": "si racconta che gli abbia detto che la sua matematica era perfetta ma la sua fisica «abominevole»",
+   "pagina": 2,
+   "fascicolo": "uploads/v-1-1-il-cosmo-esaurisce-le-domande-le-due-vie-di-lemaitre-fascicolo.pdf"
+  }
+ ],
+ "5|Le due vie di Lemaître|L’evoluzione decide quanto valiamo": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Non discendiamo dagli scimpanzé",
+   "testo": "Gli scimpanzé di oggi non sono i nostri antenati: le linee da cui veniamo noi e loro condividono antenati comuni. La storia della vita è un albero ramificato, non una scala.",
+   "citazione": "le linee da cui provengono esseri umani e scimpanzé condividono antenati comuni",
+   "pagina": 1,
+   "fascicolo": "uploads/v-1-3-evoluzione-e-valore-della-persona-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "«Più adatto» non vuol dire più forte",
+   "testo": "In biologia fitness è il successo riproduttivo relativo in un dato ambiente: non coincide con forza, longevità o valore morale. Nessun numero dice quanto rispetto si deve a una persona.",
+   "citazione": "Il termine tecnico fitness riguarda il successo riproduttivo relativo",
+   "pagina": 2,
+   "fascicolo": "uploads/v-1-3-evoluzione-e-valore-della-persona-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "Dignità viene da dignus, «degno»",
+   "testo": "Dal latino dignitas: nella lingua può indicare anche prestigio o una carica. Qui è il valore inerente alla persona, che non aumenta superando una prova né cala quando si diventa dipendenti.",
+   "citazione": "La parola dignità deriva dal latino dignitas, legato a dignus, degno",
+   "pagina": 5,
+   "fascicolo": "uploads/v-1-3-evoluzione-e-valore-della-persona-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il papa nel 1996 disse «teorie», al plurale",
+   "testo": "Giovanni Paolo II riconosce che l'evoluzione non è più una mera ipotesi, ma parla di «teorie dell'evoluzione»: diverse le spiegazioni del meccanismo, diverse le filosofie che vi si associano.",
+   "citazione": "Preferisce però parlare di «teorie dell’evoluzione», al plurale",
+   "pagina": 3,
+   "fascicolo": "uploads/v-1-3-evoluzione-e-valore-della-persona-fascicolo.pdf"
+  }
+ ],
+ "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Il Concilio non ha vietato il latino",
+   "testo": "Sacrosanctum Concilium 36 conserva il latino nei riti latini e concede alla lingua del popolo «una parte più ampia», prima di tutto nelle letture. La messa tutta in italiano venne dopo.",
+   "citazione": "L'uso della lingua latina, salvo diritti particolari, sia conservato nei riti latini",
+   "pagina": 3,
+   "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "2147 sì e 4 no, quattro secoli esatti dopo Trento",
+   "testo": "Il 4 dicembre 1963 i padri approvano la costituzione sulla liturgia: lo stesso giorno in cui, nel 1563, Trento aveva rimesso al papa la revisione dei libri liturgici.",
+   "citazione": "i padri approvarono la costituzione con 2147 sì e 4 no",
+   "pagina": 3,
+   "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Paolo VI chiamò «sacrificio» la fine del latino",
+   "testo": "7 marzo 1965: la lingua parlata entra nella messa. Paolo VI dice che la Chiesa sacrifica la propria lingua «sacra, grave, bella» perché i fedeli passino da spettatori a partecipanti attivi.",
+   "citazione": "È un sacrificio che la Chiesa ha compiuto della propria lingua, il latino",
+   "pagina": 4,
+   "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Perché il Padre nostro è cambiato nel 2020",
+   "testo": "«Non abbandonarci alla tentazione» invece di «non ci indurre»: «indurre» esprime una volontà positiva, il greco eisferein una sfumatura concessiva. Così non si attribuisce la tentazione a Dio.",
+   "citazione": "dell'italiano «indurre» esprime una volontà positiva mentre l'originale greco",
+   "pagina": 8,
+   "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf"
+  }
+ ],
+ "5|Una Chiesa dentro la storia|Davanti ai totalitarismi, che cosa fece la Chiesa": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un'enciclica nascosta nel tabernacolo",
+   "testo": "Mit brennender Sorge (1937) fu scritta in tedesco, non in latino, introdotta in Germania di nascosto, ciclostilata di notte e letta dai pulpiti la domenica delle Palme in quasi tutte le chiese.",
+   "citazione": "con l'ordine di nasconderne una copia nel tabernacolo, per ogni eventualità",
+   "pagina": 3,
+   "fascicolo": "uploads/v-2-4-chiesa-e-totalitarismi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "«Spiritualmente siamo tutti semiti»: frase omessa",
+   "testo": "Nel settembre 1938 Pio XI lo disse a pellegrini belgi; l'Osservatore Romano, riferendo l'udienza, omise il passo. Fece avviare un'enciclica contro il razzismo, ma morì prima che fosse scritta.",
+   "citazione": "dirà che «spiritualmente siamo tutti semiti» e farà avviare un'enciclica contro il razzismo",
+   "pagina": 5,
+   "fascicolo": "uploads/v-2-4-chiesa-e-totalitarismi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Cinquanta chili d'oro, poi mille deportati",
+   "testo": "Roma 1943: il papa si dice pronto a prestare l'oro che mancasse alla taglia. Non basta: il 16 ottobre più di mille persone sono deportate ad Auschwitz-Birkenau. Ne tornarono sedici.",
+   "citazione": "Quando i nazisti impongono agli ebrei romani una taglia di cinquanta chili d'oro",
+   "pagina": 7,
+   "fascicolo": "uploads/v-2-4-chiesa-e-totalitarismi-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un vescovo parlò e il governo si fermò",
+   "testo": "Estate 1941: von Galen condanna dal pulpito l'uccisione dei malati di mente e dei disabili; il programma viene sospeso. Parlare funzionò quando un vescovo tedesco parlò per vittime tedesche.",
+   "citazione": "L'impressione fu enorme, e il governo si fermò",
+   "pagina": 8,
+   "fascicolo": "uploads/v-2-4-chiesa-e-totalitarismi-fascicolo.pdf"
+  }
+ ],
+ "5|Una Chiesa dentro la storia|Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille": [
+  {
+   "rubrica": "Falso mito",
+   "gancio": "L'otto per mille non va al Vaticano",
+   "testo": "Va alla Conferenza episcopale italiana, che lo spende in Italia e nei Paesi poveri e pubblica il rendiconto. Il papa vive dell'Obolo di San Pietro, le offerte dei fedeli di tutto il mondo.",
+   "citazione": "Un errore frequente è pensare che l'otto per mille vada al Vaticano",
+   "pagina": 9,
+   "fascicolo": "uploads/v-2-2-di-che-cosa-vive-la-chiesa-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Chi non firma lascia decidere chi firma",
+   "testo": "Firmano circa quattro contribuenti su dieci; la quota di chi non sceglie si ripartisce in proporzione alle scelte espresse. Nel 2015 la Corte dei conti ha criticato il meccanismo.",
+   "citazione": "la destinazione si stabilisce in proporzione alle scelte espresse",
+   "pagina": 8,
+   "fascicolo": "uploads/v-2-2-di-che-cosa-vive-la-chiesa-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "Un prete appena ordinato: 987 euro al mese",
+   "testo": "Nel 2025 i preti a tempo pieno per le diocesi erano 28.251. Un vescovo vicino alla pensione riceve 1.625 euro. Il compenso è uguale per tutti a parità di condizioni, in parrocchia ricca o povera.",
+   "citazione": "prete appena ordinato riceve 987 euro netti al mese per dodici mesi",
+   "pagina": 9,
+   "fascicolo": "uploads/v-2-2-di-che-cosa-vive-la-chiesa-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il Vaticano: «quel tanto di corpo» per l'anima",
+   "testo": "Nel 1929 Pio XI chiese il meno possibile: 44 ettari, il più piccolo Stato del mondo, quanto basta a sostenere la sovranità. Lo paragonò a san Francesco: un corpo minimo per tenere unita l'anima.",
+   "citazione": "tanto di corpo che bastava per tenersi unita l'anima",
+   "pagina": 4,
+   "fascicolo": "uploads/v-2-2-di-che-cosa-vive-la-chiesa-fascicolo.pdf"
+  }
+ ],
+ "5|Una Chiesa dentro la storia|La libertà vale anche per chi crede diversamente": [
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Giovanni XXIII: «Qui non è una monarchia assoluta»",
+   "testo": "13 giugno 1960: lo storico ebreo Jules Isaac chiede al papa una parola contro «l'insegnamento del disprezzo». Risposta: ha diritto a più che una speranza, ma il capo deve consultare.",
+   "citazione": "Lei ha diritto a più che una speranza! Io sono il capo, ma devo anche consultare",
+   "pagina": 2,
+   "fascicolo": "uploads/v-2-5-liberta-vale-anche-crede-diversamente-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "1953: un cardinale difende «due pesi e due misure»",
+   "testo": "Ottaviani ai diplomatici: un peso per la verità, uno per l'errore. Libertà per sé dove si è pochi, tolleranza agli altri dove si è tanti. Dodici anni dopo siede nell'aula in cui parla Beran.",
+   "citazione": "io sostengo che appunto due pesi e due misure sono da usarsi",
+   "pagina": 3,
+   "fascicolo": "uploads/v-2-5-liberta-vale-anche-crede-diversamente-fascicolo.pdf"
+  },
+  {
+   "rubrica": "In numeri",
+   "gancio": "101 anni dal Sillabo alla libertà religiosa",
+   "testo": "Nel 1864 il Sillabo condanna la frase «ogni uomo è libero di professare la religione che ritiene vera». Il 7 dicembre 1965 Dignitatis humanae passa con 2.308 sì e 70 no.",
+   "citazione": "Dal Sillabo si era passati dopo 101 anni alla Dignitatis humanae",
+   "pagina": 4,
+   "fascicolo": "uploads/v-2-5-liberta-vale-anche-crede-diversamente-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Parole con una storia",
+   "gancio": "«Immune»: senza un peso addosso",
+   "testo": "Dal latino immunis, chi è esente da un munus, un peso imposto. La libertà religiosa è «immunità dalla coercizione»: il diritto di non avere nessuno addosso quando si tratta di Dio.",
+   "citazione": "Immune viene dal latino immunis, chi è esente da un munus, un peso imposto",
+   "pagina": 6,
+   "fascicolo": "uploads/v-2-5-liberta-vale-anche-crede-diversamente-fascicolo.pdf"
+  }
+ ],
+ "5|Una Chiesa dentro la storia|Un papa può sbagliare, e un papa senza Stato. Il 1870": [
+  {
+   "rubrica": "In numeri",
+   "gancio": "Infallibilità: 533 sì, 2 no, e 55 vescovi partiti",
+   "testo": "Il 13 luglio 1870, al voto di prova, 88 dissero no e 62 sì con riserve. Alla vigilia del voto finale 55 vescovi lasciarono Roma: non volevano dire no in faccia al papa, né dire sì.",
+   "citazione": "Il 18 luglio 1870 restavano in aula 535 vescovi: 533 votarono sì, 2 no",
+   "pagina": 2,
+   "fascicolo": "uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Falso mito",
+   "gancio": "Infallibile non vuol dire che non pecca",
+   "testo": "La promessa di Gesù a Pietro, «ho pregato per te», sta due versetti prima dell'annuncio del rinnegamento. Il papa può sbagliare come uomo, come teologo privato, come sovrano.",
+   "citazione": "La roccia su cui poggia la promessa è un uomo che poche ore dopo rinnegherà",
+   "pagina": 4,
+   "fascicolo": "uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Il giorno dopo il dogma scoppiò la guerra",
+   "testo": "19 luglio 1870: Napoleone III dichiara guerra alla Prussia e ritira da Roma le truppe che proteggevano il papa. Due mesi dopo il voto, il 20 settembre, i bersaglieri entrano da Porta Pia.",
+   "citazione": "Il giorno dopo il voto, 19 luglio 1870, Napoleone III dichiarò guerra alla Prussia",
+   "pagina": 6,
+   "fascicolo": "uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-fascicolo.pdf"
+  },
+  {
+   "rubrica": "Lo sapevi?",
+   "gancio": "Un papa ritrattò il giorno prima di morire",
+   "testo": "Giovanni XXII predicava che i santi vedono Dio solo dopo il giudizio finale. I teologi protestano, lui ritratta nel 1334: era un'opinione privata di teologo, non una definizione.",
+   "citazione": "il 3 dicembre 1334, il giorno prima di morire, ritratta davanti a due cardinali",
+   "pagina": 5,
+   "fascicolo": "uploads/v-2-1-papa-puo-sbagliare-papa-senza-stato-fascicolo.pdf"
+  }
+ ]
+}
