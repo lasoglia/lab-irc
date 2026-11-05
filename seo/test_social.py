@@ -130,6 +130,27 @@ class FormatiDeiTesti(unittest.TestCase):
             rubriche.FILE_DA_RIFARE = vecchio
 
 
+class AnticipiMancanti(unittest.TestCase):
+    """Un reel già montato e non ancora uscito, senza il video di anticipo: si monta solo quello."""
+
+    def test_scelta(self):
+        import reel_lezioni as rl
+        vecchi = rl.CARTELLA, rl.su_r2
+        rl.CARTELLA = Path(tempfile.mkdtemp())
+        rl.su_r2 = lambda nome: nome == "pronto.mp4"
+        try:
+            base = {"motore": "reel2", "regia": {"inquadrature": []}}
+            elenco = [{**base, "chiave": "reel|a", "video": "a.mp4", "anticipo_video": "anticipo-a.mp4"},
+                      {**base, "chiave": "reel|b", "video": "b.mp4", "anticipo_video": "pronto.mp4"},
+                      {**base, "chiave": "reel|c", "video": "c.mp4", "anticipo_video": "anticipo-c.mp4"},
+                      {**base, "chiave": "reel|d", "video": "d.mp4", "anticipo_video": "anticipo-d.mp4"}]
+            da_fare = [elenco[3]]                              # d si monta tutto, anticipo compreso
+            usciti = {"reel|c": {"instagram": "2026-11-02"}}   # c è già uscito
+            self.assertEqual([r["chiave"] for r in rl.anticipi_mancanti(elenco, da_fare, usciti)], ["reel|a"])
+        finally:
+            rl.CARTELLA, rl.su_r2 = vecchi
+
+
 class Calendario(unittest.TestCase):
     def test_pasqua_date_note(self):
         attese = {2024: (3, 31), 2025: (4, 20), 2026: (4, 5), 2027: (3, 28), 2038: (4, 25)}
