@@ -50,7 +50,7 @@ RISERVA_PROF = 6           # strisce del prof pronte in anticipo, solo se arriva
 DOMENICHE_AVANTI = 2       # domeniche preparate in anticipo
 GIORNI_ARCHIVIO = 45       # dopo quanti giorni un post già uscito lascia gli elenchi
 FORMATO_DOMENICA = "grande-domanda"
-VERSIONE_DOMENICA = "2"   # cambiala per far riscrivere le domeniche non ancora uscite né approvate (2: tono)
+VERSIONE_DOMENICA = "3"   # cambiala per far riscrivere le domeniche non ancora uscite né approvate (3: formati)
 CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 # le espressioni del prof (assets/avatar/<posa>.png o .jpg), con una breve descrizione per Claude
 POSE_PROF = json.loads((Path(__file__).resolve().parent / "pose_prof.json").read_text(encoding="utf-8"))
@@ -190,8 +190,9 @@ cambiala da una vignetta all'altra; il prof compare sempre), fumetto (massimo \
 110 caratteri, parlato naturale, la battuta di chi parla), didascalia (massimo 50 \
 caratteri, il riquadro del narratore, per esempio «Il giorno dopo…»; stringa vuota se \
 non serve);
-- facebook: 300-600 caratteri; instagram: 300-700 caratteri, paragrafi corti, senza \
-hashtag; telegram: 200-450 caratteri;
+- facebook: 300-600 caratteri, al massimo una battuta; instagram: 300-700 caratteri, \
+paragrafi corti, senza hashtag, chiude invitando a trovare il link nella bio; telegram: \
+200-450 caratteri, una riga iniziale che fa da titolo, poi due o tre frasi;
 - hashtag: da 3 a 5, senza #, sempre religionecattolica e irc.
 
 Regole vincolanti:
@@ -273,7 +274,7 @@ risposta. Restituisci nel formato JSON:
 - frase: il sottotitolo della copertina, che promette la risposta senza darla tutta \
 (massimo 120 caratteri);
 - carosello: esattamente 8 schede, ognuna con titolo (massimo 30 caratteri) e testo \
-(massimo 200 caratteri, si legge in pochi secondi sul telefono). Un percorso che si \
+(massimo 180 caratteri, mai oltre 190: si legge in pochi secondi sul telefono). Un percorso che si \
 sfoglia con il desiderio di arrivare in fondo: si parte da ciò che si pensa di solito, \
 poi i fatti, i testi e le fonti delle lezioni, le distinzioni che fanno capire, fino \
 alla risposta; l'ultima scheda lascia una domanda aperta per chi legge. Ogni scheda \
@@ -282,14 +283,19 @@ dice una cosa sola;
 - scene_video: esattamente 6 scene per il video (verticale, senza voce, una scena ogni \
 quattro secondi), ognuna con titolo (massimo 28 caratteri), testo (massimo 90 caratteri) \
 e scheda (il numero, da 1 a 8, della scheda del carosello di cui riusa il disegno);
-- facebook: 500-900 caratteri; instagram: 400-800 caratteri, paragrafi corti, senza \
-hashtag; telegram: 300-500 caratteri. Presentano la domanda, anticipano un po' della \
+- facebook: 500-900 caratteri, al massimo una battuta; instagram: 400-800 caratteri, \
+paragrafi corti, senza hashtag, chiude invitando a trovare il link nella bio; telegram: \
+300-500 caratteri, una riga iniziale che fa da titolo, poi due o tre frasi. Presentano la domanda, anticipano un po' della \
 risposta e invitano a sfogliare il carosello e ad aprire le lezioni;
 - hashtag: da 3 a 5, senza #, sempre religionecattolica e irc.
 
 Regole vincolanti:
 - Ogni fatto, data, nome e citazione deve venire dal testo delle lezioni: niente di \
 inventato. Se le lezioni non bastano per una parte della risposta, non riempirla.
+- Una citazione si attribuisce solo a chi la lezione la attribuisce, con la data della \
+lezione: se la lezione non dice chi l'ha detta o quando, non dirlo.
+- La domanda è di quelle che molti si fanno: non dire che è arrivata da una classe, da uno \
+studente o «dai banchi», e non raccontare episodi di scuola o del prof (sarebbero inventati).
 - Sulla fede, sulla Chiesa e sulla Scrittura sii preciso come un buon libro di testo: \
 niente formule vaghe che indeboliscono o deformano ciò che la Chiesa insegna.
 - Rispetto per chi crede e per chi non crede: si propone, non si impone; si distingue ciò \
@@ -305,7 +311,7 @@ li aggiunge il sistema.
 # Il sabato: «Lo Shabbat del Lab», la cultura ebraica da fonti ebraiche
 # --------------------------------------------------------------------------
 FORMATO_SHABBAT = "shabbat"
-VERSIONE_SHABBAT = "1"
+VERSIONE_SHABBAT = "2"   # cambiala per far riscrivere i sabati non ancora usciti né approvati (2: formati)
 SABATI_AVANTI = 2
 # Solo siti ebraici autorevoli: testi (Sefaria), divulgazione rabbinica, comunità ebraiche italiane
 FONTI_EBRAICHE = ["sefaria.org", "chabad.org", "myjewishlearning.com", "aish.com", "ucei.it", "moked.it",
@@ -345,13 +351,15 @@ l'indirizzo della pagina. Restituisci nel formato JSON:
 - titolo: il titolo della copertina (massimo 60 caratteri), una domanda o un'immagine che incuriosisce;
 - frase: il sottotitolo della copertina (massimo 120 caratteri);
 - carosello: esattamente 8 schede, ognuna con titolo (massimo 30 caratteri) e testo \
-(massimo 200 caratteri): un percorso che si sfoglia volentieri, una cosa sola per scheda, \
+(massimo 180 caratteri, mai oltre 190): un percorso che si sfoglia volentieri, una cosa sola per scheda, \
 con le parole ebraiche spiegate; l'ultima scheda chiude con «Shabbat shalom» e il suo significato;
 - gancio: la prima scritta del video, massimo 60 caratteri;
 - scene_video: esattamente 6 scene (titolo massimo 28 caratteri, testo massimo 90, scheda: il \
 numero da 1 a 8 della scheda di cui riusa il disegno);
-- facebook: 500-900 caratteri; instagram: 400-800, senza hashtag; telegram: 300-500;
-- hashtag: da 3 a 5, senza #, sempre irc e culturaebraica;
+- facebook: 500-900 caratteri, al massimo una battuta; instagram: 400-800, paragrafi corti, \
+senza hashtag, chiude invitando a trovare il link nella bio; telegram: 300-500, una riga \
+iniziale che fa da titolo, poi due o tre frasi;
+- hashtag: da 3 a 5, senza #, sempre religionecattolica e irc, poi culturaebraica;
 - fonti: le pagine del dossier che hai usato, con titolo breve e indirizzo esatto.
 
 Regole vincolanti:
@@ -416,6 +424,34 @@ def parasha(d: dt.date) -> str:
         return parshios.getparsha_string(dates.GregorianDate(d.year, d.month, d.day), israel=False) or ""
     except Exception:
         return ""
+
+
+FILE_DA_RIFARE = g.RADICE / "data" / "rubriche-da-rifare.md"
+
+
+def obiezioni(chiave: str) -> str:
+    """Le obiezioni dei controllori alla versione respinta di una rubrica (data/rubriche-da-rifare.md,
+    una sezione «## <chiave>» per rubrica, scritte dal piano della settimana): servono a riscriverla."""
+    try:
+        testo = FILE_DA_RIFARE.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+    m = re.search(rf"^##\s*`?{re.escape(chiave)}`?[^\n]*\n(.*?)(?=^##\s|\Z)", testo, re.M | re.S)
+    return m.group(1).strip() if m else ""
+
+
+def con_obiezioni(messaggio: str, chiave: str) -> str:
+    o = obiezioni(chiave)
+    if not o:
+        return messaggio
+    return (messaggio + "\n\n<obiezioni_dei_controllori>\n" + o + "\n</obiezioni_dei_controllori>\n"
+            "La versione precedente è stata respinta dal verificatore e dal guardiano per questi motivi: "
+            "riscrivila evitando ogni punto; dove indicano una versione corretta con le fonti, usa quella.")
+
+
+def firma_obiezioni(chiave: str) -> str:
+    o = obiezioni(chiave)
+    return hashlib.sha256(o.encode()).hexdigest()[:8] if o else ""
 
 
 def nome_file(prefisso: str, chiave: str, contenuto: dict) -> str:
@@ -508,7 +544,8 @@ def main():
     for d in domeniche:
         k = d.isoformat()
         vecchia = k in cache["domenica"] \
-            and (cache["domenica"][k].get("formato"), cache["domenica"][k].get("versione")) != (FORMATO_DOMENICA, VERSIONE_DOMENICA) \
+            and ((cache["domenica"][k].get("formato"), cache["domenica"][k].get("versione")) != (FORMATO_DOMENICA, VERSIONE_DOMENICA)
+                 or cache["domenica"][k].get("obiezioni", "") != firma_obiezioni(f"dom-{k}")) \
             and not pubblicato(cache["domenica"][k]["chiave"], registri) \
             and cache["domenica"][k]["chiave"] not in approvate
         if not client or (k in cache["domenica"] and not vecchia) or not ordinate:
@@ -530,13 +567,15 @@ def main():
             messaggio = (f"Domanda della settimana: {scelta['domanda']}\n\n" + "\n\n".join(
                 f"<lezione titolo=\"{l['titolo']}\" classe=\"{g.NOMI_ANNO.get(str(l.get('anno')), '')}\">\n"
                 f"{g.testo_lezione(l)}\n</lezione>" for l in scelte))
-            t = pr.scrivi_e_rivedi(client, ISTRUZIONI_DOMENICA, messaggio, SCHEMA_DOMENICA, ambiti=AMBITI_WEEKEND)
+            t = pr.scrivi_e_rivedi(client, ISTRUZIONI_DOMENICA, con_obiezioni(messaggio, f"dom-{k}"), SCHEMA_DOMENICA,
+                                   ambiti=AMBITI_WEEKEND)
         except Exception as err:
             print(f"  ✗ domenica {k}: {err}")
             continue
         tok_in += t["token"]["input"]; tok_out += t["token"]["output"]
         anno = str(scelte[0].get("anno", ""))
-        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "versione": VERSIONE_DOMENICA, "tempo": "",
+        voce = {"chiave": f"dom-{k}", "data": k, "formato": FORMATO_DOMENICA, "versione": VERSIONE_DOMENICA,
+                "obiezioni": firma_obiezioni(f"dom-{k}"), "tempo": "",
                 "colore": pr.COLORI_ANNO.get(anno, ORO), "anno": anno,
                 "lezione": " · ".join(l["titolo"] for l in scelte), "url": pr.url_lezione(scelte[0]),
                 "lezioni": [{"titolo": l["titolo"], "url": pr.url_lezione(l)} for l in scelte],
@@ -562,7 +601,10 @@ def main():
     sabati = cal.giorni_di("shabbat", oggi - dt.timedelta(days=1), 7 * SABATI_AVANTI)[:SABATI_AVANTI]
     for d in sabati:
         k = d.isoformat()
-        if not client or (k in cache["sabato"] and cache["sabato"][k].get("versione") == VERSIONE_SHABBAT):
+        gia = cache["sabato"].get(k)
+        if not client or (gia and ((gia.get("versione") == VERSIONE_SHABBAT
+                                    and gia.get("obiezioni", "") == firma_obiezioni(f"sab-{k}"))
+                                   or pubblicato(gia["chiave"], registri) or gia["chiave"] in approvate)):
             continue
         try:
             feste = feste_ebraiche(d, 45)
@@ -576,7 +618,8 @@ def main():
                 dossier = dossier[dossier.index("TEMA:"):]
             tema = re.search(r"TEMA:\s*\**\s*(.+)", dossier).group(1).strip(" *") if "TEMA:" in dossier else ""
             t = pr.scrivi_e_rivedi(client, ISTRUZIONI_SHABBAT,
-                                   f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", SCHEMA_SHABBAT, ambiti=AMBITI_WEEKEND)
+                                   con_obiezioni(f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", f"sab-{k}"),
+                                   SCHEMA_SHABBAT, ambiti=AMBITI_WEEKEND)
         except Exception as err:
             print(f"  ✗ sabato {k}: {err}")
             continue
@@ -585,6 +628,7 @@ def main():
         t["fonti"] = [f for f in t.get("fonti", []) if f.get("url", "") in dossier
                       and any(dom in f["url"] for dom in FONTI_EBRAICHE)]
         voce = {"chiave": f"sab-{k}", "data": k, "formato": FORMATO_SHABBAT, "versione": VERSIONE_SHABBAT,
+                "obiezioni": firma_obiezioni(f"sab-{k}"),
                 "colore": "#4FB0FF", "anno": "", "tema": tema, "dossier": dossier, "lezione": "",
                 "lezioni": [], "url": g.URL_SITO + "/", "testi": t, "illustrazioni": []}
         schede = t.get("carosello", [])[:8]
