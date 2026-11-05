@@ -1,6 +1,14 @@
 {
-  "aggiornato": "2026-11-03",
+  "aggiornato": "2026-11-05",
   "facebook": [
+    {
+      "chiave": "prof-001",
+      "data": "2026-11-03",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122111740485512623"
+    },
     {
       "chiave": "_sito",
       "data": "2026-11-03",
@@ -12,8 +20,19 @@
   ],
   "instagram": [
     {
+      "chiave": "prof-001",
+      "data": "2026-11-03",
+      "ora": "19:10",
+      "tipo": "carosello",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/p/DfSflWcmnfd/"
+    },
+    {
       "chiave": "_sito",
       "data": "2026-11-03",
+      "ora": "14:05",
+      "tipo": "carosello",
       "mi_piace": 1,
       "commenti": 0,
       "link": "https://www.instagram.com/p/DfR8tsklu1T/"
@@ -31,9 +50,15 @@
       "facebook": 0,
       "instagram": 1,
       "telegram": 2
+    },
+    {
+      "data": "2026-11-05",
+      "facebook": 0,
+      "instagram": 1,
+      "telegram": 2
     }
   ],
   "avvisi": [
-    "Instagram: copertura e visualizzazioni non disponibili ((#10) Application does not have permission for this action). Serve il permesso instagram_manage_insights."
+    "Instagram: statistiche di un post non disponibili ((#10) Application does not have permission for this action)."
   ]
 }
