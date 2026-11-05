@@ -5,7 +5,7 @@ disable-model-invocation: true
 allowed-tools: Read Glob Grep Agent WebSearch WebFetch Edit(.social/**) Write(.social/**) Edit(data/social-coda.json) Write(data/social-coda.json)
 ---
 
-Sei la regia dei social del Lab IRC. Coordini gli agenti, non scrivi i testi e non li giudichi.
+Sei la regia dei social del Lab IRC. Coordini gli agenti, non scrivi i testi e non li giudichi. La squadra: il direttore (la linea editoriale), il calendarista (quale lezione in quale giorno), verificatore e guardiano (i controlli), ricercatore e redattore (le correzioni), il regista (le note di regia per reel e caroselli), esploratore e analista (imparare dai numeri).
 
 Chiama sempre gli agenti in primo piano (`run_in_background: false`) e aspetta il loro risultato: ogni passo dipende dal precedente.
 
@@ -14,8 +14,10 @@ Leggi `.claude/social-regole.md` e `.social/stato.md`. Se lo stato manca, fermat
 
 Se lo stato dice che i social sono in pausa, passa direttamente al punto 6 e scrivi che non è stato preparato nulla.
 
-## 2. Scelta
-Chiedi a **social-calendarista** il piano delle uscite delle lezioni (i giorni elencati in «Uscite da coprire»: a scuola lunedì, mercoledì e venerdì la lezione esce come REEL, cioè un video a fumetti col prof: scegli lezioni con una curiosità o una storia che si racconta bene; martedì esce come carosello; in vacanza nessuna). Prepara un elenco di lavoro con i post scelti e le riserve.
+## 2. Linea editoriale e scelta
+Chiama prima **social-direttore**: legge numeri, quaderno, rubriche e candidati e scrive `.social/linea.md` (la linea della settimana, i candidati adatti a ogni rubrica, le priorità, i brief per il regista).
+
+Poi chiedi a **social-calendarista** il piano delle uscite delle lezioni, passandogli le priorità del direttore (i giorni elencati in «Uscite da coprire», ognuno con la sua rubrica: a scuola lunedì, mercoledì e venerdì la lezione esce come REEL del regista, con le pagine vere del fascicolo e la voce: scegli lezioni con una curiosità o una storia che si racconta bene; martedì esce come carosello della rubrica del giorno, «Parole con una storia», «In classe domani» o «In numeri»; in vacanza nessuna). Prepara un elenco di lavoro con i post scelti e le riserve.
 
 ## 3. Controllo
 Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando a ciascuno il file `.social/candidati/NN.md`.
@@ -38,6 +40,9 @@ Le strisce del prof (P1, P2…, solo nelle vacanze), lo Shabbat del sabato (S1, 
 
 Se finiscono le riserve e un'uscita resta scoperta, lasciala scoperta: meglio un post in meno che un post sbagliato.
 
+## 4b. Regia
+Per ogni lezione approvata per un reel (lunedì, mercoledì, venerdì) e per il carosello del martedì chiama **social-regista** con il numero del candidato, la data e la rubrica: scrive `.social/regia/NN.json` con le note di regia (angolo, gancio, curiosità da usare, scena, tono, prima riga della didascalia). Copia l'oggetto `regia` di quel file nella voce della coda (campo `regia`): così arriva allo script del regista e a chi scrive il carosello.
+
 ## 5. Coda
 Aggiorna `data/social-coda.json`, conservando le voci già presenti in `coda` e in `escluse` e il valore di `pausa`. Aggiungi le voci nuove:
 
@@ -47,7 +52,8 @@ Aggiorna `data/social-coda.json`, conservando le voci già presenti in `coda` e 
   "pausa": false,
   "solo_coda": true,
   "coda": [
-    {"chiave": "<chiave esatta>", "quando": "AAAA-MM-GG", "esito": "approvato", "motivo": "<una riga>"}
+    {"chiave": "<chiave esatta>", "quando": "AAAA-MM-GG", "esito": "approvato", "motivo": "<una riga>",
+     "regia": {"rubrica": "...", "angolo": "...", "gancio": "...", "curiosita": "...", "scena": "...", "tono": "...", "prima_riga": "...", "richiesta": "...", "evita": "..."}}
   ],
   "escluse": [
     {"chiave": "<chiave esatta>", "motivo": "<una riga>", "data": "AAAA-MM-GG"}
@@ -67,10 +73,13 @@ Il quaderno lo salva il controllo finale (seo/social_quaderno.py); chi scrive i 
 Scrivi `.social/rapporto.md`. Il repository è pubblico: niente dati personali. Usa questa forma:
 
 ```markdown
+## La linea della settimana
+Da `.social/linea.md`: su che cosa puntiamo e perché, in tre righe.
+
 ## Piano della settimana
 
-| Quando | Post | Classe | Perché |
-|---|---|---|---|
+| Quando | Rubrica | Post | Classe | Angolo e gancio | Perché |
+|---|---|---|---|---|---|
 
 ## Controlli
 Per ogni post: esito del verificatore, esito del guardiano, cartolina, eventuali correzioni fatte.

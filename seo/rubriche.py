@@ -56,6 +56,7 @@ CARTELLA_DOMENICA = g.RADICE / "promozione" / "illustrazioni" / "domenica"
 POSE_PROF = json.loads((Path(__file__).resolve().parent / "pose_prof.json").read_text(encoding="utf-8"))
 POSE = list(POSE_PROF)
 FORMATI = ["Lo sapevi?", "Il prof risponde", "Indovina un po'", "Vita da prof"]
+AMBITI_WEEKEND = ("caroselli", "reel", "didascalie")   # la domenica e lo Shabbat hanno carosello e video
 
 
 # --------------------------------------------------------------------------
@@ -529,7 +530,7 @@ def main():
             messaggio = (f"Domanda della settimana: {scelta['domanda']}\n\n" + "\n\n".join(
                 f"<lezione titolo=\"{l['titolo']}\" classe=\"{g.NOMI_ANNO.get(str(l.get('anno')), '')}\">\n"
                 f"{g.testo_lezione(l)}\n</lezione>" for l in scelte))
-            t = pr.scrivi_e_rivedi(client, ISTRUZIONI_DOMENICA, messaggio, SCHEMA_DOMENICA)
+            t = pr.scrivi_e_rivedi(client, ISTRUZIONI_DOMENICA, messaggio, SCHEMA_DOMENICA, ambiti=AMBITI_WEEKEND)
         except Exception as err:
             print(f"  ✗ domenica {k}: {err}")
             continue
@@ -575,7 +576,7 @@ def main():
                 dossier = dossier[dossier.index("TEMA:"):]
             tema = re.search(r"TEMA:\s*\**\s*(.+)", dossier).group(1).strip(" *") if "TEMA:" in dossier else ""
             t = pr.scrivi_e_rivedi(client, ISTRUZIONI_SHABBAT,
-                                   f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", SCHEMA_SHABBAT)
+                                   f"Tema: {tema}\n\n<dossier>\n{dossier}\n</dossier>", SCHEMA_SHABBAT, ambiti=AMBITI_WEEKEND)
         except Exception as err:
             print(f"  ✗ sabato {k}: {err}")
             continue

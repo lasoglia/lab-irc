@@ -13,6 +13,7 @@ Leggi la richiesta, `.claude/social-regole.md`, `.social/stato.md` e `data/socia
 - **Mettere o togliere la pausa:** cambia `pausa` in `data/social-coda.json`.
 - **Sostituire un post:** scegli tra i candidati e fallo approvare da **social-verificatore** e **social-guardiano** prima di metterlo in coda.
 - **Cambiare un testo:** usa **social-redattore**, poi fai ricontrollare a entrambi.
+- **Cambiare l'angolo, il gancio o il tono di un reel o del carosello del martedì:** chiama **social-regista** sul candidato e aggiorna il campo `regia` della voce in `data/social-coda.json` (lo script del regista lo legge quando monta).
 - **Spiegare o dare un'analisi:** rispondi usando i dati che hai.
 
 Non puoi modificare script, lezioni o workflow, né pubblicare. Se la richiesta chiede una di queste cose, spiega come farla.

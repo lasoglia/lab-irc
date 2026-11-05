@@ -91,14 +91,15 @@ def applica_proposta() -> str:
     return f"quaderno: aggiornato ({len(q['regole_apprese'])} regole, {len(q['idee'])} idee)"
 
 
-def istruzioni_apprese(ambito: str | None = None) -> str:
+def istruzioni_apprese(*ambiti: str) -> str:
     """Il testo da aggiungere alle istruzioni di chi scrive: regole confermate ed esperimento in corso.
-    Con «ambito» (reel, caroselli, storie…) solo le regole per tutti e per quell'ambito."""
+    Con uno o più ambiti (reel, caroselli, didascalie…) solo le regole per tutti e per quegli ambiti;
+    senza ambiti, tutte."""
     q = leggi()
     oggi = dt.date.today().isoformat()
     righe = [f"- {r['regola']}" + (f" (per: {r['per']})" if r.get("per", "tutti") != "tutti" else "")
              for r in q.get("regole_apprese", [])
-             if r.get("forza") == "confermata" and (ambito is None or r.get("per", "tutti") in ("tutti", ambito))]
+             if r.get("forza") == "confermata" and (not ambiti or r.get("per", "tutti") in ("tutti", *ambiti))]
     e = q.get("esperimento")
     attivo = e and (not e.get("al") or e["al"] >= oggi) and (not e.get("dal") or e["dal"] <= oggi)
     if not righe and not attivo:

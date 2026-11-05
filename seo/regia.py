@@ -12,7 +12,8 @@ Questo script, senza IA:
     la pagina, prepara evidenziatore, cerchio e movimento di macchina; se la citazione non c'è,
     l'inquadratura diventa una frase del prof (meglio che mostrare una pagina sbagliata);
   - se c'è la chiave GEMINI_API_KEY (o il campione VOCE_CAMPIONE per le voci clonate), fa dire
-    le frasi alla voce dei reel (seo/voce.py; voce scelta: Sadachbia, da narratore appassionato).
+    le frasi alla voce dei reel (seo/voce.py; voce scelta: Sadachbia, da narratore appassionato);
+    se la voce non riesce (quota di Gemini finita, rete assente) il reel esce con musica e sottotitoli.
 
 USO
 ---
@@ -80,13 +81,26 @@ def prepara(copione: dict, cartella: Path) -> dict:
     frasi = [q.get("voce", "") for q in r["inquadrature"]]
     if (os.environ.get("GEMINI_API_KEY") or os.environ.get("VOCE_CAMPIONE")) and any(frasi):
         (cartella / "frasi.json").write_text(json.dumps(frasi, ensure_ascii=False), encoding="utf-8")
-        subprocess.run([sys.executable, str(RADICE / "seo" / "voce.py"), str(cartella / "frasi.json"),
-                        str(cartella / "voce")], check=True)
         for i, q in enumerate(r["inquadrature"]):
-            f = cartella / "voce" / f"voce-{i:02d}.wav"
-            if q.get("voce") and f.exists():
-                q["voce_file"] = str(f)
+            f = voce_di(cartella, i)
+            if q.get("voce") and f:
+                q["voce_file"] = f
     return r
+
+
+def voce_di(cartella: Path, i: int) -> str | None:
+    """Il file della voce dell'inquadratura i, dopo aver fatto parlare seo/voce.py (una volta sola).
+    Se la voce non si può fare (Gemini senza quota, rete assente), il reel esce con musica e sottotitoli:
+    meglio un reel senza voce che nessun reel."""
+    if not (cartella / "voce").exists():
+        esito = subprocess.run([sys.executable, str(RADICE / "seo" / "voce.py"), str(cartella / "frasi.json"),
+                                str(cartella / "voce")])
+        (cartella / "voce").mkdir(exist_ok=True)
+        if esito.returncode != 0:
+            print(f"  ! la voce non è riuscita (seo/voce.py è uscito con {esito.returncode}): "
+                  "il reel esce con musica e sottotitoli")
+    f = cartella / "voce" / f"voce-{i:02d}.wav"
+    return str(f) if f.exists() else None
 
 
 def main() -> int:

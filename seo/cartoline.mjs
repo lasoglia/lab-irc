@@ -14,14 +14,17 @@
 // (senza variabili usa il Playwright e il Chromium di questo computer, se ci sono)
 
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
+const RADICE = process.env.LAB_RADICE || join(dirname(fileURLToPath(import.meta.url)), '..');
 // l'avatar del prof in una posa: assets/avatar/<posa>.png o .jpg (null se manca)
 const avatarDi = (posa) => ['png', 'jpg'].map((e) => `assets/avatar/${posa}.${e}`).find((f) => existsSync(join(RADICE, f))) || null;
-const CARTELLA = join(RADICE, 'promozione', 'cartoline');
+// PROVINO_CAROSELLI=<elenco.json> USCITA=<cartella>: disegna solo quei caroselli del martedì, per guardarli
+const PROVINO = process.env.PROVINO_CAROSELLI || '';
+const CARTELLA = PROVINO && process.env.USCITA ? process.env.USCITA : join(RADICE, 'promozione', 'cartoline');
 const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.js';
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium';
 
@@ -219,14 +222,126 @@ h1{font-size:86px}
 p{max-width:820px}`);
 }
 
+/* ---------- i caroselli del martedì (seo/caroselli.py): «Parole con una storia», «In classe domani»,
+   «In numeri», nello stile «Notte del Lab» dei reel (seo/reel2.mjs): vetrata, grana, barra dell'anno,
+   etichetta della rubrica in oro, pagine VERE del fascicolo con l'evidenziatore e il cerchio ---------- */
+const GRANA = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")`;
+// *parola* = in corsivo oro, come nei reel
+const ricco = (s) => esc(s).replace(/\*([^*]+)\*/g, '<i>$1</i>');
+function notte(colore, corpo, stile = '') {
+  return pagina(colore, corpo, `
+body{padding:84px 96px 76px;background:radial-gradient(90% 45% at 100% 0%,${colore}55,transparent 62%),radial-gradient(70% 40% at 0% 8%,rgba(139,92,246,.35),transparent 62%),radial-gradient(80% 40% at 50% 100%,rgba(34,211,238,.12),transparent 70%),#14131F}
+body:before{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;background-image:${GRANA};pointer-events:none}
+.bordo{display:none}
+.barra-anno{position:absolute;left:0;top:0;bottom:0;width:10px;background:${colore}}
+.alto{position:relative;z-index:1}
+.rubrica{display:flex;gap:14px;align-items:center}
+.rubrica b{font:600 26px/1 Cinzel;letter-spacing:.16em;text-transform:uppercase;color:#14131F;background:${ORO};padding:14px 22px 11px;border-radius:999px}
+.rubrica span{font:600 22px/1 Cinzel;letter-spacing:.16em;text-transform:uppercase;color:#C7C3DA}
+.conta{font:600 26px Cinzel;letter-spacing:.12em;color:${colore}}
+.centro{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.kicker{font:600 26px Cinzel;letter-spacing:.18em;text-transform:uppercase;color:${ORO};display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.kicker:before{content:"";width:44px;height:2px;background:currentColor;flex:none}
+h1,h2{font-family:Cormorant;font-weight:600;margin:0;text-wrap:balance;font-variant-numeric:lining-nums;letter-spacing:-.01em}
+h1 i,h2 i,p i{font-style:italic;font-weight:500;color:${ORO}}
+h2{font-size:70px;line-height:1.08;text-wrap:pretty}
+p{font:500 34px/1.4 Figtree;color:#D9D6E8}
+.cifra{font:600 300px/.9 Cormorant;font-variant-numeric:lining-nums;background:linear-gradient(180deg,#F3DCA4,#E3C27A 55%,#A67C2E);-webkit-background-clip:text;color:transparent;letter-spacing:-.02em;margin-bottom:18px}
+.foglio{position:relative;width:100%;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.tela{position:absolute;left:0;top:0;width:1241px;height:1754px;transform-origin:0 0}
+.tela>img{position:absolute;left:0;top:0;width:1241px}.tela>.evid,.tela>.cerchio{position:absolute}
+.evid{background:rgba(251,191,36,.42);border-radius:6px;mix-blend-mode:multiply}
+.cerchio{overflow:visible}.cerchio ellipse{fill:none;stroke:#E0365A;stroke-width:3.4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.fonte{margin-top:16px;font:700 22px Figtree;color:#8E89A6;letter-spacing:.02em}
+.citazione{font:500 46px/1.3 Cormorant;font-style:italic;color:#ECEAF5;border-left:4px solid ${ORO};padding:10px 0 10px 30px}
+.pillola{align-self:flex-start;font:700 28px Figtree;color:#14131F;background:${ORO};border-radius:999px;padding:14px 30px}
+.piede{position:relative;z-index:1;margin-top:34px;align-items:center}
+.piede .uda{font-weight:500;font-size:22px;color:#9A96B3;max-width:640px}
+.piede .web{font:700 26px Figtree;color:${ORO}}
+.piede .masc{width:110px;height:110px;flex:none}
+${stile}`);
+}
+// la pagina vera del fascicolo, disegnata con pdftoppm (poppler) quando serve; null se non si può
+const pagineFatte = new Map();
+function paginaPdf(fascicolo, n) {
+  const chiave = `${fascicolo}#${n}`;
+  if (pagineFatte.has(chiave)) return pagineFatte.get(chiave);
+  let file = null;
+  const pdf = join(RADICE, fascicolo);
+  if (existsSync(pdf)) {
+    const radice = join(lavoro, `pagina-${pagineFatte.size}`);
+    const e = spawnSync('pdftoppm', ['-r', '150', '-f', String(n), '-l', String(n), '-singlefile', '-jpeg', '-jpegopt', 'quality=88', pdf, radice]);
+    if (e.status === 0 && existsSync(radice + '.jpg')) file = radice + '.jpg';
+    else console.log(`  ! pagina ${n} di ${fascicolo} non disegnata (pdftoppm): la scheda mostra la citazione`);
+  }
+  pagineFatte.set(chiave, file);
+  return file;
+}
+// il foglio: la pagina vera stretta sulla frase evidenziata (L × A pixel), con l'evidenziatore e il cerchio
+function foglio(s, L, A) {
+  const file = s.fascicolo && s.pagina && (s.evidenzia || []).length ? paginaPdf(s.fascicolo, s.pagina) : null;
+  if (!file) return s.citazione ? `<div class="citazione">«${esc(s.citazione)}»</div>` : '';
+  const r = s.evidenzia;
+  const x0 = Math.min(...r.map((q) => q.x)), x1 = Math.max(...r.map((q) => q.x + q.w));
+  const y0 = Math.min(...r.map((q) => q.y)), y1 = Math.max(...r.map((q) => q.y + q.h));
+  const scala = Math.min(1.9, Math.max(0.9, (L - 90) / Math.max(x1 - x0, 480)));
+  const tx = Math.max(L - 1241 * scala, Math.min(0, L / 2 - (x0 + x1) / 2 * scala));
+  const ty = Math.max(A - 1754 * scala, Math.min(0, A / 2 - (y0 + y1) / 2 * scala));
+  return `<div class="foglio" style="height:${A}px"><div class="tela" style="transform:translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${scala.toFixed(3)})">
+    <img src="${pathToFileURL(file).href}">${r.map((e) => `<b class="evid" style="left:${e.x}px;top:${e.y}px;width:${e.w}px;height:${e.h}px"></b>`).join('')}
+    ${s.cerchio ? `<svg class="cerchio" style="left:${s.cerchio.x - 30}px;top:${s.cerchio.y - 30}px;width:${s.cerchio.w + 60}px;height:${s.cerchio.h + 60}px" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="50" cy="50" rx="46" ry="40"/></svg>` : ''}
+  </div></div><div class="fonte">Dal fascicolo della lezione, pagina ${s.pagina}</div>`;
+}
+const intestazione = (c, destra) => `<div class="alto"><div class="rubrica"><b>${esc(c.rubrica)}</b><span>Anno ${ROMANI[+c.anno] || ''}</span></div>${destra}</div>`;
+const piedeMartedi = (c) => `<div class="piede"><div class="uda">${esc(c.titolo)}</div><div class="web">www.labirc.it</div>${c.mascotte ? `<img class="masc" src="${url(`assets/mascotte/svg/${c.mascotte}.svg`)}">` : ''}</div>`;
+function martediCopertina(c, totale) {
+  const colore = c.colore || ORO;
+  const numero = c.rubrica === 'In numeri';
+  const parola = c.rubrica === 'Parole con una storia';
+  return notte(colore, `<div class="barra-anno"></div>${intestazione(c, `<div class="conta">1/${totale}</div>`)}
+<div class="centro">${numero ? `<div class="cifra">${esc(c.copertina.titolo)}</div>` : `<h1 class="${parola ? 'parola' : ''}">${ricco(c.copertina.titolo)}</h1>`}
+<p>${ricco(c.copertina.frase)}</p><div class="pillola">Sfoglia &rarr;</div></div>
+${piedeMartedi(c)}`, `h1{font-size:118px;line-height:1.02}h1.parola{font-size:190px;line-height:.95}
+.cifra{font-size:340px}p{margin:30px 0 40px;font-size:40px}`);
+}
+function martediScheda(c, i, totale, s) {
+  const colore = c.colore || ORO;
+  let corpo;
+  if (s.tipo === 'numero') {
+    corpo = `<div class="cifra">${esc(s.numero || '')}</div><div class="kicker">${esc(s.titolo)}</div><h2>${ricco(s.testo)}</h2>${foglio(s, 888, 250)}`;
+  } else if (s.tipo === 'pagina') {
+    corpo = `<div class="kicker">${esc(s.titolo)}</div>${foglio(s, 888, 560)}<h2 class="sotto">${ricco(s.testo)}</h2>`;
+  } else {
+    corpo = `<div class="kicker">${esc(s.titolo)}</div><h2>${ricco(s.testo)}</h2>`;
+  }
+  return notte(colore, `<div class="barra-anno"></div>${intestazione(c, `<div class="conta">${i}/${totale}</div>`)}
+<div class="centro">${corpo}</div>${piedeMartedi(c)}`,
+  `.cifra{font-size:230px;line-height:.95}.t-numero h2{font-size:54px}
+.foglio{margin-top:26px}h2.sotto{margin-top:30px;font-size:48px}`).replace('<body>', `<body class="t-${s.tipo}">`);
+}
+function martediFinale(c, totale) {
+  const colore = c.colore || ORO;
+  return notte(colore, `<div class="barra-anno"></div>${intestazione(c, `<div class="conta">${totale}/${totale}</div>`)}
+<div class="centro">
+<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>
+<div class="kicker">${esc(c.finale || 'Per continuare')}</div>
+<h2>La lezione completa<br>è su <i>www.labirc.it</i></h2>
+<div class="bio">Link nella bio</div></div>
+${piedeMartedi(c)}`,
+  `.centro{align-items:center;text-align:center}.kicker{justify-content:center}.kicker:before{display:none}
+.cinque{display:flex;gap:18px;margin-bottom:40px}.cinque img{width:120px;height:120px}
+h2{font-size:84px}.bio{margin-top:30px;font:700 30px Figtree;color:#ECEAF5;background:rgba(255,255,255,.07);border:1.5px solid rgba(227,194,122,.5);border-radius:999px;padding:14px 30px}`);
+}
+
 /* ---------- la storia (1080×1920): il post del giorno, con l'invito a guardarlo ----------
    Instagram e Facebook coprono in alto il nome e in basso la barra delle risposte:
-   tutto quello che conta sta nella fascia centrale */
+   tutto quello che conta sta nella fascia centrale. La copertina si legge dal JPG (i PNG
+   non si salvano più): la storia viene sempre dopo la copertina nell'elenco dei lavori. */
 const storiaDi = (f) => f.replace(/\.png$/, '-storia.png');
 function storia(colore, immagine, etichetta, invito) {
   return pagina(colore, `
 <div class="alto">${logo}<div class="tag" style="color:${colore}">${esc(etichetta)}</div></div>
-<div class="centro"><img class="post" src="${pathToFileURL(join(CARTELLA, immagine)).href}"></div>
+<div class="centro"><img class="post" src="${pathToFileURL(join(CARTELLA, jpg(immagine))).href}"></div>
 <div class="invito">${esc(invito)}</div>
 <div class="piede"><div class="uda"></div><div class="web">www.labirc.it</div></div>`,
   `html,body{height:1920px}
@@ -330,6 +445,14 @@ for (const c of leggi('cartoline.json').filter((x) => serve(x.chiave))) {
   schede.forEach((s, k) => lavori.push({ file: immagini[k + 1], html: () => scheda(c, k + 2, totale, s, (c.illustrazioni || [])[k]), adatta: 'h2' }));
   if (schede.length) lavori.push({ file: immagini[totale - 1], html: () => finale(c, totale), v: 2 });
 }
+// i caroselli del martedì (seo/caroselli.py): stessa chiave della lezione in coda; con PROVINO solo quelli
+const caroselliMartedi = PROVINO ? JSON.parse(readFileSync(PROVINO, 'utf8')) : leggi('caroselli.json').filter((x) => serve(x.chiave));
+for (const c of caroselliMartedi) {
+  const totale = c.immagini.length;
+  lavori.push({ file: c.immagini[0], html: () => martediCopertina(c, totale), adatta: 'h1,.cifra' });
+  (c.schede || []).forEach((s, k) => lavori.push({ file: c.immagini[k + 1], html: () => martediScheda(c, k + 2, totale, s), adatta: 'h2' }));
+  lavori.push({ file: c.immagini[totale - 1], html: () => martediFinale(c, totale) });
+}
 for (const p of leggi('prof.json').filter((x) => serve(x.chiave))) {
   const vignette = p.vignette || [];
   // senza le illustrazioni del prof (assets/avatar/) le strisce aspettano: meglio nessuna che sgranata
@@ -361,6 +484,9 @@ for (const c of leggi('cartoline.json').filter((x) => serve(x.chiave) && daRacco
   lavori.push({ file: storiaDi(prima), alto: 1920, html: () => storia(c.colore || ORO, prima,
     c.anno ? `Nuova lezione · classe ${c.classe}` : 'Religione Cattolica', 'Il post completo è sul profilo') });
 }
+for (const c of caroselliMartedi.filter((x) => PROVINO || daRaccontare(x.chiave))) {
+  lavori.push({ file: storiaDi(c.immagini[0]), alto: 1920, html: () => storia(c.colore || ORO, c.immagini[0], esc(c.rubrica), 'Il carosello completo è sul profilo') });
+}
 for (const p of leggi('prof.json').filter((x) => serve(x.chiave) && daRaccontare(x.chiave))) {
   if (!lavori.some((l) => l.file === p.immagini[0])) continue;
   lavori.push({ file: storiaDi(p.immagini[0]), alto: 1920, html: () => storia(COLORI[p.anno] || '#22D3EE', p.immagini[0], `Il prof del Lab · ${p.formato}`, 'Il post completo è sul profilo') });
@@ -379,15 +505,16 @@ for (const l of lavori) l.soloJpg = true;   // solo JPG: i PNG pesavano il doppi
 }
 
 mkdirSync(CARTELLA, { recursive: true });
+if (PROVINO) lavori.splice(0, lavori.length, ...lavori.filter((l) => caroselliMartedi.some((c) => c.immagini.includes(l.file) || storiaDi(c.immagini[0]) === l.file)));
 const attese = new Set(lavori.flatMap((l) => (l.soloJpg ? [jpg(l.file)] : [l.file, jpg(l.file)])));
-for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
+if (!PROVINO) for (const f of readdirSync(CARTELLA)) if (/\.(png|jpg)$/.test(f) && !attese.has(f)) unlinkSync(join(CARTELLA, f));
 
 // Quando cambia la grafica di un tipo di immagine (il suo «v»), quelle già disegnate si rifanno:
 // promozione/cartoline/versioni.json ricorda con che versione è stata disegnata ciascuna
 const VERSIONI = join(CARTELLA, 'versioni.json');
 const versioni = existsSync(VERSIONI) ? JSON.parse(readFileSync(VERSIONI, 'utf8')) : {};
 const vecchia = (l) => (versioni[l.file] || 1) !== (l.v || 1);
-const daFare = lavori.filter((l) => vecchia(l) || (!R2(jpg(l.file)) && ((!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))))));
+const daFare = PROVINO ? lavori : lavori.filter((l) => vecchia(l) || (!R2(jpg(l.file)) && ((!l.soloJpg && !existsSync(join(CARTELLA, l.file))) || !existsSync(join(CARTELLA, jpg(l.file))))));
 const salvaVersioni = () => {
   const tieni = Object.fromEntries(lavori.filter((l) => (l.v || 1) > 1 && !vecchia(l)).map((l) => [l.file, l.v]));
   writeFileSync(VERSIONI, JSON.stringify(tieni, null, 1) + '\n');
@@ -402,7 +529,7 @@ const pw = (await import(pathToFileURL(PW).href)).default;
 const browser = await pw.chromium.launch({ executablePath: CHROME });
 const scheda_ = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
 // Ogni immagine si apre da un file: così il browser può leggere font, mascotte e avatar del sito
-const lavoro = mkdtempSync(join(tmpdir(), 'cartoline-'));
+var lavoro = mkdtempSync(join(tmpdir(), 'cartoline-'));
 for (const l of daFare) {
   writeFileSync(join(lavoro, 'cartolina.html'), l.html());
   const alto = l.alto || 1350, largo = l.largo || 1080;
@@ -415,6 +542,10 @@ for (const l of daFare) {
     if (!t) return;
     let px = parseFloat(getComputedStyle(t).fontSize);
     while (px > 40 && document.body.scrollHeight > alto) { px -= 3; t.style.fontSize = px + 'px'; }
+    // le schede «pagina» e «numero» dei caroselli: se non basta, si stringe anche il foglio
+    const f = document.querySelector('.foglio');
+    let h = f ? parseFloat(f.style.height) : 0;
+    while (f && h > 220 && document.body.scrollHeight > alto) { h -= 20; f.style.height = h + 'px'; }
   }, [l.adatta || '', alto]);
   if (!l.soloJpg) await scheda_.screenshot({ path: join(CARTELLA, l.file) });
   await scheda_.screenshot({ path: join(CARTELLA, jpg(l.file)), type: 'jpeg', quality: 90 });
