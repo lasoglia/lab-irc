@@ -377,6 +377,49 @@ class SfondiIA(unittest.TestCase):
         self.assertTrue(immagini_ia.voci_da_dipingere(elenchi)["dom-1"].get("carosello"))   # la copertina, non il video
 
 
+class CaroselliMartedi(unittest.TestCase):
+    """Il martedì esce il carosello della rubrica del giorno (seo/caroselli.py), se è pronto."""
+
+    LEZIONI = [{"chiave": "lez", "titolo": "L", "anno": "2", "url": "u", "classe": "seconda", "uda": "U"}]
+
+    def test_quali_martedi(self):
+        import caroselli
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "coda.json"
+            f.write_text(json.dumps({"coda": [
+                {"chiave": "lez", "quando": "2026-11-10", "esito": "approvato"},     # martedì: Parole con una storia
+                {"chiave": "lez", "quando": "2026-11-09", "esito": "approvato"},     # lunedì: reel, non un carosello
+                {"chiave": "lez", "quando": "2026-11-17", "esito": "approvato"}]}))  # oltre i 7 giorni
+            vero, coda.FILE_CODA = coda.FILE_CODA, f
+            try:
+                da_fare = caroselli.martedi_da_preparare(dt.date(2026, 11, 6), self.LEZIONI)
+            finally:
+                coda.FILE_CODA = vero
+        self.assertEqual([(r, q) for _, r, q in da_fare], [("Parole con una storia", "2026-11-10")])
+
+    def test_schede_con_pagina_vera_o_testo(self):
+        import caroselli
+        schede = [{"tipo": "pagina", "titolo": "T", "testo": "x", "citazione": "una frase che non c'è nel fascicolo", "cerchia": ""},
+                  {"tipo": "numero", "titolo": "N", "testo": "y", "numero": "525", "citazione": "", "cerchia": ""}]
+        pronte = caroselli.prepara_schede(schede, None)
+        self.assertEqual([s["tipo"] for s in pronte], ["testo", "numero"])   # senza la pagina la scheda diventa testo
+        self.assertNotIn("citazione", pronte[0])
+        voce = caroselli.voce_elenco(self.LEZIONI[0], "In numeri", "2026-11-24",
+                                     {"copertina": {"titolo": "525", "frase": "f"}, "schede": schede, "facebook": "fb",
+                                      "instagram": "ig", "telegram": "tg", "hashtag": ["irc"]})
+        self.assertEqual(voce["chiave"], "lez")                    # la stessa chiave della lezione in coda
+        self.assertEqual(len(voce["immagini"]), 4)                 # copertina, due schede, finale
+        self.assertTrue(voce["file"].startswith("martedi-"))
+        self.assertIn("#irc", voce["instagram"])
+
+    def test_pubblica_preferisce_la_rubrica_pronta(self):
+        import pubblica
+        kit = [{"chiave": "lez", "titolo": "kit", "file": "a.png"}, {"chiave": "altra", "titolo": "k2", "file": "b.png"}]
+        rubrica = [{"chiave": "lez", "titolo": "rubrica", "file": "m.png", "immagini": ["m.png", "m-2.png"]}]
+        self.assertEqual([p["titolo"] for p in pubblica.con_caroselli_martedi(kit, rubrica, pronto=lambda c: True)], ["rubrica", "k2"])
+        self.assertEqual([p["titolo"] for p in pubblica.con_caroselli_martedi(kit, rubrica, pronto=lambda c: False)], ["kit", "k2"])
+
+
 class Controllo(unittest.TestCase):
     TG = {"a": "2026-11-09"}
     META = {"a": {"facebook": "2026-11-09", "instagram": "2026-11-09"}}
