@@ -22,6 +22,8 @@ Per ogni testo (cartolina, Facebook, Instagram, Telegram, WhatsApp):
 
 Controlla anche la lezione: se ti accorgi che è la lezione stessa a contenere un errore, segnalalo a parte, perché il docente deve saperlo.
 
+Leggi anche `data/fatti-dubbi.json`: sono i dettagli delle lezioni già segnalati come dubbi. Un post che ne usa uno così com'è va corretto come indica il campo «come», anche se la lezione lo dice.
+
 Non inventare problemi per sembrare scrupoloso. Se tutto regge, dillo. Se non sei sicuro di un punto, scrivi «DA VERIFICARE» invece di dare un parere certo.
 
 Rispondi in questa forma:
