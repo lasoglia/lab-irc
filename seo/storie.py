@@ -87,7 +87,8 @@ def scheda(fascia: str, oggi: dt.date) -> dict | None:
             l = lezione_di(post) or post
             # alle 19 il reel; il carosello del martedì alle 13:30, lo Shabbat alle 11, la grande domanda alle 18
             piede = "Stasera alle 19" if ORE.get(tipo) == "19" else f"Oggi alle {ORE.get(tipo, '19')}"
-            return {"sopra": data_bella(oggi) + " · oggi nel Lab", "titolo": post.get("titolo", ""),
+            rubrica = cal.rubrica_del_giorno(oggi) if tipo == "lezione" else ""
+            return {"sopra": data_bella(oggi) + (f" · {rubrica}" if rubrica else " · oggi nel Lab"), "titolo": post.get("titolo", ""),
                     "testo": l.get("frase", ""), "anno": str(post.get("anno", "")),
                     "mascotte": MASCOTTE.get(str(post.get("anno", ""))), "piede": piede, "posa": "sorriso"}
         return None
