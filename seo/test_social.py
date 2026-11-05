@@ -77,6 +77,44 @@ class CaroselliSenzaReel(unittest.TestCase):
         self.assertEqual([x["chiave"] for x in scelti], ["b", "c"])
 
 
+class FormatiDeiTesti(unittest.TestCase):
+    """Le regole dei formati che il guardiano controlla e che si possono garantire senza IA."""
+
+    def test_instagram_hashtag_telegram(self):
+        import promozione as pr
+        t = pr.rifinisci_canali({"titolo": "Come può un'ampolla durare otto giorni?",
+                                 "instagram": "Primo.\n\nSecondo.\n\n#irc #culturaebraica",
+                                 "hashtag": ["irc", "culturaebraica", "luce", "festa", "olio"],
+                                 "telegram": "Una frase lunga che non fa da titolo e continua per molte parole fino a superare novanta caratteri."})
+        self.assertNotIn("#", t["instagram"])
+        self.assertIn("bio", t["instagram"].split("\n\n")[-1])
+        self.assertEqual(t["hashtag"][:2], ["religionecattolica", "irc"])
+        self.assertLessEqual(len(t["hashtag"]), 5)
+        self.assertTrue(t["telegram"].startswith("Come può"))
+
+    def test_testi_gia_in_regola_restano_uguali(self):
+        import promozione as pr
+        t = {"instagram": "Testo.\n\nLa lezione completa è nel link in bio.", "telegram": "Titolo\n\nTesto.",
+             "hashtag": ["religionecattolica", "irc", "medioevo"], "titolo": "Titolo"}
+        self.assertEqual(pr.rifinisci_canali(dict(t)), t)
+        self.assertEqual(pr.accorcia_schede(None, {"carosello": [{"titolo": "a", "testo": "breve"}]}),
+                         {"carosello": [{"titolo": "a", "testo": "breve"}]})
+
+    def test_obiezioni_delle_rubriche(self):
+        import rubriche
+        vecchio = rubriche.FILE_DA_RIFARE
+        rubriche.FILE_DA_RIFARE = Path(tempfile.mkdtemp()) / "da-rifare.md"
+        rubriche.FILE_DA_RIFARE.write_text("## sab-2026-11-07 (Shabbat)\n- Telegram senza titolo.\n\n"
+                                           "## `dom-2026-11-08`\n- La frase è del 1615.\n", encoding="utf-8")
+        try:
+            self.assertEqual(rubriche.obiezioni("sab-2026-11-07"), "- Telegram senza titolo.")
+            self.assertIn("1615", rubriche.con_obiezioni("domanda", "dom-2026-11-08"))
+            self.assertEqual(rubriche.con_obiezioni("domanda", "dom-2026-11-15"), "domanda")
+            self.assertEqual(rubriche.firma_obiezioni("dom-2026-11-15"), "")
+        finally:
+            rubriche.FILE_DA_RIFARE = vecchio
+
+
 class Calendario(unittest.TestCase):
     def test_pasqua_date_note(self):
         attese = {2024: (3, 31), 2025: (4, 20), 2026: (4, 5), 2027: (3, 28), 2038: (4, 25)}
@@ -224,6 +262,11 @@ class Storie(unittest.TestCase):
 
     def tearDown(self):
         self.storie.post_di_oggi = self._post
+
+    def test_ora_del_giorno(self):
+        self.assertEqual(self.storie.ora_di("lezione", dt.date(2026, 11, 6)), "19")      # venerdì, calendario di prima
+        self.assertEqual(self.storie.ora_di("lezione", dt.date(2026, 11, 10)), "13:30")  # martedì, carosello
+        self.assertEqual(self.storie.ora_di("shabbat", dt.date(2026, 11, 14)), "11")
 
     def test_mattina_con_ricorrenza(self):
         s = self.storie.scheda("mattina", dt.date(2026, 12, 8))
