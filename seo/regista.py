@@ -12,8 +12,8 @@ La rubrica dipende dal giorno (docs/progetto-rubriche.md): lunedì «Lo sapevi?�
 «Prova alla mano», «Mappa in 30 secondi» e «Due racconti» (la sceglie il regista secondo la lezione),
 venerdì «Falso mito» (solo se la lezione corregge davvero un luogo comune; altrimenti «Lo sapevi?»).
 
-Il regista ragiona a lungo (REGISTA_MODELLO, predefinito Fable, con pensiero esteso; se non risponde,
-il modello dei post), conosce il pubblico (le rubriche, le regole imparate, i reel che hanno reso di
+Il regista ragiona a lungo (REGISTA_MODELLO, con pensiero esteso; se non risponde, il modello dei
+post), riceve le curiosità già verificate della lezione (seo/curiosita.json), conosce il pubblico (le rubriche, le regole imparate, i reel che hanno reso di
 più) e alla fine il direttore creativo rilegge il copione con la lista di controllo dei reel che
 funzionano. Fatti e citazioni restano quelli del fascicolo: li ricontrolla il codice.
 
@@ -207,6 +207,30 @@ def pubblico() -> str:
     return "\n\n".join(parti)
 
 
+FILE_CURIOSITA = RADICE / "seo" / "curiosita.json"
+
+
+def curiosita_di(chiave: str) -> list[dict]:
+    """Le curiosità già verificate della lezione (seo/curiosita.json): frasi esatte del fascicolo con la pagina."""
+    try:
+        dati = json.loads(FILE_CURIOSITA.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    voci = dati.get(chiave) or dati.get(chiave.replace("’", "'")) or []
+    return [v for v in voci if isinstance(v, dict) and v.get("citazione")]
+
+
+def blocco_curiosita(chiave: str) -> str:
+    """Il testo da dare al regista: materiale in più, non un obbligo (le citazioni sono già controllate)."""
+    voci = curiosita_di(chiave)
+    if not voci:
+        return ""
+    return ("\n\n<curiosita_verificate>\nSpunti già trovati nel fascicolo, con la frase esatta (puoi usarli, "
+            "ignorarli o trovarne di migliori):\n" + "\n".join(
+                f"- [{v.get('rubrica', '')}] {v.get('gancio', '')}: {v.get('testo', '')} · pagina {v.get('pagina', '?')}: "
+                f"«{v['citazione']}»" for v in voci) + "\n</curiosita_verificate>")
+
+
 def testo_fascicolo(pdf: Path) -> str:
     pagine = []
     for n in range(1, fa.pagine(pdf) + 1):
@@ -275,8 +299,8 @@ def scrivi(lezione: dict, quando: str | None = None) -> dict | None:
     interattiva = ("<scene_lezione>\n" + "\n".join(f"{x['n']}. [{x['fase']}] {x['titolo']}: {x['contenuto']}" for x in scene)
                    + "\n</scene_lezione>") if scene else "La lezione interattiva non c'è: niente inquadrature «lezione»."
     messaggio = (f"Rubrica del giorno: {serie}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
-                 f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}\n\n"
-                 f"<fascicolo>\n{testo}\n</fascicolo>")
+                 f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}\n{interattiva}"
+                 f"{blocco_curiosita(lezione.get('chiave', ''))}\n\n<fascicolo>\n{testo}\n</fascicolo>")
     istruzioni = ISTRUZIONI.replace("{metodo}", metodo()) + "\n\n" + TONO_REGISTA + "\n\n" + pr.METODO
     if (chi := pubblico()):
         istruzioni += "\n\n<pubblico>\n" + chi + "\n</pubblico>"
