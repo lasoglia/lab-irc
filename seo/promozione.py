@@ -184,6 +184,59 @@ def chiama_claude(client, sistema: str, messaggio: str, schema: dict, sforzo: st
     return json.loads(testo_json), risposta
 
 
+# Le regole dei formati che il guardiano controlla (.claude/social-regole.md, «Formati»): quelle che si
+# possono garantire senza IA si sistemano qui, per tutti i testi (lezioni, rubriche, reel).
+LIMITE_SCHEDA = 190
+HASHTAG_FISSI = ["religionecattolica", "irc"]
+CHIUSA_INSTAGRAM = "Le lezioni del Lab sono nel link in bio."
+
+
+def rifinisci_canali(t: dict) -> dict:
+    """Instagram senza hashtag nel testo e con la chiusa sul link nella bio; hashtag sempre con
+    religionecattolica e irc (al massimo 5); Telegram con una riga di titolo, se il testo ha un titolo."""
+    import re
+    if isinstance(t.get("instagram"), str) and t["instagram"].strip():
+        righe = [r for r in t["instagram"].strip().split("\n") if not re.fullmatch(r"\s*(#\w+\s*)+", r)]
+        testo = "\n".join(righe).strip()
+        ultimo = testo.split("\n\n")[-1].lower()
+        if "bio" not in ultimo:
+            testo += "\n\n" + CHIUSA_INSTAGRAM
+        t["instagram"] = testo
+    if isinstance(t.get("hashtag"), list):
+        resto = [h for h in t["hashtag"] if h.lower() not in HASHTAG_FISSI]
+        t["hashtag"] = HASHTAG_FISSI + list(dict.fromkeys(resto))[:3]
+    titolo = (t.get("titolo") or "").strip()
+    if titolo and isinstance(t.get("telegram"), str) and t["telegram"].strip():
+        prima = t["telegram"].strip().split("\n", 1)[0]
+        if len(prima) > 90:   # nessuna riga di titolo: la si aggiunge
+            t["telegram"] = titolo + "\n\n" + t["telegram"].strip()
+    return t
+
+
+def accorcia_schede(client, t: dict, modello: str | None = None) -> dict:
+    """Le schede del carosello oltre il limite le accorcia il caporedattore, con gli stessi fatti."""
+    schede = t.get("carosello") if isinstance(t.get("carosello"), list) else []
+    lunghe = [i for i, s in enumerate(schede) if isinstance(s, dict) and len(s.get("testo", "")) > LIMITE_SCHEDA]
+    if not lunghe:
+        return t
+    schema = {"type": "object", "properties": {"schede": {"type": "array", "items": {
+        "type": "object", "properties": {"numero": {"type": "integer"}, "testo": {"type": "string"}},
+        "required": ["numero", "testo"], "additionalProperties": False}}},
+        "required": ["schede"], "additionalProperties": False}
+    elenco = "\n".join(f"{i + 1}. ({len(schede[i]['testo'])} caratteri) {schede[i]['testo']}" for i in lunghe)
+    dati, _ = chiama_claude(
+        client, "Sei il caporedattore dei social del Lab IRC. Accorci i testi delle schede di un carosello "
+        "Instagram: ognuno deve stare sotto i 175 caratteri, spazi compresi. Tieni gli stessi fatti, le stesse "
+        "parole chiave e lo stesso tono; togli il superfluo, non aggiungere niente. Rispondi con il numero di "
+        "ogni scheda e il testo nuovo.", f"Schede da accorciare:\n{elenco}", schema, "low", modello=modello)
+    for s in dati.get("schede", []):
+        i = int(s.get("numero", 0)) - 1
+        nuovo = (s.get("testo") or "").strip()
+        if i in lunghe and 0 < len(nuovo) <= LIMITE_SCHEDA:
+            schede[i]["testo"] = nuovo
+    return t
+
+
 def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
                     modello: str | None = None, pensiero: bool = False,
                     ambiti: tuple[str, ...] = ("caroselli", "didascalie")) -> dict:
@@ -204,6 +257,11 @@ def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
         schema, "high", modello=modello, pensiero=pensiero)
     if "hashtag" in finale:
         finale["hashtag"] = [h.lstrip("#").replace(" ", "") for h in finale["hashtag"] if h.strip("# ")]
+    finale = rifinisci_canali(finale)
+    try:
+        finale = accorcia_schede(client, finale, modello)
+    except Exception as err:   # le schede lunghe le segnala comunque il guardiano
+        print(f"  ! schede non accorciate ({err})")
     finale["origine"] = r2.model
     finale["token"] = {"input": r1.usage.input_tokens + r2.usage.input_tokens,
                        "output": r1.usage.output_tokens + r2.usage.output_tokens}
