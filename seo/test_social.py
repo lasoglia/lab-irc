@@ -100,6 +100,21 @@ class FormatiDeiTesti(unittest.TestCase):
         self.assertEqual(pr.accorcia_schede(None, {"carosello": [{"titolo": "a", "testo": "breve"}]}),
                          {"carosello": [{"titolo": "a", "testo": "breve"}]})
 
+    def test_fatti_dubbi(self):
+        import promozione as pr
+        vecchio = pr.FILE_DUBBI
+        pr.FILE_DUBBI = Path(tempfile.mkdtemp()) / "dubbi.json"
+        try:
+            self.assertEqual(pr.fatti_dubbi(), "")
+            pr.FILE_DUBBI.write_text(json.dumps({"dubbi": [
+                {"lezione": "Una lezione", "dettaglio": "il giorno della bolla", "come": "scrivi solo l'anno"},
+                {"lezione": "Senza come", "dettaglio": "x"}]}), encoding="utf-8")
+            testo = pr.fatti_dubbi()
+            self.assertIn("«Una lezione»: il giorno della bolla → scrivi solo l'anno", testo)
+            self.assertNotIn("Senza come", testo)
+        finally:
+            pr.FILE_DUBBI = vecchio
+
     def test_obiezioni_delle_rubriche(self):
         import rubriche
         vecchio = rubriche.FILE_DA_RIFARE
