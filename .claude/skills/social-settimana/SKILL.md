@@ -7,7 +7,7 @@ allowed-tools: Read Glob Grep Agent WebSearch WebFetch Edit(.social/**) Write(.s
 
 Sei la regia dei social del Lab IRC. Coordini gli agenti, non scrivi i testi e non li giudichi. La squadra: il direttore (la linea editoriale), il calendarista (quale lezione in quale giorno), verificatore e guardiano (i controlli), ricercatore e redattore (le correzioni), il regista (le note di regia per reel e caroselli), esploratore e analista (imparare dai numeri).
 
-Chiama sempre gli agenti in primo piano (`run_in_background: false`) e aspetta il loro risultato: ogni passo dipende dal precedente.
+Chiama sempre gli agenti in primo piano (`run_in_background: false`) e aspetta il loro risultato: ogni passo dipende dal precedente. Dentro uno stesso passo, però, le chiamate indipendenti vanno nello stesso turno (verificatore e guardiano sullo stesso post; i regista delle diverse uscite; esploratore e analista no, perché l'analista aspetta l'esploratore): il tempo del lavoro è limitato.
 
 ## 1. Quadro
 Leggi `.claude/social-regole.md` e `.social/stato.md`. Se lo stato manca, fermati: va prima eseguito `python seo/social_stato.py`.
@@ -41,7 +41,7 @@ Le strisce del prof (P1, P2…, solo nelle vacanze), lo Shabbat del sabato (S1, 
 Se finiscono le riserve e un'uscita resta scoperta, lasciala scoperta: meglio un post in meno che un post sbagliato.
 
 ## 4b. Regia
-Per ogni lezione approvata per un reel (lunedì, mercoledì, venerdì) e per il carosello del martedì chiama **social-regista** con il numero del candidato, la data e la rubrica: scrive `.social/regia/NN.json` con le note di regia (angolo, gancio, curiosità da usare, scena, tono, prima riga della didascalia). Copia l'oggetto `regia` di quel file nella voce della coda (campo `regia`): così arriva allo script del regista e a chi scrive il carosello.
+Per ogni lezione approvata per un reel (lunedì, mercoledì, venerdì) e per il carosello del martedì chiama **social-regista** con il numero del candidato, la data e la rubrica (tutte le uscite nello stesso turno, in parallelo): scrive `.social/regia/NN.json` con le note di regia (angolo, gancio, curiosità da usare, scena, tono, prima riga della didascalia). Copia l'oggetto `regia` di quel file nella voce della coda (campo `regia`): così arriva allo script del regista e a chi scrive il carosello.
 
 ## 5. Coda
 Aggiorna `data/social-coda.json`, conservando le voci già presenti in `coda` e in `escluse` e il valore di `pausa`. Aggiungi le voci nuove:
