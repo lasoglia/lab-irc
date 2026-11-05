@@ -237,6 +237,26 @@ def accorcia_schede(client, t: dict, modello: str | None = None) -> dict:
     return t
 
 
+FILE_DUBBI = g.RADICE / "data" / "fatti-dubbi.json"
+
+
+def fatti_dubbi() -> str:
+    """I dettagli delle lezioni che i controllori hanno segnalato come dubbi (data/fatti-dubbi.json, sul
+    ramo del sito): chi scrive post, reel e caroselli non li usa così come sono finché la lezione non è
+    corretta, perché li troverebbe nel testo della lezione o nel fascicolo e li riprenderebbe."""
+    try:
+        voci = json.loads(FILE_DUBBI.read_text(encoding="utf-8")).get("dubbi", [])
+    except (OSError, ValueError, AttributeError):
+        return ""
+    righe = [f"- «{v['lezione']}»: {v['dettaglio']} → {v['come']}" for v in voci
+             if isinstance(v, dict) and v.get("lezione") and v.get("dettaglio") and v.get("come")]
+    if not righe:
+        return ""
+    return ("\n\nDettagli dubbi delle lezioni, segnalati dai controllori: non usarli così come sono, anche se "
+            "li trovi nel testo della lezione o nel fascicolo; se servono, scrivi la frase come indicato.\n"
+            + "\n".join(righe))
+
+
 def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
                     modello: str | None = None, pensiero: bool = False,
                     ambiti: tuple[str, ...] = ("caroselli", "didascalie")) -> dict:
@@ -248,6 +268,7 @@ def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
         istruzioni = istruzioni + social_quaderno.istruzioni_apprese(*ambiti)
     except (ImportError, ValueError, OSError):
         pass
+    istruzioni = istruzioni + fatti_dubbi()
     bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high", modello=modello, pensiero=pensiero)
     finale, r2 = chiama_claude(
         client, REDATTORE,
