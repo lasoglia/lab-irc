@@ -104,6 +104,31 @@ def copione_anticipo(copione: dict, anticipo: str) -> dict:
     return {**copione, "inquadrature": scelte + [chiusa]}
 
 
+def monta_anticipo(r: dict, copione: dict, t: Path) -> bool:
+    """La storia delle 13:30: il video di anticipo del reel. Se non riesce, la storia resta un'immagine."""
+    try:
+        (t / "anticipo.json").write_text(json.dumps(copione_anticipo(copione, r.get("anticipo", "")),
+                                                    ensure_ascii=False), encoding="utf-8")
+        subprocess.run([sys.executable, str(RADICE / "seo" / "regia.py"), str(t / "anticipo.json"),
+                        str(t / "regia-anticipo.json"), str(t / "lavoro-anticipo")], check=True)
+        subprocess.run(["node", str(RADICE / "seo" / "reel2.mjs"), str(t / "regia-anticipo.json"),
+                        str(CARTELLA / r["anticipo_video"])], check=True, env={**os.environ, "PYTHON": sys.executable})
+        print(f"  ✓ anticipo per la storia: {r['anticipo_video']}")
+        return True
+    except subprocess.CalledProcessError as err:
+        print(f"  ! anticipo non montato ({err}): la storia resta un'immagine")
+        (CARTELLA / r["anticipo_video"]).unlink(missing_ok=True)
+        return False
+
+
+def anticipi_mancanti(elenco: list[dict], da_fare: list[dict], usciti: dict) -> list[dict]:
+    """I reel già montati (per esempio prima che esistesse l'anticipo) ma non ancora usciti, senza video
+    di anticipo: si monta solo quello."""
+    return [r for r in elenco if r.get("motore") == "reel2" and r.get("regia") and r.get("anticipo_video")
+            and r not in da_fare and r.get("chiave") not in usciti
+            and not (CARTELLA / r["anticipo_video"]).exists() and not su_r2(r["anticipo_video"])]
+
+
 def main() -> int:
     try:
         elenco = json.loads((RADICE / "promozione" / "reel.json").read_text(encoding="utf-8"))
@@ -131,23 +156,22 @@ def main() -> int:
                 subprocess.run(["node", str(RADICE / "seo" / "reel2.mjs"), str(t / "regia.json"),
                                 str(CARTELLA / r["video"])], check=True, env={**os.environ, "PYTHON": sys.executable})
                 print(f"  ✓ {r['titolo']}: {r['video']}")
-                if r.get("anticipo_video"):   # la storia delle 13:30; se non riesce, resta l'immagine
-                    try:
-                        (t / "anticipo.json").write_text(json.dumps(copione_anticipo(copione, r.get("anticipo", "")),
-                                                                    ensure_ascii=False), encoding="utf-8")
-                        subprocess.run([sys.executable, str(RADICE / "seo" / "regia.py"), str(t / "anticipo.json"),
-                                        str(t / "regia-anticipo.json"), str(t / "lavoro-anticipo")], check=True)
-                        subprocess.run(["node", str(RADICE / "seo" / "reel2.mjs"), str(t / "regia-anticipo.json"),
-                                        str(CARTELLA / r["anticipo_video"])], check=True,
-                                       env={**os.environ, "PYTHON": sys.executable})
-                        print(f"  ✓ anticipo per la storia: {r['anticipo_video']}")
-                    except subprocess.CalledProcessError as err:
-                        print(f"  ! anticipo non montato ({err}): la storia resta un'immagine")
-                        (CARTELLA / r["anticipo_video"]).unlink(missing_ok=True)
+                if r.get("anticipo_video"):   # la storia delle 13:30
+                    monta_anticipo(r, copione, t)
             except subprocess.CalledProcessError as err:
                 print(f"  ✗ {r['titolo']}: {err}")
                 (CARTELLA / r["video"]).unlink(missing_ok=True)
                 errori += 1
+    # gli anticipi mancanti dei reel già montati: il copione così com'è, senza registrare la lezione
+    # (l'immagine dell'anticipo è una pagina del fascicolo o un numero, mai una scena da registrare)
+    try:
+        usciti = json.loads((RADICE / "data" / "meta.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        usciti = {}
+    for r in anticipi_mancanti(elenco, da_fare, usciti):
+        print(f"Anticipo da montare per un reel già pronto: {r['titolo']}")
+        with tempfile.TemporaryDirectory() as tmp:
+            monta_anticipo(r, dict(r["regia"]), Path(tmp))
     return 1 if errori and errori == len(da_fare) else 0
 
 
