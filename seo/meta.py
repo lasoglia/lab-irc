@@ -73,9 +73,12 @@ def carica_video(indirizzo: str, chiave: str, video: str) -> dict:
 
 
 def online(url: str) -> bool:
+    """Il file si legge dall'indirizzo pubblico? Cloudflare R2 (r2.dev) rifiuta le richieste HEAD senza
+    un User-Agent: si chiede il primo byte con GET, come fa seo/media_r2.py (risposta 200 o 206)."""
+    richiesta = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (LabIRC social)", "Range": "bytes=0-0"})
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=20) as r:
-            return r.status == 200
+        with urllib.request.urlopen(richiesta, timeout=30) as r:
+            return r.status in (200, 206)
     except Exception:
         return False
 
