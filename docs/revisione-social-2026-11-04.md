@@ -151,7 +151,11 @@ lezione, voce), con un angolo diverso da quello del carosello già uscito:
 
 Gli agenti che hanno letto i 50 fascicoli hanno segnalato questi dubbi di fatto. Non ho potuto
 verificarli tutti in rete (limite settimanale dell'account raggiunto durante la sessione): li metto con
-la fonte da controllare, in ordine di sicurezza.
+la fonte da controllare, in ordine di sicurezza. L'altra sessione (`docs/stato-social.md`, §4) ha già
+precisato due casi: «Quo primum» è davvero del 14 luglio 1570; per «Dignitas infinita» il documento sul
+sito vaticano porta la data del 2 aprile 2024, quella del fascicolo, quindi il dubbio va ricontrollato
+prima di correggere. I dettagli dubbi stanno in `data/fatti-dubbi.json` (ramo del sito): chi scrive post,
+reel e caroselli li evita finché le lezioni non sono corrette.
 
 | Lezione | Pagina | Che cosa dice il fascicolo | Dubbio | Dove controllare |
 |---|---|---|---|---|
@@ -168,6 +172,12 @@ la fonte da controllare, in ordine di sicurezza.
 | Perché credere ai testimoni della Pasqua (2ª) | 3 | La Mishnah «del tempo» | Gli altri fascicoli la datano verso il 200: conviene precisare. | i fascicoli dell'unità |
 
 ## 8. Come si va avanti
+
+Il passaggio di consegne dell'altra sessione, con le decisioni prese con Matteo, il guasto del 4-5
+novembre (il controllo «immagini online» che bloccava le uscite, corretto) e le cose aperte, è in
+`docs/stato-social.md`: i due documenti si completano. Le novità delle due sessioni sono state unite su
+`main` senza contrasti (56 prove verdi): il regista riceve insieme la rubrica del giorno, le curiosità
+verificate, le note di regia del piano e i dettagli dubbi da evitare.
 
 1. Sul ramo del sito arriva tutto da solo (`sync-main-to-branch.yml`).
 2. Il prossimo piano della settimana (domenica, o a mano con «Social · piano della settimana») userà
