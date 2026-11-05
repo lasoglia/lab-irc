@@ -59,7 +59,8 @@ def post_di_oggi(oggi: dt.date) -> tuple[str | None, dict | None]:
         return coda, None
     if coda in ("domenica", "sabato", "gioco"):
         elenco = [d for d in elenco if d.get("data") == s]
-    if coda == "lezioni":
+    if coda == "lezioni":   # il martedì il carosello della rubrica, se è pronto (come in seo/pubblica.py)
+        elenco = pb.con_caroselli_martedi(elenco, pb.leggi_json(g.RADICE / "promozione" / "caroselli.json", []))
         elenco = elenco + pb.leggi_json(g.RADICE / "promozione" / "prof.json", [])
     if coda == "reel":
         escluse = coda_agenti.chiavi_escluse(stato)
