@@ -59,6 +59,24 @@ class Coda(unittest.TestCase):
         self.assertEqual([x["chiave"] for x in coda.applica(ELENCO, "2026-11-09", f)], ["c", "a"])
 
 
+class CaroselliSenzaReel(unittest.TestCase):
+    """Il martedì non escono come carosello le lezioni in coda per un giorno di reel."""
+
+    def test_solo_le_lezioni_del_carosello(self):
+        import pubblica
+        vecchio = coda.FILE_CODA
+        coda.FILE_CODA = con_coda({"coda": [
+            {"chiave": "a", "quando": "2026-11-09", "esito": "approvato"},   # lunedì: reel
+            {"chiave": "b", "quando": "2026-11-10", "esito": "approvato"},   # martedì: carosello
+            {"chiave": "c", "quando": "2026-11-05", "esito": "approvato"},   # calendario di prima: carosello
+        ]})
+        try:
+            scelti = pubblica.senza_reel(coda.applica(ELENCO, "2026-11-10", coda.FILE_CODA))
+        finally:
+            coda.FILE_CODA = vecchio
+        self.assertEqual([x["chiave"] for x in scelti], ["b", "c"])
+
+
 class Calendario(unittest.TestCase):
     def test_pasqua_date_note(self):
         attese = {2024: (3, 31), 2025: (4, 20), 2026: (4, 5), 2027: (3, 28), 2038: (4, 25)}

@@ -227,6 +227,25 @@ def leggi_json(p: Path, vuoto):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else vuoto
 
 
+def senza_reel(elenco: list[dict]) -> list[dict]:
+    """Toglie le lezioni messe in coda per un giorno di reel (lunedì, mercoledì e venerdì): escono
+    come reel quel giorno (seo/reel.py) e mai come carosello in un giorno dopo. Senza questo filtro
+    il martedì uscirebbe il carosello della lezione già uscita come reel il lunedì, o di una in
+    ritardo, al posto di quella prevista."""
+    try:
+        stato = coda_agenti.leggi() or {}
+    except (ValueError, OSError):
+        return elenco
+    giorno = {v.get("chiave"): str(v.get("quando", "")) for v in stato.get("coda", [])}
+
+    def di_reel(chiave: str) -> bool:
+        try:
+            return cal.tipo_del_giorno(dt.date.fromisoformat(giorno[chiave])) == "reel"
+        except (KeyError, ValueError):
+            return False
+    return [p for p in elenco if not di_reel(p["chiave"])]
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--coda", choices=sorted(FILE_CODA), help="quale coda (di solito decide il giorno)")
@@ -293,6 +312,8 @@ def main():
     else:
         # solo i post approvati dagli agenti con la data arrivata (se c'è data/social-coda.json)
         elenco = coda_agenti.applica(elenco, oggi.isoformat())
+        if coda == "lezioni":
+            elenco = senza_reel(elenco)
     reg_tg_file, reg_meta_file = g.RADICE / "data" / "telegram.json", g.RADICE / "data" / "meta.json"
     reg_tg, reg_meta = leggi_json(reg_tg_file, {}), leggi_json(reg_meta_file, {})
 
