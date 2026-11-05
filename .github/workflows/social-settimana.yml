@@ -28,7 +28,7 @@ env:
 jobs:
   piano:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90   # direttore, calendarista, controlli, regista, analista: con dieci agenti in fila servono più di 30 minuti
     steps:
       - name: Scarica il sito
         uses: actions/checkout@v4
