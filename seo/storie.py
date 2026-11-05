@@ -37,6 +37,13 @@ MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", 
         "ottobre", "novembre", "dicembre"]
 MASCOTTE = {"1": "1-semino", "2": "2-ichthy", "3": "3-navicella", "4": "4-bussolina", "5": "5-terra"}
 ORE = {"reel": "19", "gioco": "19", "lezione": "13:30", "shabbat": "11", "domenica": "18"}
+# l'ora dell'uscita la decide il giorno della settimana (seo/orologio-cloudflare.js), non il tipo di
+# post: prima del calendario nuovo anche i caroselli del lunedì, mercoledì e venerdì escono alle 19
+ORE_DEL_GIORNO = {0: "19", 1: "13:30", 2: "19", 3: "19", 4: "19", 5: "11", 6: "18"}
+
+
+def ora_di(tipo: str | None, oggi: dt.date) -> str:
+    return ORE_DEL_GIORNO.get(oggi.weekday()) or ORE.get(tipo or "", "19")
 
 
 def leggi(p: Path, vuoto):
@@ -86,7 +93,7 @@ def scheda(fascia: str, oggi: dt.date) -> dict | None:
         if post:
             l = lezione_di(post) or post
             # alle 19 il reel; il carosello del martedì alle 13:30, lo Shabbat alle 11, la grande domanda alle 18
-            piede = "Stasera alle 19" if ORE.get(tipo) == "19" else f"Oggi alle {ORE.get(tipo, '19')}"
+            piede = "Stasera alle 19" if ora_di(tipo, oggi) == "19" else f"Oggi alle {ora_di(tipo, oggi)}"
             rubrica = cal.rubrica_del_giorno(oggi) if tipo == "lezione" else ""
             return {"sopra": data_bella(oggi) + (f" · {rubrica}" if rubrica else " · oggi nel Lab"), "titolo": post.get("titolo", ""),
                     "testo": l.get("frase", ""), "anno": str(post.get("anno", "")),

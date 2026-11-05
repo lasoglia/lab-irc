@@ -90,10 +90,16 @@ jobs:
         if: always()
         env:
           VALIDAZIONE: ${{ steps.valida.outcome }}
+          AGENTI: ${{ steps.agenti.outcome }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/social-metriche.json 2>/dev/null || true
+          # le obiezioni alle rubriche respinte: seo/rubriche.py le riscrive tenendone conto
+          if [ "$AGENTI" = "success" ] && [ -s .social/rubriche-da-rifare.md ]; then
+            cp .social/rubriche-da-rifare.md data/rubriche-da-rifare.md
+            git add data/rubriche-da-rifare.md
+          fi
           if [ "$VALIDAZIONE" = "success" ]; then
             git add data/social-coda.json data/promozione.json promozione
             if [ -e data/social-quaderno.json ]; then git add data/social-quaderno.json; fi

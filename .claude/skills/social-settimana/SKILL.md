@@ -25,7 +25,7 @@ Per ogni post scelto, chiama **social-verificatore** e **social-guardiano** nell
 ## 3b. Rubriche
 Le strisce del prof (P1, P2…, solo nelle vacanze), lo Shabbat del sabato (S1, cultura ebraica da fonti ebraiche) e la domenica (D1, la grande domanda) hanno già la loro data: non si scelgono. Per ognuna chiama **social-verificatore** e **social-guardiano** nello stesso turno, indicando `.social/candidati/P1.md` (e così via). Il guardiano guarda tutte le immagini della striscia.
 - Se entrambi approvano, mettila in coda con la data indicata nella scheda.
-- Se uno dei due chiede correzioni o respinge, non va in coda (le rubriche non si riscrivono qui, perché anche le immagini vanno rifatte). Se le obiezioni riguardano fatti, chiama **social-ricercatore** e scrivi in `.social/rubriche-da-rifare.md`, per ogni rubrica, le obiezioni e le versioni corrette con le fonti: servono a rigenerarla. Segnalala in «Da guardare tu».
+- Se uno dei due chiede correzioni o respinge, non va in coda (le rubriche non si riscrivono qui, perché anche le immagini vanno rifatte). Scrivi sempre in `.social/rubriche-da-rifare.md` una sezione per ogni rubrica non approvata, che inizia con la riga `## <chiave>` (per esempio `## sab-2026-11-14`), con tutte le obiezioni del verificatore e del guardiano, una per riga; se riguardano fatti, chiama prima **social-ricercatore** e aggiungi le versioni corrette con le fonti. Il file si salva da solo in `data/rubriche-da-rifare.md` e seo/rubriche.py riscrive la rubrica tenendone conto (la riscrittura si ricontrolla al piano successivo). Segnalala in «Da guardare tu».
 
 ## 4. Correzioni
 - Se entrambi approvano, il post è approvato.
