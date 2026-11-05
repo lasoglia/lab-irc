@@ -54,6 +54,12 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   `.claude/social-regole.md`, metodo per angoli, ganci, copioni e didascalie in `.claude/social-metodo.md`
   (`/social-reel <argomento>` lo applica tutto).
 - I file `seo/social_*.py` non usano l'IA: preparano i dati e controllano il lavoro degli agenti.
+- Per sapere se un post può uscire, senza pubblicare niente: Action «Social · controllo generale»
+  (`seo/social_verifica.py`: R2, immagini online, Instagram che scarica da R2, Telegram, coda dei giorni dopo).
+  Ogni mattina il controllo delle uscite apre un Issue «allarme» se un post manca e salva i numeri dei post.
+- Le rubriche del weekend respinte dagli agenti si riscrivono da sole con le loro obiezioni
+  (`data/rubriche-da-rifare.md`, una sezione `## <chiave>` per rubrica).
+- Decisioni di Matteo, stato e cose aperte: `docs/stato-social.md` (passaggio di consegne).
 
 ## Regole di lavoro
 - Non pubblicare mai a mano: le pubblicazioni passano sempre dalle Action.
