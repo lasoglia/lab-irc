@@ -144,6 +144,14 @@ jobs:
           CANALI: ${{ inputs.canali }}
           EVENTO: ${{ github.event_name }}
         run: |
+          # GitHub a volte fa partire la rete di sicurezza con ore di ritardo: dopo mezzanotte il
+          # giorno è già cambiato e si pubblicherebbe di notte il post del giorno nuovo, che invece
+          # esce all'orario giusto con l'orologio. Prima delle 18 (ora italiana) quindi non pubblica.
+          ora=$((10#$(TZ=Europe/Rome date +%H)))
+          if [ "$EVENTO" = schedule ] && [ "$ora" -lt 18 ]; then
+            echo "Rete di sicurezza arrivata in ritardo (ore $(TZ=Europe/Rome date +%H:%M)): non pubblico, ci pensa l'orologio."
+            exit 0
+          fi
           argomenti=""
           canali=""
           case "$CODA" in reel|gioco|lezioni|prof|sabato|domenica|video) argomenti="--coda $CODA";; esac
