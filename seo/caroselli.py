@@ -158,10 +158,11 @@ def istruzioni(rubrica: str) -> str:
             + "\n\n" + pr.TONO + "\n\n" + pr.METODO)
 
 
-def messaggio(lezione: dict, rubrica: str, testo: str) -> str:
+def messaggio(lezione: dict, rubrica: str, testo: str, quando: str | None = None) -> str:
     return (f"Rubrica: {rubrica}\nLezione: {lezione['titolo']} (classe {lezione.get('classe', '')}, "
             f"unità «{lezione.get('uda', '')}»)\nIn breve: {lezione.get('frase', '')}"
-            f"{regista.blocco_curiosita(lezione['chiave'])}\n\n<fascicolo>\n{testo}\n</fascicolo>")
+            f"{regista.blocco_curiosita(lezione['chiave'])}{regista.note_di_regia(lezione['chiave'], quando)}"
+            f"\n\n<fascicolo>\n{testo}\n</fascicolo>")
 
 
 # --------------------------------------------------------------------------
@@ -207,14 +208,14 @@ def prepara_schede(schede: list[dict], pdf: Path | None) -> list[dict]:
 # --------------------------------------------------------------------------
 # Scrivere con Claude
 # --------------------------------------------------------------------------
-def scrivi(client, lezione: dict, rubrica: str) -> dict | None:
+def scrivi(client, lezione: dict, rubrica: str, quando: str | None = None) -> dict | None:
     """I testi del carosello della rubrica per la lezione, oppure None se non si può fare."""
     pdf = regista.fascicolo_di(lezione)
     if not pdf:
         return None
     r = RUBRICHE[rubrica]
     testo = regista.testo_fascicolo(pdf)
-    ist, msg, sch = istruzioni(rubrica), messaggio(lezione, rubrica, testo), schema(r["schede"])
+    ist, msg, sch = istruzioni(rubrica), messaggio(lezione, rubrica, testo, quando), schema(r["schede"])
     t = pr.scrivi_e_rivedi(client, ist, msg, sch, ambiti=AMBITI)
     if not t.get("adatta"):
         print(f"  · «{lezione['titolo']}» non regge «{rubrica}»: {t.get('motivo', '')[:100]}")
@@ -322,7 +323,7 @@ def main() -> int:
             if not client:
                 continue
             try:
-                testi = scrivi(client, lezione, rubrica)
+                testi = scrivi(client, lezione, rubrica, quando)
             except Exception as err:
                 print(f"  ✗ {rubrica} · {lezione['titolo']}: {err}")
                 continue

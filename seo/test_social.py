@@ -438,6 +438,24 @@ class Curiosita(unittest.TestCase):
                 self.assertTrue(v["fascicolo"].endswith("-fascicolo.pdf"))
                 self.assertNotIn("http", json.dumps(v))
 
+    def test_note_di_regia_dal_piano(self):
+        import regista
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "coda.json"
+            f.write_text(json.dumps({"coda": [{"chiave": "lez", "quando": "2026-11-09", "esito": "approvato",
+                                               "regia": {"angolo": "Dionigi sbaglia i conti", "gancio": "Gesù è nato avanti Cristo", "tono": "ironico"}}]}))
+            vero, regista.FILE_CODA = regista.FILE_CODA, f
+            try:
+                note = regista.note_di_regia("lez", "2026-11-09")
+                self.assertIn("<note_del_direttore>", note)
+                self.assertIn("Dionigi", note)
+                self.assertEqual(regista.note_di_regia("lez", "2026-11-11"), "")   # un'altra data: niente
+                self.assertEqual(regista.note_di_regia("altra"), "")
+            finally:
+                regista.FILE_CODA = vero
+        self.assertEqual(regista.rubrica_del_giorno("2026-11-09"), "Lo sapevi?")
+        self.assertIn("Falso mito", regista.rubrica_del_giorno("2026-11-13"))
+
     def test_al_regista(self):
         import regista
         blocco = regista.blocco_curiosita("3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini")
