@@ -198,7 +198,8 @@ def prepara(c: dict, cache: dict, senza_ia: bool) -> dict | None:
                              f"Frase della cartolina: {c.get('frase', '')}\n\n<carosello>\n"
                              + "\n".join(f"{i}. {s['titolo']}: {s['testo']}" for i, s in enumerate(c["carosello"], 1))
                              + "\n</carosello>")
-                testi = pr.scrivi_e_rivedi(anthropic.Anthropic(), ISTRUZIONI_REEL, messaggio, SCHEMA_REEL)
+                testi = pr.scrivi_e_rivedi(anthropic.Anthropic(), ISTRUZIONI_REEL, messaggio, SCHEMA_REEL,
+                                           ambiti=("reel", "didascalie"))
                 print(f"  ✓ copione scritto da Claude ({testi['token']['input']} + {testi['token']['output']} token)")
             except Exception as err:
                 print(f"  ! Claude non ha scritto il copione ({err}): uso il carosello")

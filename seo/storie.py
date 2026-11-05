@@ -3,8 +3,8 @@
 seo/storie.py — Le storie di ogni giorno su Instagram e Facebook (Progetto Reel, fase 6).
 
 Tre momenti, sul modello dei creatori che funzionano (presenza costante, poche parole):
-  mattina (7:45)  la ricorrenza del giorno (date calcolate, mai inventate) oppure la frase della
-                  lezione di oggi: «Oggi nel Lab»
+  mattina (7:45)  la ricorrenza del giorno (date calcolate, mai inventate) oppure il post di oggi
+                  (reel, carosello del martedì, Shabbat, grande domanda): «Oggi nel Lab»
   pranzo  (13:30) l'anticipo del reel della sera: il video di 10 secondi montato dal regista
                   (gancio, un'immagine, «Stasera alle 19»), o l'immagine con la frase di anticipo
                   (solo nei giorni di reel e di gioco)
@@ -50,19 +50,24 @@ def data_bella(d: dt.date) -> str:
     return f"{GIORNI[d.weekday()]} {d.day} {MESI[d.month - 1]}"
 
 
+ELENCHI = {"reel": "reel.json", "lezione": "cartoline.json", "shabbat": "sabato.json", "domenica": "domenica.json"}
+
+
 def post_di_oggi(oggi: dt.date) -> dict | None:
-    """Il post principale di oggi: il reel della lezione in coda (approvata) o il reel del gioco."""
+    """Il post principale di oggi, già approvato dagli agenti: il reel della lezione, il carosello
+    del martedì, lo Shabbat, la grande domanda; oppure il reel del gioco (testi fissi, senza coda)."""
     tipo = cal.tipo_del_giorno(oggi)
     s = oggi.isoformat()
     if tipo == "gioco":
         return next((r for r in leggi(RADICE / "promozione" / "gioco.json", []) if r.get("data") == s), None)
-    if tipo == "reel":
-        coda = leggi(RADICE / "data" / "social-coda.json", {})
-        if coda.get("pausa"):
-            return None
-        chiavi = {v.get("chiave") for v in coda.get("coda", []) if v.get("esito") == "approvato" and str(v.get("quando")) == s}
-        return next((r for r in leggi(RADICE / "promozione" / "reel.json", []) if r.get("origine") in chiavi), None)
-    return None
+    if tipo not in ELENCHI:
+        return None
+    coda = leggi(RADICE / "data" / "social-coda.json", {})
+    if coda.get("pausa"):
+        return None
+    chiavi = {v.get("chiave") for v in coda.get("coda", []) if v.get("esito") == "approvato" and str(v.get("quando")) == s}
+    campo = "origine" if tipo == "reel" else "chiave"
+    return next((r for r in leggi(RADICE / "promozione" / ELENCHI[tipo], []) if r.get(campo) in chiavi), None)
 
 
 def lezione_di(post: dict) -> dict:
@@ -80,15 +85,21 @@ def scheda(fascia: str, oggi: dt.date) -> dict | None:
                     "testo": cal.tempo_liturgico(oggi), "piede": "Buongiorno dal Lab", "posa": "saluta"}
         if post:
             l = lezione_di(post) or post
-            return {"sopra": data_bella(oggi) + " · oggi nel Lab", "titolo": post.get("titolo", ""),
+            # alle 19 il reel; il carosello del martedì alle 13:30, lo Shabbat alle 11, la grande domanda alle 18
+            piede = "Stasera alle 19" if ORE.get(tipo) == "19" else f"Oggi alle {ORE.get(tipo, '19')}"
+            rubrica = cal.rubrica_del_giorno(oggi) if tipo == "lezione" else ""
+            return {"sopra": data_bella(oggi) + (f" · {rubrica}" if rubrica else " · oggi nel Lab"), "titolo": post.get("titolo", ""),
                     "testo": l.get("frase", ""), "anno": str(post.get("anno", "")),
-                    "mascotte": MASCOTTE.get(str(post.get("anno", ""))), "piede": "Stasera alle 19", "posa": "sorriso"}
+                    "mascotte": MASCOTTE.get(str(post.get("anno", ""))), "piede": piede, "posa": "sorriso"}
         return None
     if fascia == "pranzo":
         if not post or tipo not in ("reel", "gioco"):
             return None
-        gancio = ("La verifica di fine unità? *Si gioca.*" if tipo == "gioco" else
-                  post.get("anticipo") or post.get("gancio") or lezione_di(post).get("frase", "") or post.get("titolo", ""))
+        if tipo == "gioco":   # la scritta del gancio della variante del reel (seo/gioco_reel.py)
+            import gioco_reel
+            gancio = gioco_reel.VARIANTI[int(post.get("variante") or 0) % len(gioco_reel.VARIANTI)]["gancio"][0]
+        else:
+            gancio = post.get("anticipo") or post.get("gancio") or lezione_di(post).get("frase", "") or post.get("titolo", "")
         return {"sopra": "Stasera alle " + ORE[tipo], "titolo": gancio, "testo": post.get("titolo", ""),
                 "anno": str(post.get("anno", "")), "mascotte": MASCOTTE.get(str(post.get("anno", ""))),
                 "piede": "Il reel esce alle " + ORE[tipo], "posa": "occhiolino"}

@@ -121,8 +121,8 @@ def main() -> int:
         return 0
     # tutti i post del Lab, non solo le lezioni: reel, strisce, Shabbat, grande domanda
     elenco = []
-    for nome in ("cartoline.json", "reel.json", "reel-domenica.json", "prof.json", "sabato.json", "domenica.json",
-                 "gioco.json"):
+    for nome in ("cartoline.json", "caroselli.json", "reel.json", "reel-domenica.json", "prof.json", "sabato.json",
+                 "domenica.json", "gioco.json"):
         f = g.RADICE / "promozione" / nome
         if f.exists():
             elenco += json.loads(f.read_text(encoding="utf-8"))
@@ -157,6 +157,8 @@ def main() -> int:
             e["motore"] = c.get("motore") or "gioco"
         if c.get("variante") is not None:
             e["variante"] = c["variante"]
+        if c.get("rubrica"):
+            e["rubrica"] = c["rubrica"]
         if e:
             extra[c["chiave"]] = e
     for riga in fb + ig:

@@ -82,7 +82,8 @@ class Calendario(unittest.TestCase):
 
 
 class CalendarioSocial(unittest.TestCase):
-    """Scuola: lezioni lun-ven, sabato lo Shabbat, domenica la grande domanda. Vacanze: strisce lun-mer-ven."""
+    """Scuola: reel lun-mer-ven, carosello il martedì, sabato lo Shabbat, domenica la grande domanda.
+    Vacanze: le strisce del prof lunedì e giovedì."""
 
     def setUp(self):
         self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
@@ -114,6 +115,32 @@ class CalendarioSocial(unittest.TestCase):
             cal.FILE_VACANZE.write_text(json.dumps({"vacanze": [{"dal": "2026-11-09", "al": "2026-11-10", "nome": "ponte"}]}))
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 11, 9)), "prof")
             self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 28)), "reel")   # lunedì: il reel di una lezione
+
+
+class Rubriche(unittest.TestCase):
+    """Ogni uscita ha il nome della sua rubrica; il martedì a rotazione (docs/progetto-rubriche.md)."""
+
+    def setUp(self):
+        self._file, cal.FILE_VACANZE = cal.FILE_VACANZE, Path("/non/esiste/vacanze.json")
+
+    def tearDown(self):
+        cal.FILE_VACANZE = self._file
+
+    def test_rotazione_del_martedi(self):
+        martedi = [dt.date(2026, 11, 10) + dt.timedelta(days=7 * i) for i in range(4)]
+        self.assertEqual([cal.rubrica_del_giorno(d) for d in martedi],
+                         ["Parole con una storia", "In classe domani", "In numeri", "Parole con una storia"])
+
+    def test_rubriche_della_settimana(self):
+        giorni = [dt.date(2026, 11, 9) + dt.timedelta(days=i) for i in range(7)]
+        nomi = [cal.rubrica_del_giorno(d) for d in giorni]
+        self.assertEqual(nomi[0], "Lo sapevi?")
+        self.assertIn("Prova alla mano", nomi[2])
+        self.assertIsNone(nomi[3])
+        self.assertIn("Falso mito", nomi[4])
+        self.assertEqual(nomi[5:], ["Lo Shabbat del Lab", "La grande domanda"])
+        self.assertEqual(cal.rubrica_del_giorno(dt.date(2026, 12, 28)), "Il prof del Lab")   # lunedì di vacanza
+        self.assertEqual(cal.rubrica_del_giorno(dt.date(2026, 11, 5)), "La lezione in un carosello")   # prima del 9/11
 
 
 class Giochi(unittest.TestCase):
@@ -184,6 +211,44 @@ class Storie(unittest.TestCase):
         s = self.storie.scheda("mattina", dt.date(2026, 12, 8))
         self.assertIn("Immacolata", s["titolo"])
 
+    def test_mattina_annuncia_il_post_di_oggi(self):
+        self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "anno": "2", "origine": "x"}
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 9))["piede"], "Stasera alle 19")     # lunedì, reel
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 10))["piede"], "Oggi alle 13:30")   # martedì, carosello
+        self.assertEqual(self.storie.scheda("mattina", dt.date(2026, 11, 14))["piede"], "Oggi alle 11")      # sabato, Shabbat
+
+    def test_post_di_oggi_per_tipo(self):
+        with tempfile.TemporaryDirectory() as d:
+            radice = Path(d)
+            (radice / "data").mkdir(); (radice / "promozione").mkdir()
+            (radice / "data" / "social-coda.json").write_text(json.dumps({"coda": [
+                {"chiave": "lez", "quando": "2026-11-10", "esito": "approvato"},
+                {"chiave": "sab-2026-11-14", "quando": "2026-11-14", "esito": "approvato"}]}))
+            (radice / "promozione" / "cartoline.json").write_text(json.dumps([{"chiave": "lez", "titolo": "L"}]))
+            (radice / "promozione" / "sabato.json").write_text(json.dumps([{"chiave": "sab-2026-11-14", "titolo": "S"}]))
+            vera, self.storie.RADICE = self.storie.RADICE, radice
+            try:
+                self.assertEqual(self.storie.post_di_oggi(dt.date(2026, 11, 10))["titolo"], "L")   # martedì: il carosello
+                self.assertEqual(self.storie.post_di_oggi(dt.date(2026, 11, 14))["titolo"], "S")   # sabato: lo Shabbat
+                self.assertIsNone(self.storie.post_di_oggi(dt.date(2026, 11, 9)))                  # lunedì: nessun reel pronto
+            finally:
+                self.storie.RADICE = vera
+
+    def test_pranzo_del_gioco_con_la_sua_variante(self):
+        import gioco_reel
+        with tempfile.TemporaryDirectory() as d:
+            vero, cal.FILE_GIOCHI = cal.FILE_GIOCHI, Path(d) / "social-giochi.json"
+            cal.FILE_GIOCHI.write_text(json.dumps({"giochi": [{"file": "uploads/x-gioco.html", "titolo": "X",
+                                                               "uscito": "2026-12-01"}]}))
+            try:
+                self.assertEqual(cal.tipo_del_giorno(dt.date(2026, 12, 3)), "gioco")   # giovedì nel periodo del gioco
+                for variante in (0, 1):
+                    self.storie.post_di_oggi = lambda d, v=variante: {"titolo": "Gioco", "anno": "5", "variante": v}
+                    s = self.storie.scheda("pranzo", dt.date(2026, 12, 3))
+                    self.assertEqual(s["titolo"], gioco_reel.VARIANTI[variante]["gancio"][0])
+            finally:
+                cal.FILE_GIOCHI = vero
+
     def test_pranzo(self):
         self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "gancio": "Un gancio", "anno": "2", "origine": "x"}
         self.assertEqual(self.storie.scheda("pranzo", dt.date(2026, 11, 9))["titolo"], "Un gancio")   # lunedì, reel
@@ -252,6 +317,151 @@ class ParoleATempo(unittest.TestCase):
     def test_senza_tempi(self):
         import voce
         self.assertIsNone(voce.allinea(3, []))
+class PuliziaVideo(unittest.TestCase):
+    """seo/reel.mjs toglie solo i suoi video: non i video di anticipo delle storie né i reel dei giochi,
+    che restano in promozione/reel/ quando Cloudflare R2 non risponde."""
+
+    def test_reel_mjs_non_cancella_anticipi_e_giochi(self):
+        import os
+        import subprocess
+        with tempfile.TemporaryDirectory() as d:
+            radice = Path(d)
+            (radice / "promozione" / "reel").mkdir(parents=True)
+            (radice / "promozione" / "reel.json").write_text(json.dumps([
+                {"video": "reel2-x.mp4", "anticipo_video": "anticipo-reel2-x.mp4", "motore": "reel2"}]), encoding="utf-8")
+            for nome in ("reel2-x.mp4", "anticipo-reel2-x.mp4", "gioco-y-2026-11-12.mp4", "vecchio.mp4"):
+                (radice / "promozione" / "reel" / nome).write_bytes(b"x")
+            esito = subprocess.run(["node", str(Path(__file__).resolve().parent / "reel.mjs")], capture_output=True, text=True,
+                                   env={**os.environ, "LAB_RADICE": d, "PW_MODULE": "/non/esiste"})
+            self.assertEqual(esito.returncode, 0, esito.stderr)
+            rimasti = sorted(f.name for f in (radice / "promozione" / "reel").glob("*.mp4"))
+            self.assertEqual(rimasti, ["anticipo-reel2-x.mp4", "gioco-y-2026-11-12.mp4", "reel2-x.mp4"])
+
+
+class VoceCheNonRiesce(unittest.TestCase):
+    """Se seo/voce.py fallisce (Gemini senza quota), la regia prosegue senza voce invece di fermare il reel."""
+
+    def test_regia_senza_voce(self):
+        import os
+        import regia
+        copione = {"serie": "Prova", "titolo": "T", "anno": 2, "inquadrature": [
+            {"tipo": "gancio", "testo": "Ciao", "voce": "Ciao a tutti", "durata": 2},
+            {"tipo": "chiusa", "voce": "La lezione completa è su labirc.it", "durata": 3}]}
+        with tempfile.TemporaryDirectory() as d:
+            finto = Path(d) / "voce.py"
+            finto.write_text("import sys; sys.exit(3)\n", encoding="utf-8")
+            vera, regia.RADICE = regia.RADICE, Path(d) / "radice"
+            (regia.RADICE / "seo").mkdir(parents=True)
+            (regia.RADICE / "seo" / "voce.py").write_text(finto.read_text(), encoding="utf-8")
+            os.environ["GEMINI_API_KEY"] = "finta"
+            try:
+                r = regia.prepara(copione, Path(d) / "lavoro")
+            finally:
+                regia.RADICE = vera
+                del os.environ["GEMINI_API_KEY"]
+            self.assertEqual(len(r["inquadrature"]), 2)
+            self.assertFalse(any(q.get("voce_file") for q in r["inquadrature"]))
+
+
+class SfondiIA(unittest.TestCase):
+    """Gli sfondi dipinti servono ai video a fumetti e alle copertine del weekend, non ai reel del regista."""
+
+    def test_reel2_senza_sfondo(self):
+        import immagini_ia
+        elenchi = {"reel.json": [{"origine": "a", "motore": "reel2", "video": "reel2-a.mp4"},
+                                 {"origine": "b", "video": "reel-b.mp4"}],
+                   "domenica.json": [{"chiave": "dom-1", "carosello": [{"titolo": "t", "testo": "x"}]}],
+                   "reel-domenica.json": [{"origine": "dom-1", "video": "domenica-1.mp4"}]}
+        self.assertEqual(sorted(immagini_ia.voci_da_dipingere(elenchi)), ["b", "dom-1"])
+        self.assertIsNone(immagini_ia.chiave_sfondo("reel.json", elenchi["reel.json"][0]))
+        self.assertTrue(immagini_ia.voci_da_dipingere(elenchi)["dom-1"].get("carosello"))   # la copertina, non il video
+
+
+class CaroselliMartedi(unittest.TestCase):
+    """Il martedì esce il carosello della rubrica del giorno (seo/caroselli.py), se è pronto."""
+
+    LEZIONI = [{"chiave": "lez", "titolo": "L", "anno": "2", "url": "u", "classe": "seconda", "uda": "U"}]
+
+    def test_quali_martedi(self):
+        import caroselli
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "coda.json"
+            f.write_text(json.dumps({"coda": [
+                {"chiave": "lez", "quando": "2026-11-10", "esito": "approvato"},     # martedì: Parole con una storia
+                {"chiave": "lez", "quando": "2026-11-09", "esito": "approvato"},     # lunedì: reel, non un carosello
+                {"chiave": "lez", "quando": "2026-11-17", "esito": "approvato"}]}))  # oltre i 7 giorni
+            vero, coda.FILE_CODA = coda.FILE_CODA, f
+            try:
+                da_fare = caroselli.martedi_da_preparare(dt.date(2026, 11, 6), self.LEZIONI)
+            finally:
+                coda.FILE_CODA = vero
+        self.assertEqual([(r, q) for _, r, q in da_fare], [("Parole con una storia", "2026-11-10")])
+
+    def test_schede_con_pagina_vera_o_testo(self):
+        import caroselli
+        schede = [{"tipo": "pagina", "titolo": "T", "testo": "x", "citazione": "una frase che non c'è nel fascicolo", "cerchia": ""},
+                  {"tipo": "numero", "titolo": "N", "testo": "y", "numero": "525", "citazione": "", "cerchia": ""}]
+        pronte = caroselli.prepara_schede(schede, None)
+        self.assertEqual([s["tipo"] for s in pronte], ["testo", "numero"])   # senza la pagina la scheda diventa testo
+        self.assertNotIn("citazione", pronte[0])
+        voce = caroselli.voce_elenco(self.LEZIONI[0], "In numeri", "2026-11-24",
+                                     {"copertina": {"titolo": "525", "frase": "f"}, "schede": schede, "facebook": "fb",
+                                      "instagram": "ig", "telegram": "tg", "hashtag": ["irc"]})
+        self.assertEqual(voce["chiave"], "lez")                    # la stessa chiave della lezione in coda
+        self.assertEqual(len(voce["immagini"]), 4)                 # copertina, due schede, finale
+        self.assertTrue(voce["file"].startswith("martedi-"))
+        self.assertIn("#irc", voce["instagram"])
+
+    def test_pubblica_preferisce_la_rubrica_pronta(self):
+        import pubblica
+        kit = [{"chiave": "lez", "titolo": "kit", "file": "a.png"}, {"chiave": "altra", "titolo": "k2", "file": "b.png"}]
+        rubrica = [{"chiave": "lez", "titolo": "rubrica", "file": "m.png", "immagini": ["m.png", "m-2.png"]}]
+        self.assertEqual([p["titolo"] for p in pubblica.con_caroselli_martedi(kit, rubrica, pronto=lambda c: True)], ["rubrica", "k2"])
+        self.assertEqual([p["titolo"] for p in pubblica.con_caroselli_martedi(kit, rubrica, pronto=lambda c: False)], ["kit", "k2"])
+
+
+class Curiosita(unittest.TestCase):
+    """La biblioteca seo/curiosita.json: forma giusta e arrivo al regista (le citazioni esatte si controllano
+    con i PDF del ramo del sito: python seo/fascicolo.py)."""
+
+    def test_forma(self):
+        dati = json.loads((Path(__file__).resolve().parent / "curiosita.json").read_text(encoding="utf-8"))
+        lezioni = {k: v for k, v in dati.items() if not k.startswith("_")}
+        self.assertGreaterEqual(len(lezioni), 40)
+        for chiave, voci in lezioni.items():
+            self.assertEqual(chiave.count("|"), 2, chiave)
+            self.assertTrue(2 <= len(voci) <= 4, chiave)
+            for v in voci:
+                self.assertLessEqual(len(v["gancio"]), 60, v["gancio"])
+                self.assertLessEqual(len(v["testo"]), 200, v["testo"])
+                self.assertGreaterEqual(len(v["citazione"].split()), 6, v["citazione"])
+                self.assertTrue(v["fascicolo"].endswith("-fascicolo.pdf"))
+                self.assertNotIn("http", json.dumps(v))
+
+    def test_note_di_regia_dal_piano(self):
+        import regista
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "coda.json"
+            f.write_text(json.dumps({"coda": [{"chiave": "lez", "quando": "2026-11-09", "esito": "approvato",
+                                               "regia": {"angolo": "Dionigi sbaglia i conti", "gancio": "Gesù è nato avanti Cristo", "tono": "ironico"}}]}))
+            vero, regista.FILE_CODA = regista.FILE_CODA, f
+            try:
+                note = regista.note_di_regia("lez", "2026-11-09")
+                self.assertIn("<note_del_direttore>", note)
+                self.assertIn("Dionigi", note)
+                self.assertEqual(regista.note_di_regia("lez", "2026-11-11"), "")   # un'altra data: niente
+                self.assertEqual(regista.note_di_regia("altra"), "")
+            finally:
+                regista.FILE_CODA = vero
+        self.assertEqual(regista.rubrica_del_giorno("2026-11-09"), "Lo sapevi?")
+        self.assertIn("Falso mito", regista.rubrica_del_giorno("2026-11-13"))
+
+    def test_al_regista(self):
+        import regista
+        blocco = regista.blocco_curiosita("3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini")
+        self.assertIn("<curiosita_verificate>", blocco)
+        self.assertIn("ora et labora", blocco)
+        self.assertEqual(regista.blocco_curiosita("chiave|che|non esiste"), "")
 
 
 class Controllo(unittest.TestCase):
@@ -320,6 +530,25 @@ class Quaderno(unittest.TestCase):
     def test_proposta_sbagliata(self):
         cattivo = {**self.BUONO, "idee": [{"idea": "x", "stato": "boh"}], "regole_apprese": [{"regola": "y"}]}
         self.assertTrue(len(quaderno.controlla(cattivo)) >= 2)
+
+    def test_regole_per_ambito(self):
+        with tempfile.TemporaryDirectory() as d:
+            vero, quaderno.FILE = quaderno.FILE, Path(d) / "q.json"
+            quaderno.FILE.write_text(json.dumps({"regole_apprese": [
+                {"regola": "Per tutti", "prova": "p", "forza": "confermata"},
+                {"regola": "Solo reel", "prova": "p", "forza": "confermata", "per": "reel"},
+                {"regola": "Solo storie", "prova": "p", "forza": "confermata", "per": "storie"},
+                {"regola": "Ipotesi", "prova": "p", "forza": "ipotesi"}]}))
+            try:
+                tutto = quaderno.istruzioni_apprese()
+                self.assertIn("Solo storie", tutto)
+                reel = quaderno.istruzioni_apprese("reel", "didascalie")
+                self.assertIn("Per tutti", reel)
+                self.assertIn("Solo reel", reel)
+                self.assertNotIn("Solo storie", reel)
+                self.assertNotIn("Ipotesi", reel)
+            finally:
+                quaderno.FILE = vero
 
     def test_niente_email(self):
         con_email = {**self.BUONO, "idee": [{"idea": "scrivere a prova@esempio.it", "stato": "nuova"}]}

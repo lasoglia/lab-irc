@@ -3,10 +3,12 @@
 seo/pubblica.py — Ogni giorno decide che cosa esce sui social e lo pubblica.
 
 Il calendario (ora italiana) sta in seo/social_calendario.py (tipo_del_giorno):
-  scuola, lunedì-venerdì   una lezione (copertina + carosello)       promozione/cartoline.json
+  scuola, lun-mer-ven      il reel di una lezione (regista + voce)   promozione/reel.json
+  scuola, martedì          il carosello della rubrica del giorno     promozione/caroselli.json
+                           (o, se manca, quello della lezione)       promozione/cartoline.json
   scuola, domenica         «La grande domanda» (carosello)           promozione/domenica.json
   scuola, sabato           «Lo Shabbat del Lab» (carosello)          promozione/sabato.json
-  vacanze, lun-mer-ven     «Il prof del Lab», la striscia a fumetti  promozione/prof.json
+  vacanze, lun e gio       «Il prof del Lab», la striscia a fumetti  promozione/prof.json
   scuola, giovedì (nei 14 giorni dopo l'uscita di un gioco di verifica)
                            il reel di una partita al gioco        promozione/gioco.json
 
@@ -87,6 +89,14 @@ def url_storia(post: dict) -> str:
 def da_controllare(post: dict) -> list[str]:
     """Gli indirizzi che devono essere già online prima di pubblicare."""
     return [url_video(post)] if post.get("video") else [url_immagine(f) for f in immagini(post)]
+
+
+def con_caroselli_martedi(elenco: list[dict], caroselli: list[dict], pronto=None) -> list[dict]:
+    """Al posto del post del kit, il carosello della rubrica del martedì con la stessa chiave, se le sue
+    immagini sono già su Cloudflare R2 («pronto»); altrimenti resta il carosello del kit."""
+    pronto = pronto or (lambda c: bool(r2.url_immagine(c["immagini"][0].removesuffix(".png") + ".jpg")))
+    rubriche = {c["chiave"]: c for c in caroselli if c.get("immagini") and pronto(c)}
+    return [rubriche.get(c["chiave"], c) for c in elenco]
 
 
 def descrivi(post: dict) -> str:
@@ -243,6 +253,8 @@ def main():
     if coda in ("domenica", "sabato") and not a.coda:
         elenco = [d for d in elenco if d.get("data") == oggi.isoformat()]
     if coda == "lezioni":
+        # il martedì, il carosello della rubrica del giorno (seo/caroselli.py) al posto di quello del kit
+        elenco = con_caroselli_martedi(elenco, leggi_json(g.RADICE / "promozione" / "caroselli.json", []))
         # le strisce del prof già approvate per un giorno di scuola escono ancora (prima del nuovo calendario)
         elenco = elenco + leggi_json(g.RADICE / "promozione" / "prof.json", [])
     if coda == "gioco":

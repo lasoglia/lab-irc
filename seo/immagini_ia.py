@@ -2,8 +2,9 @@
 """
 seo/immagini_ia.py — Gli sfondi pittorici dei video e delle copertine, fatti con l'IA (gratis).
 
-Per ogni video (lezioni, grande domanda, Shabbat) e per le copertine della domenica e
-del sabato:
+Per ogni video del motore a fumetti (lezioni con il reel di prima, grande domanda, Shabbat) e
+per le copertine della domenica e del sabato (i reel del regista, motore «reel2», non ne hanno
+bisogno: mostrano pagine vere e scene della lezione):
   1. Claude descrive in inglese una scena d'atmosfera legata al tema: luoghi, paesaggi,
      oggetti, luce. Mai persone, volti, Dio, Gesù, Maria, santi o angeli; mai scritte.
   2. Cloudflare Workers AI (modello FLUX.1 schnell, nella quota gratuita giornaliera)
@@ -76,6 +77,25 @@ def descrizione(voce: dict) -> str:
             + "\n".join(f"- {s.get('titolo', '')}: {s.get('testo', '')}" for s in scene[:8]))
 
 
+def chiave_sfondo(nome_elenco: str, v: dict) -> str | None:
+    """La chiave del post a cui appartiene lo sfondo, o None se quel post non ne usa uno:
+    i reel del regista (motore «reel2») mostrano pagine vere e scene della lezione, non sfondi dipinti."""
+    if nome_elenco.startswith("reel"):
+        return None if v.get("motore") == "reel2" else v.get("origine")
+    return v.get("chiave")
+
+
+def voci_da_dipingere(elenchi: dict[str, list[dict]]) -> dict[str, dict]:
+    """Un'immagine per post: il video usa quella del suo post (chiave «origine»)."""
+    voci: dict[str, dict] = {}
+    for nome, elenco in elenchi.items():
+        for v in elenco:
+            k = chiave_sfondo(nome, v)
+            if k and (k not in voci or v.get("carosello")):
+                voci[k] = v
+    return voci
+
+
 def dipingi(scena: str, account: str, chiave: str) -> bytes:
     """Cloudflare Workers AI: restituisce l'immagine (in base64 dentro result.image)."""
     richiesta = urllib.request.Request(
@@ -114,13 +134,7 @@ def main() -> int:
 
     elenchi = {nome: leggi(g.RADICE / "promozione" / nome, [])
                for nome in ("reel.json", "reel-domenica.json", "reel-vetrina.json", "domenica.json", "sabato.json")}
-    # un'immagine per post: il video usa quella del suo post (chiave «origine»)
-    voci = {}
-    for nome, elenco in elenchi.items():
-        for v in elenco:
-            k = v.get("origine") if nome.startswith("reel") else v["chiave"]
-            if k and (k not in voci or v.get("carosello")):
-                voci[k] = v
+    voci = voci_da_dipingere(elenchi)
     cache = leggi(CACHE, {})
     client = None
     nuove = errori = 0
@@ -153,8 +167,8 @@ def main() -> int:
     # gli elenchi ricevono lo sfondo; il nome del video cambia, così seo/reel.mjs lo rimonta con lo sfondo
     for nome, elenco in elenchi.items():
         for v in elenco:
-            k = v.get("origine") if nome.startswith("reel") else v["chiave"]
-            voce = cache.get(k)
+            k = chiave_sfondo(nome, v)
+            voce = cache.get(k) if k else None
             if voce and (g.RADICE / voce["file"]).exists():
                 v["sfondo"] = voce["file"]
                 if nome.startswith("reel") and not v["video"].endswith("-ia.mp4"):

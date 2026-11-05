@@ -1,0 +1,26 @@
+{
+  "_nota": "Il quaderno del Lab (seo/social_quaderno.py): regole imparate dai numeri, esperimento della settimana, idee. Lo aggiorna l'analista ogni domenica; questa prima versione mette in idee i tre esperimenti di docs/progetto-rubriche.md, da provare uno alla volta.",
+  "regole_apprese": [],
+  "esperimento": null,
+  "esperimenti": [],
+  "idee": [
+    {
+      "idea": "Nei reel «Lo sapevi?» il gancio con un numero («525») tiene più a lungo di quello con una domanda: 6 reel, 3 e 3, misurando tempo medio di visione e visualizzazioni complete.",
+      "fonte": "progetto rubriche (sezione 6, esperimento 1)",
+      "stato": "nuova",
+      "perché": "I numeri fermano lo scorrimento e si ricordano; il quaderno può confermarlo o smentirlo con i reel del lunedì."
+    },
+    {
+      "idea": "Utilità contro curiosità nei caroselli del martedì: «In classe domani» raccoglie più invii e salvataggi per copertura di «Parole con una storia»: 4 caroselli, 2 e 2, condivisioni e salvataggi diviso copertura.",
+      "fonte": "progetto rubriche (sezione 6, esperimento 2)",
+      "stato": "nuova",
+      "perché": "Il collega di religione è il lettore principale: se l'utilità vince, il martedì pesa di più su «In classe domani»."
+    },
+    {
+      "idea": "Reel corti contro reel medi: i reel di 20-25 secondi hanno più visualizzazioni complete e seconde visioni di quelli di 30-35, a parità di rubrica: 6 reel, tempo medio di visione in proporzione alla durata.",
+      "fonte": "progetto rubriche (sezione 6, esperimento 3)",
+      "stato": "nuova",
+      "perché": "Il regista è libero sulla durata: il dato gli dice se accorciare conviene davvero."
+    }
+  ]
+}
