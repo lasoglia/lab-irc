@@ -683,5 +683,35 @@ class Quaderno(unittest.TestCase):
         self.assertTrue(any("email" in e for e in quaderno.controlla(con_email)))
 
 
+class MetricheConMemoria(unittest.TestCase):
+    """Un post uscito con un testo poi riscritto resta nei numeri grazie al suo link."""
+
+    def test_memoria_dei_link(self):
+        import social_metriche as sm
+        precedenti = {"instagram": [{"chiave": "3|U|L", "link": "https://instagram.com/p/abc/"}],
+                      "facebook": [{"chiave": "prof-001", "link": "https://facebook.com/1/posts/2"}, {"link": "x"}]}
+        self.assertEqual(sm.memoria_link(precedenti, "instagram"), {"https://instagram.com/p/abc/": "3|U|L"})
+        self.assertEqual(sm.memoria_link(precedenti, "facebook"), {"https://facebook.com/1/posts/2": "prof-001"})
+        self.assertEqual(sm.memoria_link({}, "instagram"), {})
+
+    def test_facebook_riconosce_dal_link(self):
+        import social_metriche as sm
+        risposte = {"1/published_posts": {"data": [
+            {"message": "Testo nuovo che non è più nel kit", "created_time": "2026-11-03T18:10:00+0000",
+             "permalink_url": "https://facebook.com/1/posts/2", "shares": {"count": 1},
+             "reactions": {"summary": {"total_count": 2}}, "comments": {"summary": {"total_count": 0}}},
+            {"message": "Un post estraneo", "created_time": "2026-11-01T18:10:00+0000",
+             "permalink_url": "https://facebook.com/1/posts/9"}]},
+                    "1": {"followers_count": 5}}
+        originale = sm.m.chiama
+        sm.m.chiama = lambda metodo, percorso, **kw: risposte[percorso]
+        try:
+            post, seguaci = sm.metriche_facebook("1", "k", {}, {"https://facebook.com/1/posts/2": "prof-001"})
+        finally:
+            sm.m.chiama = originale
+        self.assertEqual([(p["chiave"], p["reazioni"], p["condivisioni"]) for p in post], [("prof-001", 2, 1)])
+        self.assertEqual(seguaci, 5)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

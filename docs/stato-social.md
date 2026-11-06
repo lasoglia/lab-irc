@@ -25,8 +25,11 @@ pubblico: niente chiavi, niente dati personali, niente nomi di studenti.
   con link: le storie rimandano al profilo.
 - **Giochi di verifica**: nei 14 giorni dopo l'uscita, il giovedì il reel registrato dal gioco. Il numero
   del lucchetto vive solo nel segreto `LUCCHETTO_NUMERO`, mai nei file.
-- **Crediti**: per ora si usa `ANTHROPIC_API_KEY` (crediti API). `CLAUDE_CODE_OAUTH_TOKEN` resta la
-  strada di riserva se i crediti finiscono.
+- **Crediti**: dal 6 novembre gli agenti (piano, controllo del giovedì, chat, diagnosi del mattino) usano
+  l'abbonamento Claude con il segreto `CLAUDE_CODE_OAUTH_TOKEN` (dura circa un anno, si rinnova con
+  `claude setup-token`); il «costo stimato» negli Issue è solo una stima, non crediti scalati. Gli script
+  che chiamano l'API direttamente (regista dei reel, rubriche del weekend, caroselli del martedì, kit delle
+  lezioni, sfondi) usano ancora `ANTHROPIC_API_KEY`, quindi i crediti API servono comunque.
 - **Fuori dai social non si tocca nulla** in questa fase (i sondaggi con Supabase restano in pausa). Mai
   toccare `esami/`, il file CNAME, la sorgente di Pages, `RAMO = 'main'` in `admin/importa.html`,
   `branch: main` e `repo` in `admin/config.yml`. Mai pubblicare a mano: escono solo dalle Action.
