@@ -5,13 +5,22 @@ name: Social · piano della settimana
 # come Issue con etichetta «piano», con l'email di notifica di GitHub. Per intervenire
 # basta commentare l'Issue scrivendo @claude e la richiesta.
 #
+# Il giovedì (o a mano con «solo rubriche») un giro leggero ricontrolla soltanto le rubriche del
+# weekend riscritte dopo le obiezioni della domenica (.claude/skills/social-rubriche).
+#
 # Credenziale: se esiste il segreto CLAUDE_CODE_OAUTH_TOKEN si usa il piano Claude;
 # altrimenti ANTHROPIC_API_KEY, con i crediti API dell'organizzazione collegata.
 
 on:
   schedule:
-    - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate)
-  workflow_dispatch: {}
+    - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate): il piano intero
+    - cron: '23 17 * * 4'   # giovedì alle 17:23 UTC: solo le rubriche del weekend
+  workflow_dispatch:
+    inputs:
+      solo_rubriche:
+        description: 'Solo il controllo delle rubriche del weekend (giro leggero)'
+        type: boolean
+        default: false
 
 concurrency:
   group: social-agenti
@@ -24,6 +33,7 @@ permissions:
 env:
   RAMO: claude/lab-irc-exam-platform-v2-712y8s
   CLAUDE_CODE_VERSIONE: 2.1.316
+  SOLO_RUBRICHE: ${{ inputs.solo_rubriche == true || github.event.schedule == '23 17 * * 4' }}
 
 jobs:
   piano:
@@ -76,7 +86,12 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-        run: bash seo/social_claude.sh "/social-settimana" 45 200
+        run: |
+          if [ "$SOLO_RUBRICHE" = true ]; then
+            bash seo/social_claude.sh "/social-rubriche" 10 60
+          else
+            bash seo/social_claude.sh "/social-settimana" 45 200
+          fi
 
       - name: Valida il lavoro
         id: valida
@@ -90,6 +105,7 @@ jobs:
         run: python seo/promozione.py --senza-ia
 
       - name: Salva
+        id: salva
         if: always()
         env:
           VALIDAZIONE: ${{ steps.valida.outcome }}
@@ -110,16 +126,26 @@ jobs:
           if git diff --cached --quiet; then
             echo "Niente di nuovo da salvare."
           else
-            git commit -m "Social: piano della settimana"
+            if [ "$SOLO_RUBRICHE" = true ]; then git commit -m "Social: rubriche del weekend"; else git commit -m "Social: piano della settimana"; fi
+            # se nel frattempo qualcuno ha cambiato gli stessi file, la coda, i testi e il quaderno del
+            # piano valgono più dei loro (il piano li ha decisi guardando tutto); i file rigenerati dagli
+            # script si tengono nella versione arrivata, tanto si rifanno al giro successivo
+            risolvi() {
+              for f in $(git diff --name-only --diff-filter=U); do
+                case "$f" in
+                  data/social-coda.json|data/promozione.json|data/social-quaderno.json|data/rubriche-da-rifare.md) git checkout --theirs -- "$f" ;;
+                  *) git checkout --ours -- "$f" ;;
+                esac
+                git add "$f"
+              done
+              GIT_EDITOR=true git rebase --continue
+            }
             salvato=no
             for prova in 1 2 3; do
-              # se nel frattempo qualcun altro ha toccato la coda o il kit, vince il piano appena fatto
-              # (nel rebase «theirs» è il commit del piano); gli altri file restano come sono arrivati
-              if ! git pull --rebase --quiet --autostash origin "$RAMO"; then
-                for f in $(git diff --name-only --diff-filter=U); do git checkout --theirs -- "$f" && git add "$f"; done
-                GIT_EDITOR=true git rebase --continue || { git rebase --abort 2>/dev/null || true; sleep 10; continue; }
+              if git pull --rebase --quiet --autostash origin "$RAMO" || risolvi; then
+                git push origin "HEAD:$RAMO" && { salvato=si; break; }
               fi
-              git push origin "HEAD:$RAMO" && { salvato=si; break; }
+              git rebase --abort 2>/dev/null || true
               sleep 10
             done
             [ "$salvato" = si ] || { echo "Non sono riuscito a salvare su $RAMO."; exit 1; }
@@ -131,13 +157,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           AGENTI: ${{ steps.agenti.outcome }}
           VALIDAZIONE: ${{ steps.valida.outcome }}
+          SALVATAGGIO: ${{ steps.salva.outcome }}
         run: |
           gh label create piano --color 8B5CF6 --force >/dev/null
+          gh label create rubriche --color F59E0B --force >/dev/null
           gh label create social --color 22D3EE --force >/dev/null
-          for numero in $(gh issue list --label piano --state open --json number --jq '.[].number'); do
-            gh issue close "$numero" --comment "Sostituito dal piano più recente." >/dev/null
-          done
+          if [ "$SOLO_RUBRICHE" != true ]; then
+            for numero in $(gh issue list --label piano --state open --json number --jq '.[].number'); do
+              gh issue close "$numero" --comment "Sostituito dal piano più recente." >/dev/null
+            done
+          fi
           {
+            if [ "$SALVATAGGIO" != "success" ]; then
+              echo "> **Attenzione: questo lavoro NON è stato salvato sul ramo del sito** (il salvataggio è fallito:"
+              echo "> $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). La coda resta quella di prima."
+              echo
+            fi
             if [ "$AGENTI" = "success" ] && [ "$VALIDAZIONE" = "success" ]; then
               cat .social/rapporto.md 2>/dev/null || echo "Gli agenti non hanno scritto il rapporto."
             else
@@ -155,7 +190,11 @@ jobs:
             echo "Costo stimato: $(cat .social/costo.txt 2>/dev/null || echo '?') \$. Per intervenire commenta con @claude e la richiesta."
           } > corpo-issue.md
           cat corpo-issue.md >> "$GITHUB_STEP_SUMMARY"
-          gh issue create --title "Social: piano del $(date +%d/%m/%Y)" --label piano --label social --body-file corpo-issue.md
+          if [ "$SOLO_RUBRICHE" = true ]; then
+            gh issue create --title "Social: rubriche del weekend ($(date +%d/%m/%Y))" --label rubriche --label social --body-file corpo-issue.md
+          else
+            gh issue create --title "Social: piano del $(date +%d/%m/%Y)" --label piano --label social --body-file corpo-issue.md
+          fi
           rm -f corpo-issue.md
 
       - name: Segnala l'errore

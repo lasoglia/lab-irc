@@ -58,7 +58,9 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   (`seo/social_verifica.py`: R2, immagini online, Instagram che scarica da R2, Telegram, coda dei giorni dopo).
   Ogni mattina il controllo delle uscite apre un Issue «allarme» se un post manca e salva i numeri dei post.
 - Le rubriche del weekend respinte dagli agenti si riscrivono da sole con le loro obiezioni
-  (`data/rubriche-da-rifare.md`, una sezione `## <chiave>` per rubrica).
+  (`data/rubriche-da-rifare.md`, una sezione `## <chiave>` per rubrica) e il giovedì un giro leggero degli
+  agenti le ricontrolla (`/social-rubriche`, stessa Action del piano). Un'approvazione vale per la versione
+  controllata: se una rubrica cambia dopo, non esce (`impronta` in `data/social-coda.json`).
 - Decisioni di Matteo, stato e cose aperte: `docs/stato-social.md` (passaggio di consegne).
 
 ## Regole di lavoro
