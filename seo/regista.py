@@ -279,10 +279,17 @@ def materiale_di(lezione: dict, fine: str) -> Path | None:
         return None
     for l in dati.get("lezioni", []):
         if l.get("titolo") == lezione.get("titolo") and str(l.get("anno")) == str(lezione.get("anno")):
-            for m in l.get("materiali") or []:
-                f = str(m.get("file", ""))
-                if f.endswith(fine) and (RADICE / f.lstrip("/")).exists():
-                    return RADICE / f.lstrip("/")
+            esistenti = [f for f in (str(m.get("file", "")) for m in l.get("materiali") or [])
+                         if f and (RADICE / f.lstrip("/")).exists()]
+            esatti = [f for f in esistenti if f.endswith(fine)]
+            if esatti:
+                return RADICE / esatti[0].lstrip("/")
+            # file caricati con il nome accorciato (per esempio «iv1-1r~1.pdf» per le indulgenze):
+            # basta l'estensione, se di quel tipo ce n'è uno solo (e non è un gioco di verifica)
+            estensioni = {"-fascicolo.pdf": (".pdf",), "-artefatto.html": (".html", ".htm")}.get(fine, ())
+            simili = [f for f in esistenti if estensioni and f.lower().endswith(estensioni) and "-gioco" not in f]
+            if len(simili) == 1:
+                return RADICE / simili[0].lstrip("/")
     return None
 
 
