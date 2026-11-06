@@ -116,10 +116,14 @@ h2{margin:0;font:600 64px/1.16 Cormorant;text-wrap:pretty}
 /* ---------- lezioni: l'ultima scheda, l'invito al sito ---------- */
 function finale(c, totale) {
   const colore = c.colore || ORO;
+  // lo Shabbat chiude con le due candele dello Shabbat, non con le mascotte delle classi (il pesce e la
+  // barca sono simboli cristiani: il guardiano l'ha segnalato due settimane di fila)
+  const segno = c.segno === 'candele' ? '<div class="candele"><i></i><i></i></div>'
+    : `<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>`;
   return pagina(colore, `
 <div class="alto">${logo}<div class="conta" style="color:${colore}">${totale}/${totale}</div></div>
 <div class="centro">
-<div class="cinque">${[1, 2, 3, 4, 5].map((n) => `<img src="${url(`assets/mascotte/svg/${MASCOTTE[n]}.svg`)}">`).join('')}</div>
+${segno}
 <div class="eb" style="justify-content:center">${esc(c.saluto || 'Per continuare')}</div>
 <h2>${c.invito || 'La lezione completa<br>è su <em>www.labirc.it</em>'}</h2>
 <div class="bio">Link nella bio</div></div>
@@ -127,6 +131,7 @@ function finale(c, totale) {
   `.conta{font:600 26px Cinzel;letter-spacing:.12em}
 .centro{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px}
 .cinque{display:flex;gap:18px;margin-bottom:34px}.cinque img{width:120px;height:120px}
+${c.segno === 'candele' ? CANDELE + '\n.candele{margin:96px 0 46px}' : ''}
 h2{margin:0;font:600 68px/1.12 Cormorant}
 h2 em{font-style:italic;font-weight:500;color:${ORO}}
 .bio{margin-top:26px;font:700 30px Figtree;color:#ECEAF5;background:rgba(255,255,255,.07);border:1.5px solid rgba(227,194,122,.5);border-radius:999px;padding:14px 30px}`);
@@ -469,8 +474,8 @@ for (const d of [...leggi('domenica.json'), ...leggi('sabato.json')].filter((x) 
   const piede = { colore: d.colore || ORO, titolo: shabbat ? `Lo Shabbat del Lab · ${d.titolo}` : d.formato === 'grande-domanda' ? `La grande domanda · ${d.titolo}` : `La domenica del Lab · ${d.tempo}` };
   schede.forEach((s, k) => lavori.push({ file: d.immagini[k + 1], html: () => scheda(piede, k + 2, totale, s, (d.illustrazioni || [])[k]), adatta: 'h2' }));
   const fonti = [...new Set((d.fonti || []).map((f) => { try { return new URL(f.url).hostname.replace(/^www\./, ''); } catch { return ''; } }).filter(Boolean))];
-  if (schede.length) lavori.push({ file: d.immagini[totale - 1], v: 2, html: () => finale({
-    colore: d.colore || ORO, saluto: shabbat ? 'Shabbat shalom' : 'Buona domenica',
+  if (schede.length) lavori.push({ file: d.immagini[totale - 1], v: shabbat ? 3 : 2, html: () => finale({
+    colore: d.colore || ORO, saluto: shabbat ? 'Shabbat shalom' : 'Buona domenica', segno: shabbat ? 'candele' : '',
     titolo: shabbat ? `Fonti: ${fonti.join(' · ') || 'fonti ebraiche'}` : d.lezione,
     invito: shabbat ? 'Il laboratorio di Religione<br>è su <em>www.labirc.it</em>'
       : d.formato === 'grande-domanda' ? `${(d.lezioni || []).length > 1 ? 'Le lezioni complete<br>sono' : 'La lezione completa<br>è'} su <em>www.labirc.it</em>` : '' }, totale) });
