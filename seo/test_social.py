@@ -379,6 +379,8 @@ class Storie(unittest.TestCase):
         self.storie.post_di_oggi = lambda d: {"titolo": "Lezione", "gancio": "Un gancio", "anno": "2", "origine": "x"}
         self.assertEqual(self.storie.scheda("pranzo", dt.date(2026, 11, 9))["titolo"], "Un gancio")   # lunedì, reel
         self.assertIsNone(self.storie.scheda("pranzo", dt.date(2026, 11, 10)))                         # martedì, carosello
+        s = self.storie.scheda("pranzo", dt.date(2026, 11, 6))   # venerdì, calendario di prima: carosello alle 19
+        self.assertEqual((s["sopra"], s["piede"]), ("Stasera alle 19", "Il post esce alle 19"))
         self.storie.post_di_oggi = lambda d: None
         self.assertIsNone(self.storie.scheda("pranzo", dt.date(2026, 11, 9)))                          # niente post, niente storia
 
