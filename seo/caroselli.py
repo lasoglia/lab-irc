@@ -138,7 +138,9 @@ def schema(n_schede: int) -> dict:
             "adatta": {"type": "boolean"}, "motivo": stringa,
             "copertina": {"type": "object", "properties": {"titolo": stringa, "frase": stringa},
                           "required": ["titolo", "frase"], "additionalProperties": False},
-            "schede": {"type": "array", "minItems": n_schede, "maxItems": n_schede, "items": {
+            # il numero di schede lo chiedono le istruzioni e lo controlla scrivi(): l'API accetta
+            # minItems solo 0 o 1 (con 4 rispondeva 400 e il carosello del martedì non si scriveva)
+            "schede": {"type": "array", "items": {
                 "type": "object",
                 "properties": {"tipo": {"type": "string", "enum": TIPI}, "titolo": stringa, "testo": stringa,
                                "numero": stringa, "citazione": stringa, "cerchia": stringa},
@@ -217,6 +219,9 @@ def scrivi(client, lezione: dict, rubrica: str, quando: str | None = None) -> di
     testo = regista.testo_fascicolo(pdf)
     ist, msg, sch = istruzioni(rubrica), messaggio(lezione, rubrica, testo, quando), schema(r["schede"])
     t = pr.scrivi_e_rivedi(client, ist, msg, sch, ambiti=AMBITI)
+    t["schede"] = (t.get("schede") or [])[:r["schede"]]
+    if t.get("adatta") and len(t["schede"]) < r["schede"]:
+        t.update({"adatta": False, "motivo": f"solo {len(t['schede'])} schede su {r['schede']}"})
     if not t.get("adatta"):
         print(f"  · «{lezione['titolo']}» non regge «{rubrica}»: {t.get('motivo', '')[:100]}")
         return {"adatta": False, "motivo": t.get("motivo", ""), "token": t.get("token")}

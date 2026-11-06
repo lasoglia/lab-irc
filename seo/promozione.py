@@ -215,7 +215,8 @@ def rifinisci_canali(t: dict) -> dict:
 
 def accorcia_schede(client, t: dict, modello: str | None = None) -> dict:
     """Le schede del carosello oltre il limite le accorcia il caporedattore, con gli stessi fatti."""
-    schede = t.get("carosello") if isinstance(t.get("carosello"), list) else []
+    chiave = "carosello" if isinstance(t.get("carosello"), list) else "schede"   # schede: caroselli del martedì
+    schede = t.get(chiave) if isinstance(t.get(chiave), list) else []
     lunghe = [i for i, s in enumerate(schede) if isinstance(s, dict) and len(s.get("testo", "")) > LIMITE_SCHEDA]
     if not lunghe:
         return t
@@ -269,13 +270,15 @@ def scrivi_e_rivedi(client, istruzioni: str, messaggio: str, schema: dict,
     except (ImportError, ValueError, OSError):
         pass
     istruzioni = istruzioni + fatti_dubbi()
-    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high", modello=modello, pensiero=pensiero)
+    # 32000 token di risposta: con 16000 la grande domanda dell'8 novembre (tre lezioni lunghe) si è interrotta
+    bozza, r1 = chiama_claude(client, istruzioni, messaggio, schema, "high", max_token=32000,
+                              modello=modello, pensiero=pensiero)
     finale, r2 = chiama_claude(
         client, REDATTORE,
         f"<istruzioni_autore>\n{istruzioni}\n</istruzioni_autore>\n\n"
         f"<materiale>\n{messaggio}\n</materiale>\n\n"
         f"<bozza>\n{json.dumps(bozza, ensure_ascii=False, indent=1)}\n</bozza>",
-        schema, "high", modello=modello, pensiero=pensiero)
+        schema, "high", max_token=32000, modello=modello, pensiero=pensiero)
     if "hashtag" in finale:
         finale["hashtag"] = [h.lstrip("#").replace(" ", "") for h in finale["hashtag"] if h.strip("# ")]
     finale = rifinisci_canali(finale)
