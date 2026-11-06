@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-05",
+  "aggiornato": "2026-11-06",
   "facebook": [
     {
       "chiave": "prof-001",
@@ -53,6 +53,12 @@
     },
     {
       "data": "2026-11-05",
+      "facebook": 0,
+      "instagram": 1,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-06",
       "facebook": 0,
       "instagram": 1,
       "telegram": 2
