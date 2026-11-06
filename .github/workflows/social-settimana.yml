@@ -197,6 +197,18 @@ jobs:
           fi
           rm -f corpo-issue.md
 
+      - name: Conserva i file di lavoro degli agenti
+        # per capire che cosa è successo quando il piano non si salva (solo per chi vede le Action)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lavoro-degli-agenti
+          path: |
+            .social/
+            !.social/candidati/
+          retention-days: 7
+          if-no-files-found: ignore
+
       - name: Segnala l'errore
         if: steps.agenti.outcome != 'success' || steps.valida.outcome != 'success'
         run: |
