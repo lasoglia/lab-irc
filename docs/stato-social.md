@@ -53,22 +53,30 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | `e8f81a3` (+ `b2ca2d5` della sessione Fable) | I fascicoli caricati con il nome accorciato (le indulgenze: «iv1-1r~1.pdf») ora si trovano; il giovedì un giro leggero ricontrolla le rubriche del weekend riscritte (`/social-rubriche`); il piano si salva anche se la coda è cambiata nel frattempo, e l'Issue dice se il salvataggio è fallito. |
 | `ddd0dc5` | Lo Shabbat chiude con le due candele, non con le mascotte delle classi (pesce e barca sono simboli cristiani). |
 
-## 3. La settimana in coda (al 6 novembre)
+## 3. La settimana in coda (al 6 novembre, ore 2)
 
 | Giorno | Che cosa |
 |---|---|
-| ven 6 | carosello «Gerusalemme, una città di memorie» (calendario di prima: alle 19) |
-| sab 7, dom 8 | Shabbat e grande domanda riscritti la notte del 6 con le obiezioni; vanno in coda solo se il piano della settimana lanciato la stessa notte li approva |
-| lun 9 | reel «Chi può insegnare a chi» (già montato, voce Sadachbia, scritte a tempo) |
-| mar 10 | carosello «Cambiare il modo di leggere e di partecipare» (rubrica «Parole con una storia») |
-| mer 11 | reel «Lo screenshot non basta» |
-| gio 12 | reel del gioco «Le due vie di Lemaître» (si prepara il mercoledì sera) |
-| ven 13 | reel scelto dal piano della notte del 6, tra le lezioni con il fascicolo |
-| sab 14, dom 15 | li controlla il piano di domenica 8 |
-| mar 17 | carosello «Riformare una Chiesa: le indulgenze» |
+| ven 6 | carosello «Gerusalemme, una città di memorie» (calendario di prima: alle 19). Controllo generale verde |
+| sab 7, dom 8 | niente: Shabbat e grande domanda riscritti, ma il piano non ha potuto ricontrollarli (crediti API finiti) |
+| lun 9 | reel «Chi può insegnare a chi» (montato, con l'anticipo per la storia delle 13:30) |
+| mar 10 | carosello «Cambiare il modo di leggere e di partecipare», rubrica «Parole con una storia» (immagini su R2) |
+| mer 11 | reel «Lo screenshot non basta» (montato, con l'anticipo) |
+| gio 12 | reel del gioco «Le due vie di Lemaître» (si prepara il mercoledì sera, senza Claude) |
+| ven 13 | reel «Riformare una Chiesa: le indulgenze», «Falso mito»: lo scrive il regista se ci sono crediti, altrimenti esce il reel di riserva già montato |
+| sab 14, dom 15 e dopo | servono i crediti: li sceglie e li controlla il piano di domenica 8 |
+
+**Crediti API finiti (6 novembre, notte).** Gli ultimi due piani si sono fermati con «Credit balance is too low».
+Senza crediti non lavorano gli agenti (piano, controllo del giovedì, diagnosi del mattino), il regista, le
+rubriche e i caroselli del martedì. Pubblicazione, storie, reel del gioco, numeri e controllo generale
+non usano Claude e vanno avanti. Matteo deve ricaricare i crediti prima del piano di domenica 8 (17:23);
+in alternativa, per gli agenti, il segreto `CLAUDE_CODE_OAUTH_TOKEN` (abbonamento Claude), ma regista,
+rubriche e caroselli chiamano l'API e i crediti servono comunque.
 
 ## 4. Che cosa resta da fare
 
+0. **Ricaricare i crediti API di Anthropic** (vedi sopra): senza, dal weekend del 14-15 non esce più
+   niente di nuovo.
 1. **Permesso `instagram_manage_insights`** (lo fa Matteo in Meta Business, poi rigenera `META_TOKEN`):
    senza, Instagram non dà copertura, salvataggi e tempo di visione e il quaderno non impara nulla sui
    reel. È il passo che più serve al miglioramento automatico.
