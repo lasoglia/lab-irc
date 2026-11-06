@@ -1,18 +1,95 @@
 {
   "nota": "Dettagli delle lezioni segnalati come dubbi dai controllori (piano del 3 novembre 2026 e revisione del 4-5 novembre, docs/revisione-social-2026-11-04.md §7). Chi scrive post, reel e caroselli non li usa così come sono (seo/promozione.py, fatti_dubbi) e il verificatore li controlla. Quando una lezione viene corretta, togli la sua voce.",
   "dubbi": [
-    {"lezione": "Cambiare il modo di leggere e di partecipare", "dettaglio": "il giorno della bolla Quo primum (il fascicolo dice 13 luglio 1570; la bolla è datata il giorno prima delle Idi di luglio, cioè il 14)", "come": "scrivi «nel luglio 1570», senza il giorno"},
-    {"lezione": "L’evoluzione decide quanto valiamo", "dettaglio": "il giorno di Dignitas infinita (approvata dal papa il 25 marzo, datata 2 aprile, pubblicata l'8 aprile 2024)", "come": "scrivi «nel 2024», senza il giorno"},
-    {"lezione": "La libertà vale anche per chi crede diversamente", "dettaglio": "Josef Beran «arcivescovo di Praga nel 1949» (secondo altre fonti fu nominato nel 1946 e il 1949 è l'anno dell'internamento)", "come": "non indicare l'anno della nomina"},
-    {"lezione": "Un papa può sbagliare, e un papa senza Stato. Il 1870", "dettaglio": "Heinrich Fries detto «storico»", "come": "chiamalo «teologo»"},
-    {"lezione": "Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille", "dettaglio": "l'Obolo di San Pietro «dal VII secolo» (altre fonti dicono VIII)", "come": "non indicare il secolo"},
-    {"lezione": "Un'Europa divisa, perché la Riforma si moltiplica", "dettaglio": "Tommaso Moro «primo laico» cancelliere; la Messa e le immagini «abolite a Zurigo nel 1523» (decise nel 1523, attuate tra il 1524 e il 1525)", "come": "non dire «primo laico»; per Zurigo scrivi «tra il 1523 e il 1525»"},
-    {"lezione": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1", "dettaglio": "Pio XII che nel 1952 «precisò» che la cosmologia non parla di creazione (il fascicolo su Lemaître dice che di quel colloquio non resta prova scritta)", "come": "non usarlo"},
-    {"lezione": "Un libro o una biblioteca Una Bibbia, molti canoni", "dettaglio": "il canone rabbinico fissato «fine II – inizio III secolo»", "come": "non indicare quando fu fissato"},
-    {"lezione": "Perché fu condannato", "dettaglio": "la frase di Tacito su Cristo, tradotta in modo diverso nel fascicolo di «Lo screenshot non basta»", "come": "cita Tacito solo con le parole esatte del fascicolo della lezione del post"},
-    {"lezione": "Lo screenshot non basta", "dettaglio": "la frase di Tacito su Cristo, tradotta in modo diverso nel fascicolo di «Perché fu condannato»", "come": "cita Tacito solo con le parole esatte del fascicolo di questa lezione"},
-    {"lezione": "Perché credere ai testimoni della Pasqua", "dettaglio": "la Mishnah detta «del tempo» di Gesù (gli altri fascicoli la datano verso il 200)", "come": "non dire che è del tempo di Gesù"},
-    {"lezione": "Riformare una Chiesa: le indulgenze", "dettaglio": "l'anno in cui Alberto di Brandeburgo nomina Tetzel sottocommissario (1516 o inizio 1517) e il numero del paragrafo di Spes non confundit", "come": "non indicarli"},
-    {"lezione": "Chi può insegnare a chi", "dettaglio": "l'età minima chiesta dagli statuti di Robert de Courçon del 1215 («almeno vent'anni»: il latino si può leggere anche «ventun anni»)", "come": "scrivi «un'età minima»"}
+    {
+      "lezione": "Cambiare il modo di leggere e di partecipare",
+      "dettaglio": "il giorno della bolla Quo primum (il fascicolo dice 13 luglio 1570; la bolla è datata il giorno prima delle Idi di luglio, cioè il 14)",
+      "come": "scrivi «nel luglio 1570», senza il giorno"
+    },
+    {
+      "lezione": "L’evoluzione decide quanto valiamo",
+      "dettaglio": "il giorno di Dignitas infinita (approvata dal papa il 25 marzo, datata 2 aprile, pubblicata l'8 aprile 2024)",
+      "come": "scrivi «nel 2024», senza il giorno"
+    },
+    {
+      "lezione": "La libertà vale anche per chi crede diversamente",
+      "dettaglio": "Josef Beran «arcivescovo di Praga nel 1949» (secondo altre fonti fu nominato nel 1946 e il 1949 è l'anno dell'internamento)",
+      "come": "non indicare l'anno della nomina"
+    },
+    {
+      "lezione": "Un papa può sbagliare, e un papa senza Stato. Il 1870",
+      "dettaglio": "Heinrich Fries detto «storico»",
+      "come": "chiamalo «teologo»"
+    },
+    {
+      "lezione": "Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille",
+      "dettaglio": "l'Obolo di San Pietro «dal VII secolo» (altre fonti dicono VIII)",
+      "come": "non indicare il secolo"
+    },
+    {
+      "lezione": "Un'Europa divisa, perché la Riforma si moltiplica",
+      "dettaglio": "Tommaso Moro «primo laico» cancelliere; la Messa e le immagini «abolite a Zurigo nel 1523» (decise nel 1523, attuate tra il 1524 e il 1525)",
+      "come": "non dire «primo laico»; per Zurigo scrivi «tra il 1523 e il 1525»"
+    },
+    {
+      "lezione": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+      "dettaglio": "Pio XII che nel 1952 «precisò» che la cosmologia non parla di creazione (il fascicolo su Lemaître dice che di quel colloquio non resta prova scritta)",
+      "come": "non usarlo"
+    },
+    {
+      "lezione": "Un libro o una biblioteca Una Bibbia, molti canoni",
+      "dettaglio": "il canone rabbinico fissato «fine II – inizio III secolo»",
+      "come": "non indicare quando fu fissato"
+    },
+    {
+      "lezione": "Perché fu condannato",
+      "dettaglio": "la frase di Tacito su Cristo, tradotta in modo diverso nel fascicolo di «Lo screenshot non basta»",
+      "come": "cita Tacito solo con le parole esatte del fascicolo della lezione del post"
+    },
+    {
+      "lezione": "Lo screenshot non basta",
+      "dettaglio": "la frase di Tacito su Cristo, tradotta in modo diverso nel fascicolo di «Perché fu condannato»",
+      "come": "cita Tacito solo con le parole esatte del fascicolo di questa lezione"
+    },
+    {
+      "lezione": "Perché credere ai testimoni della Pasqua",
+      "dettaglio": "la Mishnah detta «del tempo» di Gesù (gli altri fascicoli la datano verso il 200)",
+      "come": "non dire che è del tempo di Gesù"
+    },
+    {
+      "lezione": "Riformare una Chiesa: le indulgenze",
+      "dettaglio": "l'anno in cui Alberto di Brandeburgo nomina Tetzel sottocommissario (1516 o inizio 1517) e il numero del paragrafo di Spes non confundit",
+      "come": "non indicarli"
+    },
+    {
+      "lezione": "Chi può insegnare a chi",
+      "dettaglio": "l'età minima chiesta dagli statuti di Robert de Courçon del 1215 («almeno vent'anni»: il latino si può leggere anche «ventun anni»)",
+      "come": "scrivi «un'età minima»"
+    },
+    {
+      "lezione": "Che cosa accadde nel 1616 e nel 1633, e nel 1992",
+      "dettaglio": "la parallasse del 1838 detta «la prova decisiva» del moto della Terra (l'aberrazione della luce del 1729 era già una prova) e «in ginocchio davanti a sette cardinali» (sette firmarono la sentenza, i giudici erano dieci)",
+      "come": "scrivi «la parallasse delle stelle sarà misurata solo nel 1838» e «davanti ai cardinali del Sant'Uffizio»"
+    },
+    {
+      "lezione": "Come si vadia al cielo, la Bibbia insegna astronomia",
+      "dettaglio": "la «cena» a Pisa del dicembre 1613 (il testo stesso dice «Finito il pranzo»), «settant'anni prima la Riforma» (nel 1615 era quasi un secolo prima) e il destinatario della denuncia di Lorini del 1615",
+      "come": "scrivi «pranzo», «un secolo prima» e non indicare il destinatario della denuncia"
+    },
+    {
+      "lezione": "Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1",
+      "dettaglio": "«nel 1616 il Sant'Uffizio giudicò contraria alla Scrittura l'immobilità del Sole» (la formula è del decreto dell'Indice; i qualificatori del Sant'Uffizio dissero «formalmente eretica»)",
+      "come": "scrivi «nel 1616 un decreto dell'Indice giudicò falsa e contraria alla Scrittura la dottrina di Copernico»"
+    },
+    {
+      "lezione": "La libertà vale anche per chi crede diversamente",
+      "dettaglio": "l'età di Beran il 20 settembre 1965 (77 anni nel fascicolo; nato il 29 dicembre 1888, ne aveva 76) e che Giovanni XXIII nel 1959 abbia tolto la preghiera per gli ebrei (tolse la parola «perfidi»)",
+      "come": "non indicare l'età; scrivi che Giovanni XXIII tolse la parola «perfidi» dalla preghiera del Venerdì santo"
+    },
+    {
+      "lezione": "Un libro o una biblioteca Una Bibbia, molti canoni",
+      "dettaglio": "«Bibbia è un plurale» e la spiegazione di «sporcare le mani» come dopo aver toccato una cosa consacrata (è un'interpretazione moderna)",
+      "come": "scrivi che Bibbia «viene da un plurale greco» e non spiegare il motivo di «sporcare le mani»"
+    }
   ]
 }
