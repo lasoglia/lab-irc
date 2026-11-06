@@ -45,7 +45,10 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | `9700edb` | Il martedì non esce come carosello una lezione messa in coda per un giorno di reel (`senza_reel` in `seo/pubblica.py`). |
 | `cfd1bfb` | Rubriche del weekend nei formati che il guardiano controlla (titolo su Telegram, link nella bio su Instagram, una battuta, schede entro 190 caratteri, hashtag fissi, niente «domande dai banchi»); per tutti i testi le correzioni di forma senza IA (`rifinisci_canali`, `accorcia_schede` in `seo/promozione.py`); le obiezioni dei controllori in `data/rubriche-da-rifare.md` tornano a chi riscrive. Storie del mattino con l'ora presa dal giorno della settimana. |
 | `29bff2a` | I numeri dei post ogni mattina, nel controllo delle uscite (prima solo la domenica). |
-| `f1e0a15` (ramo del sito) | Coda riallineata: «Lo screenshot non basta» all'11/11 e «le indulgenze» al 13/11, come reel. |
+| `f1e0a15`, `7bb1f3f` (ramo del sito) | Coda riallineata: «Lo screenshot non basta» all'11/11 come reel; «le indulgenze» (lezione senza fascicolo, quindi niente reel del regista) torna carosello martedì 17/11. |
+| `865de46` + `2c8a9d6` (ramo del sito) | `data/fatti-dubbi.json`: i dettagli dubbi delle lezioni arrivano a chi scrive con il divieto di usarli così come sono; il verificatore li controlla. |
+| `d654553` | L'anticipo delle 13:30 si monta anche per i reel già pronti. |
+| `f8b729c` | I caroselli del martedì di nuovo scrivibili (lo schema chiedeva un numero minimo di schede che l'API rifiuta); 32000 token di risposta per i testi lunghi. |
 
 ## 3. La settimana in coda (al 6 novembre)
 
@@ -57,8 +60,9 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | mar 10 | carosello «Cambiare il modo di leggere e di partecipare» (rubrica «Parole con una storia») |
 | mer 11 | reel «Lo screenshot non basta» |
 | gio 12 | reel del gioco «Le due vie di Lemaître» (si prepara il mercoledì sera) |
-| ven 13 | reel «Riformare una Chiesa: le indulgenze» |
+| ven 13 | reel scelto dal piano della notte del 6, tra le lezioni con il fascicolo |
 | sab 14, dom 15 | li controlla il piano di domenica 8 |
+| mar 17 | carosello «Riformare una Chiesa: le indulgenze» |
 
 ## 4. Che cosa resta da fare
 
