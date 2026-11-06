@@ -1,1 +1,77 @@
-[]
+[
+  {
+    "chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare",
+    "rubrica": "Parole con una storia",
+    "quando": "2026-11-10",
+    "anno": "5",
+    "classe": "quinta",
+    "colore": "#FBBF24",
+    "mascotte": "5-terra",
+    "titolo": "Cambiare il modo di leggere e di partecipare",
+    "uda": "Una Chiesa dentro la storia",
+    "url": "https://www.labirc.it/lezioni/5/una-chiesa-dentro-la-storia/cambiare-il-modo-di-leggere-e-di-partecipare/",
+    "copertina": {
+      "titolo": "Deposito",
+      "frase": "Da un termine del diritto romano alla chiave del Concilio Vaticano II"
+    },
+    "schede": [
+      {
+        "tipo": "testo",
+        "titolo": "Da dove viene",
+        "testo": "Dal diritto romano. Il depositum era un bene prezioso affidato a una persona di fiducia, il depositario."
+      },
+      {
+        "tipo": "testo",
+        "titolo": "Che cosa voleva dire",
+        "testo": "Chi lo riceveva aveva un solo compito: custodirlo intatto. San Paolo usa questa immagine per la fede trasmessa (2 Tm 1,13-14)."
+      },
+      {
+        "tipo": "pagina",
+        "titolo": "Dove compare nella lezione",
+        "testo": "11 ottobre 1962: Giovanni XXIII apre il Concilio e distingue il deposito della Fede dal modo di annunciarlo. Il modo può cambiare, il senso no.",
+        "citazione": "Altro è infatti il deposito della Fede, cioè le verità che sono contenute nella nostra veneranda dottrina, altro è il modo con il quale esse sono annunziate",
+        "cerchia": "deposito",
+        "pagina": 2,
+        "evidenzia": [
+          {
+            "x": 423,
+            "y": 722,
+            "w": 656,
+            "h": 37
+          },
+          {
+            "x": 161,
+            "y": 756,
+            "w": 749,
+            "h": 37
+          }
+        ],
+        "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf",
+        "cerchio": {
+          "x": 580,
+          "y": 725,
+          "w": 79,
+          "h": 31
+        }
+      },
+      {
+        "tipo": "testo",
+        "titolo": "Che cosa vuol dire oggi",
+        "testo": "Il deposito resta, il modo cambia: la messa nella lingua del popolo, il Padre nostro con «non abbandonarci alla tentazione». Stessa fede, parole più chiare."
+      }
+    ],
+    "finale": "Salvalo per la lezione",
+    "file": "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce.png",
+    "immagini": [
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce.png",
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce-2.png",
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce-3.png",
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce-4.png",
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce-5.png",
+      "martedi-5-cambiare-il-modo-di-leggere-e-di-partecipare-e7cab4ce-6.png"
+    ],
+    "facebook": "Il Concilio ha cambiato la fede? La risposta sta in una parola.\n\nPer chi insegna in quinta, per chi studia il Vaticano II e per chi se lo è sempre chiesto.\n\nL'11 ottobre 1962, aprendo il Concilio, Giovanni XXIII distingue: «Altro è infatti il deposito della Fede, cioè le verità che sono contenute nella nostra veneranda dottrina, altro è il modo con il quale esse sono annunziate». «Deposito» viene dal diritto romano: un bene prezioso da custodire intatto. Il modo, invece, è la lingua, il rito, lo stile. E il primo «modo» che i vescovi presero in mano fu la messa.\n\nSalva il carosello per la lezione sul Vaticano II.\n\nhttps://www.labirc.it/lezioni/5/una-chiesa-dentro-la-storia/cambiare-il-modo-di-leggere-e-di-partecipare/",
+    "instagram": "Che cosa c'entra il diritto romano con il Concilio Vaticano II?\n\nPer chi insegna in quinta, per chi studia e per chi si è chiesto perché a messa si prega in italiano.\n\nNel diritto romano il depositum era un bene prezioso affidato a un depositario, che doveva custodirlo intatto. Un po' come le chiavi di casa lasciate al vicino: le tiene con cura, ma la serratura non la cambia.\n\nSan Paolo usa questa immagine per la fede trasmessa (2 Tm 1,13-14). Nel 1962 Giovanni XXIII la mette al centro del discorso di apertura del Concilio: aliud depositum Fidei, aliud modus. La fede si custodisce, il modo di dirla può cambiare.\n\nSalva il post: la lezione completa è al link nella bio.\n\n#religionecattolica #irc #vaticanosecondo #paroleconunastoria",
+    "telegram": "Parole con una storia: «deposito». Nel diritto romano era il bene prezioso affidato a un depositario, da custodire intatto. Giovanni XXIII, aprendo il Concilio l'11 ottobre 1962, distingue il deposito della Fede dal modo in cui viene annunciato: il modo può cambiare, il senso no. È la chiave per capire la messa nella lingua del popolo. Lezione per la classe quinta, da salvare o da girare a un collega.\n\nhttps://www.labirc.it/lezioni/5/una-chiesa-dentro-la-storia/cambiare-il-modo-di-leggere-e-di-partecipare/"
+  }
+]

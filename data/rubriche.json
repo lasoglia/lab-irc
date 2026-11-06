@@ -318,7 +318,8 @@
       "chiave": "dom-2026-11-08",
       "data": "2026-11-08",
       "formato": "grande-domanda",
-      "versione": "2",
+      "versione": "3",
+      "obiezioni": "323ad767",
       "tempo": "",
       "colore": "#FB7BB5",
       "anno": "4",
@@ -339,99 +340,100 @@
         }
       ],
       "testi": {
-        "titolo": "Ma la Chiesa ha davvero condannato Galileo? E perché?",
-        "frase": "Una cena, un verso di Giosuè, due fogli e una sentenza: la storia vera è più sorprendente di quella che conosci.",
+        "titolo": "La Chiesa ha davvero condannato Galileo? E perché?",
+        "frase": "Sì, ma la sentenza dice una cosa più precisa di quanto si racconta. Tutto parte da un pranzo e da un versetto.",
         "carosello": [
           {
-            "titolo": "Il film che abbiamo in testa",
-            "testo": "Da una parte la Chiesa, dall'altra la scienza, in mezzo un genio punito perché aveva ragione. C'è del vero, ma i documenti raccontano una storia più precisa. E molto più sorprendente."
+            "titolo": "Quello che si racconta",
+            "testo": "Galileo, il genio che vide giusto, condannato dalla Chiesa perché diceva che la Terra gira. Vero? In parte. I documenti raccontano una storia più precisa, e più interessante."
           },
           {
-            "titolo": "Tutto parte da una cena",
-            "testo": "Dicembre 1613, alla corte del Granduca: si parla delle lune di Giove. Poi Cristina di Lorena tira fuori Giosuè: «Férmati, sole». Se Dio lo ferma, allora si muove. Scacco?"
+            "titolo": "Tutto parte da un pranzo",
+            "testo": "Pisa, dicembre 1613: a pranzo dal Granduca si parla delle lune di Giove. Dopo, Cristina di Lorena incalza Castelli, allievo di Galileo, con Giosuè: «Férmati, sole»."
           },
           {
-            "titolo": "Come si va al cielo",
-            "testo": "Galileo risponde: la Bibbia non sbaglia, sbaglia chi la legge sempre alla lettera. E cita un cardinale: lo Spirito Santo insegna «come si vadia al cielo, e non come vadia il cielo»."
+            "titolo": "Sbagliano gli interpreti",
+            "testo": "Galileo non c'è: risponde per lettera il 21 dicembre 1613. La Scrittura non può errare, ma i suoi interpreti sì, se si fermano sempre «nel puro significato delle parole»."
           },
           {
-            "titolo": "Bellarmino: mostrami la prova",
-            "testo": "1615, il cardinale: con una «vera dimostrazione» bisognerebbe rileggere la Scrittura con cura. Ma senza prova non ci crede. E la prova decisiva, la parallasse delle stelle, arriverà nel 1838."
+            "titolo": "Come si vadia al cielo",
+            "testo": "Nel 1615, nella Lettera a Cristina di Lorena, Galileo scrive che lo Spirito Santo insegna «come si vadia al cielo, e non come vadia il cielo». Lo riprende da un alto prelato."
           },
           {
-            "titolo": "1616: nessun processo",
-            "testo": "Per gli esperti del Sant'Uffizio il Sole fermo al centro è un'idea «eretica». A Galileo l'ordine di non sostenerla. Il decreto pubblico la dice solo «falsa e contraria alla Scrittura»."
+            "titolo": "1615, Bellarmino: e la prova?",
+            "testo": "Bellarmino chiede una «vera demonstratione». Le prove arriveranno dopo: l'aberrazione della luce (Bradley, 1729) e, la più diretta, la parallasse delle stelle (Bessel, 1838)."
           },
           {
-            "titolo": "1632: il libro dello scandalo",
-            "testo": "Il papa ora è Urbano VIII, amico di Galileo. Nel Dialogo, però, il suo argomento finisce in bocca a Simplicio, quello che per 400 pagine ha sempre torto. Il papa si sente deriso."
+            "titolo": "1616: un decreto",
+            "testo": "Nel 1616 un decreto giudica «falsa e contraria» alla Scrittura l'idea della Terra che si muove. Non dice «eretica». A Galileo si ordina di non tenerla né difenderla."
           },
           {
-            "titolo": "1633: sì, condannato",
-            "testo": "In ginocchio davanti a sette cardinali, Galileo abiura. La sentenza: «veementemente sospetto d'eresia», per aver difeso un'idea già dichiarata contraria alla Scrittura nel 1616."
+            "titolo": "1633: condannato per cosa",
+            "testo": "22 giugno 1633: Galileo è condannato come «veementemente sospetto d'eresia», non come eretico, e abiura. La colpa: aver difeso il moto della Terra dopo il divieto del 1616."
           },
           {
-            "titolo": "1992, e ora tocca a te",
-            "testo": "Nel 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo». Pensavano che la Bibbia insegnasse anche la fisica. E tu: che cosa chiedi alla Bibbia, e che cosa al cannocchiale?"
+            "titolo": "1992, e una domanda per te",
+            "testo": "Il 31 ottobre 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo». E ora tocca a te: che cosa chiedi alla Bibbia, e che cosa al cannocchiale?"
           }
         ],
-        "gancio": "Galileo condannato? Sì. Ma per cosa, esattamente?",
+        "gancio": "Galileo fu condannato davvero? Sì. Ma per cosa?",
         "scene_video": [
           {
-            "titolo": "1613: tutto parte a tavola",
-            "testo": "La Granduchessa cita Giosuè: «Férmati, sole». Quindi il sole si muove?",
+            "titolo": "Pisa, dicembre 1613",
+            "testo": "Cristina di Lorena incalza Castelli, allievo di Galileo, con Giosuè: «Férmati, sole».",
             "scheda": 2
           },
           {
-            "titolo": "La risposta di Galileo",
-            "testo": "La Bibbia insegna «come si vadia al cielo, e non come vadia il cielo».",
+            "titolo": "La risposta per lettera",
+            "testo": "Galileo non c'è: risponde per lettera. La Scrittura non può errare, i suoi interpreti sì.",
             "scheda": 3
           },
           {
-            "titolo": "Bellarmino vuole la prova",
-            "testo": "Richiesta ragionevole: la prova decisiva arriverà solo nel 1838.",
-            "scheda": 4
+            "titolo": "Bellarmino: prima la prova",
+            "testo": "Bellarmino nel 1615 chiede una «vera demonstratione»: arriverà più di un secolo dopo.",
+            "scheda": 5
           },
           {
-            "titolo": "1632: il papa si offende",
-            "testo": "Nel Dialogo il suo argomento lo dice Simplicio, quello che ha sempre torto.",
+            "titolo": "1616: il decreto",
+            "testo": "L'idea della Terra che si muove: «falsa e contraria» alla Scrittura. Non «eretica».",
             "scheda": 6
           },
           {
-            "titolo": "1633: sì, condannato",
-            "testo": "«Veementemente sospetto d'eresia»: aveva difeso un'idea già vietata nel 1616.",
+            "titolo": "22 giugno 1633",
+            "testo": "Galileo: «veementemente sospetto d'eresia», per aver difeso un'idea vietata nel 1616.",
             "scheda": 7
           },
           {
-            "titolo": "1992: errore riconosciuto",
-            "testo": "Giovanni Paolo II: «l'errore dei teologi del tempo». Il resto è nel carosello.",
+            "titolo": "31 ottobre 1992",
+            "testo": "Giovanni Paolo II riconosce «l'errore dei teologi del tempo». E tu che ne pensi?",
             "scheda": 8
           }
         ],
-        "facebook": "Roma, 22 giugno 1633. Un uomo di quasi settant'anni, malato, arrivato in lettiga, legge in ginocchio un foglio davanti a sette cardinali. È Galileo Galilei. 🔭\n\nQuindi sì, la condanna c'è stata. Ma la domanda arrivata dai banchi è più furba: condannato per che cosa? La chiave della sentenza è una riga: Galileo aveva difeso un'idea dopo che, nel 1616, era stata dichiarata contraria alla Scrittura.\n\nPer arrivarci si passa da una cena a Pisa, da un cardinale che chiede una prova (richiesta ragionevole, per l'epoca) e da un libro in cui l'argomento del papa finisce in bocca al personaggio che sbaglia sempre. Spoiler: al papa non piacque.\n\nIl carosello racconta tutto in otto schede, fino al 1992. Le lezioni del Lab IRC per la prima e la quarta hanno i documenti originali.",
-        "instagram": "Pisa, dicembre 1613: a cena si chiacchiera di lune di Giove. Poi la granduchessa madre tira fuori la Bibbia: «Férmati, sole». ☀️\n\nDa lì parte la storia di Galileo e della Chiesa.\n\nGalileo risponde con una frase da tenere a mente: la Bibbia insegna come si va in cielo, non come va il cielo.\n\nIl cardinale Bellarmino chiede la prova. Galileo non ce l'ha ancora: arriverà nel 1838.\n\nNel 1633 la condanna arriva davvero. Ma la sentenza dice una cosa più precisa di quanto pensi.\n\nOtto schede per scoprirla, e l'ultima è una domanda per te. Le lezioni complete sono sul Lab IRC.",
+        "facebook": "Roma, 22 giugno 1633. Galileo, quasi settant'anni, in ginocchio davanti a sette cardinali, legge la sua abiura. Fu condannato davvero? Sì: il Sant'Uffizio lo dichiarò «veementemente sospetto d'eresia». Ma la domanda vera è un'altra: condannato per che cosa?\n\nTutto parte nel 1613 da un versetto di Giosuè: «Férmati, sole». Nel 1616 l'idea della Terra che si muove è giudicata «falsa e contraria» alla Scrittura, e a Galileo si ordina di non difenderla. Nel 1632 esce il Dialogo, e l'argomento caro al papa finisce in bocca a Simplicio, il personaggio che ha torto per quattrocento pagine. Urbano VIII si sente deriso. La colpa del 1633 è questa: aver difeso quell'idea dopo il divieto. Nel 1992 Giovanni Paolo II riconosce «l'errore dei teologi del tempo».\n\nNelle lezioni del Lab IRC ci sono i testi dei documenti. Sfoglia il carosello e salvalo per la lezione.",
+        "instagram": "«Férmati, sole», si legge nel libro di Giosuè. Se Dio ferma il sole, vuol dire che il sole si muove. O no?\n\nDicembre 1613: dopo un pranzo dal Granduca, Cristina di Lorena cita il versetto contro Benedetto Castelli, allievo di Galileo.\n\nGalileo risponde per lettera: la Scrittura non può errare, i suoi interpreti sì.\n\nNel 1615, nella Lettera a Cristina di Lorena, scrive che lo Spirito Santo insegna «come si vadia al cielo, e non come vadia il cielo». Vadia? È il toscano del Seicento per «vada».\n\nNel 1633 arriva la condanna, per un motivo preciso: aver difeso il moto della Terra dopo che nel 1616 era stato dichiarato contrario alla Scrittura.\n\nIl resto è nel carosello, fino al 1992 🔭\n\nLe lezioni complete sono sul Lab IRC, link nella bio.",
         "hashtag": [
           "religionecattolica",
           "irc",
           "galileo",
-          "fedeescienza"
+          "scienzaefede",
+          "storiadellachiesa"
         ],
-        "telegram": "Galileo fu condannato davvero? Sì: il 22 giugno 1633 il Sant'Uffizio lo dichiarò «veementemente sospetto d'eresia». Non eretico, sospetto. E il motivo sta in un foglio di diciassette anni prima. Nel super post della domenica: la cena del 1613, la lettera di Bellarmino, il decreto del 1616, il Dialogo e il 1992. Otto schede da sfogliare, poi le lezioni con i documenti originali.",
+        "telegram": "Galileo fu condannato davvero?\nSì, nel 1633, ma la storia è meno semplice di quanto si dica: già nel 1615 il cardinale Bellarmino scriveva che, davanti a una vera dimostrazione del moto della Terra, bisognerebbe «più tosto dire che non l'intendiamo, che dire che sia falso quello che si dimostra». Quella prova, allora, mancava. Nel carosello la storia completa, dal pranzo di Pisa del 1613 al 1992; nelle lezioni, i testi dei documenti.",
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 35421,
-          "output": 18362
+          "input": 40296,
+          "output": 29488
         }
       },
       "illustrazioni": [
-        "2026-11-08-bfde53-1.svg",
-        "2026-11-08-bfde53-2.svg",
-        "2026-11-08-bfde53-3.svg",
-        "2026-11-08-bfde53-4.svg",
-        "2026-11-08-bfde53-5.svg",
-        "2026-11-08-bfde53-6.svg",
-        "2026-11-08-bfde53-7.svg",
-        "2026-11-08-bfde53-8.svg"
+        "2026-11-08-d63c9e-1.svg",
+        "2026-11-08-d63c9e-2.svg",
+        "2026-11-08-d63c9e-3.svg",
+        "2026-11-08-d63c9e-4.svg",
+        "2026-11-08-d63c9e-5.svg",
+        "2026-11-08-d63c9e-6.svg",
+        "2026-11-08-d63c9e-7.svg",
+        "2026-11-08-d63c9e-8.svg"
       ]
     },
     "2026-11-15": {
@@ -559,7 +561,8 @@
   },
   "domande_usate": [
     "Ma la Chiesa ha davvero condannato Galileo? E perché?",
-    "Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?"
+    "Se c'è stato il Big Bang, che bisogno c'è di un Dio creatore?",
+    "La Chiesa ha davvero condannato Galileo? E perché?"
   ],
   "sabato": {
     "2026-11-07": {
@@ -567,130 +570,131 @@
       "data": "2026-11-07",
       "formato": "shabbat",
       "versione": "2",
-      "obiezioni": "340ab977",
+      "obiezioni": "7f9b5d53",
       "colore": "#4FB0FF",
       "anno": "",
-      "tema": "La parashà Chayei Sarah («La vita di Sara», Genesi 23,1-25,18) e la grotta di Machpelah a Hebron",
-      "dossier": "TEMA: La parashà Chayei Sarah («La vita di Sara», Genesi 23,1-25,18) e la grotta di Machpelah a Hebron\n\nFATTI:\n- La parashà di questa settimana si chiama Chayei Sarah, che significa «La vita di Sara». Il nome viene da Genesi 23,1, il primo versetto della porzione. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Il nome dice «vita», ma la parashà si apre con la morte di Sara. Abramo compra la grotta di Machpelah per seppellirla, manda il suo servo a cercare una moglie per Isacco, poi si risposa, ha altri figli e muore a 175 anni. [https://www.sefaria.org/topics/parashat-chayei-sarah]\n- Sara muore a 127 anni ed è sepolta nella grotta di Machpelah, a Hebron. Abramo la compra da Efron l'Hittita per quattrocento sicli d'argento. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Prima Efron voleva regalare il terreno ad Abramo. Abramo però insiste per pagare il prezzo pieno, e l'acquisto si chiude con 400 monete d'argento di prima qualità. [https://www.chabad.org/parshah/article_cdo/aid/583868/jewish/Aliyah-Summary.htm]\n- Il riassunto di My Jewish Learning racconta così la scena: Abramo chiede ai proprietari del posto un luogo di sepoltura. Loro, sapendo che Dio lo onora, sono pronti a dargli il terreno migliore, ma Abramo vuole pagarlo. Solo dopo seppellisce la moglie. [https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/]\n- La parashà viene letta divisa in sette parti, ognuna chiamata aliyah. La prima racconta la morte di Sara e l'acquisto del terreno, la settima elenca i discendenti di Ismaele, che muore a 137 anni. [https://www.chabad.org/parshah/article_cdo/aid/583868/jewish/Aliyah-Summary.htm]\n- Abramo fa giurare al servo che non prenderà per Isacco una donna di Canaan. Gli chiede invece di andare ad Aram, la sua terra d'origine, e di cercare lì la moglie. [https://www.chabad.org/parshah/article_cdo/aid/583868/jewish/Aliyah-Summary.htm]\n- Il servo di Abramo si chiama Eliezer. Parte carico di doni verso Charan per trovare una moglie a Isacco. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Il servo porta con sé 10 cammelli e alcune delle cose più belle del suo padrone, e va verso la città di Nahor. Di sera fa inginocchiare i cammelli vicino al pozzo, nell'ora in cui le donne vengono ad attingere acqua. [https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/]\n- Il «segno» chiesto a Dio presso il pozzo è questo: il servo chiederà da bere a una ragazza, e quella che offrirà l'acqua anche ai cammelli sarà la moglie destinata a Isacco. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Rebecca supera la «prova». È figlia di Betuel, nipote di Abramo. Il servo racconta alla sua famiglia quello che è successo durante il giorno. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Il servo dà a Rebecca un anello d'oro e due braccialetti d'oro solo dopo che i cammelli hanno finito di bere. Il fratello di Rebecca, Labano, vede i doni e invita l'uomo in casa. [https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/]\n- Labano e il padre Betuel rispondono che la cosa viene da Dio. Poi chiedono a Rebecca se vuole partire con quell'uomo, e lei risponde: «Andrò». [https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/]\n- Rebecca arriva in Canaan e trova Isacco che prega nel campo. Isacco la sposa, la ama e trova consolazione per la perdita della madre. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- Isacco porta Rebecca nella tenda di sua madre Sara. [https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/]\n- Abramo prende una nuova moglie, Keturah, che la fonte identifica con Agar, e ha altri sei figli. Ai figli di lei fa dei doni e li manda via, ma lascia tutti i suoi beni a Isacco. [https://www.chabad.org/parshah/article_cdo/aid/583868/jewish/Aliyah-Summary.htm]\n- Abramo muore a 175 anni. Lo seppelliscono i due figli maggiori, Isacco e Ismaele, accanto a Sara nella grotta di Machpelah. [https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm]\n- In ebraico Machpelah vuol dire «doppia». Una spiegazione è che vi sono sepolte quattro coppie illustri, un'altra che la grotta era a due piani. In ebraico il luogo si chiama Me'arat Hamachpelah, la «grotta di Machpelah». [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Secondo la tradizione nella grotta sono sepolti Adamo ed Eva, Abramo e Sara, Isacco e Rebecca, Giacobbe e Lea. Rachele invece fu sepolta altrove. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Il terreno comprato da Abramo per Sara è stato il primo pezzo della Terra Santa a diventare proprietà legale del popolo ebraico. La fonte data l'acquisto al 1677 a.e.v. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Lo Zohar dice che la grotta di Machpelah è speciale perché è la porta del Giardino dell'Eden. Adamo l'avrebbe scavata dopo aver visto uscire un raggio di luce da quel luogo. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Secondo il Midrash, Abramo trovò la grotta per caso: stava inseguendo un vitello che voleva servire ai tre angeli suoi ospiti. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Il grande edificio di pietra che oggi sta sopra la grotta fu costruito da Erode nel I secolo a.e.v. Ha muri spessi circa sei piedi (quasi due metri) ed è l'unica costruzione erodiana rimasta del tutto intatta. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Verso il 1490 l'accesso alla grotta sotterranea fu chiuso, e resta chiuso ancora oggi. Anche gli arabi venerano la tomba di Abramo, perché discendono da suo figlio Ismaele. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Dalla fine del XIV secolo agli ebrei fu vietato entrare. Per generazioni pregarono sui gradini esterni, potendo salire solo fino al quinto e poi fino al settimo gradino. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Il primo ebreo di cui si ha notizia che andò a pregare alla grotta è Caleb, uno dei dodici esploratori mandati da Mosè. [https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm]\n- Questa settimana la haftarah (il brano dei Profeti letto in sinagoga dopo la Torah) è l'inizio del Primo libro dei Re. Racconta di Davide anziano e della scelta di Salomone come suo successore. Come la parashà, parla di chi prenderà il posto del padre. [https://www.myjewishlearning.com/article/haftarah-for-haye-sarah/]\n\nNote per la redazione:\n- Le pagine sono di tre siti: chabad.org (tre pagine), myjewishlearning.com (due pagine) e sefaria.org. Da Sefaria si è caricata solo la descrizione della pagina.\n- Non ho trovato fonti in italiano, perché ho finito le ricerche disponibili. Per questo le traslitterazioni sono quelle inglesi delle fonti (Chayei Sarah, Machpelah, Me'arat Hamachpelah, aliyah, haftarah). In italiano di solito si scrive Chayè Sarà o Hayè Sarà, ma non l'ho verificato su una fonte.\n- La data del 1677 a.e.v. e i racconti dello Zohar e del Midrash vengono dalla tradizione ebraica, non dalla storia documentata. Conviene presentarli così.\n- Ho lasciato fuori i dettagli sulle violenze nella storia recente di Hebron: sono un tema politicamente delicato e richiedono un contesto che qui non c'è.",
+      "tema": "La mezuzà, il piccolo rotolo sullo stipite della porta della casa ebraica",
+      "dossier": "TEMA: La mezuzà, il piccolo rotolo sullo stipite della porta della casa ebraica\n\nFATTI:\n- In ebraico biblico la parola mezuzah (מזוזה) vuol dire «stipite della porta». Il versetto dice: «Le scriverai sulle mezuzot, gli stipiti, della tua casa e sulle tue porte». È stata la letteratura talmudica a dare questo nome al rotolo fissato allo stipite, e lo si usa ancora oggi. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- La mezuzà è un piccolo rotolo di pergamena. Uno scriba (sofer) vi scrive a mano le parole ebraiche dello Shema. Il rotolo viene arrotolato e fissato agli stipiti delle case ebraiche. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- Il precetto ha origine nella Bibbia: «Le scriverai sugli stipiti (mezuzot) della tua casa e sulle tue porte» (Deuteronomio 6,9 e 11,20). Il testo scritto sulla pergamena è Deuteronomio 6,4-9 e 11,13-21. [https://www.myjewishlearning.com/article/mezuzah/]\n- Il rotolo contiene le prime due parti dello Shema, che comincia con «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». Tutti e due i brani contengono il comando di fissare la mezuzà. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- La pergamena si chiama klaf. La parola «mezuzah» indica sia la pergamena sia l'astuccio che la contiene. [https://www.myjewishlearning.com/article/mezuzah/]\n- La pergamena deve venire da un animale kasher ed essere preparata apposta per un uso sacro. Anche l'inchiostro e la penna d'oca sono fatti su misura, secondo i requisiti richiesti. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- Lo scriba deve conoscere le molte regole sulla scrittura della mezuzà: deve scrivere con un'intenzione speciale e rispettare l'ordine delle parole. Ogni lettera va formata bene. Basta una crepa nella pergamena o una parte mancante per rendere non valido tutto il rotolo. Una mezuzà stampata non è valida. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- Sul retro del rotolo lo scriba scrive un nome di Dio, Shaddai. Le sue tre lettere (shin, dalet, yod) sono le iniziali di Shomer daltot Yisrael, «Custode delle porte d'Israele». [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- Shaddai comincia con la lettera shin (ש). Per questo sugli astucci della mezuzà si trova spesso questa lettera, di solito in alto. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- Sul retro si scrivono anche tre parole che sembrano senza senso: כוזו במוכסז כוזו. Sono i tre nomi di Dio del versetto dello Shema, scritti mettendo al posto di ogni lettera quella che la segue nell'alfabeto ebraico. Questa «scrittura della mezuzà» veniva usata dagli ebrei nella Russia sovietica per scrivere lettere con informazioni «compromettenti». [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- L'astuccio serve solo a contenere la pergamena; ciò che conta è il rotolo. Non è obbligatorio per la legge ebraica e può essere fatto di quasi tutto: metallo, legno, ceramica, plastica. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- Il rotolo non lo si può fare da sé, perché serve uno scriba esperto. L'astuccio invece sì: argilla, tubi di PVC, legno e altri materiali da bricolage vanno bene. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- La pergamena si arrotola da sinistra a destra, così aprendola le prime parole compaiono per prime. Non va chiusa per sempre nell'astuccio, perché due volte ogni sette anni va aperta e controllata. [https://www.myjewishlearning.com/article/mezuzah/]\n- La mezuzà va su ogni stanza abitata della casa, non solo sulla porta d'ingresso. Non la richiedono bagni, ripostigli, lavanderia e locale caldaia. Va messa appena possibile dopo il trasloco, al massimo entro trenta giorni; nella Terra d'Israele si mette subito. Va messa anche nella stanza di uno studentato. [https://www.myjewishlearning.com/article/mezuzah/]\n- Secondo Chabad, se una stanza ha più porte, ognuna ha bisogno della sua mezuzà. Anche i passaggi senza porta, come gli archi tra due stanze, la richiedono. [https://www.chabad.org/library/article_cdo/aid/278460/jewish/How-to-Hang-a-Mezuzah.htm]\n- Si mette sullo stipite destro, più o meno alla base del terzo superiore. Per la porta d'ingresso è lo stipite alla destra di chi entra dalla strada. Per le porte interne è a destra di chi entra nella direzione in cui si apre la porta. [https://www.chabad.org/library/article_cdo/aid/278460/jewish/How-to-Hang-a-Mezuzah.htm]\n- Perché è inclinata? Il codice Arbaah Turim, di Rabbi Jacob ben Asher (XIII-XIV secolo), riporta due opinioni. Per Rashi la mezuzà va messa verticale. Per suo nipote Rabbeinu Tam va messa orizzontale, come stavano le Tavole e il rotolo della Torah nell'Arca del Tempio. Chi vuole rispettare tutte e due le opinioni la mette in obliquo. [https://www.chabad.org/library/article_cdo/aid/1183722/jewish/Why-Is-the-Mezuzah-Slanted.htm]\n- Nella tradizione ashkenazita la mezuzà è inclinata, con la parte alta verso l'interno della stanza. Rabbi Moshe Isserles scrive che questa usanza si è diffusa nelle comunità ashkenazite. Le comunità sefardite seguono Rashi e la fissano verticale. [https://www.chabad.org/library/article_cdo/aid/1183722/jewish/Why-Is-the-Mezuzah-Slanted.htm]\n- Prima di fissarla si recita una benedizione: «Barukh ata Adonai Eloheinu melekh ha-olam, asher kiddeshanu be-mitzvotav ve-tzivvanu likboa mezuzah», cioè «Benedetto sei Tu, Signore nostro Dio, Re dell'universo, che ci hai santificati con i Tuoi comandamenti e ci hai comandato di fissare la mezuzà». I presenti rispondono «Amen». [https://www.myjewishlearning.com/article/mezuzah/]\n- Se si fissano più mezuzot, la benedizione si dice una volta sola, prima della prima. Si comincia da una delle porte più importanti della casa, per esempio la camera da letto. [https://www.chabad.org/library/article_cdo/aid/278460/jewish/How-to-Hang-a-Mezuzah.htm]\n- Quando si passa da una porta con la mezuzà, la si guarda e la si tocca; alcuni poi si baciano la punta delle dita. È un modo per ricordarsi durante il giorno che Dio è sempre con noi, in casa e fuori. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- Secondo Chabad la mezuzà significa che l'ebraismo non resta chiuso nelle sinagoghe. Si cerca la spiritualità anche nella vita di tutti i giorni a casa propria. [https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm]\n- Secondo Chabad la mezuzà porta anche la protezione divina. Il Talmud dice che un re in carne e ossa sta dentro il palazzo e i servi lo proteggono da fuori; con Dio è il contrario: i Suoi servi stanno dentro casa e Lui li protegge da fuori. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- La scrittrice Blu Greenberg ha un'altra opinione. Per lei la mezuzà non è un amuleto né uno strumento di protezione. È un segno che ricorda l'alleanza con Dio e mostra agli altri che lì vive una famiglia ebraica. [https://www.myjewishlearning.com/article/mezuzah/]\n- Greenberg ricorda che l'ebraismo dà più importanza alla santità del tempo che a quella dei luoghi. Però la casa in cui si vive stabilmente viene santificata proprio con la mitzvah (precetto) della mezuzà. [https://www.myjewishlearning.com/article/mezuzah/]\n- Le mezuzot vanno fatte controllare da uno scriba esperto almeno due volte ogni sette anni, per vedere se le lettere si sono crepate o cancellate. Alcuni le fanno controllare ogni anno nel mese ebraico di Elul, prima delle grandi feste d'autunno. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- Quando una famiglia trasloca e sa che arriverà un'altra famiglia ebraica, lascia le mezuzot sugli stipiti. Se arriva una famiglia non ebraica, le toglie, perché non finiscano buttate via. [https://www.myjewishlearning.com/article/mezuzah/]\n- Il Talmud non ha un trattato dedicato alla mezuzà. Le sue leggi, insieme a quelle dello tzitzit (le frange) e dei tefillin (i filatteri), si trovano nel trattato Menachot, che parla delle offerte di farina nel Santuario. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n- Nel 2010 all'ingresso interno dell'aeroporto Ben Gurion in Israele fu fissata quella che allora era la mezuzà kasher più grande del mondo: pergamena e astuccio insieme superano il metro. In seguito ne sono state installate di più grandi altrove. [https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm]\n\nNOTE PER LA REDAZIONE:\n- Fonti: ho letto cinque pagine di due siti, chabad.org (quattro pagine) e myjewishlearning.com (una pagina). Non ho potuto aggiungere fonti italiane come moked.it o romaebraica.it, perché le ricerche disponibili si sono esaurite.\n- Le due fonti non sono sempre d'accordo. Chabad parla di protezione divina e mette la mezuzà anche sulla porta dell'ufficio; per Greenberg non è un amuleto e un ufficio non la richiede. Sono due letture diverse dentro l'ebraismo: nel post conviene presentarle tutte e due.\n- Le misure minime di una stanza in piedi non sono uguali nelle due pagine di Chabad (6,5 in una, 6,3 nell'altra). Per questo le ho lasciate fuori.",
       "lezione": "",
       "lezioni": [],
       "url": "https://www.labirc.it/",
       "testi": {
-        "titolo": "Una grotta «doppia», un pozzo e dieci cammelli",
-        "frase": "Chayei Sarah, la parashà della settimana: un addio, un acquisto onesto e una ragazza che risponde «Andrò».",
+        "titolo": "Che cosa c'è in quell'astuccio sulla porta?",
+        "frase": "La mezuzà: un rotolo scritto a mano, uno stipite e un piccolo gesto che accompagna chi entra in casa.",
         "carosello": [
           {
-            "titolo": "Un nome che sorprende",
-            "testo": "La parashà, la porzione della Torah di questa settimana, si chiama Chayei Sarah: «La vita di Sara». Eppure si apre con la morte di Sara, a 127 anni."
+            "titolo": "Una parola, uno stipite",
+            "testo": "In ebraico biblico mezuzah vuol dire «stipite della porta». La Bibbia dice: «Le scriverai sugli stipiti della tua casa». Poi i testi del Talmud hanno dato questo nome al rotolo."
           },
           {
-            "titolo": "Un regalo rifiutato",
-            "testo": "Efron l'Hittita vuole regalare ad Abramo il terreno per seppellire Sara. Abramo insiste per pagare il prezzo pieno: quattrocento sicli d'argento."
+            "titolo": "Dentro c'è lo Shema",
+            "testo": "Nel rotolo ci sono le prime due parti dello Shema (Dt 6,4-9 e 11,13-21): «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». Entrambi i brani chiedono di fissarla."
           },
           {
-            "titolo": "Machpelah, la «doppia»",
-            "testo": "In ebraico Machpelah vuol dire «doppia». Forse la grotta aveva due piani. Per la tradizione vi riposano quattro coppie, da Adamo ed Eva a Giacobbe e Lea."
+            "titolo": "Scritta a mano dal sofer",
+            "testo": "Il klaf, la pergamena, viene da un animale kasher (adatto secondo la legge ebraica). Il sofer, lo scriba, la scrive a mano con penna d'oca. Basta una crepa e non vale più."
           },
           {
-            "titolo": "Un vitello in fuga",
-            "testo": "Secondo il Midrash, un racconto della tradizione ebraica, Abramo trovò la grotta per caso: inseguiva un vitello da servire ai tre angeli suoi ospiti."
+            "titolo": "Quella lettera sull'astuccio",
+            "testo": "Sul retro c'è Shaddai, un nome di Dio: iniziali di Shomer daltot Yisrael, «Custode delle porte d'Israele». Comincia con la shin (ש): è la lettera che spesso vedi sull'astuccio."
           },
           {
-            "titolo": "Dieci cammelli in viaggio",
-            "testo": "Abramo manda il servo Eliezer nella sua terra d'origine a cercare una moglie per Isacco. Parte con 10 cammelli e alcune delle cose più belle del padrone."
+            "titolo": "Un compromesso in diagonale",
+            "testo": "Rashi la voleva verticale, suo nipote Rabbeinu Tam orizzontale. Gli ashkenaziti la inclinano per accontentare tutti e due; i sefarditi seguono Rashi e la tengono dritta."
           },
           {
-            "titolo": "La prova del pozzo",
-            "testo": "Al pozzo il servo prega Dio: la ragazza che darà acqua a lui e anche ai cammelli sarà la moglie di Isacco. Rebecca lo fa, cammelli compresi."
+            "titolo": "Un gesto di ogni giorno",
+            "testo": "Quando si passa dalla porta, la si guarda e la si tocca; alcuni poi si baciano la punta delle dita. È un modo per ricordare, in casa e fuori, che Dio è sempre con noi."
           },
           {
-            "titolo": "Una parola sola: «Andrò»",
-            "testo": "La famiglia di Rebecca dice che la cosa viene da Dio, ma chiede a lei se vuole partire. Lei risponde: «Andrò». Isacco la sposa, la ama e si consola della perdita di Sara."
+            "titolo": "Due modi di leggerla",
+            "testo": "Per Chabad porta la protezione divina: Dio custodisce da fuori chi sta in casa. Per la scrittrice Blu Greenberg non è un amuleto, ma un segno dell'alleanza con Dio."
           },
           {
-            "titolo": "Insieme, accanto a Sara",
-            "testo": "Abramo muore a 175 anni. Isacco e Ismaele lo seppelliscono accanto a Sara, nella grotta di Machpelah. Shabbat shalom, cioè «sabato di pace»."
+            "titolo": "Ogni porta, Shabbat shalom",
+            "testo": "Non solo all'ingresso: va su ogni stanza abitata, anche in una camera di studentato. Bagni e ripostigli no. Shabbat shalom: «sabato di pace», a ogni porta."
           }
         ],
-        "gancio": "Si chiama «La vita di Sara», ma inizia con un addio",
+        "gancio": "Perché sulla porta c'è un rotolo un po' storto?",
         "scene_video": [
           {
-            "titolo": "La vita di Sara",
-            "testo": "Il nome dice vita, ma la parashà si apre con la morte di Sara, a 127 anni.",
+            "titolo": "Uno stipite, una parola",
+            "testo": "In ebraico biblico mezuzah vuol dire «stipite della porta».",
             "scheda": 1
           },
           {
-            "titolo": "Un regalo rifiutato",
-            "testo": "Efron vuole regalare il terreno. Abramo paga il prezzo pieno: 400 sicli d'argento.",
+            "titolo": "Dentro c'è lo Shema",
+            "testo": "Il rotolo contiene «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno».",
             "scheda": 2
           },
           {
-            "titolo": "La grotta «doppia»",
-            "testo": "Machpelah vuol dire «doppia»: per la tradizione vi riposano quattro coppie.",
+            "titolo": "Solo a mano",
+            "testo": "Uno scriba, il sofer, la scrive su pergamena con penna d'oca. Stampata non vale.",
             "scheda": 3
           },
           {
-            "titolo": "Dieci cammelli in viaggio",
-            "testo": "Il servo Eliezer parte con 10 cammelli e alcune delle cose più belle di Abramo.",
+            "titolo": "Perché è storta?",
+            "testo": "Rashi la voleva verticale, Rabbeinu Tam orizzontale: inclinata rispetta entrambi.",
             "scheda": 5
           },
           {
-            "titolo": "Acqua anche ai cammelli",
-            "testo": "Rebecca dà da bere al servo e ai cammelli: è lei la moglie per Isacco.",
+            "titolo": "Un tocco passando",
+            "testo": "La si guarda e la si tocca: un modo per ricordare che Dio è sempre con noi.",
             "scheda": 6
           },
           {
-            "titolo": "Una parola sola: «Andrò»",
-            "testo": "Rebecca sceglie di partire. Isacco la sposa, la ama e si consola della perdita di Sara.",
-            "scheda": 7
+            "titolo": "Shabbat shalom",
+            "testo": "Shabbat shalom: «sabato di pace», a ogni casa e a ogni porta.",
+            "scheda": 8
           }
         ],
-        "facebook": "Qualcuno vuole regalarti un terreno e tu insisti per pagarlo, fino all'ultima moneta. È quello che fa Abramo nella parashà di questa settimana, cioè la porzione della Torah letta in sinagoga: Chayei Sarah, «La vita di Sara» (Genesi 23,1-25,18).\n\nIl nome dice vita, ma il racconto si apre con la morte di Sara, a 127 anni. Per seppellirla Abramo compra da Efron l'Hittita la grotta di Machpelah, a Hebron, e paga il prezzo pieno: quattrocento sicli d'argento. In ebraico Machpelah vuol dire «doppia»: forse la grotta aveva due piani, oppure, secondo la tradizione, lì riposano quattro coppie, da Adamo ed Eva a Giacobbe e Lea.\n\nPoi la scena si sposta a un pozzo. Il servo di Abramo arriva con dieci cammelli e aspetta una ragazza che offra acqua anche a loro: una prova di gentilezza, e pure di pazienza. 🐪\n\nTutta la storia è nello Shabbat del Lab, scheda dopo scheda.",
-        "instagram": "Dieci cammelli assetati e una ragazza che dà da bere a tutti. Così Rebecca entra nella storia. 🐪\n\nSiamo in Chayei Sarah, «La vita di Sara», la parashà di questa settimana. Il titolo parla di vita, ma tutto comincia con un addio: la morte di Sara.\n\nAbramo compra per lei la grotta di Machpelah, a Hebron. Il proprietario gliela vuole regalare, lui insiste per pagarla.\n\nMachpelah vuol dire «doppia»: per la tradizione lì riposano quattro coppie, da Adamo ed Eva a Giacobbe e Lea.\n\nE Rebecca? Quando le chiedono se vuole partire con il servo di Abramo, risponde con una parola sola: «Andrò».\n\nLe otto schede dello Shabbat del Lab ti aspettano: trovi il link nella bio.",
+        "facebook": "Sullo stipite destro di molte case ebraiche c'è un piccolo astuccio, a volte un po' inclinato. 🚪 Dentro c'è la cosa che conta davvero: una pergamena, il klaf, con le prime due parti dello Shema, «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». La scrive a mano uno scriba con penna d'oca, e due volte ogni sette anni va controllata. Si chiama mezuzà, che in ebraico biblico vuol dire proprio «stipite». Perché inclinata? Rashi la voleva verticale, suo nipote Rabbeinu Tam orizzontale: le comunità ashkenazite la mettono in diagonale, così nessuno dei due resta scontento. Passando la si tocca, per ricordare che Dio è con noi, in casa e fuori. Le letture sono diverse: per Chabad porta la protezione divina, per la scrittrice Blu Greenberg è un segno dell'alleanza che santifica la casa. Il percorso completo è nel carosello. Shabbat shalom!",
+        "instagram": "Sul retro della mezuzà ci sono tre parole che sembrano senza senso.\n\nNon è un errore dello scriba. Sono i tre nomi di Dio del versetto «Ascolta, Israele», scritti mettendo al posto di ogni lettera quella che la segue nell'alfabeto ebraico.\n\nLa chiamano «scrittura della mezuzà». Nella Russia sovietica gli ebrei la usavano per scrivere lettere con informazioni «compromettenti». 🔐\n\nIl resto è più semplice: una pergamena con lo Shema, scritta a mano e arrotolata in un astuccio sullo stipite. Passando la si tocca, per ricordare che Dio è con noi.\n\nIl percorso completo è sul Lab IRC: trovate il link nella bio.",
         "hashtag": [
           "religionecattolica",
           "irc",
           "culturaebraica",
-          "ebraismo"
+          "ebraismo",
+          "mezuza"
         ],
-        "telegram": "Lo Shabbat del Lab: una grotta che si chiama «doppia»\nQuesta settimana si legge la parashà Chayei Sarah, «La vita di Sara», che però si apre con la sua morte. Per seppellirla Abramo rifiuta il terreno in regalo e paga quattrocento sicli d'argento per la grotta di Machpelah, nome che in ebraico vuol dire «doppia». Poi arrivano un pozzo, dieci cammelli assetati e Rebecca, che alla domanda decisiva risponde: «Andrò».",
+        "telegram": "Lo Shabbat del Lab: la mezuzà\nNel 2010, all'ingresso interno dell'aeroporto Ben Gurion, fu fissata quella che allora era la mezuzà kasher più grande del mondo: pergamena e astuccio insieme superano il metro. Di solito però è un piccolo rotolo scritto a mano, e quando una famiglia ebraica trasloca lo lascia sugli stipiti solo se arriva un'altra famiglia ebraica. Nel carosello: che cosa c'è scritto dentro e perché spesso è inclinata.",
         "fonti": [
           {
-            "titolo": "Chabad.org – Chayei Sarah in a Nutshell",
-            "url": "https://www.chabad.org/parshah/article_cdo/aid/3174/jewish/Chayei-Sarah-in-a-Nutshell.htm"
+            "titolo": "Chabad – What Is a Mezuzah?",
+            "url": "https://www.chabad.org/library/article_cdo/aid/256915/jewish/What-Is-a-Mezuzah.htm"
           },
           {
-            "titolo": "Chabad.org – Aliyah Summary",
-            "url": "https://www.chabad.org/parshah/article_cdo/aid/583868/jewish/Aliyah-Summary.htm"
+            "titolo": "Chabad – 16 Mezuzah Facts",
+            "url": "https://www.chabad.org/library/article_cdo/aid/4444490/jewish/16-Mezuzah-Facts-Every-Jew-Should-Know.htm"
           },
           {
-            "titolo": "Chabad.org – Cave of the Patriarchs (Machpelah)",
-            "url": "https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm"
+            "titolo": "Chabad – How to Hang a Mezuzah",
+            "url": "https://www.chabad.org/library/article_cdo/aid/278460/jewish/How-to-Hang-a-Mezuzah.htm"
           },
           {
-            "titolo": "My Jewish Learning – Haye Sarah: riassunto",
-            "url": "https://www.myjewishlearning.com/article/haye-sarah-a-summary-of-the-parashah/"
+            "titolo": "Chabad – Why Is the Mezuzah Slanted?",
+            "url": "https://www.chabad.org/library/article_cdo/aid/1183722/jewish/Why-Is-the-Mezuzah-Slanted.htm"
           },
           {
-            "titolo": "Sefaria – Parashat Chayei Sarah",
-            "url": "https://www.sefaria.org/topics/parashat-chayei-sarah"
+            "titolo": "My Jewish Learning – Mezuzah",
+            "url": "https://www.myjewishlearning.com/article/mezuzah/"
           }
         ],
         "origine": "claude-opus-5-5",
         "token": {
-          "input": 12561,
-          "output": 17932
+          "input": 17728,
+          "output": 18400
         }
       },
       "illustrazioni": [
-        "sab-2026-11-07-7c9939-1.svg",
-        "sab-2026-11-07-7c9939-2.svg",
-        "sab-2026-11-07-7c9939-3.svg",
-        "sab-2026-11-07-7c9939-4.svg",
-        "sab-2026-11-07-7c9939-5.svg",
-        "sab-2026-11-07-7c9939-6.svg",
-        "sab-2026-11-07-7c9939-7.svg",
-        "sab-2026-11-07-7c9939-8.svg"
+        "sab-2026-11-07-406ff8-1.svg",
+        "sab-2026-11-07-406ff8-2.svg",
+        "sab-2026-11-07-406ff8-3.svg",
+        "sab-2026-11-07-406ff8-4.svg",
+        "sab-2026-11-07-406ff8-5.svg",
+        "sab-2026-11-07-406ff8-6.svg",
+        "sab-2026-11-07-406ff8-7.svg",
+        "sab-2026-11-07-406ff8-8.svg"
       ]
     },
     "2026-11-14": {
@@ -813,6 +817,7 @@
   "temi_shabbat": [
     "Chanukkà, la festa dei lumi: storia, chanukiyà, simboli e usanze",
     "La parashà Chayei Sarah («La vita di Sara», Genesi 23,1-25,18) e la grotta di Machpelah a Hebron",
-    "La parashà Toledoth (Genesi): Esaù e Giacobbe, la primogenitura e il piatto di lenticchie"
+    "La parashà Toledoth (Genesi): Esaù e Giacobbe, la primogenitura e il piatto di lenticchie",
+    "La mezuzà, il piccolo rotolo sullo stipite della porta della casa ebraica"
   ]
 }
