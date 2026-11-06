@@ -63,6 +63,9 @@ jobs:
           PW_MODULE="$RUNNER_TEMP/pw/node_modules/playwright-core/index.js" \
           CHROME_PATH="$(command -v google-chrome || command -v chromium-browser || true)" \
             node seo/cartoline.mjs
+          # il disegnatore aggiorna anche promozione/cartoline/versioni.json: è un file di lavoro, non del
+          # piano, e la validazione (seo/social_valida.py) fermerebbe tutto vedendolo cambiato
+          git checkout -- promozione/cartoline/versioni.json 2>/dev/null || true
 
       - name: Installa Claude Code
         run: npm install --global --silent "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSIONE"
