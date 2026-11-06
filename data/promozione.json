@@ -421,9 +421,9 @@
     "impronta": "33c0129aa4455ac1"
   },
   "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": {
-    "frase_cartolina": "Stesso titolo, scaffali diversi: perché le Bibbie contano 73, 66 o 24 libri",
-    "facebook": "Provate a contare i libri nell'indice di tre Bibbie: la cattolica ne ha 73, la protestante 66, quella letta in sinagoga 24. Stesso titolo in copertina, scaffali diversi. Chi ha deciso che cosa ci sta dentro? 📚\n\nLa lezione per la classe prima segue la pista di un libro solo, il Siracide: scritto da un nonno, tradotto da un nipote, sta dentro una Bibbia e fuori da un'altra. Si passa dalla Bibbia greca dei Settanta alla scelta dei rabbini dopo il 70 d.C., dalle liste dei concili di Ippona e Cartagine fino a Lutero, che i libri deuterocanonici non li tolse: li mise in appendice.\n\nIn classe gli studenti imparano a citare un passo con libro, capitolo e versetto, e leggono il prologo del Siracide come una vera fonte storica. Il materiale è online e gratuito.",
-    "instagram": "73, 66, 24.\nNon è la combinazione di un lucchetto: è il numero dei libri in una Bibbia cattolica, protestante ed ebraica. 🔢\n\nBibbia, del resto, è un plurale: dal greco tà biblía, «i libri». Più che un libro, una biblioteca.\n\nE ogni biblioteca ha bisogno di un confine. Chi l'ha tracciato?\n\nLa lezione lo scopre seguendo un nonno, Ben Sira, e il nipote che in Egitto tradusse il suo libro in greco. Poi la Bibbia dei Settanta, i rabbini dopo il 70 d.C., i concili cristiani e Lutero, che certi libri li spostò in fondo.\n\nPer la classe prima, con un bonus pratico: trovare una frase in più di mille pagine con tre dati soltanto. 📖\n\nIl link alla lezione è nella bio.",
+    "frase_cartolina": "Stesso titolo, scaffali diversi: Bibbie da 73, 66 o 24 libri",
+    "facebook": "Provate a contare i libri nell'indice di tre Bibbie: la cattolica ne ha 73, la protestante 66, quella letta in sinagoga 24. Stesso titolo in copertina, scaffali diversi. Chi ha deciso che cosa ci sta dentro? 📚\n\nLa lezione per la classe prima segue la pista di un libro solo, il Siracide: scritto da un nonno, tradotto da un nipote, sta dentro una Bibbia e fuori da un'altra. Si passa dalla Bibbia greca dei Settanta ai rabbini e alla Bibbia ebraica, dalle liste dei concili di Ippona e Cartagine fino a Lutero, che i libri deuterocanonici non li tolse: li raccolse in una sezione a parte.\n\nIn classe gli studenti imparano a citare un passo con libro, capitolo e versetto, e leggono il prologo del Siracide come una vera fonte storica. Il materiale è online e gratuito: se vi serve per le prime, salvatelo.",
+    "instagram": "73, 66, 24.\nNon è la combinazione di un lucchetto: è il numero dei libri in una Bibbia cattolica, protestante ed ebraica. 🔢\n\nBibbia, del resto, viene da un plurale greco: tà biblía, «i libri». Più che un libro, una biblioteca.\n\nE ogni biblioteca ha bisogno di un confine. Chi l'ha tracciato?\n\nLa lezione lo scopre seguendo un nonno, Ben Sira, e il nipote che in Egitto tradusse il suo libro in greco. Poi la Bibbia dei Settanta, i rabbini e la Bibbia ebraica, i concili cristiani e Lutero, che certi libri li mise in una sezione a parte.\n\nPer la classe prima, con un bonus pratico: trovare una frase in più di mille pagine con tre dati soltanto. 📖\n\nIl link alla lezione è nella bio.",
     "hashtag": [
       "religionecattolica",
       "irc",
@@ -432,7 +432,7 @@
       "classeprima"
     ],
     "whatsapp": "Ciao a tutti, ho preparato per le prime una lezione sul canone biblico: perché le Bibbie contano 73, 66 o 24 libri. Gli studenti imparano a citare un passo e leggono il prologo del Siracide come fonte, poi si ripercorrono Settanta, rabbini, concili e Lutero. È online e gratuita, se vi può servire 🙂",
-    "telegram": "📚 Il libro che non sporcava le mani\n\nNuova lezione per la classe prima: perché la Bibbia cattolica conta 73 libri, la protestante 66 e quella ebraica 24. Per i rabbini i libri sacri «sporcano le mani», e del Siracide si dice che no, non le sporca: resta fuori dall'elenco, anche se gli ebrei continuarono a leggerlo. Lungo la strada: la Bibbia greca dei Settanta con la leggenda dei settantadue saggi, i concili di Ippona e Cartagine e Lutero con i suoi «Apocrifi».",
+    "telegram": "📚 Il libro che non sporcava le mani\n\nUna lezione per la classe prima: perché la Bibbia cattolica conta 73 libri, la protestante 66 e quella ebraica 24. Per i rabbini i libri sacri «sporcano le mani», e del Siracide si dice che no, non le sporca: resta fuori dall'elenco, anche se gli ebrei continuarono a leggerlo. Lungo la strada: la Bibbia greca dei Settanta con la leggenda dei settantadue saggi, i concili di Ippona e Cartagine e Lutero con i suoi «Apocrifi».",
     "carosello": [
       {
         "titolo": "Perché 73, 66 o 24 libri?",
@@ -460,7 +460,8 @@
       "input": 14339,
       "output": 7080
     },
-    "impronta": "2429717f42cb1ae1"
+    "impronta": "2429717f42cb1ae1",
+    "bloccato": true
   },
   "2|Gesù quali tracce|Anche i testi hanno una storia": {
     "frase_cartolina": "Giuseppe Flavio, Gesù e le copie: come un testo antico arriva fino a noi",

@@ -1,26 +1,74 @@
 {
-  "_nota": "Il quaderno del Lab (seo/social_quaderno.py): regole imparate dai numeri, esperimento della settimana, idee. Lo aggiorna l'analista ogni domenica; questa prima versione mette in idee i tre esperimenti di docs/progetto-rubriche.md, da provare uno alla volta.",
   "regole_apprese": [],
-  "esperimento": null,
+  "esperimento": {
+    "ipotesi": "Nei reel del regista un gancio con un numero inatteso tiene a guardare più di un gancio a domanda: tempo medio di visione più alto, in proporzione alla durata. Prima settimana di tre: servono 3 reel per leva, su giorni diversi.",
+    "istruzione": "Nei reel di questa settimana il gancio dei primi 2 secondi usa una sola leva, quella delle note di regia (09/11 numero, 11/11 domanda, 13/11 contrasto), senza mescolarle, e la leva va scritta nel campo «leva» del primo gancio.",
+    "misura": "Tempo medio di visione diviso la durata, reel del 9/11 (numero) contro 11/11 (domanda), a 7 giorni dall'uscita; poi visualizzazioni. Serve il permesso statistiche di Instagram.",
+    "dal": "2026-11-09",
+    "al": "2026-11-15"
+  },
   "esperimenti": [],
   "idee": [
     {
       "idea": "Nei reel «Lo sapevi?» il gancio con un numero («525») tiene più a lungo di quello con una domanda: 6 reel, 3 e 3, misurando tempo medio di visione e visualizzazioni complete.",
       "fonte": "progetto rubriche (sezione 6, esperimento 1)",
-      "stato": "nuova",
-      "perché": "I numeri fermano lo scorrimento e si ricordano; il quaderno può confermarlo o smentirlo con i reel del lunedì."
+      "stato": "in prova",
+      "perché": "Esperimento dal 9 al 15/11, allargato a tutti i reel del regista (solo con i lunedì servirebbero sei settimane): 9/11 numero, 11/11 domanda, 13/11 contrasto fuori dal confronto. Numero e domanda cadono in giorni, rubriche e durate diverse: per separare la leva dal giorno serve alternare nelle settimane dopo. Senza il permesso delle statistiche Instagram l'esito resta «non si capisce ancora»."
     },
     {
       "idea": "Utilità contro curiosità nei caroselli del martedì: «In classe domani» raccoglie più invii e salvataggi per copertura di «Parole con una storia»: 4 caroselli, 2 e 2, condivisioni e salvataggi diviso copertura.",
       "fonte": "progetto rubriche (sezione 6, esperimento 2)",
       "stato": "nuova",
-      "perché": "Il collega di religione è il lettore principale: se l'utilità vince, il martedì pesa di più su «In classe domani»."
+      "perché": "Le prime due uscite arrivano da sole: 10/11 «Parole con una storia», 17/11 «In classe domani». Ma se il 17/11 prova anche la seconda copertina, il confronto mescola due cambi: o l'una o l'altra. Salvataggi, condivisioni e copertura oggi mancano (permesso Instagram)."
     },
     {
       "idea": "Reel corti contro reel medi: i reel di 20-25 secondi hanno più visualizzazioni complete e seconde visioni di quelli di 30-35, a parità di rubrica: 6 reel, tempo medio di visione in proporzione alla durata.",
       "fonte": "progetto rubriche (sezione 6, esperimento 3)",
       "stato": "nuova",
-      "perché": "Il regista è libero sulla durata: il dato gli dice se accorciare conviene davvero."
+      "perché": "È una scelta di montaggio, non un'istruzione: si prova dopo le leve. Le note di regia danno già durate diverse (9/11 20-25 s, 11/11 e 13/11 25-30 s), per questo il confronto delle leve si fa sul tempo di visione diviso la durata."
+    },
+    {
+      "idea": "Nei caroselli la seconda scheda fa da «seconda copertina»: la pagina vera del fascicolo con la frase evidenziata subito dopo la copertina, perché Instagram ripropone la seconda immagine a chi non ha sfogliato.",
+      "fonte": "esploratore (Adam Mosseri, riportato da Social Media Today, 17/10/2024)",
+      "stato": "nuova",
+      "perché": "Costa poco e non tocca i contenuti, ma senza numeri non diventa regola. Candidata per la settimana 16-22/11 sul carosello del 17/11 (non il 10/11, già approvato). Chi cura il codice verifichi che seo/caroselli.py e i modelli possano mettere la pagina vera nella scheda 2. Misura: copertura e salvataggi, che oggi mancano."
+    },
+    {
+      "idea": "Testo alternativo per ogni immagine e scheda (campo alt_text dell'API di pubblicazione Meta, dal 24/3/2025; da verificare che valga per le schede del carosello), per l'accessibilità e per farsi trovare.",
+      "fonte": "esploratore (documentazione Meta per sviluppatori sulla pubblicazione)",
+      "stato": "nuova",
+      "perché": "Non si applica con un'istruzione: serve una modifica a seo/pubblica.py, la fa chi cura il codice. Vale anche senza numeri, per chi usa un lettore di schermo; la misura è lenta e non sta in un esperimento di una settimana."
+    },
+    {
+      "idea": "Nella didascalia le parole che la gente cerca davvero (il nome del documento, del personaggio, del tema), perché dal 10/7/2025 i post Instagram pubblici possono comparire su Google e contano nella ricerca interna.",
+      "fonte": "esploratore (PPC Land; blog di Hootsuite sulla ricerca in Instagram)",
+      "stato": "nuova",
+      "perché": "Serve l'impostazione dell'account che permette l'indicizzazione e una misura lenta (ricerca su Google dopo 14 giorni). Non tocca la correttezza: possibile esperimento quando il permesso delle statistiche sarà attivo."
+    },
+    {
+      "idea": "Reel «Tre livelli»: lo stesso tema detto in una frase, con il documento, tra colleghi (sul modello «5 Levels» di WIRED), come quarta opzione della rotazione del mercoledì; prima prova il 18/11.",
+      "fonte": "esploratore (serie «5 Levels» di WIRED; Yale Quantum Institute; Tech & Learning)",
+      "stato": "nuova",
+      "perché": "Solo con lezioni che nel fascicolo distinguono già i tre piani. È una rubrica nuova: la decidono docente e direttore e va aggiunta al calendario. Non è un esperimento di una sola cosa e non deve diventare un quiz o una gara di livelli."
+    },
+    {
+      "idea": "Trial reels di Instagram (reel mostrati prima solo a chi non segue).",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Scartata dall'esploratore: servono una base di follower e numeri per confrontare; oggi Instagram ha 1 follower."
+    },
+    {
+      "idea": "Hashtag per farsi trovare nella ricerca di Telegram.",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Scartata dall'esploratore; con 2 iscritti e nessuna statistica per post su Telegram non sarebbe nemmeno misurabile."
+    },
+    {
+      "idea": "Le metriche trovano solo 2 degli 8 post usciti (prof-001 e _sito): le lezioni di ottobre e i due post vetrina del 3/11 non compaiono. Va controllato l'abbinamento tra didascalia e post in seo/social_metriche.py.",
+      "fonte": "numeri",
+      "stato": "nuova",
+      "perché": "Se l'abbinamento non trova i post, anche con il permesso i reel del regista potrebbero restare senza numeri e l'esperimento non si chiuderebbe. La verifica la fa chi cura il codice."
     }
-  ]
+  ],
+  "aggiornato": "2026-11-06"
 }

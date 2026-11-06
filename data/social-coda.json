@@ -7,10 +7,71 @@
     {"chiave": "sab-2026-11-07", "quando": "2026-11-07", "esito": "approvato", "motivo": "Lo Shabbat del Lab sulla mezuzà: approvato da verificatore e guardiano al secondo giro (controllo in sessione, crediti API finiti); corretti il nome di Dio, la scheda 6 a forma di croce e alcune frasi tagliate.", "impronta": "a4b789e9a772"},
     {"chiave": "prof-001", "quando": "2026-11-03", "esito": "approvato", "motivo": "Striscia sull'agnostico: verificatore e guardiano approvano."},
     {"chiave": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie", "quando": "2026-11-06", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (Cupola e ascesa, tolta un'attività non presente nella lezione)."},
-    {"chiave": "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze", "quando": "2026-11-13", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (debito di Alberto di Brandeburgo, fonte Treccani, telegram accorciato). Non uscito il 4 novembre per il guasto del controllo delle immagini online (corretto il 5). Esce come reel «Falso mito» venerdì 13, come deciso dal piano del 6 novembre (non salvato per un conflitto): il fascicolo c'è, caricato con il nome accorciato."},
-    {"chiave": "2|Gesù quali tracce|Lo screenshot non basta", "quando": "2026-11-11", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (tolta l'attività in classe, tolte le esagerazioni, Tacito e la repressione). Spostato dal 5 all'11 novembre, giorno di reel: non era uscito per il guasto del controllo delle immagini online (corretto il 5 novembre)."},
-    {"chiave": "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi", "quando": "2026-11-09", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (statuti del 1215 per le arti, esempio dichiarato immaginario, telegram accorciato)."},
-    {"chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare", "quando": "2026-11-10", "esito": "approvato", "motivo": "Riserva approvata dopo una riscrittura (Trento non condanna la lingua del popolo, Sacrosanctum Concilium 14)."}
+    {"chiave": "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze", "quando": "2026-11-13", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (debito di Alberto di Brandeburgo, fonte Treccani, telegram accorciato). Non uscito il 4 novembre per il guasto del controllo delle immagini online (corretto il 5). Esce come reel «Falso mito» venerdì 13, come deciso dal piano del 6 novembre (non salvato per un conflitto): il fascicolo c'è, caricato con il nome accorciato.",
+     "regia": {
+       "rubrica": "Falso mito",
+       "angolo": "«La Chiesa vendeva il perdono» è falso sulla dottrina: la colpa è già rimessa, l'indulgenza tocca solo la pena (Paolo VI, p. 2). Ma ha una parte vera nella pratica: nel 1517 c'erano esattori che «tariffavano» e un'istruzione ufficiale che toglieva il pentimento (p. 3), abusi che la Chiesa stessa riconosce (p. 5).",
+       "gancio": "«La Chiesa vendeva il perdono»? Il perdono no. La cassa sì.",
+       "ganci_di_riserva": "Istruzione del 1517: chi versava per un'anima non doveva pentirsi. | Il martello sulla porta? Il primo gesto documentato è una lettera.",
+       "curiosita": "«Chi dice «la Chiesa vendeva il perdono» attribuisce alla dottrina cattolica una cosa che quella dottrina non afferma.» (p. 2); peccati «già rimessi quanto alla colpa» (p. 2); esattori che «tariffavano le i[ndulgenze]» (Treccani, p. 3); istruzione di Alberto: chi versava per un'anima del purgatorio «non aveva bisogno di essere pentito» (p. 3).",
+       "scena": "Gancio sulla frase del mito a p. 1. Scoperta 1: p. 2, definizione di Paolo VI con «già rimessi quanto alla colpa» evidenziato. Scoperta 2: p. 3, il passo Treccani con «tariffavano» cerchiato e la riga sull'istruzione di Alberto. Chiusa su p. 5: «si infiltrarono talvolta degli abusi». Se la lezione interattiva ha la scena dei tre piani, usarla come ponte. Durata 25-30 s.",
+       "tono": "Calmo e preciso, da insegnante che rimette ordine, con al massimo una battuta garbata nella chiusa («il perdono no, la tariffa sì: lo dice la Chiesa stessa»). Si corregge uno slogan, non i protestanti né Lutero: dire la parte vera dell'accusa è ciò che rende il reel credibile e da mandare. Leva del gancio: contrasto (si crede/è).",
+       "prima_riga": "«La Chiesa vendeva il perdono»: che cosa c'era davvero nella cassa del 1517?",
+       "richiesta": "Mandalo a un collega.",
+       "evita": "Non dire «la Chiesa non ha mai chiesto soldi»; non mettere in bocca a Tetzel il distico della moneta (non sta in un suo scritto, p. 3); non dare per certa l'affissione delle tesi; nessuna cifra fuori dal fascicolo (niente somme di Alberto); Lutero né eroe né colpevole; niente immagini spaventose di purgatorio o inferno."
+     }},
+    {"chiave": "2|Gesù quali tracce|Lo screenshot non basta", "quando": "2026-11-11", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (tolta l'attività in classe, tolte le esagerazioni, Tacito e la repressione). Spostato dal 5 all'11 novembre, giorno di reel: non era uscito per il guasto del controllo delle immagini online (corretto il 5 novembre).",
+     "regia": {
+       "rubrica": "Prova alla mano",
+       "angolo": "Una frase di Plinio su Cristo, ritagliata come uno screenshot: rimessa al suo posto (governatore, verso il 112, lettera a Traiano) attesta un culto a Cristo, non dimostra che Cristo sia Dio.",
+       "gancio": "«Un inno a Cristo come a un dio»: che cosa prova davvero?",
+       "ganci_di_riserva": "Uno screenshot con una frase romana su Cristo. Basta? | Due frasi che sembrano uguali: «culto di Cristo» e «Cristo è Dio».",
+       "curiosita": "Obbligatoria, p. 2: «La lettera attesta che quelle persone rendevano culto a Cristo; non dimostra che Cristo sia Dio.» Dettaglio cerchiato, p. 2: «Tacito chiama Pilato procurator. Il titolo storico di Pilato era invece praefectus, prefetto». Traiano (p. 3) resta fuori: due scoperte bastano.",
+       "scena": "Apri sulla frase da sola, come un ritaglio senza autore né data. Poi la pagina 2 vera: evidenzia «un inno a Cristo come a un dio» e la frase «attesta… non dimostra». Sulla stessa pagina cerchia procurator/praefectus: anche lo storico va letto con la lente. Chiusa sul titolo della lezione.",
+       "tono": "Curioso e calmo, da detective delle fonti: nessuno vince. Il fascicolo separa due livelli, il dato storico e la verità della fede, e il reel li rispetta entrambi: non nega e non conferma ciò che i cristiani credono. 25-30 secondi.",
+       "prima_riga": "Una frase antica su Cristo, ritagliata e condivisa: chi l'ha scritta, quando, perché?",
+       "richiesta": "Salvalo per la lezione.",
+       "evita": "Far sembrare che il reel neghi o provi la fede. Dire «Tacito prova che Gesù è esistito», «vide Gesù» o «lesse gli archivi» (p. 2 lo esclude). Nerone colpevole certo, persecuzione continua per tre secoli, attività in classe, insistere su tortura e maledizioni. Leva del gancio da annotare: domanda."
+     }},
+    {"chiave": "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi", "quando": "2026-11-09", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (statuti del 1215 per le arti, esempio dichiarato immaginario, telegram accorciato).",
+     "regia": {
+       "rubrica": "Lo sapevi?",
+       "angolo": "Parigi, 1215: gli statuti di Robert de Courçon chiedevano vent'anni, sei anni di studio e un esame per insegnare le arti, e vietavano di comprare la licenza. Il titolo dava l'autorità, non l'autorevolezza (p. 4).",
+       "gancio": "Parigi, 1215: per insegnare, vent'anni, sei anni di studio, un esame.",
+       "ganci_di_riserva": "Nel 1215 la licenza per insegnare non si poteva comprare. (contrasto) | Chi ti dava il diritto di insegnare, nel Medioevo? (domanda)",
+       "curiosita": "[In numeri] p. 4: «Per insegnare le arti richiedevano almeno vent'anni di età, sei anni di studio e un esame.» Poi p. 4: «Vietavano inoltre di ottenere la licenza d'insegnamento mediante denaro o accordi di pagamento.» Chiusa, p. 4: un incarico «non rende vera ogni frase di chi lo ricopre». Aristotele (p. 4) solo se il reel supera i 25 secondi.",
+       "scena": "Gancio: i tre numeri a schermo, uno per battuta. Complicazione: «E se eri ricco?». Scoperta: pagina 4 del fascicolo, frase degli statuti evidenziata e riga del divieto di denaro cerchiata. Chiusa sulla sezione «L'autorevolezza rende possibile imparare» (p. 4), che riaggancia: i tre requisiti davano l'autorità, l'autorevolezza no.",
+       "tono": "Curioso, con una sola punta d'ironia garbata (il «curriculum» del 1215): il numero sorprende da solo, non serve enfasi. Durata consigliata 20-25 secondi. Leva del gancio da annotare per il quaderno: numero.",
+       "prima_riga": "Per insegnare a Parigi, nel 1215, non bastava essere ricchi: servivano età, studio ed esame.",
+       "richiesta": "Mandalo a un collega.",
+       "evita": "Dire che il cristianesimo ha inventato l'università (p. 1 lo esclude); Bologna 1088 come fondazione; «arti» come arti figurative (spiega: grammatica e logica); affermare che nessuno comprò mai la licenza (la norma prescrive, non prova, p. 4); l'esempio del maestro e dello studente come fatto vero; libertà di ricerca di oggi; confronti con i concorsi attuali."
+     }},
+    {"chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare", "quando": "2026-11-10", "esito": "approvato", "motivo": "Riserva approvata dopo una riscrittura (Trento non condanna la lingua del popolo, Sacrosanctum Concilium 14).",
+     "regia": {
+       "rubrica": "Parole con una storia (carosello)",
+       "angolo": "Come «deposito», parola del diritto romano per il bene prezioso da custodire intatto, diventa con Giovanni XXIII la chiave che separa la fede che resta dal modo di dirla, che può cambiare.",
+       "gancio": "Una parola del diritto romano spiega che cosa cambiò il Concilio.",
+       "ganci_di_riserva": "Che cosa c'entra un deposito romano con il Vaticano II? | Altro è il deposito, altro è il modo: la frase del 1962.",
+       "curiosita": "«Depositum era, nel diritto romano, il bene prezioso affidato a un depositario che doveva custodirlo intatto» (p. 2); «Altro è infatti il deposito della Fede […] altro è il modo con il quale esse sono annunziate» (p. 2); «il modo può cambiare, il senso no» (p. 2). Come esempio di modo, una scheda sola: [Lo sapevi?] Padre nostro 2020, «indurre» esprime una volontà positiva (p. 8).",
+       "scena": "Scoperta: il riquadro «DEPOSITO E MODO» di p. 2, pagina vera con la frase sul diritto romano evidenziata, poi la riga latina «aliud depositum Fidei, aliud modus». Traccia: 1 la parola; 2 diritto romano; 3 Paolo, solo il rimando 2 Tm 1,13-14; 4 Giovanni XXIII, 11 ottobre 1962; 5 il modo cambia: Padre nostro 2020 (p. 8), o SC 36 (p. 3); 6 chiusa: il senso no.",
+       "tono": "Curioso e sobrio, da insegnante che racconta la storia di una parola: la sorpresa sta nel viaggio dal diritto al Concilio, non serve enfasi. Al massimo un sorriso sul «deposito» che non è un magazzino.",
+       "prima_riga": "Nel diritto romano il «deposito» era un bene prezioso da custodire intatto.",
+       "richiesta": "Salvalo per la lezione.",
+       "evita": "Etimologie fuori dal fascicolo (niente scomposizioni di depositum); attribuire la parola «deposito» a Vincenzo di Lérins (sua è la clausola sul senso); citare il testo di 2 Tm, che il fascicolo non riporta; farne un Falso mito sul latino; toni contro chi ama la messa in latino; dire o lasciar intendere che il Concilio abbia cambiato la fede."
+     }},
+    {"chiave": "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni", "quando": "2026-11-16", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (Bibbia viene da un plurale greco, niente data del canone rabbinico, Lutero «in una sezione a parte», cartolina entro 12 parole, una sola richiesta).",
+     "regia": {
+       "rubrica": "Lo sapevi?",
+       "angolo": "Libro, capitolo e versetto non sono antichi come i testi: i capitoli arrivano all'inizio del Duecento con Stefano Langton, i versetti numerati li aggiunge uno stampatore di Parigi, Robert Estienne, nel Nuovo Testamento greco del 1551 (p. 1). Leva: sorpresa, gancio a numero.",
+       "gancio": "1551: uno stampatore di Parigi numera i versetti del Nuovo Testamento.",
+       "ganci_di_riserva": "I rotoli antichi non avevano numeri: i versetti li aggiunse uno stampatore. | Lc 24,44: il numero dopo la virgola l'ha messo uno stampatore.",
+       "curiosita": "[Lo sapevi?] p. 1: «i versetti numerati li aggiunse uno stampatore di Parigi, Robert Estienne, nell'edizione del Nuovo Testamento greco del 1551». Per la complicazione, p. 1: «I capitoli furono introdotti all'inizio del Duecento da Stefano Langton». Per la chiusa, p. 1: «Con tre dati si trova una frase in un'opera di più di mille pagine».",
+       "scena": "Pagina 1 del fascicolo con la frase su Estienne evidenziata e «1551» cerchiato. Poi la scena 2 della lezione interattiva («Sir 44,1: libro, capitolo, versetto»): si tocca il dorso «Sir» nello scaffale e il riferimento si scompone in libro, capitolo, versetto. Chiusa su «Da allora si cita così» (p. 1), di nuovo con 1551.",
+       "tono": "Curioso e leggero, da piccola scoperta di bottega: la Bibbia che si apre in classe porta l'impronta di un maestro e di un tipografo di Parigi. Al massimo una battuta garbata (il numero del versetto «nato in tipografia»), nessuna ironia sul testo sacro: si ammira l'ingegno, non si sminuisce la Scrittura.",
+       "prima_riga": "I numeri dei versetti li ha aggiunti uno stampatore di Parigi, nel 1551.",
+       "richiesta": "Mandalo a un collega che insegna in prima.",
+       "evita": "Non aprire con 73-66-24 né con Lutero. Non dire che prima non si citava, né che nel 1551 si numerò tutta la Bibbia (era il NT greco, poi esteso). Non dire «Bibbia è un plurale» (viene da un plurale greco); non datare il canone rabbinico; niente spiegazione di «sporcano le mani»; Lutero: «in una sezione a parte», mai «in fondo» o «in appendice»; niente Qumran e Masada per il Siracide."
+     }}
   ],
   "escluse": []
 }
