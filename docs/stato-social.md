@@ -70,10 +70,11 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | ven 13 | reel «Riformare una Chiesa: le indulgenze», «Falso mito»: copione del regista scritto in sessione e controllato dal verificatore, nella cache `data/reel.json` |
 | sab 14, dom 15 e dopo | servono i crediti: li sceglie e li controlla il piano di domenica 8 |
 
-**Fino al 14 novembre il lavoro di IA si fa in sessione** (decisione di Matteo, 6 novembre): la sessione di Claude
-Code (abbonamento) fa i controlli degli agenti, il piano della domenica e i copioni del regista, che mette nella
-cache `data/reel.json` con la firma di `seo/reel.py`; le Action pubblicano, montano e fanno le storie. Gli orari
-dell'Action del piano sono in pausa fino al 14.
+**Fino al 14 novembre (crediti API finiti).** Dal 6 novembre c'è il segreto `CLAUDE_CODE_OAUTH_TOKEN`: gli agenti
+delle Action (piano della domenica, rubriche del giovedì, diagnosi) usano l'abbonamento Claude e girano di nuovo da
+soli. Gli script che chiamano l'API (regista, rubriche, caroselli del martedì, sfondi) restano fermi fino alla
+ricarica: i copioni del regista li scrive la sessione di Claude Code (abbonamento) e li mette nella cache
+`data/reel.json` con la firma di `seo/reel.py`, controllati dal verificatore; le Action li montano.
 
 **Crediti API finiti (6 novembre, notte).** Gli ultimi due piani si sono fermati con «Credit balance is too low».
 Senza crediti non lavorano gli agenti (piano, controllo del giovedì, diagnosi del mattino), il regista, le
