@@ -53,6 +53,35 @@ class Coda(unittest.TestCase):
                       "escluse": [{"chiave": "a", "motivo": "x"}]})
         self.assertEqual(coda.applica(ELENCO, "2026-11-09", f), [])
 
+    def test_impronta_ferma_le_rubriche_cambiate(self):
+        post = {"chiave": "sab-2026-11-07", "titolo": "La mezuzà", "facebook": "Testo controllato"}
+        f = con_coda({"coda": [{"chiave": "sab-2026-11-07", "quando": "2026-11-07", "esito": "approvato",
+                                "impronta": coda.impronta(post)}]})
+        self.assertEqual(coda.applica([post], "2026-11-07", f), [post])
+        cambiato = {**post, "facebook": "Testo riscritto dopo l'approvazione"}
+        self.assertEqual(coda.applica([cambiato], "2026-11-07", f), [])
+        # le date scritte per esteso o lo sfondo non contano
+        self.assertEqual(coda.impronta({**post, "data_breve": "7 nov", "sfondo": "x.jpg"}), coda.impronta(post))
+
+    def test_impronte_messe_dallo_script(self):
+        import social_valida as sv
+        radice = Path(tempfile.mkdtemp())
+        (radice / ".social").mkdir()
+        (radice / "data").mkdir()
+        (radice / ".social" / "impronte.json").write_text(json.dumps({"dom-2026-11-08": "abc123"}), encoding="utf-8")
+        (radice / "data" / "social-coda.json").write_text(json.dumps({"coda": [
+            {"chiave": "dom-2026-11-08", "quando": "2026-11-08", "esito": "approvato", "impronta": "inventata"},
+            {"chiave": "x", "quando": "2026-11-09", "esito": "approvato"}]}), encoding="utf-8")
+        vecchi = sv.RADICE, coda.FILE_CODA
+        sv.RADICE, coda.FILE_CODA = radice, radice / "data" / "social-coda.json"
+        try:
+            self.assertEqual(sv.imprimi_impronte(), 1)
+            voci = {v["chiave"]: v for v in coda.leggi()["coda"]}
+        finally:
+            sv.RADICE, coda.FILE_CODA = vecchi
+        self.assertEqual(voci["dom-2026-11-08"]["impronta"], "abc123")
+        self.assertNotIn("impronta", voci["x"])
+
     def test_solo_coda_falso_aggiunge_il_resto(self):
         f = con_coda({"solo_coda": False, "escluse": [{"chiave": "b", "motivo": "x"}],
                       "coda": [{"chiave": "c", "quando": "2026-11-09", "esito": "approvato"}]})

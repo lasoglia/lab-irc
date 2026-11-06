@@ -253,8 +253,10 @@ def main() -> int:
     date = date_rubriche(oggi)
     prof = [r for r in carica(g.RADICE / "promozione" / "prof.json", [])
             if r["chiave"] not in registro and r["chiave"] not in escluse and r["chiave"] not in gia_in_coda]
+    impronte = {}   # chiave -> impronta di ciò che gli agenti vedono (seo/social_valida.py la mette in coda)
     for n, (r, quando) in enumerate(zip(prof, date["prof"]), start=1):
         indice[f"P{n}"] = r["chiave"]
+        impronte[r["chiave"]] = coda.impronta(r)
         (CARTELLA / "candidati" / f"P{n}.md").write_text(scheda_rubrica(r, quando, per_titolo.get(r.get("lezione"))), encoding="utf-8")
         righe_rubriche.append(f"- P{n} · {quando.isoformat()} ({GIORNI[quando.weekday()]}) · Il prof del Lab · {r['titolo']} · chiave: `{r['chiave']}`")
     sabati = {r.get("data"): r for r in carica(g.RADICE / "promozione" / "sabato.json", [])}
@@ -263,6 +265,7 @@ def main() -> int:
         if not r or r["chiave"] in gia_in_coda:
             continue
         indice[f"S{n}"] = r["chiave"]
+        impronte[r["chiave"]] = coda.impronta(r)
         (CARTELLA / "candidati" / f"S{n}.md").write_text(scheda_rubrica(r, quando, None), encoding="utf-8")
         righe_rubriche.append(f"- S{n} · {quando.isoformat()} (sabato) · Lo Shabbat del Lab · {r['titolo']} · chiave: `{r['chiave']}`")
     domeniche = {r.get("data"): r for r in carica(g.RADICE / "promozione" / "domenica.json", [])}
@@ -271,11 +274,14 @@ def main() -> int:
         if not r or r["chiave"] in gia_in_coda:
             continue
         indice[f"D{n}"] = r["chiave"]
+        impronte[r["chiave"]] = coda.impronta(r)
         fonti = [per_titolo.get(x["titolo"]) for x in r.get("lezioni", [])] or per_titolo.get(r.get("lezione"))
         (CARTELLA / "candidati" / f"D{n}.md").write_text(scheda_rubrica(r, quando, fonti), encoding="utf-8")
         righe_rubriche.append(f"- D{n} · {quando.isoformat()} (domenica) · La grande domanda · {r['titolo']} · chiave: `{r['chiave']}`")
     (CARTELLA / "candidati.json").write_text(json.dumps(indice, ensure_ascii=False, indent=2) + "\n",
                                              encoding="utf-8")
+    (CARTELLA / "impronte.json").write_text(json.dumps(impronte, ensure_ascii=False, indent=2) + "\n",
+                                            encoding="utf-8")
 
     ultimi = sorted(((max(v.values()), k, sorted(v)) for k, v in registro.items()), reverse=True)[:8]
     in_attesa = [v for v in stato_coda.get("coda", [])
