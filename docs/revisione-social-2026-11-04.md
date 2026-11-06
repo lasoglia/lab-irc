@@ -188,7 +188,14 @@ Crediti API spesi nella notte: 33,38 \$ registrati (8,52 + 17,59 + 7,27 + 0), pi
 interrotta senza registrare il costo, stimabile in 8-10 \$: in tutto circa 42 \$ senza un piano salvato.
 Un piano completo con direttore e regista costa da solo circa 17-18 \$, contro i 7-9 \$ di prima.
 
-Il piano completo di questa settimana è leggibile nell'Issue #14 (chiuso dai giri successivi): la linea
+**Mattina del 6 novembre: sesta esecuzione riuscita.** Con il segreto `CLAUDE_CODE_OAUTH_TOKEN` salvato da
+Matteo, il piano (esecuzione 42190041587, 28 minuti di agenti) è stato salvato sul ramo del sito: Issue #17,
+cinque uscite con le note di regia (9, 10, 11, 13 e 16 novembre), Shabbat e grande domanda del 7-8 approvati
+con la loro impronta, un post nuovo per il 16 («Un libro o una biblioteca») corretto in due giri. Il piano ha
+segnalato che `seo/social_metriche.py` ritrovava solo 2 post su 8: riconosceva i post dal testo del kit, che
+viene riscritto a ogni piano; ora ricorda i post già riconosciuti dal loro link (con test).
+
+Il piano della notte, mai salvato, è leggibile nell'Issue #14 (chiuso dai giri successivi): la linea
 editoriale, lunedì 9 «Chi può insegnare a chi» (già montato), martedì 10 «La libertà vale anche per chi
 crede diversamente» per «Parole con una storia», mercoledì 11 «Lo screenshot non basta» come «Prova alla
 mano», venerdì 13 «Le indulgenze» come «Falso mito», lunedì 16 «Un libro o una biblioteca», venerdì 20
