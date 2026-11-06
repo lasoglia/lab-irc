@@ -100,16 +100,20 @@ def scheda(fascia: str, oggi: dt.date) -> dict | None:
                     "mascotte": MASCOTTE.get(str(post.get("anno", ""))), "piede": piede, "posa": "sorriso"}
         return None
     if fascia == "pranzo":
-        if not post or tipo not in ("reel", "gioco"):
+        # «stasera alle 19» nei giorni con un post serale: i reel, il gioco e, prima del calendario
+        # nuovo, anche i caroselli del lunedì, mercoledì e venerdì
+        if not post or ora_di(tipo, oggi) != "19":
             return None
         if tipo == "gioco":   # la scritta del gancio della variante del reel (seo/gioco_reel.py)
             import gioco_reel
             gancio = gioco_reel.VARIANTI[int(post.get("variante") or 0) % len(gioco_reel.VARIANTI)]["gancio"][0]
         else:
-            gancio = post.get("anticipo") or post.get("gancio") or lezione_di(post).get("frase", "") or post.get("titolo", "")
-        return {"sopra": "Stasera alle " + ORE[tipo], "titolo": gancio, "testo": post.get("titolo", ""),
+            gancio = (post.get("anticipo") or post.get("gancio") or post.get("frase") or lezione_di(post).get("frase", "")
+                      or post.get("titolo", ""))
+        cosa = "Il reel" if tipo in ("reel", "gioco") else "Il post"
+        return {"sopra": "Stasera alle 19", "titolo": gancio, "testo": post.get("titolo", ""),
                 "anno": str(post.get("anno", "")), "mascotte": MASCOTTE.get(str(post.get("anno", ""))),
-                "piede": "Il reel esce alle " + ORE[tipo], "posa": "occhiolino"}
+                "piede": f"{cosa} esce alle 19", "posa": "occhiolino"}
     return None
 
 
