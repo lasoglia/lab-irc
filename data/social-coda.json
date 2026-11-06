@@ -3,6 +3,7 @@
   "pausa": false,
   "solo_coda": true,
   "coda": [
+    {"chiave": "sab-2026-11-07", "quando": "2026-11-07", "esito": "approvato", "motivo": "Lo Shabbat del Lab sulla mezuzà: approvato da verificatore e guardiano al secondo giro (controllo in sessione, crediti API finiti); corretti il nome di Dio, la scheda 6 a forma di croce e alcune frasi tagliate.", "impronta": "a4b789e9a772"},
     {"chiave": "prof-001", "quando": "2026-11-03", "esito": "approvato", "motivo": "Striscia sull'agnostico: verificatore e guardiano approvano."},
     {"chiave": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie", "quando": "2026-11-06", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (Cupola e ascesa, tolta un'attività non presente nella lezione)."},
     {"chiave": "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze", "quando": "2026-11-13", "esito": "approvato", "motivo": "Approvato dopo una riscrittura (debito di Alberto di Brandeburgo, fonte Treccani, telegram accorciato). Non uscito il 4 novembre per il guasto del controllo delle immagini online (corretto il 5). Esce come reel «Falso mito» venerdì 13, come deciso dal piano del 6 novembre (non salvato per un conflitto): il fascicolo c'è, caricato con il nome accorciato."},
