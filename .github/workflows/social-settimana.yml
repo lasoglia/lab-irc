@@ -113,8 +113,13 @@ jobs:
             git commit -m "Social: piano della settimana"
             salvato=no
             for prova in 1 2 3; do
-              git pull --rebase --quiet --autostash origin "$RAMO" && git push origin "HEAD:$RAMO" && { salvato=si; break; }
-              git rebase --abort 2>/dev/null || true
+              # se nel frattempo qualcun altro ha toccato la coda o il kit, vince il piano appena fatto
+              # (nel rebase «theirs» è il commit del piano); gli altri file restano come sono arrivati
+              if ! git pull --rebase --quiet --autostash origin "$RAMO"; then
+                for f in $(git diff --name-only --diff-filter=U); do git checkout --theirs -- "$f" && git add "$f"; done
+                GIT_EDITOR=true git rebase --continue || { git rebase --abort 2>/dev/null || true; sleep 10; continue; }
+              fi
+              git push origin "HEAD:$RAMO" && { salvato=si; break; }
               sleep 10
             done
             [ "$salvato" = si ] || { echo "Non sono riuscito a salvare su $RAMO."; exit 1; }
