@@ -12,9 +12,12 @@ name: Social · piano della settimana
 # altrimenti ANTHROPIC_API_KEY, con i crediti API dell'organizzazione collegata.
 
 on:
-  schedule:
-    - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate): il piano intero
-    - cron: '23 17 * * 4'   # giovedì alle 17:23 UTC: solo le rubriche del weekend
+  # IN PAUSA FINO AL 14 NOVEMBRE 2026: i crediti API sono finiti e si ricaricano il 14. Fino ad allora il
+  # piano e il controllo delle rubriche li fa la sessione di Claude Code di Matteo (con l'abbonamento),
+  # che salva la coda sul ramo del sito come farebbe questa Action. Il 14 si tolgono i # qui sotto.
+  # schedule:
+  #   - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate): il piano intero
+  #   - cron: '23 17 * * 4'   # giovedì alle 17:23 UTC: solo le rubriche del weekend
   workflow_dispatch:
     inputs:
       solo_rubriche:
