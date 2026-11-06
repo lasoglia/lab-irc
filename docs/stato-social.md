@@ -45,10 +45,13 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | `9700edb` | Il martedì non esce come carosello una lezione messa in coda per un giorno di reel (`senza_reel` in `seo/pubblica.py`). |
 | `cfd1bfb` | Rubriche del weekend nei formati che il guardiano controlla (titolo su Telegram, link nella bio su Instagram, una battuta, schede entro 190 caratteri, hashtag fissi, niente «domande dai banchi»); per tutti i testi le correzioni di forma senza IA (`rifinisci_canali`, `accorcia_schede` in `seo/promozione.py`); le obiezioni dei controllori in `data/rubriche-da-rifare.md` tornano a chi riscrive. Storie del mattino con l'ora presa dal giorno della settimana. |
 | `29bff2a` | I numeri dei post ogni mattina, nel controllo delle uscite (prima solo la domenica). |
-| `f1e0a15`, `7bb1f3f` (ramo del sito) | Coda riallineata: «Lo screenshot non basta» all'11/11 come reel; «le indulgenze» (lezione senza fascicolo, quindi niente reel del regista) torna carosello martedì 17/11. |
+| `f1e0a15`, `7bb1f3f` (ramo del sito) | Coda riallineata: «Lo screenshot non basta» all'11/11 come reel; «le indulgenze» spostata al 17/11 quando sembrava senza fascicolo (vedi `e8f81a3`: il fascicolo c'è). |
 | `865de46` + `2c8a9d6` (ramo del sito) | `data/fatti-dubbi.json`: i dettagli dubbi delle lezioni arrivano a chi scrive con il divieto di usarli così come sono; il verificatore li controlla. |
 | `d654553` | L'anticipo delle 13:30 si monta anche per i reel già pronti. |
 | `f8b729c` | I caroselli del martedì di nuovo scrivibili (lo schema chiedeva un numero minimo di schede che l'API rifiuta); 32000 token di risposta per i testi lunghi. |
+| `300a536` | Un'approvazione vale per la versione controllata: le rubriche approvate hanno in coda l'`impronta` di ciò che gli agenti hanno visto; se il testo cambia dopo, non escono (la notte del 6 lo Shabbat è stato riscritto mentre il piano lo controllava). |
+| `e8f81a3` (+ `b2ca2d5` della sessione Fable) | I fascicoli caricati con il nome accorciato (le indulgenze: «iv1-1r~1.pdf») ora si trovano; il giovedì un giro leggero ricontrolla le rubriche del weekend riscritte (`/social-rubriche`); il piano si salva anche se la coda è cambiata nel frattempo, e l'Issue dice se il salvataggio è fallito. |
+| `ddd0dc5` | Lo Shabbat chiude con le due candele, non con le mascotte delle classi (pesce e barca sono simboli cristiani). |
 
 ## 3. La settimana in coda (al 6 novembre)
 
@@ -69,11 +72,12 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 1. **Permesso `instagram_manage_insights`** (lo fa Matteo in Meta Business, poi rigenera `META_TOKEN`):
    senza, Instagram non dà copertura, salvataggi e tempo di visione e il quaderno non impara nulla sui
    reel. È il passo che più serve al miglioramento automatico.
-2. **Rubriche respinte**: ora si riscrivono da sole con le obiezioni, ma il controllo successivo arriva
-   solo al piano della domenica, quando il loro sabato e la loro domenica possono essere già passati.
-   Proposta: un secondo giro del piano a metà settimana, solo per le rubriche.
+2. **Due sessioni sullo stesso ramo**: la notte del 6 la sessione con Fable e quella di Opus hanno lanciato
+   piani e cambiato la coda in parallelo, e un piano da 17 dollari è andato perso. Regola: prima di
+   cambiare `data/social-coda.json` o di lanciare un piano, controllare che non ce ne sia uno in corso
+   (Action «Social · piano della settimana»); ora comunque il salvataggio non si perde più.
 3. **Etichette sovrapposte ai disegni** nelle cartoline del weekend (`seo/cartoline.mjs`): il guardiano
-   le ha segnalate il 3/11 (scheda 6 dello Shabbat, cartolina 7 della domenica).
+   le ha segnalate il 3/11; nelle schede ridisegnate il 6/11 non ce n'erano, ma vanno guardate.
 4. **Fatti dubbi nelle lezioni**: l'elenco è nel §7 della revisione. Due precisazioni. «Quo primum» è
    datata «il giorno prima delle Idi di luglio» del 1570, cioè il 14 luglio, come dicono quasi tutte le
    fonti: il fascicolo dice 13. Per «Dignitas infinita» il dubbio è da ricontrollare prima di correggere:
