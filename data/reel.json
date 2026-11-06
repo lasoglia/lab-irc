@@ -278,5 +278,281 @@
       "modello": "claude-fable-5-1",
       "citazioni_sbagliate": 0
     }
+  },
+  "regia|2|Gesù quali tracce|Lo screenshot non basta": {
+    "firma": "a8625f5f",
+    "testi": {
+      "serie": "Prova alla mano",
+      "angoli": [
+        {
+          "angolo": "«Tacito vide Gesù»: la frase degli Annali è vera, ma al ritaglio mancano la data, la fonte e una verifica. Che cosa dice davvero e che cosa no",
+          "leva": "sorpresa"
+        },
+        {
+          "angolo": "Plinio attesta un inno «a Cristo come a un dio»: la lettera prova un culto, non che Cristo sia Dio. Due livelli da non confondere",
+          "leva": "curiosità"
+        },
+        {
+          "angolo": "Traiano vieta di cercare i cristiani: con un ritaglio sembra libertà religiosa, con la risposta intera resta la punizione di chi non rinnega",
+          "leva": "sorpresa"
+        },
+        {
+          "angolo": "Come si legge una fonte antica in quattro mosse (data dell'evento, data del testo, genere, informazione contro giudizio): un metodo pronto per la classe",
+          "leva": "utilità"
+        },
+        {
+          "angolo": "Un autore ostile ai cristiani è più affidabile? Né più né meno: il metodo vale per tutti i testi, anche quelli da cui aspettiamo una conferma",
+          "leva": "identità"
+        }
+      ],
+      "ganci": [
+        {
+          "testo": "Tacito ha visto Gesù? Lo *screenshot* dice di sì.",
+          "leva": "domanda spiazzante"
+        },
+        {
+          "testo": "Uno storico romano scrive «Cristo». Prova tutto? *Quasi*.",
+          "leva": "affermazione controintuitiva"
+        },
+        {
+          "testo": "Settant'anni. Tanto dista Tacito da *quella condanna*.",
+          "leva": "numero inatteso"
+        },
+        {
+          "testo": "Il post dice «prova tutto». La pagina dice *tre cose* in meno.",
+          "leva": "contrasto si crede/è"
+        },
+        {
+          "testo": "30 secondi per ridare a Tacito ciò che il ritaglio ha *tolto*.",
+          "leva": "promessa concreta"
+        },
+        {
+          "testo": "Pilato *procurator*? Una pietra del 1961 dice un'altra parola.",
+          "leva": "curiosità"
+        }
+      ],
+      "inquadrature": [
+        {
+          "tipo": "gancio",
+          "testo": "Tacito ha visto Gesù? Lo *screenshot* dice di sì.",
+          "voce": "Tacito ha visto Gesù? Un post dice di sì.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "perplesso",
+          "durata": 3
+        },
+        {
+          "tipo": "pagina",
+          "testo": "",
+          "voce": "La frase è vera, di un romano non cristiano: Cristo messo a morte sotto Tiberio, per opera di Pilato.",
+          "citazione": "Cristo, da cui veniva quel nome, era stato messo a morte sotto Tiberio, per opera di Ponzio Pilato.",
+          "cerchia": "Pilato",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "lente",
+          "durata": 6
+        },
+        {
+          "tipo": "prof",
+          "testo": "Caso chiuso? No: al ritaglio mancano *tre cose*.",
+          "voce": "Caso chiuso? No. Al ritaglio mancano tre cose.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "aspetta",
+          "durata": 3
+        },
+        {
+          "tipo": "lezione",
+          "testo": "Più di settant'anni dopo",
+          "voce": "Uno: la data. Tacito scrive più di settant'anni dopo quella condanna.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 3,
+          "descrizione": "",
+          "posa": "orologio",
+          "durata": 4
+        },
+        {
+          "tipo": "pagina",
+          "testo": "",
+          "voce": "Due: la fonte. Non è un testimone oculare, e non dice da dove viene la notizia.",
+          "citazione": "Ma non è un testimone oculare di Gesù e nel passo non dichiara da dove ricavi l'informazione.",
+          "cerchia": "oculare",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "legge",
+          "durata": 5
+        },
+        {
+          "tipo": "lezione",
+          "testo": "Procurator o praefectus?",
+          "voce": "Tre: una verifica. Chiama Pilato procurator. Una pietra trovata a Cesarea nel millenovecentosessantuno lo chiama praefectus: prefetto.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 2,
+          "descrizione": "",
+          "posa": "sorpreso",
+          "durata": 6
+        },
+        {
+          "tipo": "prof",
+          "testo": "Fonte su Cristo, *non* testimone di Gesù.",
+          "voce": "Quindi no: Tacito non ha visto Gesù. È una fonte su Cristo, non un testimone. Si corregge, non si butta.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "spiega",
+          "durata": 6
+        },
+        {
+          "tipo": "chiusa",
+          "testo": "",
+          "voce": "Lo screenshot non basta. La lezione completa è su labirc.it.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "pollice",
+          "durata": 4
+        }
+      ],
+      "facebook": "Tacito ha visto Gesù? Un post dice di sì.\n\nPer chi insegna in seconda, per chi studia e per chi si è chiesto che cosa dicano davvero gli autori romani su Gesù.\n\nLa frase è vera. Tacito, Annali XV,44: «Cristo, da cui veniva quel nome, era stato messo a morte sotto Tiberio, per opera di Ponzio Pilato». Ma Tacito scrive all'inizio del II secolo, non è un testimone oculare e nel passo non dichiara da dove ricavi l'informazione. Chiama Pilato «procurator»: il titolo storico era «praefectus», prefetto.\n\nIl reel rimette al ritaglio le tre cose che gli mancano: la data, la fonte, una verifica. Nella lezione la stessa domanda tocca a Plinio e a Traiano.\n\nMandalo a un collega che lavora con le fonti: la lezione completa, con il fascicolo e l'attività interattiva, è sul Lab IRC.",
+      "instagram": "Tacito ha visto Gesù? Un post dice di sì.\n\nPer chi insegna in seconda, per chi studia e per chi ha ricevuto almeno una volta uno screenshot con una frase antica.\n\nLa frase è vera. Annali XV,44: «Cristo, da cui veniva quel nome, era stato messo a morte sotto Tiberio, per opera di Ponzio Pilato». La scrive un romano, non un cristiano.\n\nMa al ritaglio mancano tre cose. La data: Tacito scrive più di settant'anni dopo. La fonte: non è un testimone oculare e nel passo non dice da dove ricavi la notizia. Una verifica: chiama Pilato «procurator», il titolo storico era «praefectus».\n\nTacito è una fonte su Cristo, non un testimone di Gesù. Il post si corregge, non si butta.\n\nNella lezione la stessa domanda tocca alla lettera di Plinio e alla risposta di Traiano.\n\nLa lezione completa è nel link in bio.",
+      "telegram": "Stasera un reel su un post: «Tacito vide Gesù».\n\nLa frase degli Annali è vera: Cristo messo a morte sotto Tiberio, per opera di Ponzio Pilato (Tacito, Annali XV,44). Ma Tacito scrive più di settant'anni dopo, non è un testimone oculare e nel passo non dice da dove abbia la notizia. E chiama Pilato «procurator»: il titolo storico era «praefectus».\n\nAl ritaglio mancano tre cose: la data, la fonte, una verifica. La lezione completa, con Plinio e Traiano, è sul Lab IRC.",
+      "anticipo": "Allo screenshot di Tacito mancano *tre cose*",
+      "hashtag": [
+        "religionecattolica",
+        "irc",
+        "tacito",
+        "fontistoriche",
+        "gesustorico"
+      ],
+      "token": {
+        "input": 24650,
+        "output": 12421
+      },
+      "fascicolo": "uploads/ii-1-2-gesu-quali-tracce-lo-screenshot-non-basta-fascicolo.pdf",
+      "scene_lezione": [
+        {
+          "n": 1,
+          "fase": "Aggancio",
+          "titolo": "Lo screenshot",
+          "contenuto": "Anonimo · per alzata di mano · Che cosa vale, per voi, questo post? · Prova tutto: è una fonte antica · Prova tutto: l’autore non è cristiano · Dice qualcosa, ma devo saperne di più · Niente: è solo un ritaglio · Teniamo i voti. Alla fine rifaremo la stessa domanda, dopo aver restituito alla frase ciò che il ritaglio le ha tolto."
+        },
+        {
+          "n": 2,
+          "fase": "Scoperta",
+          "titolo": "Che cosa ha tolto il ritaglio?",
+          "contenuto": "Procuratore o prefetto? · Tacito chiama Pilato procurator, il titolo dei governatori della Giudea venuti dopo di lui. Una pietra trovata a Cesarea Marittima nel 1961 lo chiama praefectus, {prefetto}. Il testo si legge com’è: la precisazione è nostra. · Tacito, Annali XV,44,3; iscrizione di Pilato, Cesarea Marittima (oggi all’Israel Museum)"
+        },
+        {
+          "n": 3,
+          "fase": "Scoperta",
+          "titolo": "Quanto è lontano chi scrive?",
+          "contenuto": "Verifica lampo · Tacito scrive più di settant’anni dopo la morte di Gesù. Che cosa ne segue? · Il suo racconto è inventato · Non è un testimone oculare: da dove viene la notizia? · Ha copiato il verbale dagli archivi di Roma · È testimone oculare, perché è uno storico · La distanza non rende falso un racconto, ma impedisce di trattarlo come la parola di chi c’era. In questo passo Tacito non dice come ha saputo di Cri"
+        },
+        {
+          "n": 4,
+          "fase": "Scoperta",
+          "titolo": "Plinio interroga",
+          "contenuto": "Quale frase descrive che cosa facevano i cristiani? · «Ho chiesto loro [[se fossero cristiani::Procedura. È ciò che fa Plinio: su questo è testimone diretto, perché i processi sono suoi.]]; […] chi perseverava, l’ho fatto condurre a morte. […] Altri dicevano di esserlo stati, ma di aver smesso. Affermavano che tutta la loro colpa, o il loro errore, era riunirsi in un giorno stabilito, prima dell’alba, e cantare fra l"
+        },
+        {
+          "n": 5,
+          "fase": "Scoperta",
+          "titolo": "Fin dove arriva la luce?",
+          "contenuto": ""
+        },
+        {
+          "n": 6,
+          "fase": "Scoperta",
+          "titolo": "La risposta intera",
+          "contenuto": "Una lettera, non tre secoli · La risposta di Traiano è una norma: dice come agire, non quante persone furono condannate. E documenta un luogo e un momento: non autorizza a immaginare una persecuzione continua e identica in tutto l’Impero per tre secoli. · Traiano a Plinio, Lettere X,97"
+        },
+        {
+          "n": 7,
+          "fase": "Attività",
+          "titolo": "A quale fonte lo chiedi?",
+          "contenuto": "Sfida a squadre · Due squadre, otto domande, venti secondi a turno: chi sbaglia lascia la domanda all’altra squadra, che può rubarla. · Altra domanda · La più discussa · Quale domanda ha diviso di più le squadre, e perché? · Nessuno dei tre · Perché a volte la risposta giusta era «nessuno dei tre»?"
+        },
+        {
+          "n": 8,
+          "fase": "Chiusura",
+          "titolo": "Dove ci fermiamo",
+          "contenuto": "Dalla croce alle lettere · Una fede si diffonde · Gerusalemme, intorno al 30; Roma, 64: per Tacito i condannati sono «una moltitudine enorme»; Bitinia-Ponto, intorno al 112. · Senza comunità cristiane non ci sarebbero accusati: niente processi, niente lettere. · La fedeltà incontra il potere · Roma chiede gesti di culto agli dèi e all’imperatore; chi è davvero cristiano, si dice, non maledice Cristo. · Senza questo c"
+        },
+        {
+          "n": 9,
+          "fase": "Chiusura",
+          "titolo": "Correggiamo il post",
+          "contenuto": "«Tacito vide Gesù.» Quale correzione è giusta? · Vero: è uno storico romano del I secolo · Tacito scrive all’inizio del II secolo: riferisce la morte di Cristo sotto Pilato, ma non era presente · Tacito non parla mai di Cristo · Tacito racconta negli Annali la vita di Gesù · Tacito ricorda una condanna avvenuta sotto Tiberio, decenni prima di scrivere, e qui non dice da dove abbia la notizia: è una fonte su Cristo, n"
+        },
+        {
+          "n": 10,
+          "fase": "Chiusura",
+          "titolo": "Lo screenshot basta?",
+          "contenuto": "Di nuovo, a fine lezione · Che cosa vale, per voi, questo post? · Prova tutto: è una fonte antica · Prova tutto: l’autore non è cristiano · Dice qualcosa, ma devo saperne di più · Niente: è solo un ritaglio · Se il voto si è spostato, chiediamo a chi ha cambiato idea che cosa l’ha convinto. Non c’è un punteggio sulle opinioni: conta la ragione."
+        }
+      ],
+      "parole_voce": 110,
+      "modello": "claude-fable-5-1",
+      "citazioni_sbagliate": 0
+    }
+  },
+  "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze": {
+    "firma": "32a46af4",
+    "testi": {
+      "gancio": "La Chiesa vendeva il perdono? Lo controllano in pochi",
+      "scene": [
+        {
+          "titolo": "Una frase che diciamo tutti",
+          "testo": "Da una frase famosa a una domanda: quando una protesta ha buone ragioni?"
+        },
+        {
+          "titolo": "Cantiere, debito e un frate",
+          "testo": "Alberto deve pagare i Fugger: metà a lui, metà a San Pietro. Tetzel? L'ultimo anello."
+        },
+        {
+          "titolo": "Colpa e pena non coincidono",
+          "testo": "La colpa si perdona gratis, l'indulgenza tocca la pena: il pentimento non si compra."
+        },
+        {
+          "titolo": "Dove nasce l'abuso",
+          "testo": "Tesi 27 e 28: Lutero non nega la dottrina, contesta chi la predica a listino."
+        },
+        {
+          "titolo": "Che cosa fanno gli studenti",
+          "testo": "Leggono Paolo VI, la Treccani e Lutero, e separano dottrina, procedura e distorsione."
+        }
+      ],
+      "facebook": "Che cosa insegnava la Chiesa e che cosa accadeva alla cassa?\n\nPer chi insegna religione in quarta e per chi ha sempre sentito dire che la Chiesa vendeva il perdono: ecco la lezione in 30 secondi.\n\nLa fonte? Le tesi 27 e 28: Lutero non nega la dottrina, denuncia chi la predica con i prezzi fissati.\n\nApri la lezione completa sul sito 📚",
+      "instagram": "Il pentimento si può comprare? Spoiler: no.\n\nEcco la lezione in 30 secondi, per chi insegna religione in quarta e per chi sta studiando la Riforma.\n\nUn debito con i banchieri Fugger, metà dei proventi alla basilica di San Pietro e un frate, Tetzel, in fondo alla catena.\n\nPer la dottrina la colpa si rimette gratis nella confessione: l'indulgenza riguarda solo la pena temporale.\n\nApri la lezione completa: c'è tutto il percorso, da Leone X a Trento 🙂\n\nLe lezioni del Lab sono nel link in bio.",
+      "telegram": "La lezione in 30 secondi: indulgenze, 1517, tra Alberto di Brandeburgo, i Fugger e Tetzel. Per la quarta, con le fonti alla mano: Paolo VI, la Treccani, le tesi di Lutero. E alla fine una domanda vera: quando una protesta ha buone ragioni? La lezione completa è sul sito.",
+      "hashtag": [
+        "religionecattolica",
+        "irc",
+        "riformaprotestante",
+        "storiadellachiesa",
+        "insegnantidireligione"
+      ],
+      "origine": "claude-opus-5-5",
+      "token": {
+        "input": 3409,
+        "output": 9369
+      }
+    }
   }
 }
