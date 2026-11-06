@@ -39,19 +39,19 @@
     "carosello": [
       {
         "titolo": "Una parola, uno stipite",
-        "testo": "In ebraico biblico mezuzah vuol dire «stipite della porta». La Bibbia dice: «Le scriverai sugli stipiti della tua casa». Poi i testi del Talmud hanno dato questo nome al rotolo."
+        "testo": "In ebraico biblico mezuzah vuol dire «stipite». La Bibbia: «Le scriverai sugli stipiti della tua casa e sulle tue porte». Poi il Talmud ha dato questo nome al rotolo."
       },
       {
         "titolo": "Dentro c'è lo Shema",
-        "testo": "Nel rotolo ci sono le prime due parti dello Shema (Dt 6,4-9 e 11,13-21): «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». Entrambi i brani chiedono di fissarla."
+        "testo": "Nel rotolo ci sono le prime due parti dello Shema (Dt 6,4-9 e 11,13-21), che comincia con «Ascolta, Israele…». Tutti e due i brani chiedono di fissarla."
       },
       {
         "titolo": "Scritta a mano dal sofer",
-        "testo": "Il klaf, la pergamena, viene da un animale kasher (adatto secondo la legge ebraica). Il sofer, lo scriba, la scrive a mano con penna d'oca. Basta una crepa e non vale più."
+        "testo": "Il klaf, la pergamena, viene da un animale kasher (adatto secondo la legge ebraica). Il sofer, lo scriba, la scrive a mano con penna d'oca. Una crepa o una lettera rovinata e non vale più."
       },
       {
         "titolo": "Quella lettera sull'astuccio",
-        "testo": "Sul retro c'è Shaddai, un nome di Dio: iniziali di Shomer daltot Yisrael, «Custode delle porte d'Israele». Comincia con la shin (ש): è la lettera che spesso vedi sull'astuccio."
+        "testo": "Sul retro lo scriba scrive tre lettere ebraiche, iniziali di Shomer daltot Yisrael, «Custode delle porte d'Israele». La prima è la shin (ש): la lettera che spesso vedi sull'astuccio."
       },
       {
         "titolo": "Un compromesso in diagonale",
@@ -63,7 +63,7 @@
       },
       {
         "titolo": "Due modi di leggerla",
-        "testo": "Per Chabad porta la protezione divina: Dio custodisce da fuori chi sta in casa. Per la scrittrice Blu Greenberg non è un amuleto, ma un segno dell'alleanza con Dio."
+        "testo": "Per Chabad porta anche la protezione divina: Dio custodisce da fuori chi sta in casa. Per la scrittrice Blu Greenberg non è un amuleto, ma un segno dell'alleanza con Dio."
       },
       {
         "titolo": "Ogni porta, Shabbat shalom",
@@ -80,20 +80,20 @@
       "promozione/illustrazioni/domenica/sab-2026-11-07-406ff8-7.svg",
       "promozione/illustrazioni/domenica/sab-2026-11-07-406ff8-8.svg"
     ],
-    "file": "sabato-2026-11-07-dcbd237b.png",
+    "file": "sabato-2026-11-07-05438a89.png",
     "immagini": [
-      "sabato-2026-11-07-dcbd237b.png",
-      "sabato-2026-11-07-dcbd237b-2.png",
-      "sabato-2026-11-07-dcbd237b-3.png",
-      "sabato-2026-11-07-dcbd237b-4.png",
-      "sabato-2026-11-07-dcbd237b-5.png",
-      "sabato-2026-11-07-dcbd237b-6.png",
-      "sabato-2026-11-07-dcbd237b-7.png",
-      "sabato-2026-11-07-dcbd237b-8.png",
-      "sabato-2026-11-07-dcbd237b-9.png",
-      "sabato-2026-11-07-dcbd237b-10.png"
+      "sabato-2026-11-07-05438a89.png",
+      "sabato-2026-11-07-05438a89-2.png",
+      "sabato-2026-11-07-05438a89-3.png",
+      "sabato-2026-11-07-05438a89-4.png",
+      "sabato-2026-11-07-05438a89-5.png",
+      "sabato-2026-11-07-05438a89-6.png",
+      "sabato-2026-11-07-05438a89-7.png",
+      "sabato-2026-11-07-05438a89-8.png",
+      "sabato-2026-11-07-05438a89-9.png",
+      "sabato-2026-11-07-05438a89-10.png"
     ],
-    "gancio": "Perché sulla porta c'è un rotolo un po' storto?",
+    "gancio": "Perché in molte case la mezuzà è un po' storta?",
     "scene_video": [
       {
         "titolo": "Uno stipite, una parola",
@@ -102,7 +102,7 @@
       },
       {
         "titolo": "Dentro c'è lo Shema",
-        "testo": "Il rotolo contiene «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno».",
+        "testo": "Il rotolo contiene lo Shema, che comincia con «Ascolta, Israele…».",
         "scheda": 2
       },
       {
@@ -112,7 +112,7 @@
       },
       {
         "titolo": "Perché è storta?",
-        "testo": "Rashi la voleva verticale, Rabbeinu Tam orizzontale: inclinata rispetta entrambi.",
+        "testo": "Rashi verticale, Rabbeinu Tam orizzontale: gli ashkenaziti la inclinano, i sefarditi no.",
         "scheda": 5
       },
       {
@@ -126,10 +126,9 @@
         "scheda": 8
       }
     ],
-    "facebook": "Sullo stipite destro di molte case ebraiche c'è un piccolo astuccio, a volte un po' inclinato. 🚪 Dentro c'è la cosa che conta davvero: una pergamena, il klaf, con le prime due parti dello Shema, «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». La scrive a mano uno scriba con penna d'oca, e due volte ogni sette anni va controllata. Si chiama mezuzà, che in ebraico biblico vuol dire proprio «stipite». Perché inclinata? Rashi la voleva verticale, suo nipote Rabbeinu Tam orizzontale: le comunità ashkenazite la mettono in diagonale, così nessuno dei due resta scontento. Passando la si tocca, per ricordare che Dio è con noi, in casa e fuori. Le letture sono diverse: per Chabad porta la protezione divina, per la scrittrice Blu Greenberg è un segno dell'alleanza che santifica la casa. Il percorso completo è nel carosello. Shabbat shalom!\n\nhttps://www.labirc.it/",
-    "instagram": "Sul retro della mezuzà ci sono tre parole che sembrano senza senso.\n\nNon è un errore dello scriba. Sono i tre nomi di Dio del versetto «Ascolta, Israele», scritti mettendo al posto di ogni lettera quella che la segue nell'alfabeto ebraico.\n\nLa chiamano «scrittura della mezuzà». Nella Russia sovietica gli ebrei la usavano per scrivere lettere con informazioni «compromettenti». 🔐\n\nIl resto è più semplice: una pergamena con lo Shema, scritta a mano e arrotolata in un astuccio sullo stipite. Passando la si tocca, per ricordare che Dio è con noi.\n\nIl percorso completo è sul Lab IRC: trovate il link nella bio.\n\n#religionecattolica #irc #culturaebraica #ebraismo #mezuza",
-    "telegram": "Lo Shabbat del Lab: la mezuzà\nNel 2010, all'ingresso interno dell'aeroporto Ben Gurion, fu fissata quella che allora era la mezuzà kasher più grande del mondo: pergamena e astuccio insieme superano il metro. Di solito però è un piccolo rotolo scritto a mano, e quando una famiglia ebraica trasloca lo lascia sugli stipiti solo se arriva un'altra famiglia ebraica. Nel carosello: che cosa c'è scritto dentro e perché spesso è inclinata.\n\nhttps://www.labirc.it/",
-    "sfondo": "promozione/immagini-ia/sab-2026-11-07-6b292ac90607.jpg"
+    "facebook": "Sullo stipite destro di molte case ebraiche c'è un piccolo astuccio, a volte un po' inclinato. 🚪 Dentro c'è la cosa che conta davvero: una pergamena, il klaf, con le prime due parti dello Shema, che comincia con «Ascolta, Israele, il Signore è il nostro Dio, il Signore è Uno». La scrive a mano uno scriba con penna d'oca, e almeno due volte ogni sette anni va controllata. Si chiama mezuzà, che in ebraico biblico vuol dire proprio «stipite». Perché inclinata? Rashi la voleva verticale, suo nipote Rabbeinu Tam orizzontale: le comunità ashkenazite la mettono in diagonale, così nessuno dei due resta scontento. Passando la si tocca, per ricordare che Dio è con noi, in casa e fuori. Le letture sono diverse: per Chabad porta anche la protezione divina, per la scrittrice Blu Greenberg è un segno dell'alleanza che santifica la casa. Sfoglia il carosello e salvalo per la lezione sull'ebraismo. Shabbat shalom!\n\nhttps://www.labirc.it/",
+    "instagram": "Sul retro della mezuzà ci sono tre parole che sembrano senza senso.\n\nNon è un errore dello scriba. Sono i tre nomi di Dio del versetto «Ascolta, Israele», scritti mettendo al posto di ogni lettera quella che la segue nell'alfabeto ebraico.\n\nLa chiamano «scrittura della mezuzà». Nella Russia sovietica gli ebrei la usavano per scrivere lettere con informazioni «compromettenti». 🔐\n\nIl resto è più semplice: una pergamena con lo Shema, scritta a mano e arrotolata in un astuccio sullo stipite. Passando la si tocca, per ricordare che Dio è con noi.\n\nIl percorso completo è nel carosello; le lezioni del Lab IRC sono nel link in bio.\n\n#religionecattolica #irc #culturaebraica #ebraismo #mezuza",
+    "telegram": "Lo Shabbat del Lab: la mezuzà\nNel 2010, all'ingresso interno dell'aeroporto Ben Gurion, fu fissata quella che allora era la mezuzà kasher più grande del mondo: pergamena e astuccio insieme superano il metro. Di solito però è un piccolo rotolo scritto a mano, e quando una famiglia ebraica trasloca lo lascia sugli stipiti solo se arriva un'altra famiglia ebraica, perché non finisca buttato via. Nel carosello: che cosa c'è scritto dentro e perché spesso è inclinata.\n\nhttps://www.labirc.it/"
   },
   {
     "chiave": "sab-2026-11-14",
@@ -244,7 +243,6 @@
     ],
     "facebook": "Un piatto di lenticchie da una parte, la primogenitura dall'altra: Esaù sceglie il piatto. È l'episodio con cui si apre la parashà Toledoth, nel libro della Genesi, ed è diventato un modo di dire per chi baratta i principi con cose da poco. Un articolo del sito ebraico Moked prova però a guardarlo da vicino. Le lenticchie sono così nutrienti da essere diventate un simbolo di ricchezza, e secondo il botanico Zohary si coltivavano nella Mezzaluna Fertile già più di 10.000 anni fa. E la primogenitura? Per l'autore serviva a non spezzettare l'«azienda» di famiglia: un privilegio «umanamente ingiusto, ma economicamente necessario». L'idea di lasciare tutto a un solo erede esiste ancora oggi in Alto Adige, con il «maso chiuso». Insomma, la prossima volta che trovate le lenticchie nel piatto, guardatele con un po' più di rispetto.\n\nhttps://www.labirc.it/",
     "instagram": "Cosa daresti per un piatto di lenticchie? Esaù ci ha rimesso la primogenitura.\n\nSuccede all'inizio della parashà Toledoth, nel libro della Genesi. Ma un articolo del sito ebraico Moked ci ricorda che quel piatto non era poca cosa: le lenticchie sono così nutrienti da essere diventate un simbolo di ricchezza.\n\nE fanno bene anche alla terra: sulle loro radici vivono batteri che trasformano l'azoto dell'aria e arricchiscono il terreno. 🌱\n\nLa primogenitura, invece? Secondo l'autore serviva a non dividere l'«azienda» di famiglia tra tutti gli eredi.\n\nL'approfondimento completo lo trovi sul Lab IRC: link in bio.\n\n#religionecattolica #irc #culturaebraica #parasha #genesi",
-    "telegram": "Lo Shabbat del Lab: Esaù, Giacobbe e le lenticchie\nUna primogenitura in cambio di un piatto di lenticchie: così si apre la parashà Toledoth. Ma perché doveva ereditare proprio il primogenito? Secondo un articolo del sito ebraico Moked, perché era il più anziano e si sperava avesse più esperienza dei fratelli per far crescere l'«azienda» di famiglia, a vantaggio di tutti.\n\nhttps://www.labirc.it/",
-    "sfondo": "promozione/immagini-ia/sab-2026-11-14-3423d19de1e3.jpg"
+    "telegram": "Lo Shabbat del Lab: Esaù, Giacobbe e le lenticchie\nUna primogenitura in cambio di un piatto di lenticchie: così si apre la parashà Toledoth. Ma perché doveva ereditare proprio il primogenito? Secondo un articolo del sito ebraico Moked, perché era il più anziano e si sperava avesse più esperienza dei fratelli per far crescere l'«azienda» di famiglia, a vantaggio di tutti.\n\nhttps://www.labirc.it/"
   }
 ]
