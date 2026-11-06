@@ -1,17 +1,31 @@
-# Rubriche da rifare
-
-Le obiezioni del verificatore e del guardiano alle rubriche respinte, una sezione per chiave.
-Le scrive il piano della settimana; seo/rubriche.py riscrive la rubrica tenendone conto.
-Questa prima versione viene dal piano del 3 novembre 2026 (Issue «piano»).
-
 ## sab-2026-11-07
-- Verificatore: «Scopri perché Abramo paga 400 sicli» promette un perché che la fonte non dà; togliere anche «Zero dubbi».
-- Guardiano (respinto): Telegram senza una riga di titolo; hashtag senza religionecattolica; Instagram senza la chiusa con il link nella bio; due battute su Facebook (al massimo una); scheda 8 del carosello oltre 190 caratteri; etichetta «un segno» sovrapposta al disegno del pozzo nella scheda 6.
-- Hebron: la frase sul «primo pezzo di Terra Santa diventato proprietà legale del popolo ebraico» accanto a «oggi» può sembrare una presa di posizione su un luogo conteso. Non usarla, né altre frasi su luoghi contesi oggi.
-- Il dossier cominciava con un resto del processo di ricerca («Estraggo il corpo dei testi.») prima di «TEMA:».
+- Verificatore (DA CORREGGERE): «pasta» (Facebook «la pasta bastava sempre», carosello 9 «pasta per tutti») è un errore: il midrash (Bereshit Rabbah 60,16) parla della benedizione sull'impasto del pane. Scrivere «la benedizione sull'impasto del pane»; nel carosello «pane per tutti». Togliere «il sacro abita anche in cucina».
+- Ricercatore: formula corretta: «Per un midrash, con Rebecca tornano i tre segni della tenda di Sara: un lume acceso da un venerdì sera all'altro, la benedizione sull'impasto del pane e una nube sopra l'ingresso della tenda.» «Divina» per la nube non è nel testo ebraico; «bastava per famiglia e ospiti» è una parafrasi di My Jewish Learning. Fonti: https://www.sefaria.org/Bereshit_Rabbah.60.16 · https://www.myjewishlearning.com/article/the-miracle-in-sarahs-tent/
+- Verificatore e guardiano: togliere la frase «Per Chabad è il primo pezzo di Terra Santa diventato proprietà legale del popolo ebraico» accanto a «oggi sopra la grotta c'è un edificio»: su Hebron suona come presa di posizione politica. Il paragrafo si regge senza.
+- Verificatore: Telegram «Quattro coppie in una grotta sola» va detto come tradizione: «Quattro coppie in una grotta sola, secondo la tradizione». Lo stesso nel video (punto 3).
+- Ricercatore: Adamo ed Eva a Macpela sono tradizione rabbinica (Talmud, Eruvin 53a: Kiryat Arba, «città dei quattro», le quattro coppie); la Bibbia nomina solo Sara, Abramo, Isacco, Rebecca, Lea e Giacobbe (Gen 23; 25,9; 49,31; 50,13). Fonti: https://www.sefaria.org/Eruvin.53a · https://www.chabad.org/library/article_cdo/aid/588225/jewish/Cave-of-the-Patriarchs-Machpelah.htm
+- Ricercatore: «Eliezer» e «Charan» non sono in Genesi 24 (il servo più anziano; Aram Naharaim, città di Nacor). Scrivere «il suo servo più anziano (per la tradizione è Eliezer)» e togliere «Charan». Fonti: https://www.sefaria.org/Genesis.24 · https://www.sefaria.org/Rashi_on_Genesis.24.39
+- Guardiano: il gancio del video «Perché pagare 400 sicli per un regalo?» e Telegram «Scopri perché Abramo paga 400 sicli…» promettono una spiegazione che non c'è. Usare per esempio «Gli regalano una grotta. Lui paga 400 sicli d'argento.»
+- Verificatore e guardiano: nel carosello una sola battuta (tre ora: «Colpo di scena», «Altro che sconti!», «Zero dubbi»); tenere solo «Altro che sconti», senza punto esclamativo. «Zero dubbi» è anche un'aggiunta: il dossier riporta solo «Andrò».
+- Guardiano: schede 8 e 9 del carosello di 195 caratteri, oltre il limite di 190.
+- Guardiano: frase_cartolina senza virgolette (per esempio «Si chiama La vita di Sara, e comincia con un addio»).
+- Verificatore e guardiano: Instagram senza hashtag nel testo, in paragrafi corti, chiude con il link nella bio. Hashtag nel loro campo, con religionecattolica sempre presente.
+- Verificatore e guardiano: Telegram con una riga di titolo («Lo Shabbat del Lab: Chayei Sarah») e poi due o tre frasi.
+- Guardiano: storia «La risposta è nel carosello sul profilo» non segue una domanda: scrivere «Il resto della storia è nel carosello sul profilo».
+- Verificatore: la scheda finale 10 sembra avere una piccola croce sull'albero della barchetta della mascotte: in un post di cultura ebraica usare una chiusura senza simboli religiosi.
+- Guardiano: le schede da 2 a 9 non erano disponibili per il controllo: vanno ridisegnate e ricontrollate.
 
 ## dom-2026-11-08
-- Verificatore: la frase «come si vadia al cielo» era attribuita a Galileo e messa nel dicembre 1613; è del 1615, nella lettera a Cristina di Lorena, dove Galileo riporta le parole di un alto prelato. Correggere attribuzione e data come dice la lezione, oppure non usarla.
-- Verificatore e guardiano: togliere il riferimento a «la domanda arrivata dai banchi»: richiama un episodio di classe che non c'è.
-- Guardiano: Telegram senza una riga di titolo; Instagram con hashtag nel testo e senza la chiusa con il link nella bio; scheda 5 a 191 caratteri (massimo 190); etichetta «Urbano VIII» sovrapposta al libro nella cartolina 7.
-- Da controllare sulle lezioni prima di scriverli: la «cena» a Pisa (la fonte parla di pranzo?), la «prova decisiva» per la parallasse del 1838, i «sette cardinali». Se la lezione non è chiara, non usarli.
+- Verificatore e guardiano: Facebook «la domanda arrivata dai banchi» racconta un episodio di classe inventato, vietato. Scrivere «Ma la domanda vera è un'altra: condannato per che cosa?»
+- Verificatore: carosello 4, Instagram e video 2 mettono «come si vadia al cielo» nella risposta del 1613. La frase non è nella lettera a Castelli (21 dicembre 1613) ma nella Lettera a Cristina di Lorena (1615). La risposta del 1613 è «la Scrittura non può errare, ma i suoi interpreti sì». Scrivere: «Nel 1615, nella Lettera a Cristina di Lorena, Galileo scrive che lo Spirito Santo insegna "come si vadia al cielo, e non come vadia il cielo".» Non dire che risponde a Bellarmino.
+- Ricercatore: confermato. Fonti: https://it.wikisource.org/wiki/Lettere_(Galileo)/XI · https://it.wikisource.org/wiki/Lettere_(Galileo)/XIV · https://inters.org/node/1409
+- Verificatore: carosello 4 «E cita un cardinale»: Galileo non fa nomi («persona ecclesiastica costituita in eminentissimo grado»). Scrivere «E riprende il detto di un alto prelato, che si ritiene fosse il cardinale Baronio». Fonte: Giovanni Paolo II, 31 ottobre 1992 («attribuita a Baronio») https://www.vatican.va/content/john-paul-ii/it/speeches/1992/october/documents/hf_jp-ii_spe_19921031_accademia-scienze.html
+- Verificatore: video 1 «tutto parte a tavola: la Granduchessa cita Giosuè» non è esatto: a tavola Boscaglia sussurra a Madama; Giosuè lo porta Cristina dopo, nelle sue stanze, contro Castelli; Galileo non c'era. Scrivere: «Dicembre 1613, Pisa: a pranzo dal Granduca si parla delle lune di Giove. Poi, nelle sue stanze, Cristina di Lorena incalza Benedetto Castelli, allievo di Galileo, con Giosuè. Galileo non c'è: risponde per lettera.»
+- Ricercatore: era un pranzo, non una cena («Giovedì mattina fui alla tavola de' Padroni», lettera di Castelli del 14 dicembre 1613). In copertina, carosello 3, Facebook, Instagram e Telegram «cena» diventa «pranzo» o «a tavola». Fonti: https://archive.org/details/le-opere-di-galileo-galilei-edizione-nazionale-volume-11 · https://inters.org/node/1400
+- Verificatore: «la prova decisiva arriverà nel 1838» (carosello 5, video 3, Instagram) non è esatto. Ricercatore: l'aberrazione della luce (Bradley, 1729) era già prova del moto della Terra; la parallasse (Bessel, 1838) è la prova più diretta. Scrivere: «Le prove arriveranno dopo: l'aberrazione della luce (Bradley, 1729) e, la più diretta, la parallasse delle stelle (Bessel, 1838).» Nel video: «la prova arriverà più di un secolo dopo». Fonti: https://www.britannica.com/biography/James-Bradley · https://inters.org/node/449
+- Verificatore: Facebook «hanno i documenti originali» esagera: scrivere «hanno i testi dei documenti».
+- Guardiano: Facebook senza richiesta finale: aggiungerne una sola, per esempio «Sfoglia il carosello e salvalo per la lezione».
+- Verificatore e guardiano: Instagram chiude con il link nella bio («Le lezioni complete sono sul Lab IRC, link nella bio.») e senza hashtag nel testo.
+- Verificatore e guardiano: Telegram con una riga di titolo («Galileo fu condannato davvero?») e poi due o tre frasi; togliere «super post della domenica», termine interno.
+- Guardiano: carosello 5 di 191 caratteri, oltre il limite di 190.
+- Guardiano: le schede da 2 a 9 non erano disponibili per il controllo: vanno ridisegnate e ricontrollate.
