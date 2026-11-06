@@ -41,17 +41,24 @@ def indice_testi(elenco: list[dict], canale: str) -> dict[str, str]:
     return {inizio(c.get(canale, "")): c["chiave"] for c in elenco if c.get(canale)}
 
 
+def memoria_link(precedenti: dict, canale: str) -> dict[str, str]:
+    """Link → chiave dei post già riconosciuti in passato: i testi del kit vengono riscritti
+    a ogni piano, e un post uscito con il testo vecchio altrimenti sparirebbe dai numeri."""
+    return {r["link"]: r["chiave"] for r in precedenti.get(canale, []) if r.get("link") and r.get("chiave")}
+
+
 def conta(voce: dict, campo: str) -> int | None:
     return (voce.get(campo) or {}).get("summary", {}).get("total_count")
 
 
-def metriche_facebook(pagina_id: str, chiave_pagina: str, indice: dict) -> tuple[list, int | None]:
+def metriche_facebook(pagina_id: str, chiave_pagina: str, indice: dict,
+                      memoria: dict | None = None) -> tuple[list, int | None]:
     risposta = m.chiama("GET", f"{pagina_id}/published_posts", access_token=chiave_pagina, limit=50,
                         fields="message,created_time,permalink_url,shares,"
                                "reactions.summary(true).limit(0),comments.summary(true).limit(0)")
     post = []
     for voce in risposta.get("data", []):
-        chiave = indice.get(inizio(voce.get("message", "")))
+        chiave = indice.get(inizio(voce.get("message", ""))) or (memoria or {}).get(voce.get("permalink_url"))
         if chiave:
             post.append({"chiave": chiave, "data": voce.get("created_time", "")[:10],
                          "reazioni": conta(voce, "reactions"), "commenti": conta(voce, "comments"),
@@ -74,13 +81,14 @@ def ora_di_roma(istante: str) -> str:
         return ""
 
 
-def metriche_instagram(ig_id: str, chiave: str, indice: dict, avvisi: list[str]) -> tuple[list, int | None]:
+def metriche_instagram(ig_id: str, chiave: str, indice: dict, avvisi: list[str],
+                       memoria: dict | None = None) -> tuple[list, int | None]:
     risposta = m.chiama("GET", f"{ig_id}/media", access_token=chiave, limit=50,
                         fields="caption,timestamp,permalink,like_count,comments_count,media_type,media_product_type")
     post = []
     errori = 0
     for voce in risposta.get("data", []):
-        k = indice.get(inizio(voce.get("caption", "")))
+        k = indice.get(inizio(voce.get("caption", ""))) or (memoria or {}).get(voce.get("permalink"))
         if not k:
             continue
         tipo = voce.get("media_product_type") or "FEED"
@@ -136,12 +144,14 @@ def main() -> int:
         print(f"✗ Meta: {err}")
         return 1
     try:
-        fb, seguaci_fb = metriche_facebook(pagina_id, chiave_pagina, indice_testi(elenco, "facebook"))
+        fb, seguaci_fb = metriche_facebook(pagina_id, chiave_pagina, indice_testi(elenco, "facebook"),
+                                           memoria_link(precedenti, "facebook"))
     except m.ErroreMeta as err:
         avvisi.append(f"Facebook: {err}")
     if ig_id:
         try:
-            ig, seguaci_ig = metriche_instagram(ig_id, chiave_pagina, indice_testi(elenco, "instagram"), avvisi)
+            ig, seguaci_ig = metriche_instagram(ig_id, chiave_pagina, indice_testi(elenco, "instagram"), avvisi,
+                                                memoria_link(precedenti, "instagram"))
         except m.ErroreMeta as err:
             avvisi.append(f"Instagram: {err}")
 
