@@ -58,13 +58,19 @@ sempre «immagini non ancora online». Il 4 e il 5 novembre non è uscito nulla.
 | Giorno | Che cosa |
 |---|---|
 | ven 6 | carosello «Gerusalemme, una città di memorie» (calendario di prima: alle 19). Controllo generale verde |
-| sab 7, dom 8 | niente: Shabbat e grande domanda riscritti, ma il piano non ha potuto ricontrollarli (crediti API finiti) |
+| sab 7, ore 11 | Shabbat sulla mezuzà, «Che cosa c'è in quell'astuccio sulla porta?» (corretto e approvato in sessione, con impronta) |
+| dom 8, ore 18 e 19:30 | grande domanda su Galileo, carosello e video (corretta e approvata in sessione al terzo giro, con impronta) |
 | lun 9 | reel «Chi può insegnare a chi» (montato, con l'anticipo per la storia delle 13:30) |
 | mar 10 | carosello «Cambiare il modo di leggere e di partecipare», rubrica «Parole con una storia» (immagini su R2) |
 | mer 11 | reel «Lo screenshot non basta» (montato, con l'anticipo) |
 | gio 12 | reel del gioco «Le due vie di Lemaître» (si prepara il mercoledì sera, senza Claude) |
-| ven 13 | reel «Riformare una Chiesa: le indulgenze», «Falso mito»: lo scrive il regista se ci sono crediti, altrimenti esce il reel di riserva già montato |
+| ven 13 | reel «Riformare una Chiesa: le indulgenze», «Falso mito»: copione del regista scritto in sessione e controllato dal verificatore, nella cache `data/reel.json` |
 | sab 14, dom 15 e dopo | servono i crediti: li sceglie e li controlla il piano di domenica 8 |
+
+**Fino al 14 novembre il lavoro di IA si fa in sessione** (decisione di Matteo, 6 novembre): la sessione di Claude
+Code (abbonamento) fa i controlli degli agenti, il piano della domenica e i copioni del regista, che mette nella
+cache `data/reel.json` con la firma di `seo/reel.py`; le Action pubblicano, montano e fanno le storie. Gli orari
+dell'Action del piano sono in pausa fino al 14.
 
 **Crediti API finiti (6 novembre, notte).** Gli ultimi due piani si sono fermati con «Credit balance is too low».
 Senza crediti non lavorano gli agenti (piano, controllo del giovedì, diagnosi del mattino), il regista, le
