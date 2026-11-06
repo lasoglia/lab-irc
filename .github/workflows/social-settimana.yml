@@ -208,6 +208,7 @@ jobs:
             !.social/candidati/
           retention-days: 7
           if-no-files-found: ignore
+          include-hidden-files: true   # .social/ è una cartella nascosta
 
       - name: Segnala l'errore
         if: steps.agenti.outcome != 'success' || steps.valida.outcome != 'success'

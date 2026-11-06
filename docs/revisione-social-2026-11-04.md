@@ -171,6 +171,33 @@ reel e caroselli li evita finché le lezioni non sono corrette.
 | Perché fu condannato (2ª) | 1 | Nota: «la traduzione usata in Lo screenshot non basta» | In quel fascicolo la citazione di Tacito è tradotta diversamente. | i due fascicoli |
 | Perché credere ai testimoni della Pasqua (2ª) | 3 | La Mishnah «del tempo» | Gli altri fascicoli la datano verso il 200: conviene precisare. | i fascicoli dell'unità |
 
+## 7b. La notte del 6 novembre: il piano lanciato cinque volte
+
+Matteo ha chiesto di avviare la programmazione. «Social · piano della settimana» è stato lanciato
+cinque volte, ogni volta per una causa diversa, tutte corrette salvo l'ultima:
+
+| Esecuzione | Esito | Causa | Correzione |
+|---|---|---|---|
+| 1 (23:13 UTC) | fermata dal limite di 30 minuti | con direttore e regista in più gli agenti ci mettono più di mezz'ora | limite a 90 minuti; i regista delle diverse uscite nello stesso turno |
+| 2 (00:13) | agenti ok in 24 min (8,5 \$), validazione fallita | il disegnatore delle cartoline aggiorna `promozione/cartoline/versioni.json` e la validazione lo contava come file toccato da Claude | il file torna com'era dopo il disegno |
+| 3 (00:13) | piano completo (Issue #14 con linea, scelte, note di regia), salvataggio fallito | l'altra sessione ha cambiato `data/social-coda.json` sul ramo del sito mentre il piano girava: conflitto al rebase, tre tentativi | in caso di conflitto vince il piano appena fatto |
+| 4 (00:51) | agenti fermi dopo 17 turni (7,3 \$) | i crediti API stavano finendo | diagnostica: esito ed «ultime parole» di Claude nel log, file di lavoro conservati come artefatto |
+| 5 (01:06) | fermata subito, 0 \$ | **«Credit balance is too low»: i crediti API sono finiti** | solo Matteo: ricaricare i crediti nella Console di Anthropic, oppure salvare il segreto `CLAUDE_CODE_OAUTH_TOKEN` (la strada di riserva indicata in `docs/stato-social.md`) |
+
+Il piano completo di questa settimana è leggibile nell'Issue #14 (chiuso dai giri successivi): la linea
+editoriale, lunedì 9 «Chi può insegnare a chi» (già montato), martedì 10 «La libertà vale anche per chi
+crede diversamente» per «Parole con una storia», mercoledì 11 «Lo screenshot non basta» come «Prova alla
+mano», venerdì 13 «Le indulgenze» come «Falso mito», lunedì 16 «Un libro o una biblioteca», venerdì 20
+«Cambiare il modo di leggere» come «Falso mito», con le note di regia e gli errori trovati nelle lezioni.
+Nessuna di queste scelte è però in coda: la coda sul ramo del sito è ancora quella di prima (9/11 Chi può
+insegnare a chi, 10/11 Cambiare il modo di leggere, 11/11 Lo screenshot non basta, 17/11 le indulgenze).
+
+Che cosa succede senza crediti: lunedì 9 il reel è già montato ed esce; martedì 10 `seo/caroselli.py` non
+può scrivere il carosello della rubrica, quindi esce il carosello del kit; mercoledì 11 il regista non può
+scrivere e il reel ricade sul motore vecchio (copione preso dal carosello, senza voce); lo Shabbat e la
+grande domanda del 7-8 non possono essere riscritti né ricontrollati. Appena i crediti tornano, basta
+rilanciare «Social · piano della settimana» (o aspettare domenica).
+
 ## 8. Come si va avanti
 
 Il passaggio di consegne dell'altra sessione, con le decisioni prese con Matteo, il guasto del 4-5
