@@ -29,10 +29,14 @@ python - <<'PY'
 import json
 try:
     d = json.load(open(".social/esito-claude.json", encoding="utf-8"))
-    print(f"Claude: {d.get('subtype')}, turni {d.get('num_turns')}, costo stimato {d.get('total_cost_usd')} $")
+    print(f"Claude: {d.get('subtype')}, turni {d.get('num_turns')}, costo stimato {d.get('total_cost_usd')} $, "
+          f"errore: {d.get('is_error')}")
     print("Permessi negati:", len(d.get("permission_denials") or []))
+    # l'ultimo messaggio di Claude, per capire dove si è fermato (niente chiavi: il rapporto è pubblico)
+    print("Ultime parole:", str(d.get("result") or "")[-700:].replace("\n", " "))
     open(".social/costo.txt", "w", encoding="utf-8").write(str(d.get("total_cost_usd", "?")))
 except Exception as err:
     print("Esito di Claude non leggibile:", err)
 PY
+echo "Codice di uscita di Claude: $codice"
 exit "$codice"
