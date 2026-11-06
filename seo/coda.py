@@ -16,6 +16,7 @@ approvati dagli agenti (data/social-coda.json) la cui data è arrivata.
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 from pathlib import Path
 
@@ -28,6 +29,19 @@ def leggi(percorso: Path | None = None) -> dict | None:
     if not p.exists():
         return None
     return json.loads(p.read_text(encoding="utf-8"))
+
+
+# I campi che gli agenti controllano: testi, schede, vignette e nomi delle immagini (che cambiano se
+# cambiano i disegni). Non ci sono le date scritte per esteso, gli sfondi, le fonti o il dossier.
+CAMPI_IMPRONTA = ("titolo", "frase", "carosello", "vignette", "gancio", "scene_video", "facebook",
+                  "instagram", "telegram", "immagini")
+
+
+def impronta(post: dict) -> str:
+    """L'impronta di ciò che gli agenti hanno approvato. Una rubrica approvata con la sua impronta esce
+    solo se è ancora quella: se nel frattempo è stata riscritta, il post nuovo nessuno l'ha controllato."""
+    dati = {k: post.get(k) for k in CAMPI_IMPRONTA if post.get(k) not in (None, "", [])}
+    return hashlib.sha256(json.dumps(dati, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:12]
 
 
 def chiavi_escluse(coda: dict) -> set[str]:
@@ -50,11 +64,16 @@ def applica(elenco: list[dict], oggi: str | None = None, percorso: Path | None =
     oggi = oggi or dt.date.today().isoformat()
     per_chiave = {c["chiave"]: c for c in elenco}
     escluse = chiavi_escluse(coda)
-    scelti = [per_chiave[v["chiave"]] for v in coda.get("coda", [])
-              if v.get("chiave") in per_chiave
-              and v.get("chiave") not in escluse
-              and v.get("esito") == "approvato"
-              and str(v.get("quando", "9999-12-31")) <= oggi]
+    scelti = []
+    for v in coda.get("coda", []):
+        k = v.get("chiave")
+        if (k not in per_chiave or k in escluse or v.get("esito") != "approvato"
+                or str(v.get("quando", "9999-12-31")) > oggi):
+            continue
+        if v.get("impronta") and impronta(per_chiave[k]) != v["impronta"]:
+            print(f"✗ {k}: il testo è cambiato dopo l'approvazione degli agenti, non lo pubblico.")
+            continue
+        scelti.append(per_chiave[k])
     if coda.get("solo_coda", True):
         if not scelti:
             print("In coda non c'è nessun post approvato con la data di oggi.")

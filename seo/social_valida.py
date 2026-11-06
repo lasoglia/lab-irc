@@ -191,6 +191,29 @@ def togli_dalla_coda(scartati: dict[str, list[str]]) -> None:
                                                       encoding="utf-8")
 
 
+def imprimi_impronte() -> int:
+    """Le rubriche approvate in questo piano ricevono l'impronta di ciò che gli agenti hanno visto
+    (.social/impronte.json, scritto da seo/social_stato.py): seo/coda.py le pubblica solo se non cambiano.
+    Il valore lo mette lo script, non Claude."""
+    try:
+        impronte = json.loads((RADICE / ".social" / "impronte.json").read_text(encoding="utf-8"))
+        dati = coda.leggi()
+    except (OSError, ValueError):
+        return 0
+    if not dati or not isinstance(impronte, dict):
+        return 0
+    n = 0
+    for v in dati.get("coda", []):
+        k = v.get("chiave")
+        if v.get("esito") == "approvato" and k in impronte and v.get("impronta") != impronte[k]:
+            v["impronta"] = impronte[k]
+            n += 1
+    if n:
+        (RADICE / "data" / "social-coda.json").write_text(json.dumps(dati, ensure_ascii=False, indent=2) + "\n",
+                                                          encoding="utf-8")
+    return n
+
+
 def applica(voci: list[dict]) -> int:
     percorso = RADICE / "data" / "promozione.json"
     testi = json.loads(percorso.read_text(encoding="utf-8"))
@@ -235,7 +258,9 @@ def main() -> int:
         print(quaderno)
     rapporto.write_text("Validazione superata." + avviso + (f"\n\n{quaderno}" if quaderno else "") + "\n", encoding="utf-8")
     applicate = applica(voci) if a.applica else 0
-    print(f"✓ Validazione superata. Riscritture applicate: {applicate}.")
+    impresse = imprimi_impronte() if a.applica else 0
+    print(f"✓ Validazione superata. Riscritture applicate: {applicate}. Rubriche legate a ciò che è stato "
+          f"controllato: {impresse}.")
     return 0
 
 
