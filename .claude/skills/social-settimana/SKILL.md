@@ -61,7 +61,7 @@ Aggiorna `data/social-coda.json`, conservando le voci già presenti in `coda` e 
 }
 ```
 
-Metti in `escluse` solo i post RESPINTI dal verificatore. Quelli scartati per un motivo di data restano disponibili.
+Metti in `escluse` solo i post RESPINTI dal verificatore. Non scrivere il campo `impronta`: alle rubriche approvate lo aggiunge il controllo finale, e lega l'approvazione alla versione che gli agenti hanno visto. Quelli scartati per un motivo di data restano disponibili.
 
 ## 5b. Imparare (ogni settimana)
 Il Lab sale un gradino alla volta. Ogni settimana, dopo la coda:
