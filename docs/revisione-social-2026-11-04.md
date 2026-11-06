@@ -178,11 +178,15 @@ cinque volte, ogni volta per una causa diversa, tutte corrette salvo l'ultima:
 
 | Esecuzione | Esito | Causa | Correzione |
 |---|---|---|---|
-| 1 (23:13 UTC) | fermata dal limite di 30 minuti | con direttore e regista in più gli agenti ci mettono più di mezz'ora | limite a 90 minuti; i regista delle diverse uscite nello stesso turno |
-| 2 (00:13) | agenti ok in 24 min (8,5 \$), validazione fallita | il disegnatore delle cartoline aggiorna `promozione/cartoline/versioni.json` e la validazione lo contava come file toccato da Claude | il file torna com'era dopo il disegno |
-| 3 (00:13) | piano completo (Issue #14 con linea, scelte, note di regia), salvataggio fallito | l'altra sessione ha cambiato `data/social-coda.json` sul ramo del sito mentre il piano girava: conflitto al rebase, tre tentativi | in caso di conflitto vince il piano appena fatto |
-| 4 (00:51) | agenti fermi dopo 17 turni (7,3 \$) | i crediti API stavano finendo | diagnostica: esito ed «ultime parole» di Claude nel log, file di lavoro conservati come artefatto |
+| 1 (23:13 UTC) | fermata dal limite di 30 minuti (costo non registrato: Claude è stato interrotto prima di stamparlo; per durata vale circa quanto la 2) | con direttore e regista in più gli agenti ci mettono più di mezz'ora | limite a 90 minuti; i regista delle diverse uscite nello stesso turno |
+| 2 (23:46) | agenti ok in 24 min (8,52 \$), validazione fallita | il disegnatore delle cartoline aggiorna `promozione/cartoline/versioni.json` e la validazione lo contava come file toccato da Claude | il file torna com'era dopo il disegno |
+| 3 (00:13) | piano completo in 35 min (17,59 \$; Issue #14 con linea, scelte, note di regia), salvataggio fallito | l'altra sessione ha cambiato `data/social-coda.json` sul ramo del sito mentre il piano girava: conflitto al rebase, tre tentativi | in caso di conflitto vince il piano appena fatto |
+| 4 (00:51) | agenti fermi dopo 12 min (7,27 \$) | i crediti API stavano finendo | diagnostica: esito ed «ultime parole» di Claude nel log, file di lavoro conservati come artefatto |
 | 5 (01:06) | fermata subito, 0 \$ | **«Credit balance is too low»: i crediti API sono finiti** | solo Matteo: ricaricare i crediti nella Console di Anthropic, oppure salvare il segreto `CLAUDE_CODE_OAUTH_TOKEN` (la strada di riserva indicata in `docs/stato-social.md`) |
+
+Crediti API spesi nella notte: 33,38 \$ registrati (8,52 + 17,59 + 7,27 + 0), più la prima esecuzione
+interrotta senza registrare il costo, stimabile in 8-10 \$: in tutto circa 42 \$ senza un piano salvato.
+Un piano completo con direttore e regista costa da solo circa 17-18 \$, contro i 7-9 \$ di prima.
 
 Il piano completo di questa settimana è leggibile nell'Issue #14 (chiuso dai giri successivi): la linea
 editoriale, lunedì 9 «Chi può insegnare a chi» (già montato), martedì 10 «La libertà vale anche per chi
