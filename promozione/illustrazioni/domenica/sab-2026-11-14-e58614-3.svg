@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<path d="M200 170 q-14 -24 0 -48 q14 -24 0 -48" fill="none" stroke="#C7C3DA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M260 170 q-14 -24 0 -48 q14 -24 0 -48" fill="none" stroke="#C7C3DA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M320 170 q-14 -24 0 -48 q14 -24 0 -48" fill="none" stroke="#C7C3DA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M120 210 H380 V310 Q380 350 340 350 H160 Q120 350 120 310 Z" fill="#1D1B2B" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<ellipse cx="250" cy="210" rx="130" ry="24" fill="#FF7A59" />
+<circle cx="205" cy="206" r="6" fill="#FB7BB5" /><circle cx="245" cy="214" r="6" fill="#FB7BB5" /><circle cx="290" cy="204" r="6" fill="#FB7BB5" /><circle cx="325" cy="213" r="6" fill="#FB7BB5" />
+<line x1="100" y1="232" x2="120" y2="232" stroke="#C7C3DA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="380" y1="232" x2="400" y2="232" stroke="#C7C3DA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M190 405 Q200 370 215 405 Z" fill="#FBBF24" /><path d="M235 405 Q250 362 265 405 Z" fill="#FF7A59" /><path d="M285 405 Q300 370 310 405 Z" fill="#FBBF24" />
+<text x="250" y="460" font-family="Figtree, sans-serif" font-size="28" fill="#ECEAF5" text-anchor="middle">quella roba rossa</text>
+<rect x="470" y="110" width="250" height="80" rx="40" fill="#1D1B2B" stroke="#FF7A59" stroke-width="5" />
+<text x="595" y="163" font-family="Figtree, sans-serif" font-size="38" fill="#FF7A59" text-anchor="middle">adom</text>
+<text x="595" y="245" font-family="Figtree, sans-serif" font-size="32" fill="#ECEAF5" text-anchor="middle">= «rosso»</text>
+<line x1="595" y1="275" x2="595" y2="335" stroke="#E3C27A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<polyline points="577,317 595,337 613,317" fill="none" stroke="#E3C27A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="595" y="400" font-family="Figtree, sans-serif" font-size="40" fill="#E3C27A" text-anchor="middle" font-weight="700">Edom</text>
+</svg>

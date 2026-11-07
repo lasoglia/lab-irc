@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<rect x="70" y="70" width="34" height="360" rx="17" fill="#E3C27A" />
+<rect x="316" y="70" width="34" height="360" rx="17" fill="#E3C27A" />
+<rect x="104" y="100" width="212" height="300" rx="6" fill="#ECEAF5" />
+<line x1="135" y1="300" x2="285" y2="300" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="135" y1="330" x2="285" y2="330" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="135" y1="360" x2="245" y2="360" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="210" y="190" font-family="Figtree, sans-serif" font-size="40" fill="#1D1B2B" text-anchor="middle" font-weight="700">Toledot</text>
+<text x="210" y="240" font-family="Figtree, sans-serif" font-size="26" fill="#8B5CF6" text-anchor="middle">«generazioni»</text>
+<rect x="440" y="80" width="300" height="70" rx="35" fill="#1D1B2B" stroke="#E3C27A" stroke-width="5" />
+<text x="590" y="125" font-family="Figtree, sans-serif" font-size="28" fill="#ECEAF5" text-anchor="middle">Isacco e Rebecca</text>
+<path d="M590 150 V215 M590 215 H500 V290 M590 215 H680 V290" fill="none" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="590" cy="215" r="10" fill="#E3C27A" />
+<rect x="420" y="290" width="160" height="70" rx="35" fill="#1D1B2B" stroke="#FF7A59" stroke-width="5" />
+<text x="500" y="336" font-family="Figtree, sans-serif" font-size="30" fill="#FF7A59" text-anchor="middle">Esaù</text>
+<rect x="600" y="290" width="160" height="70" rx="35" fill="#1D1B2B" stroke="#4FB0FF" stroke-width="5" />
+<text x="680" y="336" font-family="Figtree, sans-serif" font-size="30" fill="#4FB0FF" text-anchor="middle">Giacobbe</text>
+</svg>

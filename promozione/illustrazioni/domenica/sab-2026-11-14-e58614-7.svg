@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<text x="230" y="55" font-family="Figtree, sans-serif" font-size="28" fill="#A78BFA" text-anchor="middle">tocca tutti</text>
+<circle cx="230" cy="235" r="145" fill="none" stroke="#A78BFA" stroke-width="5" stroke-dasharray="22 16" stroke-linecap="round" stroke-linejoin="round" />
+<polyline points="345,140 362,170 330,176" fill="none" stroke="#A78BFA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<ellipse cx="230" cy="235" rx="100" ry="70" fill="#FF7A59" />
+<ellipse cx="212" cy="215" rx="52" ry="26" fill="#FB7BB5" fill-opacity="0.55" />
+<text x="230" y="440" font-family="Figtree, sans-serif" font-size="34" fill="#FF7A59" text-anchor="middle">rotonda</text>
+<path d="M500 130 H720 Q750 130 750 160 V270 Q750 300 720 300 H600 L555 350 L565 300 H500 Q470 300 470 270 V160 Q470 130 500 130 Z" fill="#1D1B2B" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="560" cy="215" r="11" fill="#C7C3DA" fill-opacity="0.3" />
+<circle cx="610" cy="215" r="11" fill="#C7C3DA" fill-opacity="0.3" />
+<circle cx="660" cy="215" r="11" fill="#C7C3DA" fill-opacity="0.3" />
+<text x="610" y="440" font-family="Figtree, sans-serif" font-size="34" fill="#ECEAF5" text-anchor="middle">senza parole</text>
+</svg>

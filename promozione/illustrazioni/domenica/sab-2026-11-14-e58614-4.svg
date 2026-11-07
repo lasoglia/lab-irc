@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<text x="400" y="60" font-family="Figtree, sans-serif" font-size="28" fill="#ECEAF5" text-anchor="middle">«Vendimi oggi»</text>
+<line x1="400" y1="110" x2="400" y2="425" stroke="#C7C3DA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="320" y1="430" x2="480" y2="430" stroke="#C7C3DA" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="190" y1="160" x2="610" y2="100" stroke="#E3C27A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="400" cy="133" r="12" fill="#E3C27A" />
+<line x1="190" y1="160" x2="130" y2="290" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="190" y1="160" x2="250" y2="290" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M110 290 H270 Q260 330 190 330 Q120 330 110 290 Z" fill="#1D1B2B" stroke="#C7C3DA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M140 288 H240 Q235 250 190 250 Q145 250 140 288 Z" fill="#FF7A59" />
+<circle cx="170" cy="272" r="5" fill="#FB7BB5" /><circle cx="195" cy="262" r="5" fill="#FB7BB5" /><circle cx="215" cy="276" r="5" fill="#FB7BB5" />
+<line x1="610" y1="100" x2="550" y2="230" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="610" y1="100" x2="670" y2="230" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M530 230 H690 Q680 270 610 270 Q540 270 530 230 Z" fill="#1D1B2B" stroke="#C7C3DA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<rect x="565" y="182" width="90" height="46" rx="10" fill="#ECEAF5" stroke="#E3C27A" stroke-width="4" />
+<line x1="580" y1="198" x2="625" y2="198" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="580" y1="212" x2="615" y2="212" stroke="#C7C3DA" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+<circle cx="640" cy="214" r="10" fill="#FF7A59" />
+<text x="610" y="320" font-family="Figtree, sans-serif" font-size="30" fill="#E3C27A" text-anchor="middle">primogenitura</text>
+</svg>

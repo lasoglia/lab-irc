@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<text x="230" y="80" font-family="Figtree, sans-serif" font-size="28" fill="#E3C27A" text-anchor="middle">primogeniti</text>
+<path d="M230 268 Q170 225 205 165 Q215 200 235 205 Q225 155 260 125 Q265 175 285 190 Q300 225 260 268 Z" fill="#FBBF24" stroke="#FF7A59" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<rect x="110" y="270" width="240" height="160" rx="10" fill="#1D1B2B" stroke="#C7C3DA" stroke-width="6" />
+<line x1="110" y1="323" x2="350" y2="323" stroke="#C7C3DA" stroke-width="4" />
+<line x1="110" y1="376" x2="350" y2="376" stroke="#C7C3DA" stroke-width="4" />
+<line x1="190" y1="270" x2="190" y2="323" stroke="#C7C3DA" stroke-width="4" />
+<line x1="270" y1="323" x2="270" y2="376" stroke="#C7C3DA" stroke-width="4" />
+<line x1="190" y1="376" x2="190" y2="430" stroke="#C7C3DA" stroke-width="4" />
+<text x="230" y="478" font-family="Figtree, sans-serif" font-size="28" fill="#ECEAF5" text-anchor="middle">servizio dei sacrifici</text>
+<rect x="450" y="90" width="270" height="320" rx="16" fill="#1D1B2B" stroke="#A78BFA" stroke-width="5" />
+<text x="585" y="145" font-family="Figtree, sans-serif" font-size="30" fill="#A78BFA" text-anchor="middle">divieti</text>
+<path d="M485 185 l24 24 M509 185 l-24 24" stroke="#FF7A59" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="530" y1="197" x2="690" y2="197" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M485 240 l24 24 M509 240 l-24 24" stroke="#FF7A59" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="530" y1="252" x2="670" y2="252" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M485 295 l24 24 M509 295 l-24 24" stroke="#FF7A59" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="530" y1="307" x2="690" y2="307" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="585" y="375" font-family="Figtree, sans-serif" font-size="28" fill="#FF7A59" text-anchor="middle">pene severe</text>
+</svg>
