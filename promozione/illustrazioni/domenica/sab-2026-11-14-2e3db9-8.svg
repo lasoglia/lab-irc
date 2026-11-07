@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
-<line x1="60" y1="405" x2="740" y2="405" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="60" y1="405" x2="500" y2="405" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="535" y1="185" x2="535" y2="440" stroke="#C7C3DA" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" stroke-linejoin="round" />
+<line x1="575" y1="405" x2="740" y2="405" stroke="#C7C3DA" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
 <ellipse cx="290" cy="365" rx="200" ry="38" fill="#ECEAF5" stroke="#C7C3DA" stroke-width="5" />
 <ellipse cx="290" cy="360" rx="150" ry="24" fill="#C7C3DA" />
 <ellipse cx="190" cy="322" rx="32" ry="42" fill="#ECEAF5" stroke="#E3C27A" stroke-width="4" />
