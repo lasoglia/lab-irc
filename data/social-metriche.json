@@ -1,6 +1,22 @@
 {
-  "aggiornato": "2026-11-06",
+  "aggiornato": "2026-11-07",
   "facebook": [
+    {
+      "chiave": "sab-2026-11-07",
+      "data": "2026-11-07",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122113191681512623"
+    },
+    {
+      "chiave": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie",
+      "data": "2026-11-06",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122112975249512623"
+    },
     {
       "chiave": "prof-001",
       "data": "2026-11-03",
@@ -19,6 +35,24 @@
     }
   ],
   "instagram": [
+    {
+      "chiave": "sab-2026-11-07",
+      "data": "2026-11-07",
+      "ora": "10:52",
+      "tipo": "carosello",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/p/Dfb52biADIU/"
+    },
+    {
+      "chiave": "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie",
+      "data": "2026-11-06",
+      "ora": "19:02",
+      "tipo": "carosello",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/p/DfaND08DweQ/"
+    },
     {
       "chiave": "prof-001",
       "data": "2026-11-03",
@@ -59,6 +93,12 @@
     },
     {
       "data": "2026-11-06",
+      "facebook": 0,
+      "instagram": 1,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-07",
       "facebook": 0,
       "instagram": 1,
       "telegram": 2
