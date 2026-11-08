@@ -25,7 +25,7 @@
       "input": 5585,
       "output": 507
     },
-    "impronta": "0c0328358fe3f3b2"
+    "impronta": "3f9c87bb1d001960"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Gerusalemme, una città di memorie": {
     "titolo_seo": "Gerusalemme, luoghi santi di tre fedi: IRC classe prima",
@@ -53,7 +53,7 @@
       "input": 5156,
       "output": 523
     },
-    "impronta": "8cef8cc6429690f7"
+    "impronta": "9d2437acec449c5f"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Il male subito ha l'ultima parola": {
     "titolo_seo": "Giuseppe e i fratelli: perdono e Genesi 37-50 | IRC prima",
@@ -81,7 +81,7 @@
       "input": 5479,
       "output": 538
     },
-    "impronta": "0c677f45e5254b2a"
+    "impronta": "2fe863eee66b231a"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Liberi da che cosa, liberi per che cosa": {
     "titolo_seo": "Esodo, libertà e legge: dalla Pasqua al Sinai – IRC prima",
@@ -109,7 +109,7 @@
       "input": 5538,
       "output": 535
     },
-    "impronta": "c2dfaf09aaff5eb5"
+    "impronta": "0f8e68140ead09e2"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Molti dèi o un Dio che chiama": {
     "titolo_seo": "Abramo, promessa e monoteismo: lezione IRC classe prima",
@@ -165,7 +165,7 @@
       "input": 5465,
       "output": 482
     },
-    "impronta": "8dd6e9108560e6c6"
+    "impronta": "ab383d93497847bc"
   },
   "1|L'uomo che cerca oltre il senso religioso|Credo, non credo, non so": {
     "titolo_seo": "Teismo, ateismo, agnosticismo: lezione IRC classe prima",
@@ -193,7 +193,7 @@
       "input": 4857,
       "output": 538
     },
-    "impronta": "1221b22b6e15a58e"
+    "impronta": "e31d29042dc816c1"
   },
   "1|L'uomo che cerca oltre il senso religioso|Segni e simboli": {
     "titolo_seo": "Segni e simboli, luoghi e tempi sacri: IRC classe prima",
@@ -221,7 +221,7 @@
       "input": 4955,
       "output": 527
     },
-    "impronta": "c6d006ee0b69898a"
+    "impronta": "21e188a0c33064c5"
   },
   "1|La Bibbia si impara a leggere|Genesi vuole spiegare un meccanismo Arte, fede e scienza su Gen 1": {
     "titolo_seo": "Genesi 1: lettura, arte, fede e scienza – IRC classe prima",
@@ -249,7 +249,25 @@
       "input": 5285,
       "output": 545
     },
-    "impronta": "ed202d0d1b029f90"
+    "impronta": "afb25be07a1666d5"
+  },
+  "1|La Bibbia si impara a leggere|Lez 4 Che cosa è mai l’uomo": {
+    "titolo_seo": "Lez 4 Che cosa è mai l’uomo – Religione Cattolica, classe prima",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «La Bibbia si impara a leggere».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "5254ee0ed5d29abe"
+  },
+  "1|La Bibbia si impara a leggere|Lez 5 Perché un mostro marino su una tomba cristiana": {
+    "titolo_seo": "Lez 5 Perché un mostro marino su una tomba cristiana – Religione Catto",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «La Bibbia si impara a leggere».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "f51fe725284ecde7"
   },
   "1|La Bibbia si impara a leggere|Un diluvio più antico della Bibbia": {
     "titolo_seo": "Diluvio biblico e Gilgamesh: Genesi 6-9, IRC prima",
@@ -277,7 +295,7 @@
       "input": 5443,
       "output": 523
     },
-    "impronta": "85a2156f24972357"
+    "impronta": "46f2f39d839373ab"
   },
   "1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": {
     "titolo_seo": "Canone biblico: perché le Bibbie sono diverse, Religione 1ª",
@@ -306,6 +324,60 @@
       "output": 485
     },
     "impronta": "ab657ba15f8ff286"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 1 Un divieto può custodire un bene": {
+    "titolo_seo": "Lez 1 Un divieto può custodire un bene – Religione Cattolica, classe p",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "60bd712cf67bf9d3"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 2 Dacci un re, che cosa si perde quando si delega tutto": {
+    "titolo_seo": "Lez 2 Dacci un re, che cosa si perde quando si delega tutto – Religion",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "4947226c65c1c3a1"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 3 Chi dice al potente che ha torto": {
+    "titolo_seo": "Lez 3 Chi dice al potente che ha torto – Religione Cattolica, classe p",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "3652ca6c28498814"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 4 Una celebrazione basta a essere giusti": {
+    "titolo_seo": "Lez 4 Una celebrazione basta a essere giusti – Religione Cattolica, cl",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "b3e8b839e98cc7c1"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 5 Che cosa aspettava Israele Il re che verrà": {
+    "titolo_seo": "Lez 5 Che cosa aspettava Israele Il re che verrà – Religione Cattolica",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "cb02713a0d95b5c2"
+  },
+  "1|UDA 4 Regole, potere e giustizia|Lez 6 Come si arriva dal ghetto allo Stato d’Israele": {
+    "titolo_seo": "Lez 6 Come si arriva dal ghetto allo Stato d’Israele – Religione Catto",
+    "meta_description": "Lezione di Religione Cattolica per la classe prima della secondaria di secondo grado, nell'unità «UDA 4 Regole, potere e giustizia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "e8f7a0f7aec3ba7a"
   },
   "2|Accoglienza|Di chi mi posso fidare": {
     "titolo_seo": "Di chi mi posso fidare – Religione Cattolica, classe seconda",
@@ -370,7 +442,7 @@
       "input": 5481,
       "output": 529
     },
-    "impronta": "77bcc752c967031e"
+    "impronta": "666a73adf00eef7f"
   },
   "2|Gesù quali tracce|Gesù sotto il segno dell'aquila": {
     "titolo_seo": "Contesto storico di Gesù: Giudea e Roma, Religione II",
@@ -398,7 +470,7 @@
       "input": 5604,
       "output": 521
     },
-    "impronta": "5ec95ff0242eebee"
+    "impronta": "110b7a3fcd8e7129"
   },
   "2|Gesù quali tracce|Lo screenshot non basta": {
     "titolo_seo": "Fonti romane su Gesù: Tacito e Plinio, IRC seconda",
@@ -426,7 +498,7 @@
       "input": 4562,
       "output": 535
     },
-    "impronta": "ac1170f4bd02fa36"
+    "impronta": "1144690ed9e04dad"
   },
   "2|Quattro Vangeli, una Pasqua|Cambiare posto": {
     "titolo_seo": "Parabola del buon Samaritano Lc 10: Religione classe 2",
@@ -454,7 +526,7 @@
       "input": 5474,
       "output": 540
     },
-    "impronta": "996adf6207524b4c"
+    "impronta": "5ea997ab30fd1a98"
   },
   "2|Quattro Vangeli, una Pasqua|Passaggi di libertà": {
     "titolo_seo": "Pasqua ebraica e Ultima Cena: Es 12 e Lc 22 – IRC classe 2",
@@ -510,7 +582,7 @@
       "input": 5371,
       "output": 521
     },
-    "impronta": "5f46975e1b93ef8d"
+    "impronta": "13d5be54d92dbed0"
   },
   "2|Quattro Vangeli, una Pasqua|Perché fu condannato": {
     "titolo_seo": "Condanna e morte di Gesù nel racconto di Luca | IRC seconda",
@@ -538,7 +610,7 @@
       "input": 5489,
       "output": 561
     },
-    "impronta": "0ea438f551ec1e62"
+    "impronta": "d6224023f687a2f8"
   },
   "2|Quattro Vangeli, una Pasqua|Prima dei Vangeli, una notizia ricevuta e trasmessa": {
     "titolo_seo": "Formula pasquale di Paolo e Vangeli: IRC classe seconda",
@@ -566,7 +638,34 @@
       "input": 5407,
       "output": 532
     },
-    "impronta": "6993e66173b070f9"
+    "impronta": "8926e10fdc842698"
+  },
+  "2|UDA 4 Quando credere costa|Lez 1 Un gesto per dimostrare lealtà": {
+    "titolo_seo": "Lez 1 Un gesto per dimostrare lealtà – Religione Cattolica, classe sec",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «UDA 4 Quando credere costa».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "88dbd5c2de1431ca"
+  },
+  "2|UDA 4 Quando credere costa|Lez 2 Nel mondo, non del mondo": {
+    "titolo_seo": "Lez 2 Nel mondo, non del mondo – Religione Cattolica, classe seconda",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «UDA 4 Quando credere costa».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "03c363e9dbcae590"
+  },
+  "2|UDA 4 Quando credere costa|Lez 3 Una voce dal carcere": {
+    "titolo_seo": "Lez 3 Una voce dal carcere – Religione Cattolica, classe seconda",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «UDA 4 Quando credere costa».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "9e8dde666bc1d1b2"
   },
   "2|Una comunità che sa riparare|Beati chi, Le regole di una comunità nuova": {
     "titolo_seo": "Beatitudini di Luca e Matteo: lezione IRC classe seconda",
@@ -594,7 +693,34 @@
       "input": 5365,
       "output": 484
     },
-    "impronta": "1d60d7990ea968b6"
+    "impronta": "3332f720aaf0d452"
+  },
+  "2|Una comunità che sa riparare|Lez 3 Anche un buon gruppo esclude": {
+    "titolo_seo": "Lez 3 Anche un buon gruppo esclude – Religione Cattolica, classe secon",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Una comunità che sa riparare».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "47a1aeddb2a2ac56"
+  },
+  "2|Una comunità che sa riparare|Lez 4 Anche per i pagani": {
+    "titolo_seo": "Lez 4 Anche per i pagani – Religione Cattolica, classe seconda",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Una comunità che sa riparare».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "81f3cfe06dff5f53"
+  },
+  "2|Una comunità che sa riparare|Lez 5 Perdonare significa fidarsi subito": {
+    "titolo_seo": "Lez 5 Perdonare significa fidarsi subito – Religione Cattolica, classe",
+    "meta_description": "Lezione di Religione Cattolica per la classe seconda della secondaria di secondo grado, nell'unità «Una comunità che sa riparare».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "1b67744fc617c130"
   },
   "2|Una comunità che sa riparare|Mettere in comune": {
     "titolo_seo": "Prima comunità cristiana e condivisione dei beni, IRC classe 2",
@@ -622,7 +748,7 @@
       "input": 5337,
       "output": 521
     },
-    "impronta": "894366a6d8af6a62"
+    "impronta": "7b03a601b3bc7d05"
   },
   "3|Credere, ragionare, obbedire|Chi può limitare il potere. Canossa, 1077": {
     "titolo_seo": "Lotta per le investiture e Canossa: IRC classe terza",
@@ -650,7 +776,43 @@
       "input": 5382,
       "output": 492
     },
-    "impronta": "fccd949d07d5c3f5"
+    "impronta": "a25087acd001a604"
+  },
+  "3|Credere, ragionare, obbedire|Lez 2 Si può cercare di capire ciò che si crede": {
+    "titolo_seo": "Lez 2 Si può cercare di capire ciò che si crede – Religione Cattolica,",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Credere, ragionare, obbedire».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "e96f9283b51e80aa"
+  },
+  "3|Credere, ragionare, obbedire|Lez 3 Si può mettere la fede in discussione": {
+    "titolo_seo": "Lez 3 Si può mettere la fede in discussione – Religione Cattolica, cla",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Credere, ragionare, obbedire».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "442d973313ae0ca2"
+  },
+  "3|Credere, ragionare, obbedire|Lez 4 Una causa spiega tutto": {
+    "titolo_seo": "Lez 4 Una causa spiega tutto – Religione Cattolica, classe terza",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Credere, ragionare, obbedire».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "722f9154b95ba2c6"
+  },
+  "3|Credere, ragionare, obbedire|Lez 5 Una legge ingiusta obbliga": {
+    "titolo_seo": "Lez 5 Una legge ingiusta obbliga – Religione Cattolica, classe terza",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «Credere, ragionare, obbedire».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "0db20327d240d184"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino": {
     "titolo_seo": "Giubileo del 1300 e indulgenza: lezione IRC classe terza",
@@ -678,7 +840,7 @@
       "input": 5339,
       "output": 543
     },
-    "impronta": "6b968d4b11546b2e"
+    "impronta": "6fa4d4eb93b1001d"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi cura chi non può ricambiare": {
     "titolo_seo": "Ospedale di Santo Spirito in Sassia: IRC classe terza",
@@ -706,7 +868,7 @@
       "input": 5307,
       "output": 530
     },
-    "impronta": "0297236b861bf2f9"
+    "impronta": "4c2fd962fb3a3332"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|Chi può insegnare a chi": {
     "titolo_seo": "Nascita delle università medievali: Religione classe terza",
@@ -734,7 +896,7 @@
       "input": 4907,
       "output": 508
     },
-    "impronta": "61472ec4f3b4458f"
+    "impronta": "ea07c6924505965a"
   },
   "3|I luoghi che cambiano la vita - regola di san Benedetto|I benedettini": {
     "titolo_seo": "Regola di san Benedetto e benedettini: IRC classe terza",
@@ -790,7 +952,7 @@
       "input": 5268,
       "output": 557
     },
-    "impronta": "8e2936b79a3970a9"
+    "impronta": "a5a5bfc2d98c135c"
   },
   "3|Quando un'abitudine prende il comando|Che cosa ci rende liberi": {
     "titolo_seo": "Libertà e verità: Truman, Gv 8 e Agostino – IRC classe terza",
@@ -818,7 +980,7 @@
       "input": 5242,
       "output": 515
     },
-    "impronta": "00dcfdc1c521ae5b"
+    "impronta": "87e30de45beb8bc0"
   },
   "3|Quando un'abitudine prende il comando|Quaranta giorni nel deserto, si può dire di no": {
     "titolo_seo": "Le tentazioni di Gesù nel deserto (Mt 4) – IRC classe terza",
@@ -846,7 +1008,7 @@
       "input": 5562,
       "output": 547
     },
-    "impronta": "908d0dbbe24fdb4a"
+    "impronta": "f629a506ce6fd264"
   },
   "3|Quando un'abitudine prende il comando|Un vizio si può dipingere": {
     "titolo_seo": "Vizi capitali e abitudine: Otto Dix, Religione classe terza",
@@ -874,7 +1036,7 @@
       "input": 5255,
       "output": 546
     },
-    "impronta": "66e85d5794852d45"
+    "impronta": "7744410fe2f34136"
   },
   "3|Quando un'abitudine prende il comando|«Dove sei». Il peccato in Genesi 3": {
     "titolo_seo": "Il peccato in Genesi 3: lezione di Religione, classe terza",
@@ -902,7 +1064,34 @@
       "input": 5429,
       "output": 503
     },
-    "impronta": "595ad02acea651cb"
+    "impronta": "8c2e8cc09caca1a7"
+  },
+  "3|UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate|Lez 1 Il Duecento in una mappa": {
+    "titolo_seo": "Lez 1 Il Duecento in una mappa – Religione Cattolica, classe terza",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «UDA 4 La società cristiana del Duecento, cattedrali,…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "2f472ba5aab6b8b2"
+  },
+  "3|UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate|Lez 2 Gruppi esperti": {
+    "titolo_seo": "Lez 2 Gruppi esperti – Religione Cattolica, classe terza",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «UDA 4 La società cristiana del Duecento, cattedrali,…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "9009239e72461390"
+  },
+  "3|UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate|Lez 3 Gruppi misti, ciascuno insegna": {
+    "titolo_seo": "Lez 3 Gruppi misti, ciascuno insegna – Religione Cattolica, classe ter",
+    "meta_description": "Lezione di Religione Cattolica per la classe terza della secondaria di secondo grado, nell'unità «UDA 4 La società cristiana del Duecento, cattedrali,…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "a5854369c4214cae"
   },
   "4|Accoglienza|Presentazione corso": {
     "titolo_seo": "Presentazione corso – Religione Cattolica, classe quarta",
@@ -939,7 +1128,7 @@
       "input": 5275,
       "output": 501
     },
-    "impronta": "d2498e274a45c618"
+    "impronta": "546645a6af7fee26"
   },
   "4|Devo meritarmi tutto|Il padre, due figli e una festa difficile": {
     "titolo_seo": "Parabola del padre misericordioso Lc 15 – IRC classe quarta",
@@ -967,7 +1156,7 @@
       "input": 5322,
       "output": 485
     },
-    "impronta": "f238499b272d70a9"
+    "impronta": "e9317ab63d905a56"
   },
   "4|Devo meritarmi tutto|Se è un dono, perché impegnarsi. La grazia a caro prezzo": {
     "titolo_seo": "Grazia a caro prezzo di Bonhoeffer: Religione classe quarta",
@@ -995,7 +1184,7 @@
       "input": 5434,
       "output": 563
     },
-    "impronta": "4364bd943d10a503"
+    "impronta": "e915714ed00eece0"
   },
   "4|Devo meritarmi tutto|Sola fide. La giustificazione nel suo orizzonte": {
     "titolo_seo": "Sola fide e giustificazione: Paolo, Lutero, Trento IRC",
@@ -1023,7 +1212,7 @@
       "input": 5326,
       "output": 493
     },
-    "impronta": "54b4cb53b929d3e8"
+    "impronta": "8b58e8d0ed91bbe8"
   },
   "4|Galileo, le prove e l'autorità|Che cosa accadde nel 1616 e nel 1633, e nel 1992": {
     "titolo_seo": "Galileo: processo 1616 e 1633 sui documenti, IRC classe 4",
@@ -1079,7 +1268,25 @@
       "input": 5367,
       "output": 533
     },
-    "impronta": "4fdb9684ba268a8a"
+    "impronta": "35000b85eb403ee3"
+  },
+  "4|Galileo, le prove e l'autorità|Lez 4 Il cuore ha le sue ragioni, Pascal": {
+    "titolo_seo": "Lez 4 Il cuore ha le sue ragioni, Pascal – Religione Cattolica, classe",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Galileo, le prove e l'autorità».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "286bc50a7d191931"
+  },
+  "4|Galileo, le prove e l'autorità|Lez 5 Che cosa rende scientifica una teoria": {
+    "titolo_seo": "Lez 5 Che cosa rende scientifica una teoria – Religione Cattolica, cla",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «Galileo, le prove e l'autorità».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "4f9b276c556aa13e"
   },
   "4|Galileo, le prove e l'autorità|Un'osservazione cambia tutto": {
     "titolo_seo": "Galileo, prove e parallasse: Religione classe quarta",
@@ -1107,7 +1314,7 @@
       "input": 5372,
       "output": 503
     },
-    "impronta": "8b56587e776f3f01"
+    "impronta": "021676614c4aad6f"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Lutero a Worms": {
     "titolo_seo": "Lutero a Worms: coscienza e autorità, Religione classe 4",
@@ -1135,7 +1342,7 @@
       "input": 4998,
       "output": 514
     },
-    "impronta": "89272b7ee7da9418"
+    "impronta": "d41a5d0f967358da"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Riformare una Chiesa: le indulgenze": {
     "titolo_seo": "Indulgenze e Lutero 1517: lezione di Religione, classe IV",
@@ -1191,7 +1398,7 @@
       "input": 5057,
       "output": 515
     },
-    "impronta": "41a38f2887f1915c"
+    "impronta": "059ed260d43ca2a3"
   },
   "4|Riformare una Chiesa, cambiare una cultura|Un'Europa divisa, perché la Riforma si moltiplica": {
     "titolo_seo": "Riforma protestante e divisione dell'Europa: IRC classe quarta",
@@ -1221,6 +1428,60 @@
     },
     "impronta": "bf5fe2088796df11"
   },
+  "4|UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica|Lez 1 Bene o male, che cos’è la teologia morale": {
+    "titolo_seo": "Lez 1 Bene o male, che cos’è la teologia morale – Religione Cattolica,",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 4 Che cosa rende buona un'azione, introduzione alla…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "d1e565a6f1b67390"
+  },
+  "4|UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica|Lez 2 Oggetto, intenzione, circostanze": {
+    "titolo_seo": "Lez 2 Oggetto, intenzione, circostanze – Religione Cattolica, classe q",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 4 Che cosa rende buona un'azione, introduzione alla…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "d607a3b3888f761a"
+  },
+  "4|UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica|Lez 3 La coscienza è un’opinione": {
+    "titolo_seo": "Lez 3 La coscienza è un’opinione – Religione Cattolica, classe quarta",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 4 Che cosa rende buona un'azione, introduzione alla…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "3593d6f93a020691"
+  },
+  "4|UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica|Lez 4 Che cos’è la bioetica": {
+    "titolo_seo": "Lez 4 Che cos’è la bioetica – Religione Cattolica, classe quarta",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 4 Che cosa rende buona un'azione, introduzione alla…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "3190bc0f06453f27"
+  },
+  "4|UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica|Lez 5 Sono un corpo o possiedo un corpo": {
+    "titolo_seo": "Lez 5 Sono un corpo o possiedo un corpo – Religione Cattolica, classe ",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 4 Che cosa rende buona un'azione, introduzione alla…",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "e1cae3c434b0d011"
+  },
+  "4|UDA 5 L'amore è più forte della morte|Lez 1 Che cos’è l’amore per Platone": {
+    "titolo_seo": "Lez 1 Che cos’è l’amore per Platone – Religione Cattolica, classe quar",
+    "meta_description": "Lezione di Religione Cattolica per la classe quarta della secondaria di secondo grado, nell'unità «UDA 5 L'amore è più forte della morte».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "68c812950277fa4e"
+  },
   "5|Le due vie di Lemaître|Creazione e primo istante": {
     "titolo_seo": "Creazione e primo istante: Genesi e Tommaso, IRC classe V",
     "meta_description": "Lezione IRC per la classe quinta: creazione non è solo primo istante. Genesi 1, 2Mac 7, Lateranense IV e Tommaso d'Aquino sul rapporto tra mondo e Dio.",
@@ -1247,7 +1508,7 @@
       "input": 5308,
       "output": 550
     },
-    "impronta": "2734d654872da60d"
+    "impronta": "debc27f72bd306f9"
   },
   "5|Le due vie di Lemaître|Giobbe, dove comincia il mio limite": {
     "titolo_seo": "Libro di Giobbe e Giobbe 38: lezione IRC classe quinta",
@@ -1275,7 +1536,7 @@
       "input": 5417,
       "output": 504
     },
-    "impronta": "9e8490ddcd27b48a"
+    "impronta": "cb9f4f9dc3af6b72"
   },
   "5|Le due vie di Lemaître|La visione cosmologica di Lemaître": {
     "titolo_seo": "Lemaître, Big Bang e rapporto scienza-fede | IRC classe quinta",
@@ -1331,7 +1592,61 @@
       "input": 4846,
       "output": 498
     },
-    "impronta": "30ec35b99aea3bf5"
+    "impronta": "7496fe9753015c04"
+  },
+  "5|UDA 3 Che cosa deleghiamo alle macchine|Lez 1 Una risposta brillante basta a fare una persona": {
+    "titolo_seo": "Lez 1 Una risposta brillante basta a fare una persona – Religione Catt",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 3 Che cosa deleghiamo alle macchine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "2db5f246d37a0a4e"
+  },
+  "5|UDA 3 Che cosa deleghiamo alle macchine|Lez 2 Se sembra vero, chi controlla": {
+    "titolo_seo": "Lez 2 Se sembra vero, chi controlla – Religione Cattolica, classe quin",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 3 Che cosa deleghiamo alle macchine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "2f20f9be49dd49ec"
+  },
+  "5|UDA 3 Che cosa deleghiamo alle macchine|Lez 3 Chi risponde dell’esclusione di una persona": {
+    "titolo_seo": "Lez 3 Chi risponde dell’esclusione di una persona – Religione Cattolic",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 3 Che cosa deleghiamo alle macchine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "fa90f10fa8b381e7"
+  },
+  "5|UDA 3 Che cosa deleghiamo alle macchine|Lez 4 Qualcuno che risponde è qualcuno che mi incontra": {
+    "titolo_seo": "Lez 4 Qualcuno che risponde è qualcuno che mi incontra – Religione Cat",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 3 Che cosa deleghiamo alle macchine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "18aec4f8f14eef69"
+  },
+  "5|UDA 4 Prendersi cura fino alla fine|Lez 1 Una vita vale meno quando dipende dagli altri": {
+    "titolo_seo": "Lez 1 Una vita vale meno quando dipende dagli altri – Religione Cattol",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 4 Prendersi cura fino alla fine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "72eee850dcce2fb2"
+  },
+  "5|UDA 4 Prendersi cura fino alla fine|Lez 2 Curare non è solo guarire": {
+    "titolo_seo": "Lez 2 Curare non è solo guarire – Religione Cattolica, classe quinta",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «UDA 4 Prendersi cura fino alla fine».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "c5212bd8e9f465b3"
   },
   "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare": {
     "titolo_seo": "Vaticano II, liturgia e lingua della messa: IRC classe quinta",
@@ -1359,7 +1674,7 @@
       "input": 5275,
       "output": 535
     },
-    "impronta": "a748329bba607e5a"
+    "impronta": "d8c93c073de76415"
   },
   "5|Una Chiesa dentro la storia|Davanti ai totalitarismi, che cosa fece la Chiesa": {
     "titolo_seo": "Chiesa e totalitarismi: Mit brennender Sorge, IRC classe V",
@@ -1387,7 +1702,7 @@
       "input": 5283,
       "output": 559
     },
-    "impronta": "63495f439131c26a"
+    "impronta": "d2c3eebe69f42b6c"
   },
   "5|Una Chiesa dentro la storia|Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille": {
     "titolo_seo": "Finanziamento della Chiesa e questione romana: IRC classe 5",
@@ -1415,7 +1730,7 @@
       "input": 5377,
       "output": 488
     },
-    "impronta": "7055b01641e80ee7"
+    "impronta": "a72ce188ffbc9d36"
   },
   "5|Una Chiesa dentro la storia|La libertà vale anche per chi crede diversamente": {
     "titolo_seo": "Libertà religiosa e Nostra aetate: IRC classe quinta",
@@ -1443,7 +1758,16 @@
       "input": 5361,
       "output": 554
     },
-    "impronta": "0b97b8ee58e9a5c9"
+    "impronta": "b35ab3ebe99fe450"
+  },
+  "5|Una Chiesa dentro la storia|Lez 6 Le gioie e le speranze, che cosa dice la Chiesa al mondo": {
+    "titolo_seo": "Lez 6 Le gioie e le speranze, che cosa dice la Chiesa al mondo – Relig",
+    "meta_description": "Lezione di Religione Cattolica per la classe quinta della secondaria di secondo grado, nell'unità «Una Chiesa dentro la storia».",
+    "sintesi": "",
+    "argomenti": [],
+    "parole_chiave": [],
+    "origine": "automatica",
+    "impronta": "071337d7b1cac27f"
   },
   "5|Una Chiesa dentro la storia|Un papa può sbagliare, e un papa senza Stato. Il 1870": {
     "titolo_seo": "Infallibilità del papa e 1870: IRC classe quinta",
@@ -1471,6 +1795,6 @@
       "input": 5251,
       "output": 504
     },
-    "impronta": "14ed764e65cd9ceb"
+    "impronta": "5a6fd9de5655f0d8"
   }
 }
