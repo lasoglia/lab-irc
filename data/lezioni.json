@@ -137,6 +137,24 @@
           "file": "/uploads/iv1-1r~1.pdf",
           "titolo": "Fascicolo di studio",
           "tipo": "Documento/PDF"
+        },
+        {
+          "file": "/uploads/iv-1-1-riformare-una-chiesa-cambiare-una-cultura-indulgenze-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-1-1-riformare-una-chiesa-cambiare-una-cultura-indulgenze-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-1-1-riformare-una-chiesa-cambiare-una-cultura-indulgenze-slide.pdf",
+          "titolo": "Slide",
+          "tipo": "Slide",
+          "in_evidenza": false
         }
       ],
       "ordine": 1
@@ -1061,6 +1079,726 @@
         },
         {
           "file": "/uploads/i-3-3-diluvio-piu-antico-della-bibbia-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Che cosa è mai l’uomo",
+      "anno": "1",
+      "uda": "La Bibbia si impara a leggere",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/i-3-4-cosa-mai-uomo-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-3-4-cosa-mai-uomo-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Perché un mostro marino su una tomba cristiana",
+      "anno": "1",
+      "uda": "La Bibbia si impara a leggere",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/i-3-5-perche-mostro-marino-tomba-cristiana-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-3-5-perche-mostro-marino-tomba-cristiana-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Un divieto può custodire un bene",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-1-divieto-puo-custodire-bene-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-1-divieto-puo-custodire-bene-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Dacci un re, che cosa si perde quando si delega tutto",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-2-dacci-re-cosa-perde-quando-delega-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-2-dacci-re-cosa-perde-quando-delega-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Chi dice al potente che ha torto",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-3-dice-al-potente-ha-torto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-3-dice-al-potente-ha-torto-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Una celebrazione basta a essere giusti",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-4-celebrazione-basta-essere-giusti-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-4-celebrazione-basta-essere-giusti-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Che cosa aspettava Israele Il re che verrà",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-5-cosa-aspettava-israele-re-verra-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-5-cosa-aspettava-israele-re-verra-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 6 Come si arriva dal ghetto allo Stato d’Israele",
+      "anno": "1",
+      "uda": "UDA 4 Regole, potere e giustizia",
+      "ordine": 6,
+      "materiali": [
+        {
+          "file": "/uploads/i-4-6-come-arriva-dal-ghetto-allo-stato-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/i-4-6-come-arriva-dal-ghetto-allo-stato-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Anche un buon gruppo esclude",
+      "anno": "2",
+      "uda": "Una comunità che sa riparare",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/ii-3-3-anche-buon-gruppo-esclude-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-3-3-anche-buon-gruppo-esclude-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Anche per i pagani",
+      "anno": "2",
+      "uda": "Una comunità che sa riparare",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/ii-3-4-anche-pagani-paolo-assemblea-gerusalemme-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-3-4-anche-pagani-paolo-assemblea-gerusalemme-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Perdonare significa fidarsi subito",
+      "anno": "2",
+      "uda": "Una comunità che sa riparare",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/ii-3-5-perdonare-significa-fidarsi-subito-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-3-5-perdonare-significa-fidarsi-subito-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Un gesto per dimostrare lealtà",
+      "anno": "2",
+      "uda": "UDA 4 Quando credere costa",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/ii-4-1-gesto-dimostrare-lealta-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-4-1-gesto-dimostrare-lealta-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Nel mondo, non del mondo",
+      "anno": "2",
+      "uda": "UDA 4 Quando credere costa",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/ii-4-2-nel-mondo-non-del-mondo-come-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-4-2-nel-mondo-non-del-mondo-come-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Una voce dal carcere",
+      "anno": "2",
+      "uda": "UDA 4 Quando credere costa",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/ii-4-3-voce-dal-carcere-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/ii-4-3-voce-dal-carcere-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Si può cercare di capire ciò che si crede",
+      "anno": "3",
+      "uda": "Credere, ragionare, obbedire",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iii-3-2-puo-cercare-capire-cio-crede-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-3-2-puo-cercare-capire-cio-crede-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Si può mettere la fede in discussione",
+      "anno": "3",
+      "uda": "Credere, ragionare, obbedire",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iii-3-3-puo-mettere-fede-discussione-abelardo-bernardo-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-3-3-puo-mettere-fede-discussione-abelardo-bernardo-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Una causa spiega tutto",
+      "anno": "3",
+      "uda": "Credere, ragionare, obbedire",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iii-3-4-causa-spiega-tutto-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-3-4-causa-spiega-tutto-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Una legge ingiusta obbliga",
+      "anno": "3",
+      "uda": "Credere, ragionare, obbedire",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/iii-3-5-legge-ingiusta-obbliga-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-3-5-legge-ingiusta-obbliga-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Il Duecento in una mappa",
+      "anno": "3",
+      "uda": "UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iii-4-1-duecento-mappa-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-4-1-duecento-mappa-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Gruppi esperti",
+      "anno": "3",
+      "uda": "UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iii-4-2-gruppi-esperti-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-4-2-gruppi-esperti-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Gruppi misti, ciascuno insegna",
+      "anno": "3",
+      "uda": "UDA 4 La società cristiana del Duecento, cattedrali, mendicanti e crociate",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iii-4-3-gruppi-misti-ciascuno-insegna-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iii-4-3-gruppi-misti-ciascuno-insegna-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Il cuore ha le sue ragioni, Pascal",
+      "anno": "4",
+      "uda": "Galileo, le prove e l'autorità",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iv-3-4-cuore-ha-sue-ragioni-pascal-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-3-4-cuore-ha-sue-ragioni-pascal-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Che cosa rende scientifica una teoria",
+      "anno": "4",
+      "uda": "Galileo, le prove e l'autorità",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/iv-3-5-cosa-rende-scientifica-teoria-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-3-5-cosa-rende-scientifica-teoria-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Bene o male, che cos’è la teologia morale",
+      "anno": "4",
+      "uda": "UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iv-4-1-bene-male-cos-teologia-morale-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-4-1-bene-male-cos-teologia-morale-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Oggetto, intenzione, circostanze",
+      "anno": "4",
+      "uda": "UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/iv-4-2-oggetto-intenzione-circostanze-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-4-2-oggetto-intenzione-circostanze-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 La coscienza è un’opinione",
+      "anno": "4",
+      "uda": "UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/iv-4-3-coscienza-opinione-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-4-3-coscienza-opinione-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Che cos’è la bioetica",
+      "anno": "4",
+      "uda": "UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/iv-4-4-cos-bioetica-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-4-4-cos-bioetica-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 5 Sono un corpo o possiedo un corpo",
+      "anno": "4",
+      "uda": "UDA 4 Che cosa rende buona un'azione, introduzione alla morale e alla bioetica",
+      "ordine": 5,
+      "materiali": [
+        {
+          "file": "/uploads/iv-4-5-sono-corpo-possiedo-corpo-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-4-5-sono-corpo-possiedo-corpo-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Che cos’è l’amore per Platone",
+      "anno": "4",
+      "uda": "UDA 5 L'amore è più forte della morte",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/iv-5-1-cos-amore-platone-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/iv-5-1-cos-amore-platone-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 6 Le gioie e le speranze, che cosa dice la Chiesa al mondo",
+      "anno": "5",
+      "uda": "Una Chiesa dentro la storia",
+      "ordine": 6,
+      "materiali": [
+        {
+          "file": "/uploads/v-2-6-gioie-speranze-cosa-dice-chiesa-al-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-2-6-gioie-speranze-cosa-dice-chiesa-al-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Una risposta brillante basta a fare una persona",
+      "anno": "5",
+      "uda": "UDA 3 Che cosa deleghiamo alle macchine",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/v-3-1-risposta-brillante-basta-fare-persona-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-3-1-risposta-brillante-basta-fare-persona-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Se sembra vero, chi controlla",
+      "anno": "5",
+      "uda": "UDA 3 Che cosa deleghiamo alle macchine",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/v-3-2-se-sembra-vero-controlla-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-3-2-se-sembra-vero-controlla-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 3 Chi risponde dell’esclusione di una persona",
+      "anno": "5",
+      "uda": "UDA 3 Che cosa deleghiamo alle macchine",
+      "ordine": 3,
+      "materiali": [
+        {
+          "file": "/uploads/v-3-3-risponde-dell-esclusione-persona-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-3-3-risponde-dell-esclusione-persona-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 4 Qualcuno che risponde è qualcuno che mi incontra",
+      "anno": "5",
+      "uda": "UDA 3 Che cosa deleghiamo alle macchine",
+      "ordine": 4,
+      "materiali": [
+        {
+          "file": "/uploads/v-3-4-qualcuno-risponde-qualcuno-mi-incontra-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-3-4-qualcuno-risponde-qualcuno-mi-incontra-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 1 Una vita vale meno quando dipende dagli altri",
+      "anno": "5",
+      "uda": "UDA 4 Prendersi cura fino alla fine",
+      "ordine": 1,
+      "materiali": [
+        {
+          "file": "/uploads/v-4-1-vita-vale-meno-quando-dipende-dagli-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-4-1-vita-vale-meno-quando-dipende-dagli-fascicolo.pdf",
+          "titolo": "Fascicolo di approfondimento",
+          "tipo": "Documento/PDF",
+          "in_evidenza": false
+        }
+      ]
+    },
+    {
+      "titolo": "Lez 2 Curare non è solo guarire",
+      "anno": "5",
+      "uda": "UDA 4 Prendersi cura fino alla fine",
+      "ordine": 2,
+      "materiali": [
+        {
+          "file": "/uploads/v-4-2-curare-non-solo-guarire-artefatto.html",
+          "titolo": "Lezione interattiva",
+          "tipo": "Artefatto interattivo",
+          "in_evidenza": false
+        },
+        {
+          "file": "/uploads/v-4-2-curare-non-solo-guarire-fascicolo.pdf",
           "titolo": "Fascicolo di approfondimento",
           "tipo": "Documento/PDF",
           "in_evidenza": false
