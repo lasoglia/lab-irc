@@ -795,5 +795,227 @@
       "modello": "sessione (abbonamento)",
       "citazioni_sbagliate": 0
     }
+  },
+  "regia|1|La Bibbia si impara a leggere|Un libro o una biblioteca Una Bibbia, molti canoni": {
+    "firma": "0bef5620",
+    "testi": {
+      "serie": "Lo sapevi?",
+      "angoli": [
+        {
+          "angolo": "Il numero dopo la virgola ha una data di nascita: i versetti numerati da uno stampatore di Parigi nel 1551",
+          "leva": "numero"
+        },
+        {
+          "angolo": "Prima i rotoli senza numeri, poi i capitoli di Stefano Langton nel Duecento, poi i versetti di Robert Estienne: tre passi in quaranta secondi",
+          "leva": "sorpresa"
+        },
+        {
+          "angolo": "Come si legge «Sir 44,1»: tre dati per trovare una frase in più di mille pagine",
+          "leva": "utilità"
+        },
+        {
+          "angolo": "Un maestro e un tipografo di Parigi dentro ogni Bibbia che si apre in classe",
+          "leva": "curiosità"
+        },
+        {
+          "angolo": "Chi ha inventato capitoli e versetti? Due nomi che quasi nessuno conosce",
+          "leva": "domanda"
+        }
+      ],
+      "ganci": [
+        {
+          "testo": "*1551*: uno stampatore di Parigi numera i versetti del Nuovo Testamento",
+          "leva": "numero"
+        },
+        {
+          "testo": "I rotoli antichi non avevano numeri: i versetti li aggiunse uno stampatore",
+          "leva": "sorpresa"
+        },
+        {
+          "testo": "Il numero dopo la virgola ha *un inventore*",
+          "leva": "curiosità"
+        },
+        {
+          "testo": "Chi ha messo i numeri ai versetti della Bibbia?",
+          "leva": "domanda"
+        },
+        {
+          "testo": "Tre dati per trovare una frase in più di mille pagine",
+          "leva": "promessa concreta"
+        }
+      ],
+      "inquadrature": [
+        {
+          "tipo": "gancio",
+          "testo": "*1551*: uno stampatore di Parigi numera i versetti del Nuovo Testamento",
+          "voce": "Millecinquecentocinquantuno: uno stampatore di Parigi mette i numeri ai versetti del Nuovo Testamento.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "sorpreso",
+          "durata": 5.0
+        },
+        {
+          "tipo": "lezione",
+          "testo": "Libro, capitolo, versetto",
+          "voce": "Siracide quarantaquattro, uno: libro, capitolo, versetto. Tre dati, e trovi una frase in più di mille pagine.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 2,
+          "descrizione": "",
+          "posa": "spiega",
+          "durata": 7.0
+        },
+        {
+          "tipo": "pagina",
+          "testo": "",
+          "voce": "Ma nei testi antichi questo sistema non c'era: si copiavano su rotoli, senza numeri.",
+          "citazione": "sistema non c'era nei testi antichi, che si copiavano su rotoli senza numeri",
+          "cerchia": "rotoli",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "lente",
+          "durata": 5.5
+        },
+        {
+          "tipo": "pagina",
+          "testo": "",
+          "voce": "I capitoli arrivano all'inizio del Duecento, con Stefano Langton, un maestro di Parigi.",
+          "citazione": "introdotti all'inizio del Duecento da Stefano Langton, un maestro di Parigi",
+          "cerchia": "Duecento",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "spiega",
+          "durata": 5.5
+        },
+        {
+          "tipo": "pagina",
+          "testo": "",
+          "voce": "I versetti, invece, li numera uno stampatore: Robert Estienne, nel Nuovo Testamento greco del millecinquecentocinquantuno. Poi il sistema passa a tutta la Bibbia.",
+          "citazione": "i versetti numerati li aggiunse uno stampatore di Parigi, Robert Estienne, nell'edizione del Nuovo Testamento greco del 1551",
+          "cerchia": "1551",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "meraviglia",
+          "durata": 8.5
+        },
+        {
+          "tipo": "prof",
+          "testo": "Il numero dopo la virgola? *Nato in tipografia*.",
+          "voce": "Proprio così: il numero dopo la virgola è nato in tipografia.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "occhiolino",
+          "durata": 4.0
+        },
+        {
+          "tipo": "chiusa",
+          "testo": "",
+          "voce": "Da allora si cita così. La lezione completa è su labirc.it.",
+          "citazione": "",
+          "cerchia": "",
+          "numero": "",
+          "scena": 0,
+          "descrizione": "",
+          "posa": "saluta",
+          "durata": 4.5
+        }
+      ],
+      "facebook": "I numeri dei versetti del Nuovo Testamento li ha aggiunti uno stampatore di Parigi, nel 1551.\n\nPer chi insegna in prima, e per chi ha sempre cercato un versetto senza chiedersi da dove venisse il numero dopo la virgola.\n\nI testi antichi si copiavano su rotoli senza numeri. I capitoli arrivano all'inizio del Duecento con Stefano Langton, un maestro di Parigi; i versetti li aggiunge Robert Estienne nell'edizione del Nuovo Testamento greco del 1551, e il sistema viene presto esteso a tutta la Bibbia. Da allora si cita così: oggi «Sir 44,1» vuol dire libro del Siracide, capitolo 44, versetto 1.\n\nNella lezione si parte da qui per arrivare a una domanda più grande: perché le Bibbie non hanno tutte lo stesso numero di libri.\n\nMandalo a un collega che insegna in prima.",
+      "instagram": "I numeri dei versetti del Nuovo Testamento? Li ha aggiunti uno stampatore, nel 1551.\n\nSe insegni in prima, o se hai sempre cercato «Lc 24,44» senza chiederti chi avesse inventato quei numeri, questo è per te.\n\nI rotoli antichi non avevano numeri. I capitoli arrivano all'inizio del Duecento con Stefano Langton; i versetti li numera Robert Estienne, stampatore di Parigi, nel Nuovo Testamento greco del 1551. Poi il sistema fu esteso a tutta la Bibbia.\n\nLa lezione completa è nel link in bio: mandala a un collega che insegna in prima.",
+      "telegram": "Lo sapevi? Il Nuovo Testamento ha i versetti numerati dal 1551\nI rotoli antichi non avevano numeri. I capitoli li introdusse all'inizio del Duecento Stefano Langton, un maestro di Parigi; i versetti li aggiunse Robert Estienne, stampatore di Parigi, nell'edizione del Nuovo Testamento greco del 1551, e il sistema fu presto esteso a tutta la Bibbia. Una lezione per la prima, sul Lab IRC.",
+      "anticipo": "Il numero dopo la virgola ha *un inventore*",
+      "hashtag": [
+        "religionecattolica",
+        "irc",
+        "bibbia",
+        "lezionidireligione"
+      ],
+      "token": {
+        "input": 0,
+        "output": 0
+      },
+      "fascicolo": "uploads/i-3-1-bibbia-molti-canoni-fascicolo.pdf",
+      "scene_lezione": [
+        {
+          "n": 1,
+          "fase": "Aggancio",
+          "titolo": "Un libro o una biblioteca?",
+          "contenuto": "Quanti libri ha la Bibbia cattolica, la CEI 2008? · Uno solo: la Bibbia è un libro · 73: 46 libri nell’Antico Testamento e 27 nel Nuovo (CEI: Conferenza episcopale italiana). Una Bibbia protestante ne ha 66: 39 dell’Antico e 27 del Nuovo. Quella ebraica ne conta 24: sono gli stessi 39 libri, contati in un altro modo. La differenza vera è di sette libri. · Dal greco tà biblía, «i libri»: un plurale. · Non un libro, ma"
+        },
+        {
+          "n": 2,
+          "fase": "Scoperta",
+          "titolo": "Sir 44,1: libro, capitolo, versetto",
+          "contenuto": "Leggete la sigla in alto, trovate il dorso con le stesse lettere e toccatelo. · «In principio Dio creò il cielo e la terra.» · Il primo versetto della Bibbia: la prossima volta partiremo da qui. · Vangelo secondo Luca · Gesù risorto parla di ciò che è scritto su di lui «nella legge di Mosè, nei Profeti e nei Salmi». · Tre parti delle Scritture: tra poco le ritroviamo. · «Facciamo ora l’elogio di uomini illustri, dei "
+        },
+        {
+          "n": 3,
+          "fase": "Scoperta",
+          "titolo": "Il nipote di Ben Sira, 132 a.C.",
+          "contenuto": "Siracide, Prologo · Bibbia CEI 2008 · In quale frase il nipote dice quali libri leggeva il nonno? · «Mio nonno Gesù, dopo essersi dedicato per tanto tempo alla lettura [[!della legge, dei profeti e degli altri libri dei nostri padri::Tre gruppi di libri: la legge, i profeti, gli altri libri. È il primo abbozzo di un elenco dell’Antico Testamento che possediamo.]] […]. Anch’io, [[venuto in Egitto::Qui dice dove arriva"
+        },
+        {
+          "n": 4,
+          "fase": "Scoperta",
+          "titolo": "Tre scaffali: il TaNaK",
+          "contenuto": "Toccate i tre ripiani, uno alla volta: che nome hanno in ebraico? · «insegnamento, legge»: i cinque libri di Mosè · gli altri libri · «scritti»: lo scaffale è ancora aperto, cioè non c’è ancora una lista chiusa dei libri che ci stanno · T, N, K, con le vocali: TaNaK. Gli ebrei chiamano così la loro Bibbia ancora oggi. · Tre scaffali, una sigla: TaNaK."
+        },
+        {
+          "n": 5,
+          "fase": "Scoperta",
+          "titolo": "Due biblioteche, poi un confine",
+          "contenuto": "Schema semplificato: nella Bibbia i sette libri stanno ciascuno al suo posto. In oro, il Siracide. · La Legge e i Profeti sono già raccolti; il terzo scaffale, «gli altri libri», è ancora aperto: non c’è una lista chiusa. · Bibbia in ebraico · Per quasi tre secoli · A partire dalla Legge, si traduce e si scrive in greco: la Bibbia dei Settanta, più lunga. Il Siracide ci entra con il nipote, nel 132. · Bibbia in ebrai"
+        },
+        {
+          "n": 6,
+          "fase": "Scoperta",
+          "titolo": "Lutero sposta, Trento definisce",
+          "contenuto": "Schema semplificato: nella Bibbia i sette libri stanno ciascuno al suo posto. In oro, il Siracide. · La Chiesa continua a leggere nelle sue celebrazioni i libri della Bibbia greca, poi tradotta in latino: i sette libri compresi. · Bibbia della Chiesa: Antico + Nuovo Testamento · Lutero mette i sette libri in appendice: «non sono ritenuti uguali alle sacre Scritture, ma sono parimenti utili e buoni a leggersi». · Bibb"
+        },
+        {
+          "n": 7,
+          "fase": "Attività",
+          "titolo": "Pausa: Sfida a squadre",
+          "contenuto": "Sfida a squadre · Due squadre, cinque domande: venti secondi per rispondere, e se una sbaglia l’altra può rubare. Dopo ogni risposta si legge il perché. Dopo la quinta domanda si torna qui."
+        },
+        {
+          "n": 8,
+          "fase": "Attività",
+          "titolo": "Tre confini, una canna che misura",
+          "contenuto": "Tocca un libro, poi il suo posto in ciascuna Bibbia: sullo scaffale, in appendice o fuori. · Bibbia ebraica · i rabbini · 24 libri · Bibbia di Lutero · 1534 · 66 libri + appendice · Bibbia cattolica · Trento 1546 · 73 libri · Sullo scaffale · Genesi apre la Torah: sta nella Bibbia ebraica. · Genesi è uno dei libri comuni: Lutero lo tiene sullo scaffale. · Genesi è uno dei libri comuni: sta in tutte e tre le Bibbie. ·"
+        },
+        {
+          "n": 9,
+          "fase": "Scoperta",
+          "titolo": "Parola di Dio in parole umane",
+          "contenuto": "Nella fede della Chiesa · Dei Verbum, 1965 · Che cosa dice la Chiesa di come è nata la Bibbia? · Dio l’ha dettata parola per parola a chi scriveva · Uomini l’hanno scritta da soli, poi la Chiesa l’ha approvata · Dio è l’autore, e uomini l’hanno scritta come veri autori · Dei Verbum 11: i libri «hanno Dio per autore»; Dio «si servì di uomini nel possesso delle loro facoltà e capacità», che scrissero «come veri autori»"
+        },
+        {
+          "n": 10,
+          "fase": "Chiusura",
+          "titolo": "E oggi, in libreria?",
+          "contenuto": "Bibbie protestanti · Senza i sette libri · Lutero li aveva messi in appendice; nell’Ottocento molte edizioni protestanti li tolgono del tutto. Oggi molte li rimettono in appendice. · Tradurre insieme · Il Vaticano II permette di tradurre anche «in collaborazione con i fratelli separati», cioè con gli altri cristiani (Dei Verbum 22). Negli anni Settanta e Ottanta nasce così la Bibbia in lingua corrente: i sette libri "
+        },
+        {
+          "n": 11,
+          "fase": "Chiusura",
+          "titolo": "Una Bibbia, molti canoni",
+          "contenuto": "Tre su tre: sapete dire chi ha tracciato i confini, e perché. · Perché il nipote di Ben Sira traduce in greco il libro del nonno? · Perché il greco era la lingua dei rabbini · Perché gli ebrei d’Egitto parlavano greco · Perché il nonno lo aveva scritto in greco · Il prologo dice che traduce «per quelli che, all’estero, desiderano istruirsi»: in Egitto gli ebrei parlavano greco. Il nonno aveva scritto in ebraico. · Pe"
+        }
+      ],
+      "parole_voce": 102,
+      "modello": "sessione (abbonamento)",
+      "citazioni_sbagliate": 0
+    }
   }
 }
