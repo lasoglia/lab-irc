@@ -3,7 +3,7 @@
   "esperimento": {
     "ipotesi": "Nei reel del regista un gancio con un numero inatteso tiene a guardare più di un gancio a domanda: tempo medio di visione più alto, in proporzione alla durata. Prima settimana di tre: servono 3 reel per leva, su giorni diversi.",
     "istruzione": "Nei reel di questa settimana il gancio dei primi 2 secondi usa una sola leva, quella delle note di regia (09/11 numero, 11/11 domanda, 13/11 contrasto), senza mescolarle, e la leva va scritta nel campo «leva» del primo gancio.",
-    "misura": "Tempo medio di visione diviso la durata, reel del 9/11 (numero) contro 11/11 (domanda), a 7 giorni dall'uscita; poi visualizzazioni. Serve il permesso statistiche di Instagram.",
+    "misura": "Tempo medio di visione diviso la durata, reel del 9/11 (numero) contro 11/11 (domanda), letto a 7 giorni (16/11 e 18/11); poi visualizzazioni. Serve il permesso statistiche di Instagram.",
     "dal": "2026-11-09",
     "al": "2026-11-15"
   },
@@ -13,31 +13,31 @@
       "idea": "Nei reel «Lo sapevi?» il gancio con un numero («525») tiene più a lungo di quello con una domanda: 6 reel, 3 e 3, misurando tempo medio di visione e visualizzazioni complete.",
       "fonte": "progetto rubriche (sezione 6, esperimento 1)",
       "stato": "in prova",
-      "perché": "Esperimento dal 9 al 15/11, allargato a tutti i reel del regista (solo con i lunedì servirebbero sei settimane): 9/11 numero, 11/11 domanda, 13/11 contrasto fuori dal confronto. Numero e domanda cadono in giorni, rubriche e durate diverse: per separare la leva dal giorno serve alternare nelle settimane dopo. Senza il permesso delle statistiche Instagram l'esito resta «non si capisce ancora»."
+      "perché": "Esperimento dal 9 al 15/11, allargato a tutti i reel del regista: 9/11 numero, 11/11 domanda, 13/11 contrasto fuori dal confronto. Confermato nel piano dell'8/11 senza cambi, perché le uscite sono già approvate con queste leve. Numero e domanda cadono in giorni, rubriche, classi e durate diverse (20-25 s contro 25-30 s): una sola coppia non separa la leva dal resto. Settimana 2: il 16/11 è già a numero; per alternare i giorni conviene il 18/11 a numero (candidata 46, 4 beatitudini in Luca e 9 in Matteo) e il 20/11 a domanda. Senza il permesso delle statistiche Instagram (errore #10) l'esito resta «non si capisce ancora»."
     },
     {
       "idea": "Utilità contro curiosità nei caroselli del martedì: «In classe domani» raccoglie più invii e salvataggi per copertura di «Parole con una storia»: 4 caroselli, 2 e 2, condivisioni e salvataggi diviso copertura.",
       "fonte": "progetto rubriche (sezione 6, esperimento 2)",
       "stato": "nuova",
-      "perché": "Le prime due uscite arrivano da sole: 10/11 «Parole con una storia», 17/11 «In classe domani». Ma se il 17/11 prova anche la seconda copertina, il confronto mescola due cambi: o l'una o l'altra. Salvataggi, condivisioni e copertura oggi mancano (permesso Instagram)."
+      "perché": "Le prime due uscite arrivano da sole: 10/11 «Parole con una storia» (già in coda), 17/11 «In classe domani». Se il 17/11 prova anche la seconda copertina, il confronto mescola due cambi: o l'una o l'altra. Salvataggi, condivisioni e copertura oggi mancano (permesso Instagram)."
     },
     {
       "idea": "Reel corti contro reel medi: i reel di 20-25 secondi hanno più visualizzazioni complete e seconde visioni di quelli di 30-35, a parità di rubrica: 6 reel, tempo medio di visione in proporzione alla durata.",
       "fonte": "progetto rubriche (sezione 6, esperimento 3)",
       "stato": "nuova",
-      "perché": "È una scelta di montaggio, non un'istruzione: si prova dopo le leve. Le note di regia danno già durate diverse (9/11 20-25 s, 11/11 e 13/11 25-30 s), per questo il confronto delle leve si fa sul tempo di visione diviso la durata."
+      "perché": "È una scelta di montaggio, non un'istruzione: si prova dopo le leve e la applica chi cura il codice. Le note di regia danno già durate diverse (9/11 20-25 s, 11/11 e 13/11 25-30 s), per questo il confronto delle leve si fa sul tempo di visione diviso la durata."
     },
     {
       "idea": "Nei caroselli la seconda scheda fa da «seconda copertina»: la pagina vera del fascicolo con la frase evidenziata subito dopo la copertina, perché Instagram ripropone la seconda immagine a chi non ha sfogliato.",
       "fonte": "esploratore (Adam Mosseri, riportato da Social Media Today, 17/10/2024)",
       "stato": "nuova",
-      "perché": "Costa poco e non tocca i contenuti, ma senza numeri non diventa regola. Candidata per la settimana 16-22/11 sul carosello del 17/11 (non il 10/11, già approvato). Chi cura il codice verifichi che seo/caroselli.py e i modelli possano mettere la pagina vera nella scheda 2. Misura: copertura e salvataggi, che oggi mancano."
+      "perché": "Costa poco e non tocca i contenuti, ma senza numeri non diventa regola. È una scelta di grafica: la applica chi cura il codice (seo/caroselli.py e i modelli devono poter mettere la pagina vera nella scheda 2). Non sul 17/11 se quel martedì serve al confronto utilità/curiosità. Misura: copertura e salvataggi, che oggi mancano."
     },
     {
-      "idea": "Testo alternativo per ogni immagine e scheda (campo alt_text dell'API di pubblicazione Meta, dal 24/3/2025; da verificare che valga per le schede del carosello), per l'accessibilità e per farsi trovare.",
-      "fonte": "esploratore (documentazione Meta per sviluppatori sulla pubblicazione)",
+      "idea": "Testo alternativo per ogni immagine e per ogni scheda dei caroselli (campo alt_text dell'API di pubblicazione Meta, fino a 1000 caratteri; non vale per reel e storie), per l'accessibilità e per farsi trovare.",
+      "fonte": "esploratore (documentazione Meta per sviluppatori sulla pubblicazione; conferma per le schede del carosello nella ricerca dell'8/11)",
       "stato": "nuova",
-      "perché": "Non si applica con un'istruzione: serve una modifica a seo/pubblica.py, la fa chi cura il codice. Vale anche senza numeri, per chi usa un lettore di schermo; la misura è lenta e non sta in un esperimento di una settimana."
+      "perché": "L'esploratore ha verificato che il campo vale anche per le immagini dentro un carosello, quindi si può fare su tutte le schede. Non si applica con un'istruzione: serve una modifica a seo/pubblica.py, la fa chi cura il codice. Vale anche senza numeri, per chi usa un lettore di schermo; la misura è lenta e non sta in un esperimento di una settimana."
     },
     {
       "idea": "Nella didascalia le parole che la gente cerca davvero (il nome del documento, del personaggio, del tema), perché dal 10/7/2025 i post Instagram pubblici possono comparire su Google e contano nella ricerca interna.",
@@ -46,10 +46,28 @@
       "perché": "Serve l'impostazione dell'account che permette l'indicizzazione e una misura lenta (ricerca su Google dopo 14 giorni). Non tocca la correttezza: possibile esperimento quando il permesso delle statistiche sarà attivo."
     },
     {
-      "idea": "Reel «Tre livelli»: lo stesso tema detto in una frase, con il documento, tra colleghi (sul modello «5 Levels» di WIRED), come quarta opzione della rotazione del mercoledì; prima prova il 18/11.",
+      "idea": "Reel «Tre livelli»: lo stesso tema detto in una frase, con il documento, tra colleghi (sul modello «5 Levels» di WIRED), come quarta opzione della rotazione del mercoledì.",
       "fonte": "esploratore (serie «5 Levels» di WIRED; Yale Quantum Institute; Tech & Learning)",
       "stato": "nuova",
-      "perché": "Solo con lezioni che nel fascicolo distinguono già i tre piani. È una rubrica nuova: la decidono docente e direttore e va aggiunta al calendario. Non è un esperimento di una sola cosa e non deve diventare un quiz o una gara di livelli."
+      "perché": "Solo con lezioni che nel fascicolo distinguono già i tre piani. È una rubrica nuova: la decidono docente e direttore e va aggiunta al calendario. Il 18/11 serve al confronto delle leve (gancio a numero), quindi la prima prova slitta. Non è un esperimento di una sola cosa e non deve diventare un quiz o una gara di livelli."
+    },
+    {
+      "idea": "Post in collaborazione su Instagram (campo «collaborators» dell'API, fino a 3 account, per immagini, reel e caroselli) con un account istituzionale del mondo IRC: ufficio diocesano IRC, associazione di insegnanti di Religione, rivista per la scuola.",
+      "fonte": "esploratore (Kontentino, 25/8/2026, con Mosseri riportato di seconda mano; studio di Daniel Goetz, Università di Toronto, 25/5/2026; documentazione Meta IG User Media)",
+      "stato": "nuova",
+      "perché": "Con 1 follower su Instagram è l'idea che può portare pubblico nuovo; secondo lo studio conta l'affinità del pubblico del partner più della sua grandezza. Servono: l'accordo preso a mano da Matteo (il partner accetta a mano e, per un difetto segnalato, non riceve notifica se invitato via API, quindi va avvisato), un campo facoltativo «collaboratori» in seo/pubblica.py fatto da chi cura il codice, e mai colleghi privati né nomi utente privati nel repo. Prova proposta: un solo carosello della domenica (22 o 29/11), da tenere fuori dagli altri confronti. Misura: follower di Instagram il giorno prima e 7 giorni dopo; i «mi piace» contro le domeniche precedenti dicono poco, perché il carosello dell'8/11 ne ha 0."
+    },
+    {
+      "idea": "Tenere su ogni immagine e video con personaggi generati la scritta «personaggio inventato · immagine generata con IA» e controllare negli avvisi dell'account se Instagram chiede l'etichetta «AI-generated profile» (annunciata il 31/8/2026).",
+      "fonte": "esploratore (Engadget, Unite.AI, implicator.ai)",
+      "stato": "nuova",
+      "perché": "L'etichetta riguarda i profili con una persona generata dall'IA e, secondo le fonti, senza etichetta la portata può calare. Chi usa l'IA come strumento non deve etichettarsi: il Lab è un docente vero, ma usa avatar, voce clonata e personaggi IA. Non è un esperimento: è un controllo che fa Matteo nelle impostazioni e negli avvisi dell'account."
+    },
+    {
+      "idea": "Le metriche non trovano ancora tutti i post usciti: mancano le 4 lezioni di ottobre e il reel vetrina del 3/11, il post «_sito» risulta del 3/11 (ma è uscito il 19/10) e il reel della domenica ha la stessa chiave del carosello.",
+      "fonte": "numeri",
+      "stato": "nuova",
+      "perché": "Rispetto al 6/11 va meglio: Instagram ha 6 post abbinati (prima 2), compresi il reel e il carosello della domenica 8/11, lo Shabbat e Gerusalemme. Ma su 12 post usciti (data/meta.json) 6 restano senza numeri, e il post delle 14:05 del 3/11 attribuito a «_sito» è probabilmente il post vetrina di benvenuto. Va controllato l'abbinamento tra didascalia e post in seo/social_metriche.py, e che i reel del regista portino nel file anche «leva», «serie» e «motore», altrimenti l'esperimento sulle leve non si chiude. La verifica la fa chi cura il codice."
     },
     {
       "idea": "Trial reels di Instagram (reel mostrati prima solo a chi non segue).",
@@ -64,11 +82,29 @@
       "perché": "Scartata dall'esploratore; con 2 iscritti e nessuna statistica per post su Telegram non sarebbe nemmeno misurabile."
     },
     {
-      "idea": "Le metriche trovano solo 2 degli 8 post usciti (prof-001 e _sito): le lezioni di ottobre e i due post vetrina del 3/11 non compaiono. Va controllato l'abbinamento tra didascalia e post in seo/social_metriche.py.",
-      "fonte": "numeri",
-      "stato": "nuova",
-      "perché": "Se l'abbinamento non trova i post, anche con il permesso i reel del regista potrebbero restare senza numeri e l'esperimento non si chiuderebbe. La verifica la fa chi cura il codice."
+      "idea": "Series di Instagram (raccolte di post in serie).",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Scartata dall'esploratore l'8/11: la funzione è ancora in sviluppo. Da riguardare quando sarà disponibile."
+    },
+    {
+      "idea": "Cartelle di chat e canali simili di Telegram per farsi trovare.",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Scartata dall'esploratore l'8/11: servono iscritti, il canale ne ha 2."
+    },
+    {
+      "idea": "Ripubblicare (repost) i post del Lab o di altri su Instagram.",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Scartata dall'esploratore l'8/11: funziona solo con chi ha già follower, il Lab ne ha 1."
+    },
+    {
+      "idea": "Pubblicare i reel anche come YouTube Shorts.",
+      "fonte": "esploratore",
+      "stato": "scartata",
+      "perché": "Canale nuovo: Matteo ha deciso di no."
     }
   ],
-  "aggiornato": "2026-11-06"
+  "aggiornato": "2026-11-08"
 }
