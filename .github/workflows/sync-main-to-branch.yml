@@ -70,7 +70,7 @@ jobs:
         if: steps.check.outputs.esiste == 'true' && hashFiles('seo/genera.py') != ''
         continue-on-error: true
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
         run: |
           pip install --quiet anthropic pypdf
           python seo/genera.py --no-artefatti
@@ -90,7 +90,7 @@ jobs:
         if: steps.check.outputs.esiste == 'true' && hashFiles('seo/promozione.py') != ''
         continue-on-error: true
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
         run: |
           pip install --quiet anthropic pypdf
           python seo/promozione.py
