@@ -48,7 +48,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_API_KEY: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
           COPIONE: ${{ inputs.copione }}
           LEZIONE: ${{ inputs.lezione }}
           GIORNO: ${{ inputs.giorno }}

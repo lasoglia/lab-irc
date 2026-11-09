@@ -13,9 +13,11 @@ name: Social · piano della settimana
 
 on:
   # Con il segreto CLAUDE_CODE_OAUTH_TOKEN gli agenti usano l'abbonamento Claude e non i crediti API.
-  schedule:
-    - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate): il piano intero
-    - cron: '23 17 * * 4'   # giovedì alle 17:23 UTC: solo le rubriche del weekend
+  # SPENTO DAL 9 NOVEMBRE 2026 (decisione di Matteo, piano Claude ridotto): niente orari e il job non parte.
+  # Il lavoro social passerà fuori da GitHub. Per riaccenderlo togli i # qui sotto e «if: false».
+  # schedule:
+  #   - cron: '23 16 * * 0'   # domenica alle 16:23 UTC (17:23 d'inverno, 18:23 d'estate): il piano intero
+  #   - cron: '23 17 * * 4'   # giovedì alle 17:23 UTC: solo le rubriche del weekend
   workflow_dispatch:
     inputs:
       solo_rubriche:
@@ -38,6 +40,7 @@ env:
 
 jobs:
   piano:
+    if: false   # spento dal 9/11/2026
     runs-on: ubuntu-latest
     timeout-minutes: 90   # direttore, calendarista, controlli, regista, analista: con dieci agenti in fila servono più di 30 minuti
     steps:
@@ -85,8 +88,8 @@ jobs:
         id: agenti
         continue-on-error: true
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
+          CLAUDE_CODE_OAUTH_TOKEN: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
         run: |
           if [ "$SOLO_RUBRICHE" = true ]; then
             bash seo/social_claude.sh "/social-rubriche" 10 60

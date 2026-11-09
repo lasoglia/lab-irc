@@ -83,15 +83,15 @@ jobs:
           gh run view "$numero" --log | grep -E '✗|!|rror|rifiutato|Pubblicato|Prossimo|Pagina:' | tail -n 60 > .social/log.txt || true
 
       - name: Installa Claude Code
-        if: steps.controllo.outcome == 'failure'
+        if: false   # Claude spento dal 9/11/2026; prima: steps.controllo.outcome == 'failure'
         run: npm install --global --silent "@anthropic-ai/claude-code@$CLAUDE_CODE_VERSIONE"
 
       - name: Diagnosi
-        if: steps.controllo.outcome == 'failure'
+        if: false   # Claude spento dal 9/11/2026; prima: steps.controllo.outcome == 'failure'
         continue-on-error: true
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN == '' && secrets.ANTHROPIC_API_KEY || '' }}
-          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
+          CLAUDE_CODE_OAUTH_TOKEN: ''   # Claude spento dal 9/11/2026 (decisione di Matteo): niente richieste all'API né all'abbonamento
         run: bash seo/social_claude.sh "/social-controllo" 2 20
 
       - name: Avvisa con un Issue
