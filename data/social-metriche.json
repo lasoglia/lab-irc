@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-08",
+  "aggiornato": "2026-11-09",
   "facebook": [
     {
       "chiave": "dom-2026-11-08",
@@ -56,7 +56,7 @@
       "data": "2026-11-08",
       "ora": "19:22",
       "tipo": "reel",
-      "mi_piace": 0,
+      "mi_piace": 2,
       "commenti": 0,
       "link": "https://www.instagram.com/reel/DffY4gJnOBZ/"
     },
@@ -141,6 +141,12 @@
       "data": "2026-11-08",
       "facebook": 0,
       "instagram": 1,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-09",
+      "facebook": 0,
+      "instagram": 2,
       "telegram": 2
     }
   ],
