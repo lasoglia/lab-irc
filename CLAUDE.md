@@ -9,6 +9,10 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   in automatico con `sync-main-to-branch.yml`, che rigenera anche pagine SEO e kit social.
 
 ## Social
+- **Dal 9 novembre 2026 Claude è spento in tutte le Action** (decisione di Matteo, piano ridotto): nessun workflow passa
+  ANTHROPIC_API_KEY o CLAUDE_CODE_OAUTH_TOKEN, il piano della settimana e la chat con @claude non partono, e gli
+  script girano «senza IA». Le Action pubblicano solo ciò che è già approvato in coda. Il lavoro social passerà
+  fuori da GitHub (Cloudflare o altro, da decidere con Matteo): vedi docs/stato-social.md.
 - `seo/promozione.py` scrive il kit delle lezioni (con il carosello), `seo/rubriche.py` le strisce
   del prof e «La grande domanda» della domenica (carosello di 10 immagini e video), `seo/cartoline.mjs` tutte le immagini.
 - Il calendario sta in `seo/social_calendario.py` (`tipo_del_giorno`), dal 9 novembre 2026 più reel che caroselli.
