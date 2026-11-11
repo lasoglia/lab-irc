@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-10",
+  "aggiornato": "2026-11-11",
   "facebook": [
     {
       "chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare",
@@ -7,8 +7,7 @@
       "reazioni": 0,
       "commenti": 0,
       "condivisioni": 0,
-      "link": "https://www.facebook.com/122111760399512623/posts/122114378793512623",
-      "rubrica": "Parole con una storia"
+      "link": "https://www.facebook.com/122111760399512623/posts/122114378793512623"
     },
     {
       "chiave": "dom-2026-11-08",
@@ -67,8 +66,7 @@
       "tipo": "carosello",
       "mi_piace": 0,
       "commenti": 0,
-      "link": "https://www.instagram.com/p/Dfj5irhDV--/",
-      "rubrica": "Parole con una storia"
+      "link": "https://www.instagram.com/p/Dfj5irhDV--/"
     },
     {
       "chiave": "dom-2026-11-08",
@@ -172,6 +170,12 @@
       "data": "2026-11-10",
       "facebook": 1,
       "instagram": 3,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-11",
+      "facebook": 1,
+      "instagram": 4,
       "telegram": 2
     }
   ],
