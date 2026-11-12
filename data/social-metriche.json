@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-11",
+  "aggiornato": "2026-11-12",
   "facebook": [
     {
       "chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare",
@@ -176,6 +176,12 @@
       "data": "2026-11-11",
       "facebook": 1,
       "instagram": 4,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-12",
+      "facebook": 1,
+      "instagram": 5,
       "telegram": 2
     }
   ],
