@@ -1,6 +1,15 @@
 {
-  "aggiornato": "2026-11-12",
+  "aggiornato": "2026-11-13",
   "facebook": [
+    {
+      "chiave": "gioco|uploads/v-1-g-il-cosmo-esaurisce-le-domande-gioco.html|2026-11-12",
+      "data": "2026-11-12",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/reel/2169745880284089/",
+      "motore": "gioco"
+    },
     {
       "chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare",
       "data": "2026-11-10",
@@ -59,6 +68,16 @@
     }
   ],
   "instagram": [
+    {
+      "chiave": "gioco|uploads/v-1-g-il-cosmo-esaurisce-le-domande-gioco.html|2026-11-12",
+      "data": "2026-11-12",
+      "ora": "18:52",
+      "tipo": "reel",
+      "mi_piace": 2,
+      "commenti": 0,
+      "link": "https://www.instagram.com/reel/DfpoqmonKYe/",
+      "motore": "gioco"
+    },
     {
       "chiave": "5|Una Chiesa dentro la storia|Cambiare il modo di leggere e di partecipare",
       "data": "2026-11-10",
@@ -182,6 +201,12 @@
       "data": "2026-11-12",
       "facebook": 1,
       "instagram": 5,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-13",
+      "facebook": 1,
+      "instagram": 6,
       "telegram": 2
     }
   ],
