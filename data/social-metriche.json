@@ -1,6 +1,22 @@
 {
-  "aggiornato": "2026-11-15",
+  "aggiornato": "2026-11-16",
   "facebook": [
+    {
+      "chiave": "dom-2026-11-15",
+      "data": "2026-11-15",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/reel/1139916101996419/"
+    },
+    {
+      "chiave": "dom-2026-11-15",
+      "data": "2026-11-15",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122115980079512623"
+    },
     {
       "chiave": "sab-2026-11-14",
       "data": "2026-11-14",
@@ -76,6 +92,24 @@
     }
   ],
   "instagram": [
+    {
+      "chiave": "dom-2026-11-15",
+      "data": "2026-11-15",
+      "ora": "19:22",
+      "tipo": "reel",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/reel/Dfxad5-CZiH/"
+    },
+    {
+      "chiave": "dom-2026-11-15",
+      "data": "2026-11-15",
+      "ora": "17:54",
+      "tipo": "carosello",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/p/DfxQYGoCVC-/"
+    },
     {
       "chiave": "sab-2026-11-14",
       "data": "2026-11-14",
@@ -234,6 +268,12 @@
     },
     {
       "data": "2026-11-15",
+      "facebook": 1,
+      "instagram": 6,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-16",
       "facebook": 1,
       "instagram": 6,
       "telegram": 2
