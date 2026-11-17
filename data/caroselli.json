@@ -59,5 +59,67 @@
       "citazioni_sbagliate": 0,
       "fascicolo": "uploads/v-2-3-cambiare-modo-leggere-partecipare-fascicolo.pdf"
     }
+  },
+  "In numeri|3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino": {
+    "versione": "1",
+    "testi": {
+      "adatta": true,
+      "motivo": "",
+      "copertina": {
+        "titolo": "1423",
+        "frase": "La Porta Santa? Nel primo giubileo, quello del 1300, non c'era"
+      },
+      "schede": [
+        {
+          "tipo": "numero",
+          "titolo": "Prima la folla, poi la bolla",
+          "testo": "Fine 1299, a Roma corre una voce: chi visita San Pietro nel nuovo secolo ottiene il perdono di tutte le colpe. La folla non aspetta. Il 22 febbraio la bolla chiede pentimento e confessione.",
+          "numero": "1° gennaio 1300",
+          "citazione": "La notte del 1° gennaio 1300 la folla accorre in San Pietro a chiedere l'indulgenza; il papa non c'è, e quel giorno non accade nulla",
+          "cerchia": "1° gennaio 1300"
+        },
+        {
+          "tipo": "numero",
+          "titolo": "Il primo giubileo senza Porta Santa",
+          "testo": "Nel 1300 la bolla chiedeva di arrivare a Roma pentiti e confessati e di visitare per quindici giorni le basiliche di San Pietro e di San Paolo. La porta arriva dopo.",
+          "numero": "1423",
+          "citazione": "La Porta Santa, la porta murata che si apre solo nell'anno santo, compare al Laterano nel 1423",
+          "cerchia": "1423"
+        },
+        {
+          "tipo": "numero",
+          "titolo": "Il giubileo che abbiamo visto noi",
+          "testo": "Sono i pellegrini del Giubileo 2025. Per il 1300 c'è la stima di un testimone: secondo il cronista Villani, duecentomila pellegrini in città in ogni momento, più quelli per strada.",
+          "numero": "33.475.369",
+          "citazione": "33.475.369 pellegrini da 185 Paesi, secondo il bilancio della Santa Sede",
+          "cerchia": "33.475.369"
+        },
+        {
+          "tipo": "testo",
+          "titolo": "Che cosa li tiene insieme",
+          "testo": "Prima arriva la gente, poi la bolla, molto dopo la Porta Santa. I segni cambiano, la strada resta: nel 1300 come nel 2025, pellegrinaggio, confessione, indulgenza.",
+          "numero": "",
+          "citazione": "",
+          "cerchia": ""
+        }
+      ],
+      "facebook": "1° gennaio 1300: folla in San Pietro, ma il papa non c'è.\n\nPer chi si è sempre chiesto come è cominciato il primo giubileo.\n\nA fine 1299 a Roma si sparge una voce: nel nuovo secolo, chi visita San Pietro riceve il perdono di tutte le colpe. La gente non aspetta nessun documento. Il papa, Bonifacio VIII, fa cercare negli archivi un fondamento per quella voce, e non lo trova. Il 22 febbraio firma la bolla: l'indulgenza è per chi visita San Pietro e San Paolo «veramente pentito e confessato».\n\nSui numeri c'è un testimone, il mercante fiorentino Giovanni Villani, che era a Roma: in città, scrive, c'erano sempre «duecentomila pellegrini, sanza quegli ch'erano per gli cammini». È la stima di chi guarda una folla, non una statistica; ma Villani aggiunge: «vi fui presente e vidi».\n\nMandalo a chi nel 2025 è andato a Roma.",
+      "instagram": "Nel 1300, a Roma, nessun pellegrino passò per una Porta Santa.\n\nPer chi ha attraversato una Porta Santa, o l'ha vista in tv, e si è chiesto da quando esiste.\n\nLa porta murata che si apre solo nell'anno santo compare al Laterano nel 1423. Nel 1300 la bolla di Bonifacio VIII chiedeva ai pellegrini quindici giorni di visite alle basiliche di Pietro e Paolo, da pentiti e confessati.\n\nLe corsie per la folla, invece, c'erano già: Dante ricorda il ponte di Castel Sant'Angelo diviso in due.\n\nLa storia completa è al link nella bio.",
+      "telegram": "Giubileo 2025: 33.475.369 pellegrini da 185 Paesi, secondo la Santa Sede.\n\nE la parola «giubileo»? La bolla del 1300 non la usa: la usano i contemporanei, come il cronista Villani. Viene dalla Bibbia: l'ebraico yôbēl è il montone, e poi il corno che annunciava l'anno della liberazione.\n\nSalva il messaggio: la prossima volta che senti «giubileo», pensa al montone.",
+      "hashtag": [
+        "religionecattolica",
+        "irc",
+        "giubileo",
+        "pellegrinaggio",
+        "medioevo"
+      ],
+      "origine": "sessione (abbonamento)",
+      "token": {
+        "input": 0,
+        "output": 0
+      },
+      "citazioni_sbagliate": 0,
+      "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf"
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "aggiornata": "2026-11-08",
+  "aggiornata": "2026-11-17",
   "pausa": false,
   "solo_coda": true,
   "coda": [
@@ -73,7 +73,11 @@
        "prima_riga": "I numeri dei versetti li ha aggiunti uno stampatore di Parigi, nel 1551.",
        "richiesta": "Mandalo a un collega che insegna in prima.",
        "evita": "Non aprire con 73-66-24 né con Lutero. Non dire che prima non si citava, né che nel 1551 si numerò tutta la Bibbia (era il NT greco, poi esteso). Non dire «Bibbia è un plurale» (viene da un plurale greco); non datare il canone rabbinico; niente spiegazione di «sporcano le mani»; Lutero: «in una sezione a parte», mai «in fondo» o «in appendice»; niente Qumran e Masada per il Siracide."
-     }}
+     }},
+    {"chiave": "3|Credere, ragionare, obbedire|Chi può limitare il potere. Canossa, 1077", "quando": "2026-11-18", "esito": "approvato", "motivo": "Reel «Prova alla mano» su Canossa, scritto in sessione (abbonamento, nessun credito API): approvato da verificatore e guardiano dopo le correzioni (le ginocchia le mette una miniatura; i dubbi del fascicolo sono in data/fatti-dubbi.json)."},
+    {"chiave": "3|Quando un'abitudine prende il comando|Un vizio si può dipingere", "quando": "2026-11-20", "esito": "approvato", "motivo": "Reel «Falso mito» sui vizi capitali, scritto in sessione (abbonamento): approvato da verificatore e guardiano dopo le correzioni (da habitus presentato come «una lettura», capitale da caput)."},
+    {"chiave": "2|Gesù quali tracce|Che anno è, Una fede che ha una data", "quando": "2026-11-23", "esito": "approvato", "motivo": "Reel «Lo sapevi?» su Dionigi e il calendario, scritto in sessione (abbonamento): approvato da verificatore e guardiano dopo le correzioni (a.C./d.C., «Dionigi sbagliò», due ganci di riserva nuovi)."},
+    {"chiave": "3|I luoghi che cambiano la vita - regola di san Benedetto|1300, perché tutti in cammino", "quando": "2026-11-24", "esito": "approvato", "motivo": "Carosello «In numeri» sul primo giubileo (curiosità, al posto del kit sull'otto per mille), scritto in sessione: approvato da verificatore e guardiano dopo le correzioni (la bolla chiede pentimento e confessione, la Porta Santa non è una condizione, gancio Telegram accorciato)."}
   ],
   "escluse": []
 }

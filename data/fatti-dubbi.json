@@ -120,6 +120,41 @@
       "lezione": "La visione cosmologica di Lemaître",
       "dettaglio": "«Nel 2010 l'astrofisico Mario Livio ha trovato…»: la ricerca di Livio risulterebbe pubblicata su «Nature» nel novembre 2011 (da verificare)",
       "come": "non dare l'anno della ricerca di Livio finché non è verificato"
+    },
+    {
+      "lezione": "Chi può limitare il potere. Canossa, 1077",
+      "dettaglio": "p. 2, «a Sutri aveva fatto deporre i papi che si contendevano Roma» (a Sutri, nel 1046, furono deposti Silvestro III e Gregorio VI; Benedetto IX pochi giorni dopo, in un sinodo a Roma)",
+      "come": "scrivi che nel 1046 il re fece deporre i papi rivali, senza dire che avvenne tutto a Sutri"
+    },
+    {
+      "lezione": "Chi può limitare il potere. Canossa, 1077",
+      "dettaglio": "p. 10, il contesto di «Non andremo a Canossa» (Bismarck lo disse il 14 maggio 1872 nel dibattito sul rifiuto di Pio IX di accettare il cardinale Hohenlohe come ambasciatore, non per la resistenza dei vescovi)",
+      "come": "cita la frase di Bismarck e l'anno, senza spiegarne l'occasione"
+    },
+    {
+      "lezione": "Un vizio si può dipingere",
+      "dettaglio": "p. 3, «Dix non inventa il paragone, lo trova nella parola»: il legame abito/abitudine è la lettura proposta dal fascicolo, non un'intenzione documentata di Dix",
+      "come": "presentalo come una lettura («una lettura: da habitus vengono abito e abitudine»), mai come il motivo di Dix"
+    },
+    {
+      "lezione": "Un vizio si può dipingere",
+      "dettaglio": "p. 4, l'elenco «elaborato nei monasteri a partire dal V secolo» (poche righe prima e a p. 6 il fascicolo dice fine del IV secolo, con Evagrio Pontico)",
+      "come": "scrivi «dalla fine del IV secolo»"
+    },
+    {
+      "lezione": "Che anno è, Una fede che ha una data",
+      "dettaglio": "p. 4, «in sedici secoli aveva accumulato dieci giorni di ritardo» (i dieci giorni tolti nel 1582 sono lo scarto dal concilio di Nicea, 325: circa tredici secoli)",
+      "come": "scrivi che nel 1582 si tolsero dieci giorni, senza dire in quanti secoli si erano accumulati"
+    },
+    {
+      "lezione": "Che anno è, Una fede che ha una data",
+      "dettaglio": "p. 2, «Oltre a Maria, Pilato è l'unico essere umano nominato» nel Credo (esclude Gesù, vero uomo)",
+      "come": "scrivi «oltre a Gesù e a Maria, Pilato è l'unica persona nominata»"
+    },
+    {
+      "lezione": "Di che cosa vive la Chiesa. Dalla questione romana all'otto per mille",
+      "dettaglio": "p. 1, l'otto per mille «più di un miliardo l'anno» (a p. 8 lo stesso fascicolo dà 911 milioni per il 2024)",
+      "come": "usa la cifra di p. 8 con il suo anno, oppure nessuna cifra"
     }
   ]
 }
