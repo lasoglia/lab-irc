@@ -25,18 +25,24 @@
         "pagina": 2,
         "evidenzia": [
           {
-            "x": 498,
-            "y": -3,
-            "w": 60,
-            "h": 8
+            "x": 546,
+            "y": 678,
+            "w": 533,
+            "h": 37
+          },
+          {
+            "x": 161,
+            "y": 712,
+            "w": 724,
+            "h": 37
           }
         ],
         "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf",
         "cerchio": {
-          "x": 508,
-          "y": 0,
-          "w": 6,
-          "h": 2
+          "x": 666,
+          "y": 681,
+          "w": 147,
+          "h": 31
         }
       },
       {
@@ -49,18 +55,24 @@
         "pagina": 6,
         "evidenzia": [
           {
-            "x": 1102,
-            "y": -3,
-            "w": 43,
-            "h": 8
+            "x": 906,
+            "y": 1443,
+            "w": 173,
+            "h": 37
+          },
+          {
+            "x": 161,
+            "y": 1477,
+            "w": 697,
+            "h": 37
           }
         ],
         "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf",
         "cerchio": {
-          "x": 1140,
-          "y": 0,
-          "w": 2,
-          "h": 2
+          "x": 803,
+          "y": 1480,
+          "w": 52,
+          "h": 31
         }
       },
       {
@@ -73,18 +85,18 @@
         "pagina": 7,
         "evidenzia": [
           {
-            "x": 79,
-            "y": -3,
-            "w": 31,
-            "h": 8
+            "x": 297,
+            "y": 189,
+            "w": 660,
+            "h": 37
           }
         ],
         "fascicolo": "uploads/iii-1-4-1300-giubileo-e-pellegrinaggio-fascicolo.pdf",
         "cerchio": {
-          "x": 83,
-          "y": 0,
-          "w": 2,
-          "h": 2
+          "x": 301,
+          "y": 192,
+          "w": 103,
+          "h": 31
         }
       },
       {
