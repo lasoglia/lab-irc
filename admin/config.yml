@@ -395,3 +395,43 @@ collections:
                 required: false
                 hint: "La lezione dentro l'UDA. Se la scegli, l'UDA può restare vuota: si deduce dalla lezione."
               - { label: "In evidenza", name: in_evidenza, widget: boolean, default: false, required: false }
+
+  # ===========================================================
+  #  Indice dei nomi e dei temi (ricerca del sito, pagine /indice/)
+  #  Le pagine e la ricerca si aggiornano da sole a ogni salvataggio
+  #  (seo/indice.py). I nomi da aggiungere li suggerisce /indice/proposte/
+  # ===========================================================
+  - name: indice
+    label: "🔎  Indice dei nomi"
+    delete: false
+    editor: { preview: false }
+    files:
+      - name: voci
+        label: "Voci dell'indice"
+        file: data/indice.json
+        fields:
+          - label: "Voci"
+            name: voci
+            widget: list
+            label_singular: "voce"
+            collapsed: true
+            allow_reorder: false
+            add_to_top: true
+            summary: "{{fields.nome}} · {{fields.tipo}}"
+            fields:
+              - { label: "Nome", name: nome, widget: string, hint: "Come compare nell'indice. Es. Galileo Galilei" }
+              - label: "Tipo"
+                name: tipo
+                widget: select
+                default: "persona"
+                options:
+                  - { label: "Persona", value: "persona" }
+                  - { label: "Luogo", value: "luogo" }
+                  - { label: "Libro o documento", value: "documento" }
+                  - { label: "Evento", value: "evento" }
+                  - { label: "Tema", value: "tema" }
+              - { label: "Come si trova scritto nei testi", name: forme, widget: list, hint: "Una forma per riga: Galileo, Galilei… Con una maiuscola si cerca così com'è (Galileo, non galileo); tutta minuscola si cerca senza badare alle maiuscole (indulgenze)" }
+              - { label: "Da non contare", name: escludi, widget: list, required: false, hint: "Frasi che non valgono: es. «il Galileo» (detto di Gesù), «Agostino Bea». Il segno # vale un numero qualsiasi: «canone #»" }
+              - { label: "Voce di Wikipedia", name: wikipedia, widget: string, required: false, hint: "Indirizzo completo, es. https://it.wikipedia.org/wiki/Galileo_Galilei (aiuta Google a capire di chi si parla)" }
+              - { label: "Una riga di presentazione", name: descrizione, widget: string, required: false, hint: "Facoltativa: compare in cima alla pagina della voce" }
+          - { label: "Nomi scartati", name: scartate, widget: list, required: false, hint: "Nomi che /indice/proposte/ non deve più proporre" }

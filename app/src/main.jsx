@@ -36,6 +36,7 @@ import {
   dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
   titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
   verificheAnno, verificheUda, azioneVerifica, archivioVerifiche, hrefVerificheAnno, giocabile,
+  caricaTesti, caricaIndice, cercaNeiTesti, cercaNellIndice, estratto, paroleRicerca, viciniDiLezione,
 } from "./dati.js";
 import { statoLucchetto, provaPassword } from "./lucchetto.js";
 
@@ -1124,6 +1125,7 @@ function LezionePage({ D, n, uda, lezione, apri }) {
         : <Vuoto anno={+n} titolo="Questa lezione è in preparazione" testo="I materiali arriveranno presto. Intanto puoi tornare all'unità." indietro={{ testo: "← Torna all'unità", href: hrefUda(n, u.titolo) }} />}
       {completa && <Fine>{v.succ || vu.succ ? "Qui hai aperto tutto. La strada continua qui sotto." : "Qui hai aperto tutto. Quando vuoi, torna all'unità per vedere il quadro."}</Fine>}
       <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa} />
+      <NeParlanoAnche n={n} uda={u.titolo} titolo={L.titolo} />
     </div>
   );
 }
@@ -1302,14 +1304,23 @@ function RicercaPage({ D, q, apri, setQ }) {
   const { cartelle, items } = useMemo(() => cerca(D, q), [D, q]);
   const [tutte, setTutte] = useState(false);
   useEffect(() => setTutte(false), [q]);
-  const tot = cartelle.length + items.length;
+  /* testo dei fascicoli e indice dei nomi: si scaricano alla prima ricerca */
+  const lunga = q.length >= 3;
+  const T = useCaricato(caricaTesti, lunga);
+  const I = useCaricato(caricaIndice, lunga);
+  const qd = useRitardato(q, 220);
+  const testo = useMemo(() => (T && qd.length >= 3 ? cercaNeiTesti(T, qd) : []), [T, qd]);
+  const voci = useMemo(() => (I ? cercaNellIndice(I, qd) : []), [I, qd]);
+  const caricando = lunga && (T === undefined || qd !== q);
+  const tot = cartelle.length + items.length + testo.length + voci.length;
   const righe = tutte ? cartelle : cartelle.slice(0, 4);
   const conVer = cartelle.some((c) => c.tipo === "verifica");
-  const sub = [cartelle.length && `${cartelle.length} tra unità${conVer ? ", lezioni e verifiche" : " e lezioni"}`, items.length && materiali(items.length)].filter(Boolean).join(" · ");
+  const sub = [cartelle.length && `${cartelle.length} tra unità${conVer ? ", lezioni e verifiche" : " e lezioni"}`, testo.length && `${testo.length === 1 ? "1 lezione ne parla" : testo.length + " lezioni ne parlano"} nel testo`, items.length && materiali(items.length)].filter(Boolean).join(" · ");
   return (
     <div className="lab-pagina" style={{ maxWidth: 1140, margin: "0 auto", padding: "0 21px 89px" }}>
       <Briciole voci={[{ testo: "Ricerca" }]} su={{ testo: "Home" }} />
-      <SectionHead small h1 eyebrow="Ricerca" title={tot ? `Risultati per «${q}»` : `Niente per «${q}»`} sub={sub} />
+      <SectionHead small h1 eyebrow="Ricerca" title={tot ? `Risultati per «${q}»` : caricando ? `Cerco «${q}»…` : `Niente per «${q}»`} sub={sub} />
+      {voci.length > 0 && <VociTrovate voci={voci} I={I} setQ={setQ} />}
       {cartelle.length > 0 && (
         <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 21 }}>
           <Eyebrow>{conVer ? "Unità, lezioni e verifiche" : "Unità e lezioni"}</Eyebrow>
@@ -1329,6 +1340,8 @@ function RicercaPage({ D, q, apri, setQ }) {
           {!tutte && cartelle.length > 4 && <div style={{ marginTop: 13 }}><Button size="sm" variant="ghost" onClick={() => setTutte(true)}>Mostra tutte ({cartelle.length})</Button></div>}
         </div>
       )}
+      {testo.length > 0 && <NelTesto ris={testo} parole={paroleRicerca(qd)} setQ={setQ} />}
+      {caricando && !testo.length && <p className="lab-attesa" role="status">Cerco anche nel testo dei fascicoli…</p>}
       {items.length > 0 && (
         <Griglia n={items.length}>
           {items.map((m) => (
@@ -1338,7 +1351,7 @@ function RicercaPage({ D, q, apri, setQ }) {
           ))}
         </Griglia>
       )}
-      {!tot && (
+      {!tot && !caricando && (
         <Vuoto titolo={`Niente per «${q}»`} testo="Prova con un tema (es. «Gesù», «Benedetto», «Big Bang») o con il titolo di una lezione, oppure scegli un anno:">
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
             {ANNI.map((a) => <Chip key={a.n} onClick={() => { setQ(""); location.hash = "anno/" + a.n; }}>Anno {a.rom}</Chip>)}
@@ -1348,6 +1361,134 @@ function RicercaPage({ D, q, apri, setQ }) {
     </div>
   );
 }
+/* dati caricati con una promessa: undefined = in arrivo, null = non disponibili */
+function useCaricato(fn, attivo = true) {
+  const [x, setX] = useState(undefined);
+  useEffect(() => {
+    if (!attivo || x) return;
+    let vivo = true;
+    fn().then((r) => { if (vivo) setX(r || null); });
+    return () => { vivo = false; };
+  }, [attivo]);
+  return x;
+}
+function useRitardato(v, ms) {
+  const [d, setD] = useState(v);
+  useEffect(() => { const t = setTimeout(() => setD(v), ms); return () => clearTimeout(t); }, [v]);
+  return d;
+}
+function Evidenza({ e }) {
+  return <>{e.prima && "…"}{e.parti.map((p, i) => (p.m ? <mark key={i} className="lab-segno">{p.t}</mark> : <React.Fragment key={i}>{p.t}</React.Fragment>))}{e.dopo && "…"}</>;
+}
+const volte = (n) => (n === 1 ? "1 volta" : `${n} volte`);
+
+/* le voci dell'indice del Lab che corrispondono alla ricerca (es. «Galileo Galilei») */
+function VociTrovate({ voci, I, setQ }) {
+  const [aperta, setAperta] = useState(false);
+  return (
+    <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 21 }}>
+      <Eyebrow>Nell'indice del Lab</Eyebrow>
+      {voci.slice(0, 3).map((v) => {
+        const lista = aperta ? v.l : v.l.slice(0, 5);
+        return (
+          <div key={v.s} style={{ marginTop: 8 }}>
+            <p style={{ margin: "0 0 4px", fontSize: 15, color: "var(--lab-ink-soft)" }}>
+              <b style={{ fontFamily: "var(--lab-font-display)", fontSize: 22, color: "var(--lab-ink)" }}>{v.n}</b>{" · "}
+              {v.l.length === 1 ? "ne parla 1 lezione" : `ne parlano ${v.l.length} lezioni`}{" · "}
+              <a href={resolvePath("indice/" + v.s + "/")}>la voce dell'indice</a>
+            </p>
+            {lista.map(([li, n, pag, f, fr]) => {
+              const [a, u, t, soloUda] = I.lezioni[li];
+              const col = colore(a);
+              return (
+                <a key={li} href={soloUda ? hrefUda(a, u) : hrefLezione(a, u, t)} className="lab-riga" onClick={() => setQ("")}>
+                  <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}><IconaLibro /></span>
+                  <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+                    <b style={{ fontSize: 16, color: "var(--lab-ink)" }}>{pulito(t)}</b>
+                    <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)" }}>Anno {annoMeta(a).rom} · {pulito(u)} · {volte(n)}</span>
+                    <span className="lab-estratto">{fr}</span>
+                  </span>
+                  <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
+                </a>
+              );
+            })}
+            {!aperta && v.l.length > 5 && <div style={{ marginTop: 8 }}><Button size="sm" variant="ghost" onClick={() => setAperta(true)}>Mostra tutte ({v.l.length})</Button></div>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* dove compare la parola nel testo dei fascicoli: lezione, frase evidenziata, pagina */
+function NelTesto({ ris, parole, setQ }) {
+  const [tutti, setTutti] = useState(false);
+  useEffect(() => setTutti(false), [ris]);
+  const lista = tutti ? ris : ris.slice(0, 8);
+  return (
+    <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", marginBottom: 21 }}>
+      <Eyebrow>Nel testo delle lezioni</Eyebrow>
+      {lista.map((g) => {
+        const m = g.migliore, col = colore(g.a);
+        const altre = [...new Set(g.pagine.filter((x) => x.pdf && x.p !== m.p).map((x) => x.p))].sort((x, y) => x - y).slice(0, 6);
+        return (
+          <div key={g.a + g.u + g.l + (g.t || "")} className="lab-trovato">
+            <a href={g.l ? hrefLezione(g.a, g.u, g.l) : hrefUda(g.a, g.u)} className="lab-riga" onClick={() => setQ("")}>
+              <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}><IconaLibro /></span>
+              <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+                <b style={{ fontSize: 16, color: "var(--lab-ink)" }}>{pulito(g.l || g.t)}</b>
+                <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)" }}>Anno {annoMeta(g.a).rom} · {pulito(g.u)} · {volte(g.nf || g.n)}</span>
+                <span className="lab-estratto"><Evidenza e={estratto(m.testo, m.pos, parole)} /></span>
+              </span>
+              <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
+            </a>
+            {m.pdf && (
+              <p className="lab-pagine">
+                <a href={resolvePath(m.f) + "#page=" + m.p} target="_blank" rel="noopener">Pagina {m.p} del fascicolo ↗</a>
+                {altre.length > 0 && <> · anche a pag. {altre.map((p, i) => <React.Fragment key={p}>{i ? ", " : ""}<a href={resolvePath(m.f) + "#page=" + p} target="_blank" rel="noopener">{p}</a></React.Fragment>)}</>}
+              </p>
+            )}
+          </div>
+        );
+      })}
+      {!tutti && ris.length > 8 && <div style={{ marginTop: 13 }}><Button size="sm" variant="ghost" onClick={() => setTutti(true)}>Mostra tutte ({ris.length})</Button></div>}
+    </div>
+  );
+}
+
+/* in fondo alla lezione: le voci dell'indice e le lezioni che parlano delle stesse cose */
+function NeParlanoAnche({ n, uda, titolo }) {
+  const I = useCaricato(caricaIndice);
+  const r = useMemo(() => (I ? viciniDiLezione(I, n, uda, titolo) : null), [I, n, uda, titolo]);
+  if (!r || (!r.voci.length && !r.vicini.length)) return null;
+  return (
+    <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", margin: "34px 0 0" }}>
+      {r.vicini.length > 0 && <>
+        <Eyebrow>Ne parlano anche</Eyebrow>
+        {r.vicini.map((x) => {
+          const col = colore(x.a);
+          return (
+            <a key={x.a + x.u + x.l} href={hrefLezione(x.a, x.u, x.l)} className="lab-riga">
+              <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}><IconaLibro /></span>
+              <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+                <b style={{ fontSize: 16, color: "var(--lab-ink)" }}>{pulito(x.l)}</b>
+                <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)" }}>Anno {annoMeta(x.a).rom} · {x.voci.join(", ")}</span>
+              </span>
+              <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
+            </a>
+          );
+        })}
+      </>}
+      {r.voci.length > 0 && <>
+        <div style={{ marginTop: r.vicini.length ? 21 : 0 }}><Eyebrow>In questa lezione si parla di</Eyebrow></div>
+        <div className="lab-voci-indice">
+          {r.voci.slice(0, 14).map(({ v }) => <a key={v.s} href={resolvePath("indice/" + v.s + "/")} className="lab-voce-indice">{v.n}</a>)}
+        </div>
+      </>}
+    </div>
+  );
+}
+
 function MatCardRicerca({ item, apri, primario }) {
   const orme = usePercorsoVisibile();
   return <MatCard item={item} color={colore(item.anno)} apri={apri} aperto={orme.set.has(chiaveItem(item))} primario={primario} mascotte contesto={contestoDi(item)} />;
@@ -1514,6 +1655,7 @@ function Footer({ autore, iscrizione, festa }) {
       <span style={{ justifySelf: "end", display: "flex", alignItems: "center", gap: 13 }}>
         {/* l'indice statico delle lezioni (pagine per Google, generate da seo/genera.py) */}
         <a href="lezioni/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Indice delle lezioni</a>
+        <a href="indice/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Indice dei nomi</a>
         <a href="admin/" style={{ whiteSpace: "nowrap", color: "var(--lab-muted)" }}>Accesso docente</a>
         {/* la via breve per caricare le lezioni: discreta, ma c'è */}
         <a href="admin/importa.html" className="lab-importa" title="Importazione rapida delle lezioni" style={{ whiteSpace: "nowrap" }}>Importa</a>
@@ -1562,8 +1704,19 @@ function Carico() {
 
 function App() {
   const [D, setD] = useState(null);
-  const [q, setQ] = useState("");
+  /* una ricerca è anche un indirizzo da condividere: www.labirc.it/?q=galileo */
+  const [q, setQ] = useState(() => { try { return new URLSearchParams(location.search).get("q") || ""; } catch (e) { return ""; } });
   const [visore, setVisore] = useState(null);
+  useEffect(() => {
+    const t = setTimeout(() => {
+      try {
+        const u = new URL(location.href), v = q.trim();
+        if (v.length > 1) u.searchParams.set("q", v); else u.searchParams.delete("q");
+        if (u.href !== location.href) history.replaceState(history.state, "", u.href);
+      } catch (e) { /* niente */ }
+    }, 400);
+    return () => clearTimeout(t);
+  }, [q]);
   const hash = useHash();
   const lim = useLim();
   const yRef = useRef(null);

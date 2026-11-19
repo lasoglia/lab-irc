@@ -521,3 +521,113 @@ export function cerca(D, q) {
   });
   return { cartelle, items };
 }
+
+/* ---------- ricerca nel testo e indice dei nomi ----------
+   I due file li scrive seo/indice.py a ogni sincronizzazione. Si scaricano solo
+   quando servono (la prima ricerca, la prima lezione aperta) e una volta sola. */
+const _unaVolta = {};
+function caricaUnaVolta(p) {
+  if (!_unaVolta[p]) {
+    _unaVolta[p] = fetch(resolvePath(p)).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+      .then((x) => { if (!x) delete _unaVolta[p]; return x; });
+  }
+  return _unaVolta[p];
+}
+export const caricaIndice = () => caricaUnaVolta("data/indice-uso.json");
+
+/* minuscole e senza accenti, carattere per carattere: le posizioni restano quelle del testo vero */
+function piatto(t) {
+  let o = "";
+  for (let i = 0; i < t.length; i++) {
+    const c = t[i], k = c.charCodeAt(0);
+    if (k < 128) { o += k >= 65 && k <= 90 ? String.fromCharCode(k + 32) : c; continue; }
+    const n = c.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    o += n ? n[0] : c;
+  }
+  return o;
+}
+let _testi = null;
+export function caricaTesti() {
+  if (!_testi) {
+    _testi = caricaUnaVolta("data/testi.json").then((x) => {
+      if (!x || !Array.isArray(x.d)) { _testi = null; return null; }
+      return x.d.map((d) => ({ ...d, n: d.p.map(piatto) }));
+    });
+  }
+  return _testi;
+}
+
+/* parole della ricerca: almeno 2 lettere; «"..."» o più parole = anche la frase intera */
+export function paroleRicerca(q) {
+  return norm(q).replace(/["«»“”]/g, " ").split(/[^a-z0-9'’]+/).map((w) => w.replace(/^['’]+|['’]+$/g, "")).filter((w) => w.length >= 2);
+}
+/* cerca nel testo dei fascicoli: ogni parola deve esserci (anche come inizio di parola:
+   «galile» trova Galileo e Galilea, «galileo» solo Galileo). Una voce per lezione. */
+export function cercaNeiTesti(T, q) {
+  const parole = paroleRicerca(q);
+  if (!T || !parole.length || parole.join("").length < 3) return [];
+  const re = parole.map((w) => new RegExp("(^|[^a-z0-9])(" + escRe(w) + ")", "g"));
+  const frase = parole.length > 1 ? new RegExp("(^|[^a-z0-9])(" + parole.map(escRe).join("[^a-z0-9]+") + ")", "g") : null;
+  const conta = (r, s) => { r.lastIndex = 0; let n = 0, m; while ((m = r.exec(s))) { n++; if (m[0].length === 0) r.lastIndex++; } return n; };
+  const primo = (r, s) => { r.lastIndex = 0; const m = r.exec(s); return m ? [m.index + m[1].length, m.index + m[0].length] : null; };
+  const perLez = new Map();
+  T.forEach((d) => {
+    const k = d.a + "|" + d.u + "|" + (d.l || d.t || "");
+    const tutto = parole.map(() => false);
+    const pagine = [];
+    d.n.forEach((s, i) => {
+      let n = 0;
+      re.forEach((r, j) => { const c = conta(r, s); if (c) { tutto[j] = true; n += c; } });
+      if (!n) return;
+      const nf = frase ? conta(frase, s) : 0;
+      const pos = (frase && nf ? primo(frase, s) : null) || primo(re[0], s) || re.map((r) => primo(r, s)).find(Boolean);
+      pagine.push({ p: i + 1, n, nf, pos });
+    });
+    if (!pagine.length) return;
+    const g = perLez.get(k) || { a: d.a, u: d.u, l: d.l, t: d.t, ok: parole.map(() => false), pagine: [], n: 0, nf: 0, docs: [] };
+    tutto.forEach((x, j) => { if (x) g.ok[j] = true; });
+    pagine.forEach((p) => { g.n += p.n; g.nf += p.nf; g.pagine.push({ ...p, f: d.f, testo: d.p[p.p - 1], pdf: /\.pdf$/i.test(d.f) }); });
+    perLez.set(k, g);
+  });
+  const out = [...perLez.values()].filter((g) => g.ok.every(Boolean));
+  out.forEach((g) => {
+    /* la pagina migliore: prima quelle con la frase intera, poi quelle con più parole trovate */
+    g.pagine.sort((x, y) => y.nf - x.nf || y.n - x.n || x.p - y.p);
+    g.migliore = g.pagine[0];
+  });
+  return out.sort((x, y) => y.nf - x.nf || y.n - x.n || String(x.a).localeCompare(String(y.a)));
+}
+/* un pezzo di testo attorno alla parola trovata, con le parti da evidenziare */
+export function estratto(testo, pos, parole, larg = 220) {
+  const [a, b] = pos || [0, 0];
+  let ini = Math.max(0, a - 80), fin = Math.min(testo.length, Math.max(b, ini + larg));
+  if (ini > 0) { const sp = testo.indexOf(" ", ini); if (sp > -1 && sp < a) ini = sp + 1; }
+  if (fin < testo.length) { const sp = testo.lastIndexOf(" ", fin); if (sp > b) fin = sp; }
+  const pezzo = testo.slice(ini, fin), p2 = piatto(pezzo);
+  const segni = [];
+  parole.forEach((w) => {
+    const r = new RegExp("(^|[^a-z0-9])(" + escRe(w) + ")", "g"); let m;
+    while ((m = r.exec(p2))) { const s = m.index + m[1].length; segni.push([s, s + w.length]); if (m[0].length === 0) r.lastIndex++; }
+  });
+  segni.sort((x, y) => x[0] - y[0]);
+  const parti = []; let c = 0;
+  segni.forEach(([s, e]) => { if (s < c) return; if (s > c) parti.push({ t: pezzo.slice(c, s) }); parti.push({ t: pezzo.slice(s, e), m: true }); c = e; });
+  if (c < pezzo.length) parti.push({ t: pezzo.slice(c) });
+  return { prima: ini > 0, dopo: fin < testo.length, parti };
+}
+/* voci dell'indice che corrispondono alla ricerca («galileo», «galilei», «lutero»…) */
+export function cercaNellIndice(I, q) {
+  const k = norm(q).replace(/["«»“”]/g, "").trim();
+  if (!I || k.length < 3) return [];
+  return I.voci.filter((v) => v.l.length && (v.f.some((f) => f === k || (k.length >= 4 && f.startsWith(k))) || norm(v.n) === k
+    || (k.length >= 4 && norm(v.n).split(/\s+/).some((w) => w.startsWith(k)))));
+}
+/* le lezioni vicine a una lezione (stesse voci dell'indice) */
+export function viciniDiLezione(I, anno, uda, titolo) {
+  if (!I) return { voci: [], vicini: [] };
+  const i = I.lezioni.findIndex((x) => String(x[0]) === String(anno) && normT(x[1]) === normT(uda) && normT(x[2]) === normT(titolo));
+  if (i < 0) return { voci: [], vicini: [] };
+  const voci = I.voci.filter((v) => v.l.some((r) => r[0] === i)).map((v) => ({ v, n: v.l.find((r) => r[0] === i)[1] })).sort((x, y) => y.n - x.n);
+  const vicini = (I.vicini[String(i)] || []).filter(([j]) => I.lezioni[j].length === 3).map(([j, com]) => ({ a: I.lezioni[j][0], u: I.lezioni[j][1], l: I.lezioni[j][2], voci: com.map((x) => I.voci[x].n) }));
+  return { voci, vicini };
+}

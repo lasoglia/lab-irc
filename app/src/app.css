@@ -330,3 +330,15 @@ html[data-lim]:not([data-tema="chiaro"]) .lab-pagina-hero--anno{ background:line
 /* ---------- la porta delle verifiche: il campo della password di oggi ---------- */
 .lab-pw{ flex:1; min-width:0; font:600 22px var(--lab-font-body); letter-spacing:.12em; text-align:center; padding:9px 13px; border-radius:12px; border:1.5px solid var(--lab-line); background:var(--lab-bg); color:var(--lab-ink); }
 .lab-pw:focus-visible{ outline:2px solid var(--lab-ciano); outline-offset:2px; }
+
+/* ricerca nel testo e indice dei nomi */
+.lab-estratto{ display:block; margin-top:4px; font-size:14.5px; line-height:1.5; color:var(--lab-ink-soft); white-space:normal; }
+.lab-segno{ background:color-mix(in srgb, var(--lab-oro) 34%, transparent); color:var(--lab-ink); border-radius:3px; padding:0 2px; }
+.lab-trovato + .lab-trovato{ margin-top:2px; }
+.lab-pagine{ margin:0 0 6px 55px; font-size:13.5px; color:var(--lab-ink-soft); }
+.lab-pagine a{ color:var(--lab-viola-2, var(--lab-oro)); }
+.lab-attesa{ color:var(--lab-ink-soft); font-size:15px; margin:0 0 21px; }
+.lab-voci-indice{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.lab-voce-indice{ border:1px solid var(--lab-line); border-radius:99px; padding:4px 13px; font-size:14px; color:var(--lab-ink-soft); text-decoration:none; }
+@media (hover:hover){ .lab-voce-indice:hover{ color:var(--lab-ink); border-color:var(--lab-oro); } }
+@media (max-width:720px){ .lab-pagine{ margin-left:8px; } }
