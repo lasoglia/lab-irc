@@ -9,5 +9,6 @@ Disallow: /sorgenti-lezioni/
 Disallow: /supabase/
 Disallow: /app/
 Disallow: /promozione/
+Disallow: /indice/proposte/
 
 Sitemap: https://www.labirc.it/sitemap.xml
