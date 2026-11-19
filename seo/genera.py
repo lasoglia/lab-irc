@@ -13,6 +13,8 @@ statica e leggibile dai motori di ricerca:
   lezioni/index.html                       indice di tutte le lezioni
   lezioni/<anno>/<uda>/<lezione>/index.html una pagina vera per ogni lezione
   sitemap.xml                              elenco degli indirizzi per Google
+  indice/, data/testi.json, data/indice-uso.json   ricerca nel testo e indice dei nomi
+                                           (vedi seo/indice.py)
   uploads/*.html                           (opzionale) meta description negli artefatti
 
 FASI
@@ -411,7 +413,7 @@ def pagina(titolo, descrizione, canonical, profondita, corpo, jsonld=None) -> st
 <body>
 <div class="wrap">
 {corpo}
-<footer>© {dt.date.today().year} Matteo Sestili · Tutti i diritti riservati · <a href="{su}">Lab IRC</a> · <a href="{su}lezioni/">Indice delle lezioni</a><br><a href="{su}privacy.html">Privacy e cookie</a></footer>
+<footer>© {dt.date.today().year} Matteo Sestili · Tutti i diritti riservati · <a href="{su}">Lab IRC</a> · <a href="{su}lezioni/">Indice delle lezioni</a> · <a href="{su}indice/">Indice dei nomi e dei temi</a><br><a href="{su}privacy.html">Privacy e cookie</a></footer>
 </div>
 </body>
 </html>
@@ -425,7 +427,7 @@ def link_materiale(m: dict, su: str) -> str:
             f'<small>{e(tipo)}</small></a>')
 
 
-def costruisci(sito, anni, uda, lezioni, extra_uda, seo) -> list[tuple[str, str]]:
+def costruisci(sito, anni, uda, lezioni, extra_uda, seo, per_lezione=None) -> list[tuple[str, str]]:
     """Scrive le pagine e restituisce (url, lastmod) per la sitemap."""
     cartella = RADICE / "lezioni"
     # Ripulisce le pagine generate in passato (lezioni rinominate o eliminate)
@@ -448,6 +450,12 @@ def costruisci(sito, anni, uda, lezioni, extra_uda, seo) -> list[tuple[str, str]
         su = "../" * 4
         app = (f"{su}#anno/{enc(anno)}/uda/{enc(l.get('uda',''))}/lezione/{enc(l['titolo'])}")
         argomenti = "".join(f"<li>{e(a)}</li>" for a in s.get("argomenti", []))
+        info = (per_lezione or {}).get((anno, l.get("uda", ""), l["titolo"]), {"voci": [], "vicini": []})
+        voci_lez = "".join(f'<li><a href="{su}indice/{v["s"]}/">{e(v["n"])}</a></li>' for v, _ in info["voci"][:24])
+        vicini = "".join(
+            f'<li><a href="{su}lezioni/{a2}/{slug(u2)}/{slug(t2)}/">{e(t2)}</a> '
+            f'<small>· classe {e(NOMI_ANNO.get(str(a2), ""))} · {e(", ".join(com))}</small></li>'
+            for (a2, u2, t2), com in info["vicini"])
         materiali = "".join(link_materiale(m, su) for m in l.get("materiali", []))
         corpo = f"""<nav class="bc"><a href="{su}">Lab IRC</a> › <a href="{su}lezioni/#anno-{anno}">Classe {e(classe)}</a> › {e(l.get('uda'))}</nav>
 <div class="kicker">Religione Cattolica · classe {e(classe)}</div>
@@ -457,7 +465,9 @@ def costruisci(sito, anni, uda, lezioni, extra_uda, seo) -> list[tuple[str, str]
 <h2>Materiali della lezione</h2>
 {materiali or '<p>I materiali di questa lezione sono in preparazione.</p>'}
 <a class="cta" href="{e(app)}">Apri la lezione nel Lab</a>
-<p style="margin-top:28px;color:var(--lab-muted)">Unità didattica: <b>{e(l.get('uda'))}</b>.</p>"""
+<p style="margin-top:28px;color:var(--lab-muted)">Unità didattica: <b>{e(l.get('uda'))}</b>.</p>
+{f'<h2>Nella lezione si parla di</h2><ul class="argomenti">{voci_lez}</ul>' if voci_lez else ''}
+{f'<h2>Ne parlano anche</h2><ul>{vicini}</ul>' if vicini else ''}"""
         jsonld = {
             "@context": "https://schema.org", "@type": "LearningResource",
             "name": l["titolo"], "headline": s.get("titolo_seo", l["titolo"]),
@@ -465,15 +475,21 @@ def costruisci(sito, anni, uda, lezioni, extra_uda, seo) -> list[tuple[str, str]
             "inLanguage": "it", "author": autore, "isAccessibleForFree": True,
             "educationalLevel": f"Scuola secondaria di secondo grado – classe {classe}",
             "learningResourceType": "Lezione",
-            "about": "Insegnamento della Religione Cattolica",
+            "about": [{"@type": "Thing", "name": "Insegnamento della Religione Cattolica"}] + [
+                {"@type": {"persona": "Person", "luogo": "Place"}.get(v["t"], "Thing"), "name": v["n"],
+                 **({"sameAs": v["w"]} if v.get("w") else {})} for v, _ in info["voci"][:12]],
             "teaches": s.get("argomenti", []), "keywords": ", ".join(s.get("parole_chiave", [])),
             "isPartOf": {"@type": "Course", "name": l.get("uda", ""),
                          "provider": autore},
         }
+        briciole = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Lab IRC", "item": URL_SITO + "/"},
+            {"@type": "ListItem", "position": 2, "name": f"Classe {classe}", "item": f"{URL_SITO}/lezioni/#anno-{anno}"},
+            {"@type": "ListItem", "position": 3, "name": l["titolo"], "item": canonical}]}
         dest = RADICE / rel / "index.html"
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(pagina(s.get("titolo_seo") or l["titolo"], s.get("meta_description", ""),
-                               canonical, 4, corpo, jsonld), encoding="utf-8")
+                               canonical, 4, corpo, [jsonld, briciole]), encoding="utf-8")
         date = [ultima_modifica(file_locale(m["file"])) for m in l.get("materiali", []) if m.get("file")]
         url_sitemap.append((canonical, max(date) if date else ultima_modifica(RADICE / "data" / "lezioni.json")))
 
@@ -571,7 +587,18 @@ def main():
     sito, anni, uda, lezioni, extra_uda = raccogli()
     print(f"Lezioni trovate: {len(lezioni)}")
     seo = aggiorna_seo(lezioni, uda, usa_ia=not a.senza_ia, forza=a.forza)
-    url_pagine = costruisci(sito, anni, uda, lezioni, extra_uda, seo)
+    # ricerca nel testo e indice dei nomi (seo/indice.py): se fallisce, le pagine si fanno lo stesso
+    uso = None
+    try:
+        import indice
+        _, uso, prop = indice.esegui(lezioni, extra_uda)
+    except Exception as ex:
+        print(f"! indice non aggiornato: {ex}", file=sys.stderr)
+    url_pagine = costruisci(sito, anni, uda, lezioni, extra_uda, seo,
+                            indice.lezioni_per_pagina(uso) if uso else None)
+    if uso:
+        url_pagine += indice.scrivi_pagine(uso, prop, pagina, e, URL_SITO,
+                                           ultima_modifica(RADICE / "data" / "indice.json"))
     n_url = scrivi_sitemap(lezioni, extra_uda, url_pagine)
     n_art = 0 if a.no_artefatti else inietta_meta_artefatti(lezioni, seo)
     print(f"Pagine statiche: {len(lezioni) + 1} · URL in sitemap: {n_url} · artefatti aggiornati: {n_art}")
