@@ -8,6 +8,15 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 - `claude/lab-irc-exam-platform-v2-712y8s`: il ramo da cui si pubblica il sito. Riceve `main`
   in automatico con `sync-main-to-branch.yml`, che rigenera anche pagine SEO e kit social.
 
+## Ricerca e indice del sito
+- `seo/indice.py` (lo chiama `seo/genera.py` nella sincronizzazione, senza IA) scrive `data/testi.json` (testo
+  dei fascicoli pagina per pagina: la casella «Cerca…» lo scarica alla prima ricerca), `data/indice-uso.json`
+  e le pagine `indice/` (A–Z e una per voce; `indice/proposte/` nascosta, con i nomi da aggiungere).
+- Le voci le decide Matteo in `data/indice.json` (pannello /admin → «Indice dei nomi»): nome, tipo, forme,
+  esclusioni (es. «il Galileo» detto di Gesù), Wikipedia. Ogni lezione ha «Ne parlano anche…».
+- `seo/indexnow.py` avvisa Bing delle pagine cambiate (codice pubblico in `indexnow.txt`). La ricerca è anche
+  un indirizzo: `www.labirc.it/?q=parola`.
+
 ## Social
 - **Dal 9 novembre 2026 Claude è spento in tutte le Action** (decisione di Matteo, piano ridotto): nessun workflow passa
   ANTHROPIC_API_KEY o CLAUDE_CODE_OAUTH_TOKEN, il piano della settimana e la chat con @claude non partono, e gli
