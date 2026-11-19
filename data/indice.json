@@ -1,0 +1,1390 @@
+{
+  "voci": [
+    {
+      "nome": "Galileo Galilei",
+      "tipo": "persona",
+      "forme": [
+        "Galileo Galilei",
+        "Galilei",
+        "Galileo"
+      ],
+      "escludi": [
+        "il Galileo",
+        "Il Galileo",
+        "Galileo di Nazaret"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Galileo_Galilei",
+      "descrizione": ""
+    },
+    {
+      "nome": "Blaise Pascal",
+      "tipo": "persona",
+      "forme": [
+        "Blaise Pascal",
+        "Pascal"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Blaise_Pascal",
+      "descrizione": ""
+    },
+    {
+      "nome": "Martin Lutero",
+      "tipo": "persona",
+      "forme": [
+        "Martin Lutero",
+        "Lutero"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Martin_Lutero",
+      "descrizione": ""
+    },
+    {
+      "nome": "Agostino d'Ippona",
+      "tipo": "persona",
+      "forme": [
+        "Agostino d'Ippona",
+        "Agostino d’Ippona",
+        "sant'Agostino",
+        "Sant'Agostino",
+        "sant’Agostino",
+        "Sant’Agostino",
+        "Agostino"
+      ],
+      "escludi": [
+        "Agostino Bea",
+        "Agostino Oreggi",
+        "Agostino Casaroli"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Agostino_d%27Ippona",
+      "descrizione": ""
+    },
+    {
+      "nome": "Tommaso d'Aquino",
+      "tipo": "persona",
+      "forme": [
+        "Tommaso d'Aquino",
+        "Tommaso d’Aquino",
+        "Aquinate",
+        "san Tommaso",
+        "San Tommaso"
+      ],
+      "escludi": [
+        "Tommaso Moro"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Tommaso_d%27Aquino",
+      "descrizione": ""
+    },
+    {
+      "nome": "Aristotele",
+      "tipo": "persona",
+      "forme": [
+        "Aristotele"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Aristotele",
+      "descrizione": ""
+    },
+    {
+      "nome": "Platone",
+      "tipo": "persona",
+      "forme": [
+        "Platone"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Platone",
+      "descrizione": ""
+    },
+    {
+      "nome": "Socrate",
+      "tipo": "persona",
+      "forme": [
+        "Socrate"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Socrate",
+      "descrizione": ""
+    },
+    {
+      "nome": "Niccolò Copernico",
+      "tipo": "persona",
+      "forme": [
+        "Niccolò Copernico",
+        "Copernico"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Niccol%C3%B2_Copernico",
+      "descrizione": ""
+    },
+    {
+      "nome": "Claudio Tolomeo",
+      "tipo": "persona",
+      "forme": [
+        "Claudio Tolomeo",
+        "Tolomeo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Claudio_Tolomeo",
+      "descrizione": ""
+    },
+    {
+      "nome": "Georges Lemaître",
+      "tipo": "persona",
+      "forme": [
+        "Georges Lemaître",
+        "George Lemaître",
+        "Lemaître",
+        "Lemaitre"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Georges_Lema%C3%AEtre",
+      "descrizione": ""
+    },
+    {
+      "nome": "Albert Einstein",
+      "tipo": "persona",
+      "forme": [
+        "Albert Einstein",
+        "Einstein"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Albert_Einstein",
+      "descrizione": ""
+    },
+    {
+      "nome": "Roberto Bellarmino",
+      "tipo": "persona",
+      "forme": [
+        "Roberto Bellarmino",
+        "Bellarmino"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Roberto_Bellarmino",
+      "descrizione": ""
+    },
+    {
+      "nome": "Michelangelo Buonarroti",
+      "tipo": "persona",
+      "forme": [
+        "Michelangelo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Michelangelo_Buonarroti",
+      "descrizione": ""
+    },
+    {
+      "nome": "Dante Alighieri",
+      "tipo": "persona",
+      "forme": [
+        "Dante Alighieri",
+        "Dante"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Dante_Alighieri",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giuseppe Flavio",
+      "tipo": "persona",
+      "forme": [
+        "Giuseppe Flavio",
+        "Flavio Giuseppe"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Flavio_Giuseppe",
+      "descrizione": ""
+    },
+    {
+      "nome": "Tacito",
+      "tipo": "persona",
+      "forme": [
+        "Publio Cornelio Tacito",
+        "Tacito"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Publio_Cornelio_Tacito",
+      "descrizione": ""
+    },
+    {
+      "nome": "Plinio il Giovane",
+      "tipo": "persona",
+      "forme": [
+        "Plinio il Giovane",
+        "Plinio"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Plinio_il_Giovane",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giustino martire",
+      "tipo": "persona",
+      "forme": [
+        "Giustino"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Tertulliano",
+      "tipo": "persona",
+      "forme": [
+        "Tertulliano"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Tertulliano",
+      "descrizione": ""
+    },
+    {
+      "nome": "Origene",
+      "tipo": "persona",
+      "forme": [
+        "Origene"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Origene",
+      "descrizione": ""
+    },
+    {
+      "nome": "Girolamo",
+      "tipo": "persona",
+      "forme": [
+        "san Girolamo",
+        "San Girolamo",
+        "Girolamo"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Gregorio Magno",
+      "tipo": "persona",
+      "forme": [
+        "Gregorio Magno",
+        "Gregorio I"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Gregorio_I",
+      "descrizione": ""
+    },
+    {
+      "nome": "Ponzio Pilato",
+      "tipo": "persona",
+      "forme": [
+        "Ponzio Pilato",
+        "Pilato"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Ponzio_Pilato",
+      "descrizione": ""
+    },
+    {
+      "nome": "Abramo",
+      "tipo": "persona",
+      "forme": [
+        "Abramo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Abramo",
+      "descrizione": ""
+    },
+    {
+      "nome": "Mosè",
+      "tipo": "persona",
+      "forme": [
+        "Mosè"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Mos%C3%A8",
+      "descrizione": ""
+    },
+    {
+      "nome": "Davide",
+      "tipo": "persona",
+      "forme": [
+        "re Davide",
+        "Davide"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Salomone",
+      "tipo": "persona",
+      "forme": [
+        "Salomone"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Salomone",
+      "descrizione": ""
+    },
+    {
+      "nome": "Isaia",
+      "tipo": "persona",
+      "forme": [
+        "Isaia"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Isaia",
+      "descrizione": ""
+    },
+    {
+      "nome": "Geremia",
+      "tipo": "persona",
+      "forme": [
+        "Geremia"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Geremia",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giobbe",
+      "tipo": "persona",
+      "forme": [
+        "Giobbe"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Giobbe",
+      "descrizione": ""
+    },
+    {
+      "nome": "Adamo ed Eva",
+      "tipo": "persona",
+      "forme": [
+        "Adamo",
+        "Eva"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Noè",
+      "tipo": "persona",
+      "forme": [
+        "Noè"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/No%C3%A8",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giacobbe",
+      "tipo": "persona",
+      "forme": [
+        "Giacobbe"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Giacobbe",
+      "descrizione": ""
+    },
+    {
+      "nome": "Isacco",
+      "tipo": "persona",
+      "forme": [
+        "Isacco"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Isacco",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giosuè",
+      "tipo": "persona",
+      "forme": [
+        "Giosuè"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Gios%C3%B9%C3%A8",
+      "descrizione": ""
+    },
+    {
+      "nome": "Samuele",
+      "tipo": "persona",
+      "forme": [
+        "Samuele"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Amos",
+      "tipo": "persona",
+      "forme": [
+        "Amos"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giovanni Battista",
+      "tipo": "persona",
+      "forme": [
+        "Giovanni Battista",
+        "il Battista"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Giovanni_Battista",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pietro apostolo",
+      "tipo": "persona",
+      "forme": [
+        "Simon Pietro",
+        "Simone Pietro",
+        "san Pietro",
+        "Pietro",
+        "Cefa"
+      ],
+      "escludi": [
+        "San Pietro",
+        "Pietro Abelardo",
+        "Pietro Lombardo",
+        "Pietro il Venerabile",
+        "Pietro Gasparri",
+        "Pietro Parente",
+        "legato Pietro",
+        "chiese di Pietro"
+      ],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Paolo di Tarso",
+      "tipo": "persona",
+      "forme": [
+        "Paolo di Tarso",
+        "san Paolo",
+        "apostolo Paolo",
+        "Saulo"
+      ],
+      "escludi": [
+        "Edizioni San Paolo",
+        "San Paolo Edizioni"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Paolo_di_Tarso",
+      "descrizione": ""
+    },
+    {
+      "nome": "Maria di Magdala",
+      "tipo": "persona",
+      "forme": [
+        "Maria di Magdala",
+        "Maria Maddalena"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Maria_Maddalena",
+      "descrizione": ""
+    },
+    {
+      "nome": "Francesco d'Assisi",
+      "tipo": "persona",
+      "forme": [
+        "Francesco d'Assisi",
+        "Francesco d’Assisi",
+        "san Francesco",
+        "San Francesco"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Francesco_d%27Assisi",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giovanni Paolo II",
+      "tipo": "persona",
+      "forme": [
+        "Giovanni Paolo II"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Giovanni_Paolo_II",
+      "descrizione": ""
+    },
+    {
+      "nome": "Benedetto XVI",
+      "tipo": "persona",
+      "forme": [
+        "Benedetto XVI",
+        "Joseph Ratzinger",
+        "Ratzinger"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Benedetto_XVI",
+      "descrizione": ""
+    },
+    {
+      "nome": "Papa Francesco",
+      "tipo": "persona",
+      "forme": [
+        "papa Francesco",
+        "Papa Francesco",
+        "Jorge Mario Bergoglio",
+        "Bergoglio"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Francesco",
+      "descrizione": ""
+    },
+    {
+      "nome": "Leone XIV",
+      "tipo": "persona",
+      "forme": [
+        "Leone XIV"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Leone_XIV",
+      "descrizione": ""
+    },
+    {
+      "nome": "Leone XIII",
+      "tipo": "persona",
+      "forme": [
+        "Leone XIII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Leone_XIII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Leone X",
+      "tipo": "persona",
+      "forme": [
+        "Leone X"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Leone_X",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pio XII",
+      "tipo": "persona",
+      "forme": [
+        "Pio XII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Pio_XII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pio XI",
+      "tipo": "persona",
+      "forme": [
+        "Pio XI"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Pio_XI",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pio IX",
+      "tipo": "persona",
+      "forme": [
+        "Pio IX"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Pio_IX",
+      "descrizione": ""
+    },
+    {
+      "nome": "Paolo VI",
+      "tipo": "persona",
+      "forme": [
+        "Paolo VI"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Paolo_VI",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giovanni XXIII",
+      "tipo": "persona",
+      "forme": [
+        "Giovanni XXIII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Giovanni_XXIII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Innocenzo III",
+      "tipo": "persona",
+      "forme": [
+        "Innocenzo III"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Innocenzo_III",
+      "descrizione": ""
+    },
+    {
+      "nome": "Gregorio VII",
+      "tipo": "persona",
+      "forme": [
+        "Gregorio VII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Gregorio_VII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Bonifacio VIII",
+      "tipo": "persona",
+      "forme": [
+        "Bonifacio VIII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Bonifacio_VIII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Urbano VIII",
+      "tipo": "persona",
+      "forme": [
+        "Urbano VIII"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Papa_Urbano_VIII",
+      "descrizione": ""
+    },
+    {
+      "nome": "Carlo Magno",
+      "tipo": "persona",
+      "forme": [
+        "Carlo Magno"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Carlo_Magno",
+      "descrizione": ""
+    },
+    {
+      "nome": "Costantino I",
+      "tipo": "persona",
+      "forme": [
+        "Costantino"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Costantino_I",
+      "descrizione": ""
+    },
+    {
+      "nome": "Nerone",
+      "tipo": "persona",
+      "forme": [
+        "Nerone"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Nerone",
+      "descrizione": ""
+    },
+    {
+      "nome": "Adolf Hitler",
+      "tipo": "persona",
+      "forme": [
+        "Adolf Hitler",
+        "Hitler"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Adolf_Hitler",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giovanni Calvino",
+      "tipo": "persona",
+      "forme": [
+        "Giovanni Calvino",
+        "Calvino"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Giovanni_Calvino",
+      "descrizione": ""
+    },
+    {
+      "nome": "Johann Tetzel",
+      "tipo": "persona",
+      "forme": [
+        "Johann Tetzel",
+        "Tetzel"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Johann_Tetzel",
+      "descrizione": ""
+    },
+    {
+      "nome": "John Henry Newman",
+      "tipo": "persona",
+      "forme": [
+        "John Henry Newman",
+        "Newman"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/John_Henry_Newman",
+      "descrizione": ""
+    },
+    {
+      "nome": "Otto Dix",
+      "tipo": "persona",
+      "forme": [
+        "Otto Dix"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Otto_Dix",
+      "descrizione": ""
+    },
+    {
+      "nome": "Charles Darwin",
+      "tipo": "persona",
+      "forme": [
+        "Charles Darwin",
+        "Darwin"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Charles_Darwin",
+      "descrizione": ""
+    },
+    {
+      "nome": "Gerusalemme",
+      "tipo": "luogo",
+      "forme": [
+        "Gerusalemme"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Gerusalemme",
+      "descrizione": ""
+    },
+    {
+      "nome": "Galilea",
+      "tipo": "luogo",
+      "forme": [
+        "Galilea"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Galilea",
+      "descrizione": ""
+    },
+    {
+      "nome": "Nazaret",
+      "tipo": "luogo",
+      "forme": [
+        "Nazaret",
+        "Nazareth"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Nazaret",
+      "descrizione": ""
+    },
+    {
+      "nome": "Betlemme",
+      "tipo": "luogo",
+      "forme": [
+        "Betlemme"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Betlemme",
+      "descrizione": ""
+    },
+    {
+      "nome": "Egitto",
+      "tipo": "luogo",
+      "forme": [
+        "Egitto"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Antico_Egitto",
+      "descrizione": ""
+    },
+    {
+      "nome": "Babilonia",
+      "tipo": "luogo",
+      "forme": [
+        "Babilonia"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Babilonia",
+      "descrizione": ""
+    },
+    {
+      "nome": "Qumran",
+      "tipo": "luogo",
+      "forme": [
+        "Qumran"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Qumran",
+      "descrizione": ""
+    },
+    {
+      "nome": "Monte Sinai",
+      "tipo": "luogo",
+      "forme": [
+        "Sinai"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Monte_Sinai",
+      "descrizione": ""
+    },
+    {
+      "nome": "Wittenberg",
+      "tipo": "luogo",
+      "forme": [
+        "Wittenberg"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Wittenberg",
+      "descrizione": ""
+    },
+    {
+      "nome": "Worms",
+      "tipo": "luogo",
+      "forme": [
+        "Worms"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Auschwitz",
+      "tipo": "luogo",
+      "forme": [
+        "Auschwitz"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Campo_di_concentramento_di_Auschwitz",
+      "descrizione": ""
+    },
+    {
+      "nome": "Samaria",
+      "tipo": "luogo",
+      "forme": [
+        "Samaria",
+        "samaritano",
+        "samaritani",
+        "Samaritano",
+        "Samaritani"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Samaria",
+      "descrizione": ""
+    },
+    {
+      "nome": "Antiochia",
+      "tipo": "luogo",
+      "forme": [
+        "Antiochia"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Tempio di Gerusalemme",
+      "tipo": "luogo",
+      "forme": [
+        "Tempio di Gerusalemme",
+        "Tempio"
+      ],
+      "escludi": [
+        "Tempio Maggiore"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Tempio_di_Gerusalemme",
+      "descrizione": ""
+    },
+    {
+      "nome": "Catechismo della Chiesa Cattolica",
+      "tipo": "documento",
+      "forme": [
+        "Catechismo della Chiesa Cattolica",
+        "Catechismo",
+        "CCC"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Catechismo_della_Chiesa_cattolica",
+      "descrizione": ""
+    },
+    {
+      "nome": "Gaudium et spes",
+      "tipo": "documento",
+      "forme": [
+        "Gaudium et spes",
+        "Gaudium et Spes"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Gaudium_et_spes",
+      "descrizione": ""
+    },
+    {
+      "nome": "Dei Verbum",
+      "tipo": "documento",
+      "forme": [
+        "Dei Verbum"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Dei_Verbum",
+      "descrizione": ""
+    },
+    {
+      "nome": "Lumen gentium",
+      "tipo": "documento",
+      "forme": [
+        "Lumen gentium",
+        "Lumen Gentium"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Lumen_gentium",
+      "descrizione": ""
+    },
+    {
+      "nome": "Sacrosanctum Concilium",
+      "tipo": "documento",
+      "forme": [
+        "Sacrosanctum Concilium"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Sacrosanctum_Concilium",
+      "descrizione": ""
+    },
+    {
+      "nome": "Dignitatis humanae",
+      "tipo": "documento",
+      "forme": [
+        "Dignitatis humanae",
+        "Dignitatis Humanae"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Dignitatis_humanae",
+      "descrizione": ""
+    },
+    {
+      "nome": "Nostra aetate",
+      "tipo": "documento",
+      "forme": [
+        "Nostra aetate",
+        "Nostra Aetate"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Nostra_aetate",
+      "descrizione": ""
+    },
+    {
+      "nome": "Fides et ratio",
+      "tipo": "documento",
+      "forme": [
+        "Fides et ratio"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Fides_et_ratio",
+      "descrizione": ""
+    },
+    {
+      "nome": "Laudato si'",
+      "tipo": "documento",
+      "forme": [
+        "Laudato si",
+        "Laudato sì"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Laudato_si%27",
+      "descrizione": ""
+    },
+    {
+      "nome": "Fratelli tutti",
+      "tipo": "documento",
+      "forme": [
+        "Fratelli tutti"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Fratelli_tutti",
+      "descrizione": ""
+    },
+    {
+      "nome": "Veritatis splendor",
+      "tipo": "documento",
+      "forme": [
+        "Veritatis splendor"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Veritatis_splendor",
+      "descrizione": ""
+    },
+    {
+      "nome": "Salvifici doloris",
+      "tipo": "documento",
+      "forme": [
+        "Salvifici doloris"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Providentissimus Deus",
+      "tipo": "documento",
+      "forme": [
+        "Providentissimus Deus"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Providentissimus_Deus",
+      "descrizione": ""
+    },
+    {
+      "nome": "Humani generis",
+      "tipo": "documento",
+      "forme": [
+        "Humani generis"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Humani_generis",
+      "descrizione": ""
+    },
+    {
+      "nome": "Sillabo",
+      "tipo": "documento",
+      "forme": [
+        "Sillabo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Sillabo",
+      "descrizione": ""
+    },
+    {
+      "nome": "Mit brennender Sorge",
+      "tipo": "documento",
+      "forme": [
+        "Mit brennender Sorge"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Mit_brennender_Sorge",
+      "descrizione": ""
+    },
+    {
+      "nome": "Indulgentiarum doctrina",
+      "tipo": "documento",
+      "forme": [
+        "Indulgentiarum doctrina",
+        "Indulgentiarum Doctrina"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Antiqua et nova",
+      "tipo": "documento",
+      "forme": [
+        "Antiqua et nova",
+        "Antiqua et Nova"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Lettera a Diogneto",
+      "tipo": "documento",
+      "forme": [
+        "A Diogneto",
+        "Diogneto"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Lettera_a_Diogneto",
+      "descrizione": ""
+    },
+    {
+      "nome": "Genesi",
+      "tipo": "documento",
+      "forme": [
+        "Genesi"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Libro_della_Genesi",
+      "descrizione": ""
+    },
+    {
+      "nome": "Esodo",
+      "tipo": "documento",
+      "forme": [
+        "libro dell'Esodo",
+        "Esodo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Libro_dell%27Esodo",
+      "descrizione": ""
+    },
+    {
+      "nome": "Salmi",
+      "tipo": "documento",
+      "forme": [
+        "Salmi",
+        "Salmo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Libro_dei_Salmi",
+      "descrizione": ""
+    },
+    {
+      "nome": "Torah",
+      "tipo": "documento",
+      "forme": [
+        "Torah",
+        "Torà"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Torah",
+      "descrizione": ""
+    },
+    {
+      "nome": "Mishnah",
+      "tipo": "documento",
+      "forme": [
+        "Mishnah"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Mishnah",
+      "descrizione": ""
+    },
+    {
+      "nome": "Concilio Vaticano II",
+      "tipo": "evento",
+      "forme": [
+        "Concilio Vaticano II",
+        "Vaticano II"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Concilio_Vaticano_II",
+      "descrizione": ""
+    },
+    {
+      "nome": "Concilio di Trento",
+      "tipo": "evento",
+      "forme": [
+        "Concilio di Trento",
+        "concilio di Trento",
+        "tridentino",
+        "tridentina"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Concilio_di_Trento",
+      "descrizione": ""
+    },
+    {
+      "nome": "Concilio di Nicea",
+      "tipo": "evento",
+      "forme": [
+        "Concilio di Nicea",
+        "concilio di Nicea",
+        "Nicea",
+        "Nicea I"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Riforma protestante",
+      "tipo": "evento",
+      "forme": [
+        "Riforma protestante",
+        "riforma protestante",
+        "protestanti",
+        "protestante",
+        "protestantesimo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Riforma_protestante",
+      "descrizione": ""
+    },
+    {
+      "nome": "Shoah",
+      "tipo": "evento",
+      "forme": [
+        "Shoah",
+        "Olocausto"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Olocausto",
+      "descrizione": ""
+    },
+    {
+      "nome": "Big Bang",
+      "tipo": "tema",
+      "forme": [
+        "Big Bang"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Big_Bang",
+      "descrizione": ""
+    },
+    {
+      "nome": "indulgenze",
+      "tipo": "tema",
+      "forme": [
+        "indulgenza",
+        "indulgenze"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Indulgenza",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pasqua",
+      "tipo": "tema",
+      "forme": [
+        "Pasqua"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Pasqua",
+      "descrizione": ""
+    },
+    {
+      "nome": "Pesach",
+      "tipo": "tema",
+      "forme": [
+        "Pesach"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Pesach",
+      "descrizione": ""
+    },
+    {
+      "nome": "Eucaristia",
+      "tipo": "tema",
+      "forme": [
+        "Eucaristia",
+        "eucaristia",
+        "eucaristico",
+        "eucaristica"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Eucaristia",
+      "descrizione": ""
+    },
+    {
+      "nome": "Trinità",
+      "tipo": "tema",
+      "forme": [
+        "Trinità",
+        "trinitario",
+        "trinitaria"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "Purgatorio",
+      "tipo": "tema",
+      "forme": [
+        "Purgatorio",
+        "purgatorio"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Purgatorio",
+      "descrizione": ""
+    },
+    {
+      "nome": "Giubileo",
+      "tipo": "tema",
+      "forme": [
+        "Giubileo",
+        "giubileo"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Giubileo",
+      "descrizione": ""
+    },
+    {
+      "nome": "creazione",
+      "tipo": "tema",
+      "forme": [
+        "creazione",
+        "Creatore",
+        "creato"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "evoluzione",
+      "tipo": "tema",
+      "forme": [
+        "evoluzione",
+        "evoluzionismo",
+        "evoluzionistica"
+      ],
+      "escludi": [],
+      "wikipedia": "https://it.wikipedia.org/wiki/Evoluzione",
+      "descrizione": ""
+    },
+    {
+      "nome": "coscienza",
+      "tipo": "tema",
+      "forme": [
+        "coscienza"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "libertà religiosa",
+      "tipo": "tema",
+      "forme": [
+        "libertà religiosa"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "canone biblico",
+      "tipo": "tema",
+      "forme": [
+        "canone biblico",
+        "canone delle Scritture",
+        "canone",
+        "deuterocanonici",
+        "deuterocanonico",
+        "protocanonici"
+      ],
+      "escludi": [
+        "canone #",
+        "canone DH",
+        "diritto canonico"
+      ],
+      "wikipedia": "https://it.wikipedia.org/wiki/Canone_biblico",
+      "descrizione": ""
+    },
+    {
+      "nome": "ispirazione",
+      "tipo": "tema",
+      "forme": [
+        "ispirazione",
+        "ispirata",
+        "ispirati",
+        "ispirato"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    },
+    {
+      "nome": "risurrezione",
+      "tipo": "tema",
+      "forme": [
+        "risurrezione",
+        "risorto",
+        "Risorto",
+        "risuscitato"
+      ],
+      "escludi": [],
+      "wikipedia": "",
+      "descrizione": ""
+    }
+  ],
+  "scartate": []
+}
