@@ -1,5 +1,5 @@
 {
-  "aggiornato": "2026-11-19",
+  "aggiornato": "2026-11-20",
   "facebook": [
     {
       "chiave": "dom-2026-11-15",
@@ -292,6 +292,12 @@
     },
     {
       "data": "2026-11-19",
+      "facebook": 1,
+      "instagram": 6,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-20",
       "facebook": 1,
       "instagram": 6,
       "telegram": 2
