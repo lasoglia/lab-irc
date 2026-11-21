@@ -12,6 +12,7 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
   rimandate su GitHub: riporterebbero dentro la storia tolta. Matteo ha una copia di sicurezza completa.
 - Giochi pesanti (i giochi 3D): non vanno in `uploads/`, si pubblicano su Cloudflare Pages (progetto
   `lab-irc-giochi`, https://giochi.labirc.it) e nel catalogo il campo `file` è l'indirizzo completo.
+  Come si pubblicano e che cosa cambia per `prepara_caricamento.py`: `docs/giochi-cloudflare-pages.md`.
 
 ## Ricerca e indice del sito
 - `seo/indice.py` (lo chiama `seo/genera.py` nella sincronizzazione, senza IA) scrive `data/testi.json` (testo

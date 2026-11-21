@@ -423,7 +423,9 @@ def pagina(titolo, descrizione, canonical, profondita, corpo, jsonld=None) -> st
 def link_materiale(m: dict, su: str) -> str:
     f = m.get("file", "")
     tipo = m.get("tipo") or ("Documento/PDF" if f.endswith(".pdf") else "Artefatto interattivo")
-    return (f'<a class="mat" href="{e(su + f.lstrip("/"))}"><b>{e(m.get("titolo") or tipo)}</b>'
+    # i giochi pesanti stanno fuori dal repository (https://giochi.labirc.it/...): link così com'è
+    href = f if re.match(r"https?://", f) else su + f.lstrip("/")
+    return (f'<a class="mat" href="{e(href)}"><b>{e(m.get("titolo") or tipo)}</b>'
             f'<small>{e(tipo)}</small></a>')
 
 
