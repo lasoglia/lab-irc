@@ -112,8 +112,8 @@
     "impronta": "0f8e68140ead09e2"
   },
   "1|Israele, una promessa, una storia, fino a oggi|Molti dèi o un Dio che chiama": {
-    "titolo_seo": "Abramo, promessa e monoteismo: lezione IRC classe prima",
-    "meta_description": "Lezione di Religione per la classe prima: Abramo, le tre promesse di Genesi 12, la fede come fiducia, l'alleanza e il passaggio dal politeismo al monoteismo.",
+    "titolo_seo": "Abramo e la nascita del monoteismo · Religione, classe prima",
+    "meta_description": "Molti dèi o un Dio che chiama per nome? Abramo, le promesse di Genesi 12, la fede come fiducia e l'alleanza. Lezione con fascicolo per la prima superiore.",
     "sintesi": "La lezione mette a confronto il politeismo antico, con gli dèi come forze del mondo, e il Dio che in Genesi 12 chiama Abramo per nome e gli fa tre promesse. Gli studenti leggono i testi biblici, distinguono fede e credulità, seguono il tema dell'alleanza e vedono come in Israele nasce il monoteismo. Il materiale si chiude con domande per lo studio che richiedono risposte con esempi tratti dal testo.",
     "argomenti": [
       "Politeismo e monoteismo",
@@ -137,7 +137,8 @@
       "input": 5451,
       "output": 478
     },
-    "impronta": "ee7ccab48f398e00"
+    "impronta": "ee7ccab48f398e00",
+    "bloccato": true
   },
   "1|Israele, una promessa, una storia, fino a oggi|Tanta storia e poca geografia, come si legge una linea del tempo lunga tremila anni": {
     "titolo_seo": "Esilio di Babilonia e storia di Israele: IRC classe prima",
@@ -196,8 +197,8 @@
     "impronta": "e31d29042dc816c1"
   },
   "1|L'uomo che cerca oltre il senso religioso|Segni e simboli": {
-    "titolo_seo": "Segni e simboli, luoghi e tempi sacri: IRC classe prima",
-    "meta_description": "Lezione di IRC per la prima superiore su segni, simboli, sacro e profano, luoghi e tempi sacri, con Giacobbe a Betel, domenica e anno liturgico.",
+    "titolo_seo": "Segno e simbolo, sacro e profano · Religione, classe prima",
+    "meta_description": "Che differenza c'è tra segno e simbolo? Sacro e profano, Giacobbe a Betel, luoghi e tempi sacri. Lezione di Religione con fascicolo per la prima superiore.",
     "sintesi": "La lezione introduce il linguaggio religioso partendo dalla differenza tra segno e simbolo, con gli esempi della freccia e dell'anello. Presenta la tesi di Cassirer sull'animale simbolico e le nozioni di sacro e profano. Analizza il racconto di Giacobbe a Betel, alcuni luoghi di culto (altare, aron ha-qodesh, mihrab) e i tempi sacri: Shabbat, domenica, anno liturgico. Gli studenti rispondono a quattro domande di studio e imparano a interpretare un luogo o un giorno a partire dal contesto e dalle fonti.",
     "argomenti": [
       "Segno e simbolo",
@@ -221,7 +222,8 @@
       "input": 4955,
       "output": 527
     },
-    "impronta": "21e188a0c33064c5"
+    "impronta": "21e188a0c33064c5",
+    "bloccato": true
   },
   "1|La Bibbia si impara a leggere|Che cosa è mai l’uomo": {
     "titolo_seo": "Che cosa è mai l’uomo – Religione Cattolica, classe prima",
@@ -954,8 +956,8 @@
     "impronta": "2f472ba5aab6b8b2"
   },
   "3|Quando un'abitudine prende il comando|Che cos'è un vizio": {
-    "titolo_seo": "Che cos'è un vizio: vizi capitali e abitudine, IRC terza",
-    "meta_description": "Lezione di IRC per la terza: dagli otto pensieri di Evagrio ai sette vizi di Gregorio Magno, fino ad Aristotele e Tommaso su abitudine e virtù.",
+    "titolo_seo": "Vizi capitali: erano otto, poi sette · Religione, classe terza",
+    "meta_description": "Perché i vizi capitali sono sette? Per Evagrio erano otto pensieri; Gregorio Magno mise la superbia alla radice e aggiunse l'invidia. Lezione per la terza.",
     "sintesi": "La lezione ricostruisce l'origine dell'elenco dei vizi capitali: gli otto pensieri di Evagrio Pontico nel deserto egiziano, la rielaborazione di Cassiano e di Gregorio Magno, la lettura di Tommaso d'Aquino. Gli studenti seguono il passaggio dal pensiero all'abitudine, con il vizio inteso come desiderio buono che perde la misura, leggono un brano dell'Etica Nicomachea di Aristotele sulla formazione delle virtù e accennano alle virtù cardinali, con riferimenti a Dante e al Catechismo.",
     "argomenti": [
       "Evagrio e gli otto pensieri",
@@ -979,7 +981,8 @@
       "input": 5268,
       "output": 557
     },
-    "impronta": "a5a5bfc2d98c135c"
+    "impronta": "a5a5bfc2d98c135c",
+    "bloccato": true
   },
   "3|Quando un'abitudine prende il comando|Che cosa ci rende liberi": {
     "titolo_seo": "Libertà e verità: Truman, Gv 8 e Agostino – IRC classe terza",
@@ -1038,8 +1041,8 @@
     "impronta": "f629a506ce6fd264"
   },
   "3|Quando un'abitudine prende il comando|Un vizio si può dipingere": {
-    "titolo_seo": "Vizi capitali e abitudine: Otto Dix, Religione classe terza",
-    "meta_description": "Lezione IRC per la classe terza: i sette vizi capitali nel quadro di Otto Dix del 1933, il vizio come abitudine (habitus) e la lista nata nei monasteri.",
+    "titolo_seo": "I sette vizi capitali di Otto Dix (1933) · Religione, terza",
+    "meta_description": "Il quadro «I sette vizi capitali» di Otto Dix, Dresda 1933, letto figura per figura: il vizio come abitudine e l'origine della lista. Lezione per la terza.",
     "sintesi": "La lezione parte dal quadro I sette vizi capitali, dipinto da Otto Dix a Dresda nel 1933 dopo il licenziamento dalla cattedra. Gli studenti osservano le sette figure allegoriche, le interpretano alla luce del legame tra abito e abitudine (habitus) e leggono i numeri 1865 e 1866 del Catechismo. Ricostruiscono poi l'origine monastica della lista, da Evagrio Pontico a Cassiano e Gregorio Magno, distinguendo vizi capitali e peccato mortale.",
     "argomenti": [
       "Vizi capitali nell'opera di Dix",
@@ -1063,7 +1066,8 @@
       "input": 5255,
       "output": 546
     },
-    "impronta": "7744410fe2f34136"
+    "impronta": "7744410fe2f34136",
+    "bloccato": true
   },
   "3|Quando un'abitudine prende il comando|«Dove sei». Il peccato in Genesi 3": {
     "titolo_seo": "Il peccato in Genesi 3: lezione di Religione, classe terza",
