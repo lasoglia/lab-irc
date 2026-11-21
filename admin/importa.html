@@ -143,7 +143,7 @@ td.stretta{width:1%;white-space:nowrap}
         <label class="btn ghost">Scegli una cartella <input type="file" id="cartella" webkitdirectory directory multiple></label>
         <label class="btn ghost">Scegli dei file <input type="file" id="files" multiple></label>
       </div>
-      <p class="hint">Formati: PDF, slide (ppt, pptx, odp, key), lezioni interattive .html, giochi di verifica (<code>…-gioco.html</code>), immagini. Massimo 95 MB a file.</p>
+      <p class="hint">Formati: PDF, slide (ppt, pptx, odp, key), lezioni interattive .html, giochi di verifica (<code>…-gioco.html</code>), immagini. Massimo 95 MB a file. I giochi più pesanti di 5 MB vanno prima su <b>giochi.labirc.it</b> (li pubblica la chat dei giochi): qui si collegano soltanto.</p>
     </div>
     <div class="orfani" id="orfani" hidden>
       <p class="eyebrow" style="margin-top:21px">File già su GitHub ma non collegati a nessuna lezione</p>
@@ -168,7 +168,7 @@ td.stretta{width:1%;white-space:nowrap}
       <span class="stato" id="stato-giochi" hidden></span>
     </div>
     <div class="barra" id="barra-giochi" hidden><i></i></div>
-    <p class="hint">Serve per i giochi caricati prima del lucchetto o dal pannello, e ogni settembre per rinnovare il lucchetto per il nuovo anno scolastico.</p>
+    <p class="hint">Serve per i giochi caricati prima del lucchetto o dal pannello, e ogni settembre per rinnovare il lucchetto per il nuovo anno scolastico. I giochi su giochi.labirc.it li rinnova la chat dei giochi.</p>
   </section>
 
   <!-- 3 · tabella -->
@@ -211,6 +211,11 @@ td.stretta{width:1%;white-space:nowrap}
   var GIOCO_FINE = /[ _-]gioco\.html?$/i;
   var GIOCO = /^(i|ii|iii|iv|v)[ _-](\d+)[ _-]?g[ _-](.+?)[ _-]gioco\.html?$/i;
   var MAX = 95 * 1024 * 1024;
+  /* i giochi pesanti stanno su Cloudflare Pages (https://giochi.labirc.it), non su GitHub: la chat dei giochi
+     li chiude a chiave (admin/chiudi-gioco.mjs) e li pubblica lì. Qui un gioco già online si COLLEGA soltanto,
+     dopo aver controllato che online sia chiuso a chiave e uguale a quello trascinato (docs/giochi-cloudflare-pages.md) */
+  var GIOCHI_CLOUD = 'https://giochi.labirc.it/';
+  var PESANTE = 5 * 1024 * 1024;   /* un gioco più pesante non va su GitHub: prima va su giochi.labirc.it */
   var $ = function (s) { return document.querySelector(s); };
   var el = function (tag, attrs, kids) { var e = document.createElement(tag); Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') e.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]); else e.setAttribute(k, attrs[k]); }); (kids || []).forEach(function (c) { e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); }); return e; };
   var norm = function (s) { return String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^\p{L}\p{N}\s]+/gu, ' ').trim().replace(/\s+/g, ' '); };
@@ -438,6 +443,7 @@ td.stretta{width:1%;white-space:nowrap}
       var r = { file: f, nome: nome, anno: String(anno), uda: pulisci(uda), lezione: pulisci(lez), tipo: gioco ? TIPO_GIOCO : tipoDa(nome), titolo: gioco ? ((qui && qui.titolo) || titoloGioco(mg, nome)) : lez ? titoloPerTipo(nome) : titoloDa(nome), evidenza: false, esistente: false, cartella: parti.join('/'), dalSito: !!qui, gioco: gioco, _titoloAuto: gioco && !(qui && qui.titolo) };
       righe.push(r); nuove.push(r);
       if (r._titoloAuto) titoloDalFile(r);
+      if (r.gioco) controllaCloud(r);
     });
     /* un file nuovo nella stessa cartella di uno già pubblicato va nella sua lezione (es. le slide aggiunte dopo);
        non se la cartella è un'unità: lì i file possono essere di lezioni diverse; i giochi non c'entrano */
@@ -502,7 +508,9 @@ td.stretta{width:1%;white-space:nowrap}
       var g = (r.anno ? ANNI[r.anno] : 'Anno da scegliere') + ' › ' + (r.uda || 'Unità da scegliere') + (r.gioco ? ' › Verifica di fine unità' : r.lezione && r.lezione !== '—' ? ' › ' + r.lezione : '');
       if (g !== gruppo) { gruppo = g; tb.appendChild(el('tr', { class: 'gruppo' }, [el('td', { colspan: 8, text: g })])); }
       var tr = el('tr');
-      tr.appendChild(el('td', {}, [el('div', { class: 'file' }, [el('b', { text: r.nome, title: r.nome }), el('small', { text: r.esistente ? 'già su GitHub' : (r.file.size / 1024 / 1024 >= 1 ? (r.file.size / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(r.file.size / 1024)) + ' KB') + (giaSulSito(r) ? ' → sostituisce uploads/' : ' → uploads/') + nomeFinale(r) })])]));
+      r._peso = r.esistente ? '' : (r.file.size / 1024 / 1024 >= 1 ? (r.file.size / 1024 / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(r.file.size / 1024)) + ' KB');
+      r._dove = el('small', { text: r.esistente ? 'già su GitHub' : r._peso + doveTesto(r) });
+      tr.appendChild(el('td', {}, [el('div', { class: 'file' }, [el('b', { text: r.nome, title: r.nome }), r._dove])]));
       tr.appendChild(el('td', { class: 'stretta' }, [selectAnno(r)]));
       var udas = dati.uda.filter(function (u) { return !r.anno || String(u.anno) === r.anno; }).map(function (u) { return u.titolo.trim(); });
       righe.forEach(function (x) { if (x.uda && x.anno === r.anno && udas.indexOf(x.uda) < 0) udas.push(x.uda); });
@@ -530,6 +538,70 @@ td.stretta{width:1%;white-space:nowrap}
     });
     riassumi();
   }
+  /* ---------- giochi su giochi.labirc.it (Cloudflare Pages) ----------
+     r.cloud: ''          non c'è (o non serve): il gioco va su GitHub come sempre
+              'cerco'     controllo in corso
+              'ok'        online, chiuso a chiave e uguale a quello trascinato: si collega soltanto
+              'numero'    online e chiuso: per confrontarlo serve il numero segreto
+              'numero-no' online, ma chiuso con un altro numero segreto
+              'diverso'   online c'è un'altra versione
+              'aperto'    online SENZA lucchetto
+              'muto'      giochi.labirc.it non risponde (o non dà il permesso di leggerlo) */
+  var controlli = 0;
+  function nomeCloud(r) { return slugFile(r.nome).replace(/\.html?$/i, ''); }
+  function linkCloud(r) { return GIOCHI_CLOUD + nomeCloud(r) + '.html'; }
+  function controllaCloud(r) {
+    if (!r.gioco || !r.file) return;
+    var mio = ++controlli;
+    r._controllo = mio; r._online = null; r.cloud = 'cerco'; aggiornaCloud(r);
+    /* senza «.html»: Cloudflare Pages rimanda /nome.html a /nome */
+    fetch(GIOCHI_CLOUD + encodeURIComponent(nomeCloud(r)), { cache: 'no-store' })
+      .then(function (risp) {
+        if (risp.status === 404) return null;
+        if (!risp.ok) throw new Error('HTTP ' + risp.status);
+        return risp.text();
+      })
+      .then(function (online) {
+        if (r._controllo !== mio) return;
+        r._online = online;
+        return confrontaCloud(r);
+      }, function () {
+        if (r._controllo !== mio) return;
+        r.cloud = 'muto';
+      })
+      .then(function () { if (r._controllo === mio) aggiornaCloud(r); });
+  }
+  function confrontaCloud(r) {
+    var online = r._online;
+    if (online == null) { r.cloud = ''; return Promise.resolve(); }
+    if (!LabLucchetto.eChiuso(online)) {
+      /* una pagina aperta è un problema solo se è proprio questo gioco: per un file che non c'è,
+         Cloudflare Pages può mostrare la sua pagina iniziale («Giochi del Lab IRC») */
+      return leggiTesto(r.file).then(function (t) {
+        var chiaro = LabLucchetto.eChiuso(t) && /^\d{1,6}$/.test(segreto) ? LabLucchetto.apri(t, segreto) : Promise.resolve(t);
+        return chiaro.then(function (c) { r.cloud = online === t || online === c ? 'aperto' : ''; }, function () { r.cloud = online === t ? 'aperto' : ''; });
+      });
+    }
+    if (!/^\d{1,6}$/.test(segreto)) { r.cloud = 'numero'; return Promise.resolve(); }
+    var s = segreto;
+    return Promise.all([LabLucchetto.apri(online, s), leggiTesto(r.file).then(function (t) { return LabLucchetto.apri(t, s); })])
+      .then(function (x) { if (s === segreto) r.cloud = x[0] === x[1] ? 'ok' : 'diverso'; },
+            function () { if (s === segreto) r.cloud = 'numero-no'; });
+  }
+  function doveTesto(r) {
+    if (r.gioco && !r.esistente) {
+      if (r.cloud === 'ok') return ' → già su giochi.labirc.it: si collega soltanto';
+      if (r.cloud === 'cerco') return ' → controllo giochi.labirc.it…';
+      if (r.cloud && r.cloud !== 'muto') return ' → su giochi.labirc.it: da sistemare (vedi sotto)';
+      if (r.file.size > PESANTE) return ' → troppo pesante per GitHub: prima su giochi.labirc.it';
+    }
+    return (giaSulSito(r) ? ' → sostituisce uploads/' : ' → uploads/') + nomeFinale(r);
+  }
+  function aggiornaCloud(r) {
+    if (r._dove) r._dove.textContent = r._peso + doveTesto(r);
+    if (righe.indexOf(r) >= 0) riassumi();
+  }
+
   /* un file nuovo con lo stesso nome di uno già in uploads/ lo sostituisce: niente copia «-2».
      Se nella stessa importazione due file hanno quel nome, sostituisce solo il primo: l'altro diventa «-2» */
   function giaSulSito(r) {
@@ -558,6 +630,15 @@ td.stretta{width:1%;white-space:nowrap}
       if (!r.uda) errori.push('«' + r.nome + '»: manca l\'unità' + (r.gioco ? ' di cui è la verifica' : '') + '.');
       if (!r.anno || !r.uda) return;
       if (!trovaUda(r.uda, r.anno) && !udaNuove.some(function (u) { return norm(u.titolo) === norm(r.uda) && u.anno === r.anno; })) udaNuove.push({ titolo: r.uda, anno: r.anno });
+      if (r.gioco && !r.esistente && r.file) {
+        var chi = '«' + r.nome + '»: ';
+        if (r.cloud === 'cerco') errori.push(chi + 'sto controllando se è già su giochi.labirc.it…');
+        else if (r.cloud === 'aperto') errori.push(chi + 'su giochi.labirc.it è SENZA lucchetto. La chat dei giochi deve chiuderlo a chiave e ripubblicarlo; poi lo ritrascini qui.');
+        else if (r.cloud === 'diverso') errori.push(chi + 'su giochi.labirc.it c\'è una versione diversa da questa. Ripubblica prima quella giusta (chat dei giochi), poi lo ritrascini qui.');
+        else if (r.cloud === 'numero') errori.push(chi + 'è già su giochi.labirc.it: scrivi il numero segreto del lucchetto (riquadro 🔒) per controllarlo.');
+        else if (r.cloud === 'numero-no') errori.push(chi + 'su giochi.labirc.it è chiuso con un numero segreto diverso da quello scritto nel riquadro 🔒.');
+        else if (r.cloud !== 'ok' && r.file.size > PESANTE) errori.push(chi + 'è un gioco pesante (' + (r.file.size / 1048576).toFixed(1) + ' MB) e ' + (r.cloud === 'muto' ? 'non riesco a controllare giochi.labirc.it' : 'non è ancora su giochi.labirc.it') + ': va pubblicato prima lì (chat dei giochi), poi lo ritrascini qui. Su GitHub non va.');
+      }
       if (r.gioco) { verifiche.push(r); return; }
       var lez = r.lezione && r.lezione !== '—' ? r.lezione : '';
       if (lez) {
@@ -569,11 +650,14 @@ td.stretta{width:1%;white-space:nowrap}
     return { udaNuove: udaNuove, lezNuove: lezNuove, perLez: perLez, sciolti: sciolti, verifiche: verifiche, errori: errori };
   }
   function riassumi() {
-    var p = piano(), box = $('#riassunto'), nF = righe.filter(function (r) { return !r.esistente; }).length;
+    var p = piano(), box = $('#riassunto'), nF = righe.filter(function (r) { return !r.esistente && r.cloud !== 'ok'; }).length;
+    var nCloud = righe.filter(function (r) { return !r.esistente && r.cloud === 'ok'; }).length;
     box.innerHTML = '';
     var voci = [];
-    voci.push(nF + (nF === 1 ? ' file da caricare' : ' file da caricare') + (righe.length - nF ? ' · ' + (righe.length - nF) + ' già su GitHub da collegare' : ''));
-    var nAgg = righe.filter(giaSulSito).length;
+    var nGia = righe.filter(function (r) { return r.esistente; }).length;
+    voci.push(nF + (nF === 1 ? ' file da caricare' : ' file da caricare') + (nGia ? ' · ' + nGia + ' già su GitHub da collegare' : ''));
+    if (nCloud) voci.push(nCloud === 1 ? '1 gioco è già su giochi.labirc.it (chiuso a chiave e uguale): viene solo collegato' : nCloud + ' giochi sono già su giochi.labirc.it (chiusi a chiave e uguali): vengono solo collegati');
+    var nAgg = righe.filter(function (r) { return giaSulSito(r) && r.cloud !== 'ok'; }).length;
     if (nAgg) voci.push(nAgg + (nAgg === 1 ? ' file sostituisce' : ' file sostituiscono') + ' la versione già sul sito (stesso nome): nessun doppione');
     var nIgn = Object.keys(ignorati).length;
     if (nIgn) voci.push(nIgn + (nIgn === 1 ? ' file ignorato' : ' file ignorati') + ': guide del docente, sorgenti e formati che non vanno sul sito');
@@ -602,6 +686,12 @@ td.stretta{width:1%;white-space:nowrap}
   $('#segreto').addEventListener('input', segretoValido);
   $('#ricorda-segreto').addEventListener('change', segretoValido);
   segretoValido();
+  /* con il numero segreto (nuovo o corretto) si riconfrontano i giochi trovati su giochi.labirc.it */
+  $('#segreto').addEventListener('input', function () {
+    righe.forEach(function (r) {
+      if (r.gioco && r._online && r.cloud !== 'cerco') { var mio = r._controllo; confrontaCloud(r).then(function () { if (r._controllo === mio) aggiornaCloud(r); }); }
+    });
+  });
   function leggiTesto(file) {
     return new Promise(function (ok, ko) { var fr = new FileReader(); fr.onload = function () { ok(String(fr.result)); }; fr.onerror = ko; fr.readAsText(file, 'utf-8'); });
   }
@@ -684,6 +774,13 @@ td.stretta{width:1%;white-space:nowrap}
     /* i giochi di verifica: in data/verifiche.json; un gioco già collegato si aggiorna (anno, unità),
        senza doppioni: il titolo scelto nel pannello resta */
     p.verifiche.forEach(function (r) {
+      if (r.cloud === 'ok') {   /* su giochi.labirc.it: «Oppure un link esterno» del pannello; se prima stava in uploads/, il link prende il suo posto */
+        var url = linkCloud(r), nc = nomeCloud(r), senza = function (x) { return String(x || '').replace(/\.html?$/i, ''); };
+        var W = ver.verifiche.find(function (v) { return v && (senza(v.link) === GIOCHI_CLOUD + nc || (v.file && senza(v.file.replace(/^\/?uploads\//, '')) === nc)); });
+        if (W) { W.anno = r.anno; W.uda = r.uda; if (!W.titolo && r.titolo) W.titolo = r.titolo; W.link = url; delete W.file; return; }
+        ver.verifiche.push({ titolo: r.titolo || '', anno: r.anno, uda: r.uda, descrizione: '', link: url });
+        return;
+      }
       var percorso = '/uploads/' + nomeFinale(r), p2 = percorso.replace(/^\/?uploads\//, '');
       var V = ver.verifiche.find(function (v) { return v && v.file && v.file.replace(/^\/?uploads\//, '') === p2; });
       if (V) { V.anno = r.anno; V.uda = r.uda; if (!V.titolo && r.titolo) V.titolo = r.titolo; return; }
@@ -699,7 +796,7 @@ td.stretta{width:1%;white-space:nowrap}
     if (giochi && !segretoValido()) { $('#p-lucchetto').scrollIntoView({ behavior: 'smooth' }); $('#segreto').focus(); var e0 = $('#esito'); e0.hidden = false; e0.className = 'esito ko'; e0.textContent = 'Per pubblicare un gioco di verifica serve il numero segreto del lucchetto (riquadro 🔒 qui sopra).'; return; }
     var btn = $('#pubblica'); btn.disabled = true; $('#esito').hidden = true;
     var base = '/repos/' + OWNER + '/' + REPO + '/git/';
-    var nuovi = righe.filter(function (r) { return !r.esistente; }), fatti = 0, albero = [];
+    var nuovi = righe.filter(function (r) { return !r.esistente && r.cloud !== 'ok'; }), fatti = 0, albero = [];   /* i giochi già su giochi.labirc.it si collegano e basta */
     avanz(0.02, 'Leggo lo stato di GitHub…');
     caricaDati()                                                          /* dati freschi: qualcuno può aver salvato da Decap nel frattempo */
       .then(function () { return gh(base + 'ref/heads/' + RAMO); })
