@@ -28,8 +28,14 @@ cifrati dal lucchetto, in più, non si comprimono, quindi ogni ripubblicazione a
    La prima volta si accede con `npx wrangler login` dal browser: nessuna chiave nei file. Serve Node.js.
    Nel pannello di Cloudflare il deploy deve risultare «Production». Se risulta «Preview», si usa in
    `--branch` il ramo di produzione indicato nelle impostazioni del progetto.
-3. Nel catalogo del sito (`data/verifiche.json` per i giochi di fine unità, oppure il materiale della
-   lezione) il campo `file` è l'**indirizzo completo**: `https://giochi.labirc.it/<nome>.html`.
+3. Nel catalogo del sito va l'**indirizzo completo**: `https://giochi.labirc.it/<nome>.html`.
+   - Giochi di fine unità: pannello /admin → Verifiche → nuova voce, con titolo, anno e unità. Il campo
+     «File del gioco» si lascia vuoto e l'indirizzo va in «Oppure un link esterno». Oppure si scrive
+     `link` (o `file`) in `data/verifiche.json`.
+   - Materiale di una lezione: campo `file` del materiale con l'indirizzo completo.
+   - La pagina admin/importa.html carica i file solo su GitHub (`uploads/`): **non** va usata per i giochi
+     pesanti. Dal browser non può pubblicare su Cloudflare, perché servirebbe una chiave di Cloudflare
+     nella pagina, e l'API di Cloudflare non accetta richieste dalle pagine web.
    - Il sito apre già così i giochi: quelli di verifica in una scheda nuova, i materiali delle lezioni
      nel visore.
    - Le pagine per Google (`seo/genera.py`) tengono il link così com'è.

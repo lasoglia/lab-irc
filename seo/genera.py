@@ -421,7 +421,7 @@ def pagina(titolo, descrizione, canonical, profondita, corpo, jsonld=None) -> st
 
 
 def link_materiale(m: dict, su: str) -> str:
-    f = m.get("file", "")
+    f = m.get("file") or m.get("link") or ""   # un gioco può avere solo il «link esterno»
     tipo = m.get("tipo") or ("Documento/PDF" if f.endswith(".pdf") else "Artefatto interattivo")
     # i giochi pesanti stanno fuori dal repository (https://giochi.labirc.it/...): link così com'è
     href = f if re.match(r"https?://", f) else su + f.lstrip("/")
