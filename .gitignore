@@ -7,9 +7,6 @@ node_modules/
 .social/
 __pycache__/
 
-# File dei post social: si disegnano quando servono e vanno su Cloudflare R2 (seo/media_r2.py),
-# non nel repo. Resta solo la vetrina dei profili.
-promozione/cartoline/*.jpg
-promozione/cartoline/*.png
-!promozione/cartoline/vetrina-*
-promozione/reel/*.mp4
+# Il kit social (promozione/) non sta più nel repository: dal 21/11/2026 i social sono in un
+# progetto a parte. Questa riga evita che rientri per sbaglio.
+promozione/

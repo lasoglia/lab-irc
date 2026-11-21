@@ -1,5 +1,7 @@
 # Stato dei social · passaggio di consegne (6 novembre 2026)
 
+> **21 novembre 2026: i social escono da questo repository.** Su decisione di Matteo sono state tolte tutte le Action social (post, storie, reel del gioco, controllo, piano, chat, vetrina e prove), il passo «Kit social» della sincronizzazione e la cartella `promozione/`, anche dalla storia. Da qui non esce più niente sui social. Il lavoro si riautomatizza in un progetto a parte, anche con Codex: questo documento, gli script in `seo/` e i dati in `data/` restano come riferimento. L'orologio su Cloudflare va spento dal suo pannello.
+
 > **9 novembre 2026: Claude spento.** Matteo ha ridotto il piano Claude a 100 e ha chiesto di fermare le richieste a Claude. In tutte le Action le credenziali di Claude sono vuote, il piano della settimana (social-settimana.yml) non ha orari e ha `if: false`, la chat @claude (social-chat.yml) e la diagnosi del controllo (social-controllo.yml) sono spente. Restano attivi, senza IA: pubblicazione della coda approvata, storie, controllo e misure, rete di sicurezza, reel del gioco. In coda ci sono uscite approvate fino a lunedì 16 novembre; dopo, i reel senza copione in cache uscirebbero con il motore vecchio (copione di riserva dal carosello). Prossimo passo: portare il lavoro social fuori da GitHub (Cloudflare o altro), con meno richieste a Claude. Per riaccendere: rimettere i segreti nei workflow (cercare «Claude spento»).
 
 Per chi riprende il lavoro sui social del Lab (un'altra sessione di Claude, o Matteo). Completa
