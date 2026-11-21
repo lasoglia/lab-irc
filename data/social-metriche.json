@@ -1,6 +1,14 @@
 {
-  "aggiornato": "2026-11-20",
+  "aggiornato": "2026-11-21",
   "facebook": [
+    {
+      "chiave": "sab-2026-11-21",
+      "data": "2026-11-21",
+      "reazioni": 0,
+      "commenti": 0,
+      "condivisioni": 0,
+      "link": "https://www.facebook.com/122111760399512623/posts/122117589879512623"
+    },
     {
       "chiave": "dom-2026-11-15",
       "data": "2026-11-15",
@@ -92,6 +100,15 @@
     }
   ],
   "instagram": [
+    {
+      "chiave": "sab-2026-11-21",
+      "data": "2026-11-21",
+      "ora": "10:53",
+      "tipo": "carosello",
+      "mi_piace": 0,
+      "commenti": 0,
+      "link": "https://www.instagram.com/p/Df_9BvcDVnG/"
+    },
     {
       "chiave": "dom-2026-11-15",
       "data": "2026-11-15",
@@ -298,6 +315,12 @@
     },
     {
       "data": "2026-11-20",
+      "facebook": 1,
+      "instagram": 6,
+      "telegram": 2
+    },
+    {
+      "data": "2026-11-21",
       "facebook": 1,
       "instagram": 6,
       "telegram": 2
