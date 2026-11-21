@@ -10,9 +10,10 @@ Il repository è pubblico: non scrivere mai qui dati personali, chiavi o nomi di
 - Il 21/11/2026 la storia è stata ripulita (tolte `promozione/` e le versioni vecchie di `uploads/`) e i rami
   vecchi cancellati. Le copie del repository fatte prima di quel giorno vanno riscaricate e non vanno mai
   rimandate su GitHub: riporterebbero dentro la storia tolta. Matteo ha una copia di sicurezza completa.
-- Giochi pesanti (i giochi 3D): non vanno in `uploads/`, si pubblicano su Cloudflare Pages (progetto
-  `lab-irc-giochi`, https://giochi.labirc.it) e nel catalogo il campo `file` è l'indirizzo completo.
-  Come si pubblicano e che cosa cambia per `prepara_caricamento.py`: `docs/giochi-cloudflare-pages.md`.
+- Giochi pesanti (più di 5 MB, i giochi 3D): non vanno in `uploads/`. La chat dei giochi li chiude a chiave
+  (`admin/chiudi-gioco.mjs`, stesso lucchetto di Importa) e li pubblica su Cloudflare Pages (progetto
+  `lab-irc-giochi`, https://giochi.labirc.it). Importa li collega da sola: nel catalogo scrive il link, dopo
+  aver controllato che online siano chiusi a chiave e uguali. Procedura: `docs/giochi-cloudflare-pages.md`.
 
 ## Ricerca e indice del sito
 - `seo/indice.py` (lo chiama `seo/genera.py` nella sincronizzazione, senza IA) scrive `data/testi.json` (testo
