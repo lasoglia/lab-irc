@@ -622,12 +622,3 @@ export function cercaNellIndice(I, q) {
   return I.voci.filter((v) => v.l.length && (v.f.some((f) => f === k || (k.length >= 4 && f.startsWith(k))) || norm(v.n) === k
     || (k.length >= 4 && norm(v.n).split(/\s+/).some((w) => w.startsWith(k)))));
 }
-/* le lezioni vicine a una lezione (stesse voci dell'indice) */
-export function viciniDiLezione(I, anno, uda, titolo) {
-  if (!I) return { voci: [], vicini: [] };
-  const i = I.lezioni.findIndex((x) => String(x[0]) === String(anno) && normT(x[1]) === normT(uda) && normT(x[2]) === normT(titolo));
-  if (i < 0) return { voci: [], vicini: [] };
-  const voci = I.voci.filter((v) => v.l.some((r) => r[0] === i)).map((v) => ({ v, n: v.l.find((r) => r[0] === i)[1] })).sort((x, y) => y.n - x.n);
-  const vicini = (I.vicini[String(i)] || []).filter(([j]) => I.lezioni[j].length === 3).map(([j, com]) => ({ a: I.lezioni[j][0], u: I.lezioni[j][1], l: I.lezioni[j][2], voci: com.map((x) => I.voci[x].n) }));
-  return { voci, vicini };
-}

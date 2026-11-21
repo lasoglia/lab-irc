@@ -36,7 +36,7 @@ import {
   dimenticaPercorso, contaAperti, vicini, slug, hrefUda, hrefLezione, ordinaPercorso, cerca,
   titoloPulito, titoloMateriale, breve, ruolo, risolviUda, risolviLezione,
   verificheAnno, verificheUda, azioneVerifica, archivioVerifiche, hrefVerificheAnno, giocabile,
-  caricaTesti, caricaIndice, cercaNeiTesti, cercaNellIndice, estratto, paroleRicerca, viciniDiLezione,
+  caricaTesti, caricaIndice, cercaNeiTesti, cercaNellIndice, estratto, paroleRicerca,
 } from "./dati.js";
 import { statoLucchetto, provaPassword } from "./lucchetto.js";
 
@@ -1125,7 +1125,6 @@ function LezionePage({ D, n, uda, lezione, apri }) {
         : <Vuoto anno={+n} titolo="Questa lezione è in preparazione" testo="I materiali arriveranno presto. Intanto puoi tornare all'unità." indietro={{ testo: "← Torna all'unità", href: hrefUda(n, u.titolo) }} />}
       {completa && <Fine>{v.succ || vu.succ ? "Qui hai aperto tutto. La strada continua qui sotto." : "Qui hai aperto tutto. Quando vuoi, torna all'unità per vedere il quadro."}</Fine>}
       <Continua tiles={tiles} chiama={chiama} color={color} stretto={completa} />
-      <NeParlanoAnche n={n} uda={u.titolo} titolo={L.titolo} />
     </div>
   );
 }
@@ -1452,39 +1451,6 @@ function NelTesto({ ris, parole, setQ }) {
         );
       })}
       {!tutti && ris.length > 8 && <div style={{ marginTop: 13 }}><Button size="sm" variant="ghost" onClick={() => setTutti(true)}>Mostra tutte ({ris.length})</Button></div>}
-    </div>
-  );
-}
-
-/* in fondo alla lezione: le voci dell'indice e le lezioni che parlano delle stesse cose */
-function NeParlanoAnche({ n, uda, titolo }) {
-  const I = useCaricato(caricaIndice);
-  const r = useMemo(() => (I ? viciniDiLezione(I, n, uda, titolo) : null), [I, n, uda, titolo]);
-  if (!r || (!r.voci.length && !r.vicini.length)) return null;
-  return (
-    <div className="lab-regione" style={{ padding: 21, borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-line)", background: "var(--lab-surface)", margin: "34px 0 0" }}>
-      {r.vicini.length > 0 && <>
-        <Eyebrow>Ne parlano anche</Eyebrow>
-        {r.vicini.map((x) => {
-          const col = colore(x.a);
-          return (
-            <a key={x.a + x.u + x.l} href={hrefLezione(x.a, x.u, x.l)} className="lab-riga">
-              <span aria-hidden="true" style={{ width: 34, height: 34, borderRadius: "50%", display: "grid", placeItems: "center", color: `color-mix(in srgb, ${col} var(--lab-tinta-icona, 100%), var(--lab-ink))`, background: `color-mix(in srgb, ${col} 16%, transparent)` }}><IconaLibro /></span>
-              <span style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
-                <b style={{ fontSize: 16, color: "var(--lab-ink)" }}>{pulito(x.l)}</b>
-                <span style={{ fontSize: 13.5, color: "var(--lab-ink-soft)" }}>Anno {annoMeta(x.a).rom} · {x.voci.join(", ")}</span>
-              </span>
-              <span aria-hidden="true" style={{ color: "var(--lab-oro)" }}>→</span>
-            </a>
-          );
-        })}
-      </>}
-      {r.voci.length > 0 && <>
-        <div style={{ marginTop: r.vicini.length ? 21 : 0 }}><Eyebrow>In questa lezione si parla di</Eyebrow></div>
-        <div className="lab-voci-indice">
-          {r.voci.slice(0, 14).map(({ v }) => <a key={v.s} href={resolvePath("indice/" + v.s + "/")} className="lab-voce-indice">{v.n}</a>)}
-        </div>
-      </>}
     </div>
   );
 }
