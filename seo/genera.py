@@ -427,7 +427,7 @@ def link_materiale(m: dict, su: str) -> str:
             f'<small>{e(tipo)}</small></a>')
 
 
-def costruisci(sito, anni, uda, lezioni, extra_uda, seo, per_lezione=None) -> list[tuple[str, str]]:
+def costruisci(sito, anni, uda, lezioni, extra_uda, seo, per_lezione=None, estratti=None) -> list[tuple[str, str]]:
     """Scrive le pagine e restituisce (url, lastmod) per la sitemap."""
     cartella = RADICE / "lezioni"
     # Ripulisce le pagine generate in passato (lezioni rinominate o eliminate)
@@ -451,6 +451,13 @@ def costruisci(sito, anni, uda, lezioni, extra_uda, seo, per_lezione=None) -> li
         app = (f"{su}#anno/{enc(anno)}/uda/{enc(l.get('uda',''))}/lezione/{enc(l['titolo'])}")
         argomenti = "".join(f"<li>{e(a)}</li>" for a in s.get("argomenti", []))
         info = (per_lezione or {}).get((anno, l.get("uda", ""), l["titolo"]), {"voci": [], "vicini": []})
+        est = (estratti or {}).get((anno, l.get("uda", ""), l["titolo"]))
+        blocco_est = ""
+        if est:
+            blocco_est = ('<h2>Dal fascicolo della lezione</h2>'
+                          + "".join(f"<p>{e(x)}</p>" for x in est["paragrafi"])
+                          + f'<p><a href="{e(su + est["file"].lstrip("/"))}">Continua a leggere nel fascicolo '
+                          f'({est["pagine"]} pagine, PDF)</a></p>')
         voci_lez = "".join(f'<li><a href="{su}indice/{v["s"]}/">{e(v["n"])}</a></li>' for v, _ in info["voci"][:24])
         vicini = "".join(
             f'<li><a href="{su}lezioni/{a2}/{slug(u2)}/{slug(t2)}/">{e(t2)}</a> '
@@ -462,6 +469,7 @@ def costruisci(sito, anni, uda, lezioni, extra_uda, seo, per_lezione=None) -> li
 <h1>{e(l['titolo'])}</h1>
 <p class="sintesi">{e(s.get('sintesi',''))}</p>
 {'<ul class="argomenti">' + argomenti + '</ul>' if argomenti else ''}
+{blocco_est}
 <h2>Materiali della lezione</h2>
 {materiali or '<p>I materiali di questa lezione sono in preparazione.</p>'}
 <a class="cta" href="{e(app)}">Apri la lezione nel Lab</a>
@@ -588,14 +596,15 @@ def main():
     print(f"Lezioni trovate: {len(lezioni)}")
     seo = aggiorna_seo(lezioni, uda, usa_ia=not a.senza_ia, forza=a.forza)
     # ricerca nel testo e indice dei nomi (seo/indice.py): se fallisce, le pagine si fanno lo stesso
-    uso = None
+    uso, docs = None, []
     try:
         import indice
-        _, uso, prop = indice.esegui(lezioni, extra_uda)
+        docs, uso, prop = indice.esegui(lezioni, extra_uda)
     except Exception as ex:
         print(f"! indice non aggiornato: {ex}", file=sys.stderr)
     url_pagine = costruisci(sito, anni, uda, lezioni, extra_uda, seo,
-                            indice.lezioni_per_pagina(uso) if uso else None)
+                            indice.lezioni_per_pagina(uso) if uso else None,
+                            indice.estratti(docs) if docs else None)
     if uso:
         url_pagine += indice.scrivi_pagine(uso, prop, pagina, e, URL_SITO,
                                            ultima_modifica(RADICE / "data" / "indice.json"))

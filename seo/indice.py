@@ -463,6 +463,39 @@ def esegui(lezioni: list[dict], extra_uda: dict) -> tuple[list[dict], dict, list
     return docs, uso, prop
 
 
+def estratti(docs: list[dict], parole: int = 380) -> dict[tuple, dict]:
+    """L'inizio del fascicolo di ogni lezione (dopo l'intestazione), per le pagine per Google:
+    testo vero e unico che dice a Google di che cosa parla la lezione."""
+    out: dict[tuple, dict] = {}
+    for d in docs:
+        if not d["l"] or not d["f"].lower().endswith(".pdf") or chiave(d) in out:
+            continue
+        t = " ".join(d["p"][:3])
+        m = re.search(r"Materiale ad uso personale dello studente\s*", t)
+        if m and m.end() < 1500:
+            t = t[m.end():]
+        t = re.sub(r"\s*\[\d+(?:[,–-]\s*\d+)*\]", "", t)          # rimandi alle note
+        t = re.sub(r"\s+", " ", t).strip()
+        w = t.split(" ")
+        if len(w) < 60:
+            continue
+        pezzo = " ".join(w[:parole])
+        fine = max(pezzo.rfind(". "), pezzo.rfind("? "), pezzo.rfind("! "), pezzo.rfind(".» "))
+        if fine > len(pezzo) * 0.6:
+            pezzo = pezzo[:fine + 1]
+        # paragrafi di 3-4 frasi, più leggibili
+        frasi = re.split(r"(?<=[.?!»])\s+(?=[A-ZÀ-Ý«“])", pezzo)
+        par, cur = [], []
+        for f in frasi:
+            cur.append(f)
+            if len(" ".join(cur)) > 420:
+                par.append(" ".join(cur)); cur = []
+        if cur:
+            par.append(" ".join(cur))
+        out[chiave(d)] = {"paragrafi": par, "file": d["f"], "pagine": len(d["p"])}
+    return out
+
+
 def lezioni_per_pagina(uso: dict) -> dict[tuple, dict]:
     """Per ogni lezione (anno, uda, titolo): le sue voci e le lezioni vicine (per le pagine statiche)."""
     L = uso["lezioni"]
