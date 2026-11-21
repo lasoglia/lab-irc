@@ -15,13 +15,19 @@ cifrati dal lucchetto, in più, non si comprimono, quindi ogni ripubblicazione a
 - Ogni file al massimo **25 MiB**. Un gioco più grande va diviso: modelli e texture in file a parte.
 - Al massimo 20.000 file per progetto.
 - Ogni pubblicazione è una fotografia completa della cartella. Sul PC serve quindi una cartella con
-  **tutti** i giochi, che si pubblica intera ogni volta. Wrangler ricarica solo i file cambiati.
+  **tutti** i giochi, più `index.html` (la pagina «Giochi del Lab IRC»), che si pubblica intera ogni volta:
+  se si pubblica solo il gioco nuovo, gli altri spariscono. Wrangler ricarica solo i file cambiati.
+- Pages toglie l'estensione: `/nome.html` viene rimandato a `/nome`. Nel catalogo si scrive comunque
+  l'indirizzo con `.html`, che serve al sito per riconoscere il gioco. Il browser segue il rimando da solo,
+  e anche il controllo dello SHA-256 deve seguire i rimandi.
 
 ## Come si pubblica (dal PC, progetto Programmazione IRC)
 1. Il gioco finito va nella cartella locale dei giochi pubblicati, per esempio `giochi.labirc.it/`, con
    tutti gli altri giochi.
 2. `npx wrangler pages deploy giochi.labirc.it --project-name lab-irc-giochi --branch main`
-   La prima volta si accede con `npx wrangler login` dal browser: nessuna chiave nei file.
+   La prima volta si accede con `npx wrangler login` dal browser: nessuna chiave nei file. Serve Node.js.
+   Nel pannello di Cloudflare il deploy deve risultare «Production». Se risulta «Preview», si usa in
+   `--branch` il ramo di produzione indicato nelle impostazioni del progetto.
 3. Nel catalogo del sito (`data/verifiche.json` per i giochi di fine unità, oppure il materiale della
    lezione) il campo `file` è l'**indirizzo completo**: `https://giochi.labirc.it/<nome>.html`.
    - Il sito apre già così i giochi: quelli di verifica in una scheda nuova, i materiali delle lezioni
